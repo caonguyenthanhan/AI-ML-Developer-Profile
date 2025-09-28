@@ -1,0 +1,19 @@
+{
+  "rewrites": [
+    {
+      "source": "/caonguyenthanhan/pfofile",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/caonguyenthanhan/pfofile/",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/caonguyenthanhan/pfofile",
+      "permanent": true
+    }
+  ]
+}
