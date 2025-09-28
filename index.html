@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV: Cao Nguyễn Thành An - Thực Tập Sinh Kỹ Sư AI/ML Ấn Tượng</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tải thư viện Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .section-title {
+            @apply text-2xl font-bold border-b-2 border-indigo-400 pb-2 mb-4 text-indigo-700 flex items-center;
+        }
+        .skill-item {
+            @apply bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium shadow-sm;
+        }
+        .project-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Shadow đậm hơn khi hover */
+        }
+        /* Thanh tiến trình minh họa */
+        .progress-bar-container {
+            @apply h-2 bg-gray-200 rounded-full mt-1;
+        }
+        .progress-bar {
+            @apply h-2 bg-indigo-600 rounded-full;
+        }
+        /* Chatbox styles */
+        #chat-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+            height: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        #chat-widget.open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        #chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+    <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden print:shadow-none print:p-0">
+        
+        <!-- HEADER & CONTACT INFO -->
+        <header class="bg-indigo-700 text-white p-6 md:p-10 lg:p-12 flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-10">
+            <div class="flex-shrink-0">
+                <!-- Sử dụng link ảnh đại diện bạn cung cấp -->
+                <img src="./public/image/avata1.png" 
+                     alt="Ảnh đại diện Cao Nguyễn Thành An" 
+                     onerror="this.onerror=null; this.src='https://placehold.co/150x150/ffffff/525252?text=AN';"
+                     class="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-white shadow-lg">
+            </div>
+            <div class="text-left">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">CAO NGUYỄN THÀNH AN</h1>
+                <p class="text-xl md:text-2xl font-light mt-1 opacity-95">
+                    Thực Tập Sinh Kỹ Sư AI/ML (AI Intern)
+                </p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mt-4 text-sm font-light">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <span>caonguyenthanhan.aaa@gmail.com</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        <span>0929620697</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        <span>Số 70, Đường Số 6, Linh Trung, Thủ Đức</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        <span>29-09-2003 (Nam)</span>
+                    </div>
+                </div>
+                <div class="flex space-x-4 mt-3">
+                     <a href="https://github.com/caonguyenthanhan" target="_blank" class="flex items-center text-white/90 hover:text-white transition duration-300">
+                        <i data-lucide="github" class="w-5 h-5 mr-1"></i> GitHub Profile
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT (Omitting for brevity, as it remains largely unchanged) -->
+        <main class="p-6 md:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- COLUMN 1: OBJECTIVE, EDUCATION, OTHER SKILLS -->
+            <div class="lg:col-span-1 space-y-8">
+                
+                <!-- MỤC TIÊU NGHỀ NGHIỆP -->
+                <section>
+                    <h2 class="section-title">
+                        <i data-lucide="target" class="w-5 h-5 mr-2"></i> Mục Tiêu Nghề Nghiệp
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed text-sm">
+                        Với kiến thức vững chắc về <strong class="font-semibold">Machine Learning</strong> và <strong class="font-semibold">kỹ năng lập trình Python</strong>, mong muốn được tham gia vào các dự án phát triển sản phẩm/dịch vụ <strong class="font-semibold">AI</strong>.
+                        <br><br>
+                        Mục tiêu là áp dụng kinh nghiệm thực tế để <strong class="font-semibold">giải quyết các bài toán phức tạp</strong>, góp phần nâng cao hiệu quả hoạt động và mang lại giá trị thiết thực cho công ty.
+                    </p>
+                </section>
+                
+                <!-- HỌC VẤN -->
+                <section>
+                    <h2 class="section-title">
+                        <i data-lucide="graduation-cap" class="w-5 h-5 mr-2"></i> Học Vấn
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-indigo-600 pl-3">
+                            <p class="font-semibold text-lg text-gray-800">Trí Tuệ Nhân Tạo</p>
+                            <p class="text-sm text-gray-600">Trường Đại học Sư phạm Kỹ thuật TP. HCM</p>
+                            <p class="text-xs text-gray-500 italic">08-2021 – 04-2025 | Khoa Công nghệ thông Tin (Chất lượng cao)</p>
+                            <p class="text-sm mt-1 font-medium text-indigo-700">Loại tốt nghiệp dự kiến: Khá</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- KỸ NĂNG KHÁC -->
+                <section>
+                    <h2 class="section-title">
+                        <i data-lucide="settings" class="w-5 h-5 mr-2"></i> Kỹ Năng Khác
+                    </h2>
+                    <div class="space-y-3 text-sm">
+                        <div class="bg-gray-100 p-3 rounded-lg">
+                             <p class="font-semibold text-gray-800 mb-1">Giao tiếp & Hỗ trợ Kỹ thuật</p>
+                             <div class="flex flex-wrap gap-2">
+                                <span class="skill-item !bg-gray-200 !text-gray-800">Kỹ năng Giáo viên/Gia sư</span>
+                                <span class="skill-item !bg-gray-200 !text-gray-800">Hỗ trợ Khách hàng</span>
+                                <span class="skill-item !bg-gray-200 !text-gray-800">IT Support</span>
+                             </div>
+                        </div>
+                         <div class="bg-gray-100 p-3 rounded-lg">
+                             <p class="font-semibold text-gray-800 mb-1">Sáng tạo & Thiết kế</p>
+                             <div class="flex flex-wrap gap-2">
+                                <span class="skill-item !bg-gray-200 !text-gray-800">Thiết kế 2D (Photoshop/AI)</span>
+                                <span class="skill-item !bg-gray-200 !text-gray-800">Sáng tạo Nội dung</span>
+                                <span class="skill-item !bg-gray-200 !text-gray-800">Dựng Video</span>
+                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SỞ THÍCH -->
+                <section>
+                    <h2 class="section-title">
+                        <i data-lucide="heart" class="w-5 h-5 mr-2"></i> Sở Thích
+                    </h2>
+                    <p class="text-gray-700 text-sm">
+                        Thích viết blog về công nghệ, chia sẻ kiến thức về AI/ML, rèn luyện kỹ năng viết lách và truyền đạt thông tin.
+                    </p>
+                </section>
+
+            </div>
+
+            <!-- COLUMN 2 & 3: TECHNICAL SKILLS & EXPERIENCE + PROJECTS -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- KỸ NĂNG CHUYÊN MÔN AI/ML (ĐÃ THÊM THANH TIẾN TRÌNH) -->
+                <section>
+                    <h2 class="section-title">
+                        <i data-lucide="cpu" class="w-5 h-5 mr-2"></i> Kỹ Năng Chuyên Môn AI/ML
+                    </h2>
+                    <div class="space-y-4">
+                        
+                        <!-- Nhóm 1: Python & Core ML/Data -->
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h3 class="font-semibold text-lg text-indigo-700 mb-2">Python & Core ML/Data</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <p class="text-sm font-medium">Python (Scikit-learn, Pandas, Numpy)</p>
+                                    <div class="progress-bar-container"><div class="progress-bar" style="width: 90%;"></div></div>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">Data Processing & SQL</p>
+                                    <p class="text-xs text-gray-500 italic">Kinh nghiệm làm sạch, biến đổi dữ liệu lớn. (Pandas/SQL)</p>
+                                    <div class="progress-bar-container"><div class="progress-bar" style="width: 80%;"></div></div>
+                                </div>
+                                <p class="text-sm mt-2 text-gray-700">
+                                    <strong class="font-semibold">Ứng dụng:</strong> Xây dựng mô hình <strong class="font-semibold">dự đoán giá nhà</strong> bằng Scikit-learn.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Nhóm 2: Deep Learning & Vision/NLP -->
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h3 class="font-semibold text-lg text-indigo-700 mb-2">Deep Learning & Thuật toán</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <p class="text-sm font-medium">TensorFlow & PyTorch</p>
+                                    <div class="progress-bar-container"><div class="progress-bar" style="width: 75%;"></div></div>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">Mô hình Học Sâu (GANs, DCGAN, AttGAN)</p>
+                                    <div class="progress-bar-container"><div class="progress-bar" style="width: 70%;"></div></div>
+                                </div>
+                                <p class="text-sm mt-2 text-gray-700">
+                                    <strong class="font-semibold">Ứng dụng:</strong> Phát triển hệ thống <strong class="font-semibold">Nhận dạng Khuôn mặt</strong> và các mô hình thị giác máy tính khác (OCR).
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Nhóm 3: Công cụ & Nền tảng -->
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h3 class="font-semibold text-lg text-indigo-700 mb-2">DevOps, Cloud & Big Data</h3>
+                            <div class="flex flex-wrap gap-3 mt-2">
+                                <span class="skill-item">EC2, S3, Lambda</span>
+                                <span class="skill-item">Docker, Git</span>
+                                <span class="skill-item">Hadoop, Spark</span>
+                                <span class="skill-item">Power BI</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- DỰ ÁN AI/ML TIÊU BIỂU (TĂNG CƯỜNG MÔ TẢ VÀ TAGS) -->
+                <section>
+                    <h2 class="section-title">
+                        <i data-lucide="archive" class="w-5 h-5 mr-2"></i> Dự Án AI/ML Tiêu Biểu
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        <!-- Dự án 1: OCR Mobile Application -->
+                        <div class="project-card bg-gray-50 p-4 rounded-lg border border-indigo-400">
+                            <h3 class="font-semibold text-base text-indigo-700 mb-1">OCR Mobile Application</h3>
+                            <p class="text-xs text-gray-600 mb-2">Phát triển ứng dụng di động sử dụng <strong class="font-semibold">Computer Vision</strong> để nhận dạng ký tự quang học.</p>
+                             <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="text-xs font-medium bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full">Computer Vision</span>
+                                <span class="text-xs font-medium bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full">Mobile App</span>
+                            </div>
+                            <a href="https://github.com/caonguyenthanhan/OCR-Mobile-Application" target="_blank" class="flex items-center text-sm text-indigo-600 hover:text-indigo-800">
+                                <i data-lucide="github" class="w-4 h-4 mr-1"></i> Xem GitHub
+                            </a>
+                        </div>
+                        
+                        <!-- Dự án 2: Gemini Tóm Tắt & Đọc -->
+                        <div class="project-card bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h3 class="font-semibold text-base text-gray-800 mb-1">Gemini Tóm Tắt & Đọc</h3>
+                            <p class="text-xs text-gray-600 mb-2">Tích hợp API Gemini để tóm tắt văn bản và sử dụng TTS để đọc lại nội dung.</p>
+                             <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="text-xs font-medium bg-green-200 text-green-800 px-2 py-0.5 rounded-full">Gemini API</span>
+                                <span class="text-xs font-medium bg-green-200 text-green-800 px-2 py-0.5 rounded-full">TTS</span>
+                            </div>
+                            <div class="flex space-x-3">
+                                <a href="https://github.com/caonguyenthanhan/Ai-Demo-Project" target="_blank" class="flex items-center text-sm text-indigo-600 hover:text-indigo-800">
+                                    GitHub
+                                </a>
+                                <a href="https://youtu.be/vH-Bx89bpsw" target="_blank" class="flex items-center text-sm text-red-600 hover:text-red-800">
+                                    Video
+                                </a>
+                            </div>
+                        </div>
+
+                         <!-- Dự án 3: AI Models Unified Chatbox -->
+                        <div class="project-card bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h3 class="font-semibold text-base text-gray-800 mb-1">AI Models Unified Chatbox</h3>
+                            <p class="text-xs text-gray-600 mb-2">Giao diện chat box đa mô hình, thể hiện khả năng tích hợp LLM.</p>
+                             <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="text-xs font-medium bg-green-200 text-green-800 px-2 py-0.5 rounded-full">LLM Integration</span>
+                                <span class="text-xs font-medium bg-green-200 text-green-800 px-2 py-0.5 rounded-full">Interface</span>
+                            </div>
+                             <div class="flex space-x-3">
+                                <a href="https://github.com/caonguyenthanhan/Ai-Demo-Project" target="_blank" class="flex items-center text-sm text-indigo-600 hover:text-indigo-800">
+                                    GitHub
+                                </a>
+                                <a href="https://youtu.be/Nh6EXXIHCmM" target="_blank" class="flex items-center text-sm text-red-600 hover:text-red-800">
+                                    Video
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Dự án 4: Hệ thống Tư vấn Y tế (Llama) -->
+                        <div class="project-card bg-gray-50 p-4 rounded-lg border border-yellow-400/50">
+                            <h3 class="font-semibold text-base text-gray-800 mb-1">Hệ thống Tư vấn Y tế (Dùng Llama)</h3>
+                            <p class="text-xs text-gray-600 mb-2 italic">Đang phát triển: Ứng dụng mô hình <strong class="font-semibold">Llama</strong> cho hệ thống hỗ trợ tư vấn y tế (Healthcare AI).</p>
+                             <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="text-xs font-medium bg-yellow-200 text-yellow-800 px-2 py-0.5 rounded-full">In Progress</span>
+                                <span class="text-xs font-medium bg-yellow-200 text-yellow-800 px-2 py-0.5 rounded-full">Llama Model</span>
+                            </div>
+                            <a href="https://github.com/caonguyenthanhan/Medical-Consulting-System" target="_blank" class="flex items-center text-sm text-indigo-600 hover:text-indigo-800">
+                                <i data-lucide="github" class="w-4 h-4 mr-1"></i> Xem GitHub
+                            </a>
+                        </div>
+                        
+                    </div>
+                </section>
+
+
+                <!-- KINH NGHIỆM LÀM VIỆC (ĐÃ SẮP XẾP VÀ TÓM TẮT) -->
+                <section>
+                    <h2 class="section-title">
+                        <i data-lucide="briefcase" class="w-5 h-5 mr-2"></i> Kinh Nghiệm Làm Việc
+                    </h2>
+                    <div class="space-y-6">
+                        
+                         <!-- Chuyên viên Đào tạo AI (Gần nhất và quan trọng nhất) -->
+                        <div class="border-l-4 border-indigo-600 pl-4 bg-indigo-50/50 p-3 rounded-lg">
+                            <h3 class="font-semibold text-lg text-indigo-700">Chuyên viên Đào tạo AI/ML</h3>
+                            <p class="text-sm text-gray-600">CTy TNHH Tư Vấn Giáo Dục Nhân Mỹ</p>
+                            <p class="text-xs text-gray-500 italic mb-2">01-2025 – 04-2025</p>
+                            <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
+                                <li>Thiết kế và triển khai chương trình đào tạo về Trí tuệ Nhân tạo.</li>
+                                <li><strong class="font-semibold">Thành tựu:</strong> Ước tính giúp nâng cao năng suất làm việc của đội ngũ lên 15-20% thông qua ứng dụng AI.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Nhân viên Triển khai và Bảo trì Phần mềm -->
+                        <div class="border-l-4 border-indigo-600 pl-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Nhân viên Triển khai và Bảo trì Phần mềm</h3>
+                            <p class="text-sm text-gray-600">CÔNG TY TNHH TM&DV TIN HỌC PHẦN MỀM VÀNG</p>
+                            <p class="text-xs text-gray-500 italic mb-2">06-2024 – 07-2024</p>
+                            <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
+                                <li><strong class="font-semibold">Quản lý Dữ liệu:</strong> Thực hiện sửa chữa các mô tả thông tin trên cơ sở dữ liệu cơ bản (SQL/Data Management).</li>
+                                <li>Hỗ trợ Kỹ thuật: Hỗ trợ khách hàng từ xa, giải quyết các lỗi phần mềm và kết nối phần cứng.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Nhân viên Kỹ thuật & Marketing -->
+                        <div class="border-l-4 border-indigo-600 pl-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Nhân viên Kỹ thuật & Marketing</h3>
+                            <p class="text-sm text-gray-600">Hệ thống giáo dục mầm non và anh ngữ quốc tế Nam Mỹ</p>
+                            <p class="text-xs text-gray-500 italic mb-2">03-2023 – 03-2024</p>
+                            <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
+                                <li><strong class="font-semibold">Thành tựu Digital Marketing:</strong> Quản lý và phát triển các kênh truyền thông, đạt thành tích tăng 20% lượng người theo dõi trong 6 tháng.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Thực tập sinh Sửa chữa Máy tính -->
+                        <div class="border-l-4 border-indigo-600 pl-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Thực tập sinh Sửa chữa Máy tính</h3>
+                            <p class="text-sm text-gray-600">Công Ty TNHH TM Trường Thịnh Group</p>
+                            <p class="text-xs text-gray-500 italic mb-2">05-2024 – 06-2024</p>
+                            <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
+                                <li>Thực hiện các công việc IT support cơ bản như sửa chữa, lắp đặt máy tính và cài đặt hệ điều hành/ứng dụng.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </section>
+                
+            </div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-indigo-700/90 text-white text-center p-4 mt-6">
+            <p class="text-sm">Cao Nguyễn Thành An | Web CV được xây dựng dựa trên thông tin cá nhân và định hướng AI/ML</p>
+        </footer>
+    </div>
+    
+    <!-- CHATBOT WIDGET -->
+    <button id="chat-toggle" class="fixed bottom-6 right-6 p-4 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 transition duration-300 transform hover:scale-105">
+        <i data-lucide="message-square" class="w-6 h-6"></i>
+    </button>
+
+    <div id="chat-widget" class="flex flex-col bg-white rounded-xl shadow-2xl overflow-hidden border border-indigo-200">
+        <div class="bg-indigo-600 text-white p-3 flex justify-between items-center">
+            <h3 class="font-semibold text-base flex items-center">
+                 <i data-lucide="sparkles" class="w-4 h-4 mr-2 text-yellow-300"></i> AI CV Assistant
+            </h3>
+            <button id="chat-close" class="p-1 rounded-full hover:bg-indigo-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        
+        <div id="chat-messages" class="flex-grow p-4 space-y-4">
+            <!-- Initial Message -->
+            <div class="flex justify-start">
+                <div class="bg-indigo-100 text-gray-800 p-3 rounded-xl rounded-tl-none max-w-xs text-sm shadow-md">
+                    Chào bạn! Tôi là trợ lý AI, tôi có thể trả lời các câu hỏi về kinh nghiệm, kỹ năng và dự án trong CV của Cao Nguyễn Thành An.
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-3 border-t border-gray-200 flex space-x-2">
+            <input type="text" id="chat-input" placeholder="Hỏi về kinh nghiệm AI..." class="w-full border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <button id="chat-send" class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition duration-300">
+                <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Khởi tạo Lucide Icons và Logic Chatbot -->
+    <script>
+        lucide.createIcons();
+
+        const chatWidget = document.getElementById('chat-widget');
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatClose = document.getElementById('chat-close');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
+        
+        // CHỈNH SỬA: Không sử dụng API key ở Client-side.
+        // Thay vì gọi API trực tiếp, chúng ta sẽ gọi một endpoint Proxy.
+        const proxyUrl = '/api/chat'; 
+        
+        const MODEL_NAME = 'gemini-2.5-flash-preview-05-20'; // Vẫn giữ tên model để gửi lên Proxy
+        // Xóa biến apiKey khỏi đây
+
+        // 1. NGỮ CẢNH CV DÀNH CHO AI ASSISTANT
+        const cvContext = `
+            Hồ sơ xin việc của Cao Nguyễn Thành An, Thực Tập Sinh Kỹ Sư AI/ML.
+
+            Mục Tiêu: Áp dụng kiến thức Machine Learning và Python để giải quyết các bài toán phức tạp trong dự án AI/ML.
+
+            Học Vấn: Trí Tuệ Nhân Tạo, Đại học Sư phạm Kỹ thuật TP. HCM (08/2021 – 04/2025). Loại tốt nghiệp dự kiến: Khá.
+
+            Kỹ Năng Chuyên Môn:
+            1. Python & Core ML/Data: Python (thành thạo Scikit-learn, Pandas, Numpy). Kinh nghiệm Data Processing & SQL. Ứng dụng: Xây dựng mô hình dự đoán giá nhà.
+            2. Deep Learning & Thuật toán: TensorFlow, PyTorch. Mô hình Học Sâu (GANs, DCGAN, AttGAN). Ứng dụng: Phát triển hệ thống Nhận dạng Khuôn mặt, OCR.
+            3. Nền tảng: EC2, S3, Lambda, Docker, Git, Hadoop, Spark, Power BI.
+
+            Kinh Nghiệm Làm Việc (Sắp xếp theo thời gian):
+            - 01/2025 – 04/2025: Chuyên viên Đào tạo AI/ML (CTy TNHH Tư Vấn Giáo Dục Nhân Mỹ). Thành tựu: Nâng cao năng suất làm việc của đội ngũ lên 15-20%.
+            - 06/2024 – 07/2024: Nhân viên Triển khai và Bảo trì Phần mềm (CÔNG TY PHẦN MỀM VÀNG). Vai trò: Quản lý Dữ liệu (SQL) và Hỗ trợ Kỹ thuật.
+            - 03/2023 – 03/2024: Nhân viên Kỹ thuật & Marketing (Hệ thống giáo dục Nam Mỹ). Thành tựu: Tăng 20% lượng người theo dõi truyền thông.
+            - 05/2024 – 06/2024: Thực tập sinh Sửa chữa Máy tính (Trường Thịnh Group).
+
+            Dự Án AI/ML Tiêu Biểu:
+            - OCR Mobile Application (Computer Vision, Mobile App)
+            - Gemini Tóm Tắt & Đọc (Gemini API, TTS)
+            - AI Models Unified Chatbox (LLM Integration)
+            - Hệ thống Tư vấn Y tế (Dùng Llama)
+            - Bộ Công Cụ Xử Lý Ngôn Ngữ Tự Nhiên (NLP)
+            - Ứng Dụng Chat Tích Hợp API
+        `;
+
+        const systemPrompt = `
+            Bạn là Trợ lý AI được xây dựng để trả lời các câu hỏi về hồ sơ xin việc (CV) của Cao Nguyễn Thành An.
+            Chỉ sử dụng thông tin được cung cấp trong CV dưới đây để trả lời.
+            Tuyệt đối không bịa đặt thông tin. Giữ câu trả lời ngắn gọn, chuyên nghiệp và lịch sự bằng tiếng Việt.
+            CV chi tiết: ${cvContext}
+        `;
+
+        // 2. LOGIC UI
+        chatToggle.addEventListener('click', () => {
+            chatWidget.classList.toggle('open');
+            chatToggle.style.display = 'none';
+            chatInput.focus();
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.remove('open');
+            chatToggle.style.display = 'flex';
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        chatSend.addEventListener('click', sendMessage);
+
+        // 3. LOGIC XỬ LÝ CHAT & API (ĐÃ CHUYỂN SANG GỌI PROXY)
+        function displayMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = `p-3 rounded-xl max-w-xs text-sm shadow-md ${
+                isUser 
+                ? 'bg-indigo-600 text-white rounded-br-none' 
+                : 'bg-indigo-100 text-gray-800 rounded-tl-none'
+            }`;
+            contentDiv.innerHTML = text;
+            messageDiv.appendChild(contentDiv);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
+        }
+
+        function createLoadingIndicator() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loading-indicator';
+            loadingDiv.className = 'flex justify-start';
+            loadingDiv.innerHTML = `
+                <div class="bg-indigo-100 p-3 rounded-xl rounded-tl-none text-sm shadow-md">
+                    <div class="flex space-x-1">
+                        <span class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: -0.32s;"></span>
+                        <span class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: -0.16s;"></span>
+                        <span class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></span>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return loadingDiv;
+        }
+
+        async function sendMessage() {
+            const userQuery = chatInput.value.trim();
+            if (!userQuery) return;
+
+            // Display user message and clear input
+            displayMessage(userQuery, true);
+            chatInput.value = '';
+
+            const loadingIndicator = createLoadingIndicator();
+            chatInput.disabled = true;
+            chatSend.disabled = true;
+            
+            // Dữ liệu gửi đến Proxy
+            const payload = {
+                userQuery: userQuery,
+                systemInstruction: systemPrompt,
+            };
+
+            try {
+                // Gửi request đến proxy endpoint
+                const response = await fetch(proxyUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Proxy error: ${response.status} ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                
+                let aiResponseText = "Rất tiếc, máy chủ trung gian (Proxy) chưa được cấu hình hoặc gặp lỗi. Vui lòng thử lại sau.";
+                
+                if (result.text) {
+                    aiResponseText = result.text;
+                }
+                
+                // Remove loading indicator
+                loadingIndicator.remove();
+
+                // Display AI response
+                displayMessage(aiResponseText);
+
+            } catch (error) {
+                console.error('Error fetching AI response:', error);
+                loadingIndicator.remove();
+                displayMessage("Đã xảy ra lỗi kết nối với máy chủ trung gian (Proxy).");
+            } finally {
+                chatInput.disabled = false;
+                chatSend.disabled = false;
+                chatInput.focus();
+            }
+        }
+    </script>
+</body>
+</html>
