@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin Cá nhân - Cao Nguyên Thanh An</title>
+    <!-- Tải Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Cấu hình Tailwind cho font Inter và màu sắc cơ bản -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#3b82f6', // Blue 500
+                        'dark-bg': '#0f172a', // Slate 900
+                        'dark-card': '#1e293b', // Slate 800
+                        'dark-text': '#f1f5f9', // Slate 100
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Nền tối (Slate 900) */
+            color: #f1f5f9; /* Màu chữ sáng */
+            /* Hiệu ứng nền chấm mờ ảo */
+            background-image: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Hiệu ứng bóng đổ và di chuyển nhẹ cho thẻ bài khi hover */
+        .card-glow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .card-glow:hover {
+            /* Hiệu ứng phát sáng nhẹ từ màu chủ đạo */
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.5), 0 4px 6px -4px rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Animation cho tiêu đề khi trang tải */
+        @keyframes slideInFromTop {
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .title-entrance {
+            animation: slideInFromTop 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+    <!-- Card Container -->
+    <div class="w-full max-w-3xl bg-dark-card rounded-2xl p-6 md:p-10 card-glow">
+
+        <!-- Header - Thông tin cơ bản -->
+        <header class="text-center mb-10">
+            <!-- Avatar Placeholder-->
+            <img src=".\image\avata3.png" alt="Avatar" class="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-primary-blue shadow-xl object-cover">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-dark-text mb-2 title-entrance">
+                CAO NGUYỄN THÀNH AN
+            </h1>
+            <p class="text-xl font-light text-primary-blue/80 title-entrance" style="animation-delay: 0.2s;">
+                Thực tập sinh thiết kế Hệ thống Thông minh & AI
+            </p>
+            <!-- Gạch chân phân cách -->
+            <div class="w-20 h-1 bg-primary-blue mx-auto mt-4 rounded-full"></div>
+        </header>
+
+        <!-- Main Section - Giới thiệu và Kỹ năng -->
+        <section class="space-y-8">
+            
+            <!-- Giới thiệu chung -->
+            <div class="bg-dark-bg p-6 rounded-xl shadow-inner border border-primary-blue/20">
+                <h2 class="text-2xl font-semibold text-primary-blue mb-3 border-b border-primary-blue/30 pb-2">
+                    Triết lý Công việc
+                </h2>
+                <p class="text-dark-text/90 leading-relaxed text-lg">
+                    Tôi tin vào sức mạnh của dữ liệu và Trí tuệ Nhân tạo để tạo ra các giải pháp tự động hóa thông minh, giúp tối ưu hóa quy trình và thúc đẩy sự đổi mới. Với nền tảng vững chắc về Khoa học Dữ liệu và Kỹ thuật Phần mềm, tôi tập trung vào việc chuyển đổi các mô hình lý thuyết thành các hệ thống hoạt động thực tiễn, có khả năng mở rộng (scalable).
+                </p>
+            </div>
+
+            <!-- Kỹ năng chính (Thay thế bằng kỹ năng cụ thể của bạn) -->
+            <div>
+                <h2 class="text-2xl font-semibold text-primary-blue mb-4">Các Lĩnh vực Chuyên môn</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <!-- Skill 1 -->
+                    <span class="px-4 py-2 bg-primary-blue/20 text-primary-blue rounded-full font-medium text-center transition-all duration-200 hover:bg-primary-blue/40 hover:text-dark-text">
+                        Deep Learning & LLMs
+                    </span>
+                    <!-- Skill 2 -->
+                    <span class="px-4 py-2 bg-primary-blue/20 text-primary-blue rounded-full font-medium text-center transition-all duration-200 hover:bg-primary-blue/40 hover:text-dark-text">
+                        MLOps & Deployment
+                    </span>
+                    <!-- Skill 3 -->
+                    <span class="px-4 py-2 bg-primary-blue/20 text-primary-blue rounded-full font-medium text-center transition-all duration-200 hover:bg-primary-blue/40 hover:text-dark-text">
+                        Phát triển Backend (Python)
+                    </span>
+                    <!-- Skill 4 -->
+                    <span class="px-4 py-2 bg-primary-blue/20 text-primary-blue rounded-full font-medium text-center transition-all duration-200 hover:bg-primary-blue/40 hover:text-dark-text">
+                        Computer Vision
+                    </span>
+                    <!-- Skill 5 -->
+                    <span class="px-4 py-2 bg-primary-blue/20 text-primary-blue rounded-full font-medium text-center transition-all duration-200 hover:bg-primary-blue/40 hover:text-dark-text">
+                        Cloud Computing (AWS/GCP)
+                    </span>
+                    <!-- Skill 6 -->
+                    <span class="px-4 py-2 bg-primary-blue/20 text-primary-blue rounded-full font-medium text-center transition-all duration-200 hover:bg-primary-blue/40 hover:text-dark-text">
+                        Data Analysis
+                    </span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Call to Action (CTA) - Đến Portfolio chi tiết -->
+        <div class="mt-12 text-center pt-8 border-t border-dark-card/50">
+            <p class="mb-4 text-xl font-light text-dark-text/80">
+                Khám phá hành trình sự nghiệp và các dự án công nghệ chi tiết:
+            </p>
+            <!-- Nút dẫn đến Portfolio chi tiết: /caonguyenthanhan/pfofile -->
+            <a href="/caonguyenthanhan/pfofile" 
+               class="inline-flex items-center px-10 py-4 bg-primary-blue text-dark-text font-bold text-lg rounded-full shadow-2xl shadow-primary-blue/40 hover:bg-primary-blue/90 transition duration-300 transform hover:scale-105 active:scale-100 focus:outline-none focus:ring-4 focus:ring-primary-blue/60">
+               <!-- Icon Portfolio/Document -->
+               <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-4-4m5-6h1.5l-3-3m-6 3l-3 3h1.5m1.5 6h10.5M14 17V4a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-3.5"></path></svg>
+               Xem Portfolio Chuyên nghiệp
+            </a>
+        </div>
+
+        <!-- Footer - Quay lại Trang chủ -->
+        <footer class="mt-8 text-center text-sm text-gray-500">
+             <a href="/" class="hover:text-primary-blue transition duration-200">
+                 &#8592; Quay lại Trang Chào mừng
+             </a>
+        </footer>
+
+    </div>
+
+</body>
+</html>

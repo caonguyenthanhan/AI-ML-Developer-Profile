@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chào mừng: Kỷ nguyên AI</title>
+    <!-- Tải Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Cấu hình Tailwind cho font Inter và màu sắc cơ bản -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#1e40af', // Blue 700
+                        'accent-yellow': '#fcd34d', // Amber 300
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles and custom scrollbar */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Enhanced background: Subtle, dark blue pattern */
+            background-color: #0f172a; /* Slate 900 */
+            background-image: radial-gradient(circle at center, rgba(30, 64, 175, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; /* Darker track */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; /* Slate 600 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* Slate 500 */
+        }
+
+        /* Keyframe for a subtle pulse on the article card */
+        @keyframes subtle-pulse {
+            0%, 100% {
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            50% {
+                /* Màu bóng đổ mờ ảo của màu chủ đạo */
+                box-shadow: 0 25px 50px -12px rgba(30, 64, 175, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+            }
+        }
+
+        /* Keyframe for a cool header underline animation (drawing effect) */
+        @keyframes line-draw {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 6rem; /* Tương đương w-24 trong Tailwind */
+            }
+        }
+        
+        .card-effect {
+            animation: subtle-pulse 10s infinite ease-in-out;
+        }
+        
+        .header-line {
+            width: 0; /* Khởi tạo bằng 0 để animation hoạt động */
+            animation: line-draw 1.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Content Container (Blog Post Style) -->
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
+        <!-- Áp dụng hiệu ứng nhấp nháy nhẹ cho card -->
+        <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-6 md:p-12 transition-all duration-300 transform hover:shadow-primary-blue/50 card-effect">
+
+            <!-- Header and Title -->
+            <header class="text-center mb-10">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 leading-tight">
+                    Kỷ nguyên AI: Lực lượng Định hình Tương lai
+                </h1>
+                <p class="text-lg text-gray-500 font-medium">Một góc nhìn về Trí tuệ Nhân tạo hiện tại và các ứng dụng đột phá.</p>
+                <!-- Thêm class header-line để áp dụng animation gạch chân động -->
+                <div class="h-1 bg-primary-blue mx-auto mt-4 rounded-full header-line"></div>
+            </header>
+
+            <!-- Blog Content -->
+            <section class="space-y-8 text-gray-700 text-base md:text-lg leading-relaxed">
+                
+                <!-- Hình ảnh minh họa cho bài viết -->
+                <figure class="mb-8 rounded-lg overflow-hidden shadow-xl">
+                    <img src=".\image\LLMs GenAI .png" 
+                         alt="Hình ảnh minh họa về LLMs và Generative AI" 
+                         class="w-full h-auto object-cover"
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x400/6b7280/ffffff?text=Ảnh+Không+Khả+Dụng'">
+                    <figcaption class="text-center text-sm text-gray-500 py-2 bg-gray-50 border-t border-gray-100">
+                        Hình 1: AI Tạo Sinh (Generative AI) và Mô hình Ngôn ngữ Lớn (LLMs).
+                    </figcaption>
+                </figure>
+
+                <!-- Introduction -->
+                <p>
+                    <span class="font-bold text-gray-900">Trí tuệ Nhân tạo (AI)</span> không còn là một khái niệm trong khoa học viễn tưởng. Nó đã trở thành một lực lượng thực tế, định hình lại mọi ngành công nghiệp, từ y tế, tài chính đến giáo dục và sáng tạo nội dung. Ngày nay, chúng ta đang chứng kiến sự bùng nổ của <strong class="text-primary-blue">Generative AI</strong> – những mô hình có khả năng tạo ra văn bản, hình ảnh, mã nguồn, và âm nhạc gần như không thể phân biệt được với sản phẩm của con người.
+                </p>
+
+                <!-- Current State of AI -->
+                <h2 class="text-2xl font-bold text-gray-900 pt-4 border-t border-gray-100">1. Sự Bùng nổ của LLMs và AI Tạo Sinh</h2>
+                <p>
+                    Các Mô hình Ngôn ngữ Lớn (<span class="font-semibold text-primary-blue">LLMs</span>) như Gemini, GPT-4, và Claude đã thay đổi cách chúng ta tương tác với máy tính. Chúng không chỉ đơn thuần là công cụ tìm kiếm, mà là những trợ lý biết tư duy, phân tích, và tổng hợp thông tin phức tạp. Điều này mở ra tiềm năng tự động hóa các tác vụ nhận thức, giải phóng con người khỏi công việc lặp đi lặp lại để tập trung vào sự đổi mới và chiến lược.
+                </p>
+                <p>
+                    Song song đó, các mô hình hình ảnh như Midjourney và Stable Diffusion đang dân chủ hóa nghệ thuật, cho phép bất kỳ ai cũng có thể trở thành người sáng tạo hình ảnh chỉ bằng câu lệnh. Sự kết hợp giữa khả năng xử lý ngôn ngữ và tạo nội dung này đang xây dựng một "Hệ thống Thông minh" mới.
+                </p>
+
+                <!-- Impact and Future Outlook -->
+                <h2 class="text-2xl font-bold text-gray-900 pt-4 border-t border-gray-100">2. Cơ hội và Tầm nhìn</h2>
+                <p>
+                    Trong lĩnh vực lập trình và phát triển hệ thống, AI không thay thế lập trình viên, mà nâng cao năng suất của họ. Các công cụ hỗ trợ mã hóa (code assistants) giúp viết code nhanh hơn, gỡ lỗi hiệu quả hơn, và thử nghiệm các kiến trúc phức tạp. <strong class="text-primary-blue">Tư duy về Hệ thống Thông minh</strong> là khả năng tích hợp các giải pháp AI vào quy trình làm việc để đạt được hiệu suất tối đa.
+                </p>
+                <p>
+                    Việc làm chủ công nghệ AI, từ thuật toán Deep Learning cơ bản đến triển khai trên quy mô lớn (MLOps), đang trở thành kỹ năng thiết yếu. Nó không chỉ là kiến thức chuyên môn mà còn là khả năng nhìn thấy bức tranh toàn cảnh về cách dữ liệu được chuyển đổi thành quyết định.
+                </p>
+                
+                <!-- Closing summary -->
+                <p class="italic text-gray-600">
+                    Sự phát triển của AI là một hành trình thú vị. Nó đòi hỏi sự tò mò không ngừng, khả năng thích ứng linh hoạt, và cam kết theo đuổi công nghệ đỉnh cao.
+                </p>
+
+            </section>
+
+            <!-- Call to Action (CTA) Button -->
+            <div class="mt-12 text-center">
+                <p class="mb-4 text-xl font-semibold text-gray-800">Bạn muốn tìm hiểu thêm về người xây dựng hệ thống này?</p>
+                <!-- Nút dẫn đến Trang Thông tin Cá nhân: /caonguyenthanhan -->
+                <a href="/caonguyenthanhan" 
+                   class="inline-block px-8 py-3 bg-primary-blue text-white font-bold text-lg rounded-full shadow-lg hover:bg-primary-blue/90 transition duration-300 transform hover:scale-105 active:scale-100 focus:outline-none focus:ring-4 focus:ring-primary-blue/50 shadow-primary-blue/50"
+                   aria-label="Chuyển đến trang thông tin cá nhân của Cao Nguyên Thanh An">
+                    Xem Thông tin Cá nhân của Thanh An
+                </a>
+            </div>
+
+            <!-- Footer -->
+            <footer class="mt-12 text-center text-sm text-gray-400 border-t pt-6">
+                &copy; 2025 Hệ thống Thông minh | Đón đầu Công nghệ AI.
+            </footer>
+
+        </div>
+    </div>
+
+</body>
+</html>

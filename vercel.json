@@ -1,19 +1,20 @@
 {
   "rewrites": [
     {
-      "source": "/caonguyenthanhan/pfofile",
-      "destination": "/index.html"
+      "source": "/",
+      "destination": "/ai_welcome.html"
     },
     {
-      "source": "/caonguyenthanhan/pfofile/",
-      "destination": "/index.html"
-    }
-  ],
-  "redirects": [
+      "source": "/caonguyenthanhan",
+      "destination": "/personal_info.html"
+    },
     {
-      "source": "/",
-      "destination": "/caonguyenthanhan/pfofile",
-      "permanent": true
+      "source": "/caonguyenthanhan/pfofile",
+      "destination": "/profile_portfolio.html"
+    },
+    {
+      "source": "/caonguyenthanhan/",
+      "destination": "/personal_info.html"
     }
   ]
 }
