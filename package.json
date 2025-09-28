@@ -1,0 +1,16 @@
+{
+  "name": "ai-ml-developer-profile",
+  "version": "1.0.0",
+  "description": "Web CV with AI Chatbot integration.",
+  "main": "api/chat.js",
+  "scripts": {
+    "start": "echo 'No start script needed for static deployment'"
+  },
+  "keywords": [
+    "vercel",
+    "serverless",
+    "gemini"
+  ],
+  "author": "Cao Nguyen Thanh An",
+  "license": "ISC"
+}
