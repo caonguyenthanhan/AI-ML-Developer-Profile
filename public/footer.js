@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             Liên Kết Nhanh
                         </h3>
                         <div class="space-y-2 text-sm">
-                            <a href="/caonguyenthanhan/pfofile" class="block hover:text-indigo-300 transition duration-300">
+                            <a href="/caonguyenthanhan/profile" class="block hover:text-indigo-300 transition duration-300">
                                 <i data-lucide="user-circle" class="w-4 h-4 mr-2 inline"></i>
                                 Hồ Sơ CV
                             </a>
