@@ -5,27 +5,27 @@
       "destination": "/ai_welcome.html"
     },
     {
-      "source": "/caonguyenthanhan/",
+      "source": "/caonguyenthanhan",
       "destination": "/personal_info.html"
     },
     {
-      "source": "/caonguyenthanhan/profile/",
+      "source": "/caonguyenthanhan/profile",
       "destination": "/profile_portfolio.html"
     },
     {
-      "source": "/genai/prompts/",
+      "source": "/genai/prompts",
       "destination": "/image_prompt_library.html"
     },
     {
-      "source": "/nlp/",
+      "source": "/nlp",
       "destination": "/nlp_overview.html"
     },
     {
-      "source": "/genai/",
+      "source": "/genai",
       "destination": "/genai.html"
     },
     {
-      "source": "/extensions/",
+      "source": "/extensions",
       "destination": "/extensions.html"
     }
   ]
