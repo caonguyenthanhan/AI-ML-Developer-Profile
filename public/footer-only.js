@@ -36,19 +36,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             Liên Kết Nhanh
                         </h3>
                         <div class="space-y-2 text-sm">
-                            <a href="profile_portfolio.html" class="block hover:text-indigo-300 transition duration-300">
+                            <a href="/caonguyenthanhan/pfofile" class="block hover:text-indigo-300 transition duration-300">
                                 <i data-lucide="user-circle" class="w-4 h-4 mr-2 inline"></i>
                                 Hồ Sơ CV
                             </a>
-                            <a href="nlp.html" class="block hover:text-indigo-300 transition duration-300">
+                            <a href="/nlp" class="block hover:text-indigo-300 transition duration-300">
                                 <i data-lucide="brain" class="w-4 h-4 mr-2 inline"></i>
                                 NLP Projects
                             </a>
-                            <a href="genai.html" class="block hover:text-indigo-300 transition duration-300">
+                            <a href="/genai" class="block hover:text-indigo-300 transition duration-300">
                                 <i data-lucide="sparkles" class="w-4 h-4 mr-2 inline"></i>
                                 GenAI Tools
                             </a>
-                            <a href="extensions.html" class="block hover:text-indigo-300 transition duration-300">
+                            <a href="/extensions" class="block hover:text-indigo-300 transition duration-300">
                                 <i data-lucide="puzzle" class="w-4 h-4 mr-2 inline"></i>
                                 Extensions
                             </a>

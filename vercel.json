@@ -9,7 +9,7 @@
       "destination": "/personal_info.html"
     },
     {
-      "source": "/caonguyenthanhan/pfofile(/|$)",
+      "source": "/caonguyenthanhan/profile(/|$)",
       "destination": "/profile_portfolio.html"
     },
     {
@@ -18,7 +18,7 @@
     },
     {
       "source": "/nlp(/|$)",
-      "destination": "/nlp.html"
+      "destination": "/nlp_overview.html"
     },
     {
       "source": "/genai(/|$)",
