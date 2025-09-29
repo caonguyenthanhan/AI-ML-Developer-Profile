@@ -40,6 +40,22 @@
             text-decoration: none; 
             margin-bottom: 20px;
         }
+        .github-btn {
+            background-color: #24292e;
+            color: white;
+            margin-left: 10px;
+        }
+        .github-btn:hover {
+            background-color: #1a1e22;
+        }
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: none;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
     </style>
 </head>
 <body>
@@ -47,6 +63,9 @@
         <h1>Quản lý Prompts</h1>
         <a href="{{ url_for('add_prompt') }}" class="add-link">Thêm Prompt Mới</a>
         <a href="{{ url_for('manage_categories') }}" class="add-link">Quản lý Categories</a>
+        <button onclick="uploadToGitHub()" class="add-link github-btn">📤 Upload lên GitHub</button>
+        
+        <div id="message" class="message"></div>
 
         {% if prompts %}
             <ul class="prompt-list">
@@ -71,5 +90,53 @@
             <p>Không có prompt nào.</p>
         {% endif %}
     </div>
+
+    <script>
+        function uploadToGitHub() {
+            const messageDiv = document.getElementById('message');
+            const button = event.target;
+            
+            // Disable button và hiển thị loading
+            button.disabled = true;
+            button.textContent = '⏳ Đang upload...';
+            
+            fetch('/upload_to_github', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageDiv.style.display = 'block';
+                if (data.success) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = data.message;
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = data.message;
+                }
+                
+                // Ẩn message sau 5 giây
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            })
+            .catch(error => {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'Lỗi kết nối: ' + error.message;
+                
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            })
+            .finally(() => {
+                // Enable lại button
+                button.disabled = false;
+                button.textContent = '📤 Upload lên GitHub';
+            });
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Server Control - AIML Developer Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .admin-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .admin-header {
+            margin-bottom: 30px;
+        }
+        
+        .admin-header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .admin-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .server-status {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-online {
+            background-color: #28a745;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-offline {
+            background-color: #dc3545;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #1e7e34);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #ffc107, #e0a800);
+            color: #212529;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .server-info {
+            background: #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .server-info h3 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .message {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>🔧 Server Control Panel</h1>
+            <p>Quản lý AIML Developer Profile Server</p>
+        </div>
+        
+        <div class="server-status">
+            <h3>
+                <span id="statusIndicator" class="status-indicator status-offline"></span>
+                Server Status: <span id="serverStatus">Checking...</span>
+            </h3>
+        </div>
+        
+        <div class="server-info">
+            <h3>📊 Server Information</h3>
+            <div class="info-item">
+                <span><strong>Server Path:</strong></span>
+                <span>D:\desktop\AIML Developer Profile\app.py</span>
+            </div>
+            <div class="info-item">
+                <span><strong>Local URL:</strong></span>
+                <span id="serverUrl">http://127.0.0.1:5000</span>
+            </div>
+            <div class="info-item">
+                <span><strong>Python Command:</strong></span>
+                <span>python app.py</span>
+            </div>
+            <div class="info-item">
+                <span><strong>Last Check:</strong></span>
+                <span id="lastCheck">-</span>
+            </div>
+        </div>
+        
+        <div id="message" class="message"></div>
+        
+        <div class="control-buttons">
+            <button id="startBtn" class="btn btn-success" onclick="startServer()">
+                🚀 Start Server
+            </button>
+            <button id="stopBtn" class="btn btn-danger" onclick="stopServer()">
+                🛑 Stop Server
+            </button>
+            <button id="restartBtn" class="btn btn-warning" onclick="restartServer()">
+                🔄 Restart Server
+            </button>
+            <button id="checkBtn" class="btn btn-primary" onclick="checkServerStatus()">
+                🔍 Check Status
+            </button>
+        </div>
+        
+        <div class="control-buttons">
+            <a href="http://127.0.0.1:5000" target="_blank" class="btn btn-primary">
+                🌐 Open Server
+            </a>
+            <a href="/json-manager" class="btn btn-primary">
+                📝 JSON Manager
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let serverCheckInterval;
+        
+        // Kiểm tra trạng thái server khi load trang
+        document.addEventListener('DOMContentLoaded', function() {
+            checkServerStatus();
+            // Tự động kiểm tra mỗi 30 giây
+            serverCheckInterval = setInterval(checkServerStatus, 30000);
+        });
+        
+        function showMessage(text, type = 'info') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        function updateLastCheck() {
+            document.getElementById('lastCheck').textContent = new Date().toLocaleString('vi-VN');
+        }
+        
+        async function checkServerStatus() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/', {
+                    method: 'HEAD',
+                    mode: 'no-cors'
+                });
+                
+                // Server đang chạy
+                document.getElementById('serverStatus').textContent = 'Online';
+                document.getElementById('statusIndicator').className = 'status-indicator status-online';
+                document.getElementById('startBtn').disabled = true;
+                document.getElementById('stopBtn').disabled = false;
+                document.getElementById('restartBtn').disabled = false;
+                
+            } catch (error) {
+                // Server không chạy
+                document.getElementById('serverStatus').textContent = 'Offline';
+                document.getElementById('statusIndicator').className = 'status-indicator status-offline';
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('stopBtn').disabled = true;
+                document.getElementById('restartBtn').disabled = true;
+            }
+            
+            updateLastCheck();
+        }
+        
+        async function startServer() {
+            const btn = document.getElementById('startBtn');
+            const originalText = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Starting...';
+            
+            try {
+                const response = await fetch('/api/server/start', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    showMessage('Server đã được khởi động thành công!', 'success');
+                    setTimeout(checkServerStatus, 2000);
+                } else {
+                    showMessage('Lỗi khi khởi động server!', 'error');
+                }
+            } catch (error) {
+                showMessage('Không thể kết nối để khởi động server!', 'error');
+            }
+            
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+        
+        async function stopServer() {
+            const btn = document.getElementById('stopBtn');
+            const originalText = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Stopping...';
+            
+            try {
+                const response = await fetch('/api/server/stop', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    showMessage('Server đã được dừng!', 'success');
+                    setTimeout(checkServerStatus, 2000);
+                } else {
+                    showMessage('Lỗi khi dừng server!', 'error');
+                }
+            } catch (error) {
+                showMessage('Không thể kết nối để dừng server!', 'error');
+            }
+            
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+        
+        async function restartServer() {
+            const btn = document.getElementById('restartBtn');
+            const originalText = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Restarting...';
+            
+            showMessage('Đang restart server...', 'info');
+            
+            try {
+                // Dừng server trước
+                await fetch('/api/server/stop', { method: 'POST' });
+                
+                // Đợi 2 giây
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Khởi động lại
+                const response = await fetch('/api/server/start', { method: 'POST' });
+                
+                if (response.ok) {
+                    showMessage('Server đã được restart thành công!', 'success');
+                    setTimeout(checkServerStatus, 3000);
+                } else {
+                    showMessage('Lỗi khi restart server!', 'error');
+                }
+            } catch (error) {
+                showMessage('Không thể restart server!', 'error');
+            }
+            
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

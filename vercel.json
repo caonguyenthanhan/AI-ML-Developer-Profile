@@ -51,6 +51,10 @@
     {
       "source": "/admin/json-manager",
       "destination": "/json-manager.html"
+    },
+    {
+      "source": "/admin/29029003/upson",
+      "destination": "/admin-server-control.html"
     }
   ]
 }

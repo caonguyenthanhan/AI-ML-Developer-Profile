@@ -1,12 +1,18 @@
 import os
 import json
-from flask import Flask, request, render_template, redirect, url_for
+import subprocess
+import base64
+import threading
+import time
+import signal
+import sys
+from flask import Flask, request, render_template, redirect, url_for, flash, jsonify
 from werkzeug.utils import secure_filename
 import uuid
 
 # Cấu hình ứng dụng
 app = Flask(__name__, static_folder='public', static_url_path='')
-app.config['UPLOAD_FOLDER'] = 'public/image'
+app.config['UPLOAD_FOLDER'] = 'public/image/genai'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # 1 MB
 
@@ -36,7 +42,9 @@ def index():
 @app.route('/add', methods=['GET', 'POST'])
 def add_prompt():
     """Thêm mới một prompt."""
-    categories = load_data(CATEGORIES_FILE)
+    categories_data = load_data(CATEGORIES_FILE)
+    # Chỉ lấy tên category thay vì toàn bộ object
+    categories = [cat['name'] if isinstance(cat, dict) else cat for cat in categories_data]
     if request.method == 'POST':
         title = request.form['title']
         prompt_text = request.form['prompt']
@@ -49,7 +57,7 @@ def add_prompt():
                 filename = secure_filename(f"{uuid.uuid4()}.{file.filename.rsplit('.', 1)[1].lower()}")
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(file_path)
-                image_path = f"/image/{filename}"
+                image_path = f"/image/genai/{filename}"
 
         prompts = load_data(PROMPTS_FILE)
         new_id = max([p['id'] for p in prompts]) + 1 if prompts else 1
@@ -70,7 +78,9 @@ def edit_prompt(prompt_id):
     """Sửa một prompt hiện có."""
     prompts = load_data(PROMPTS_FILE)
     prompt_to_edit = next((p for p in prompts if p['id'] == prompt_id), None)
-    categories = load_data(CATEGORIES_FILE)
+    categories_data = load_data(CATEGORIES_FILE)
+    # Chỉ lấy tên category thay vì toàn bộ object
+    categories = [cat['name'] if isinstance(cat, dict) else cat for cat in categories_data]
 
     if not prompt_to_edit:
         return "Prompt not found!", 404
@@ -89,7 +99,7 @@ def edit_prompt(prompt_id):
                 filename = secure_filename(f"{uuid.uuid4()}.{file.filename.rsplit('.', 1)[1].lower()}")
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(file_path)
-                prompt_to_edit['imagePath'] = f"/image/{filename}"
+                prompt_to_edit['imagePath'] = f"/image/genai/{filename}"
 
         save_data(PROMPTS_FILE, prompts)
         return redirect(url_for('index'))
@@ -128,9 +138,153 @@ def delete_category(category_name):
         save_data(CATEGORIES_FILE, categories)
     return redirect(url_for('manage_categories'))
 
+@app.route('/upload_to_github', methods=['POST'])
+def upload_to_github():
+    """Upload prompts.json và category.json lên GitHub repository."""
+    try:
+        # Kiểm tra xem có file cần upload không
+        if not os.path.exists(PROMPTS_FILE) or not os.path.exists(CATEGORIES_FILE):
+            return jsonify({'success': False, 'message': 'Không tìm thấy file dữ liệu để upload!'})
+        
+        # Thực hiện git add, commit và push
+        commands = [
+            ['git', 'add', PROMPTS_FILE, CATEGORIES_FILE, 'public/image/genai/'],
+            ['git', 'commit', '-m', 'Update prompts, categories data and genai images'],
+            ['git', 'push', 'origin', 'main']
+        ]
+        
+        for cmd in commands:
+            result = subprocess.run(cmd, capture_output=True, text=True, cwd='.')
+            if result.returncode != 0:
+                return jsonify({
+                    'success': False, 
+                    'message': f'Lỗi khi thực hiện lệnh {" ".join(cmd)}: {result.stderr}'
+                })
+        
+        return jsonify({
+            'success': True, 
+            'message': 'Đã upload thành công lên GitHub!'
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False, 
+            'message': f'Lỗi không mong muốn: {str(e)}'
+        })
+
+# Global variable để lưu server process
+server_process = None
+
+@app.route('/api/server/start', methods=['POST'])
+def start_server():
+    """API endpoint để khởi động server."""
+    global server_process
+    try:
+        if server_process and server_process.poll() is None:
+            return jsonify({'success': False, 'message': 'Server đã đang chạy!'})
+        
+        # Khởi động server trong subprocess
+        server_process = subprocess.Popen([
+            sys.executable, 'app.py'
+        ], cwd=os.getcwd())
+        
+        return jsonify({
+            'success': True, 
+            'message': 'Server đã được khởi động thành công!',
+            'pid': server_process.pid
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False, 
+            'message': f'Lỗi khi khởi động server: {str(e)}'
+        })
+
+@app.route('/api/server/stop', methods=['POST'])
+def stop_server():
+    """API endpoint để dừng server."""
+    global server_process
+    try:
+        if server_process and server_process.poll() is None:
+            server_process.terminate()
+            server_process.wait(timeout=5)
+            server_process = None
+            return jsonify({
+                'success': True, 
+                'message': 'Server đã được dừng!'
+            })
+        else:
+            return jsonify({
+                'success': False, 
+                'message': 'Server không đang chạy!'
+            })
+        
+    except subprocess.TimeoutExpired:
+        server_process.kill()
+        server_process = None
+        return jsonify({
+            'success': True, 
+            'message': 'Server đã được force stop!'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False, 
+            'message': f'Lỗi khi dừng server: {str(e)}'
+        })
+
+@app.route('/api/server/status', methods=['GET'])
+def server_status():
+    """API endpoint để kiểm tra trạng thái server."""
+    global server_process
+    try:
+        is_running = server_process and server_process.poll() is None
+        
+        return jsonify({
+            'success': True,
+            'running': is_running,
+            'pid': server_process.pid if is_running else None,
+            'message': 'Server đang chạy' if is_running else 'Server không chạy'
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False, 
+            'message': f'Lỗi khi kiểm tra trạng thái: {str(e)}'
+        })
+
+@app.route('/api/server/restart', methods=['POST'])
+def restart_server():
+    """API endpoint để restart server."""
+    try:
+        # Dừng server trước
+        stop_result = stop_server()
+        if not stop_result.get_json().get('success', False):
+            return jsonify({
+                'success': False, 
+                'message': 'Không thể dừng server để restart!'
+            })
+        
+        # Đợi một chút
+        time.sleep(2)
+        
+        # Khởi động lại
+        start_result = start_server()
+        return start_result
+        
+    except Exception as e:
+        return jsonify({
+            'success': False, 
+            'message': f'Lỗi khi restart server: {str(e)}'
+        })
+
+@app.route('/admin/29029003/upson')
+def admin_server_control():
+    """Route admin để quản lý server."""
+    return app.send_static_file('admin-server-control.html')
+
 if __name__ == '__main__':
-    if not os.path.exists('public/image'):
-        os.makedirs('public/image')
+    if not os.path.exists('public/image/genai'):
+        os.makedirs('public/image/genai')
     if not os.path.exists(PROMPTS_FILE):
         os.makedirs(os.path.dirname(PROMPTS_FILE), exist_ok=True)
         with open(PROMPTS_FILE, 'w', encoding='utf-8') as f:

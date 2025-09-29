@@ -37,85 +37,85 @@
     {
         "id": 6,
         "title": "Tác phẩm điêu khắc Hiện đại Khổng lồ",
-        "prompt": "Transform the main body of the image into a giant modern art piece, put it in the middle of the frame and keep the characteristics of the main body image. This giant sculpture shows beautiful surreal details, extremely realistic texture, with a giant shape that is delicate and elegant, ultra-high definition simulation materials, real skin and hair texture, vivid art gallery background (white wall, long ceiling light, smooth floor), many visitors (forming a commensurate contrast with the giant main body), the exhibition space is separated by a fence, surreal art style and modern art exhibition atmosphere. Under the light of the exhibition, keep the clothes.",
+        "prompt": "from my create a pictures: Transform the main body of the image into a giant modern art piece, put it in the middle of the frame and keep the characteristics of the main body image. This giant sculpture shows beautiful surreal details, extremely realistic texture, with a giant shape that is delicate and elegant, ultra-high definition simulation materials, real skin and hair texture, vivid art gallery background (white wall, long ceiling light, smooth floor), many visitors (forming a commensurate contrast with the giant main body), the exhibition space is separated by a fence, surreal art style and modern art exhibition atmosphere. Under the light of the exhibition, keep the clothes.",
         "imagePath": "/image/genai/image6.jpeg",
         "category": "Art Gallery & Exhibition"
     },
     {
         "id": 7,
         "title": "Ngắm Tranh trong Gallery",
-        "prompt": "Create a pictures: a person, seen from behind, mirroring the subject's attire, stands in an art gallery, 1/3 from the left edge of the frame. He gazes at a framed portrait of himself. The portrait is a realistic painting with clear, textured brushstrokes and impasto effects, giving it an artistic, hand-painted feel. The gallery is dimly lit, with a strong spotlight illuminating the portrait and casting a dramatic shadow on the man and the wall. The floor is clean and reflective. The overall atmosphere is artistic and contemplative, captured with a professional camera.",
+        "prompt": "from my create a pictures: Create a pictures: a person, seen from behind, mirroring the subject's attire, stands in an art gallery, 1/3 from the left edge of the frame. He gazes at a framed portrait of himself. The portrait is a realistic painting with clear, textured brushstrokes and impasto effects, giving it an artistic, hand-painted feel. The gallery is dimly lit, with a strong spotlight illuminating the portrait and casting a dramatic shadow on the man and the wall. The floor is clean and reflective. The overall atmosphere is artistic and contemplative, captured with a professional camera.",
         "imagePath": "/image/genai/image7.jpeg",
         "category": "Art Gallery & Exhibition"
     },
     {
         "id": 8,
         "title": "Chân dung Thần thánh, Hào quang Vàng",
-        "prompt": "A portrait of a divine and ethereal figure, radiating serenity, profound wisdom, and quiet power. The subject possesses noble features and a peaceful, contemplative expression. A soft, warm, golden light emanates from behind and around the figure, casting a divine glow that bathes their form and illuminates their features. The light subtly emphasizes the grace and dignity of the individual. A faint, shimmering aura, composed of luminous particles and delicate tendrils of light, surrounds the being, further emphasizing their otherworldly nature. The background is softly blurred with a warm, amber, or celestial hue, suggesting a heavenly or cosmic environment without distracting from the central figure. The overall impression is one of immense grace and awe, creating a sense of encountering a truly sacred and benevolent entity.",
+        "prompt": "from my create a pictures: A portrait of a divine and ethereal figure, radiating serenity, profound wisdom, and quiet power. The subject possesses noble features and a peaceful, contemplative expression. A soft, warm, golden light emanates from behind and around the figure, casting a divine glow that bathes their form and illuminates their features. The light subtly emphasizes the grace and dignity of the individual. A faint, shimmering aura, composed of luminous particles and delicate tendrils of light, surrounds the being, further emphasizing their otherworldly nature. The background is softly blurred with a warm, amber, or celestial hue, suggesting a heavenly or cosmic environment without distracting from the central figure. The overall impression is one of immense grace and awe, creating a sense of encountering a truly sacred and benevolent entity.",
         "imagePath": "/image/genai/image8.jpeg",
         "category": "Divine & Spiritual"
     },
     {
         "id": 9,
         "title": "Phong cách Hội họa Leonardo da Vinci",
-        "prompt": "A Renaissance masterpiece oil painting of Leonardo da Vinci. Featuring dramatic Chiaroscuro lighting with strong contrasts between light and shadow, and soft Sfumato effect for blurred edges. A rich color palette with earthy tones, deep reds, and royal gold. The composition is balanced and harmonious, with a serene and contemplative expression. Highly detailed, classic oil on canvas texture with subtle craquelure. Inspired by the style of Leonardo da Vinci and Raphael.",
+        "prompt": "from my create a pictures: A Renaissance masterpiece oil painting of Leonardo da Vinci. Featuring dramatic Chiaroscuro lighting with strong contrasts between light and shadow, and soft Sfumato effect for blurred edges. A rich color palette with earthy tones, deep reds, and royal gold. The composition is balanced and harmonious, with a serene and contemplative expression. Highly detailed, classic oil on canvas texture with subtle craquelure. Inspired by the style of Leonardo da Vinci and Raphael.",
         "imagePath": "/image/genai/image9.jpeg",
         "category": "Classical Art Styles"
     },
     {
         "id": 10,
         "title": "Phong cách Hội họa Michelangelo",
-        "prompt": "A masterpiece in the style of Michelangelo. Figures are sculptural, muscular, and monumental, with a strong sense of volume. The composition is highly dramatic with powerful, dynamic poses. Vibrant, vivid colors reminiscent of a fresco painting.",
+        "prompt": "from my create a pictures: A masterpiece in the style of Michelangelo. Figures are sculptural, muscular, and monumental, with a strong sense of volume. The composition is highly dramatic with powerful, dynamic poses. Vibrant, vivid colors reminiscent of a fresco painting.",
         "imagePath": "/image/genai/image10.jpeg",
         "category": "Classical Art Styles"
     },
     {
         "id": 11,
         "title": "Phong cách Hội họa Raphael",
-        "prompt": "An artwork in the style of Raphael. Characterized by its perfect harmony and balanced composition. The figures exude grace, serene beauty, and an idealized elegance. The color palette is clear and luminous, with rich reds and deep blues.",
+        "prompt": "from my create a pictures: An artwork in the style of Raphael. Characterized by its perfect harmony and balanced composition. The figures exude grace, serene beauty, and an idealized elegance. The color palette is clear and luminous, with rich reds and deep blues.",
         "imagePath": "/image/genai/image11.jpeg",
         "category": "Classical Art Styles"
     },
     {
         "id": 12,
         "title": "Phong cách Hội họa Titian",
-        "prompt": "An oil painting in the style of Titian. Strong emphasis on color and light over line (colorito). Featuring loose, expressive brushstrokes that create rich surface textures. Dramatic and warm atmospheric lighting, creating a vibrant mood. A deep, opulent color palette.",
+        "prompt": "from my create a pictures: An oil painting in the style of Titian. Strong emphasis on color and light over line (colorito). Featuring loose, expressive brushstrokes that create rich surface textures. Dramatic and warm atmospheric lighting, creating a vibrant mood. A deep, opulent color palette.",
         "imagePath": "/image/genai/image12.jpeg",
         "category": "Classical Art Styles"
     },
     {
         "id": 13,
         "title": "Chú Cuội trên Cung trăng",
-        "prompt": "A Vietnamese man, Uncle Cuoi, dressed in simple traditional peasant clothing, sits under a large banyan tree with his buffalo. They are on the moon, surrounded by clouds, looking back at the Earth in a starry night sky. The style is a magical and detailed digital painting. Don't change the facial det.",
+        "prompt": "from my create a pictures: A Vietnamese man, Uncle Cuoi, dressed in simple traditional peasant clothing, sits under a large banyan tree with his buffalo. They are on the moon, surrounded by clouds, looking back at the Earth in a starry night sky. The style is a magical and detailed digital painting. Don't change the facial det.",
         "imagePath": "/image/genai/image13.jpeg",
         "category": "Vietnamese Mythology"
     },
     {
         "id": 14,
         "title": "Chị Hằng và Thỏ Ngọc",
-        "prompt": "The beautiful Vietnamese moon goddess, Hang, is dressed in an elegant and flowing traditional white costume. She is sitting on a cloud, holding a white jade rabbit, with other rabbits surrounding her. Behind her is a large, bright full moon, with the Earth visible in the distance in the starry sky. The painting style is elegant and magical. Don't change the facial det.",
+        "prompt": "from my create a pictures: The beautiful Vietnamese moon goddess, Hang, is dressed in an elegant and flowing traditional white costume. She is sitting on a cloud, holding a white jade rabbit, with other rabbits surrounding her. Behind her is a large, bright full moon, with the Earth visible in the distance in the starry sky. The painting style is elegant and magical. Don't change the facial det.",
         "imagePath": "/image/genai/image14.jpeg",
         "category": "Vietnamese Mythology"
     },
     {
         "id": 15,
         "title": "Tắm suối, Ánh sáng Tự nhiên",
-        "prompt": "A full body photo of a man bathing in a stream, he is shirtless, wearing Adidas shorts, with his hands stroking his wet hair, provocative, under the stream, there are a few fish, his body and hair are drenched, the sunlight shines on his body, creating a sense of contrast, the colors are clear and crisp. The style of the character in the photo is changed, keeping the exact proportions of the facial features such as eyes, nose, mouth, focusing on the character's face with bare shoulders. surreal photo.",
+        "prompt": "from my create a pictures: A full body photo of a man bathing in a stream, he is shirtless, wearing Adidas shorts, with his hands stroking his wet hair, provocative, under the stream, there are a few fish, his body and hair are drenched, the sunlight shines on his body, creating a sense of contrast, the colors are clear and crisp. The style of the character in the photo is changed, keeping the exact proportions of the facial features such as eyes, nose, mouth, focusing on the character's face with bare shoulders. surreal photo.",
         "imagePath": "/image/genai/image15.jpeg",
         "category": "Lifestyle & Nature"
     },
     {
         "id": 16,
         "title": "Ảnh 3d",
-        "prompt": "In a simple and bright art gallery, the main character in the photo stack stands next to another character wearing the same outfit. The hairstyle and accessories are the same, and the face is also the same. The oversized chibi character is many times larger than the main character, and the main character's features are not distorted at all. The overall effect is both fashionable and cute, with a strong contrast in proportion, clear and delicate images, and a combination of light and dark, highlighting the interaction between the character and the giant character, as well as the matching outfit.",
-        "imagePath": "/image/7e4a4954-74d4-40f7-8cad-b2d8f3284ae8.png",
+        "prompt": "from my create a pictures: In a simple and bright art gallery, the main character in the photo stack stands next to another character wearing the same outfit. The hairstyle and accessories are the same, and the face is also the same. The oversized chibi character is many times larger than the main character, and the main character's features are not distorted at all. The overall effect is both fashionable and cute, with a strong contrast in proportion, clear and delicate images, and a combination of light and dark, highlighting the interaction between the character and the giant character, as well as the matching outfit.",
+        "imagePath": "/image/genai/7e4a4954-74d4-40f7-8cad-b2d8f3284ae8.png",
         "category": "Art Gallery & Exhibition"
     },
     {
         "id": 17,
         "title": "Ảnh trung thu cho trẻ",
-        "prompt": "A vibrant, cinematic, photorealistic portrait of a young Vietnamese boy celebrating the Mid-Autumn Festival. He is dressed in a striking dark teal áo dài with white trousers and stands in a playful, festive studio. The backdrop is a vivid red, and he is surrounded by large, colorful cloud decorations, a giant flower-like prop, a stylized lion head ornament, and a ceramic vase with festive pinwheels. He holds a slender prop stick. The lighting is soft and balanced, illuminating the scene without harsh shadows, creating a joyful and professional look. The shot is a full-body, medium-wide portrait at an eye-level angle, with the child centered in the frame. The style is photorealistic, vibrant, and festive. Don't change the facial det.",
-        "imagePath": "/image/bd95198f-e820-4b1e-96e6-40f00eec8ec4.png",
+        "prompt": "from my create a pictures: A vibrant, cinematic, photorealistic portrait of a young Vietnamese boy celebrating the Mid-Autumn Festival. He is dressed in a striking dark teal áo dài with white trousers and stands in a playful, festive studio. The backdrop is a vivid red, and he is surrounded by large, colorful cloud decorations, a giant flower-like prop, a stylized lion head ornament, and a ceramic vase with festive pinwheels. He holds a slender prop stick. The lighting is soft and balanced, illuminating the scene without harsh shadows, creating a joyful and professional look. The shot is a full-body, medium-wide portrait at an eye-level angle, with the child centered in the frame. The style is photorealistic, vibrant, and festive. Don't change the facial det.",
+        "imagePath": "/image/genai/bd95198f-e820-4b1e-96e6-40f00eec8ec4.png",
         "category": "Vietnamese Mythology"
     }
 ]
