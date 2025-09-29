@@ -131,19 +131,18 @@ class handler(BaseHTTPRequestHandler):
                 'author': new_prompt.get('author', 'Anonymous')
             })
 
-            # Thêm prompt mới vào danh sách
+            # Thêm prompt mới vào danh sách (chỉ trong memory, không ghi file)
             prompts_data.append(new_prompt)
 
-            # Ghi lại file
-            with open(prompts_file, 'w', encoding='utf-8') as f:
-                json.dump(prompts_data, f, ensure_ascii=False, indent=2)
-
-            # Trả về response thành công
+            # Trả về response thành công (giả lập việc lưu)
+            # Note: Trên Vercel, file system là read-only nên không thể ghi file
+            # Trong production, cần sử dụng database như MongoDB, PostgreSQL, etc.
             self.send_response_with_cors(201)
             response = {
                 'success': True,
                 'data': new_prompt,
-                'message': f'Thêm prompt "{new_prompt["title"]}" thành công'
+                'message': f'Prompt "{new_prompt["title"]}" đã được xử lý thành công (Demo mode - không lưu vĩnh viễn)',
+                'note': 'Dữ liệu chỉ tồn tại trong phiên làm việc hiện tại'
             }
             self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
 
