@@ -109,6 +109,13 @@
         "title": "Ảnh 3d",
         "prompt": "In a simple and bright art gallery, the main character in the photo stack stands next to another character wearing the same outfit. The hairstyle and accessories are the same, and the face is also the same. The oversized chibi character is many times larger than the main character, and the main character's features are not distorted at all. The overall effect is both fashionable and cute, with a strong contrast in proportion, clear and delicate images, and a combination of light and dark, highlighting the interaction between the character and the giant character, as well as the matching outfit.",
         "imagePath": "/image/7e4a4954-74d4-40f7-8cad-b2d8f3284ae8.png",
-        "category": "{'id': 2, 'name': 'Art Gallery & Exhibition', 'description': 'Tác phẩm nghệ thuật trong không gian triển lãm', 'count': 2, 'color': '#8B5CF6', 'icon': 'palette'}"
+        "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 17,
+        "title": "Ảnh trung thu cho trẻ",
+        "prompt": "A vibrant, cinematic, photorealistic portrait of a young Vietnamese boy celebrating the Mid-Autumn Festival. He is dressed in a striking dark teal áo dài with white trousers and stands in a playful, festive studio. The backdrop is a vivid red, and he is surrounded by large, colorful cloud decorations, a giant flower-like prop, a stylized lion head ornament, and a ceramic vase with festive pinwheels. He holds a slender prop stick. The lighting is soft and balanced, illuminating the scene without harsh shadows, creating a joyful and professional look. The shot is a full-body, medium-wide portrait at an eye-level angle, with the child centered in the frame. The style is photorealistic, vibrant, and festive. Don't change the facial det.",
+        "imagePath": "/image/bd95198f-e820-4b1e-96e6-40f00eec8ec4.png",
+        "category": "Vietnamese Mythology"
     }
 ]
