@@ -29,7 +29,7 @@
     },
     {
       "source": "/genai/prompts",
-      "destination": "/image_prompt_library.html"
+      "destination": "/prompts"
     },
     {
       "source": "/prompts",
