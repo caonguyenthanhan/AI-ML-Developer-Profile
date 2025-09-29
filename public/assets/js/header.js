@@ -12,7 +12,7 @@ class HeaderComponent {
         const depth = (currentPath.match(/\//g) || []).length - 1;
         
         if (currentPath === '/' || currentPath === '/index.html') {
-            return 'public/image/';
+            return 'image/';
         } else if (depth === 1) {
             return 'image/';
         } else {
@@ -37,10 +37,10 @@ class HeaderComponent {
                     </div>
                     <nav class="navigation">
                         <a href="/" class="nav-item" data-page="/">Trang chủ</a>
-                        <a href="/public/caonguyenthanhan/personal_info.html" class="nav-item" data-page="/caonguyenthanhan">Thông tin</a>
-                        <a href="/public/nlp/nlp.html" class="nav-item" data-page="/nlp">NLP</a>
-                        <a href="/public/genai/genai.html" class="nav-item" data-page="/genai">Gen AI</a>
-                        <a href="/public/extension/extensions.html" class="nav-item" data-page="/extensions">Extensions</a>
+                        <a href="/caonguyenthanhan/personal_info.html" class="nav-item" data-page="/caonguyenthanhan">Thông tin</a>
+                        <a href="/nlp/nlp.html" class="nav-item" data-page="/nlp">NLP</a>
+                        <a href="/genai/genai.html" class="nav-item" data-page="/genai">Gen AI</a>
+                        <a href="/extension/extensions.html" class="nav-item" data-page="/extensions">Extensions</a>
                     </nav>
                 </div>
             </header>
