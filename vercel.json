@@ -1,49 +1,48 @@
 {
-  "public": true,
   "rewrites": [
     {
       "source": "/",
-      "destination": "/index.html"
+      "destination": "/ai_welcome.html"
     },
     {
       "source": "/ai_welcome",
-      "destination": "/public/ai_welcome.html"
+      "destination": "/ai_welcome.html"
     },
     {
       "source": "/caonguyenthanhan",
-      "destination": "/public/caonguyenthanhan/personal_info.html"
+      "destination": "/caonguyenthanhan/personal_info.html"
     },
     {
       "source": "/caonguyenthanhan/profile",
-      "destination": "/public/caonguyenthanhan/profile_portfolio.html"
+      "destination": "/caonguyenthanhan/profile_portfolio.html"
     },
     {
       "source": "/profile",
-      "destination": "/public/caonguyenthanhan/profile_portfolio.html"
+      "destination": "/caonguyenthanhan/profile_portfolio.html"
     },
     {
       "source": "/genai/prompts",
-      "destination": "/public/genai/image_prompt_library.html"
+      "destination": "/genai/image_prompt_library.html"
     },
     {
       "source": "/prompts",
-      "destination": "/public/genai/image_prompt_library.html"
+      "destination": "/genai/image_prompt_library.html"
     },
     {
       "source": "/nlp",
-      "destination": "/public/nlp/nlp.html"
+      "destination": "/nlp/nlp.html"
     },
     {
       "source": "/genai",
-      "destination": "/public/genai/genai.html"
+      "destination": "/genai/genai.html"
     },
     {
       "source": "/extensions",
-      "destination": "/public/extension/extensions.html"
+      "destination": "/extension/extensions.html"
     },
     {
       "source": "/tool-admin/up_prompt",
-      "destination": "/public/tool-admin-up-prompt.html"
+      "destination": "/tool-admin-up-prompt.html"
     }
   ]
 }
