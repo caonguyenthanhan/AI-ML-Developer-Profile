@@ -17,6 +17,10 @@
       "destination": "/image_prompt_library.html"
     },
     {
+      "source": "/prompts",
+      "destination": "/image_prompt_library.html"
+    },
+    {
       "source": "/nlp",
       "destination": "/nlp.html"
     },
