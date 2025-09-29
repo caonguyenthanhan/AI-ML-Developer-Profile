@@ -1,5 +1,10 @@
 # Python dependencies for Vercel Serverless Functions
-# Core libraries for HTTP handling and JSON processing
-json5==0.9.14
-# For file operations and path handling (built-in modules)
-# os, json, urllib.parse are built-in Python modules
+# 
+# Hiện tại project chỉ sử dụng các thư viện chuẩn của Python:
+# - json (built-in): Xử lý JSON data
+# - os (built-in): File system operations  
+# - urllib.parse (built-in): URL parsing
+# - http.server (built-in): HTTP request handling
+#
+# Không cần cài đặt thêm package nào khác.
+# File này cần thiết để Vercel biết rằng không có external dependencies.
