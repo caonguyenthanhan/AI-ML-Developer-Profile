@@ -215,21 +215,17 @@
                     
                     if (response.ok) {
                         var result = await response.json();
-                        var message = result.message || 'Prompt added successfully!';
-                        if (result.note) {
-                            message += ' (' + result.note + ')';
-                        }
-                        showStatus(message);
+                        showStatus('Prompt added successfully! ID: ' + result.id);
                         
                         // Reset form
                         document.getElementById('promptForm').reset();
                         imagePreview.classList.add('hidden');
                         charCount.textContent = '0';
                         
-                        // Redirect to prompt library after 3 seconds (longer for demo message)
+                        // Redirect to prompt library after 2 seconds
                         setTimeout(function() {
                             window.location.href = '/genai/prompts';
-                        }, 3000);
+                        }, 2000);
                     } else {
                         var error = await response.text();
                         showStatus('Error: ' + error);
