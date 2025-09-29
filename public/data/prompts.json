@@ -145,5 +145,12 @@
         "prompt": "from my create a pictures: A cinematic, 16:9 photorealistic, medium shot of a young Vietnamese man in a navy blue, single-button suit jacket, a crisp white shirt, and a navy blue, maroon, and white striped tie. He sits calmly with one leg crossed on a luxurious teal velvet armchair in a classic-modern bar. With a confident, contemplative expression, he holds a pipe in his right hand and raises his left hand, palm open, as if giving a command. The low, dramatic lighting creates a mysterious and moody atmosphere, with a focused spotlight on him, casting strong highlights and deep shadows. In the blurry background, a second, energetic young man in a black long-sleeve shirt stands behind the bar with his hands raised, poised for action, creating a sense of tension and narrative. The background is filled with a well-stocked bar counter with gleaming bottles and glasses. The overall color palette is dark and warm, with the navy blue and white of the main subject's attire as a focal point. Don't change the facial det.",
         "imagePath": "/image/genai/7888f719-fbe3-499d-bc7a-c2ecb5bf965a.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 22,
+        "title": "Vẽ tranh lên tường",
+        "prompt": "from my create a pictures: A Vietnamese man, a young artist, is sitting on the floor in a bright sunlit studio, painting a large portrait on the wall. The portrait is of this man, glowing with a soft, warm light. The artist is holding a brush and a palette, looking up at his work. The studio is filled with art supplies, including canvases, tubes of paint, and brushes. The sunlight streams in from a large window, creating a warm and peaceful atmosphere. The style is a magical, cinematic, and detailed digital painting. The photo is in a vertical 9:16 aspect ratio.",
+        "imagePath": "/image/genai/13d8a368-e203-497d-b586-99a1fe9d5af4.png",
+        "category": "Art Gallery & Exhibition"
     }
 ]
