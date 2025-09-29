@@ -35,6 +35,10 @@
     {
       "source": "/extensions",
       "destination": "/extensions.html"
+    },
+    {
+      "source": "/tool-admin/up_prompt",
+      "destination": "/tool-admin-up-prompt.html"
     }
   ]
 }

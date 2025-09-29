@@ -12,5 +12,13 @@
     "gemini"
   ],
   "author": "Cao Nguyen Thanh An",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "formidable": "^3.5.1",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0"
+  }
 }

@@ -18,7 +18,7 @@ class HeaderComponent {
                 <div class="header-content">
                     <div class="avatar-container">
                         <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" rel="noopener noreferrer">
-                            <img id="rotating-avatar" src="image/${this.avatars[0]}" alt="Avatar" class="avatar-image">
+                            <img id="rotating-avatar" src="/image/${this.avatars[0]}" alt="Avatar" class="avatar-image">
                         </a>
                     </div>
                     <nav class="navigation">
@@ -41,7 +41,7 @@ class HeaderComponent {
             this.currentAvatarIndex = (this.currentAvatarIndex + 1) % this.avatars.length;
             const avatarImg = document.getElementById('rotating-avatar');
             if (avatarImg) {
-                avatarImg.src = `image/${this.avatars[this.currentAvatarIndex]}`;
+                avatarImg.src = `/image/${this.avatars[this.currentAvatarIndex]}`;
             }
         }, 2000); // Đổi avatar mỗi 2 giây
     }
