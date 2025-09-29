@@ -1,55 +1,59 @@
 {
   "functions": {
     "api/prompts.py": {
-      "runtime": "@vercel/python@3.9"
+      "runtime": "vercel-python@3.9.0"
     },
     "api/chat.js": {
-      "runtime": "@vercel/node@18.x"
+      "runtime": "vercel-node@18.0.0"
     },
     "api/update-prompt-library.js": {
-      "runtime": "@vercel/node@18.x"
+      "runtime": "vercel-node@18.0.0"
     }
   },
   "rewrites": [
     {
       "source": "/",
-      "destination": "/ai_welcome.html"
+      "destination": "/index.html"
+    },
+    {
+      "source": "/ai_welcome",
+      "destination": "/public/ai_welcome.html"
     },
     {
       "source": "/caonguyenthanhan",
-      "destination": "/personal_info.html"
+      "destination": "/public/caonguyenthanhan/personal_info.html"
     },
     {
       "source": "/caonguyenthanhan/profile",
-      "destination": "/profile_portfolio.html"
+      "destination": "/public/caonguyenthanhan/profile_portfolio.html"
     },
     {
       "source": "/profile",
-      "destination": "/profile_portfolio.html"
+      "destination": "/public/caonguyenthanhan/profile_portfolio.html"
     },
     {
       "source": "/genai/prompts",
-      "destination": "/prompts"
+      "destination": "/public/genai/image_prompt_library.html"
     },
     {
       "source": "/prompts",
-      "destination": "/image_prompt_library.html"
+      "destination": "/public/genai/image_prompt_library.html"
     },
     {
       "source": "/nlp",
-      "destination": "/nlp.html"
+      "destination": "/public/nlp/nlp.html"
     },
     {
       "source": "/genai",
-      "destination": "/genai.html"
+      "destination": "/public/genai/genai.html"
     },
     {
       "source": "/extensions",
-      "destination": "/extensions.html"
+      "destination": "/public/extension/extensions.html"
     },
     {
       "source": "/tool-admin/up_prompt",
-      "destination": "/tool-admin-up-prompt.html"
+      "destination": "/public/tool-admin-up-prompt.html"
     }
   ]
 }
