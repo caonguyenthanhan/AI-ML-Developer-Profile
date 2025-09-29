@@ -3,7 +3,21 @@ class HeaderComponent {
     constructor() {
         this.avatars = ['avata1.png', 'avata2.png', 'avata3.png', 'avata4.png', 'avata5.png'];
         this.currentAvatarIndex = 0;
+        this.imagePath = this.getImagePath();
         this.init();
+    }
+
+    getImagePath() {
+        const currentPath = window.location.pathname;
+        const depth = (currentPath.match(/\//g) || []).length - 1;
+        
+        if (currentPath === '/' || currentPath === '/index.html') {
+            return 'public/image/';
+        } else if (depth === 1) {
+            return 'image/';
+        } else {
+            return '../image/';
+        }
     }
 
     init() {
@@ -18,15 +32,15 @@ class HeaderComponent {
                 <div class="header-content">
                     <div class="avatar-container">
                         <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" rel="noopener noreferrer">
-                            <img id="rotating-avatar" src="/image/${this.avatars[0]}" alt="Avatar" class="avatar-image">
+                            <img id="rotating-avatar" src="${this.imagePath}${this.avatars[0]}" alt="Avatar" class="avatar-image">
                         </a>
                     </div>
                     <nav class="navigation">
                         <a href="/" class="nav-item" data-page="/">Trang chủ</a>
-                        <a href="/caonguyenthanhan" class="nav-item" data-page="/caonguyenthanhan">Thông tin</a>
-                        <a href="/nlp" class="nav-item" data-page="/nlp">NLP</a>
-                        <a href="/genai" class="nav-item" data-page="/genai">Gen AI</a>
-                        <a href="/extensions" class="nav-item" data-page="/extensions">Extensions</a>
+                        <a href="/public/caonguyenthanhan/personal_info.html" class="nav-item" data-page="/caonguyenthanhan">Thông tin</a>
+                        <a href="/public/nlp/nlp.html" class="nav-item" data-page="/nlp">NLP</a>
+                        <a href="/public/genai/genai.html" class="nav-item" data-page="/genai">Gen AI</a>
+                        <a href="/public/extension/extensions.html" class="nav-item" data-page="/extensions">Extensions</a>
                     </nav>
                 </div>
             </header>
@@ -41,7 +55,7 @@ class HeaderComponent {
             this.currentAvatarIndex = (this.currentAvatarIndex + 1) % this.avatars.length;
             const avatarImg = document.getElementById('rotating-avatar');
             if (avatarImg) {
-                avatarImg.src = `/image/${this.avatars[this.currentAvatarIndex]}`;
+                avatarImg.src = `${this.imagePath}${this.avatars[this.currentAvatarIndex]}`;
             }
         }, 2000); // Đổi avatar mỗi 2 giây
     }
@@ -53,11 +67,12 @@ class HeaderComponent {
         navItems.forEach(item => {
             const itemPath = item.getAttribute('data-page');
             if (currentPath === itemPath || 
-                (currentPath === '/ai_welcome.html' && itemPath === '/') ||
-                (currentPath === '/personal_info.html' && itemPath === '/caonguyenthanhan') ||
-                (currentPath === '/nlp.html' && itemPath === '/nlp') ||
-                (currentPath === '/genai.html' && itemPath === '/genai') ||
-                (currentPath === '/extensions.html' && itemPath === '/extensions')) {
+                (currentPath === '/' && itemPath === '/') ||
+                (currentPath === '/index.html' && itemPath === '/') ||
+                (currentPath.includes('/caonguyenthanhan/') && itemPath === '/caonguyenthanhan') ||
+                (currentPath.includes('/nlp/') && itemPath === '/nlp') ||
+                (currentPath.includes('/genai/') && itemPath === '/genai') ||
+                (currentPath.includes('/extension/') && itemPath === '/extensions')) {
                 item.classList.add('active');
             }
         });
