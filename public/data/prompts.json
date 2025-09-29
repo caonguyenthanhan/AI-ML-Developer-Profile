@@ -117,5 +117,26 @@
         "prompt": "from my create a pictures: A vibrant, cinematic, photorealistic portrait of a young Vietnamese boy celebrating the Mid-Autumn Festival. He is dressed in a striking dark teal áo dài with white trousers and stands in a playful, festive studio. The backdrop is a vivid red, and he is surrounded by large, colorful cloud decorations, a giant flower-like prop, a stylized lion head ornament, and a ceramic vase with festive pinwheels. He holds a slender prop stick. The lighting is soft and balanced, illuminating the scene without harsh shadows, creating a joyful and professional look. The shot is a full-body, medium-wide portrait at an eye-level angle, with the child centered in the frame. The style is photorealistic, vibrant, and festive. Don't change the facial det.",
         "imagePath": "/image/genai/bd95198f-e820-4b1e-96e6-40f00eec8ec4.png",
         "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 18,
+        "title": "Ảnh trung thu cho trẻ 2",
+        "prompt": "from\r\nmy create a pictures: 8K, A cute Asian baby girl, with a radiant smile, standing and leaning on a small bamboo table, dressed in a red silk halter dress with intricate golden brocade patterns. The studio setting is festive and traditional for the Mid-Autumn Festival, with colorful star lanterns, a fish-shaped lantern, and hand-painted paper fans surrounding her. The background is a vibrant orange-red with blue cloud cutouts, and the floor is a turquoise fabric. The lighting is soft and even, highlighting the subject and the rich colors without harsh shadows. The style is a photorealistic, high-resolution studio portrait. Static, eye-level shot to capture the baby's expression. 85mm prime lens.",
+        "imagePath": "/image/genai/2808190b-50e2-445f-b922-08c01fd2d1eb.jpg",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 19,
+        "title": "Ảnh trung thu cho trẻ 3",
+        "prompt": "from\r\nmy create a pictures: An 8K, photorealistic, wide studio shot of a fair-skinned baby girl, lying peacefully on her side with eyes gently closed, cradling a large, round mooncake with intricate gold-carved motifs. She is wearing a striking traditional bright red dress with pristine white accents and a simple red headband. The backdrop is a deep red matte with a decorative gold-carved screen and a large, dark red paper flower. Three lightweight gold paper fish float above her. A curling turquoise and white cloud motif is visible in the lower left corner. The lighting is soft, warm, and diffused, creating a serene, dreamy, and festive atmosphere. The camera angle is slightly elevated, capturing the entire elegant scene. The style is that of traditional East Asian art, with a luxurious feel. Don't change the facial det.",
+        "imagePath": "/image/genai/3fe3f182-f3f7-4096-9d81-3b099857010b.jpg",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 20,
+        "title": "Ảnh trung thu cho trẻ 4",
+        "prompt": "from\r\nmy create a pictures: A cinematic, 16:9 photorealistic, full-body studio portrait of a young Asian girl with a radiant smile and joyful eyes, looking directly at the camera. She wears a stylized traditional outfit: a red 'yếm' top with intricate embroidery, a voluminous red outer skirt, and a pristine white inner skirt, with a bright red headband. She holds a multi-colored star lantern in her right hand and stands barefoot on a clean floor. The backdrop is a vibrant red, meticulously decorated with three floating golden carp fish, a large traditional wooden mooncake mold on the left, and a red drum with gold motifs on the right. Rolled-up blue and yellow scrolls are at her feet. Soft, diffused studio lighting creates a warm and festive glow. Don't change the facial det.",
+        "imagePath": "/image/genai/1485bf26-6dbe-4f4f-a1a7-2f0438b0327f.jpg",
+        "category": "Vietnamese Mythology"
     }
 ]
