@@ -39,10 +39,73 @@
         </div>
     </header>
 
+    <!-- Filter and Search Section -->
+    <section class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <div class="flex flex-col lg:flex-row gap-4 items-center">
+                <!-- Search Input -->
+                <div class="flex-1 w-full lg:w-auto">
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            placeholder="Tìm kiếm prompt theo tiêu đề hoặc nội dung..." 
+                            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out"
+                        >
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="w-full lg:w-auto">
+                    <select 
+                        id="category-filter" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out bg-white"
+                    >
+                        <option value="">Tất cả danh mục</option>
+                        <option value="Portrait Photography">Chụp chân dung</option>
+                        <option value="Art Gallery & Exhibition">Triển lãm nghệ thuật</option>
+                        <option value="Divine & Spiritual">Thần thánh & Tâm linh</option>
+                        <option value="Classical Art Styles">Phong cách hội họa cổ điển</option>
+                        <option value="Vietnamese Mythology">Thần thoại Việt Nam</option>
+                        <option value="Lifestyle & Nature">Phong cách sống & Thiên nhiên</option>
+                    </select>
+                </div>
+                
+                <!-- Clear Filters Button -->
+                <button 
+                    id="clear-filters" 
+                    class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition duration-150 ease-in-out flex items-center"
+                >
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    Xóa bộ lọc
+                </button>
+            </div>
+            
+            <!-- Filter Results Info -->
+            <div class="mt-4 text-sm text-gray-600">
+                Hiển thị <span id="filtered-count">0</span> trong tổng số <span id="total-count">0</span> prompts
+            </div>
+        </div>
+    </section>
+
     <!-- Main Content Grid -->
-    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <main class="max-w-7xl mx-auto pb-8 px-4 sm:px-6 lg:px-8">
         <div id="prompt-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Prompt cards sẽ được render tại đây bởi JavaScript -->
+        </div>
+        
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-12">
+            <div class="text-gray-400 text-6xl mb-4">🔍</div>
+            <h3 class="text-xl font-semibold text-gray-600 mb-2">Không tìm thấy kết quả</h3>
+            <p class="text-gray-500">Hãy thử thay đổi từ khóa tìm kiếm hoặc bộ lọc danh mục</p>
         </div>
     </main>
 
@@ -58,102 +121,84 @@
 
 
     <script>
-        // Dữ liệu Prompts được trích xuất từ file "promt gen image.docx"
-        const promptsData = [
-            {
-                id: 1,
-                title: "Chân dung Moody, Ánh sáng Cinema",
-                prompt: "Create a hyper-realistic close- up portrait of a young, stylish, and confident Asian man, inspired by my reference image. The setting is moody and editorial, with sharp beams of amber and icy blue light cutting across his face, enhancing his clean jawline and bold, focused eyes. He's wearing a dark velvet jacket, slightly open at the collar to show a simple chain necklace, with a black t-shirt underneath. Don't change the facial det",
-                imagePath: "image/genai/image1.jpeg"
-            },
-            {
-                id: 2,
-                title: "Góc Overhead, Chuyển động Mờ",
-                prompt: "Cinematic overhead shot of me standing still on a brick city sidewalk, wearing a dark oversized sweater. Motion-blurred crowd rushes past around me. Moody lighting, 35mm film look, shallow depth of field, sharp focus on me. Ratio portrait 4:3. Don't change the facial det",
-                imagePath: "image/genai/image2.jpeg"
-            },
-            {
-                id: 3,
-                title: "Chân dung Cinematic, Nền Đỏ Crimson",
-                prompt: "Create a Vertical portrait shot in 1080x1920 format, characterized by stark cinematic lighting and intense contrast. Captured with a slightly low, upward-facing angle that dramatizes the subject's jawline and neck, the composition evokes quiet dominance and sculptural elegance. The background is a deep, saturated crimson red, creating a bold visual clash with the model's luminous skin and dark wardrobe. Lighting is tigaily directional, casting warm golden highlights on one side of the face while plunging the other into velvety shadow, emphasizing bone structure with almost architectural precision. wearing smart black suit and black shirt. shooting haft top body. Don't change the facial det.",
-                imagePath: "image/genai/image3.jpeg"
-            },
-            {
-                id: 4,
-                title: "Chân dung Contrast Cao, Nền Đen",
-                prompt: "Create a Vertical portrait shot in 1080x1920 format, with extremely high cinematic contrast and dramatic lighting. Captured with a slightly low, upward-facing angle that dramatizes the subject's jawline and neck, the composition evokes quiet dominance and sculptural elegance. The background is a pure, void-like black, creating a bold visual clash with the model's brilliant white wardrobe and vibrant human skin tones. Lighting is tightly directional, casting blindingly bright white highlights on one side of the face while plunging the other into a pitch-black, velvety shadow, emphasizing bone structure with architectural precision. The image is primarily monochromatic, with the sole exception of the model's realistic skin and hair color. The model is wearing a crisp white suit and a pristine white shirt. Shooting half-top body. Don't change the facial details. note: lower the chin, change the camera angle so the character looks straight into the camera, let better face lighting.",
-                imagePath: "image/genai/image4.jpeg"
-            },
-            {
-                id: 5,
-                title: "Chân dung Ánh sáng Drama, Nền Xanh",
-                prompt: "Create a vertical portrait, characterized by strong cinematic lighting and high contrast. Shot from a slightly low, upward angle, highlighting the subject's jawline and neck, the composition evokes quiet dominance and sculptural beauty. The background is a rich Deep Blue, creating a bold visual contrast with the model's light skin and dark outfit. The lighting is skillfully directed, creating a soft white highlight on one side of the face while plunging the other into smooth shadow, highlighting the bone structure with almost architectural precision. Dressed in a smart black suit with a button-down collar and black shirt. 8k Ultra HD image quality.",
-                imagePath: "image/genai/image5.jpeg"
-            },
-            {
-                id: 6,
-                title: "Tác phẩm điêu khắc Hiện đại Khổng lồ",
-                prompt: "Transform the main body of the image into a giant modern art piece, put it in the middle of the frame and keep the characteristics of the main body image. This giant sculpture shows beautiful surreal details, extremely realistic texture, with a giant shape that is delicate and elegant, ultra-high definition simulation materials, real skin and hair texture, vivid art gallery background (white wall, long ceiling light, smooth floor), many visitors (forming a commensurate contrast with the giant main body), the exhibition space is separated by a fence, surreal art style and modern art exhibition atmosphere. Under the light of the exhibition, keep the clothes.",
-                imagePath: "image/genai/image6.jpeg"
-            },
-            {
-                id: 7,
-                title: "Ngắm Tranh trong Gallery",
-                prompt: "Create a pictures: a person, seen from behind, mirroring the subject's attire, stands in an art gallery, 1/3 from the left edge of the frame. He gazes at a framed portrait of himself. The portrait is a realistic painting with clear, textured brushstrokes and impasto effects, giving it an artistic, hand-painted feel. The gallery is dimly lit, with a strong spotlight illuminating the portrait and casting a dramatic shadow on the man and the wall. The floor is clean and reflective. The overall atmosphere is artistic and contemplative, captured with a professional camera.",
-                imagePath: "image/genai/image7.jpeg"
-            },
-            {
-                id: 8,
-                title: "Chân dung Thần thánh, Hào quang Vàng",
-                prompt: "A portrait of a divine and ethereal figure, radiating serenity, profound wisdom, and quiet power. The subject possesses noble features and a peaceful, contemplative expression. A soft, warm, golden light emanates from behind and around the figure, casting a divine glow that bathes their form and illuminates their features. The light subtly emphasizes the grace and dignity of the individual. A faint, shimmering aura, composed of luminous particles and delicate tendrils of light, surrounds the being, further emphasizing their otherworldly nature. The background is softly blurred with a warm, amber, or celestial hue, suggesting a heavenly or cosmic environment without distracting from the central figure. The overall impression is one of immense grace and awe, creating a sense of encountering a truly sacred and benevolent entity.",
-                imagePath: "image/genai/image8.jpeg"
-            },
-            {
-                id: 9,
-                title: "Phong cách Hội họa Leonardo da Vinci",
-                prompt: "A Renaissance masterpiece oil painting of Leonardo da Vinci. Featuring dramatic Chiaroscuro lighting with strong contrasts between light and shadow, and soft Sfumato effect for blurred edges. A rich color palette with earthy tones, deep reds, and royal gold. The composition is balanced and harmonious, with a serene and contemplative expression. Highly detailed, classic oil on canvas texture with subtle craquelure. Inspired by the style of Leonardo da Vinci and Raphael.",
-                imagePath: "image/genai/image9.jpeg"
-            },
-            {
-                id: 10,
-                title: "Phong cách Hội họa Michelangelo",
-                prompt: "A masterpiece in the style of Michelangelo. Figures are sculptural, muscular, and monumental, with a strong sense of volume. The composition is highly dramatic with powerful, dynamic poses. Vibrant, vivid colors reminiscent of a fresco painting.",
-                imagePath: "image/genai/image10.jpeg"
-            },
-            {
-                id: 11,
-                title: "Phong cách Hội họa Raphael",
-                prompt: "An artwork in the style of Raphael. Characterized by its perfect harmony and balanced composition. The figures exude grace, serene beauty, and an idealized elegance. The color palette is clear and luminous, with rich reds and deep blues.",
-                imagePath: "image/genai/image11.jpeg"
-            },
-            {
-                id: 12,
-                title: "Phong cách Hội họa Titian",
-                prompt: "An oil painting in the style of Titian. Strong emphasis on color and light over line (colorito). Featuring loose, expressive brushstrokes that create rich surface textures. Dramatic and warm atmospheric lighting, creating a vibrant mood. A deep, opulent color palette.",
-                imagePath: "image/genai/image12.jpeg"
-            },
-            {
-                id: 13,
-                title: "Chú Cuội trên Cung trăng",
-                prompt: "A Vietnamese man, Uncle Cuoi, dressed in simple traditional peasant clothing, sits under a large banyan tree with his buffalo. They are on the moon, surrounded by clouds, looking back at the Earth in a starry night sky. The style is a magical and detailed digital painting. Don't change the facial det.",
-                imagePath: "image/genai/image13.jpeg"
-            },
-            {
-                id: 14,
-                title: "Chị Hằng và Thỏ Ngọc",
-                prompt: "The beautiful Vietnamese moon goddess, Hang, is dressed in an elegant and flowing traditional white costume. She is sitting on a cloud, holding a white jade rabbit, with other rabbits surrounding her. Behind her is a large, bright full moon, with the Earth visible in the distance in the starry sky. The painting style is elegant and magical. Don't change the facial det.",
-                imagePath: "image/genai/image14.jpeg"
-            },
-            {
-                id: 15,
-                title: "Tắm suối, Ánh sáng Tự nhiên",
-                prompt: "A full body photo of a man bathing in a stream, he is shirtless, wearing Adidas shorts, with his hands stroking his wet hair, provocative, under the stream, there are a few fish, his body and hair are drenched, the sunlight shines on his body, creating a sense of contrast, the colors are clear and crisp. The style of the character in the photo is changed, keeping the exact proportions of the facial features such as eyes, nose, mouth, focusing on the character's face with bare shoulders. surreal photo.",
-                imagePath: "image/genai/image15.jpeg"
-            }
-        ];
+        let promptsData = [];
+        let filteredData = [];
 
-        document.getElementById('prompt-count').textContent = promptsData.length;
-        const promptGrid = document.getElementById('prompt-grid');
+        // Load prompts data from JSON file
+        async function loadPromptsData() {
+            try {
+                const response = await fetch('/data/prompts.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load prompts data');
+                }
+                promptsData = await response.json();
+                filteredData = [...promptsData]; // Initialize filtered data
+                updateCounts();
+                renderPrompts();
+                initializeFilters();
+            } catch (error) {
+                console.error('Error loading prompts data:', error);
+                // Fallback to empty array if JSON fails to load
+                promptsData = [];
+                filteredData = [];
+                updateCounts();
+                renderPrompts();
+                initializeFilters();
+            }
+        }
+
+        // Update count displays
+        function updateCounts() {
+            document.getElementById('prompt-count').textContent = promptsData.length;
+            document.getElementById('total-count').textContent = promptsData.length;
+            document.getElementById('filtered-count').textContent = filteredData.length;
+        }
+
+        // Filter and search functionality
+        function filterPrompts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const selectedCategory = document.getElementById('category-filter').value;
+
+            filteredData = promptsData.filter(item => {
+                const matchesSearch = !searchTerm || 
+                    item.title.toLowerCase().includes(searchTerm) || 
+                    item.prompt.toLowerCase().includes(searchTerm);
+                
+                const matchesCategory = !selectedCategory || item.category === selectedCategory;
+                
+                return matchesSearch && matchesCategory;
+            });
+
+            updateCounts();
+            renderPrompts();
+        }
+
+        // Initialize filter event listeners
+        function initializeFilters() {
+            const searchInput = document.getElementById('search-input');
+            const categoryFilter = document.getElementById('category-filter');
+            const clearFiltersBtn = document.getElementById('clear-filters');
+
+            // Search input with debounce
+            let searchTimeout;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(filterPrompts, 300);
+            });
+
+            // Category filter
+            categoryFilter.addEventListener('change', filterPrompts);
+
+            // Clear filters
+            clearFiltersBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                categoryFilter.value = '';
+                filterPrompts();
+            });
+        }
+
+        // Initialize data loading when page loads
+        document.addEventListener('DOMContentLoaded', loadPromptsData);
         const notificationModal = document.getElementById('notification-modal');
         const notificationContent = document.getElementById('notification-content');
 
@@ -216,8 +261,19 @@
          * Chức năng: Render các thẻ prompt lên giao diện.
          */
         function renderPrompts() {
+            const promptGrid = document.getElementById('prompt-grid');
+            const noResults = document.getElementById('no-results');
+            
             promptGrid.innerHTML = ''; // Xóa nội dung cũ
-            promptsData.forEach(item => {
+            
+            if (filteredData.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+            
+            filteredData.forEach(item => {
                 const card = document.createElement('div');
                 card.classList.add('prompt-card', 'bg-white', 'rounded-xl', 'shadow-md', 'overflow-hidden', 'ring-1', 'ring-gray-200', 'flex', 'flex-col');
                 
@@ -235,6 +291,13 @@
 
                     <!-- Content -->
                     <div class="p-6 flex flex-col flex-grow">
+                        <!-- Category Badge -->
+                        <div class="mb-3">
+                            <span class="inline-block px-3 py-1 text-xs font-semibold text-white bg-indigo-500 rounded-full">
+                                ${item.category || 'Chưa phân loại'}
+                            </span>
+                        </div>
+                        
                         <!-- Title and ID -->
                         <h2 class="text-xl font-bold text-gray-800 mb-2">${item.title}</h2>
                         <span class="text-sm font-medium text-indigo-600 mb-3 block">#Prompt ID: ${item.id}</span>
@@ -267,8 +330,7 @@
             });
         }
 
-        // Chạy hàm render khi trang được tải
-        document.addEventListener('DOMContentLoaded', renderPrompts);
+
     </script>
     <!-- Header Component -->
     <script src="/assets/js/header.js"></script>

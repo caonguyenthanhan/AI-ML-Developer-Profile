@@ -1,0 +1,5 @@
+# Python dependencies for Vercel Serverless Functions
+# Core libraries for HTTP handling and JSON processing
+json5==0.9.14
+# For file operations and path handling (built-in modules)
+# os, json, urllib.parse are built-in Python modules
