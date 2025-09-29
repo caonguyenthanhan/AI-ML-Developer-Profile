@@ -159,5 +159,19 @@
         "prompt": "A photorealistic, high-resolution portrait shot of a man in the uploaded image wearing a black shirt suit, sitting comfortably on a white sofa next to President Donald trump. Trump is wearing his signature Black 5 star suit.  They are in an official, well-lit meeting room. Between them is a small, dark wood table with a vase of vibrant pink orchids In the background, there are two large, perfectly displayed  VIET NAM National flag at the back of me and American National flag behind Donald Trump. Man and trump poses.",
         "imagePath": "/image/genai/c35754c8-bf31-4c4f-87f5-f34b3051d7c8.png",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 24,
+        "title": "bắn tiền Supreme",
+        "prompt": "Turn this photo into a portrait of a young man sitting in a vintage-style luxury leather chair with high backrest.\" la is wearing an elegant black suit, black tie-less shirt, and dark sunglasses.\r\nShort hair neat brushed to the side. Calm, confident, and authoritative facial expression. Right hand holding red money gun written\r\n'Supreme', shoots dollars into the air in dramatic air. Left hand holding a stack of hundred dollars.",
+        "imagePath": "/image/genai/ed2855ed-f5d9-41d5-b948-c32b172702f2.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 25,
+        "title": "ngồi thư thái trên đỉnh một đám mây",
+        "prompt": "A surreal, cinematic scene of a young man sitting casually on top of a soft, fluffy cloud high above the earth, surrounded by a vast ocean of white clouds under a golden sunset sky. The man is wearing a long, oversized charcoal-gray wool overcoat layered over a black turtleneck, slim black trousers, and white chunky sneakers. He has curly dark hair, slightly messy, and is wearing large, futuristic silver over-ear headphones. His posture is relaxed, leaning slightly back with one leg extended and the other bent, hands resting loosely by his sides. His head is tilted back slightly, eyes closed, as if lost in the music, radiating a sense of peace and dreamlike calm. The lighting is warm and soft, casting a golden glow across the clouds and subtly illuminating his face and clothes, creating a serene, ethereal, and photorealistic atmosphere.",
+        "imagePath": "/image/genai/0526a6a9-a524-46d7-9afb-14c68d43c8ab.png",
+        "category": "Lifestyle & Nature"
     }
 ]
