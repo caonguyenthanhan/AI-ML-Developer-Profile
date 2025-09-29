@@ -272,6 +272,9 @@
             } else {
                 noResults.classList.add('hidden');
             }
+
+            // Sắp xếp theo id giảm dần (cao đến thấp)
+            const sortedData = [...filteredData].sort((a, b) => b.id - a.id);
             
             filteredData.forEach(item => {
                 const card = document.createElement('div');
