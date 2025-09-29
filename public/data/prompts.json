@@ -110,12 +110,5 @@
         "prompt": "In a simple and bright art gallery, the main character in the photo stack stands next to another character wearing the same outfit. The hairstyle and accessories are the same, and the face is also the same. The oversized chibi character is many times larger than the main character, and the main character's features are not distorted at all. The overall effect is both fashionable and cute, with a strong contrast in proportion, clear and delicate images, and a combination of light and dark, highlighting the interaction between the character and the giant character, as well as the matching outfit.",
         "imagePath": "/image/7e4a4954-74d4-40f7-8cad-b2d8f3284ae8.png",
         "category": "{'id': 2, 'name': 'Art Gallery & Exhibition', 'description': 'Tác phẩm nghệ thuật trong không gian triển lãm', 'count': 2, 'color': '#8B5CF6', 'icon': 'palette'}"
-    },
-    {
-        "id": 17,
-        "title": "ảnh 3d",
-        "prompt": "In a simple and bright art gallery, the main character in the photo stack stands next to another character wearing the same outfit. The hairstyle and accessories are the same, and the face is also the same. The oversized chibi character is many times larger than the main character, and the main character's features are not distorted at all. The overall effect is both fashionable and cute, with a strong contrast in proportion, clear and delicate images, and a combination of light and dark, highlighting the interaction between the character and the giant character, as well as the matching outfit.",
-        "imagePath": "/image/34e2c64e-25ab-4c55-92b0-33a415a84047.png",
-        "category": "{'id': 2, 'name': 'Art Gallery & Exhibition', 'description': 'Tác phẩm nghệ thuật trong không gian triển lãm', 'count': 2, 'color': '#8B5CF6', 'icon': 'palette'}"
     }
 ]
