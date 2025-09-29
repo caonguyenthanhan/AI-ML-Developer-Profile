@@ -4,10 +4,10 @@
       "runtime": "@vercel/python@3.9"
     },
     "api/chat.js": {
-      "runtime": "@vercel/node@18.x"
+      "runtime": "@vercel/node@18"
     },
     "api/update-prompt-library.js": {
-      "runtime": "@vercel/node@18.x"
+      "runtime": "@vercel/node@18"
     }
   },
   "rewrites": [
