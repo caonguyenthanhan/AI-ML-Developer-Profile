@@ -43,6 +43,14 @@
     {
       "source": "/tool-admin/up_prompt",
       "destination": "/tool-admin-up-prompt.html"
+    },
+    {
+      "source": "/json-manager",
+      "destination": "/json-manager.html"
+    },
+    {
+      "source": "/admin/json-manager",
+      "destination": "/json-manager.html"
     }
   ]
 }

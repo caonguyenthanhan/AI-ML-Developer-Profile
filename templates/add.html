@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Prompt Mới</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        label { font-weight: bold; }
+        input[type="text"], textarea, select, input[type="file"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        textarea { resize: vertical; height: 150px; }
+        button {
+            padding: 10px 15px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Thêm Prompt Mới</h1>
+        <form method="post" enctype="multipart/form-data">
+            <label for="title">Tiêu đề:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="prompt">Prompt:</label>
+            <textarea id="prompt" name="prompt" required></textarea>
+
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                {% for cat in categories %}
+                <option value="{{ cat }}">{{ cat }}</option>
+                {% endfor %}
+            </select>
+            <p><small>Chưa có category? <a href="{{ url_for('manage_categories') }}">Thêm mới tại đây</a>.</small></p>
+
+            <label for="image">Ảnh (dưới 1MB):</label>
+            <input type="file" id="image" name="image" accept="image/*">
+
+            <button type="submit">Lưu</button>
+        </form>
+        <a href="{{ url_for('index') }}">Quay lại</a>
+    </div>
+</body>
+</html>

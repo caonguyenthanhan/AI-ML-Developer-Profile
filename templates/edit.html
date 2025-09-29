@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Prompt</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        label { font-weight: bold; }
+        input[type="text"], textarea, select, input[type="file"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        textarea { resize: vertical; height: 150px; }
+        button {
+            padding: 10px 15px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .current-image { margin-bottom: 10px; }
+        .current-image img { max-width: 200px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sửa Prompt</h1>
+        <form method="post" enctype="multipart/form-data">
+            <label for="title">Tiêu đề:</label>
+            <input type="text" id="title" name="title" value="{{ prompt.title }}" required>
+
+            <label for="prompt_text">Prompt:</label>
+            <textarea id="prompt_text" name="prompt" required>{{ prompt.prompt }}</textarea>
+
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                {% for cat in categories %}
+                <option value="{{ cat }}" {% if cat == prompt.category %}selected{% endif %}>{{ cat }}</option>
+                {% endfor %}
+            </select>
+            <p><small>Chưa có category? <a href="{{ url_for('manage_categories') }}">Thêm mới tại đây</a>.</small></p>
+
+            <div class="current-image">
+                {% if prompt.imagePath %}
+                <p>Ảnh hiện tại:</p>
+                <img src="{{ url_for('static', filename='images/' + prompt.imagePath.split('/')[-1]) }}" alt="Current Image">
+                {% endif %}
+            </div>
+
+            <label for="image">Chọn ảnh mới (dưới 1MB):</label>
+            <input type="file" id="image" name="image" accept="image/*">
+
+            <button type="submit">Cập nhật</button>
+        </form>
+        <a href="{{ url_for('index') }}">Quay lại</a>
+    </div>
+</body>
+</html>

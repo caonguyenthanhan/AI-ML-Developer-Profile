@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Prompts</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2 { color: #333; }
+        .container { max-width: 900px; margin: auto; }
+        .prompt-list { list-style: none; padding: 0; }
+        .prompt-item { 
+            border: 1px solid #ccc; 
+            margin-bottom: 15px; 
+            padding: 15px; 
+            border-radius: 8px; 
+            display: flex; 
+            gap: 20px; 
+            align-items: center;
+        }
+        .prompt-item img { max-width: 150px; border-radius: 5px; }
+        .prompt-details { flex-grow: 1; }
+        .prompt-details h3 { margin-top: 0; }
+        .actions { flex-shrink: 0; }
+        .actions a, button { 
+            padding: 8px 12px; 
+            margin-left: 5px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            text-decoration: none; 
+        }
+        .edit { background-color: #4CAF50; color: white; }
+        .delete { background-color: #f44336; color: white; }
+        .add-link { 
+            display: inline-block; 
+            background-color: #008CBA; 
+            color: white; 
+            padding: 10px 15px; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý Prompts</h1>
+        <a href="{{ url_for('add_prompt') }}" class="add-link">Thêm Prompt Mới</a>
+        <a href="{{ url_for('manage_categories') }}" class="add-link">Quản lý Categories</a>
+
+        {% if prompts %}
+            <ul class="prompt-list">
+                {% for prompt in prompts %}
+                    <li class="prompt-item">
+                        {% if prompt.imagePath %}
+                            <img src="{{ url_for('static', filename='images/' + prompt.imagePath.split('/')[-1]) }}" alt="{{ prompt.title }}">
+                        {% endif %}
+                        <div class="prompt-details">
+                            <h3>{{ prompt.title }}</h3>
+                            <p><strong>Category:</strong> {{ prompt.category }}</p>
+                            <p>{{ prompt.prompt }}</p>
+                        </div>
+                        <div class="actions">
+                            <a href="{{ url_for('edit_prompt', prompt_id=prompt.id) }}" class="edit">Sửa</a>
+                            <a href="{{ url_for('delete_prompt', prompt_id=prompt.id) }}" class="delete" onclick="return confirm('Bạn có chắc chắn muốn xóa không?');">Xóa</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Không có prompt nào.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Manager - Prompts Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-2">JSON Manager</h1>
+            <p class="text-white text-lg">Quản lý Prompts Library</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 mb-6 shadow-2xl">
+            <div class="flex flex-wrap gap-4 items-center justify-between">
+                <div class="flex gap-4">
+                    <button id="addBtn" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2">
+                        <i data-lucide="plus"></i>
+                        Thêm mới
+                    </button>
+                    <button id="refreshBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2">
+                        <i data-lucide="refresh-cw"></i>
+                        Làm mới
+                    </button>
+                </div>
+                <div class="flex gap-4 items-center">
+                    <select id="categoryFilter" class="px-4 py-2 rounded-lg border border-gray-300 bg-white">
+                        <option value="">Tất cả danh mục</option>
+                        <option value="Portrait Photography">Chụp chân dung</option>
+                        <option value="Art Gallery & Exhibition">Triển lãm nghệ thuật</option>
+                        <option value="Divine & Spiritual">Thần thánh & Tâm linh</option>
+                        <option value="Classical Art Styles">Phong cách hội họa cổ điển</option>
+                        <option value="Vietnamese Mythology">Thần thoại Việt Nam</option>
+                        <option value="Lifestyle & Nature">Phong cách sống & Thiên nhiên</option>
+                    </select>
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm..." class="px-4 py-2 rounded-lg border border-gray-300 bg-white">
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-black bg-opacity-20">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-white font-semibold">ID</th>
+                            <th class="px-6 py-4 text-left text-white font-semibold">Hình ảnh</th>
+                            <th class="px-6 py-4 text-left text-white font-semibold">Tiêu đề</th>
+                            <th class="px-6 py-4 text-left text-white font-semibold">Danh mục</th>
+                            <th class="px-6 py-4 text-left text-white font-semibold">Prompt</th>
+                            <th class="px-6 py-4 text-left text-white font-semibold">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTable" class="text-white">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Status Message -->
+        <div id="statusMessage" class="mt-6 hidden">
+            <div class="bg-white bg-opacity-25 backdrop-blur-lg rounded-lg p-4 text-center">
+                <p id="statusText" class="text-white font-medium"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modalTitle" class="text-2xl font-bold text-gray-800">Thêm Prompt mới</h2>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <form id="promptForm" class="space-y-6">
+                <input type="hidden" id="editId">
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tiêu đề</label>
+                    <input type="text" id="title" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Danh mục</label>
+                    <select id="category" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white">
+                        <option value="">Chọn danh mục</option>
+                        <option value="Portrait Photography">Chụp chân dung</option>
+                        <option value="Art Gallery & Exhibition">Triển lãm nghệ thuật</option>
+                        <option value="Divine & Spiritual">Thần thánh & Tâm linh</option>
+                        <option value="Classical Art Styles">Phong cách hội họa cổ điển</option>
+                        <option value="Vietnamese Mythology">Thần thoại Việt Nam</option>
+                        <option value="Lifestyle & Nature">Phong cách sống & Thiên nhiên</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Đường dẫn hình ảnh</label>
+                    <input type="text" id="imagePath" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="/image/genai/image1.jpeg">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nội dung Prompt</label>
+                    <textarea id="prompt" required rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"></textarea>
+                    <div class="text-sm text-gray-500 mt-1">
+                        Ký tự: <span id="charCount">0</span>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <button type="submit" id="saveBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                        Lưu
+                    </button>
+                    <button type="button" id="cancelBtn" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                        Hủy
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let prompts = [];
+        let filteredPrompts = [];
+        let editingId = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            loadData();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('addBtn').addEventListener('click', () => openModal());
+            document.getElementById('refreshBtn').addEventListener('click', loadData);
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            document.getElementById('cancelBtn').addEventListener('click', closeModal);
+            document.getElementById('promptForm').addEventListener('submit', savePrompt);
+            document.getElementById('searchInput').addEventListener('input', filterData);
+            document.getElementById('categoryFilter').addEventListener('change', filterData);
+            document.getElementById('prompt').addEventListener('input', updateCharCount);
+        }
+
+        async function loadData() {
+            try {
+                const response = await fetch('/api/prompts');
+                if (response.ok) {
+                    prompts = await response.json();
+                    filteredPrompts = [...prompts];
+                    renderTable();
+                    showStatus('Dữ liệu đã được tải thành công!', 'success');
+                } else {
+                    showStatus('Lỗi khi tải dữ liệu!', 'error');
+                }
+            } catch (error) {
+                showStatus('Lỗi kết nối: ' + error.message, 'error');
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('dataTable');
+            tbody.innerHTML = '';
+
+            filteredPrompts.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-white border-opacity-20 hover:bg-white hover:bg-opacity-10 transition-colors';
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4">${item.id}</td>
+                    <td class="px-6 py-4">
+                        <img src="${item.imagePath}" alt="${item.title}" class="w-16 h-16 object-cover rounded-lg" onerror="this.src='https://placehold.co/64x64/e0e0e0/333333?text=No+Image'">
+                    </td>
+                    <td class="px-6 py-4 font-medium">${item.title}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 bg-blue-600 bg-opacity-70 rounded-full text-xs">${item.category}</span>
+                    </td>
+                    <td class="px-6 py-4 max-w-xs">
+                        <div class="truncate" title="${item.prompt}">${item.prompt}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex gap-2">
+                            <button onclick="editPrompt(${item.id})" class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded text-sm transition-colors">
+                                <i data-lucide="edit" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="deletePrompt(${item.id})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm transition-colors">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+
+            // Re-create icons for new elements
+            lucide.createIcons();
+        }
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+
+            filteredPrompts = prompts.filter(item => {
+                const matchesSearch = item.title.toLowerCase().includes(searchTerm) || 
+                                    item.prompt.toLowerCase().includes(searchTerm);
+                const matchesCategory = !categoryFilter || item.category === categoryFilter;
+                
+                return matchesSearch && matchesCategory;
+            });
+
+            renderTable();
+        }
+
+        function openModal(id = null) {
+            editingId = id;
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const form = document.getElementById('promptForm');
+            
+            if (id) {
+                const prompt = prompts.find(p => p.id === id);
+                modalTitle.textContent = 'Chỉnh sửa Prompt';
+                document.getElementById('editId').value = id;
+                document.getElementById('title').value = prompt.title;
+                document.getElementById('category').value = prompt.category;
+                document.getElementById('imagePath').value = prompt.imagePath;
+                document.getElementById('prompt').value = prompt.prompt;
+                updateCharCount();
+            } else {
+                modalTitle.textContent = 'Thêm Prompt mới';
+                form.reset();
+                document.getElementById('editId').value = '';
+                updateCharCount();
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            editingId = null;
+        }
+
+        function updateCharCount() {
+            const prompt = document.getElementById('prompt').value;
+            document.getElementById('charCount').textContent = prompt.length;
+        }
+
+        async function savePrompt(e) {
+            e.preventDefault();
+            
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Đang lưu...';
+            
+            const formData = {
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                imagePath: document.getElementById('imagePath').value,
+                prompt: document.getElementById('prompt').value
+            };
+            
+            try {
+                let response;
+                if (editingId) {
+                    formData.id = editingId;
+                    response = await fetch(`/api/prompts/${editingId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                } else {
+                    response = await fetch('/api/prompts', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                }
+                
+                if (response.ok) {
+                    showStatus(editingId ? 'Cập nhật thành công!' : 'Thêm mới thành công!', 'success');
+                    closeModal();
+                    loadData();
+                } else {
+                    const error = await response.text();
+                    showStatus('Lỗi: ' + error, 'error');
+                }
+            } catch (error) {
+                showStatus('Lỗi kết nối: ' + error.message, 'error');
+            }
+            
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Lưu';
+        }
+
+        function editPrompt(id) {
+            openModal(id);
+        }
+
+        async function deletePrompt(id) {
+            if (!confirm('Bạn có chắc chắn muốn xóa prompt này?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/prompts/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    showStatus('Xóa thành công!', 'success');
+                    loadData();
+                } else {
+                    const error = await response.text();
+                    showStatus('Lỗi: ' + error, 'error');
+                }
+            } catch (error) {
+                showStatus('Lỗi kết nối: ' + error.message, 'error');
+            }
+        }
+
+        function showStatus(message, type = 'info') {
+            const statusMessage = document.getElementById('statusMessage');
+            const statusText = document.getElementById('statusText');
+            
+            statusText.textContent = message;
+            statusMessage.classList.remove('hidden');
+            
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                statusMessage.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

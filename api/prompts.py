@@ -8,7 +8,7 @@ class handler(BaseHTTPRequestHandler):
         """Gửi response với CORS headers"""
         self.send_response(code)
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
@@ -64,6 +64,182 @@ class handler(BaseHTTPRequestHandler):
             response = {
                 'error': 'Invalid JSON format',
                 'message': 'File prompts.json có định dạng không hợp lệ'
+            }
+            self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+
+        except Exception as e:
+            self.send_response_with_cors(500)
+            response = {
+                'error': 'Internal server error',
+                'message': f'Lỗi server: {str(e)}'
+            }
+            self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+
+    def do_PUT(self):
+        """Xử lý PUT request - cập nhật prompt"""
+        try:
+            # Parse URL để lấy ID
+            parsed_url = urlparse(self.path)
+            path_parts = parsed_url.path.strip('/').split('/')
+            
+            if len(path_parts) < 3 or path_parts[0] != 'api' or path_parts[1] != 'prompts':
+                self.send_response_with_cors(400)
+                response = {
+                    'error': 'Invalid URL',
+                    'message': 'URL phải có dạng /api/prompts/{id}'
+                }
+                self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+                return
+            
+            try:
+                prompt_id = int(path_parts[2])
+            except ValueError:
+                self.send_response_with_cors(400)
+                response = {
+                    'error': 'Invalid ID',
+                    'message': 'ID phải là số nguyên'
+                }
+                self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+                return
+
+            # Đọc dữ liệu từ request body
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            
+            # Parse JSON data
+            try:
+                updated_prompt = json.loads(post_data.decode('utf-8'))
+            except json.JSONDecodeError:
+                self.send_response_with_cors(400)
+                response = {
+                    'error': 'Invalid JSON',
+                    'message': 'Dữ liệu JSON không hợp lệ'
+                }
+                self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+                return
+
+            # Đường dẫn đến file prompts.json
+            prompts_file = os.path.join(os.path.dirname(__file__), '..', 'public', 'data', 'prompts.json')
+            
+            if not os.path.exists(prompts_file):
+                self.send_response_with_cors(404)
+                response = {
+                    'error': 'File not found',
+                    'message': 'File prompts.json không tồn tại'
+                }
+                self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+                return
+
+            # Đọc dữ liệu hiện tại
+            with open(prompts_file, 'r', encoding='utf-8') as f:
+                prompts_data = json.load(f)
+
+            # Tìm prompt cần cập nhật
+            prompt_index = None
+            for i, prompt in enumerate(prompts_data):
+                if prompt.get('id') == prompt_id:
+                    prompt_index = i
+                    break
+
+            if prompt_index is None:
+                self.send_response_with_cors(404)
+                response = {
+                    'error': 'Prompt not found',
+                    'message': f'Không tìm thấy prompt với ID {prompt_id}'
+                }
+                self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+                return
+
+            # Cập nhật prompt (giữ nguyên ID)
+            updated_prompt['id'] = prompt_id
+            prompts_data[prompt_index] = updated_prompt
+
+            # Ghi lại file
+            with open(prompts_file, 'w', encoding='utf-8') as f:
+                json.dump(prompts_data, f, ensure_ascii=False, indent=2)
+
+            # Trả về response thành công
+            self.send_response_with_cors(200)
+            response = {
+                'success': True,
+                'data': updated_prompt,
+                'message': f'Cập nhật prompt "{updated_prompt.get("title", "")}" thành công'
+            }
+            self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+
+        except Exception as e:
+            self.send_response_with_cors(500)
+            response = {
+                'error': 'Internal server error',
+                'message': f'Lỗi server: {str(e)}'
+            }
+            self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+
+    def do_DELETE(self):
+        """Xử lý DELETE request - xóa prompt"""
+        try:
+            # Parse URL để lấy ID
+            parsed_url = urlparse(self.path)
+            path_parts = parsed_url.path.strip('/').split('/')
+            
+            if len(path_parts) < 3 or path_parts[0] != 'api' or path_parts[1] != 'prompts':
+                self.send_response_with_cors(400)
+                response = {
+                    'error': 'Invalid URL',
+                    'message': 'URL phải có dạng /api/prompts/{id}'
+                }
+                self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+                return
+            
+            try:
+                prompt_id = int(path_parts[2])
+            except ValueError:
+                self.send_response_with_cors(400)
+                response = {
+                    'error': 'Invalid ID',
+                    'message': 'ID phải là số nguyên'
+                }
+                self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+                return
+
+            # Đường dẫn đến file prompts.json
+            prompts_file = os.path.join(os.path.dirname(__file__), '..', 'public', 'data', 'prompts.json')
+            
+            if not os.path.exists(prompts_file):
+                self.send_response_with_cors(404)
+                response = {
+                    'error': 'File not found',
+                    'message': 'File prompts.json không tồn tại'
+                }
+                self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+                return
+
+            # Đọc dữ liệu hiện tại
+            with open(prompts_file, 'r', encoding='utf-8') as f:
+                prompts_data = json.load(f)
+
+            # Tìm và xóa prompt
+            original_length = len(prompts_data)
+            prompts_data = [p for p in prompts_data if p.get('id') != prompt_id]
+
+            if len(prompts_data) == original_length:
+                self.send_response_with_cors(404)
+                response = {
+                    'error': 'Prompt not found',
+                    'message': f'Không tìm thấy prompt với ID {prompt_id}'
+                }
+                self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
+                return
+
+            # Ghi lại file
+            with open(prompts_file, 'w', encoding='utf-8') as f:
+                json.dump(prompts_data, f, ensure_ascii=False, indent=2)
+
+            # Trả về response thành công
+            self.send_response_with_cors(200)
+            response = {
+                'success': True,
+                'message': f'Xóa prompt với ID {prompt_id} thành công'
             }
             self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
 
