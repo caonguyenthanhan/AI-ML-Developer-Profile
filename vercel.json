@@ -13,6 +13,10 @@
       "destination": "/profile_portfolio.html"
     },
     {
+      "source": "/profile",
+      "destination": "/profile_portfolio.html"
+    },
+    {
       "source": "/genai/prompts",
       "destination": "/image_prompt_library.html"
     },
