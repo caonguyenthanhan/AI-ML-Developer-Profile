@@ -9,12 +9,56 @@
       "destination": "/personal_info.html"
     },
     {
+      "source": "/caonguyenthanhan/",
+      "destination": "/personal_info.html"
+    },
+    {
       "source": "/caonguyenthanhan/pfofile",
       "destination": "/profile_portfolio.html"
     },
     {
-      "source": "/caonguyenthanhan/",
-      "destination": "/personal_info.html"
+      "source": "/caonguyenthanhan/pfofile/",
+      "destination": "/profile_portfolio.html"
+    },
+    {
+      "source": "/prompts",
+      "destination": "/image_prompt_library.html"
+    },
+    {
+      "source": "/prompts/",
+      "destination": "/image_prompt_library.html"
+    },
+    {
+      "source": "/caonguyenthanhan/prompts",
+      "destination": "/image_prompt_library.html"
+    },
+    {
+      "source": "/caonguyenthanhan/prompts/",
+      "destination": "/image_prompt_library.html"
+    },
+    {
+      "source": "/nlp",
+      "destination": "/nlp.html"
+    },
+    {
+      "source": "/nlp/",
+      "destination": "/nlp.html"
+    },
+    {
+      "source": "/genai",
+      "destination": "/genai.html"
+    },
+    {
+      "source": "/genai/",
+      "destination": "/genai.html"
+    },
+    {
+      "source": "/extensions",
+      "destination": "/extensions.html"
+    },
+    {
+      "source": "/extensions/",
+      "destination": "/extensions.html"
     }
   ]
 }

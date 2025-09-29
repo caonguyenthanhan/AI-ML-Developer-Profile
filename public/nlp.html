@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP - Xử lý Ngôn ngữ Tự nhiên</title>
+    <!-- Tải Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Favicon (Giữ nguyên link nếu bạn có file) -->
+    <link rel="icon" type="image/png" href="image/tag.png"> 
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Phong cách mới cho nền và thẻ (card) */
+        .container-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Shadow nhẹ */
+        }
+        .container-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(219, 39, 119, 0.1), 0 4px 6px -2px rgba(219, 39, 119, 0.05);
+            transform: translateY(-3px);
+        }
+        .section-header {
+            color: #831843; /* Màu Hồng đậm */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    
+    <div class="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <!-- Header Section (Theo cấu trúc nlp.html mẫu) -->
+        <header class="text-center mb-12">
+             <h1 class="text-5xl sm:text-6xl font-extrabold text-gray-900 mt-2 mb-4">
+                🔤 Xử Lý Ngôn Ngữ Tự Nhiên (NLP)
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Lĩnh vực AI giúp máy tính hiểu, diễn giải và tạo ra ngôn ngữ của con người, mở ra kỷ nguyên giao tiếp thông minh.
+            </p>
+        </header>
+        
+        <!-- Main Content Grid for Key NLP Areas (Nội dung gốc được giữ nguyên) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            
+            <!-- 1. Hiểu Ngôn ngữ (NLU) -->
+            <section class="container-card p-8 rounded-2xl flex flex-col">
+                <div class="mb-4 text-3xl text-pink-600">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                </div>
+                <h2 class="section-header text-2xl font-bold mb-3">
+                    1. Hiểu Ngôn ngữ (NLU)
+                </h2>
+                <p class="text-gray-700 mb-4 flex-grow leading-relaxed">
+                    Tập trung vào việc máy tính có thể giải mã ý định, sắc thái và ý nghĩa thực sự của văn bản con người. Đây là nền tảng cho bất kỳ tương tác thông minh nào.
+                </p>
+                
+                <h3 class="text-lg font-semibold text-gray-800 mt-2 mb-2 border-b pb-1 border-gray-100">Các Ứng dụng:</h3>
+                <ul class="list-disc list-inside text-sm text-gray-600 ml-4 space-y-1">
+                    <li>**Phân tích Cảm xúc (Sentiment Analysis):** Xác định thái độ (tích cực, tiêu cực, trung lập).</li>
+                    <li>**Nhận dạng Thực thể Có tên (NER):** Trích xuất tên người, địa điểm, tổ chức.</li>
+                    <li>**Phân loại văn bản:** Gán nhãn chủ đề cho tài liệu.</li>
+                </ul>
+            </section>
+
+            <!-- 2. Sinh Ngôn ngữ (NLG) -->
+            <section class="container-card p-8 rounded-2xl flex flex-col">
+                <div class="mb-4 text-3xl text-red-600">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                </div>
+                <h2 class="section-header text-2xl font-bold mb-3">
+                    2. Sinh Ngôn ngữ (NLG)
+                </h2>
+                <p class="text-gray-700 mb-4 flex-grow leading-relaxed">
+                    Khả năng tạo ra văn bản tự nhiên, mạch lạc và phù hợp với ngữ cảnh như con người. Đây là công nghệ cốt lõi của các chatbot và trợ lý ảo hiện đại.
+                </p>
+                
+                <h3 class="text-lg font-semibold text-gray-800 mt-2 mb-2 border-b pb-1 border-gray-100">Các Ứng dụng:</h3>
+                <ul class="list-disc list-inside text-sm text-gray-600 ml-4 space-y-1">
+                    <li>**Tóm tắt Văn bản:** Rút gọn tài liệu dài thành bản tóm tắt ngắn.</li>
+                    <li>**Dịch Máy:** Tự động dịch giữa các ngôn ngữ (Google Translate).</li>
+                    <li>**Tạo nội dung:** Viết báo cáo, bài luận, email tự động (như ChatGPT).</li>
+                </ul>
+            </section>
+
+            <!-- 3. Xử lý giọng nói (Speech Processing) -->
+            <section class="container-card p-8 rounded-2xl flex flex-col">
+                <div class="mb-4 text-3xl text-indigo-600">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </div>
+                <h2 class="section-header text-2xl font-bold mb-3">
+                    3. Xử lý Giọng nói (Speech Processing)
+                </h2>
+                <p class="text-gray-700 mb-4 flex-grow leading-relaxed">
+                    Liên quan đến việc chuyển đổi giọng nói thành văn bản (Speech-to-Text) và ngược lại (Text-to-Speech), tạo ra cầu nối giao tiếp tự nhiên giữa người và máy.
+                </p>
+                
+                <h3 class="text-lg font-semibold text-gray-800 mt-2 mb-2 border-b pb-1 border-gray-100">Các Ứng dụng:</h3>
+                <ul class="list-disc list-inside text-sm text-gray-600 ml-4 space-y-1">
+                    <li>**Trợ lý Ảo:** Siri, Google Assistant, Alexa.</li>
+                    <li>**Chuyển đổi Giọng nói thành Văn bản:** Ghi chú hoặc phụ đề tự động.</li>
+                    <li>**Tổng hợp Giọng nói (TTS):** Tạo giọng đọc tự động từ văn bản.</li>
+                </ul>
+            </section>
+        </div>
+        
+        <!-- Call to Action/Model Focus -->
+        <div class="mt-16 bg-white p-8 rounded-2xl border-2 border-pink-100 shadow-xl">
+            <h3 class="text-2xl font-bold text-gray-900 mb-3">Tác động của Các Mô hình Ngôn ngữ Lớn (LLMs)</h3>
+            <p class="text-gray-700 leading-relaxed">
+                Các mô hình như **GPT-4, Gemini, và Llama** là sự kết hợp mạnh mẽ giữa NLG và NLU. Chúng không chỉ hiểu và tạo ra ngôn ngữ ở cấp độ cao mà còn mở rộng ứng dụng NLP sang các lĩnh vực phức tạp như lập trình, suy luận và giải quyết vấn đề.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>
