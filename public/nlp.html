@@ -6,9 +6,11 @@
     <title>NLP - Xử lý Ngôn ngữ Tự nhiên</title>
     <!-- Tải Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <!-- Font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <!-- Favicon (Giữ nguyên link nếu bạn có file) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="image/tag.png"> 
     <style>
         body {
@@ -33,7 +35,7 @@
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     
     <div class="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <!-- Header Section (Theo cấu trúc nlp.html mẫu) -->
+        <!-- Header Section -->
         <header class="text-center mb-12">
              <h1 class="text-5xl sm:text-6xl font-extrabold text-gray-900 mt-2 mb-4">
                 🔤 Xử Lý Ngôn Ngữ Tự Nhiên (NLP)
@@ -43,7 +45,7 @@
             </p>
         </header>
         
-        <!-- Main Content Grid for Key NLP Areas (Nội dung gốc được giữ nguyên) -->
+        <!-- Main Content Grid for Key NLP Areas -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             
             <!-- 1. Hiểu Ngôn ngữ (NLU) -->
@@ -60,9 +62,9 @@
                 
                 <h3 class="text-lg font-semibold text-gray-800 mt-2 mb-2 border-b pb-1 border-gray-100">Các Ứng dụng:</h3>
                 <ul class="list-disc list-inside text-sm text-gray-600 ml-4 space-y-1">
-                    <li>**Phân tích Cảm xúc (Sentiment Analysis):** Xác định thái độ (tích cực, tiêu cực, trung lập).</li>
-                    <li>**Nhận dạng Thực thể Có tên (NER):** Trích xuất tên người, địa điểm, tổ chức.</li>
-                    <li>**Phân loại văn bản:** Gán nhãn chủ đề cho tài liệu.</li>
+                    <li><strong>Phân tích Cảm xúc (Sentiment Analysis):</strong> Xác định thái độ (tích cực, tiêu cực, trung lập).</li>
+                    <li><strong>Nhận dạng Thực thể Có tên (NER):</strong> Trích xuất tên người, địa điểm, tổ chức.</li>
+                    <li><strong>Phân loại văn bản:</strong> Gán nhãn chủ đề cho tài liệu.</li>
                 </ul>
             </section>
 
@@ -80,9 +82,9 @@
                 
                 <h3 class="text-lg font-semibold text-gray-800 mt-2 mb-2 border-b pb-1 border-gray-100">Các Ứng dụng:</h3>
                 <ul class="list-disc list-inside text-sm text-gray-600 ml-4 space-y-1">
-                    <li>**Tóm tắt Văn bản:** Rút gọn tài liệu dài thành bản tóm tắt ngắn.</li>
-                    <li>**Dịch Máy:** Tự động dịch giữa các ngôn ngữ (Google Translate).</li>
-                    <li>**Tạo nội dung:** Viết báo cáo, bài luận, email tự động (như ChatGPT).</li>
+                    <li><strong>Tóm tắt Văn bản:</strong> Rút gọn tài liệu dài thành bản tóm tắt ngắn.</li>
+                    <li><strong>Dịch Máy:</strong> Tự động dịch giữa các ngôn ngữ (Google Translate).</li>
+                    <li><strong>Tạo nội dung:</strong> Viết báo cáo, bài luận, email tự động (như ChatGPT).</li>
                 </ul>
             </section>
 
@@ -100,9 +102,9 @@
                 
                 <h3 class="text-lg font-semibold text-gray-800 mt-2 mb-2 border-b pb-1 border-gray-100">Các Ứng dụng:</h3>
                 <ul class="list-disc list-inside text-sm text-gray-600 ml-4 space-y-1">
-                    <li>**Trợ lý Ảo:** Siri, Google Assistant, Alexa.</li>
-                    <li>**Chuyển đổi Giọng nói thành Văn bản:** Ghi chú hoặc phụ đề tự động.</li>
-                    <li>**Tổng hợp Giọng nói (TTS):** Tạo giọng đọc tự động từ văn bản.</li>
+                    <li><strong>Trợ lý Ảo:</strong> Siri, Google Assistant, Alexa.</li>
+                    <li><strong>Chuyển đổi Giọng nói thành Văn bản:</strong> Ghi chú hoặc phụ đề tự động.</li>
+                    <li><strong>Tổng hợp Giọng nói (TTS):</strong> Tạo giọng đọc tự động từ văn bản.</li>
                 </ul>
             </section>
         </div>
@@ -111,11 +113,15 @@
         <div class="mt-16 bg-white p-8 rounded-2xl border-2 border-pink-100 shadow-xl">
             <h3 class="text-2xl font-bold text-gray-900 mb-3">Tác động của Các Mô hình Ngôn ngữ Lớn (LLMs)</h3>
             <p class="text-gray-700 leading-relaxed">
-                Các mô hình như **GPT-4, Gemini, và Llama** là sự kết hợp mạnh mẽ giữa NLG và NLU. Chúng không chỉ hiểu và tạo ra ngôn ngữ ở cấp độ cao mà còn mở rộng ứng dụng NLP sang các lĩnh vực phức tạp như lập trình, suy luận và giải quyết vấn đề.
+                Các mô hình như <strong>GPT-4, Gemini, và Llama</strong> là sự kết hợp mạnh mẽ giữa NLG và NLU. Chúng không chỉ hiểu và tạo ra ngôn ngữ ở cấp độ cao mà còn mở rộng ứng dụng NLP sang các lĩnh vực phức tạp như lập trình, suy luận và giải quyết vấn đề.
             </p>
         </div>
 
     </div>
 
+    <!-- Header Component -->
+    <script src="header.js"></script>
+    <!-- Footer Component với Chat Box -->
+    <script src="footer.js"></script>
 </body>
 </html>

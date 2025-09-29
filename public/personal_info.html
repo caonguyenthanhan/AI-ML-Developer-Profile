@@ -26,6 +26,8 @@
     </script>
     <!-- Font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="image/tag.png">
     <style>
@@ -60,10 +62,12 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+<body class="min-h-screen">
 
-    <!-- Card Container -->
-    <div class="w-full max-w-3xl bg-dark-card rounded-2xl p-6 md:p-10 card-glow">
+    <!-- Main Content Container -->
+    <div class="min-h-screen flex items-center justify-center p-4 sm:p-8" style="padding-top: 120px;">
+        <!-- Card Container -->
+        <div class="w-full max-w-3xl bg-dark-card rounded-2xl p-6 md:p-10 card-glow">
 
         <!-- Header - Thông tin cơ bản -->
         <header class="text-center mb-10">
@@ -139,16 +143,12 @@
             </a>
         </div>
 
-        <!-- Footer - Quay lại Trang chủ -->
-        <footer class="mt-8 text-center text-sm text-gray-500">
-             <a href="/" class="hover:text-primary-blue transition duration-200">
-                 &#8592; Quay lại Trang Chào mừng
-             </a>
-        </footer>
-
+        </div>
     </div>
 
     <!-- Header Component -->
     <script src="header.js"></script>
+    <!-- Footer Component với Chat Box -->
+    <script src="footer.js"></script>
 </body>
 </html>

@@ -17,7 +17,9 @@ class HeaderComponent {
             <header class="header-container">
                 <div class="header-content">
                     <div class="avatar-container">
-                        <img id="rotating-avatar" src="image/${this.avatars[0]}" alt="Avatar" class="avatar-image">
+                        <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" rel="noopener noreferrer">
+                            <img id="rotating-avatar" src="image/${this.avatars[0]}" alt="Avatar" class="avatar-image">
+                        </a>
                     </div>
                     <nav class="navigation">
                         <a href="/" class="nav-item" data-page="/">Trang chủ</a>
@@ -86,6 +88,16 @@ const headerStyles = `
     flex-shrink: 0;
 }
 
+.avatar-container a {
+    display: block;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.avatar-container a:hover {
+    transform: scale(1.05);
+}
+
 .avatar-image {
     width: 80px;
     height: 80px;
@@ -93,9 +105,11 @@ const headerStyles = `
     border: 3px solid white;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+    object-position: center;
 }
 
-.avatar-image:hover {
+.avatar-container a:hover .avatar-image {
     transform: scale(1.1);
 }
 
@@ -147,6 +161,8 @@ const headerStyles = `
     .avatar-image {
         width: 60px;
         height: 60px;
+        object-fit: cover;
+        object-position: center;
     }
 }
 </style>

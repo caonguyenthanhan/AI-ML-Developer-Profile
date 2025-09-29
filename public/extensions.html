@@ -3,124 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extensions - Tiện ích mở rộng</title>
-    <!-- Tải Tailwind CSS CDN -->
+    <title>Extensions - Công cụ mở rộng AI & Tiện ích</title>
+    <!-- Tải Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Inter -->
+    <!-- Tải Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="image/tag.png">
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Màu nền Xanh Xám Rất Nhẹ */
+            padding-top: 100px; /* Đảm bảo nội dung không bị header che mất */
+        }
+        .extension-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+        .extension-card:hover {
+            box-shadow: 0 10px 20px -5px rgba(234, 88, 12, 0.15); /* Shadow Cam */
+            transform: translateY(-5px);
+        }
+        .header-section {
+            color: #ea580c; /* Màu Cam Đậm */
+        }
+        .install-button {
+            transition: background-color 0.2s;
+        }
+        /* Custom style cho body gradient (theo phong cách nlp.html) */
+        .page-background {
+            background: linear-gradient(135deg, #f0fdf4 0%, #fef3c7 100%); /* Gradient Xanh lá - Vàng nhạt */
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-50 to-pink-100 min-h-screen">
-    
-    <div class="container mx-auto px-4 py-8">
-        <div class="max-w-6xl mx-auto">
-            <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">
-                🔧 Extensions & Tools
+<body class="page-background min-h-screen">
+
+    <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <header class="text-center mb-16">
+            <span class="text-sm font-semibold uppercase tracking-wider text-orange-600">Công Cụ Mở Rộng & Tiện Ích</span>
+            <h1 class="text-5xl sm:text-6xl font-extrabold text-gray-900 mt-2 mb-4">
+                🚀 Extensions Đã Phát Triển
             </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Các tiện ích mở rộng được thiết kế để nâng cao hiệu suất làm việc và tích hợp sức mạnh của AI vào trải nghiệm hàng ngày.
+            </p>
+        </header>
+
+        <!-- Extensions Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
             
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Tiện ích mở rộng</h2>
-                <p class="text-gray-600 leading-relaxed">
-                    Bộ sưu tập các tiện ích mở rộng, công cụ và ứng dụng hỗ trợ phát triển AI/ML, 
-                    giúp tăng hiệu quả làm việc và tối ưu hóa quy trình phát triển.
-                </p>
-            </div>
+            <!-- 1. Gemini Tóm Tắt & Đọc -->
+            <section class="extension-card p-8 rounded-2xl flex flex-col justify-between">
+                <div class="mb-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-indigo-600"></i>
+                        <h2 class="header-section text-3xl font-bold">
+                            Gemini Tóm Tắt & Đọc
+                        </h2>
+                    </div>
+                    
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Tiện ích tích hợp API Gemini để tự động <strong>tóm tắt</strong> nội dung trang web hoặc văn bản được chọn. Ngoài ra, nó còn sử dụng tính năng <strong>Text-to-Speech (TTS)</strong> để đọc to nội dung tóm tắt, giúp tiết kiệm thời gian và tiếp thu thông tin hiệu quả hơn.
+                    </p>
+                    
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <p class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 mr-2 text-green-500"></i> <strong>Chức năng chính:</strong> Tóm tắt văn bản và Chuyển văn bản thành Giọng nói (TTS).</p>
+                        <p class="flex items-center"><i data-lucide="zap" class="w-4 h-4 mr-2 text-yellow-500"></i> <strong>Công nghệ:</strong> Google Gemini API, TTS Engine.</p>
+                        <p class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-2 text-blue-500"></i> <strong>Lợi ích:</strong> Tăng cường hiệu suất đọc và học tập. </p>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="https://github.com/caonguyenthanhan/Gemini-T-m-T-t-c" target="_blank" class="install-button w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 shadow-md">
+                        <i data-lucide="github" class="w-5 h-5 mr-2"></i> Xem mã nguồn trên GitHub
+                    </a>
+                </div>
+            </section>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-3xl mb-4">🤖</div>
-                    <h3 class="text-xl font-semibold text-purple-600 mb-3">AI Code Assistant</h3>
-                    <p class="text-gray-600 mb-4">Trợ lý AI hỗ trợ viết code, debug và tối ưu hóa thuật toán.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm">GitHub Copilot</span>
-                        <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm">Tabnine</span>
+            <!-- 2. Video Speed Controller -->
+            <section class="extension-card p-8 rounded-2xl flex flex-col justify-between">
+                <div class="mb-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i data-lucide="fast-forward" class="w-8 h-8 text-teal-600"></i>
+                        <h2 class="header-section text-3xl font-bold">
+                            Video Speed Controller
+                        </h2>
+                    </div>
+                    
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Tiện ích đơn giản nhưng mạnh mẽ cho phép người dùng <strong>tùy chỉnh tốc độ phát</strong> của bất kỳ video HTML5 nào trên các trang web (bao gồm YouTube và các nền tảng khác) một cách dễ dàng và chính xác thông qua các phím tắt.
+                    </p>
+                    
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <p class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 mr-2 text-green-500"></i> <strong>Chức năng chính:</strong> Điều chỉnh tốc độ từ 0.1x đến 16x.</p>
+                        <p class="flex items-center"><i data-lucide="key" class="w-4 h-4 mr-2 text-yellow-500"></i> <strong>Tính năng nổi bật:</strong> Điều khiển bằng phím tắt tùy chỉnh (ví dụ: <code>D</code> tăng, <code>S</code> giảm tốc độ).</p>
+                        <p class="flex items-center"><i data-lucide="mouse-pointer-click" class="w-4 h-4 mr-2 text-blue-500"></i> <strong>Lợi ích:</strong> Tăng tốc độ xem bài giảng, hội thảo để tiết kiệm thời gian.</p>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-3xl mb-4">📊</div>
-                    <h3 class="text-xl font-semibold text-blue-600 mb-3">Data Visualization</h3>
-                    <p class="text-gray-600 mb-4">Công cụ trực quan hóa dữ liệu và phân tích kết quả ML.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">Plotly</span>
-                        <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">Tensorboard</span>
-                    </div>
+                <div class="mt-4">
+                    <a href="https://github.com/caonguyenthanhan/Video-Speed-Controller" target="_blank" class="install-button w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-500 focus:ring-opacity-50 shadow-md">
+                        <i data-lucide="github" class="w-5 h-5 mr-2"></i> Xem mã nguồn trên GitHub
+                    </a>
                 </div>
-
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-3xl mb-4">🔍</div>
-                    <h3 class="text-xl font-semibold text-green-600 mb-3">Model Monitoring</h3>
-                    <p class="text-gray-600 mb-4">Giám sát hiệu suất và chất lượng mô hình AI trong production.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-sm">MLflow</span>
-                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-sm">Weights & Biases</span>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-3xl mb-4">⚡</div>
-                    <h3 class="text-xl font-semibold text-yellow-600 mb-3">Performance Tools</h3>
-                    <p class="text-gray-600 mb-4">Tối ưu hóa hiệu suất và tăng tốc quá trình training.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-sm">CUDA</span>
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-sm">TensorRT</span>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-3xl mb-4">🚀</div>
-                    <h3 class="text-xl font-semibold text-red-600 mb-3">Deployment</h3>
-                    <p class="text-gray-600 mb-4">Triển khai và quản lý mô hình AI trên cloud và edge.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-red-100 text-red-800 rounded text-sm">Docker</span>
-                        <span class="px-2 py-1 bg-red-100 text-red-800 rounded text-sm">Kubernetes</span>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-3xl mb-4">🔐</div>
-                    <h3 class="text-xl font-semibold text-indigo-600 mb-3">Security & Privacy</h3>
-                    <p class="text-gray-600 mb-4">Bảo mật dữ liệu và đảm bảo quyền riêng tư trong AI.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-indigo-100 text-indigo-800 rounded text-sm">Differential Privacy</span>
-                        <span class="px-2 py-1 bg-indigo-100 text-indigo-800 rounded text-sm">Federated Learning</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-2xl font-semibold text-gray-700 mb-6">Công cụ phát triển yêu thích</h2>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="font-semibold text-gray-800 mb-3">IDE & Editors</h4>
-                        <ul class="space-y-2 text-gray-600">
-                            <li>• Visual Studio Code với AI extensions</li>
-                            <li>• Jupyter Notebook/Lab</li>
-                            <li>• PyCharm Professional</li>
-                            <li>• Google Colab</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-gray-800 mb-3">Libraries & Frameworks</h4>
-                        <ul class="space-y-2 text-gray-600">
-                            <li>• TensorFlow/Keras</li>
-                            <li>• PyTorch</li>
-                            <li>• Scikit-learn</li>
-                            <li>• Hugging Face Transformers</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
-    </div>
 
-    <!-- Header Component -->
+        <div class="mt-16 text-center text-gray-600">
+            <p class="text-sm italic">Cả hai tiện ích đều được phát triển như các dự án mã nguồn mở (Open Source).</p>
+        </div>
+
+    </div>
+    
+    <!-- Khởi tạo Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+    <!-- Header Component (Sử dụng script header.js để tạo navigation) -->
     <script src="header.js"></script>
+    <!-- Footer Component với Chat Box -->
+    <script src="footer.js"></script>
 </body>
 </html>
