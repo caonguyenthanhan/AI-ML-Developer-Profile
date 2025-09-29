@@ -138,5 +138,12 @@
         "prompt": "from\r\nmy create a pictures: A cinematic, 16:9 photorealistic, full-body studio portrait of a young Asian girl with a radiant smile and joyful eyes, looking directly at the camera. She wears a stylized traditional outfit: a red 'yếm' top with intricate embroidery, a voluminous red outer skirt, and a pristine white inner skirt, with a bright red headband. She holds a multi-colored star lantern in her right hand and stands barefoot on a clean floor. The backdrop is a vibrant red, meticulously decorated with three floating golden carp fish, a large traditional wooden mooncake mold on the left, and a red drum with gold motifs on the right. Rolled-up blue and yellow scrolls are at her feet. Soft, diffused studio lighting creates a warm and festive glow. Don't change the facial det.",
         "imagePath": "/image/genai/1485bf26-6dbe-4f4f-a1a7-2f0438b0327f.jpg",
         "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 21,
+        "title": "Tổng Đài",
+        "prompt": "from my create a pictures: A cinematic, 16:9 photorealistic, medium shot of a young Vietnamese man in a navy blue, single-button suit jacket, a crisp white shirt, and a navy blue, maroon, and white striped tie. He sits calmly with one leg crossed on a luxurious teal velvet armchair in a classic-modern bar. With a confident, contemplative expression, he holds a pipe in his right hand and raises his left hand, palm open, as if giving a command. The low, dramatic lighting creates a mysterious and moody atmosphere, with a focused spotlight on him, casting strong highlights and deep shadows. In the blurry background, a second, energetic young man in a black long-sleeve shirt stands behind the bar with his hands raised, poised for action, creating a sense of tension and narrative. The background is filled with a well-stocked bar counter with gleaming bottles and glasses. The overall color palette is dark and warm, with the navy blue and white of the main subject's attire as a focal point. Don't change the facial det.",
+        "imagePath": "/image/genai/7888f719-fbe3-499d-bc7a-c2ecb5bf965a.png",
+        "category": "Portrait Photography"
     }
 ]
