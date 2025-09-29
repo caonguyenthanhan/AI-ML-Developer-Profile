@@ -1,21 +1,13 @@
 {
-  "builds": [
-    {
-      "src": "api/*.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "public/*.html",
-      "use": "@vercel/static-build"
-    },
-    {
-      "src": "*.html",
-      "use": "@vercel/static-build"
-    }
-  ],
   "functions": {
     "api/prompts.py": {
       "runtime": "python3.9"
+    },
+    "api/chat.js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/update-prompt-library.js": {
+      "runtime": "nodejs18.x"
     }
   },
   "rewrites": [

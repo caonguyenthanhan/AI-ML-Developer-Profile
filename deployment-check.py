@@ -20,32 +20,35 @@ def check_vercel_config():
         with open('vercel.json', 'r', encoding='utf-8') as f:
             config = json.load(f)
         
-        # Kiểm tra builds
-        if 'builds' not in config:
-            print("❌ Thiếu mục 'builds' trong vercel.json")
+        # Kiểm tra không có builds (để tránh xung đột)
+        if 'builds' in config:
+            print("❌ Cấu hình có builds - có thể xung đột với functions")
             return False
         
-        builds = config['builds']
-        python_build = any(build.get('use') == '@vercel/python' for build in builds)
-        static_build = any(build.get('use') == '@vercel/static-build' for build in builds)
-        
-        if not python_build:
-            print("❌ Thiếu cấu hình build cho Python files")
-            return False
-        
-        if not static_build:
-            print("❌ Thiếu cấu hình build cho HTML files")
-            return False
-        
-        print("✅ Cấu hình builds hợp lệ")
+        print("✅ Không có builds - tránh xung đột")
         
         # Kiểm tra functions
-        if 'functions' in config:
-            print("✅ Cấu hình functions có sẵn")
+        if 'functions' not in config:
+            print("❌ Không có cấu hình functions")
+            return False
+        
+        functions = config['functions']
+        required_functions = ['api/prompts.py', 'api/chat.js', 'api/update-prompt-library.js']
+        
+        for func in required_functions:
+            if func not in functions:
+                print(f"❌ Không có cấu hình function cho {func}")
+                return False
+        
+        print(f"✅ Cấu hình functions OK - có {len(functions)} functions")
         
         # Kiểm tra rewrites
-        if 'rewrites' in config:
-            print(f"✅ Có {len(config['rewrites'])} routing rules")
+        if 'rewrites' not in config:
+            print("❌ Không có cấu hình rewrites")
+            return False
+        
+        rewrites = config['rewrites']
+        print(f"✅ Có {len(rewrites)} quy tắc rewrites")
         
         return True
         
