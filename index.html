@@ -35,31 +35,7 @@
         .progress-bar {
             @apply h-2 bg-indigo-600 rounded-full;
         }
-        /* Chatbox styles */
-        #chat-widget {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-            width: 90%;
-            max-width: 400px;
-            height: 500px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transform: translateY(100%);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease-in-out;
-        }
-        #chat-widget.open {
-            transform: translateY(0);
-            opacity: 1;
-            visibility: visible;
-        }
-        #chat-messages {
-            height: 400px;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
+
     </style>
 </head>
 <body class="p-4 md:p-8 lg:p-12">

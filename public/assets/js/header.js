@@ -12,9 +12,9 @@ class HeaderComponent {
         const depth = (currentPath.match(/\//g) || []).length - 1;
         
         if (currentPath === '/' || currentPath === '/index.html') {
-            return 'image/';
+            return '../image/';
         } else if (depth === 1) {
-            return 'image/';
+            return '../image/';
         } else {
             return '../image/';
         }
