@@ -1,13 +1,13 @@
 {
   "functions": {
     "api/prompts.py": {
-      "runtime": "@vercel/python@3.9"
+      "runtime": "@vercel/python@3.9.0"
     },
     "api/chat.js": {
-      "runtime": "@vercel/node@18"
+      "runtime": "@vercel/node@18.0.0"
     },
     "api/update-prompt-library.js": {
-      "runtime": "@vercel/node@18"
+      "runtime": "@vercel/node@18.0.0"
     }
   },
   "rewrites": [
