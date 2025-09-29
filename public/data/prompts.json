@@ -152,5 +152,12 @@
         "prompt": "from my create a pictures: A Vietnamese man, a young artist, is sitting on the floor in a bright sunlit studio, painting a large portrait on the wall. The portrait is of this man, glowing with a soft, warm light. The artist is holding a brush and a palette, looking up at his work. The studio is filled with art supplies, including canvases, tubes of paint, and brushes. The sunlight streams in from a large window, creating a warm and peaceful atmosphere. The style is a magical, cinematic, and detailed digital painting. The photo is in a vertical 9:16 aspect ratio.",
         "imagePath": "/image/genai/13d8a368-e203-497d-b586-99a1fe9d5af4.png",
         "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 23,
+        "title": "Chụp cùng Tổng thống Donald Trump",
+        "prompt": "A photorealistic, high-resolution portrait shot of a man in the uploaded image wearing a black shirt suit, sitting comfortably on a white sofa next to President Donald trump. Trump is wearing his signature Black 5 star suit.  They are in an official, well-lit meeting room. Between them is a small, dark wood table with a vase of vibrant pink orchids In the background, there are two large, perfectly displayed  VIET NAM National flag at the back of me and American National flag behind Donald Trump. Man and trump poses.",
+        "imagePath": "/image/genai/c35754c8-bf31-4c4f-87f5-f34b3051d7c8.png",
+        "category": "Lifestyle & Nature"
     }
 ]
