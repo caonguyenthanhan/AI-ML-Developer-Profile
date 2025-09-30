@@ -411,5 +411,26 @@
         "prompt": "from my photo create a pictures: A hyper-realistic cinematic portrait of the young man (using the face from the uploaded photo) standing against a minimalist dark background. He is bathed in soft, gentle golden-yellow light that creates long, subtle shadows. He is wearing an elegant, fitted white suit with matching white suit trousers, a crisp white dress shirt, and a black tie. He has a dark blue belt and is wearing the rim glasses from the photo. One hand is tucked casually into his trouser pocket, while the other is in a natural, relaxed position. His hair is styled naturally with volume as seen in the uploaded image. The lighting should sculpt his face and the elegant lines of his suit, emphasizing a clean, sophisticated, and moody aesthetic. Don't change the facial det, glasses, or facial expression.",
         "imagePath": "/image/genai/58494ecf-5a72-42c2-abc7-007096209241.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 60,
+        "title": "Chân Dung Studio Phong Cách Yakuza Hiện Đại",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/c6a021a4-fb90-4939-b3cc-6573a17b211b.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 61,
+        "title": "Chân Dung Studio Siêu Thực Tattoos Với Tư Thế Bí Ẩn",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/4a6c52ed-4677-4da7-b59d-6ffc5ab956a4.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 62,
+        "title": "Khung Cảnh Hậu Trường Quay Phim Điện Ảnh Đầy Ánh Sáng",
+        "prompt": "from my photo create a pictures: A hyper-realistic and detailed cinematic photograph of a messy, high-energy behind-the-scenes set for a photoshoot or film production inside a stylish, cluttered apartment. The room is brightly lit with large, professional softbox lights and various filming equipment scattered across the wooden floor, tangled with numerous cables. Several crew members (using the man's face from the uploaded photo, if possible, but maintaining the chaotic group composition) are sitting or kneeling on the floor, some looking at smartphones, while others adjust the gear. The room features a clothing rack, a sofa, and various props. The atmosphere is busy, creative, and slightly chaotic, captured with a wide-angle perspective and bright, studio-style lighting. The style should be raw documentary photography. Don't change the facial det.",
+        "imagePath": "/image/genai/de4b0a78-66c5-4921-a590-d073e1c6cf55.png",
+        "category": "Portrait Photography"
     }
 ]
