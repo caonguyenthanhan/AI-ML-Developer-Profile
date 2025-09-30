@@ -173,5 +173,12 @@
         "prompt": "A surreal, cinematic scene of a young man sitting casually on top of a soft, fluffy cloud high above the earth, surrounded by a vast ocean of white clouds under a golden sunset sky. The man is wearing a long, oversized charcoal-gray wool overcoat layered over a black turtleneck, slim black trousers, and white chunky sneakers. He has curly dark hair, slightly messy, and is wearing large, futuristic silver over-ear headphones. His posture is relaxed, leaning slightly back with one leg extended and the other bent, hands resting loosely by his sides. His head is tilted back slightly, eyes closed, as if lost in the music, radiating a sense of peace and dreamlike calm. The lighting is warm and soft, casting a golden glow across the clouds and subtly illuminating his face and clothes, creating a serene, ethereal, and photorealistic atmosphere.",
         "imagePath": "/image/genai/0526a6a9-a524-46d7-9afb-14c68d43c8ab.png",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 26,
+        "title": "Quay về trẻ thơ",
+        "prompt": "from my photo create photo:\r\nA vertical portrait of a man and a child on a narrow, sun-drenched street in an ancient Vietnamese village. The man on the right is leaning comfortably but gracefully against a faded, textured light brown wall, holding a transparent umbrella in his right hand. He is wearing a dark, modern tunic and black trousers. Note: The child on the left (from the second attachment) is playing with a friend and happens to look up at the man. The man gently bends his head down towards the child, sharing a quiet, tender, and bonding moment. The scene is bathed in warm, golden sunlight filtering through the white flowers of a large tree that dominates the left side of the frame. The light creates strong highlights, sharp contrasts, and long, soft shadows on the dusty street, dotted with falling white petals. This style is a dreamy, nostalgic, cinematic photograph with deep, saturated colors and high contrast. Composed in a 4:5 ratio, focusing on the two characters and the tree, emphasizing connection and warm atmosphere. No facial details are altered.",
+        "imagePath": "/image/genai/298684ad-9a1e-4e99-8063-f19ac37aa3ba.png",
+        "category": "Vietnamese Mythology"
     }
 ]
