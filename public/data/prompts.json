@@ -404,5 +404,12 @@
         "prompt": "from my photo create a pictures: A hyper-realistic and dynamic photograph capturing the moment a male soccer player (using the face from the uploaded photo), about 23 years old, is celebrating a goal on a lush green field. He is wearing a red shirt and shorts with the number 87 clearly visible in white, and a Vietnamese flag logo on the chest. He wears red socks and white Adidas cleats. Behind him, other players and spectators are clearly visible, many holding Vietnamese flags, all illuminated by bright stadium lights. The composition should be dynamic, focusing sharply on the player's celebratory movement and the soccer ball nearby, using a shallow depth of field to blur the background. Cinematic sports photography style. Don't change the facial det.",
         "imagePath": "/image/genai/bc929874-e442-402a-b2bf-b3dc18d9ec52.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 59,
+        "title": "Chân Dung Điện Ảnh Siêu Thực Trong Bộ Vest Trắng",
+        "prompt": "from my photo create a pictures: A hyper-realistic cinematic portrait of the young man (using the face from the uploaded photo) standing against a minimalist dark background. He is bathed in soft, gentle golden-yellow light that creates long, subtle shadows. He is wearing an elegant, fitted white suit with matching white suit trousers, a crisp white dress shirt, and a black tie. He has a dark blue belt and is wearing the rim glasses from the photo. One hand is tucked casually into his trouser pocket, while the other is in a natural, relaxed position. His hair is styled naturally with volume as seen in the uploaded image. The lighting should sculpt his face and the elegant lines of his suit, emphasizing a clean, sophisticated, and moody aesthetic. Don't change the facial det, glasses, or facial expression.",
+        "imagePath": "/image/genai/58494ecf-5a72-42c2-abc7-007096209241.png",
+        "category": "Portrait Photography"
     }
 ]
