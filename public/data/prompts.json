@@ -222,5 +222,33 @@
         "prompt": "from my photo create a pictures: A dark orange studio photo featuring the young man from the photo, sitting casually on a metal folding chair with his legs crossed. He is wearing black denim baggy jeans, a black t-shirt, and black boots. The lighting is soft and minimal, producing sharp shadows and a moody atmosphere. His pose is relaxed, slightly leaning with one hand on the chair's backrest, his face turned to the side, emphasizing a modern aesthetic. Don't change the facial det.",
         "imagePath": "/image/genai/f6b773b2-4bcb-487c-969b-d4052c0c382c.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 33,
+        "title": "Chân Dung Siêu Thực Vị Sư Võ Thuật Trong Bộ Pháp Khí Công",
+        "prompt": "from my photo create a pictures: An ultra-realistic full-body portrait of a monk (from the photo) in a dynamic martial arts stance, gracefully bending air currents around him. His sharp eyes convey calm focus and inner strength. He wears flowing yellow and orange monk-style robes tied with a red sash, paired with white wrappings around his arms and lower legs. One arm is raised above his head while the other extends forward in a precise martial pose, as translucent streams of swirling air spiral smoothly around his body, captured in photorealistic detail like ribbons of wind. The background is a smooth yellow studio backdrop, enhancing the warmth of his robes and creating strong contrast with the pale, glowing air effects. Lighting is cinematic yet clean, with soft highlights and shadows that emphasize the fluid motion. Ultra-detailed, realistic, and styled as an energetic studio photoshoot. Don't change the facial det.",
+        "imagePath": "/image/genai/02a16903-d224-4114-81e7-01e22650c176.png",
+        "category": "Divine & Spiritual"
+    },
+    {
+        "id": 34,
+        "title": "Chân Dung Siêu Thực: Hiệu Ứng Phân Rã và Ảo Ảnh Quạ",
+        "prompt": "from my photo create a pictures: An ultra-realistic 8K portrait in 9:16 format of the man from the image, shown in a slight side-view profile with his head turned just enough to reveal his stoic and mysterious expression. He is styled in a modern minimalist black outfit resembling a shinobi cloak, with subtle, realistic fabric textures. The back side of his body begins to disintegrate into fragments of black dust and ink-like particles, seamlessly transforming into a dramatic swarm of lifelike crows bursting outward in mid-flight. Each crow has glowing red eyes with a faint eerie glow. Some crows emerge partially from the dissolving body, others fly sharply detailed while a few appear motion-blurred, creating cinematic depth. Lighting is dramatic studio-grade, angled to highlight facial structure, skin texture, and cloak detail while casting vivid shadows. The background is minimalist and bright. The overall mood is hyper-realistic, surreal, and powerful — a live-action cinematic reinterpretation of Itachi Uchiha’s crow illusion, enhanced by the side-profile perspective. Don't change the facial det.",
+        "imagePath": "/image/genai/a79e35d2-c770-410a-bf60-a338f1b7e9c3.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 35,
+        "title": "Chân Dung Editorial Siêu Thực Cùng Pokémon Blastoise",
+        "prompt": "from my photo create a pictures: Create a hyper-realistic editorial portrait of the man (with the same face, hairstyle, and expression as the reference). He is in a natural pose (sitting, standing, or kneeling) with his face clearly visible towards the camera, lovingly interacting with a large Blastoise scaled equal to or larger than him. The man holds a Pokéball in one hand, engaging the creature playfully. Blastoise shows personality through funny elemental quirks (water splashes and shimmer from its cannons). The man wears a modern outfit (hooded jacket, joggers, sneakers) whose colors, motifs, and embroidery reflect Blastoise’s palette (blues, browns, creams) and type (water), with subtle themed patterns stitched into the fabric. The background is a cinematic gradient with matching water elemental effects (mists, splashes, shimmer), with both the man and Blastoise reflected on the glossy floor. Lighting is dramatic key and rim light to highlight skin, fabric, and creature textures. The atmosphere includes cinematic shallow depth of field, slight film grain, ultra-detailed 8K realism, and seamless integration. Don't change the facial det.",
+        "imagePath": "/image/genai/800d90f7-591d-41fe-bc49-a4ecfb349c51.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 36,
+        "title": "Bức Tranh Thần Thoại: Arceus Chiếu Sáng Thế Giới",
+        "prompt": "from my photo create a pictures: A hyper-realistic editorial portrait of the man from the photo, sitting cross-legged in a meditative/reverent pose with his face clearly visible towards the camera. He is holding a Pokéball with a calm expression. He is reverently interacting with a large Arceus (the original creator Pokémon, matching the second reference image), scaled equal to or larger than him. Arceus is positioned majestically above/behind him, radiating its cosmic, divine power, with a golden ethereal light and a rainbow halo (or ring) forming an arch around both of them. The man wears a modern, minimalist white outfit (high-neck jacket, sleek trousers, subtle sneakers) whose colors (white, gold, gray) and motifs reflect Arceus’s palette and themes of creation, with subtle geometric patterns stitched into the fabric. The background is a cosmic, cinematic gradient featuring swirling nebula-like effects and soft ethereal glows, with both the man and Arceus reflected on a glossy, metallic floor. Lighting is dramatic key and rim light to highlight skin, fabric, and the creature’s metallic/ethereal textures. The atmosphere includes cinematic shallow depth of field, slight film grain, ultra-detailed 8K realism, and seamless integration, conveying a powerful, awe-inspiring moment of divine encounter. Don't change the facial det.",
+        "imagePath": "/image/genai/0999ca85-b74b-44cc-a75b-9d6d402afba9.png",
+        "category": "Divine & Spiritual"
     }
 ]
