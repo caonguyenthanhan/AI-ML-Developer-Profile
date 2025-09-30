@@ -44,7 +44,7 @@
     {
         "id": 7,
         "title": "Ngắm Tranh trong Gallery",
-        "prompt": "from my create a pictures: Create a pictures: a person, seen from behind, mirroring the subject's attire, stands in an art gallery, 1/3 from the left edge of the frame. He gazes at a framed portrait of himself. The portrait is a realistic painting with clear, textured brushstrokes and impasto effects, giving it an artistic, hand-painted feel. The gallery is dimly lit, with a strong spotlight illuminating the portrait and casting a dramatic shadow on the man and the wall. The floor is clean and reflective. The overall atmosphere is artistic and contemplative, captured with a professional camera.",
+        "prompt": "liên hệ admin",
         "imagePath": "/image/genai/image7.jpeg",
         "category": "Art Gallery & Exhibition"
     },
@@ -264,5 +264,12 @@
         "prompt": "liên hệ admin",
         "imagePath": "/image/genai/b58fc006-ebba-4a83-a74e-ed38f51888cf.png",
         "category": "Divine & Spiritual"
+    },
+    {
+        "id": 39,
+        "title": "Chân Dung Họa Sĩ Trong Xưởng Vẽ 🎨",
+        "prompt": "from my photo create a photo: A bright, cinematic photo of a young man, me, sitting on a chair in my art studio. He concentrates, brush in hand, adding the final touches to a bright, colorful oil portrait on an easel, with a close-up of his own portrait face. The studio background is bright with natural light, displaying painting tools, brushes, and a vase of flowers. The overall style should maintain the warm, detailed, and realistic beauty of a high-quality photo, emphasizing the artistic atmosphere and the artist's intense concentration. Do not change facial details.",
+        "imagePath": "/image/genai/3f0a0605-9e6b-4e29-abe9-391094ee76ec.png",
+        "category": "Art Gallery & Exhibition"
     }
 ]
