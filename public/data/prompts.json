@@ -271,5 +271,12 @@
         "prompt": "from my photo create a photo: A bright, cinematic photo of a young man, me, sitting on a chair in my art studio. He concentrates, brush in hand, adding the final touches to a bright, colorful oil portrait on an easel, with a close-up of his own portrait face. The studio background is bright with natural light, displaying painting tools, brushes, and a vase of flowers. The overall style should maintain the warm, detailed, and realistic beauty of a high-quality photo, emphasizing the artistic atmosphere and the artist's intense concentration. Do not change facial details.",
         "imagePath": "/image/genai/3f0a0605-9e6b-4e29-abe9-391094ee76ec.png",
         "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 40,
+        "title": "Tượng Điêu Khắc Đá Cẩm Thạch Siêu Chi Tiết 🗿",
+        "prompt": "from my photo create a pictures: A photorealistic, ultra-detailed image of a bust sculpture of the subject, rendered in shining white marble. The sculpture should display an incredibly smooth and reflective marble surface, emphasizing its brilliant luster and exceptional artistic craftsmanship. The design is elegant and classic, highlighting the inherent beauty and depth of the marble material. The lighting in the image should be dramatic and strategic, precisely illuminating the sculpture's contours, textures, and chiseled features, creating a visually stunning, mesmerizing, and museum-quality effect. The background should be simple and dark to make the luminous marble stand out. Don't change the facial det.",
+        "imagePath": "/image/genai/1b9e1430-052e-48d2-9fc9-f01599d6d54c.png",
+        "category": "Classical Art Styles"
     }
 ]
