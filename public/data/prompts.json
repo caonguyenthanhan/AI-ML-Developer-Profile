@@ -180,5 +180,47 @@
         "prompt": "from my photo create photo:\r\nA vertical portrait of a man and a child on a narrow, sun-drenched street in an ancient Vietnamese village. The man on the right is leaning comfortably but gracefully against a faded, textured light brown wall, holding a transparent umbrella in his right hand. He is wearing a dark, modern tunic and black trousers. Note: The child on the left (from the second attachment) is playing with a friend and happens to look up at the man. The man gently bends his head down towards the child, sharing a quiet, tender, and bonding moment. The scene is bathed in warm, golden sunlight filtering through the white flowers of a large tree that dominates the left side of the frame. The light creates strong highlights, sharp contrasts, and long, soft shadows on the dusty street, dotted with falling white petals. This style is a dreamy, nostalgic, cinematic photograph with deep, saturated colors and high contrast. Composed in a 4:5 ratio, focusing on the two characters and the tree, emphasizing connection and warm atmosphere. No facial details are altered.",
         "imagePath": "/image/genai/298684ad-9a1e-4e99-8063-f19ac37aa3ba.png",
         "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 27,
+        "title": "Tử Tước Ấn Độ và Cú Hoàng Gia",
+        "prompt": "from my photo create a pictures: Potrait of South Asian man (face same as reference), standing in a grand old library, tailored brown suit with gloves and tie, calm confident expression, holding a majestic owl on forearm, warm cinematic candlelight, golden motes, subtle magical glow, aristocratic elegance.",
+        "imagePath": "/image/genai/05d28f5f-1977-4333-87dc-9b52e3988149.png",
+        "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 28,
+        "title": "Ảnh Chụp Nhóm Tạp Chí Hài Hước",
+        "prompt": "from my photo create a pictures:  \" A high-quality, realistic group selfie magazine concept photo. The main subject (man) from the uploaded reference image must be 100% identical, preserving his exact face, hairstyle, and body type. He is wearing a black shirt with the text ®TAOANHEZ. He is surrounded by a group of beautiful Vietnamese female models (no other men). The man looks genuinely happy, while all the women are smiling happily and snuggling closely toward the camera, creating a warm, intimate atmosphere like a close group of friends gathering. The photo is well-lit, sharp, and styled for a high-end magazine, focusing on the joyful expressions and closeness of the group. Don't change the facial det.",
+        "imagePath": "/image/genai/cc3908e7-c1f1-4263-8e1e-04a5c89396f4.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 29,
+        "title": "Tái Hiện Nhân Vật Manga Bóng Rổ Phong Cách Slam Dunk",
+        "prompt": "from my photo create a pictures: Low angle shot, an illustration in the style of the manga/anime Slam Dunk. The man in the attached photo is redrawn as a basketball manga character wearing all-black Japanese streetwear. He stands firmly with both hands in his pants pockets, gazing straight ahead with a determined expression, evoking the iconic aura of Slam Dunk. His modern black outfit includes a visible basketball jersey inside his jacket featuring a large, bold number. He is wearing retro basketball shoes in black, white, and red, drawn in the classic 90s comic style. Don't change the facial det.",
+        "imagePath": "/image/genai/07ce0b12-9fd2-4bd2-8883-307cdeadbd73.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 30,
+        "title": "Chân Dung Điện Ảnh Sang Trọng Cùng Rolls-Royce Tại Dubai",
+        "prompt": "from my photo create a pictures: An editorial cinematic portrait of the man from the photo, leaning casually against a luxury white Rolls-Royce with the futuristic Dubai skyline, including the Burj Khalifa, in the background. He is wearing an elegant cream double-breasted suit with golden buttons, accessorized with aviator sunglasses and a silver wristwatch. The editing should highlight warm golden-hour tones, a high-end fashion aesthetic, and a powerful lifestyle vibe, symbolizing wealth, sophistication, and modern luxury. Don't change the facial det.",
+        "imagePath": "/image/genai/aa863f0d-cb37-412c-a841-8b9738904db1.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 31,
+        "title": "Kỹ Sư Xây Dựng Hasnain Alvi Trên Công Trường Hiện Đại",
+        "prompt": "from my photo create a pictures: A portrait of Civil Engineer Hasnain Alvi (from the photo) on a site visit, wearing a yellow safety helmet and vest, holding blueprints. He is surrounded by workers, cranes, and scaffolding, with a modern plaza under construction in the background. The photo should be real HD 8K, ultra-realistic, with a cinematic professional vibe. Don't change the facial det.",
+        "imagePath": "/image/genai/6f8b4892-0d9d-4e00-acf0-76bc0f068972.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 32,
+        "title": "Chân Dung Studio Tông Cam Tối Với Ánh Sáng Tối Giản",
+        "prompt": "from my photo create a pictures: A dark orange studio photo featuring the young man from the photo, sitting casually on a metal folding chair with his legs crossed. He is wearing black denim baggy jeans, a black t-shirt, and black boots. The lighting is soft and minimal, producing sharp shadows and a moody atmosphere. His pose is relaxed, slightly leaning with one hand on the chair's backrest, his face turned to the side, emphasizing a modern aesthetic. Don't change the facial det.",
+        "imagePath": "/image/genai/f6b773b2-4bcb-487c-969b-d4052c0c382c.png",
+        "category": "Portrait Photography"
     }
 ]
