@@ -18,6 +18,7 @@ app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # 1 MB
 
 PROMPTS_FILE = 'public/data/prompts.json'
 CATEGORIES_FILE = 'public/data/category.json'
+PROMPTS_VIP_FILE = 'private/prompts_vip.json'
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -49,6 +50,7 @@ def add_prompt():
         title = request.form['title']
         prompt_text = request.form['prompt']
         category = request.form['category']
+        is_public = 'is_public' in request.form  # Checkbox được tick hay không
         
         image_path = None
         if 'image' in request.files:
@@ -59,17 +61,41 @@ def add_prompt():
                 file.save(file_path)
                 image_path = f"/image/genai/{filename}"
 
+        # Lấy ID mới từ cả hai file để đảm bảo không trùng
         prompts = load_data(PROMPTS_FILE)
-        new_id = max([p['id'] for p in prompts]) + 1 if prompts else 1
-        new_prompt = {
+        prompts_vip = load_data(PROMPTS_VIP_FILE)
+        all_ids = [p['id'] for p in prompts] + [p['id'] for p in prompts_vip]
+        new_id = max(all_ids) + 1 if all_ids else 1
+        
+        # Tạo prompt đầy đủ
+        full_prompt = {
             "id": new_id,
             "title": title,
             "prompt": prompt_text,
             "imagePath": image_path,
             "category": category
         }
-        prompts.append(new_prompt)
-        save_data(PROMPTS_FILE, prompts)
+        
+        if is_public:
+            # Nếu công khai, lưu đầy đủ vào prompts.json
+            prompts.append(full_prompt)
+            save_data(PROMPTS_FILE, prompts)
+        else:
+            # Nếu riêng tư, lưu đầy đủ vào prompts_vip.json
+            prompts_vip.append(full_prompt)
+            save_data(PROMPTS_VIP_FILE, prompts_vip)
+            
+            # Và lưu thông tin cơ bản với prompt="liên hệ admin" vào prompts.json
+            public_prompt = {
+                "id": new_id,
+                "title": title,
+                "prompt": "liên hệ admin",
+                "imagePath": image_path,
+                "category": category
+            }
+            prompts.append(public_prompt)
+            save_data(PROMPTS_FILE, prompts)
+        
         return redirect(url_for('index'))
     return render_template('add.html', categories=categories)
 
@@ -285,6 +311,8 @@ def admin_server_control():
 if __name__ == '__main__':
     if not os.path.exists('public/image/genai'):
         os.makedirs('public/image/genai')
+    if not os.path.exists('private'):
+        os.makedirs('private')
     if not os.path.exists(PROMPTS_FILE):
         os.makedirs(os.path.dirname(PROMPTS_FILE), exist_ok=True)
         with open(PROMPTS_FILE, 'w', encoding='utf-8') as f:
@@ -292,5 +320,9 @@ if __name__ == '__main__':
     if not os.path.exists(CATEGORIES_FILE):
         os.makedirs(os.path.dirname(CATEGORIES_FILE), exist_ok=True)
         with open(CATEGORIES_FILE, 'w', encoding='utf-8') as f:
+            f.write('[]')
+    if not os.path.exists(PROMPTS_VIP_FILE):
+        os.makedirs(os.path.dirname(PROMPTS_VIP_FILE), exist_ok=True)
+        with open(PROMPTS_VIP_FILE, 'w', encoding='utf-8') as f:
             f.write('[]')
     app.run(debug=True)

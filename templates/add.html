@@ -46,6 +46,11 @@
             <label for="image">Ảnh (dưới 1MB):</label>
             <input type="file" id="image" name="image" accept="image/*">
 
+            <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                <input type="checkbox" id="is_public" name="is_public" checked>
+                <label for="is_public" style="font-weight: normal;">Công khai prompt (bỏ tick nếu muốn giữ riêng tư)</label>
+            </div>
+
             <button type="submit">Lưu</button>
         </form>
         <a href="{{ url_for('index') }}">Quay lại</a>
