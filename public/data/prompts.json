@@ -278,5 +278,131 @@
         "prompt": "from my photo create a pictures: A photorealistic, ultra-detailed image of a bust sculpture of the subject, rendered in shining white marble. The sculpture should display an incredibly smooth and reflective marble surface, emphasizing its brilliant luster and exceptional artistic craftsmanship. The design is elegant and classic, highlighting the inherent beauty and depth of the marble material. The lighting in the image should be dramatic and strategic, precisely illuminating the sculpture's contours, textures, and chiseled features, creating a visually stunning, mesmerizing, and museum-quality effect. The background should be simple and dark to make the luminous marble stand out. Don't change the facial det.",
         "imagePath": "/image/genai/1b9e1430-052e-48d2-9fc9-f01599d6d54c.png",
         "category": "Classical Art Styles"
+    },
+    {
+        "id": 41,
+        "title": "Tấm Mood Board Thời Trang Sáng Tạo ✂️",
+        "prompt": "from my photo create a pictures: A cute, creative fashion mood board collage centered around a portrait of the subject. The main photo is surrounded by individual item cutouts of the clothing and accessories the model is wearing. The collage features playful, marker-style, handwritten notes and rough sketches detailing the styling and inspiration. Crucially, include English brand names and the source (e.g., T-shirt: Uniqlo, source: online store) next to the corresponding cutouts. The overall aesthetic should be bright, high-contrast, slightly messy but stylish, resembling a page torn from a fashion designer's sketchbook or a creative influencer's journal. Don't change the facial det.",
+        "imagePath": "/image/genai/29e95346-beef-45bb-9874-d758baf6825c.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 42,
+        "title": "Tạp Chí Nhóm Tự Sướng Parody Hài Hước Nhật Bản 📸",
+        "prompt": "from my photo create a pictures: An ultra-realistic, high-detail, parody magazine cover group selfie with a 3:4 aspect ratio. The main subject, with a sly smile, is surrounded and snuggled up by several beautiful Japanese female models (not men) who are all smiling happily, mimicking a group of best friends in a tight frame. The scene is set in a naturally lit bedroom, with realistically reproduced skin tones. Japanese magazine-style text, headlines, and titles are layered throughout the image, mimicking the aesthetic of adult or entertainment magazines but with an over-the-top, humorous, and cheeky tone. The image must be super-sharp, with vivid colors, a film-like composition, and ready to be enjoyed in UHD 8K resolution. The main subject's face, hairstyle, body type, and sly smile must be 100% identical to the reference image.",
+        "imagePath": "/image/genai/dc74b709-4122-4f88-888f-0e80011a73e0.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 43,
+        "title": "Tương Tác Cùng Khối Chữ 3D Đầy Màu Sắc ✨",
+        "prompt": "from my photo create a pictures: An ultra-realistic digital art piece of the subject in a dynamic full-body pose. The subject wears a stylish, modern, casual relaxed outfit (shirt, pants, shoes, and accessories) in bold, striking colors. A single, large text '[TAOANHEZ]' is rendered as massive, 3D block glossy letters in a bold, contrasting color. The subject is actively interacting with the text (e.g., sitting on top of the letters, leaning against them naturally) so that the text and the model blend harmoniously and look like a single composition. The background is an artistic, decorative space with bold yet elegant colors, dynamic but not distracting from the subject. The image features professional studio lighting and is presented in ultra-high resolution with sharp focus. Don't change the facial det.",
+        "imagePath": "/image/genai/57b634a7-8a0d-4865-ab7a-3f657d8d791b.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 44,
+        "title": "Truy Nã Hải Tặc Trên Giấy Da Cũ Kỹ 🏴‍☠️",
+        "prompt": "from my photo create a pictures: A detailed, brown monochrome wanted poster for a pirate, drawn with the texture and aesthetic of aged parchment. The top section features a large, close-up sketch of the subject's face, wearing a classic pirate hat. The style and character design, down to the smallest facial details, must be retained from the original image, making the drawing appear hand-sketched and highly realistic. At the bottom of the poster, display a large, random bounty amount using a fictitious currency unit (e.g., 750,000 Doubloons, 1,200,000 Galactic Credits). Directly below the bounty, in small letters, write a brief description of the crime using a fictitious, invented language or script (no English or Chinese characters allowed), enhancing the authentic pirate/fantasy feel. Don't change the facial det.",
+        "imagePath": "/image/genai/867a0343-7d08-443e-95a0-6ae04afe4557.png",
+        "category": "Classical Art Styles"
+    },
+    {
+        "id": 45,
+        "title": "One piece wanted poster: Poster Truy Nã Hải Tặc Cổ Điển",
+        "prompt": "from my photo create a pictures: A highly detailed wanted poster drawn on aged parchment in a brown monochrome palette. The texture of the parchment should be prominent. At the top, paste a large close-up image of the character's face from the original photo, maintaining the exact style and character design down to the smallest detail. The character must be wearing a classic pirate hat. Below the image, the text \"WANTED\" and \"DEAD OR ALIVE\" should be prominently displayed in an old-timey font. At the bottom, write a random large bounty amount using a fictitious currency symbol (e.g., 'G' for Gold or 'A' for Alons). Beneath the bounty, in very small letters, write the crime in a fictitious, invented language (use random non-English, non-Chinese characters to mimic an unknown alphabet, like a mix of glyphs or made-up symbols). The overall style is that of a vintage, hand-drawn pirate wanted poster. Don't change the facial det.",
+        "imagePath": "/image/genai/f44d3abd-282a-4668-b71b-6a00e9b94ae9.png",
+        "category": "Classical Art Styles"
+    },
+    {
+        "id": 46,
+        "title": "Avatar 3D Phong Cách Hoạt Hình",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/ded4fa9a-9370-4479-9bc6-7410dcc77415.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 47,
+        "title": "Đối Thoại Siêu Thực Của Rượu Vang Đỏ (Khung Vàng)",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/e9fa48d9-df65-43ba-b7d4-c8745c113c7b.png",
+        "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 48,
+        "title": "Khoảnh Khắc Điện Ảnh Trong Xe Hơi",
+        "prompt": "from my photo create a pictures: A cinematic and hyper-realistic image of the Asian man from the photo sitting in the driver’s seat of a modern luxury car. He is holding a smartphone in his right hand and casually resting his left hand on the steering wheel. He is wearing a stylish black leather jacket over a light plaid shirt and dark jeans. The car interior must be modern and highly detailed, with a visible dashboard and gear shift. The background outside the window is a blurred forest scene, with raindrops visible on the glass, creating a natural, dramatic look. The lighting is soft and moody (noir style), sharply highlighting the man's face and features with perfect skin texture and sharp, professional cinematic details. Don't change the facial det.",
+        "imagePath": "/image/genai/bd8cdb0a-5d1d-49ee-9a28-1375acbc7d66.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 49,
+        "title": "Khoảnh Khắc Vui Vẻ Bên Ngoài 7-Eleven Philippines",
+        "prompt": "from my photo create a pictures: A hyper-realistic and raw cinematic scene of the Vietnamese man from the photo sitting on the ground directly in front of a 7-Eleven store in the Philippines. He is wearing a torn, distressed jersey shirt and distressed denim shorts. In his right hand, he holds chopsticks with instant noodles. In his left hand, he holds an orange iPhone 17 Pro Max, raised slightly, looking at the phone with a happy, glowing expression. A bowl of instant noodles is in front of him. A thin, short-haired brown askal dog sits beside him, gnawing on a chicken bone. A homeless person is lying nearby on the ground. The atmosphere is raw, realistic, and street-documentary style, capturing the blend of struggle and joy in the moment. Don't change the facial det.",
+        "imagePath": "/image/genai/618ea94b-121d-4e34-891b-122aad1749fe.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 50,
+        "title": "Khoảnh Khắc Tự Do Đầy Cảm Xúc Giữa Đồng Cỏ",
+        "prompt": "from my photo create a pictures: A cinematic, moody photograph of the man (from the uploaded photo) standing in a lush green field of tall grass under a cloudy, overcast sky. He is wearing a loose, dark button-up shirt and dark trousers. His posture is expressive and dramatic, leaning slightly backward with one arm outstretched and palm open, as if embracing the wind or the moment. His head is tilted back, eyes closed, and he is wearing large, over-ear silver headphones, conveying a sense of calm and emotional release. The perspective is slightly low-angle, with blurred grass in the foreground creating a dreamy depth of field. The overall color grading is in muted green and gray tones, with soft, diffused natural lighting for a serene, reflective, and slightly melancholic mood. The image should feel cinematic, atmospheric, and intimate, capturing a quiet moment of solitude and freedom. Don't change the facial det.",
+        "imagePath": "/image/genai/548d8c02-f1ea-4ea4-842d-920fb9037726.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 51,
+        "title": "Khung Cảnh Văn Phòng Tương Lai Với Màn Hình Holographic",
+        "prompt": "from my photo create a pictures: A side view scene of a futuristic, high-tech office at night. The man (from the uploaded photo), wearing rim glasses, is intently working on a large, transparent holographic screen. The screen displays intricate, glowing data visualizations, including a world map, bar graphs, circular interfaces, and digital analytics. The man is actively interacting with the holographic interface using his hand, and a neon-blue light from the screen dramatically reflects on his face. Outside the window, city lights create a blurred bokeh effect, emphasizing the high-tech atmosphere. The style is cinematic and hyper-realistic. Don't change the facial det.",
+        "imagePath": "/image/genai/a1a274bc-aaa0-4f79-aabc-febdc52b65bb.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 52,
+        "title": "Khoảnh Khắc Rơi Tự Do Siêu Thực Giữa Những Tòa Nhà Chọc Trời",
+        "prompt": "from my photo create a pictures: A hyper-realistic image of the Asian man (from the uploaded photo), with short hair, falling freely between massive, towering skyscrapers, captured from a dramatic low-angle view. Debris is scattered in the air around him, under a cloudy, overcast sky. He wears modern casual clothing. His face is partly hidden in shadow, creating an intense and dramatic atmosphere. Floating freely in front of him is a large smartphone with its screen glowing, displaying a music app interface. The image must have sharp details, a surreal mood, and cinematic lighting. Don't change the facial det.",
+        "imagePath": "/image/genai/06f128ee-582d-499d-a534-1ed8f11dcfb2.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 53,
+        "title": "Chân Dung Cơ Trưởng Trong Buồng Lái Hiện Đại",
+        "prompt": "from my photo create a pictures: A photorealistic image of an airline pilot (with the man's face from the uploaded photo) sitting inside a modern commercial airplane cockpit. The pilot is wearing a crisp white uniform shirt with shoulder epaulets, a black pilot hat, a blue tie, and a lanyard around his neck. He is seated in the captain’s seat, with one hand resting on the aircraft’s control yoke and the other hand on his lap. The cockpit is highly detailed, filled with instrument panels, switches, and throttle levers. Bright sunlight is shining through the cockpit windows, creating a realistic and professional atmosphere. Don't change the facial det.",
+        "imagePath": "/image/genai/c5b260e8-ad0c-4270-a258-6aa35aafa948.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 54,
+        "title": "Chân Dung Gương Đen Trắng Đầy Kịch Tính",
+        "prompt": "from my photo create a pictures: A dramatic and artistic black and white photograph in 9:16 vertical format with a classic, cinematic aesthetic. The atmosphere is mysterious, elegant, and full of dramatic nuance. The subject (using the face from the uploaded photo) wears a dark, impeccably tailored formal suit and a crisp white dress shirt. The camera is positioned behind the subject, capturing his back as he faces a large mirror. His posture is slightly hunched over a table, with his hands resting on its surface, conveying a sense of elegant confidence and deep thought. His reflection in the mirror must reveal a serious and intense facial expression. The setting is an exclusive dressing room or a high-end hotel suite. In the foreground, at the bottom of the frame, a small table holds a single, elegant perfume bottle. The key feature is the lighting: it is focused entirely on the reflection. The man's face and the front of his body are illuminated only through the mirror, while his back and the surrounding room are cast in intense shadow. This creates a high-contrast, artistic effect where the reflection is the brightest, most highlighted part of the image. Emulate the classic visual style of fine-art film photography with deep, rich blacks and sharp, clear highlights in 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/d7fe594c-4a00-44e2-9c32-8ae236c72a79.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 55,
+        "title": "Chân Dung Studio Ánh Sáng Hoàng Hôn",
+        "prompt": "from my photo create a pictures: A moody studio portrait of the man (from the uploaded photo), bathed in a golden-orange spotlight. The light should create a glowing circular halo directly behind him on the wall. This warm, sunset-like light should sculpt his face and upper body with soft tones, while casting a strong, dramatic head shadow to the right. Style the person in a refined, elegant manner (e.g., a simple high-collar shirt or suit jacket). His eyes are closed and his chin is tilted slightly up, conveying a sense of serenity or emotional release. Cinematic, high-contrast style. Don't change the facial det.",
+        "imagePath": "/image/genai/59d6c86f-e5e1-4f08-a049-40d6c3fdb75b.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 56,
+        "title": "Tai Nạn Xe Máy Hài Hước Trên Đường Phố Việt Nam",
+        "prompt": "from my photo create a pictures: A hyper-realistic cinematic street scene in bright daylight in Vietnam. The man (using the face from the uploaded photo) is lying face-down on the urban asphalt road, positioned as if he just fell from a light blue vintage scooter. He is wearing a slightly dirty gray zip-up hoodie, blue jeans, and white sneakers. A light blue open-face helmet with a black star graphic lies near his head. He has a mad selfie expression, with his arm stretched forward, holding a smartphone toward the camera. His face and arms must show light scratches, dust, and small bruises for realism. Scattered oranges, mangoes, durians, and other colorful fruit are rolling across the asphalt from a toppled wooden market stall with white tablecloths. A tipped-over pink scooter with chrome details lies behind him. In the background, a woman in a traditional Vietnamese robe holds her head in shock, while a young boy in a striped T-shirt watches wide-eyed. Parked cars and mid-rise apartment buildings line the street beneath lush green trees. Warm afternoon sunlight filters through the foliage, creating dynamic highlights, soft shadows, and a slightly wide-angle perspective for dramatic depth. Don't change the facial det.",
+        "imagePath": "/image/genai/f96b82a5-c246-4616-bba5-6b59e1936159.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 57,
+        "title": "Chân Dung Phong Cách Wong Kar-wai: Sự Cô Đơn Trong Mưa",
+        "prompt": "from my photo create a pictures: A hyper-realistic cinematic portrait in the distinctive Wong Kar-wai style. The subject (using the uploaded photo) is sitting with his head resting against the window of an old taxi, with his hand resting on the edge of the window frame. The camera is shot from outside the window, creating overlapping reflections on the glass and his face. The setting is the interior of an old taxi with faded leather seats, and the glass is fogged up by rain. Red-green neon lights from the city are passing by, causing his face to change color dramatically with the light. The streetlights refract into blurred, streaking lines on the wet glass. The lighting should highlight the jawline and neck to create a statuesque look on his face. He is wearing a black button-down shirt, slightly open, and his hair appears damp. The image tone features intense red-green contrast, thick film grain, pronounced motion blur, and a hazy glow around the vehicle's headlights. The mood is one of loneliness, solitude, and a sense of a big city with no answering voice. Don't change the facial det.",
+        "imagePath": "/image/genai/366d9d75-60cc-4dd7-b54b-579260721c82.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 58,
+        "title": "Khoảnh Khắc Ăn Mừng Bàn Thắng Của Cầu Thủ Việt Nam",
+        "prompt": "from my photo create a pictures: A hyper-realistic and dynamic photograph capturing the moment a male soccer player (using the face from the uploaded photo), about 23 years old, is celebrating a goal on a lush green field. He is wearing a red shirt and shorts with the number 87 clearly visible in white, and a Vietnamese flag logo on the chest. He wears red socks and white Adidas cleats. Behind him, other players and spectators are clearly visible, many holding Vietnamese flags, all illuminated by bright stadium lights. The composition should be dynamic, focusing sharply on the player's celebratory movement and the soccer ball nearby, using a shallow depth of field to blur the background. Cinematic sports photography style. Don't change the facial det.",
+        "imagePath": "/image/genai/bc929874-e442-402a-b2bf-b3dc18d9ec52.png",
+        "category": "Portrait Photography"
     }
 ]
