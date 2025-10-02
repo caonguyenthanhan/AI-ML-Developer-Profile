@@ -522,7 +522,7 @@
         "title": "Chân Dung Cưới Studio Lãng Mạn (Trăm Năm Hạnh Phúc)",
         "prompt": "from my photo create a pictures: A hyper-realistic studio wedding portrait of the couple (using their exact real faces, hairstyles, and skin tones from the uploaded photo). The groom is wearing a sharp white tuxedo with a black bow tie, gracefully holding a bouquet of white orchids in one hand while gently lifting the bride’s hand with the other, as if leading her into a graceful dance. The bride is dressed in a voluminous off-shoulder white ball gown with elegant floral details at the waist, smiling radiantly with a graceful pose. Her hair is neatly styled with a floral accessory and a flowing veil behind her. The background is a clean gray studio backdrop with the elegant, scripted text ‘Trăm năm hạnh phúc’ displayed prominently at the top, creating a luxurious, romantic, and timeless atmosphere. Don't change the facial det.",
         "imagePath": "/image/genai/67256b56-02a7-4a41-b439-ed2f4ec82f67.png",
-        "category": "Portrait Photography"
+        "category": "Wedding Day"
     },
     {
         "id": 76,
@@ -544,5 +544,12 @@
         "prompt": "from my photo create a pictures: A hyper-realistic, dramatic fine-art photograph of a young Asian girl (using the same facial features as the reference image), sitting on the floor of a dark, messy art studio. She is wearing a soft blue oversized sweater and is meticulously painting a giant, glowing, surreal neon portrait of herself onto the wall. The glowing portrait radiates ethereal light in shades of vibrant cyan and lavender, serving as the main light source. Several luminous, magical butterflies and shimmering golden light particles float around the room. In the foreground, paintbrushes, scattered sketches, and glowing artistic circles are visible on the glossy, reflective floor. Shot with a wide-angle 35mm lens, shallow depth of field, and high detail, emphasizing the stark contrast between the warm, natural skin tone and the cool, otherworldly glow. Cinematic lighting, hyper-detailed texture, surreal fantasy art style. Don't change the facial det.",
         "imagePath": "/image/genai/599bee33-9f42-48e6-9619-52b5d1f370ba.png",
         "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 79,
+        "title": "Khoảnh Khắc Tình Yêu Cổ Trang, Ánh Sáng Đỏ Thân Mật",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/c5962b2c-109c-43eb-be3a-deee8ab088a0.png",
+        "category": "Portrait Photography"
     }
 ]
