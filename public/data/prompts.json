@@ -565,5 +565,12 @@
         "prompt": "from my photo create a pictures: A striking editorial studio portrait of a young Asian woman (using the face and confident expression from the reference image) wearing rich, intricately embroidered traditional ethnic minority attire (H'Mong/Dao style), featuring a dark black long-sleeved shirt with vibrant red and white patterns, layered over a patterned skirt. Her head is wrapped in a bold, multicolored plaid scarf (red, orange, green, yellow) with fringed edges, covering her hair. She wears substantial silver jewelry, including thick neck rings and silver bangles. The background is a solid, vibrant Cobalt Blue seamless backdrop, creating high-contrast and visual impact. Dramatic studio beauty lighting (softbox and fill light) is used to perfectly illuminate the subject, emphasizing the rich texture of the embroidery and the sharpness of the makeup. Vertical portrait, ultra-high resolution 8K, fashion magazine quality. Don't change the facial det.",
         "imagePath": "/image/genai/44cfaa67-b7ae-4c02-9833-92b66bca6240.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 82,
+        "title": "Chân Dung Studio Siêu Thực: Nàng Thơ Cô Đơn Trong Ánh Sáng Xanh",
+        "prompt": "from my photo create a pictures: Ultra-sharp 8K studio portrait of a beautiful young East Asian woman, early twenties, with long, flowing black wavy hair and thin, light eyebrows. She looks slightly away from the lens with a serene, slightly melancholy expression, her head slightly tilted. Her bare shoulders suggest an elegant, minimal look. The long, black hair is naturally styled and appears slightly windblown, with individual strands catching the light and subtly floating around her face. Makeup is natural and subtle, highlighting her features. The background is an extremely dark, almost black, soft bokeh, dramatically isolating the subject. The lighting features striking blue tones, conveying a feeling of cold loneliness. A dramatic, artistic key light source positioned above and slightly behind creates a strong halo effect on her hair and sharp highlights on her forehead, bridge of the nose, and cheekbones. The face is sculpted by soft, full lighting. Cinematic, highly detailed, slight film grain, shallow depth of field. Don't change the facial det.",
+        "imagePath": "/image/genai/3b962255-e543-4b12-adf5-900cc99c5811.png",
+        "category": "Portrait Photography"
     }
 ]
