@@ -2,57 +2,396 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Categories</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .container { max-width: 600px; margin: auto; }
-        form { display: flex; gap: 10px; margin-bottom: 20px; }
-        input[type="text"] { flex-grow: 1; padding: 8px; }
-        button { padding: 8px 12px; }
-        ul { list-style: none; padding: 0; }
-        li { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 10px; 
-            border: 1px solid #ccc; 
-            margin-bottom: 8px; 
-            border-radius: 5px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .delete-btn { 
-            background-color: #f44336; 
-            color: white; 
-            border: none; 
-            padding: 5px 10px; 
-            cursor: pointer; 
-            border-radius: 4px; 
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container { 
+            max-width: 1000px; 
+            margin: auto; 
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .add-form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .add-form h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .form-field {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .form-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-field input[type="text"],
+        .form-field input[type="color"],
+        .form-field select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-field input[type="text"]:focus,
+        .form-field select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-field input[type="color"] {
+            height: 50px;
+            cursor: pointer;
+        }
+        
+        .color-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .color-input-group input[type="text"] {
+            flex: 1;
+            min-width: 100px;
+        }
+        
+        .icon-hint {
+            display: block;
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+        
+        .btn-add {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .categories-section h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .category-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .category-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+        
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-count {
+            background: #f8f9fa;
+            color: #666;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        
+        .delete-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+        
+        .no-categories {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            padding: 50px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-group {
+                flex-direction: column;
+            }
+            
+            .form-group input[type="text"] {
+                min-width: 100%;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Quản lý Categories</h1>
-        <a href="{{ url_for('index') }}">Quay lại trang chủ</a>
+        <div class="header">
+            <h1>🎨 Quản lý Categories</h1>
+            <p>Tổ chức và quản lý các danh mục prompt của bạn</p>
+            <a href="{{ url_for('index') }}" class="back-link">← Quay lại trang chủ</a>
+        </div>
 
-        <h2>Thêm Category Mới</h2>
-        <form method="post">
-            <input type="text" name="new_category" placeholder="Tên category mới" required>
-            <button type="submit">Thêm</button>
-        </form>
+        <div class="content">
+            <div class="add-form">
+                <h2>➕ Thêm Category Mới</h2>
+                <form method="post">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="category_name">Tên Category *</label>
+                            <input type="text" id="category_name" name="new_category" placeholder="Ví dụ: Portrait Photography" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="category_description">Mô tả</label>
+                            <input type="text" id="category_description" name="category_description" placeholder="Mô tả ngắn về category">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="category_color">Màu sắc</label>
+                            <div class="color-input-group">
+                                <input type="color" id="category_color_picker" value="#667eea" onchange="updateColorText()">
+                                <input type="text" id="category_color" name="category_color" placeholder="#667eea" value="#667eea" pattern="^#[0-9A-Fa-f]{6}$" oninput="updateColorPicker()">
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label for="category_icon">Icon</label>
+                            <input type="text" id="category_icon" name="category_icon" placeholder="gear, camera, palette, sun, brush, moon, leaf, heart..." value="folder">
+                            <small class="icon-hint">Nhập tên icon: gear, camera, palette, sun, brush, moon, leaf, heart, star, diamond, folder, book, music, video, code, design, photo, art, game, tool, light, fire, water, earth, rocket, crown, magic</small>
+                        </div>
+                        <div class="form-field">
+                            <button type="submit" class="btn-add">Thêm Category</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-        <h2>Danh sách Categories</h2>
-        {% if categories %}
-            <ul>
-                {% for category in categories %}
-                <li>
-                    <span>{{ category }}</span>
-                    <a href="{{ url_for('delete_category', category_name=category) }}" class="delete-btn" onclick="return confirm('Bạn có chắc chắn muốn xóa category này không?');">Xóa</a>
-                </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Chưa có category nào.</p>
-        {% endif %}
+            <div class="categories-section">
+                <h2>📋 Danh sách Categories</h2>
+                {% if categories %}
+                    <div class="categories-grid">
+                        {% for category in categories %}
+                        <div class="category-card" style="border-left-color: {{ category.color if category.color else '#667eea' }};">
+                            <div class="category-header">
+                                <div>
+                                    <div class="category-name">
+                                        {% if category.icon %}
+                                            <span style="margin-right: 8px;">
+                                                {% if category.icon == 'camera' %}📷
+                                                {% elif category.icon == 'palette' %}🎨
+                                                {% elif category.icon == 'sun' %}☀️
+                                                {% elif category.icon == 'brush' %}🖌️
+                                                {% elif category.icon == 'moon' %}🌙
+                                                {% elif category.icon == 'leaf' %}🍃
+                                                {% elif category.icon == 'heart' %}💖
+                                                {% elif category.icon == 'star' %}⭐
+                                                {% elif category.icon == 'diamond' %}💎
+                                                {% elif category.icon == 'gear' or category.icon == 'Gear' %}⚙️
+                                                {% elif category.icon == 'folder' %}📁
+                                                {% elif category.icon == 'book' %}📚
+                                                {% elif category.icon == 'music' %}🎵
+                                                {% elif category.icon == 'video' %}🎬
+                                                {% elif category.icon == 'code' %}💻
+                                                {% elif category.icon == 'design' %}🎨
+                                                {% elif category.icon == 'photo' %}📸
+                                                {% elif category.icon == 'art' %}🖼️
+                                                {% elif category.icon == 'game' %}🎮
+                                                {% elif category.icon == 'tool' %}🔧
+                                                {% elif category.icon == 'light' %}💡
+                                                {% elif category.icon == 'fire' %}🔥
+                                                {% elif category.icon == 'water' %}💧
+                                                {% elif category.icon == 'earth' %}🌍
+                                                {% elif category.icon == 'rocket' %}🚀
+                                                {% elif category.icon == 'crown' %}👑
+                                                {% elif category.icon == 'magic' %}✨
+                                                {% else %}📁
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+                                        {{ category.name if category.name else category }}
+                                    </div>
+                                    {% if category.description %}
+                                        <div class="category-description">{{ category.description }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="category-stats">
+                                <span class="category-count">
+                                    {{ category.count if category.count is defined else 0 }} prompts
+                                </span>
+                                <button class="delete-btn" onclick="deleteCategory('{{ category.name if category.name else category }}')">
+                                    🗑️ Xóa
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="no-categories">
+                        <p>🚫 Chưa có category nào.</p>
+                        <p>Hãy thêm category đầu tiên để bắt đầu tổ chức prompts của bạn!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
+
+    <script>
+        function deleteCategory(categoryName) {
+            if (confirm('Bạn có chắc chắn muốn xóa category "' + categoryName + '" không?\n\nLưu ý: Tất cả prompts thuộc category này sẽ không còn category.')) {
+                window.location.href = "{{ url_for('delete_category', category_name='PLACEHOLDER') }}".replace('PLACEHOLDER', encodeURIComponent(categoryName));
+            }
+        }
+        
+        function updateColorText() {
+            const colorPicker = document.getElementById('category_color_picker');
+            const colorText = document.getElementById('category_color');
+            colorText.value = colorPicker.value;
+        }
+        
+        function updateColorPicker() {
+            const colorText = document.getElementById('category_color');
+            const colorPicker = document.getElementById('category_color_picker');
+            if (colorText.value.match(/^#[0-9A-Fa-f]{6}$/)) {
+                colorPicker.value = colorText.value;
+            }
+        }
+    </script>
 </body>
 </html>

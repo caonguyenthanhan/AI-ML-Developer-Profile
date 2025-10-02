@@ -9,12 +9,13 @@ import sys
 from flask import Flask, request, render_template, redirect, url_for, flash, jsonify
 from werkzeug.utils import secure_filename
 import uuid
+from PIL import Image, ImageOps
 
 # Cấu hình ứng dụng
 app = Flask(__name__, static_folder='public', static_url_path='')
 app.config['UPLOAD_FOLDER'] = 'public/image/genai'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
-app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # 1 MB
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB
 
 PROMPTS_FILE = 'public/data/prompts.json'
 CATEGORIES_FILE = 'public/data/category.json'
@@ -33,6 +34,112 @@ def load_data(filename):
 def save_data(filename, data):
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
+
+def compress_image(image_path, target_size_mb=1):
+    """
+    Nén ảnh để đảm bảo kích thước file dưới target_size_mb MB.
+    
+    Args:
+        image_path (str): Đường dẫn đến file ảnh
+        target_size_mb (float): Kích thước mục tiêu tính bằng MB (mặc định 1MB)
+    
+    Returns:
+        bool: True nếu nén thành công, False nếu có lỗi
+    """
+    try:
+        target_size_bytes = target_size_mb * 1024 * 1024
+        
+        # Mở ảnh
+        with Image.open(image_path) as img:
+            # Chuyển đổi sang RGB nếu cần (để hỗ trợ PNG với alpha channel)
+            if img.mode in ('RGBA', 'LA', 'P'):
+                img = img.convert('RGB')
+            
+            # Tự động xoay ảnh theo EXIF orientation
+            img = ImageOps.exif_transpose(img)
+            
+            # Lấy kích thước file hiện tại
+            current_size = os.path.getsize(image_path)
+            
+            # Nếu file đã nhỏ hơn target size thì không cần nén
+            if current_size <= target_size_bytes:
+                return True
+            
+            # Tính toán chất lượng ban đầu
+            quality = 95
+            
+            # Thử nén với các mức chất lượng khác nhau
+            while quality > 10:
+                # Lưu ảnh tạm với chất lượng hiện tại
+                temp_path = image_path + '.temp'
+                img.save(temp_path, 'JPEG', quality=quality, optimize=True)
+                
+                # Kiểm tra kích thước
+                temp_size = os.path.getsize(temp_path)
+                
+                if temp_size <= target_size_bytes:
+                    # Thay thế file gốc bằng file đã nén
+                    os.replace(temp_path, image_path)
+                    return True
+                else:
+                    # Xóa file tạm và giảm chất lượng
+                    os.remove(temp_path)
+                    quality -= 5
+            
+            # Nếu vẫn không đạt được kích thước mong muốn, thử resize ảnh
+            original_width, original_height = img.size
+            scale_factor = 0.9
+            
+            while scale_factor > 0.3:
+                new_width = int(original_width * scale_factor)
+                new_height = int(original_height * scale_factor)
+                
+                resized_img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                
+                temp_path = image_path + '.temp'
+                resized_img.save(temp_path, 'JPEG', quality=85, optimize=True)
+                
+                temp_size = os.path.getsize(temp_path)
+                
+                if temp_size <= target_size_bytes:
+                    os.replace(temp_path, image_path)
+                    return True
+                else:
+                    os.remove(temp_path)
+                    scale_factor -= 0.1
+            
+            # Nếu vẫn không thể nén đủ nhỏ, sử dụng chất lượng thấp nhất
+            img.save(image_path, 'JPEG', quality=10, optimize=True)
+            return True
+            
+    except Exception as e:
+        print(f"Lỗi khi nén ảnh {image_path}: {str(e)}")
+        return False
+
+def update_category_counts():
+    """Cập nhật số lượng prompts cho mỗi category."""
+    try:
+        categories = load_data(CATEGORIES_FILE)
+        prompts = load_data(PROMPTS_FILE)
+        
+        # Đếm số prompts cho mỗi category
+        category_counts = {}
+        for prompt in prompts:
+            category = prompt.get('category', '')
+            if category:
+                category_counts[category] = category_counts.get(category, 0) + 1
+        
+        # Cập nhật count cho mỗi category
+        for category in categories:
+            if isinstance(category, dict):
+                category_name = category.get('name', '')
+                category['count'] = category_counts.get(category_name, 0)
+        
+        save_data(CATEGORIES_FILE, categories)
+        return True
+    except Exception as e:
+        print(f"Error updating category counts: {e}")
+        return False
 
 @app.route('/')
 def index():
@@ -59,6 +166,10 @@ def add_prompt():
                 filename = secure_filename(f"{uuid.uuid4()}.{file.filename.rsplit('.', 1)[1].lower()}")
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(file_path)
+                
+                # Nén ảnh nếu cần thiết
+                compress_image(file_path)
+                
                 image_path = f"/image/genai/{filename}"
 
         # Lấy ID mới từ cả hai file để đảm bảo không trùng
@@ -96,6 +207,8 @@ def add_prompt():
             prompts.append(public_prompt)
             save_data(PROMPTS_FILE, prompts)
         
+        # Cập nhật count cho categories
+        update_category_counts()
         return redirect(url_for('index'))
     return render_template('add.html', categories=categories)
 
@@ -125,9 +238,15 @@ def edit_prompt(prompt_id):
                 filename = secure_filename(f"{uuid.uuid4()}.{file.filename.rsplit('.', 1)[1].lower()}")
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(file_path)
+                
+                # Nén ảnh nếu cần thiết
+                compress_image(file_path)
+                
                 prompt_to_edit['imagePath'] = f"/image/genai/{filename}"
 
         save_data(PROMPTS_FILE, prompts)
+        # Cập nhật count cho categories
+        update_category_counts()
         return redirect(url_for('index'))
     return render_template('edit.html', prompt=prompt_to_edit, categories=categories)
 
@@ -141,6 +260,8 @@ def delete_prompt(prompt_id):
             os.remove(prompt_to_delete['imagePath'][1:])
         prompts = [p for p in prompts if p['id'] != prompt_id]
         save_data(PROMPTS_FILE, prompts)
+        # Cập nhật count cho categories
+        update_category_counts()
     return redirect(url_for('index'))
 
 @app.route('/categories', methods=['GET', 'POST'])
@@ -148,10 +269,40 @@ def manage_categories():
     """Quản lý các category."""
     categories = load_data(CATEGORIES_FILE)
     if request.method == 'POST':
-        new_category = request.form['new_category']
-        if new_category and new_category not in categories:
-            categories.append(new_category)
-            save_data(CATEGORIES_FILE, categories)
+        new_category_name = request.form['new_category']
+        category_description = request.form.get('category_description', '')
+        category_color = request.form.get('category_color', '#667eea')
+        category_icon = request.form.get('category_icon', 'folder')
+        
+        if new_category_name:
+            # Kiểm tra xem category đã tồn tại chưa
+            existing_names = []
+            for cat in categories:
+                if isinstance(cat, dict):
+                    existing_names.append(cat.get('name', ''))
+                else:
+                    existing_names.append(cat)
+            
+            if new_category_name not in existing_names:
+                # Tạo ID mới
+                max_id = 0
+                for cat in categories:
+                    if isinstance(cat, dict) and 'id' in cat:
+                        max_id = max(max_id, cat['id'])
+                
+                # Thêm category mới với cấu trúc đầy đủ
+                new_category = {
+                    "id": max_id + 1,
+                    "name": new_category_name,
+                    "description": category_description or f"Category {new_category_name}",
+                    "count": 0,
+                    "color": category_color,
+                    "icon": category_icon
+                }
+                categories.append(new_category)
+                save_data(CATEGORIES_FILE, categories)
+                # Cập nhật count sau khi thêm category
+                update_category_counts()
         return redirect(url_for('manage_categories'))
     return render_template('categories.html', categories=categories)
 
@@ -159,10 +310,58 @@ def manage_categories():
 def delete_category(category_name):
     """Xóa một category."""
     categories = load_data(CATEGORIES_FILE)
-    if category_name in categories:
-        categories.remove(category_name)
-        save_data(CATEGORIES_FILE, categories)
+    updated_categories = []
+    
+    for cat in categories:
+        if isinstance(cat, dict):
+            if cat.get('name') != category_name:
+                updated_categories.append(cat)
+        else:
+            if cat != category_name:
+                updated_categories.append(cat)
+    
+    save_data(CATEGORIES_FILE, updated_categories)
+    # Cập nhật count cho categories
+    update_category_counts()
     return redirect(url_for('manage_categories'))
+
+@app.route('/toggle_vip/<int:prompt_id>', methods=['POST'])
+def toggle_vip(prompt_id):
+    """Chuyển đổi trạng thái VIP của prompt."""
+    prompts = load_data(PROMPTS_FILE)
+    prompts_vip = load_data(PROMPTS_VIP_FILE)
+    
+    # Tìm prompt trong file public
+    prompt_public = next((p for p in prompts if p['id'] == prompt_id), None)
+    if not prompt_public:
+        return jsonify({'success': False, 'message': 'Không tìm thấy prompt!'})
+    
+    # Kiểm tra xem prompt có phải VIP không (prompt = "liên hệ admin")
+    is_currently_vip = prompt_public['prompt'] == "liên hệ admin"
+    
+    if is_currently_vip:
+        # Chuyển từ VIP sang thường
+        # Tìm prompt đầy đủ trong file VIP
+        prompt_vip = next((p for p in prompts_vip if p['id'] == prompt_id), None)
+        if prompt_vip:
+            # Copy prompt đầy đủ từ VIP sang public
+            prompt_public['prompt'] = prompt_vip['prompt']
+            save_data(PROMPTS_FILE, prompts)
+            return jsonify({'success': True, 'message': 'Đã chuyển prompt từ VIP sang thường!'})
+        else:
+            return jsonify({'success': False, 'message': 'Không tìm thấy dữ liệu VIP tương ứng!'})
+    else:
+        # Chuyển từ thường lên VIP
+        # Copy toàn bộ prompt vào file VIP
+        prompt_vip_exists = next((p for p in prompts_vip if p['id'] == prompt_id), None)
+        if not prompt_vip_exists:
+            prompts_vip.append(prompt_public.copy())
+            save_data(PROMPTS_VIP_FILE, prompts_vip)
+        
+        # Thay đổi prompt trong file public thành "liên hệ admin"
+        prompt_public['prompt'] = "liên hệ admin"
+        save_data(PROMPTS_FILE, prompts)
+        return jsonify({'success': True, 'message': 'Đã chuyển prompt lên VIP!'})
 
 @app.route('/upload_to_github', methods=['POST'])
 def upload_to_github():
@@ -307,6 +506,24 @@ def restart_server():
 def admin_server_control():
     """Route admin để quản lý server."""
     return app.send_static_file('admin-server-control.html')
+
+@app.route('/admin/vip_prompts')
+def admin_vip_prompts():
+    """Route admin để xem toàn bộ prompt VIP."""
+    try:
+        with open('private/ad_view_prompt.html', 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        return "Admin page not found", 404
+
+@app.route('/private/prompts_vip.json')
+def serve_vip_prompts():
+    """Route để serve file prompts_vip.json cho trang admin."""
+    try:
+        with open(PROMPTS_VIP_FILE, 'r', encoding='utf-8') as f:
+            return f.read(), 200, {'Content-Type': 'application/json'}
+    except FileNotFoundError:
+        return "[]", 200, {'Content-Type': 'application/json'}
 
 if __name__ == '__main__':
     if not os.path.exists('public/image/genai'):

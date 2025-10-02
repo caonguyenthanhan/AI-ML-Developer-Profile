@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <title>Quản lý Prompts</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background-color: #ffffff; 
+            color: #000000; 
+        }
         h1, h2 { color: #333; }
         .container { max-width: 900px; margin: auto; }
         .prompt-list { list-style: none; padding: 0; }
@@ -16,9 +21,14 @@
             display: flex; 
             gap: 20px; 
             align-items: center;
+            background-color: #ffffff;
+            color: #000000;
         }
         .prompt-item img { max-width: 150px; border-radius: 5px; }
-        .prompt-details { flex-grow: 1; }
+        .prompt-details { 
+            flex-grow: 1; 
+            color: #000000; 
+        }
         .prompt-details h3 { margin-top: 0; }
         .actions { flex-shrink: 0; }
         .actions a, button { 
@@ -48,6 +58,35 @@
         .github-btn:hover {
             background-color: #1a1e22;
         }
+        .vip-btn {
+            background-color: #ff6b35;
+            color: white;
+        }
+        .vip-btn:hover {
+            background-color: #e55a2b;
+        }
+        .vip-active {
+            background-color: #dc3545;
+        }
+        .vip-active:hover {
+            background-color: #c82333;
+        }
+        .admin-btn {
+            background-color: #6f42c1;
+            color: white;
+        }
+        .admin-btn:hover {
+            background-color: #5a32a3;
+        }
+        .vip-badge {
+            background-color: #dc3545;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
         .message {
             padding: 10px;
             margin: 10px 0;
@@ -64,6 +103,7 @@
         <a href="{{ url_for('add_prompt') }}" class="add-link">Thêm Prompt Mới</a>
         <a href="{{ url_for('manage_categories') }}" class="add-link">Quản lý Categories</a>
         <button onclick="uploadToGitHub()" class="add-link github-btn">📤 Upload lên GitHub</button>
+        <a href="{{ url_for('admin_vip_prompts') }}" class="add-link admin-btn">🔐 Admin VIP</a>
         
         <div id="message" class="message"></div>
 
@@ -72,14 +112,25 @@
                 {% for prompt in prompts %}
                     <li class="prompt-item">
                         {% if prompt.imagePath %}
-                            <img src="{{ url_for('static', filename='images/' + prompt.imagePath.split('/')[-1]) }}" alt="{{ prompt.title }}">
+                            <img src="{{ url_for('static', filename='image/genai/' + prompt.imagePath.split('/')[-1]) }}" alt="{{ prompt.title }}">
                         {% endif %}
                         <div class="prompt-details">
-                            <h3>{{ prompt.title }}</h3>
+                            <h3>{{ prompt.title }}
+                                {% if prompt.prompt == "liên hệ admin" %}
+                                    <span class="vip-badge">VIP</span>
+                                {% endif %}
+                            </h3>
                             <p><strong>Category:</strong> {{ prompt.category }}</p>
                             <p>{{ prompt.prompt }}</p>
                         </div>
                         <div class="actions">
+                            <button onclick="toggleVIP({{ prompt.id }})" class="{% if prompt.prompt == 'liên hệ admin' %}vip-active{% else %}vip-btn{% endif %}">
+                                {% if prompt.prompt == "liên hệ admin" %}
+                                    🔓 Bỏ VIP
+                                {% else %}
+                                    🔒 Đặt VIP
+                                {% endif %}
+                            </button>
                             <a href="{{ url_for('edit_prompt', prompt_id=prompt.id) }}" class="edit">Sửa</a>
                             <a href="{{ url_for('delete_prompt', prompt_id=prompt.id) }}" class="delete" onclick="return confirm('Bạn có chắc chắn muốn xóa không?');">Xóa</a>
                         </div>
@@ -135,6 +186,46 @@
                 // Enable lại button
                 button.disabled = false;
                 button.textContent = '📤 Upload lên GitHub';
+            });
+        }
+
+        function toggleVIP(promptId) {
+            const messageDiv = document.getElementById('message');
+            
+            fetch(`/toggle_vip/${promptId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageDiv.style.display = 'block';
+                if (data.success) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = data.message;
+                    // Reload trang để cập nhật UI
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = data.message;
+                }
+                
+                // Ẩn message sau 5 giây
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            })
+            .catch(error => {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'Lỗi kết nối: ' + error.message;
+                
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
             });
         }
     </script>

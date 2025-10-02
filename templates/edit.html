@@ -48,7 +48,7 @@
             <div class="current-image">
                 {% if prompt.imagePath %}
                 <p>Ảnh hiện tại:</p>
-                <img src="{{ url_for('static', filename='images/' + prompt.imagePath.split('/')[-1]) }}" alt="Current Image">
+                <img src="{{ url_for('static', filename='image/genai/' + prompt.imagePath.split('/')[-1]) }}" alt="Current Image">
                 {% endif %}
             </div>
 
