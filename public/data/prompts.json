@@ -551,5 +551,12 @@
         "prompt": "liên hệ admin",
         "imagePath": "/image/genai/c5962b2c-109c-43eb-be3a-deee8ab088a0.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 80,
+        "title": "Chân Dung Chiêm Tinh: Bóng Đổ Chiếu Sáng và Vẻ Đẹp Nam Tính",
+        "prompt": "from my photo create a pictures: A hyper-realistic editorial close-up portrait of a young Asian man (using the face and expression from the reference image) with messy dark hair, posing shirtless to emphasize his neck and shoulders. The setting is a minimalist photography studio with a creamy beige background. Dramatic, warm directional lighting is used to cast sharp, intricate shadows of bare tree branches across his face, neck, and chest (chiascuro effect). Subtle, glittering, ethereal bokeh or dust particles float around him, adding a dreamy, atmospheric layer. The overall style is high-end fashion photography with sharp focus, flawless skin texture, and a cinematic aesthetic, maintaining the exact features and the emotional intensity of the eyes. Shot with an 85mm lens. Don't change the facial det.",
+        "imagePath": "/image/genai/7534f28d-7599-49db-8660-ee656fc8bc75.png",
+        "category": "Portrait Photography"
     }
 ]
