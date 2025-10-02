@@ -530,5 +530,12 @@
         "prompt": "from my photo create a pictures: A full-body digital painting of a beautiful Vietnamese woman wearing a traditional Ao Dai with a subtle Steampunk aesthetic. She stands in a dimly lit, narrow alleyway in Hanoi's Old Quarter, which is covered in neon signs and small, intricate clockwork mechanisms integrated into the ancient brick walls. She is a \"Mechanical Seamstress\", holding a vintage sewing machine that has copper gears and glowing blue plasma accents. Cinematic lighting, volumetric fog, and rain-slicked cobblestones reflect the vivid cyan and magenta neon light. Focus on dramatic shadows and high facial detail (Don't change the facial det). Intricate details, 8k resolution, ultra detailed, 3:4 aspect ratio.\r\n\r\n",
         "imagePath": "/image/genai/f2e60482-d7f9-4ee4-b48e-2838baaac705.png",
         "category": "Tech-Woven History"
+    },
+    {
+        "id": 77,
+        "title": "Cô Gái Việt Nam Trong Vòng Xoáy Hoa Sen Lơ Lửng",
+        "prompt": "from my photo create a pictures: A surreal photograph of a Vietnamese woman wearing a flowing, translucent Ao Dai made of silk that gently floats around her. She is suspended in the center of the frame, surrounded by hundreds of glowing pink and white lotus flowers that are also defying gravity and spinning slowly. The background is a soft, dreamlike void of pale lavender and gold light with a hint of ethereal mist. Shallow depth of field, extreme detail in the fabric and facial expression (Don't change the facial det). Soft rim lighting highlights the edges of her hair and the petals. Cinematic, high-resolution, 4K photo quality, 16:9 aspect ratio.",
+        "imagePath": "/image/genai/64fd1168-b12c-4735-a308-fa0f31bcc21d.png",
+        "category": "Ethereal Suspension"
     }
 ]

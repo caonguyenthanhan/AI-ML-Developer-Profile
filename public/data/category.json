@@ -62,5 +62,13 @@
         "count": 1,
         "color": "#CD7F32",
         "icon": "Gear"
+    },
+    {
+        "id": 9,
+        "name": "Ethereal Suspension",
+        "description": "Vẻ Đẹp Thần Tiên Lơ Lửng",
+        "count": 1,
+        "color": "#DCD0FF",
+        "icon": "sparkles"
     }
 ]
