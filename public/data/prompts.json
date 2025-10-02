@@ -698,5 +698,47 @@
         "prompt": "from my photo create a pictures: An ultra-realistic, dramatic cinematic photo shoot of a beautiful young woman (using the exact face and identity from the reference photo, ensuring 100% facial fidelity and realistic blending). She is wearing a long, smooth, black couture dress made of silk, featuring a translucent neckline, a dramatic long tail, and a high slit on the leg. The dress fabric is dramatically caught by a strong wind, billowing and flowing powerfully to create a sense of dynamic movement. She stands firmly, holding the leather reins of a majestic black horse. The horse is large, muscular, and positioned near her. The woman is gazing intensely at the horse. The background is a vast, blurred landscape of tall, dry rice grass (or dry savannah grass), fading into a shallow depth of field. The lighting is cinematic and moody, possibly backlighting from a low sun or moon, creating sharp, golden rim lighting on the woman's silhouette, the flowing dress, and the horse's coat. Focus on hyper-realistic details of the skin, the delicate translucency of the fabric, and the texture of the horse's mane and coat. Ultra-detailed, 8K resolution, high-fashion editorial style. Do not change the facial det.",
         "imagePath": "/image/genai/882e5319-aa89-460a-b4b3-be1a6c56d537.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 101,
+        "title": "Bình Yên Giữa Ánh Sáng: Chân Dung Mơ Màng Bên Cửa Sổ",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/461d1c8a-656c-4996-8b42-e5ff27cab636.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 102,
+        "title": "Nữ Hoàng Ánh Kim: Chân Dung Thời Trang Sang Trọng Trên Bối Cảnh Studio",
+        "prompt": "from my photo create a pictures: A hyper-realistic, ultra-detailed portrait of a beautiful young woman (using the exact face and identity from the uploaded photo, ensuring 100% facial fidelity and retaining authenticity/liveliness). She has long, voluminous, wavy black hair gracefully flowing, and stands in a confident, powerful pose in a high-fashion studio setting. FASHION: She is wearing a sparkling white mini-suit (sequin/tweed fabric) consisting of a double-breasted blazer with white satin lapels, a white knit turtleneck underneath, and a matching A-line mini-skirt. The jacket is meticulously adorned with large diamond brooches/buttons and pearl beading trim on the pockets and hem. ACCESSORIES: She wears sparkling drop earrings, large diamond rings, and a small white floral brooch on her collar. MOOD: Her expression is sultry, fierce, and elegant, with a captivating direct gaze. LIGHTING/BACKGROUND: Soft light is projected from the front and slightly elevated, creating a clean, bright, and glamorous ambiance with minimal shadows, intensely highlighting the sparkle of the sequins and jewelry. The background is a pale grey/cream studio backdrop with an abstract, textured terrain model in the foreground. TECHNIQUE: Shot with a medium focal length lens, focusing on the full figure. Ultra-high sharpness is applied specifically to the face, the sequin fabric texture, and jewelry details. Medium contrast is used to maintain a soft look while enhancing the sparkle. High Fashion studio photography style, sophisticated, 8K resolution. Do not change the facial det.",
+        "imagePath": "/image/genai/5600363d-a7b6-4275-a341-3dcd04860088.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 103,
+        "title": "Nàng Thơ Bên Hồ: Vẻ Đẹp Thanh Bình Giữa Thiên Nhiên Hùng Vĩ",
+        "prompt": "from my photo create a pictures: A hyper-realistic, close-up cinematic portrait of the subject (the style is changed, while strictly maintaining the exact correct proportions of facial features such as eyes, nose, and mouth, 100% identical to the uploaded reference photo). She is sitting gracefully on large, ancient rocks by the edge of a crystal-clear blue lake, with majestic, snow-capped mountains dramatically rising in the background. She is wearing a flowing, deep white dress with delicate ruffled details, paired with stylish brown leather boots. Her long hair flows naturally in the gentle breeze, framing her face as she looks slightly to the side with a calm, dreamy, and serene expression. The warm sunlight highlights her fair skin and elegant posture, creating soft glows. The atmosphere is serene, vibrant, and profoundly cinematic, with vivid natural colors and ultra-sharp details. In the lower left corner of the portrait, a small, elegant signature logo appears: \"Mr.LePhuc\" written in white with a thin black border, stylized with a subtle camera-shaped curve above the text. This logo is minimal, classy, and seamlessly integrated. Do not change the facial det.",
+        "imagePath": "/image/genai/ffceb05c-c1bd-42eb-8d27-31dd0d0ac600.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 104,
+        "title": "Thanh Lịch Tối Giản: Nàng Tiên Hạc Giữa Không Gian Hiện Đại",
+        "prompt": "from my photo create a pictures: A hyper-realistic, full-body editorial portrait of a beautiful, elegant Asian woman (using the exact face and identity from the reference image) wearing a magnificent, flowing white Vietnamese Ao Dai. The Ao Dai features a high mandarin collar and wide, graceful sleeves, with a long train of fabric pooling elegantly around her feet. She holds a delicate wooden hand fan gently in front of her. Beside her, a majestic Red-crowned Crane stands serenely. The setting is a minimalist, modern, and symmetrical interior space with sleek white walls and strong vertical strip lighting on either side, creating a clean, high-contrast, and almost futuristic ambiance. The flooring is a dark, polished concrete. The lighting is bright and even, highlighting the pristine white of her Ao Dai, the bird's feathers, and her radiant skin. Shot with a medium-format camera for ultimate photorealistic detail. Her pose is poised and graceful, with a calm, confident expression. Maintain the exact proportions of the facial features, ensuring a dignified and alluring expression.",
+        "imagePath": "/image/genai/1fa5f471-53a6-48d3-8e13-3f150a63ef3d.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 105,
+        "title": "Quý Ông Sắc Lạnh: Chân Dung Điện Ảnh Giữa Vườn Xanh",
+        "prompt": "from my photo create a pictures: An ultra-realistic, cinematic portrait of a handsome young Asian man (use the face and exact identity from the newly uploaded male reference image - image_397be9.jpg - ensuring 100% facial fidelity and realistic blending). He has slightly tousled dark hair, fair skin, and wears a sharp, fitted black pinstripe suit, an unbuttoned white dress shirt (no tie), and dark aviator sunglasses which he is confidently adjusting with his right hand. His left hand is casually tucked into his trouser pocket. The background is a lush, vibrant green garden or hedge of white blooming flowers, creating a natural and elegant contrast against his dark, polished attire. The lighting is bright, slightly overcast daylight, emphasizing the clean lines of the suit and the subtle texture of the fabric. The expression is confident, cool, and commanding. Ultra-detailed, 8K resolution, high-fashion editorial style, cinematic depth of field. Do not change the facial det.",
+        "imagePath": "/image/genai/072df11b-398e-4383-af22-06f84a8076f9.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 106,
+        "title": "Quý Ông Sòng Bạc: Khoảnh Khắc Lịch Lãm & Quyền Lực",
+        "prompt": "from my photo create a pictures: An ultra-realistic, cinematic portrait of a handsome young Asian man (use the face and exact identity from the newly uploaded reference image - image_397c46.jpg - ensuring 100% facial fidelity and realistic blending). He is seated confidently at an opulent poker table in a dark, neon-lit casino, wearing a tailored beige suit jacket and an unbuttoned white dress shirt, complemented by stylish red-tinted sunglasses. He gestures casually with his right hand toward several poker chips dramatically floating in mid-air above the green felt table, conveying a sense of playful power and high stakes. In the background, the casino is dimly lit by vibrant red and neon Chinese signs and blurred figures, creating a moody, high-contrast, and mysterious atmosphere reminiscent of a classic crime film. The lighting is dominated by warm, dramatic neon glow and golden rim light, highlighting the expensive fabric texture and the confidence in his subtle smirk. Ultra-detailed, 8K resolution, high-fashion editorial style. Do not change the facial det.",
+        "imagePath": "/image/genai/02ca5473-eb0d-4b61-bf02-eb10d2149202.png",
+        "category": "Portrait Photography"
     }
 ]
