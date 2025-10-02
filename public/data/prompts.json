@@ -558,5 +558,12 @@
         "prompt": "from my photo create a pictures: A hyper-realistic editorial close-up portrait of a young Asian man (using the face and expression from the reference image) with messy dark hair, posing shirtless to emphasize his neck and shoulders. The setting is a minimalist photography studio with a creamy beige background. Dramatic, warm directional lighting is used to cast sharp, intricate shadows of bare tree branches across his face, neck, and chest (chiascuro effect). Subtle, glittering, ethereal bokeh or dust particles float around him, adding a dreamy, atmospheric layer. The overall style is high-end fashion photography with sharp focus, flawless skin texture, and a cinematic aesthetic, maintaining the exact features and the emotional intensity of the eyes. Shot with an 85mm lens. Don't change the facial det.",
         "imagePath": "/image/genai/7534f28d-7599-49db-8660-ee656fc8bc75.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 81,
+        "title": "Sắc Màu Thổ Cẩm: Chân Dung Thời Trang Dân Tộc Trên Nền Xanh Cobalt",
+        "prompt": "from my photo create a pictures: A striking editorial studio portrait of a young Asian woman (using the face and confident expression from the reference image) wearing rich, intricately embroidered traditional ethnic minority attire (H'Mong/Dao style), featuring a dark black long-sleeved shirt with vibrant red and white patterns, layered over a patterned skirt. Her head is wrapped in a bold, multicolored plaid scarf (red, orange, green, yellow) with fringed edges, covering her hair. She wears substantial silver jewelry, including thick neck rings and silver bangles. The background is a solid, vibrant Cobalt Blue seamless backdrop, creating high-contrast and visual impact. Dramatic studio beauty lighting (softbox and fill light) is used to perfectly illuminate the subject, emphasizing the rich texture of the embroidery and the sharpness of the makeup. Vertical portrait, ultra-high resolution 8K, fashion magazine quality. Don't change the facial det.",
+        "imagePath": "/image/genai/44cfaa67-b7ae-4c02-9833-92b66bca6240.png",
+        "category": "Portrait Photography"
     }
 ]
