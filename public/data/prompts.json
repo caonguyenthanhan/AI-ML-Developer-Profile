@@ -432,5 +432,19 @@
         "prompt": "from my photo create a pictures: A hyper-realistic and detailed cinematic photograph of a messy, high-energy behind-the-scenes set for a photoshoot or film production inside a stylish, cluttered apartment. The room is brightly lit with large, professional softbox lights and various filming equipment scattered across the wooden floor, tangled with numerous cables. Several crew members (using the man's face from the uploaded photo, if possible, but maintaining the chaotic group composition) are sitting or kneeling on the floor, some looking at smartphones, while others adjust the gear. The room features a clothing rack, a sofa, and various props. The atmosphere is busy, creative, and slightly chaotic, captured with a wide-angle perspective and bright, studio-style lighting. The style should be raw documentary photography. Don't change the facial det.",
         "imagePath": "/image/genai/de4b0a78-66c5-4921-a590-d073e1c6cf55.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 63,
+        "title": "Chân Dung Tết Trung Thu Truyền Thống Việt Nam",
+        "prompt": "from my photo create a pictures: A full-body, ultra-realistic cinematic portrait of the young boy (using the face and exact expression from the uploaded photo) sitting on a small bamboo bench in a festive Mid-Autumn Festival setting. He is wearing traditional Vietnamese attire: a beige áo dài (long tunic) with simple brown trousers, and a classic black turban-style headpiece. He is smiling brightly while holding a red paper fan. On the bamboo table beside him are traditional mooncakes and an old-style oil lamp. The surrounding scene is richly decorated with Mid-Autumn Festival ornaments: a large red carp-shaped lion head, star lanterns, bamboo toys, and lush green bamboo leaves. The background features a red wooden wall and festive hanging ornaments. The scene is illuminated with warm, nostalgic indoor lighting, creating a rich cultural atmosphere with high attention to detail. Don't change the facial det.",
+        "imagePath": "/image/genai/2ab07335-f9f2-4def-b694-5bb2ed0061ac.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 64,
+        "title": "Chân Dung Bé Yêu Tương Tác Cùng Cá Trong Ánh Sáng Lung Linh",
+        "prompt": "from my photo create a pictures: An extreme close-up fashion portrait of the baby (from the uploaded photo), with eyes gazing directly into the lens, maintaining a natural and relaxed expression. Gentle light drifts across the highlights of the face. The baby is dressed in a macaron milk-blue half-sleeve shirt. The scene is viewed through the glass of an aquarium. In the foreground, several small tropical fish swim slowly, their translucent tails lively and delicate. The baby is interacting with the fish by touching the glass with tiny fingers. On the water's surface, light reflects into shimmering ripples, and fragmented light spots dance across the baby's cheeks. Underwater, floating particles linger, accentuating the clear, translucent texture of the light reflections. The background is blurred with subtle motion blur and fine film grain to create a masterpiece of light and shadow expression. The entire scene captures the baby interacting with the fish behind the aquarium glass. Don't change the facial det.",
+        "imagePath": "/image/genai/7865b6b4-e5ea-4fe1-9854-357142d567f0.png",
+        "category": "Portrait Photography"
     }
 ]
