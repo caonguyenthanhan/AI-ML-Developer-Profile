@@ -621,5 +621,33 @@
         "prompt": "from my photo create a pictures: An ultra-realistic, cinematic full-body scene of a handsome Asian man (using 100% of the uploaded photo for facial reference, clean-shaved) walking confidently beside a majestic white tiger. Both are emerging through a dusty, smoky battlefield-like environment. The man possesses a rugged and powerful physique with defined muscles, wearing a fitted olive green military-style t-shirt, tactical khaki cargo pants, and heavy combat boots. He carries a sidearm holstered at his waist, wears a prominent wristwatch, stylish sunglasses, and a dog tag necklace. His expression is intense and fearless, characterized by a strong jawline. The white tiger walks gracefully and perfectly aligned at his side, its fur glowing with realistic black stripes, fierce blue eyes, and a powerful, muscular body. The lighting is dramatic, with soft golden highlights cutting through the dust and smoke, emphasizing every hyper-detail of the man’s muscles, visible tattoos, fabric textures, and the tiger’s fur. The atmosphere is intensely cinematic, with photorealistic rendering, UHD, 8K resolution, extreme sharpness, and a carefully managed depth of field to enhance the realism. Ensure 100% fidelity to the uploaded face, with enhanced Ultra HD 8K resolution.",
         "imagePath": "/image/genai/ad8b17d6-235c-4c6e-9382-519de57a15d0.png",
         "category": "Action & Adventure"
+    },
+    {
+        "id": 90,
+        "title": "Nỗi Nhớ Phố Thị: Gương Mặt Ướt Mưa Của Kẻ Mộng Mơ",
+        "prompt": "from my photo create a pictures: An ultra-realistic, cinematic close-up portrait of a man (using the exact face and identity from the uploaded photo, ensuring no changes to facial structure or skin tone). He is wearing a plain black hoodie. His pose is slightly tilted, and he is smiling gently, with eyes gazing out with quiet longing at the glowing, rain-streaked city beyond a foggy window. With his fingertip, he delicately traces the words \"Taoanhez\" onto the condensation on the glass. The scene is captured with a Canon EOS R camera and a 50mm f/1.8 lens, using an f/2.2 aperture, 1/200s shutter speed, and ISO 100, relying solely on natural light. This is a full-body shot, presented in a hyper-realistic, cinematic, and hyper-detailed style, with Ultra HD, HDR, and meticulous color correction and grading for a truly immersive and high-quality rendering. Maintain the exact facial features from the provided reference image.",
+        "imagePath": "/image/genai/74955f40-609c-4db3-a31e-57d91ef231e6.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 91,
+        "title": "Bước Chân Giữa Phố Thị & Bầu Trời: Phong Cách Á Châu Đầy Năng Động",
+        "prompt": "from my photo create a pictures: A cinematic street-style portrait in a bustling Asian market street, captured from a dynamic low-angle perspective. The subject (face 99.99% identical to the uploaded reference photo, with absolutely no changes to facial features or structure) is walking confidently on a crosswalk, wearing casual modern streetwear: a stylish hoodie, tactical cargo pants, and trendy sneakers. Directly above them, a massive commercial airplane is flying extremely low, creating a dramatic, surreal, and awe-inspiring atmosphere. The background is rich with urban details, including vibrant shop signs, bustling street vendors, and a clear blue sky. The lighting is bright daylight, sharp, and clean, highlighting every detail. The overall image quality is hyper-realistic, with cinematic color grading, ultra-detailed textures, and extreme sharpness, capturing the energy of the urban environment and the dramatic overhead element. Ensure 99.99% fidelity to the uploaded face.",
+        "imagePath": "/image/genai/89b2d99c-9c8d-4870-be80-8a011af8bfd8.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 92,
+        "title": "Giấc Mơ Vàng: Phút Giây Bình Yên Trong Nắng Chiều",
+        "prompt": "from my photo create a pictures: An ultra-realistic, dreamy portrait of a man (using the exact face, identity, and facial features from the uploaded photo, ensuring 100% consistency) with dark, slightly tousled hair, lying shirtless in a field of golden, sun-drenched tall grass. His eyes are gently closed, and his head is softly resting on his outstretched arms, conveying a serene, deeply relaxed, and contemplative expression. Warm, soft sunlight bathes the scene, creating beautiful golden highlights on his skin and hair while casting subtle, long shadows. The atmosphere is natural, intimate, and carries a slight melancholic or wistful mood. The image is captured with an extremely shallow depth of field, blurring the background grass into a soft, glowing bokeh effect. Hyper-realistic photography, cinematic color grading with warm sepia and golden tones, UHD, 8K resolution, and soft focus for a dreamlike quality. Don't change the facial det.",
+        "imagePath": "/image/genai/d609282a-d9ec-4bdd-ba6d-b88f8d97b6e8.png",
+        "category": "Ethereal Suspension"
+    },
+    {
+        "id": 93,
+        "title": "Nàng Tiên Ao Dai Lơ Lửng Giữa Bầu Trời Hoàng Hôn",
+        "prompt": "from my photo create a pictures: An ultra-realistic, surreal photograph of a beautiful Vietnamese woman (using the exact face and identity from the uploaded photo, ensuring 100% fidelity) wearing a flowing, translucent Ao Dai made of silk that gently floats and billows around her. She is suspended gracefully in the center of the frame, surrounded by hundreds of ribbons of shimmering, gossamer-thin silk and ethereal, glowing threads that defy gravity and spiral slowly around her. The background is a soft, dreamlike vista of surreal, golden-hued clouds and pale lavender skies, with a hint of ethereal mist. Soft rim lighting highlights the edges of her hair and the floating silk ribbons. The ground below is an expansive field of textured, floating clouds, suggesting high altitude and limitless space. Shallow depth of field, extreme detail in the fabric and facial expression. Cinematic, high-resolution, 4K photo quality, 16:9 aspect ratio. Do not include any lotus flowers. Don't change the facial det.",
+        "imagePath": "/image/genai/848a1c59-5bf9-4662-8e2f-0cd58267fdf9.png",
+        "category": "Ethereal Suspension"
     }
 ]

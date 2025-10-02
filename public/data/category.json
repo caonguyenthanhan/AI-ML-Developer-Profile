@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 31,
+        "count": 33,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -67,7 +67,7 @@
         "id": 9,
         "name": "Ethereal Suspension",
         "description": "Vẻ Đẹp Thần Tiên Lơ Lửng",
-        "count": 1,
+        "count": 3,
         "color": "#DCD0FF",
         "icon": "sparkles"
     },
@@ -86,5 +86,13 @@
         "count": 2,
         "color": "#FFBF00",
         "icon": "sword"
+    },
+    {
+        "id": 12,
+        "name": "Street Photography & Urban",
+        "description": "Nhiếp ảnh Đường phố & Đô thị",
+        "count": 0,
+        "color": "#84CC16",
+        "icon": "bus"
     }
 ]
