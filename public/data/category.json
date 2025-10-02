@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 45,
+        "count": 46,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -83,7 +83,7 @@
         "id": 11,
         "name": "Action & Adventure",
         "description": "Hành động & Phiêu lưu",
-        "count": 2,
+        "count": 3,
         "color": "#FFBF00",
         "icon": "sword"
     },

@@ -740,5 +740,19 @@
         "prompt": "from my photo create a pictures: An ultra-realistic, cinematic portrait of a handsome young Asian man (use the face and exact identity from the newly uploaded reference image - image_397c46.jpg - ensuring 100% facial fidelity and realistic blending). He is seated confidently at an opulent poker table in a dark, neon-lit casino, wearing a tailored beige suit jacket and an unbuttoned white dress shirt, complemented by stylish red-tinted sunglasses. He gestures casually with his right hand toward several poker chips dramatically floating in mid-air above the green felt table, conveying a sense of playful power and high stakes. In the background, the casino is dimly lit by vibrant red and neon Chinese signs and blurred figures, creating a moody, high-contrast, and mysterious atmosphere reminiscent of a classic crime film. The lighting is dominated by warm, dramatic neon glow and golden rim light, highlighting the expensive fabric texture and the confidence in his subtle smirk. Ultra-detailed, 8K resolution, high-fashion editorial style. Do not change the facial det.",
         "imagePath": "/image/genai/02ca5473-eb0d-4b61-bf02-eb10d2149202.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 107,
+        "title": "Nhà Thám Hiểm Giữa Bầy Khủng Long: Khoảnh Khắc Tự Nhiên Bên Xe Jeep",
+        "prompt": "from my photo create a pictures: An ultra-natural, candid portrait of a man (use the exact face and identity from the uploaded reference photo, ensuring 100% facial fidelity and realistic blending). He is sitting casually on the hood of a classic, rugged Jurassic Park-style safari car. His expression is natural as he adjusts his safari hat in the wind. He is wearing a plain white shirt, khaki cargo shorts, and sturdy, dirt-covered boots. His boots are naturally framed in the shot, and in the background, gigantic dinosaurs (e.g., Brachiosaurus, Triceratops) are walking majestically, creating a sense of awe and scale. The scene is bathed in golden sunlight, highlighting the dust in the air and the textures of his clothing and the car. Ultra-realistic details, cinematic adventure atmosphere, 8K resolution, with a slightly wide-angle lens to capture both the subject and the colossal dinosaurs.\r\n",
+        "imagePath": "/image/genai/e803cce4-1f57-4693-9e38-e8de1289f715.png",
+        "category": "Action & Adventure"
+    },
+    {
+        "id": 108,
+        "title": "Bước Chân Dũng Cảm: Đối Mặt T-Rex Giữa Hoàng Hôn Safari",
+        "prompt": "from my photo create a pictures: An ultra-natural, candid portrait of a man (use the exact face and identity from the uploaded reference photo, ensuring 100% facial fidelity and realistic blending). He is captured walking confidently along a dusty safari trail. He is dressed in stylish khaki cargo pants, a plain white shirt (no logos or text) with the sleeves slightly rolled up showing muscular forearms and a prominent wristwatch, and sturdy ankle boots. He wears dark aviator sunglasses and a subtle dog tag necklace. His hair is slightly tousled by the wind. The candid angle emphasizes his dynamic stride, with his shoes naturally framed in the shot. The scene is illuminated by warm golden sunlight (Golden Hour), creating long shadows and highlighting the dust in the air. He has a determined, focused, and adventurous expression. In the background, a massive T-Rex is wandering, adding an element of thrilling danger and ancient wilderness. Ultra-realistic details, cinematic adventure atmosphere, 8K resolution, with a focus on capturing the dust, the golden light, and the raw power of the dinosaur. Do not change the facial det.",
+        "imagePath": "/image/genai/59f8cc72-1f3a-4a12-aa8b-a047843a8523.png",
+        "category": "Portrait Photography"
     }
 ]
