@@ -537,5 +537,12 @@
         "prompt": "from my photo create a pictures: A surreal photograph of a Vietnamese woman wearing a flowing, translucent Ao Dai made of silk that gently floats around her. She is suspended in the center of the frame, surrounded by hundreds of glowing pink and white lotus flowers that are also defying gravity and spinning slowly. The background is a soft, dreamlike void of pale lavender and gold light with a hint of ethereal mist. Shallow depth of field, extreme detail in the fabric and facial expression (Don't change the facial det). Soft rim lighting highlights the edges of her hair and the petals. Cinematic, high-resolution, 4K photo quality, 16:9 aspect ratio.",
         "imagePath": "/image/genai/64fd1168-b12c-4735-a308-fa0f31bcc21d.png",
         "category": "Ethereal Suspension"
+    },
+    {
+        "id": 78,
+        "title": "Ảo Ảnh Nghệ Thuật: Chân Dung Phát Sáng và Vũ Điệu Bướm Thần Tiên",
+        "prompt": "from my photo create a pictures: A hyper-realistic, dramatic fine-art photograph of a young Asian girl (using the same facial features as the reference image), sitting on the floor of a dark, messy art studio. She is wearing a soft blue oversized sweater and is meticulously painting a giant, glowing, surreal neon portrait of herself onto the wall. The glowing portrait radiates ethereal light in shades of vibrant cyan and lavender, serving as the main light source. Several luminous, magical butterflies and shimmering golden light particles float around the room. In the foreground, paintbrushes, scattered sketches, and glowing artistic circles are visible on the glossy, reflective floor. Shot with a wide-angle 35mm lens, shallow depth of field, and high detail, emphasizing the stark contrast between the warm, natural skin tone and the cool, otherworldly glow. Cinematic lighting, hyper-detailed texture, surreal fantasy art style. Don't change the facial det.",
+        "imagePath": "/image/genai/599bee33-9f42-48e6-9619-52b5d1f370ba.png",
+        "category": "Art Gallery & Exhibition"
     }
 ]
