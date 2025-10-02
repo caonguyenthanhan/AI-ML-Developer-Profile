@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 30,
+        "count": 32,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 13,
+        "count": 14,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -70,5 +70,13 @@
         "count": 1,
         "color": "#DCD0FF",
         "icon": "sparkles"
+    },
+    {
+        "id": 10,
+        "name": "Imperial Vietnamese Fashion",
+        "description": "Thời trang Hoàng gia Việt",
+        "count": 3,
+        "color": "#800000",
+        "icon": "👑"
     }
 ]

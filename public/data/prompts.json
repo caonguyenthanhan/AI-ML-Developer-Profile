@@ -572,5 +572,47 @@
         "prompt": "from my photo create a pictures: Ultra-sharp 8K studio portrait of a beautiful young East Asian woman, early twenties, with long, flowing black wavy hair and thin, light eyebrows. She looks slightly away from the lens with a serene, slightly melancholy expression, her head slightly tilted. Her bare shoulders suggest an elegant, minimal look. The long, black hair is naturally styled and appears slightly windblown, with individual strands catching the light and subtly floating around her face. Makeup is natural and subtle, highlighting her features. The background is an extremely dark, almost black, soft bokeh, dramatically isolating the subject. The lighting features striking blue tones, conveying a feeling of cold loneliness. A dramatic, artistic key light source positioned above and slightly behind creates a strong halo effect on her hair and sharp highlights on her forehead, bridge of the nose, and cheekbones. The face is sculpted by soft, full lighting. Cinematic, highly detailed, slight film grain, shallow depth of field. Don't change the facial det.",
         "imagePath": "/image/genai/3b962255-e543-4b12-adf5-900cc99c5811.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 83,
+        "title": "Nàng Xuân Áo Dài Đỏ: Kiêu Sa Giữa Khung Cảnh Cổ Điển",
+        "prompt": "from my photo create a pictures: A hyper-realistic, full-body portrait of a beautiful, elegant Asian woman (using the face and identity from the reference image) wearing a magnificent, floor-length Vietnamese Ao Dai in a deep, vibrant crimson red. The Ao Dai features intricate, traditional embroidery of pagodas, stylized mountains, and blossoming trees in black and gold threads, running down the front panel. She wears a matching, long, sheer red silk cape draped over her shoulders, flowing dramatically to the sides and floor. She stands poised and regal on a narrow runway in a spacious, dimly lit room with a traditional Vietnamese or Chinese style. The background is subtle, featuring a large, dark framed artwork with elegant calligraphy and muted beige walls. The lighting is soft, yet focused, highlighting the rich texture of the silk and the details of the embroidery, with a slight warm glow on her face. Shot with a high-end prime lens (e.g., 85mm) to achieve stunning depth of field and ultimate photorealistic detail. The character's pose is dynamic and graceful, with both arms slightly extended, showcasing the flowing cape. Maintain the exact proportions of the facial features, ensuring a graceful, confident, and slightly aloof expression.",
+        "imagePath": "/image/genai/fd6edc7b-1be6-4ec7-a4f1-f2e7e8e89304.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 84,
+        "title": "Sự Cô Đơn Kiêu Hãnh Giữa Cơn Mưa Đêm",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/642872cb-94c6-43e1-b17e-351a19822a4a.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 85,
+        "title": "Nồng Nàn Giữa Dòng Nước Lũ: Chân Dung Cặp Đôi Phiêu Lưu",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/89f465ce-addb-4ce0-a14c-e129ecb45439.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 86,
+        "title": "Thời trang Hoàng gia Việt",
+        "prompt": "from my photo create a pictures: A hyper-realistic, vertical cinematic portrait of a handsome Asian man (1.2), with a toned, balanced physique (1.2), seated in a relaxed regal pose (1.2) on a large, intricately carved stone pedestal (1.3). He is wearing a vibrant red satin VIETNAMESE Ao Dai (1.3) richly embroidered with a golden dragon motif, with detailed gold embroidery on the mandarin collar and cuffs (1.2). He wears polished black leather dress shoes (1.1). His crystal-fair skin is glowing (1.2), and he possesses a confident aura of a male deity and fashion king (1.3), with captivating eyes and a subtle smirk (1.2). His right hand rests on his knee, holding a traditional wooden fan or a ceramic teacup (1.2), while his left arm is draped casually (1.2). The scene is set outdoors under a large, glowing full moon with golden mist (1.3), featuring faint imperial railings and curved palace roofs (1.1) in the background. Nearby, a gold-lacquered square table holds golden mooncakes and colorful fruits (1.1), a traditional brown ceramic tea set (1.1), and a black lacquer vase with peach blossoms and red berries (1.2). Flower petals are softly falling (1.1). Glowing Mid-Autumn lanterns (red, yellow, orange) are placed strategically, bright up close and fading into the distance (1.3), with a blurred lion dance performance faintly visible in the far background (1.2). The image features cinematic golden rim lighting (1.3) outlining his face, shoulders, and Ao Dai, emphasizing the luxurious Mid-Autumn fashion runway atmosphere (1.2). Hyper-realistic 4K editorial style (1.3). Don't change the facial det.",
+        "imagePath": "/image/genai/16991d4a-1d22-4dfe-bbc4-ae262bafa602.png",
+        "category": "Imperial Vietnamese Fashion"
+    },
+    {
+        "id": 87,
+        "title": "Hoàng Tử Mùa Trăng: Chân Dung Đế Vương Giữa Dòng Chảy Thời Trang",
+        "prompt": "from my photo create a pictures: A hyper-realistic, vertical cinematic portrait of a handsome Asian man (1.2) with a toned, balanced physique (1.2), maintaining a regal pose (1.2) while sitting cross-legged on a gold-lacquered wooden chair carved with dragons and phoenixes (1.3). He is wearing a vibrant red satin VIETNAMESE Ao Dai (1.3) richly embroidered with golden dragon patterns, featuring detailed gold embroidery on the mandarin collar and cuffs (1.2). He wears polished black leather dress shoes (1.1). His crystal-fair skin is glowing (1.2), displaying a thoughtful gaze (1.2) and a gentle smile (1.2), radiating the aura of a male deity and fashion king (1.2). His right hand rests gracefully on the chair's armrest (1.2), and his left hand holds a brown ceramic teacup (1.3). The scene is set under a large, glowing full moon engulfed in golden mist (1.3). Nearby, a gold-lacquered square table holds golden mooncakes (1.2) and colorful fruits (1.1), alongside a black lacquer vase with peach blossoms and red berries (1.2), with petals softly falling (1.1). Faint imperial railings and curved palace roofs (1.1) are visible in the background. Glowing Mid-Autumn lanterns (red, yellow, orange) are placed strategically, bright up close and fading into the distance (1.3). A lion dance performance is subtly present in the far background (1.2). The lighting is dramatic, featuring cinematic golden rim lighting (1.3) outlining his face, shoulders, and Ao Dai, emphasizing a luxurious Mid-Autumn fashion runway atmosphere (1.2). Hyper-realistic 4K editorial style (1.3). Don't change the facial det.",
+        "imagePath": "/image/genai/5d560e9d-b7b3-4ea6-874d-db029244ceaf.png",
+        "category": "Imperial Vietnamese Fashion"
+    },
+    {
+        "id": 88,
+        "title": "Hoàng Đế Thời Trang Giữa Đêm Trăng Rằm Lộng Lẫy",
+        "prompt": "from my photo create a pictures: A hyper-realistic, 4K editorial portrait of a handsome young Asian man (using the exact face and identity from the reference image) with a toned, balanced physique, seated regally on a gold-lacquered wooden chair intricately carved with detailed dragons and phoenixes. He is wearing a stunning vibrant red satin VIETNAMESE Ao Dai, heavily embroidered with golden dragon motifs, complemented by matching gold embroidery on the mandarin collar and cuffs, and polished black leather dress shoes. His crystal-like fair skin glows under the light, and his captivating eyes and gentle smile radiate the aura of a male deity and a fashion king. In front of him is a gold-lacquered square table set with golden mooncakes, colorful fruits, and a traditional brown ceramic tea set. Beside the table stands a black lacquer vase holding elegant peach blossoms and red berries, with a few petals softly falling. The background features a large, luminous full moon high in the sky, with the faint silhouette of imperial railings and curved palace roofs visible through a golden mist. Numerous glowing Mid-Autumn lanterns in red, yellow, and orange hang above and around, some close and shining brightly, others softly fading into the distance to create depth. A vibrant lion dance performance is faintly visible in the far background under the moonlight. Dramatic cinematic golden rim lighting outlines his face, shoulders, and Ao Dai, transforming the entire scene into a luxurious Mid-Autumn fashion runway. Hyper-realistic 4K editorial style. Do not change any facial features.",
+        "imagePath": "/image/genai/a05453bd-4128-46d2-900b-bee9b9e16066.png",
+        "category": "Imperial Vietnamese Fashion"
     }
 ]
