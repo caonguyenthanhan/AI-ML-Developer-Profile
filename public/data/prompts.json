@@ -256,7 +256,7 @@
         "title": "Chân Dung Điện Ảnh Siêu Thực: Đặc Nhiệm Delta Lực Lưỡng Tại Afghanistan",
         "prompt": "liên hệ admin",
         "imagePath": "/image/genai/9e77d16e-b8e8-4412-bcb2-6eb55761eb85.png",
-        "category": "Portrait Photography"
+        "category": "Action & Adventure"
     },
     {
         "id": 38,
@@ -614,5 +614,12 @@
         "prompt": "from my photo create a pictures: A hyper-realistic, 4K editorial portrait of a handsome young Asian man (using the exact face and identity from the reference image) with a toned, balanced physique, seated regally on a gold-lacquered wooden chair intricately carved with detailed dragons and phoenixes. He is wearing a stunning vibrant red satin VIETNAMESE Ao Dai, heavily embroidered with golden dragon motifs, complemented by matching gold embroidery on the mandarin collar and cuffs, and polished black leather dress shoes. His crystal-like fair skin glows under the light, and his captivating eyes and gentle smile radiate the aura of a male deity and a fashion king. In front of him is a gold-lacquered square table set with golden mooncakes, colorful fruits, and a traditional brown ceramic tea set. Beside the table stands a black lacquer vase holding elegant peach blossoms and red berries, with a few petals softly falling. The background features a large, luminous full moon high in the sky, with the faint silhouette of imperial railings and curved palace roofs visible through a golden mist. Numerous glowing Mid-Autumn lanterns in red, yellow, and orange hang above and around, some close and shining brightly, others softly fading into the distance to create depth. A vibrant lion dance performance is faintly visible in the far background under the moonlight. Dramatic cinematic golden rim lighting outlines his face, shoulders, and Ao Dai, transforming the entire scene into a luxurious Mid-Autumn fashion runway. Hyper-realistic 4K editorial style. Do not change any facial features.",
         "imagePath": "/image/genai/a05453bd-4128-46d2-900b-bee9b9e16066.png",
         "category": "Imperial Vietnamese Fashion"
+    },
+    {
+        "id": 89,
+        "title": "Chiến Binh & Bạch Hổ: Bước Chân Quyền Lực Giữa Màn Khói Bụi",
+        "prompt": "from my photo create a pictures: An ultra-realistic, cinematic full-body scene of a handsome Asian man (using 100% of the uploaded photo for facial reference, clean-shaved) walking confidently beside a majestic white tiger. Both are emerging through a dusty, smoky battlefield-like environment. The man possesses a rugged and powerful physique with defined muscles, wearing a fitted olive green military-style t-shirt, tactical khaki cargo pants, and heavy combat boots. He carries a sidearm holstered at his waist, wears a prominent wristwatch, stylish sunglasses, and a dog tag necklace. His expression is intense and fearless, characterized by a strong jawline. The white tiger walks gracefully and perfectly aligned at his side, its fur glowing with realistic black stripes, fierce blue eyes, and a powerful, muscular body. The lighting is dramatic, with soft golden highlights cutting through the dust and smoke, emphasizing every hyper-detail of the man’s muscles, visible tattoos, fabric textures, and the tiger’s fur. The atmosphere is intensely cinematic, with photorealistic rendering, UHD, 8K resolution, extreme sharpness, and a carefully managed depth of field to enhance the realism. Ensure 100% fidelity to the uploaded face, with enhanced Ultra HD 8K resolution.",
+        "imagePath": "/image/genai/ad8b17d6-235c-4c6e-9382-519de57a15d0.png",
+        "category": "Action & Adventure"
     }
 ]
