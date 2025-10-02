@@ -25,6 +25,37 @@
             transform: translateY(-4px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+        
+        /* Category dropdown color styling */
+        #category-filter option {
+            padding: 8px 12px;
+            font-weight: bold;
+        }
+        
+        #category-filter option:first-child {
+            color: #374151 !important;
+            font-weight: normal;
+        }
+        
+        /* Enhanced dropdown styling */
+         #category-filter {
+             background-image: linear-gradient(45deg, transparent 50%, #6b7280 50%), linear-gradient(135deg, #6b7280 50%, transparent 50%);
+             background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
+             background-size: 5px 5px, 5px 5px;
+             background-repeat: no-repeat;
+         }
+         
+         /* Category badge styling */
+         .category-badge {
+             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+             transition: all 0.2s ease;
+             border: 1px solid rgba(255, 255, 255, 0.2);
+         }
+         
+         .category-badge:hover {
+             transform: translateY(-1px);
+             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+         }
     </style>
 </head>
 <body class="min-h-screen">
@@ -67,12 +98,7 @@
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out bg-white"
                     >
                         <option value="">Tất cả danh mục</option>
-                        <option value="Portrait Photography">Chụp chân dung</option>
-                        <option value="Art Gallery & Exhibition">Triển lãm nghệ thuật</option>
-                        <option value="Divine & Spiritual">Thần thánh & Tâm linh</option>
-                        <option value="Classical Art Styles">Phong cách hội họa cổ điển</option>
-                        <option value="Vietnamese Mythology">Thần thoại Việt Nam</option>
-                        <option value="Lifestyle & Nature">Phong cách sống & Thiên nhiên</option>
+                        <!-- Categories will be loaded dynamically from category.json -->
                     </select>
                 </div>
                 
@@ -123,6 +149,41 @@
     <script>
         let promptsData = [];
         let filteredData = [];
+        let categoriesData = [];
+
+        // Load categories data from JSON file
+        async function loadCategoriesData() {
+            try {
+                const response = await fetch('/data/category.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load categories data');
+                }
+                categoriesData = await response.json();
+                renderCategoryDropdown();
+            } catch (error) {
+                console.error('Error loading categories data:', error);
+                categoriesData = [];
+            }
+        }
+
+        // Render category dropdown options
+        function renderCategoryDropdown() {
+            const categoryFilter = document.getElementById('category-filter');
+            
+            // Clear existing options except "Tất cả danh mục"
+            categoryFilter.innerHTML = '<option value="">Tất cả danh mục</option>';
+            
+            // Add categories from JSON data
+            categoriesData.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.name;
+                option.textContent = category.description || category.name;
+                option.style.color = category.color;
+                option.style.fontWeight = 'bold';
+                option.setAttribute('data-color', category.color);
+                categoryFilter.appendChild(option);
+            });
+        }
 
         // Load prompts data from JSON file
         async function loadPromptsData() {
@@ -198,7 +259,10 @@
         }
 
         // Initialize data loading when page loads
-        document.addEventListener('DOMContentLoaded', loadPromptsData);
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadCategoriesData();
+            await loadPromptsData();
+        });
         const notificationModal = document.getElementById('notification-modal');
         const notificationContent = document.getElementById('notification-content');
 
@@ -258,6 +322,20 @@
         }
 
         /**
+         * Chức năng: Lấy thông tin màu sắc của category từ categoriesData
+         */
+        function getCategoryInfo(categoryName) {
+            const category = categoriesData.find(cat => cat.name === categoryName);
+            return category ? {
+                color: category.color,
+                description: category.description
+            } : {
+                color: '#6B7280', // Màu xám mặc định
+                description: categoryName || 'Chưa phân loại'
+            };
+        }
+
+        /**
          * Chức năng: Render các thẻ prompt lên giao diện.
          */
         function renderPrompts() {
@@ -276,7 +354,7 @@
             // Sắp xếp theo id giảm dần (cao đến thấp)
             const sortedData = [...filteredData].sort((a, b) => b.id - a.id);
             
-            filteredData.forEach(item => {
+            sortedData.forEach(item => {
                 const card = document.createElement('div');
                 card.classList.add('prompt-card', 'bg-white', 'rounded-xl', 'shadow-md', 'overflow-hidden', 'ring-1', 'ring-gray-200', 'flex', 'flex-col');
                 
@@ -296,8 +374,8 @@
                     <div class="p-6 flex flex-col flex-grow">
                         <!-- Category Badge -->
                         <div class="mb-3">
-                            <span class="inline-block px-3 py-1 text-xs font-semibold text-white bg-indigo-500 rounded-full">
-                                ${item.category || 'Chưa phân loại'}
+                            <span class="inline-block px-3 py-1 text-xs font-semibold text-white rounded-full category-badge" style="background-color: ${getCategoryInfo(item.category).color}">
+                                ${getCategoryInfo(item.category).description}
                             </span>
                         </div>
                         
