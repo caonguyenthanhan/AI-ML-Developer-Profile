@@ -446,5 +446,54 @@
         "prompt": "from my photo create a pictures: An extreme close-up fashion portrait of the baby (from the uploaded photo), with eyes gazing directly into the lens, maintaining a natural and relaxed expression. Gentle light drifts across the highlights of the face. The baby is dressed in a macaron milk-blue half-sleeve shirt. The scene is viewed through the glass of an aquarium. In the foreground, several small tropical fish swim slowly, their translucent tails lively and delicate. The baby is interacting with the fish by touching the glass with tiny fingers. On the water's surface, light reflects into shimmering ripples, and fragmented light spots dance across the baby's cheeks. Underwater, floating particles linger, accentuating the clear, translucent texture of the light reflections. The background is blurred with subtle motion blur and fine film grain to create a masterpiece of light and shadow expression. The entire scene captures the baby interacting with the fish behind the aquarium glass. Don't change the facial det.",
         "imagePath": "/image/genai/7865b6b4-e5ea-4fe1-9854-357142d567f0.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 65,
+        "title": "Chân Dung Bé Yêu Đón Tết Trung Thu Với Khăn Rằn",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/2ac27e25-bdff-4fb9-97eb-787fe90e758c.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 66,
+        "title": "Chân Dung Bé Yêu Đón Tết Trung Thu Với Khăn Rằn (Cười Rạng Rỡ)",
+        "prompt": "from my photo create a pictures: A traditional Mid-Autumn Festival portrait of the young child (using the exact face and a bright, joyful smile/expression from the uploaded photo) sitting on a wooden chair in a festive indoor setting. The child is dressed in a simple brown áo bà ba outfit with a buttoned top and loose pants, paired with a black-and-white checkered khăn rằn tied around the head. On the child's lap is a colorful star lantern decorated with green tinsel. The backdrop is a red velvet curtain with multiple star lanterns hanging, and the setting includes typical Mid-Autumn decorations: painted paper masks with smiling faces, a small lion dance head, and dried floral arrangements with warm autumn tones. On a low wooden table next to the child are mooncakes, a ceramic tea set, toy figurines, and festive ornaments. The atmosphere is warm, nostalgic, and joyful. The style is ultra-realistic and cinematic with rich cultural detail. Don't change the facial det.",
+        "imagePath": "/image/genai/dd5e8a76-9b39-4cbd-987d-85f39b82ab1e.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 67,
+        "title": "Chân Dung Tết Trung Thu Truyền Thống Việt Nam",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/951d52b3-fda7-4864-8bf1-887d77d54806.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 68,
+        "title": "Chân Dung Tết Trung Thu Truyền Thống Việt Nam (Cười Rạng Rỡ)",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/d420189e-8781-4a8b-a87b-724549ffbff7.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 69,
+        "title": "Chân Dung Bé Yêu Đón Trung Thu Với Yếm Đỏ",
+        "prompt": "from my photo create a pictures: An AI-generated image of a baby (1–2 years old, using the exact face and expression from the uploaded photo) in the atmosphere of the Mid-Autumn Festival in Vietnam. The baby is sitting on a rustic bamboo bed, wearing a traditional Vietnamese red yếm (halter-neck top) paired with green pants, along with a vibrant lion dance hat decorated with fluffy white trim and colorful embroidery. The baby is holding a small mooncake in both hands, gazing at it with curious, innocent eyes. Around the scene are iconic Mid-Autumn details: a lion dance head placed nearby, a plate of ripe golden persimmons, a black lacquer tray with a teapot and lotus flowers, and vases with blooming lotuses and kumquat branches. The bamboo wall backdrop is decorated with red and green star-shaped lanterns, colorful fabric lanterns, and shimmering tinsel garlands, recreating a lively festival setting. Warm lighting highlights the scene, evoking a cozy and nostalgic feeling of traditional Vietnamese Mid-Autumn celebrations. The style is high-resolution, ultra-realistic, natural, festive, and heartwarming. Don't change the facial det.",
+        "imagePath": "/image/genai/d083a924-6a9a-4d2b-9bc6-a3d06d4c00e0.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 70,
+        "title": "Bé Phi Hành Gia Đón Trung Thu Trên Mặt Trăng",
+        "prompt": "from my photo create a pictures: A full-body portrait of a baby boy around 2 years old (using the exact face and expression from the uploaded photo) dressed in a cute mini astronaut suit with a helmet. He is standing on a moon-like surface created with realistic props. Floating around him are star lanterns (lồng đèn ông sao), a cute chibi bunny mascot (thỏ ngọc), and glowing space-themed decorations. Above, the full moon shines brightly with soft glowing stars in the night sky. The style blends traditional Mid-Autumn Festival elements with a modern sci-fi aesthetic. The atmosphere is magical, whimsical, and ultra-realistic. Don't change the facial det.",
+        "imagePath": "/image/genai/e625f7d0-572c-4cf2-b46c-9c0bfe09ae94.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 71,
+        "title": "Bé Yêu Áo Dài Ăn Vụn Bánh Trung Thu",
+        "prompt": "from my photo create a pictures: A hyper-realistic and heartwarming portrait of a baby boy around 2 years old (using the exact face and expression from the uploaded photo). He is wearing a modern áo dài with elegant golden patterns, and is sitting at a small wooden table. On the table is a box of mini mooncakes and a toy tea set. The baby is holding half of a mooncake in his hand with a mischievous, secretive expression, as if secretly eating it. The background is richly decorated with red festive fabric, yellow lanterns, and festive flowers. The atmosphere is warm and joyful, capturing the essence of the Mid-Autumn Festival in Vietnam. Don't change the facial det.",
+        "imagePath": "/image/genai/ccfdd716-f0e1-491b-b9c9-5fb717b0443e.png",
+        "category": "Vietnamese Mythology"
     }
 ]
