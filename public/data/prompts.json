@@ -649,5 +649,54 @@
         "prompt": "from my photo create a pictures: An ultra-realistic, surreal photograph of a beautiful Vietnamese woman (using the exact face and identity from the uploaded photo, ensuring 100% fidelity) wearing a flowing, translucent Ao Dai made of silk that gently floats and billows around her. She is suspended gracefully in the center of the frame, surrounded by hundreds of ribbons of shimmering, gossamer-thin silk and ethereal, glowing threads that defy gravity and spiral slowly around her. The background is a soft, dreamlike vista of surreal, golden-hued clouds and pale lavender skies, with a hint of ethereal mist. Soft rim lighting highlights the edges of her hair and the floating silk ribbons. The ground below is an expansive field of textured, floating clouds, suggesting high altitude and limitless space. Shallow depth of field, extreme detail in the fabric and facial expression. Cinematic, high-resolution, 4K photo quality, 16:9 aspect ratio. Do not include any lotus flowers. Don't change the facial det.",
         "imagePath": "/image/genai/848a1c59-5bf9-4662-8e2f-0cd58267fdf9.png",
         "category": "Ethereal Suspension"
+    },
+    {
+        "id": 94,
+        "title": "Nữ Hoàng Sắc Cam: Chân Dung Thời Trang Siêu Sang Giờ Vàng",
+        "prompt": "from my photo create a pictures: An ultra-realistic, cinematic editorial portrait of a beautiful young woman (using the exact face and identity from the uploaded photo, ensuring 100% authentic facial features and original skin tone, do not change the facial structure). She is approximately 28 years old, with long, natural brown, loosely curled hair, fair pinkish skin, and natural, fresh Barbie-esque makeup, smiling charmingly at the camera. FASHION: She wears a white, strapless top, an orange suit jacket, a sleek modern long-sleeved shirt, and white/orange houndstooth patterned bottoms, paired with orange and white sneakers for a cool, fresh look. She sits confidently on the hood of a shiny orange sports car, holding a black leather Chanel clutch bag (or a black leather bag with gold-tone rings). SCENE: Set on a beautiful street surrounded by pastel-colored houses and tall palm trees. LIGHTING/MOOD: Captured during the warm afternoon sunlight (Golden Hour). The mood features a high-contrast Orange-Teal color tone with rich gold and orange hues, emphasizing luxury and vibrant street fashion. CAMERA/DETAIL: Use a shallow depth of field (slight background blur). Composition follows the Rule of Thirds, positioning the model on the left side of the frame. Lens: 85mm f/2.0, Aperture f/2.2, ISO 100, Shutter speed 1/320s. Emphasize meticulous detail in fabric and leather texture. Style: Hyper Realistic Photography, Cinematic, Cinema, Hyper detail, Ultra HD, HDR, Color Correction, Color Grading. Do not change the facial det.",
+        "imagePath": "/image/genai/57f974ad-aade-4122-b655-e623a525e9a2.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 95,
+        "title": "Nàng Thơ Vải Trắng: Khoảnh Khắc Lãng Mạn Cùng Ánh Sáng Cam",
+        "prompt": "from my photo create a pictures: A hyper-realistic portrait of a young woman (replace the face with the user's face from the reference photo in a natural, realistic style, ensuring seamless blending and 100% facial fidelity). She has long, wavy hair and wears a delicate white sheer dress with soft lace details. A large, deep orange ribbon is tied elegantly in her hair, cascading down on both sides. She holds a single orange gently near her lips, her expression soft and enchanting. The lighting is warm, soft, and gentle, casting dreamy highlights on her face and hair, creating a romantic and ethereal mood. The background is softly blurred with elegant white drapery, enhancing the fairytale-like atmosphere. Cinematic aesthetic, ultra-detailed textures (skin, lace, ribbon), shallow depth of field, 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/8ed1731d-8ba1-4bd4-a679-6af8577de703.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 96,
+        "title": "Bữa Tối Sinh Nhật Sang Trọng Dưới Ánh Hoàng Hôn Thành Phố",
+        "prompt": "from my photo create a pictures: An ultra-realistic, cinematic close-up portrait of a beautiful young woman (using the exact face and identity from the reference photo, ensuring 100% facial fidelity and realistic blending). She has long wavy black hair, fair skin, and is wearing an elegant ivory strapless dress. She sits confidently at an opulent dining table, holding up a glass of red wine and gazing at it with a soft, enchanting expression. The table setting is lavish, featuring a birthday cake decorated with a small bunny, plates of spaghetti with crab, fresh salad, steak with baguette bread, and wine glasses. Lit candles surround the setup, casting a warm, rich glow. Behind her, a large glass window offers a view of a luxurious cityscape at sunset, with purple-pink skies and blurred neon lights creating dramatic contrast. Decorations include a glowing neon sign reading 'Happy Birthday' and a banner with 'Happy Birthday' letters. The image is captured with a Canon EOS R5 camera, 35mm f/1.4 lens at f/1.8 aperture. Lighting is a mix of cinematic candlelight and neon glow against natural sunset backlight. The overall style is romantic, modern, and luxurious, rendered in ultra-realistic 8K resolution, with rich details, and a profound cinematic atmosphere, emphasizing natural skin and food textures. Don't change the facial det.",
+        "imagePath": "/image/genai/3cf3dc37-1ee4-4303-9410-c037d534747f.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 97,
+        "title": "Sắc Đỏ May Mắn: Chân Dung Nàng Xuân Cùng Ngư Tiên",
+        "prompt": "from my photo create a pictures: An ultra-realistic, detailed portrait of a beautiful young woman (using the exact face and identity from the reference photo, ensuring 100% facial fidelity and realistic blending). She has long black hair and fair skin, wearing an elegant red and blue traditional Qipao dress. She is smiling gently and holding a large, intricately decorated red fish ornament. The background reveals a cozy, warmly lit traditional shop interior with wooden shelves completely filled with red and gold festive decorations, including fish ornaments, lanterns, and other traditional items. The atmosphere beautifully blends cultural elegance and warm celebration, with soft, directional lighting enhancing the rich details and textures of the silk fabric, wooden shelves, and her skin. Focus on realistic skin tones, natural expression, and authentic fabric textures. UHD, 8K, cinematic soft lighting. Don't change the facial det.",
+        "imagePath": "/image/genai/b75da228-d95c-4e09-b7fc-dbd3f47b6537.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 98,
+        "title": "Mặt Trời Sau Lưng: Vẻ Đẹp Thanh Thuần & Bí Ẩn",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/a468b504-722f-49ef-a03d-a64481555e0f.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 99,
+        "title": "Nữ Thần Ánh Hoàng Hôn: Thời Trang Haute Couture Trên Cầu Alexandre III",
+        "prompt": "Hyper-realistic cinematic fashion shoot of a glamorous female supermodel standing on the Pont Alexandre III bridge in Paris at golden hour, wearing a flowing scarlet couture gown with thigh-high slit, wind catching the fabric dramatically. Eiffel Tower glowing in the background with warm evening lights, golden sunlight outlining her silhouette. Camera angle low and powerful, sharp focus on her confident gaze and bold red lips. Jewelry sparkles subtly under natural light. Ultra-detailed skin, glossy fashion magazine vibe, 8K medium-format DSLR high-fashion editorial.",
+        "imagePath": "/image/genai/69b4663f-b195-47d2-a447-79eb189c34f3.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 100,
+        "title": "Nữ Thần Ánh Trăng: Quyền Lực Trong Chiếc Váy Lụa Bay Cùng Chiến Mã Đen",
+        "prompt": "from my photo create a pictures: An ultra-realistic, dramatic cinematic photo shoot of a beautiful young woman (using the exact face and identity from the reference photo, ensuring 100% facial fidelity and realistic blending). She is wearing a long, smooth, black couture dress made of silk, featuring a translucent neckline, a dramatic long tail, and a high slit on the leg. The dress fabric is dramatically caught by a strong wind, billowing and flowing powerfully to create a sense of dynamic movement. She stands firmly, holding the leather reins of a majestic black horse. The horse is large, muscular, and positioned near her. The woman is gazing intensely at the horse. The background is a vast, blurred landscape of tall, dry rice grass (or dry savannah grass), fading into a shallow depth of field. The lighting is cinematic and moody, possibly backlighting from a low sun or moon, creating sharp, golden rim lighting on the woman's silhouette, the flowing dress, and the horse's coat. Focus on hyper-realistic details of the skin, the delicate translucency of the fabric, and the texture of the horse's mane and coat. Ultra-detailed, 8K resolution, high-fashion editorial style. Do not change the facial det.",
+        "imagePath": "/image/genai/882e5319-aa89-460a-b4b3-be1a6c56d537.png",
+        "category": "Portrait Photography"
     }
 ]
