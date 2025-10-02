@@ -495,5 +495,26 @@
         "prompt": "from my photo create a pictures: A hyper-realistic and heartwarming portrait of a baby boy around 2 years old (using the exact face and expression from the uploaded photo). He is wearing a modern áo dài with elegant golden patterns, and is sitting at a small wooden table. On the table is a box of mini mooncakes and a toy tea set. The baby is holding half of a mooncake in his hand with a mischievous, secretive expression, as if secretly eating it. The background is richly decorated with red festive fabric, yellow lanterns, and festive flowers. The atmosphere is warm and joyful, capturing the essence of the Mid-Autumn Festival in Vietnam. Don't change the facial det.",
         "imagePath": "/image/genai/ccfdd716-f0e1-491b-b9c9-5fb717b0443e.png",
         "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 72,
+        "title": "Chân Dung Cô Bé Hanfu Dưới Ánh Trăng Chơi Đàn Cổ",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/dc1a750c-e2d2-4567-b043-5c0ff450301f.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 73,
+        "title": "Chân Dung Cô Bé Hanfu Màu Xanh Ngọc Dưới Ánh Trăng",
+        "prompt": "from my photo create a pictures: A close-up, high-resolution portrait of a young Asian girl (around 6-8 years old, using the exact face, identity, and calm, gentle expression from the uploaded photo) looking directly into the camera. She is elegantly dressed in an ethereal light green and white Hanfu, featuring delicate, flowing layers of sheer fabric. Her hair is styled in a traditional updo, adorned with white floral ornaments and subtle pearl or jade accents. She is seated gracefully amidst flowing, sheer green fabric that drapes around her like mist or water. The background features a large, glowing full moon in a mystical night sky, with silhouettes of bamboo stalks and soft atmospheric lighting. The overall aesthetic is tranquil, elegant, and enchanting, with soft, artistic lighting that emphasizes the lightness of the fabric and the dreamy quality of the scene. Shot with a prime lens for a shallow depth of field, creating a dreamlike bokeh. Don't change the facial det.",
+        "imagePath": "/image/genai/5ea2ae31-8d95-46af-82b1-4b5f7b1ad8fd.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 74,
+        "title": "Chân Dung Cô Bé Hanfu Màu Vàng Bay Bổng Dưới Ánh Trăng",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/f0ac456b-2e04-41da-a3eb-c659a6677ed3.png",
+        "category": "Vietnamese Mythology"
     }
 ]
