@@ -768,5 +768,26 @@
         "prompt": "from my photo create a pictures: A vertical, split-frame cinematic photograph (2160x3840 pixels, UHD 8K quality) presented as a single composition divided into three equally sized horizontal frames. Maintaining the exact facial features, expression, and hairstyle of the original reference image (Face-Lock 100%, Facial Detail 100%). The color palette is intensely cold and moody, featuring muted blue/gray tones to convey deep melancholy and solitude.\r\nOutfit: Elegant, high-fashion black winter puffer jacket, oversized wide-leg pants, and a thick black knit scarf.\r\nFrame 1 (Close-up Portrait): The character holds a large, transparent umbrella, turning their head slightly back, gazing directly at the camera with a subtle, sorrowful, nostalgic aura. Heavy, directional cinematic light sculpts the face, with sharp focus on the eyes and glasses. The background is a soft, deep bokeh of blurred snowy whiteness.\r\nFrame 2 (Full Body, Wide Shot): The character stands isolated and centered in a vast, desolate snowy field under an oppressive overcast sky, holding the umbrella. Use a dramatic high-angle perspective to minimize the figure and emphasize extreme isolation. Distant, dark, barren trees line the horizon. Motion blur on the fine, falling snowflakes.\r\nFrame 3 (Extreme Close-up): A hyper-detailed close-up on the character’s eyes (Face-Lock 100%), which must convey intense sorrow, regret, and longing. The transparent umbrella frame is visible overhead. Snowflakes are sharply rendered on the eyelashes.\r\nTechnical Details: Shot on a high-end film camera (e.g., Arri Alexa 65) with a 50mm lens (Frame 1 & 3) and a 16mm lens (Frame 2). Ultra-detailed, photorealistic, cinematic grading, deep contrast, shallow depth of field (except for Frame 2).",
         "imagePath": "/image/genai/117fccf6-d71f-4c5f-8f3d-7e9667bc148d.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 111,
+        "title": "Điệu Múa Dải Lụa: Nàng Tiên Thanh Thoát Dưới Ánh Trăng Rằm",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/2f3ea93b-a1d9-4e69-a616-456b0aee8c30.png",
+        "category": "Divine & Spiritual"
+    },
+    {
+        "id": 112,
+        "title": "Tỉ Phú Du Thuyền: Quý Ông Trắng Tinh Khôi Dưới Nắng Hè",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/78efdb60-9de4-46df-bf7c-fe2d3272f949.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 113,
+        "title": "Nàng Xuân Nổi Loạn: Phong Cách Hiện Đại Giữa Lễ Hội Lân Sư Rồng",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/daca60f1-9ee3-40ef-b97b-c70fae4c8b1e.png",
+        "category": "Portrait Photography"
     }
 ]
