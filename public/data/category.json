@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 17,
+        "count": 18,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -67,7 +67,7 @@
         "id": 9,
         "name": "Ethereal Suspension",
         "description": "Vẻ Đẹp Thần Tiên Lơ Lửng",
-        "count": 3,
+        "count": 2,
         "color": "#DCD0FF",
         "icon": "sparkles"
     },
