@@ -11,7 +11,7 @@
         "id": 2,
         "name": "Art Gallery & Exhibition",
         "description": "Tác phẩm nghệ thuật trong không gian triển lãm",
-        "count": 5,
+        "count": 7,
         "color": "#8B5CF6",
         "icon": "palette"
     },
@@ -35,7 +35,7 @@
         "id": 5,
         "name": "Vietnamese Mythology",
         "description": "Thần thoại và truyền thuyết Việt Nam",
-        "count": 7,
+        "count": 8,
         "color": "#10B981",
         "icon": "moon"
     },
