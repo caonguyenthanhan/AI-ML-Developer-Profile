@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 51,
+        "count": 12,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -11,7 +11,7 @@
         "id": 2,
         "name": "Art Gallery & Exhibition",
         "description": "Tác phẩm nghệ thuật trong không gian triển lãm",
-        "count": 9,
+        "count": 5,
         "color": "#8B5CF6",
         "icon": "palette"
     },
@@ -19,7 +19,7 @@
         "id": 3,
         "name": "Divine & Spiritual",
         "description": "Hình ảnh thiêng liêng và tâm linh",
-        "count": 5,
+        "count": 3,
         "color": "#F59E0B",
         "icon": "sun"
     },
@@ -27,7 +27,7 @@
         "id": 4,
         "name": "Classical Art Styles",
         "description": "Phong cách hội họa cổ điển của các danh họa",
-        "count": 7,
+        "count": 4,
         "color": "#EF4444",
         "icon": "brush"
     },
@@ -35,7 +35,7 @@
         "id": 5,
         "name": "Vietnamese Mythology",
         "description": "Thần thoại và truyền thuyết Việt Nam",
-        "count": 18,
+        "count": 7,
         "color": "#10B981",
         "icon": "moon"
     },
@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 18,
+        "count": 6,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -51,7 +51,7 @@
         "id": 7,
         "name": "Wedding Day",
         "description": "Chụp ảnh cưới và sự kiện đặc biệt",
-        "count": 1,
+        "count": 0,
         "color": "#EC4899",
         "icon": "heart"
     },
@@ -59,7 +59,7 @@
         "id": 8,
         "name": "Tech-Woven History",
         "description": "Lịch sử đan xen Công nghệ",
-        "count": 1,
+        "count": 0,
         "color": "#CD7F32",
         "icon": "Gear"
     },
@@ -67,7 +67,7 @@
         "id": 9,
         "name": "Ethereal Suspension",
         "description": "Vẻ Đẹp Thần Tiên Lơ Lửng",
-        "count": 2,
+        "count": 0,
         "color": "#DCD0FF",
         "icon": "sparkles"
     },
@@ -75,7 +75,7 @@
         "id": 10,
         "name": "Imperial Vietnamese Fashion",
         "description": "Thời trang Hoàng gia Việt",
-        "count": 3,
+        "count": 0,
         "color": "#800000",
         "icon": "👑"
     },
@@ -83,7 +83,7 @@
         "id": 11,
         "name": "Action & Adventure",
         "description": "Hành động & Phiêu lưu",
-        "count": 3,
+        "count": 0,
         "color": "#FFBF00",
         "icon": "sword"
     },
@@ -91,7 +91,7 @@
         "id": 12,
         "name": "Street Photography & Urban",
         "description": "Nhiếp ảnh Đường phố & Đô thị",
-        "count": 1,
+        "count": 0,
         "color": "#84CC16",
         "icon": "bus"
     },
@@ -99,7 +99,7 @@
         "id": 13,
         "name": "Fantasy Sci-Fi",
         "description": "Khoa học viễn tưởng giả tưởng",
-        "count": 3,
+        "count": 0,
         "color": "#8A2BE2",
         "icon": "🌌"
     }
