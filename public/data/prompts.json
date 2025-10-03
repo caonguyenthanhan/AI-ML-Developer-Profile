@@ -789,5 +789,61 @@
         "prompt": "liên hệ admin",
         "imagePath": "/image/genai/daca60f1-9ee3-40ef-b97b-c70fae4c8b1e.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 114,
+        "title": "Tình Yêu Trên Sân Pickleball: Chân Dung Đôi Vận Động Viên Giờ Hoàng Hôn",
+        "prompt": "from my photo create a pictures: A professional sports portrait shot on an outdoor pickleball court at sunset. The female character is locked exactly as in the reference photo (Face-Lock 100%, Outfit-Lock 100%), wearing a black sports bra with thin straps and a white pleated sports skirt, holding a pickleball paddle with a natural, happy smile. Next to her is the male character (Face-Lock applied from the uploaded face - image_9c18ae.jpg left side), who is a handsome young Asian man wearing professional sportswear in varied colors (different color variations, not limited to blue, avoiding headbands), also holding a pickleball paddle. Both subjects are standing together on the court in a casual pose, illuminated by natural, soft golden hour lighting. The background features a tennis net, court lines, lamps, and other players slightly blurred for depth of field. Professional sports photography style, hyper-realistic, high quality, 8K resolution, cinematic natural light. Don't change the facial det for either subject.",
+        "imagePath": "/image/genai/77bc6319-2c3c-4389-9b12-13089e3abf18.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 115,
+        "title": "Kỳ Thủ Thần Bí: Cuộc Cờ Định Mệnh Giữa Sa Mạc Khói Lửa",
+        "prompt": "from my photo create a pictures: A hyper-realistic, 8K cinematic fantasy sequence of a young man (use the exact face and identity from the uploaded reference photo - image_39e1a6.jpg - ensuring 100% facial fidelity and realistic blending) standing on a massive, cracked chessboard that stretches across an epic desert battlefield. He wears a long, flowing scarlet red coat richly adorned with golden embroidery, a sleek black shirt, black pants, and polished black shoes. His coat flutters powerfully in the strong wind, enhancing his commanding and almost ethereal presence. His calm yet determined expression radiates an ancient wisdom, as though he controls the unfolding game of life. Around him, hundreds of colossal chess pieces—towering kings, queens, rooks, bishops, knights, and pawns—float and swirl dramatically in the air, rotating in slow motion, suspended in a surreal, gravity-defying moment. They glow faintly with reflections of golden light, appearing to be under his silent command. The cracked chessboard beneath his feet emits a mysterious, pulsating golden energy, symbolizing hidden strategy and profound knowledge. The background is a vast, war-scarred high desert, with crumbling ruins and sand swept by powerful gusts of wind. Above, the sky churns with dramatic storm clouds, while piercing rays of divine sunlight break through, creating an epic balance between darkness and hope. Ultra-detailed, cinematic lighting, profound depth of field. Do not change the facial det.",
+        "imagePath": "/image/genai/7078d970-0dec-4a4e-8df2-f4ced9abb08e.png",
+        "category": "Divine & Spiritual"
+    },
+    {
+        "id": 116,
+        "title": "Ảo Thuật Gia Lửa: Khoảnh Khắc Bí Ẩn Trong Ánh Sáng Điện Ảnh",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic portrait of a person (use the exact face and identity from the uploaded reference photo - image_39e1a6.jpg - ensuring 100% facial fidelity and realistic blending). The subject is sitting composedly in the center of an elegant, dimly lit room, characterized by warm wooden wall panels, soft ambient lighting, and vintage-style furniture. They stare directly into the camera with an intense, enigmatic gaze, a slight smirk playing at the corner of their lips, conveying calm confidence. They wear a deep burgundy velvet jacket over a buttoned black shirt, exuding the mysterious presence of an artistic illusionist or a high-stakes gambler. Dramatically, they hold a newspaper that is actively engulfed in bright, realistic flames, casting dynamic, flickering light. Their face is expertly sculpted by soft cinematic lighting—warm highlights and gentle shadows naturally define their features, creating a dramatic, filmic look. The overall tone is cinematic and moody, with rich, warm colors and deep, soft shadows. Ultra-detailed, 8K resolution, capturing the texture of the velvet, the burning paper, and the intensity of their eyes. Do not change the facial det.",
+        "imagePath": "/image/genai/c8d8363b-ba20-48ba-9a76-716243f0db53.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 117,
+        "title": "Tâm Điểm Phố Thị: Chân Dung Góc Rộng Dưới Ánh Đèn Đêm",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/98ebbf9d-c72c-4080-a7bf-58e25aa5f1d7.png",
+        "category": "Street Photography & Urban"
+    },
+    {
+        "id": 118,
+        "title": "Đối Diện Bản Thân: Chân Dung Phản Chiếu Trong Bảo Tàng",
+        "prompt": "from my photo create a pictures: A hyper-detailed, photorealistic close-shot in a dimly lit museum gallery. The person (use the exact face and original hairstyle from the uploaded reference photo, ensuring 100% facial fidelity and realistic blending) is viewed from the back, standing perfectly centered on a polished tile floor, looking directly up at a large framed oil painting. The painting is a large, square-format classical oil portrait of that exact same person, wearing a dark, high-necked sweater or garment, against a deep, dark brown, earthy background. The subject in the painting has a serious, compelling expression. The room's walls are a muted, dark gray/brown. The lighting is dominated by a strong, focused museum spotlight illuminating only the painting, creating a dramatic contrast with the softly lit surrounding room. Perfect symmetry, eye-level shot, ultra-realistic, 8K resolution, cinematic composition with deep, profound shadows and masterful, dramatic lighting. Do not change the facial det.",
+        "imagePath": "/image/genai/afd9f49c-8970-4495-a50c-317c4f361b13.png",
+        "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 119,
+        "title": "Thượng Hải Noir: Quý Ông Thập Niên 30 Dưới Ánh Neon",
+        "prompt": "from my photo create a pictures: An ultra-realistic, cinematic portrait of a handsome man (use the exact face, identity, glasses, and expression from the uploaded reference photo - image_9c2bf5.jpg - ensuring 100% facial fidelity). The setting is a vintage Shanghai street at night, circa 1930s, filled with vibrant, brightly glowing Chinese neon signs and wet cobblestone pavement, reflecting the colorful lights. The background features blurred figures in period clothing, adding to the classic ambiance. FASHION: The subject wears a sharp, classic beige three-piece suit (vest, jacket, and trousers), a crisp white shirt, and a matching beige tie. He wears polished black leather dress shoes and a black belt. POSE: He is leaning confidently against the hood of a dark, vintage 1930s classic car. His right hand is holding a lit cigarette (hoặc cigarillo) with smoke subtly curling upwards. MOOD & STYLE: The style is cinematic and moody, drawing inspiration from classic film noir. The atmosphere is warm, rich, and mysterious, highlighted by warm streetlights and dramatic film color grading (e.g., deep greens, rich reds, and golds). Ultra-high resolution, hyper-realistic, fashion editorial style, resembling a still frame from a historical crime film. Maintain the subject's distinct glasses and the confident, enigmatic gaze. Do not change the facial det.",
+        "imagePath": "/image/genai/be57a531-7a90-42b3-bb2e-c751ea3591dc.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 120,
+        "title": "Nghệ Sĩ Nhí: Nhịp Trống Trung Thu Trong Sân Đình Cổ Tự",
+        "prompt": "from my photo create a pictures: A hyper-realistic, 8K cinematic portrait of a 3-year-old boy (use the exact face from the uploaded photo, ensuring 100% facial fidelity and realistic blending). He is wearing a traditional, vibrant red brocade outfit adorned with intricate golden patterns, sitting neatly and poised on a polished wooden floor in the tranquil courtyard of an ancient temple. He holds drumsticks firmly with a serious, focused expression, ready to play a bright red festival drum placed directly before him. Around him, numerous vivid red silk lanterns hang, interspersed with multicolored pennant flags, creating a festive canopy. Nearby, a colorful lion dance head and other performance props lie on the floor. The entire scene is bathed in dramatic, warm spotlit lantern light, creating a theatrical and traditional festival ambiance. The composition evokes the grandeur and spirited mood of Mid-Autumn celebrations in an old, rich cultural setting, with deep shadows and glowing highlights. Do not change the facial det.",
+        "imagePath": "/image/genai/1666e990-8516-4509-a1b9-acb1ed4c7db2.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 121,
+        "title": "Nắng Hạ Đồng Quê: Chân Dung Cụ Ông Giữa Cánh Đồng Lúa",
+        "prompt": "from my photo create a pictures: A hyper-realistic, environmental portrait of an 80-year-old Asian man (use the face and identity from the uploaded reference photo, ensuring 100% facial fidelity and realistic blending, aged naturally to 80 years). He has deeply tanned skin and a humble, gentle smile. He wears a traditional light brown Ao Ba Ba shirt and a classic conical hat (Non La). The background is a vast, lush green rice field under the bright sun, with minimal distraction. The portrait is captured with a Fujifilm GFX 100S, emphasizing a documentary photography style. Focus on ultra-detailed skin texture, sharp details, 8K resolution, and the effect of harsh natural daylight. The color palette features rich, earthy color tones, conveying an authentic and serene rural atmosphere. Shallow depth of field should softly blur the background, keeping the focus sharp on the subject. Do not change the facial det (except for the specified aging).",
+        "imagePath": "/image/genai/c0c4c51b-a9e8-41ba-902f-d6392aa8e2e4.png",
+        "category": "Portrait Photography"
     }
 ]

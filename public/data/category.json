@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 48,
+        "count": 52,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -11,7 +11,7 @@
         "id": 2,
         "name": "Art Gallery & Exhibition",
         "description": "Tác phẩm nghệ thuật trong không gian triển lãm",
-        "count": 8,
+        "count": 9,
         "color": "#8B5CF6",
         "icon": "palette"
     },
@@ -19,7 +19,7 @@
         "id": 3,
         "name": "Divine & Spiritual",
         "description": "Hình ảnh thiêng liêng và tâm linh",
-        "count": 5,
+        "count": 6,
         "color": "#F59E0B",
         "icon": "sun"
     },
@@ -35,7 +35,7 @@
         "id": 5,
         "name": "Vietnamese Mythology",
         "description": "Thần thoại và truyền thuyết Việt Nam",
-        "count": 17,
+        "count": 18,
         "color": "#10B981",
         "icon": "moon"
     },
@@ -91,7 +91,7 @@
         "id": 12,
         "name": "Street Photography & Urban",
         "description": "Nhiếp ảnh Đường phố & Đô thị",
-        "count": 0,
+        "count": 1,
         "color": "#84CC16",
         "icon": "bus"
     }
