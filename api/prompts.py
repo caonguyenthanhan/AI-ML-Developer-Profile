@@ -19,20 +19,12 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(b'')
 
     def do_GET(self):
-        """Xử lý GET request - lấy danh sách prompts (hỗ trợ hợp nhất VIP)"""
+        """Xử lý GET request - lấy danh sách prompts"""
         try:
-            # Parse query parameters
-            parsed_url = urlparse(self.path)
-            query_params = parse_qs(parsed_url.query)
-            include_vip = query_params.get('include_vip', ['false'])[0].lower() == 'true'
-            sanitize = query_params.get('sanitize', ['false'])[0].lower() == 'true'
-
-            # Đường dẫn đến các file dữ liệu
-            base_dir = os.path.join(os.path.dirname(__file__), '..')
-            prompts_file = os.path.join(base_dir, 'public', 'data', 'prompts.json')
-            vip_file = os.path.join(base_dir, 'private', 'prompts_vip.json')
-
-            # Đọc file prompts.json (public)
+            # Đường dẫn đến file prompts.json
+            prompts_file = os.path.join(os.path.dirname(__file__), '..', 'public', 'data', 'prompts.json')
+            
+            # Kiểm tra file có tồn tại không
             if not os.path.exists(prompts_file):
                 self.send_response_with_cors(404)
                 response = {
@@ -42,43 +34,20 @@ class handler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps(response, ensure_ascii=False).encode('utf-8'))
                 return
 
+            # Đọc file prompts.json
             with open(prompts_file, 'r', encoding='utf-8') as f:
-                public_prompts = json.load(f)
+                prompts_data = json.load(f)
 
-            merged_prompts = public_prompts[:]
-
-            # Nếu cần hợp nhất VIP thì đọc và gộp
-            if include_vip and os.path.exists(vip_file):
-                with open(vip_file, 'r', encoding='utf-8') as vf:
-                    vip_prompts = json.load(vf)
-                # Ánh xạ theo ID để ghi đè
-                by_id = {p.get('id'): p for p in public_prompts if 'id' in p}
-                for vip in vip_prompts:
-                    vid = vip.get('id')
-                    if vid in by_id:
-                        by_id[vid] = vip
-                    else:
-                        by_id[vid] = vip
-                merged_prompts = list(by_id.values())
-
-                # Sanitize nội dung prompt cho đầu công khai nếu yêu cầu
-                if sanitize:
-                    for p in merged_prompts:
-                        # Chỉ che nội dung của mục có nguồn VIP (giả định có trường 'is_vip' hoặc nằm trong vip_prompts)
-                        # Nếu không có trường đánh dấu, dùng heuristic theo ID trùng trong vip_prompts
-                        try:
-                            is_vip_item = any(v.get('id') == p.get('id') for v in vip_prompts)
-                        except Exception:
-                            is_vip_item = False
-                        if is_vip_item:
-                            p['prompt'] = 'Liên hệ admin để xem đầy đủ nội dung prompt'
-
+            # Parse query parameters
+            parsed_url = urlparse(self.path)
+            query_params = parse_qs(parsed_url.query)
+            
             # Lọc theo category nếu có
             category = query_params.get('category', [None])[0]
             if category:
-                filtered_prompts = [p for p in merged_prompts if str(p.get('category', '')).lower() == category.lower()]
+                filtered_prompts = [p for p in prompts_data if p.get('category', '').lower() == category.lower()]
             else:
-                filtered_prompts = merged_prompts
+                filtered_prompts = prompts_data
 
             # Trả về response
             self.send_response_with_cors(200)

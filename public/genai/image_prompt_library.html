@@ -155,7 +155,7 @@
         // Load categories data from JSON file
         async function loadCategoriesData() {
             try {
-                const response = await fetch('/public/data/category.json');
+                const response = await fetch('/data/category.json');
                 if (!response.ok) {
                     throw new Error('Failed to load categories data');
                 }
@@ -186,26 +186,10 @@
             });
         }
 
-        // Load prompts data from API with fallback
+        // Load prompts data from JSON file
         async function loadPromptsData() {
             try {
-                // Ưu tiên lấy từ API hợp nhất (bao gồm VIP, sanitize cho public UI)
-                const apiResponse = await fetch('/api/prompts?include_vip=true&sanitize=true');
-                if (apiResponse.ok) {
-                    promptsData = await apiResponse.json();
-                    filteredData = [...promptsData];
-                    updateCounts();
-                    renderPrompts();
-                    initializeFilters();
-                    return;
-                }
-            } catch (e) {
-                console.warn('API /api/prompts unavailable, falling back to local JSON:', e);
-            }
-
-            try {
-                // Fallback: dữ liệu public từ file JSON tĩnh
-                const response = await fetch('/public/data/prompts.json');
+                const response = await fetch('/data/prompts.json');
                 if (!response.ok) {
                     throw new Error('Failed to load prompts data');
                 }
