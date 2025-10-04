@@ -2,7 +2,7 @@
     {
         "id": 1,
         "title": "Chân dung Moody, Ánh sáng Cinema",
-        "prompt": "Create a hyper-realistic close- up portrait of a young, stylish, and confident Asian man, inspired by my reference image. The setting is moody and editorial, with sharp beams of amber and icy blue light cutting across his face, enhancing his clean jawline and bold, focused eyes. He's wearing a dark velvet jacket, slightly open at the collar to show a simple chain necklace, with a black t-shirt underneath. Don't change the facial det",
+        "prompt": "liên hệ admin",
         "imagePath": "/image/genai/image1.jpeg",
         "category": "Portrait Photography"
     },
@@ -44,7 +44,7 @@
     {
         "id": 7,
         "title": "Ngắm Tranh trong Gallery",
-        "prompt": "from my create a pictures: Create a pictures: a person, seen from behind, mirroring the subject's attire, stands in an art gallery, 1/3 from the left edge of the frame. He gazes at a framed portrait of himself. The portrait is a realistic painting with clear, textured brushstrokes and impasto effects, giving it an artistic, hand-painted feel. The gallery is dimly lit, with a strong spotlight illuminating the portrait and casting a dramatic shadow on the man and the wall. The floor is clean and reflective. The overall atmosphere is artistic and contemplative, captured with a professional camera.",
+        "prompt": "liên hệ admin",
         "imagePath": "/image/genai/image7.jpeg",
         "category": "Art Gallery & Exhibition"
     },
@@ -65,7 +65,7 @@
     {
         "id": 10,
         "title": "Phong cách Hội họa Michelangelo",
-        "prompt": "from my create a pictures: A masterpiece in the style of Michelangelo. Figures are sculptural, muscular, and monumental, with a strong sense of volume. The composition is highly dramatic with powerful, dynamic poses. Vibrant, vivid colors reminiscent of a fresco painting.",
+        "prompt": "liên hệ admin",
         "imagePath": "/image/genai/image10.jpeg",
         "category": "Classical Art Styles"
     },
@@ -177,7 +177,7 @@
     {
         "id": 26,
         "title": "Quay về trẻ thơ",
-        "prompt": "from my photo create photo:\r\nA vertical portrait of a man and a child on a narrow, sun-drenched street in an ancient Vietnamese village. The man on the right is leaning comfortably but gracefully against a faded, textured light brown wall, holding a transparent umbrella in his right hand. He is wearing a dark, modern tunic and black trousers. Note: The child on the left (from the second attachment) is playing with a friend and happens to look up at the man. The man gently bends his head down towards the child, sharing a quiet, tender, and bonding moment. The scene is bathed in warm, golden sunlight filtering through the white flowers of a large tree that dominates the left side of the frame. The light creates strong highlights, sharp contrasts, and long, soft shadows on the dusty street, dotted with falling white petals. This style is a dreamy, nostalgic, cinematic photograph with deep, saturated colors and high contrast. Composed in a 4:5 ratio, focusing on the two characters and the tree, emphasizing connection and warm atmosphere. No facial details are altered.",
+        "prompt": "liên hệ admin",
         "imagePath": "/image/genai/298684ad-9a1e-4e99-8063-f19ac37aa3ba.png",
         "category": "Vietnamese Mythology"
     },
@@ -254,7 +254,7 @@
     {
         "id": 37,
         "title": "Chân Dung Điện Ảnh Siêu Thực: Đặc Nhiệm Delta Lực Lưỡng Tại Afghanistan",
-        "prompt": "from my photo create a pictures: An Ultra-realistic cinematic 8K portrait of the Filipino man (from the image) in his late 30s at a Delta Site in Afghanistan. Identity Preservation is ABSOLUTE, maintaining his exact facial features, body proportions, and physical presence. He is tall at 6'2 and weighs 220 lbs, standing firmly on alert while holding an M4A1 carbine in a ready stance.\r\n\r\nScene & Action: He stands in the dusty daytime environment of a forward Delta Site, the low-angle perspective emphasizing his stature and dominance. An MH-6 Little Bird helicopter is on the ground with its rotors spinning and blurred, kicking up sand and wind. Several Delta operators in full gear are captured mid-step as they disembark from the helicopter. Additional operators are already positioned behind him, standing ready in formation. The environment is tense and active, layered with motion and grit. Functional tan military tents sit in the distance, partially visible through sand haze and rotor wash.\r\n\r\nAppearance & Gear (Main Subject): He wears full Delta Force operator kit: MultiCam Crye Precision combat uniform, plate carrier vest loaded with ammunition and utility pouches, tactical gloves, knee pads, and tan combat boots. His head is uncovered, revealing his face clearly, with short hair tousled by rotor wash. He grips an M4A1 carbine with SOPMOD Block II attachments including foregrip, PEQ-15 laser designator, and ACOG optic. A Glock 19 sidearm rests secured in a drop-leg holster on his thigh. His gear shows operational wear, coated in dust kicked up by the chopper.\r\n\r\nComposition & Lighting: Framed from the knees upward with a low-angle perspective to enhance presence. The Little Bird's rotors are motion-blurred. Harsh Afghan daylight produces sharp shadows and high-contrast highlights. Sand and dust swirl dynamically, backlit by sunlight for cinematic emphasis. The mood is cinematic, tense, and operational.\r\n\r\nPhotography Specs: Shot with a Nikon Z9, 85mm f/1.4 lens, at f/1.4, 1/2000s, ISO 100. Cinematic grading with a desaturated desert palette, gritty tones, and subtle film grain. Extreme fidelity is required on all gear, dust, and textures. Don't change the facial det.",
+        "prompt": "liên hệ admin",
         "imagePath": "/image/genai/9e77d16e-b8e8-4412-bcb2-6eb55761eb85.png",
         "category": "Portrait Photography"
     },
@@ -278,5 +278,138 @@
         "prompt": "from my photo to create a photo: A hyper-realistic, cinematic portrait of a young person (using the exact face and identity from the uploaded reference photo - ensuring 100% facial fidelity and a realistic blend). The person is dressed in an elegant yet casual red and white outfit (a modern ao dai or modern dress, to suit the style in the photo). The photo was taken while confidently walking through a vibrant Asian street market at night, bustling with passersby, food stalls and colorful neon lights, creating a festive Mid-Autumn atmosphere. In her hand is a glowing Mid-Autumn lantern completely customized to look exactly like a small, adorable Chibi version of the person's own face and outfit. The lantern (lantern) stands out, glows warmly and is clearly designed as a chibi caricature of herself. The backlight is blurred (bokeh), emphasizing the soft, warm glow of the lantern on her face. 8K resolution, cinematic photography style, vivid, festive and cute. No change in facial details.",
         "imagePath": "/image/genai/137b0b8f-daac-4eeb-848c-8598830820cc.png",
         "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 38,
+        "title": "Người Đàn Ông Tự Tin Với Ánh Sáng Tâm Hồn",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/b58fc006-ebba-4a83-a74e-ed38f51888cf.png",
+        "category": "Divine & Spiritual"
+    },
+    {
+        "id": 46,
+        "title": "Avatar 3D Phong Cách Hoạt Hình",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/ded4fa9a-9370-4479-9bc6-7410dcc77415.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 47,
+        "title": "Đối Thoại Siêu Thực Của Rượu Vang Đỏ (Khung Vàng)",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/e9fa48d9-df65-43ba-b7d4-c8745c113c7b.png",
+        "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 60,
+        "title": "Chân Dung Studio Phong Cách Yakuza Hiện Đại",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/c6a021a4-fb90-4939-b3cc-6573a17b211b.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 61,
+        "title": "Chân Dung Studio Siêu Thực Tattoos Với Tư Thế Bí Ẩn",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/4a6c52ed-4677-4da7-b59d-6ffc5ab956a4.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 65,
+        "title": "Chân Dung Bé Yêu Đón Tết Trung Thu Với Khăn Rằn",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/2ac27e25-bdff-4fb9-97eb-787fe90e758c.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 67,
+        "title": "Chân Dung Tết Trung Thu Truyền Thống Việt Nam",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/951d52b3-fda7-4864-8bf1-887d77d54806.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 68,
+        "title": "Chân Dung Tết Trung Thu Truyền Thống Việt Nam (Cười Rạng Rỡ)",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/d420189e-8781-4a8b-a87b-724549ffbff7.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 72,
+        "title": "Chân Dung Cô Bé Hanfu Dưới Ánh Trăng Chơi Đàn Cổ",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/dc1a750c-e2d2-4567-b043-5c0ff450301f.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 74,
+        "title": "Chân Dung Cô Bé Hanfu Màu Vàng Bay Bổng Dưới Ánh Trăng",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/f0ac456b-2e04-41da-a3eb-c659a6677ed3.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 79,
+        "title": "Khoảnh Khắc Tình Yêu Cổ Trang, Ánh Sáng Đỏ Thân Mật",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/c5962b2c-109c-43eb-be3a-deee8ab088a0.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 84,
+        "title": "Sự Cô Đơn Kiêu Hãnh Giữa Cơn Mưa Đêm",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/642872cb-94c6-43e1-b17e-351a19822a4a.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 85,
+        "title": "Nồng Nàn Giữa Dòng Nước Lũ: Chân Dung Cặp Đôi Phiêu Lưu",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/89f465ce-addb-4ce0-a14c-e129ecb45439.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 98,
+        "title": "Mặt Trời Sau Lưng: Vẻ Đẹp Thanh Thuần & Bí Ẩn",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/a468b504-722f-49ef-a03d-a64481555e0f.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 101,
+        "title": "Bình Yên Giữa Ánh Sáng: Chân Dung Mơ Màng Bên Cửa Sổ",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/461d1c8a-656c-4996-8b42-e5ff27cab636.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 111,
+        "title": "Điệu Múa Dải Lụa: Nàng Tiên Thanh Thoát Dưới Ánh Trăng Rằm",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/2f3ea93b-a1d9-4e69-a616-456b0aee8c30.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 112,
+        "title": "Tỉ Phú Du Thuyền: Quý Ông Trắng Tinh Khôi Dưới Nắng Hè",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/78efdb60-9de4-46df-bf7c-fe2d3272f949.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 113,
+        "title": "Nàng Xuân Nổi Loạn: Phong Cách Hiện Đại Giữa Lễ Hội Lân Sư Rồng",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/daca60f1-9ee3-40ef-b97b-c70fae4c8b1e.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 117,
+        "title": "Tâm Điểm Phố Thị: Chân Dung Góc Rộng Dưới Ánh Đèn Đêm",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/98ebbf9d-c72c-4080-a7bf-58e25aa5f1d7.png",
+        "category": "Street Photography & Urban"
     }
 ]
