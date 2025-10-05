@@ -880,5 +880,12 @@
         "prompt": "from my photo create a pictures: A hyper-realistic, full-body cinematic photograph of a 25-year-old muscular man (using the exact face, facial det, and identity from the provided photo), with an extremely fit physique. The scene is moody and dark, illuminated only by a hint of dramatic blue and white spotlight sharply focused on the subject. He is wearing an open, flowing white long-sleeve shirt (no undershirt) and loose white pants. The fabric is caught in a strong wind effect, creating dynamic movement. The man is levitating just above the ground, suspended by an unseen force. He is captured from a side view, with his back mostly turned to the camera, his back arched dramatically, and his arms positioned behind him. Emerging from his back are a majestic pair of massive, ultra-realistic white angel wings, suspended and detailed in the air. The lighting should emphasize the muscular contours and the texture of the wings and fabric, contrasting sharply with the deep, dark background. The atmosphere is surreal, ethereal, and powerful. Don't change the facial det.",
         "imagePath": "/image/genai/4e92b9f0-8bd0-41e2-9329-d6cc9edeb52f.png",
         "category": "Divine & Spiritual"
+    },
+    {
+        "id": 127,
+        "title": "Nàng Thơ Hiện Đại Trong Ánh Ban Mai",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/1fa52d86-faf8-4fa0-b8a3-d370708d512c.png",
+        "category": "Portrait Photography"
     }
 ]
