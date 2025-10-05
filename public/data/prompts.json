@@ -873,6 +873,12 @@
         "prompt": "from my photo to create a photo: A hyper-realistic, cinematic portrait of a young person (using the exact face and identity from the uploaded reference photo - ensuring 100% facial fidelity and a realistic blend). The person is dressed in an elegant yet casual red and white outfit (a modern ao dai or modern dress, to suit the style in the photo). The photo was taken while confidently walking through a vibrant Asian street market at night, bustling with passersby, food stalls and colorful neon lights, creating a festive Mid-Autumn atmosphere. In her hand is a glowing Mid-Autumn lantern completely customized to look exactly like a small, adorable Chibi version of the person's own face and outfit. The lantern (lantern) stands out, glows warmly and is clearly designed as a chibi caricature of herself. The backlight is blurred (bokeh), emphasizing the soft, warm glow of the lantern on her face. 8K resolution, cinematic photography style, vivid, festive and cute. No change in facial details.",
         "imagePath": "/image/genai/137b0b8f-daac-4eeb-848c-8598830820cc.png",
         "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 126,
+        "title": "Thiên Thần Mở Cánh Giữa Ánh Sáng Xanh Bí Ẩn",
+        "prompt": "from my photo create a pictures: A hyper-realistic, full-body cinematic photograph of a 25-year-old muscular man (using the exact face, facial det, and identity from the provided photo), with an extremely fit physique. The scene is moody and dark, illuminated only by a hint of dramatic blue and white spotlight sharply focused on the subject. He is wearing an open, flowing white long-sleeve shirt (no undershirt) and loose white pants. The fabric is caught in a strong wind effect, creating dynamic movement. The man is levitating just above the ground, suspended by an unseen force. He is captured from a side view, with his back mostly turned to the camera, his back arched dramatically, and his arms positioned behind him. Emerging from his back are a majestic pair of massive, ultra-realistic white angel wings, suspended and detailed in the air. The lighting should emphasize the muscular contours and the texture of the wings and fabric, contrasting sharply with the deep, dark background. The atmosphere is surreal, ethereal, and powerful. Don't change the facial det.",
+        "imagePath": "/image/genai/4e92b9f0-8bd0-41e2-9329-d6cc9edeb52f.png",
+        "category": "Divine & Spiritual"
     }
-
 ]
