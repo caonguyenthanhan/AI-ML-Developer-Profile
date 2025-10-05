@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 52,
+        "count": 53,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -102,5 +102,13 @@
         "count": 3,
         "color": "#8A2BE2",
         "icon": "🌌"
+    },
+    {
+        "id": 14,
+        "name": "Sports Portraiture",
+        "description": " Chân dung Thể thao",
+        "count": 1,
+        "color": "#DC143C",
+        "icon": "ball"
     }
 ]
