@@ -950,5 +950,12 @@
         "prompt": "from my photo create a pictures: A surreal cinematic close-up portrait of a young man (face must match the reference image), head tilted to the right in a subtle three-quarter angle, chin slightly raised with eyes closed, expression serene yet stylish. Warm, natural, realistic skin tones with detailed texture, illuminated by bright sunlight. Layered short black hair, slightly messy on top, neatly trimmed sides. Wearing a plain black crew neck t-shirt. Real crisp green foliage overhead, sunlight filtering through the leaves and casting distinct artistic shadows on the face. Cinematic, high-contrast lighting: yellow highlights on the raised nose, lips and jawline balanced with cool teal-toned shadows. Dark background, gently blurred, evoking cinematic depth of field. Artistic editorial photography style, luxurious and dramatic mood, 8k ultra-detailed resolution, cinematic color effects (turquoise and orange). Don't change the facial det, keeping the exact proportions of the facial features.",
         "imagePath": "/image/genai/7e193628-762b-4507-87db-3f27cbb14a0b.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 137,
+        "title": "Tứ Quý Chân Dung Điện Ảnh: Xuân Hạ Thu Đông",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/452d517d-39f8-4c2c-bd90-68343744df17.png",
+        "category": "Portrait Photography"
     }
 ]
