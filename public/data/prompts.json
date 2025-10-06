@@ -957,5 +957,12 @@
         "prompt": "liên hệ admin",
         "imagePath": "/image/genai/452d517d-39f8-4c2c-bd90-68343744df17.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 138,
+        "title": "Khoảnh Khắc Vàng Mùa Thu: Chân Dung Điện Ảnh Giờ Vàng",
+        "prompt": "from my photo create a pictures: A cinematic, hyper-realistic lifestyle portrait of a young Asian man (using the face and exact proportions of the facial features from the uploaded photo) sitting relaxed on a thick blanket of autumn leaves in a sun-drenched park. He is wearing a brown-orange overshirt layered over a crisp white T-shirt and dark trousers. The light must be dramatically captured during the golden hour, featuring a strong, warm backlight streaming through the canopy of rich orange and yellow foliage, creating a pronounced, glowing rim light around his head and shoulders. The man is looking up with a peaceful, contemplative expression. Use a shallow depth of field (bokeh effect) to blur the background into a dreamy wash of autumnal colors. Shot with an 85mm prime lens, cinematic color grading, ultra-detailed, photorealistic 8K quality. Don't change the facial det.",
+        "imagePath": "/image/genai/c913f93e-d963-4e90-9f12-fb1676ab56f1.png",
+        "category": "Lifestyle & Nature"
     }
 ]
