@@ -110,5 +110,13 @@
         "count": 1,
         "color": "#DC143C",
         "icon": "ball"
+    },
+    {
+        "id": 15,
+        "name": "Fantasy Ancient Style",
+        "description": "Huyền Ảo Cổ Trang",
+        "count": 1,
+        "color": "#f4fc83",
+        "icon": "🦊"
     }
 ]
