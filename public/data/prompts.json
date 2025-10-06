@@ -964,5 +964,40 @@
         "prompt": "from my photo create a pictures: A cinematic, hyper-realistic lifestyle portrait of a young Asian man (using the face and exact proportions of the facial features from the uploaded photo) sitting relaxed on a thick blanket of autumn leaves in a sun-drenched park. He is wearing a brown-orange overshirt layered over a crisp white T-shirt and dark trousers. The light must be dramatically captured during the golden hour, featuring a strong, warm backlight streaming through the canopy of rich orange and yellow foliage, creating a pronounced, glowing rim light around his head and shoulders. The man is looking up with a peaceful, contemplative expression. Use a shallow depth of field (bokeh effect) to blur the background into a dreamy wash of autumnal colors. Shot with an 85mm prime lens, cinematic color grading, ultra-detailed, photorealistic 8K quality. Don't change the facial det.",
         "imagePath": "/image/genai/c913f93e-d963-4e90-9f12-fb1676ab56f1.png",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 139,
+        "title": "Nàng Tiên Hoa Sen Trong Ánh Trăng Dịu Dàng",
+        "prompt": "from my photo create a pictures: A hyper-realistic, dreamy portrait of a graceful young Asian woman with delicate features. She is dressed in an elegant, flowing white Ao Dai or Hanfu made of sheer, translucent silk that creates an ethereal, luminescent halo around her body. She holds a small bouquet of white blossoms in her hands. The scene is set in a magical, nighttime garden or courtyard, surrounded by branches of glowing white cherry blossoms (or similar spring flowers). The background features softly blurred traditional paper lanterns or squares of warm light, contributing to a mystical atmosphere. Incorporate floating white petals and subtle light orbs (bokeh) throughout the image. Lighting is soft, magical, and dramatically focused on her face, highlighting her skin texture and the sheer fabric. Ultra-detailed, romantic fantasy style, cinematic quality, vertical 9:16 aspect ratio. Don't change the facial det or facial expression.",
+        "imagePath": "/image/genai/9c386821-5f9a-4314-b287-07f3f4d1bfb8.png",
+        "category": "Ethereal Suspension"
+    },
+    {
+        "id": 140,
+        "title": "Nàng Tiên Lụa Trắng Thần Thánh Trong Hào Quang Siêu Thực",
+        "prompt": "from my photo create a pictures: An ultra-high resolution Fine Art portrait of a majestic Asian woman (using the face and exact proportions of the facial features from the uploaded photo). She is positioned dramatically against a pure void-like black background. She wears a flowing, ethereal white Hanfu or traditional gown, made entirely of translucent sheer silk that appears weightless and billowing, creating huge, luminous folds of fabric that drift like clouds. The image utilizes dramatic rim lighting and underscoring light with a subtle cool white or pale blue tone, making the edges of her dress and body glow intensely and emphasizing the contrast with the dark background. Her expression is stoic, powerful, and serene. Cinematic, hyper-realistic, 8K detail focusing on the soft fabric texture and the radiant, supernatural aura. Don't change the facial det or expression.",
+        "imagePath": "/image/genai/e0edea49-0790-4463-997c-95019ccd72e6.png",
+        "category": "Ethereal Suspension"
+    },
+    {
+        "id": 141,
+        "title": "Khoảnh Khắc Lãng Mạn Dưới Ánh Trăng Hoa: Nàng Thơ Lụa Trắng",
+        "prompt": "from my photo create a pictures: A hyper-realistic, ethereal cinematic portrait of a young Asian woman (using the face and exact proportions of the facial features from the uploaded photo) in a state of gentle reverence. She is adorned in a flowing white Hanfu or robe made of sheer silk, which billows gracefully around her. She holds a small bouquet of white blossoms while gently reaching up to touch a branch of luminous white, glowing flowers overhead. The backdrop features soft, blurred rectangular lights (paper lanterns or windows) and dramatic, dark shadows. The scene is filled with floating white petals and magical light particles (light orbs), emphasizing a sense of suspended motion and divine tranquility. Lighting is focused, pure white, and soft, creating a high-contrast, yet dreamy aesthetic. Ultra-detailed, 8K photo quality, vertical 9:16 aspect ratio. Don't change the facial det or expression.",
+        "imagePath": "/image/genai/cc8e4722-c1e3-4bcc-b5b4-ad88264c00df.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 142,
+        "title": "Hằng Nga Và Thỏ Ngọc Giữa Rừng Hoa Phát Sáng Dưới Ánh Trăng",
+        "prompt": "from my photo create a pictures: A full-body, hyper-realistic, and ethereal portrait of the beautiful Asian woman (using the face and exact proportions of the facial features from the uploaded photo), embodying the Moon Goddess (Chị Hằng). She stands gracefully in a mystical moonlit forest. She is wearing a multilayered Hanfu-style gown in sheer white and soft pink silk, adorned with elegant hairpins and dangling pearl ornaments. She gently cradles a white jade rabbit (Thỏ Ngọc) in her arms. Above her, a large, brilliant full moon dominates the deep blue night sky. The surrounding dark woods are illuminated by countless tiny, glowing fairy lights or orbs and branches heavy with luminous white blossoms, creating a dreamy, magical atmosphere. The style is cinematic fantasy, rich in texture and detail, with dramatic yet soft lighting. Ultra-detailed, 8K resolution, vertical 9:16 aspect ratio. Don't change the facial det or expression.",
+        "imagePath": "/image/genai/8d688360-cbc0-4f8e-91cb-05d5269d1b3f.png",
+        "category": "Vietnamese Mythology"
+    },
+    {
+        "id": 143,
+        "title": "Nàng Học Sinh Mơ Màng Với Kẹo Mút Giờ Tan Trường",
+        "prompt": "from my photo create a pictures: A vibrant, hyper-realistic portrait of a beautiful young Asian girl (keeping the exact proportions of the facial features and the expression from the uploaded photo) with long, straight black hair. She is dressed in a crisp white short-sleeved school shirt, a dark navy blue high-waisted pleated skirt, and a matching navy blue tie. She holds a small round red lollipop near her lips with one hand and gently touches her modern silver over-ear headphones with the other. Her makeup is natural with a light blush, pink lips, and bright, clear eyes. The background is a row of classic blue school lockers, subtly adorned with small retro stickers. Use professional studio lighting with soft light tones, pastel color grading, and cinematic focus. 8K DSLR photography, shallow depth of field, with a slight surreal skin texture. Style: Chinese school aesthetics, April Studio portrait photography. Mood: youthful, gentle, slightly nostalgic, and elegant. Don't change the facial det.",
+        "imagePath": "/image/genai/80292e36-5e24-44d1-8f1e-d3e1e78f1ccd.png",
+        "category": "Portrait Photography"
     }
 ]

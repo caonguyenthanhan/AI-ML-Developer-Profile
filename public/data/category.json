@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 57,
+        "count": 59,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -35,7 +35,7 @@
         "id": 5,
         "name": "Vietnamese Mythology",
         "description": "Thần thoại và truyền thuyết Việt Nam",
-        "count": 22,
+        "count": 23,
         "color": "#10B981",
         "icon": "moon"
     },
@@ -67,7 +67,7 @@
         "id": 9,
         "name": "Ethereal Suspension",
         "description": "Vẻ Đẹp Thần Tiên Lơ Lửng",
-        "count": 2,
+        "count": 4,
         "color": "#DCD0FF",
         "icon": "sparkles"
     },
