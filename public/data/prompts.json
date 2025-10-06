@@ -1069,5 +1069,12 @@
         "prompt": "from my photo create a pictures: An ultra-realistic 8K HDR Cinematic Portrait of a young male Fox Spirit Scholar (Hồ Ly Thư Sinh) (keeping the exact face and natural expression from the uploaded photo, and keeping the exact proportions of the facial features). He is standing, posed dramatically, wearing an intricate traditional scholar's robe (áo thư sinh) made of shimmering silver-gray silk, with long sleeves billowing softly in an invisible wind. His face is painted with traditional pale makeup, highlighted by fierce red-orange smoky eyeshadow around the eyes, with subtle, pointed fox ears visible in his hair. A vibrant pink peony flower is tucked near his ear. He is smiling gently and looking upwards, conveying a mystical and powerful demeanor. He wears a square scholar's hat, with the fabric strings trailing lightly behind him. The background is a stunning moody ink wash landscape (thủy mặc) of towering mountains and stone cliffs engulfed in volumetric, misty fog. Dominating the backdrop is a huge, vivid red sun (mặt trời đỏ rực). Studio light is intensely focused from above, highlighting the luxurious silk texture and sculpting the contours of his face and cheekbones. Subtle, cold smoke (khói nhẹ) drifts around the hem of his robe. Overall color palette: cool silver-gray, deep crimson/red-orange accents, and soft white mist. Include the calligraphy text \"Hồ Ly Thư Sinh\" floating subtly in the corner to reinforce the mystical theme. Style: Surreal Ancient Chinese/Vietnamese Fantasy, Cinematic Depth of Field, extreme detail, and deep, powerful \"thần thái\". Don't change the facial det.",
         "imagePath": "/image/genai/cdbf49ac-8a7c-4ef0-bcc6-8741bdea7782.png",
         "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 154,
+        "title": "Bản Render 3D Siêu Thực: Gương Mặt Khí Cầu Hài Hước Theo Phong Cách Đồ Chơi Nghệ Thuật",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/28f9105a-584b-467b-9b17-4a7cbb6e1d93.png",
+        "category": "Whimsical & Playfu"
     }
 ]

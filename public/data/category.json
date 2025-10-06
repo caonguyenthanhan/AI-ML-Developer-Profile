@@ -118,5 +118,13 @@
         "count": 1,
         "color": "#f4fc83",
         "icon": "🦊"
+    },
+    {
+        "id": 16,
+        "name": "Whimsical & Playfu",
+        "description": "Kỳ Quặc & Vui Tươi",
+        "count": 1,
+        "color": "#001eff",
+        "icon": "🎈"
     }
 ]
