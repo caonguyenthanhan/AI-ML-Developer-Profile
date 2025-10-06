@@ -999,5 +999,19 @@
         "prompt": "from my photo create a pictures: A vibrant, hyper-realistic portrait of a beautiful young Asian girl (keeping the exact proportions of the facial features and the expression from the uploaded photo) with long, straight black hair. She is dressed in a crisp white short-sleeved school shirt, a dark navy blue high-waisted pleated skirt, and a matching navy blue tie. She holds a small round red lollipop near her lips with one hand and gently touches her modern silver over-ear headphones with the other. Her makeup is natural with a light blush, pink lips, and bright, clear eyes. The background is a row of classic blue school lockers, subtly adorned with small retro stickers. Use professional studio lighting with soft light tones, pastel color grading, and cinematic focus. 8K DSLR photography, shallow depth of field, with a slight surreal skin texture. Style: Chinese school aesthetics, April Studio portrait photography. Mood: youthful, gentle, slightly nostalgic, and elegant. Don't change the facial det.",
         "imagePath": "/image/genai/80292e36-5e24-44d1-8f1e-d3e1e78f1ccd.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 144,
+        "title": "Nữ Sinh Bóng Chày Siêu Thực Với Nét Đẹp Á Đông",
+        "prompt": "from my photo create a pictures: A vibrant, hyper-realistic portrait of a beautiful young Asian girl (keeping the exact proportions of the facial features, expression, and gentle look from the uploaded photo) with long, straight black hair. She is dressed in a crisp white short-sleeved school shirt, a dark navy blue high-waisted pleated skirt, and a matching navy blue tie. Modern silver headphones are worn around her neck. She holds a small white baseball in one hand and a light brown baseball bat in the other, displaying a mischievous student look. Her appearance features light and natural makeup with smooth porcelain skin, light blush, and pink lips. The background is a row of classic school blue lockers, decorated with vintage stickers and colorful magnets. Use professional studio portrait lighting with bright, soft tones and cinematic focus. Style: Chinese school aesthetics, April studio portrait, surreal 8K DSLR photography, shallow depth of field. Mood: youthful, elegant, and gently mischievous. Don't change the facial det.",
+        "imagePath": "/image/genai/bce5f8a3-c2d2-4833-a91f-258f18b7cdd3.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 145,
+        "title": "Nữ Sinh Bóng Chày Trầm Tư Bên Tủ Khóa",
+        "prompt": "from my photo create a pictures: A hyper-realistic and cinematic studio portrait of a beautiful young Asian girl (keeping the exact proportions of the facial features and the soft, thoughtful expression from the uploaded photo) with long, straight black hair. She is wearing a crisp white short-sleeved school shirt, a dark navy blue high-waisted pleated skirt, and a matching tie. Silver over-ear headphones are worn around her neck. She sits on the floor next to a classic blue metal school locker, which is backed by brown plaid wallpaper and adorned with vintage stickers. She leans forward slightly, with one elbow resting on her knee and her chin resting in her hand. Her other hand rests on the floor, lightly holding a white baseball. A brown baseball glove and an additional baseball lie beside her. She wears white socks and black loafers. The scene is illuminated by soft natural light coming from the side, creating dramatic yet subtle cinematic lighting. Style: Chinese school aesthetics, April Studio portrait photography. Mood: youthful, nostalgic school beauty. 8K surreal studio image, shallow depth of field. Don't change the facial det.",
+        "imagePath": "/image/genai/02e05091-956f-4321-b4c4-62e4adb4790d.png",
+        "category": "Portrait Photography"
     }
 ]
