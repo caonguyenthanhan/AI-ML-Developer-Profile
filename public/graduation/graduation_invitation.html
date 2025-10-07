@@ -67,6 +67,12 @@
             border: 2px solid #ffd700;
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
         }
+        .gold-frame-bg {
+            background-image: url('/image/vien-vang.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100% 100%;
+        }
 
     </style>
 </head>
@@ -123,11 +129,13 @@
         const INFO_URL = "/data/info.json";
         const GUESTS_URL = "/data/khach.json";
         const ASSETS = {
-            GRADUATE_IMAGE: "/image/graduation/main.jpg", // Ảnh người tốt nghiệp
-            MAP_IMAGE: "/image/graduation/map.jpg", // Ảnh bản đồ nội bộ
-            MAN_DEFAULT: "/image/graduation/man.jpg", // Ảnh mặc định nam
-            WOMEN_DEFAULT: "/image/graduation/women.jpg" // Ảnh mặc định nữ
-        };
+                GRADUATE_IMAGE: "/image/graduation/main.jpg", // Ảnh người tốt nghiệp
+                MAP_IMAGE: "/image/graduation/map.jpg", // Ảnh bản đồ nội bộ
+                MAN_DEFAULT: "/image/graduation/man.jpg", // Ảnh mặc định nam
+                WOMEN_DEFAULT: "/image/graduation/women.jpg", // Ảnh mặc định nữ
+                LAUREL_WREATH: "/image/nguyet-que.png", // Vòng nguyệt quế vàng
+                GOLD_FRAME: "/image/vien-vang.png" // Viền khung trang trí vàng
+            };
 
 
         // --- 3. LOGIC XỬ LÝ DỮ LIỆU TỪ FIRESTORE (ĐÃ BỎ MOCK DATA) ---
@@ -233,7 +241,10 @@
 
                             <!-- Vòng ảnh người tốt nghiệp -->
                             <div class="my-8 flex justify-center">
-                                <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" onerror="this.onerror=null;this.src='${ASSETS.GRADUATE_IMAGE}';" class="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border">
+                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64">
+                                    <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
+                                    <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" onerror="this.onerror=null;this.src='${ASSETS.GRADUATE_IMAGE}';" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+                                </div>
                             </div>
 
                             <p class="text-base text-gold font-semibold tracking-wider">TRÂN TRỌNG KÍNH MỜI</p>
@@ -247,7 +258,7 @@
                     </div>
 
                     <!-- Cột Phải: Chi tiết Sự kiện -->
-                    <div class="flex-1 p-8 md:p-12 invitation-frame bg-white text-navy flex flex-col">
+                    <div class="flex-1 p-8 md:p-12 invitation-frame gold-frame-bg bg-white text-navy flex flex-col">
                         <div class="text-center">
                             <p class="text-sm font-semibold tracking-widest text-gray-500">${info.university || 'Tên trường'}</p>
                             <h1 class="text-4xl font-serif font-black text-navy mt-2">LỄ TỐT NGHIỆP</h1>
@@ -318,7 +329,7 @@
                 : 'bg-navy/95 text-white';
 
             const frameClass = guest.special
-                ? 'invitation-frame bg-white/95 text-navy'
+                ? 'invitation-frame gold-frame-bg bg-white/95 text-navy'
                 : 'invitation-frame bg-white text-navy';
 
             return `
@@ -334,7 +345,10 @@
 
                             <!-- Vòng ảnh tốt nghiệp -->
                             <div class="my-8 flex justify-center">
-                                <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border">
+                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64">
+                                    <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
+                                    <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+                                </div>
                             </div>
 
                             <p class="text-base text-gold font-semibold tracking-wider">TRÂN TRỌNG KÍNH MỜI</p>
