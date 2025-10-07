@@ -277,7 +277,7 @@
                     <!-- Cột Trái: Giống ảnh mẫu (Thông báo Lễ Tốt Nghiệp) -->
 
                     <div class="flex-1 p-8 md:p-12 text-white flex flex-col items-center justify-between relative overflow-hidden">
-                        
+                        <div class="absolute inset-0 w-full h-full bg-navy/70 backdrop-blur-sm pointer-events-none z-[5]"></div>
                         <video id="background-video" autoplay loop muted playsinline 
                             class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0">
                             <source src="/video/sparkle-background.mp4" type="video/mp4">
@@ -304,9 +304,9 @@
                         </div>
                         
                         <!-- Thông tin phụ như khóa học/khoa -->
-                            <p class="text-base font-bold text-white bg-navy py-1 px-4 inline-block rounded-full mt-3 shadow-md">
-                                ${info.subEventDetails || info.universityShort || 'UEH'} - ${info.date ? `Ngày ${info.date}` : 'Thông tin phụ'}
-                            </p>
+                        <p class="text-base font-bold text-white bg-navy py-1 px-4 inline-block rounded-full mt-3 shadow-md">
+                            ${info.subEventDetails || info.universityShort || 'UEH'} - ${info.date ? `Ngày ${info.date}` : 'Thông tin phụ'}
+                        </p>
                     </div>
 
                     <!-- Cột Phải: Chi tiết Sự kiện -->
