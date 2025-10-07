@@ -470,7 +470,7 @@
                             <p class="text-lg font-serif italic text-gray-700 text-center mb-4">
                                 "${inviteMsg}"
                             </p>
-                            <p class="text-sm font-semibold text-navy">Trân trọng từ người tốt nghiệp, ${defaultGuestName} </p>
+                            <p class="text-sm font-semibold text-navy">Trân trọng từ người tốt nghiệp, ${info.graduateName} </p>
                         </div>
                         
                         <!-- Kính mời cuối -->
@@ -513,38 +513,35 @@
         
         // Helper: Gắn sự kiện submit cho form tìm thiệp mời khách mời
         function attachGuestForm(guests) {
-            const form = document.getElementById('guestSearchForm');
-            const input = document.getElementById('guestNameInput');
-            if (!form || !input) return;
-
+            const forms = Array.from(document.querySelectorAll('form#guestSearchForm'));
+            if (!forms.length) return;
+        
             const normalize = (s) => (s || '')
                 .normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
                 .toLowerCase()
                 .trim();
-
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const query = normalize(input.value);
-                if (!query) {
-                    input.focus();
-                    return;
-                }
-                // Ưu tiên khớp chính xác theo tên (không phân biệt hoa/thường, loại dấu)
-                let target = (guests || []).find(g => normalize(g.name) === query);
-                // Nếu không thấy, thử khớp gần đúng theo chuỗi chứa
-                if (!target) {
-                    target = (guests || []).find(g => normalize(g.name).includes(query));
-                }
-                if (target) {
-                    history.pushState({}, '', `${APP_ROOT}/${encodeURIComponent(target.name)}`);
-                    router();
-                } else {
-                    // Feedback nhẹ khi không tìm thấy
-                    input.classList.add('ring-2', 'ring-red-500');
-                    setTimeout(() => input.classList.remove('ring-2', 'ring-red-500'), 1200);
-                }
-            }, { once: true });
+        
+            forms.forEach((form) => {
+                const input = form.querySelector('input#guestNameInput');
+                if (!input) return;
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const query = normalize(input.value);
+                    if (!query) { input.focus(); return; }
+                    let target = (guests || []).find(g => normalize(g.name) === query);
+                    if (!target) {
+                        target = (guests || []).find(g => normalize(g.name).includes(query));
+                    }
+                    if (target) {
+                        history.pushState({}, '', `${APP_ROOT}/${encodeURIComponent(target.name)}`);
+                        router();
+                    } else {
+                        input.classList.add('ring-2', 'ring-red-500');
+                        setTimeout(() => input.classList.remove('ring-2', 'ring-red-500'), 1200);
+                    }
+                });
+            });
         }
 
         // --- 7. HÀM ĐỊNH TUYẾN (ROUTER) ---
