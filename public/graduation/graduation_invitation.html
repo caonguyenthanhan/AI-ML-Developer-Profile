@@ -169,7 +169,7 @@
             };
 
 
-        // --- 3. LOGIC XỬ LÝ DỮ LIỆU TỪ FIRESTORE (ĐÃ BỎ MOCK DATA) ---
+        // --- 3. LOGIC XỬ LÝ DỮ LIỆU TỪ FIRESTORE---
         
         const getInfoDocRef = () => doc(db, "artifacts", appId, "public", "data", "info", "event_details");
         const getGuestsCollectionRef = () => collection(db, "artifacts", appId, "public", "data", "khach");
@@ -329,7 +329,8 @@
                     </div>
 
                     <!-- Cột Phải: Chi tiết Sự kiện -->
-                    <div class="flex-1 p-8 md:p-12 invitation-frame gold-frame-bg bg-white/60 backdrop-blur-sm text-navy flex flex-col relative">
+                    <div class="flex-1 p-8 md:p-12 ${frameClass} flex flex-col relative">
+                        <div class="absolute inset-0 bg-white/40 backdrop-blur-sm z-[2]"></div>
                         <img src="/image/graduation/logotruong.jpg" alt="Logo Trường" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 md:w-28 opacity-90 z-0 pointer-events-none">
                         <div class="absolute inset-0 bg-white/40 backdrop-blur-sm z-0"></div>
                         <div class="relative z-10">
