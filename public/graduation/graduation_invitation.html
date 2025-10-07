@@ -127,26 +127,26 @@
             WOMEN_DEFAULT: "/image/graduation/women.png" // Ảnh mặc định nữ
         };
 
-        // Mock data nếu Firestore lỗi (sử dụng info.json và khach.json đã đính kèm)
-        const MOCK_INFO = {
-            "eventName": "Lễ Tốt Nghiệp",
-            "graduateName": "Nguyễn Văn A",
-            "university": "Đại học Kinh tế TP. Hồ Chí Minh",
-            "universityShort": "UEH",
-            "date": "15/06/2025",
-            "time": "10:00 - 14:00",
-            "venue": "Hội trường A",
-            "address": "2 Hoàng Văn Thụ, Phường 9, Quận Phú Nhuận, TP. Hồ Chí Minh",
-            "mapLink": "https://maps.google.com/?q=2+Hoang+Van+Thu+Phu+Nhuan+HCMC",
-            "quote": "Hành trình học vấn kết thúc, hành trình mới bắt đầu.",
-            // Thêm trường mô phỏng Khóa học/Thông tin phụ (theo ảnh mẫu)
-            "subEventDetails": "Khoa Quản trị Kinh doanh - K48" 
-        };
-        const MOCK_GUESTS = [
-            {"name": "Nguyễn Thị B", "title": "Bạn thân", "gender": "female", "image": "", "message": "Mình rất vui được chia sẻ khoảnh khắc đặc biệt này cùng bạn. Hy vọng bạn sẽ đến tham dự!", "special": false},
-            {"name": "Nguyễn Văn D", "title": "Cha", "gender": "male", "image": "", "message": "Con yêu quý, đây là thành quả của những năm tháng học tập vất vất vả. Ba rất tự hào về con!", "special": true},
-            {"name": "Cao An", "title": "Anh", "gender": "male", "image": "", "message": "", "special": false}
-        ].map(g => ({...g, nameEncoded: encodeURIComponent(g.name)}));
+        // // Mock data nếu Firestore lỗi (sử dụng info.json và khach.json đã đính kèm)
+        // const MOCK_INFO = {
+        //     "eventName": "Lễ Tốt Nghiệp",
+        //     "graduateName": "Nguyễn Văn A",
+        //     "university": "Đại học Kinh tế TP. Hồ Chí Minh",
+        //     "universityShort": "UEH",
+        //     "date": "15/06/2025",
+        //     "time": "10:00 - 14:00",
+        //     "venue": "Hội trường A",
+        //     "address": "2 Hoàng Văn Thụ, Phường 9, Quận Phú Nhuận, TP. Hồ Chí Minh",
+        //     "mapLink": "https://maps.google.com/?q=2+Hoang+Van+Thu+Phu+Nhuan+HCMC",
+        //     "quote": "Hành trình học vấn kết thúc, hành trình mới bắt đầu.",
+        //     // Thêm trường mô phỏng Khóa học/Thông tin phụ (theo ảnh mẫu)
+        //     "subEventDetails": "Khoa Quản trị Kinh doanh - K48" 
+        // };
+        // const MOCK_GUESTS = [
+        //     {"name": "Nguyễn Thị B", "title": "Bạn thân", "gender": "female", "image": "", "message": "Mình rất vui được chia sẻ khoảnh khắc đặc biệt này cùng bạn. Hy vọng bạn sẽ đến tham dự!", "special": false},
+        //     {"name": "Nguyễn Văn D", "title": "Cha", "gender": "male", "image": "", "message": "Con yêu quý, đây là thành quả của những năm tháng học tập vất vất vả. Ba rất tự hào về con!", "special": true},
+        //     {"name": "Cao An", "title": "Anh", "gender": "male", "image": "", "message": "", "special": false}
+        // ].map(g => ({...g, nameEncoded: encodeURIComponent(g.name)}));
 
 
         // --- 3. LOGIC XỬ LÝ DỮ LIỆU TỪ FIRESTORE ---
