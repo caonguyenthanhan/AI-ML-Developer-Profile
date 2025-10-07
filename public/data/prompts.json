@@ -1076,5 +1076,12 @@
         "prompt": "liên hệ admin",
         "imagePath": "/image/genai/28f9105a-584b-467b-9b17-4a7cbb6e1d93.png",
         "category": "Whimsical & Playfu"
+    },
+    {
+        "id": 155,
+        "title": "Khoảnh Khắc Vinh Quang: Ảnh Cử Nhân Siêu Thực",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic portrait of the graduate (using the exact face and joyful, radiant smile/expression from the uploaded photo). He is wearing a flawless, deep royal blue graduation gown with bright yellow trim and a matching blue mortarboard. He holds a diploma tied with a red ribbon and a blue certificate cover. The scene is a grand university hall bathed in soft, glowing golden light from above, creating a divine, celebratory atmosphere. The background is slightly blurred (shallow depth of field) to focus entirely on the subject, showing a crowd of other graduates in blue gowns, cheering subtly in the distance. The photography style is modern editorial, high-resolution 8K, with clean focus, warm color grading, and soft rim lighting emphasizing the texture of the gown and the joy on his face. Don't change the facial det.",
+        "imagePath": "/image/genai/c5c3dce0-d14c-40ba-8397-1603b324cd30.png",
+        "category": "Portrait Photography"
     }
 ]
