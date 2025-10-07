@@ -301,12 +301,31 @@
                             <h3 class="text-3xl md:text-4xl font-serif font-black text-gold mt-2 drop-shadow-[0_0_6px_rgba(255,215,0,0.8)] animate-pulse">
                                 ♦ ${defaultGuestName} ♦
                             </h3>
-                        </div>
-                        
-                        <!-- Thông tin phụ như khóa học/khoa -->
+                            <!-- Thông tin phụ như khóa học/khoa -->
                         <p class="text-base font-bold text-white bg-navy py-1 px-4 inline-block rounded-full mt-3 shadow-md">
                             ${info.subEventDetails || info.universityShort || 'UEH'} - ${info.date ? `Ngày ${info.date}` : 'Thông tin phụ'}
                         </p>
+
+                        <!-- Form nhập tên khách mời -->
+                        <div class="mt-8 w-full max-w-sm mx-auto">
+                            <form id="guestSearchForm" class="space-y-3">
+                                <input
+                                    type="text"
+                                    id="guestNameInput"
+                                    placeholder="Nhập tên khách mời..."
+                                    class="w-full px-4 py-2 rounded-md border border-gold/50 bg-transparent text-gold placeholder-gold/70 focus:outline-none focus:ring-2 focus:ring-gold"
+                                />
+                                <button
+                                    type="submit"
+                                    class="w-full bg-gold text-navy font-semibold py-2 rounded-md hover:bg-yellow-400 transition-colors"
+                                >
+                                    Tìm thiệp mời
+                                </button>
+                            </form>
+                        </div>
+                        </div>
+                        
+                        
                     </div>
 
                     <!-- Cột Phải: Chi tiết Sự kiện -->
