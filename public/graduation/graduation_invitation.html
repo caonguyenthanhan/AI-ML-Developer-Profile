@@ -3,137 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thư Mời Tốt Nghiệp</title>
+    <title>Lời Mời Tốt Nghiệp Cá Nhân Hóa</title>
+    <!-- Tải Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tải thư viện icon Lucide-React -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
+    <!-- Tải Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, getDocs, collection, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // Cấu hình Tailwind CSS cho tông màu Xanh Navy và Vàng Kim
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'navy': '#03204c',
-                        'gold': '#ffd700',
-                        'primary': '#03204c',
-                        'secondary': '#ffd700',
+                        'navy': '#03204c', // Màu xanh navy đậm
+                        'gold': '#ffd700', // Màu vàng kim
+                        'primary': '#03204c', // Đặt primary là navy
+                        'secondary': '#ffd700', // Đặt secondary là gold
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
+                        serif: ['Playfair Display', 'serif'], // Font cho tiêu đề lớn
                     },
                 }
             }
         }
     </script>
     <style>
+        /* CSS tuỳ chỉnh để thêm hiệu ứng lấp lánh và kiểu thiệp mời */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;600;700&display=swap');
-        body { background-color: #eef2ff; }
+        
+        body {
+            background-color: #eef2ff; /* Nền xanh nhạt bên ngoài */
+        }
+        
+        /* Hiệu ứng lấp lánh (dùng cho nền cột trái) */
         .sparkle-background {
             background-color: #03204c;
-            background-image: radial-gradient(circle at top right, rgba(255, 215, 0, 0.1) 1px, transparent 0), radial-gradient(circle at bottom left, rgba(255, 215, 0, 0.1) 1px, transparent 0);
+            background-image: 
+                radial-gradient(circle at top right, rgba(255, 215, 0, 0.1) 1px, transparent 0), 
+                radial-gradient(circle at bottom left, rgba(255, 215, 0, 0.1) 1px, transparent 0);
             background-size: 20px 20px;
         }
-        .golden-border { border: 4px solid transparent; box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8), 0 0 5px 2px rgba(255, 215, 0, 0.6); }
-        .special-card { background: linear-gradient(135deg, #05376e, #03204c); box-shadow: 0 10px 30px rgba(3, 32, 76, 0.8); border: 3px solid #ffd700; }
-        .invitation-frame { border: 2px solid #ffd700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+
+        /* Viền vàng lấp lánh cho ảnh */
+        .golden-border {
+            border: 4px solid transparent;
+            box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8), 0 0 5px 2px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Thiệp mời đặc biệt (dành cho Cha, Mẹ, Thầy Cô) */
+        .special-card {
+            background: linear-gradient(135deg, #05376e, #03204c);
+            box-shadow: 0 10px 30px rgba(3, 32, 76, 0.8);
+            border: 3px solid #ffd700;
+        }
+
+        /* Viền thiệp chính (cột phải) */
+        .invitation-frame {
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
     </style>
 </head>
 <body class="min-h-screen">
+
+    <!-- Container chính để render nội dung -->
     <div id="app" class="flex flex-col items-center p-4 md:p-8">
+        <!-- Nội dung sẽ được render bởi JavaScript -->
         <div class="text-center p-8">Đang tải...</div>
     </div>
 
     <script type="module">
-        const INFO_URL = '/data/info.json';
-        const GUESTS_URL = '/data/khach.json';
-        const DEFAULT_INVITE_MESSAGE = 'Thân gửi bạn, hãy đến chung vui cùng tôi trong buổi lễ trọng đại này, đánh dấu một cột mốc quan trọng trên con đường sắp tới. Sự hiện diện của bạn là niềm vinh dự lớn nhất của tôi!';
-        const ASSETS = {
-            GRADUATE_IMAGE: '/image/graduation/main.png',
-            MAN_DEFAULT: '/image/graduation/man.png',
-            WOMEN_DEFAULT: '/image/graduation/women.png'
-        };
-        const APP_ROOT = (() => {
-        const p = window.location.pathname.replace(/\/+$/, '');
-        const idx = p.indexOf('/graduation');
-        if (idx >= 0) return p.substring(0, idx + '/graduation'.length);
-        return p.replace(/\/graduation_invitation\.html$/, '');
-        })();
+        // Biến toàn cục từ môi trường Canvas
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-        async function initializeData() {
+        let db, auth;
+        let isAuthReady = false;
+
+        // --- 1. SETUP FIREBASE VÀ AUTH ---
+        async function setupFirebase() {
             try {
-                const [infoRes, guestsRes] = await Promise.all([
-                    fetch(INFO_URL, { cache: 'no-store' }),
-                    fetch(GUESTS_URL, { cache: 'no-store' })
-                ]);
-                const info = infoRes.ok ? await infoRes.json() : {};
-                const guestsJson = guestsRes.ok ? await guestsRes.json() : [];
-                let guests = Array.isArray(guestsJson) ? guestsJson : (Array.isArray(guestsJson.guests) ? guestsJson.guests : []);
-                const mapLink = info.mapLink && info.mapLink.trim() !== ''
-                    ? info.mapLink
-                    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(info.address || '')}`;
-                info.mapLink = mapLink;
-                if (!Array.isArray(guests) || guests.length === 0) {
-                    guests = [{ name: 'Khách Mời', title: 'Bạn', gender: 'male', image: '', message: DEFAULT_INVITE_MESSAGE, special: false }];
+                if (Object.keys(firebaseConfig).length === 0) {
+                    console.error("Firebase config is missing. Using mock data.");
+                    return false;
                 }
-                guests = guests.map(g => ({ ...g, nameEncoded: encodeURIComponent(g.name) }));
-                return { info, guests };
-            } catch (e) {
-                const info = { eventName: 'Lễ Tốt Nghiệp', university: '', universityShort: '', date: '', time: '', venue: '', address: '', mapLink: '' };
-                const guests = [{ name: 'Khách Mời', title: 'Bạn', gender: 'male', image: '', message: DEFAULT_INVITE_MESSAGE, special: false, nameEncoded: encodeURIComponent('Khách Mời') }];
-                return { info, guests };
+                
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Đăng nhập bằng Custom Token hoặc ẩn danh
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                console.log("Firebase initialized and user signed in:", auth.currentUser.uid);
+                isAuthReady = true;
+                return true;
+            } catch (error) {
+                console.error("Error setting up Firebase:", error);
+                return false;
             }
         }
+
+        // --- 2. MOCK DATA & CẤU HÌNH ---
+        const DEFAULT_INVITE_MESSAGE = "Thân gửi bạn, hãy đến chung vui cùng tôi trong buổi lễ trọng đại này, đánh dấu một cột mốc quan trọng trên con đường sắp tới. Sự hiện diện của bạn là niềm vinh dự lớn nhất của tôi!";
+        const APP_ROOT = '/graduation';
+        
+        // Mặc định ảnh sẽ lấy từ public/image/graduation
+        const ASSETS = {
+            GRADUATE_IMAGE: "/image/graduation/main.png", // Ảnh người tốt nghiệp
+            MAN_DEFAULT: "/image/graduation/man.png", // Ảnh mặc định nam
+            WOMEN_DEFAULT: "/image/graduation/women.png" // Ảnh mặc định nữ
+        };
+
+        // Mock data nếu Firestore lỗi (sử dụng info.json và khach.json đã đính kèm)
+        const MOCK_INFO = {
+            "eventName": "Lễ Tốt Nghiệp",
+            "graduateName": "Nguyễn Văn A",
+            "university": "Đại học Kinh tế TP. Hồ Chí Minh",
+            "universityShort": "UEH",
+            "date": "15/06/2025",
+            "time": "10:00 - 14:00",
+            "venue": "Hội trường A",
+            "address": "2 Hoàng Văn Thụ, Phường 9, Quận Phú Nhuận, TP. Hồ Chí Minh",
+            "mapLink": "https://maps.google.com/?q=2+Hoang+Van+Thu+Phu+Nhuan+HCMC",
+            "quote": "Hành trình học vấn kết thúc, hành trình mới bắt đầu."
+        };
+        const MOCK_GUESTS = [
+            {"name": "Nguyễn Thị B", "title": "Bạn thân", "gender": "female", "image": "", "message": "Mình rất vui được chia sẻ khoảnh khắc đặc biệt này cùng bạn. Hy vọng bạn sẽ đến tham dự!", "special": false},
+            {"name": "Nguyễn Văn D", "title": "Cha", "gender": "male", "image": "", "message": "Con yêu quý, đây là thành quả của những năm tháng học tập vất vả. Ba rất tự hào về con!", "special": true},
+            {"name": "Cao An", "title": "Anh", "gender": "male", "image": "", "message": "", "special": false}
+        ].map(g => ({...g, nameEncoded: encodeURIComponent(g.name)}));
+
+
+        // --- 3. LOGIC XỬ LÝ DỮ LIỆU TỪ FIRESTORE ---
+        
+        const getInfoDocRef = () => doc(db, "artifacts", appId, "public", "data", "info", "event_details");
+        const getGuestsCollectionRef = () => collection(db, "artifacts", appId, "public", "data", "khach");
+
+        async function initializeData() {
+            let data = {};
+            let isUsingFirestore = await setupFirebase();
+            let guests = [];
+            let info = {};
+
+            if (isUsingFirestore && isAuthReady) {
+                try {
+                    // 1. Tải Info
+                    const infoDoc = await getDoc(getInfoDocRef());
+                    info = infoDoc.exists() ? infoDoc.data() : MOCK_INFO;
+                    
+                    // 2. Tải Guests
+                    const guestSnapshot = await getDocs(getGuestsCollectionRef());
+                    guests = guestSnapshot.docs.map(doc => doc.data());
+                    
+                    if (guests.length === 0) {
+                        console.warn("No guests found in Firestore. Using mock guests.");
+                        guests = MOCK_GUESTS;
+                    }
+                } catch (e) {
+                    console.error("Error loading data from Firestore:", e);
+                    info = MOCK_INFO;
+                    guests = MOCK_GUESTS;
+                }
+            } else {
+                info = MOCK_INFO;
+                guests = MOCK_GUESTS;
+            }
+
+            // Thêm trường encoded name cho routing
+            guests = guests.map(g => ({...g, nameEncoded: encodeURIComponent(g.name)}));
+            
+            return { info, guests };
+        }
+
+        // --- 4. HÀM RENDER THIỆP MỜI CÁ NHÂN HÓA ---
 
         function renderGuestHtml(info, guest) {
             const guestName = guest.name;
             const guestTitle = guest.title;
             const inviteMsg = guest.message && guest.message.trim() !== '' ? guest.message : DEFAULT_INVITE_MESSAGE;
-            const guestImg = guest.image && guest.image.trim() !== ''
-                ? `/image/graduation/${guest.image}`
-                : (guest.gender && guest.gender.toLowerCase() === 'female' ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT);
-            const mainCardClass = guest.special ? 'special-card text-white' : 'bg-navy/95 text-white';
-            const frameClass = guest.special ? 'invitation-frame bg-white/95 text-navy' : 'invitation-frame bg-white text-navy';
+            
+            // Xác định ảnh khách mời
+            const guestImg = guest.image && guest.image.trim() !== '' 
+                ? `/image/graduation/${guest.image}` // Giả định ảnh khách mời cũng lưu ở public/image/graduation
+                : (guest.gender && guest.gender.toLowerCase() === 'female' 
+                    ? ASSETS.WOMEN_DEFAULT 
+                    : ASSETS.MAN_DEFAULT);
+            
+            // Xử lý CSS cho Khách mời Đặc biệt
+            const mainCardClass = guest.special 
+                ? 'special-card text-white' 
+                : 'bg-navy/95 text-white';
+
+            const frameClass = guest.special
+                ? 'invitation-frame bg-white/95 text-navy'
+                : 'invitation-frame bg-white text-navy';
 
             return `
                 <div class="flex flex-col md:flex-row w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl my-8">
+                    
+                    <!-- Cột Trái: Thông tin Khách Mời -->
                     <div class="flex-1 p-8 md:p-12 sparkle-background ${mainCardClass} flex flex-col items-center justify-between">
                         <div class="text-center w-full">
                             <h2 class="text-2xl font-serif text-gold mb-1">Thư Mời</h2>
-                            <h1 class="text-4xl md:text-5xl font-serif font-black text-gold border-b border-gold/50 pb-2 mb-8">Tham Dự <br> LỄ TỐT NGHIỆP</h1>
+                            <h1 class="text-4xl md:text-5xl font-serif font-black text-gold border-b border-gold/50 pb-2 mb-8">
+                                Tham Dự <br> LỄ TỐT NGHIỆP
+                            </h1>
+
+                            <!-- Vòng ảnh -->
                             <div class="my-8 flex justify-center">
                                 <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border">
                             </div>
+
                             <p class="text-base text-gold font-semibold tracking-wider">TRÂN TRỌNG KÍNH MỜI</p>
-                            <h3 class="text-3xl md:text-4xl font-serif font-bold text-gold mt-2">♦ ${guestTitle} ${guestName} ♦</h3>
+                            <h3 class="text-3xl md:text-4xl font-serif font-bold text-gold mt-2">
+                                ♦ ${guestTitle} ${guestName} ♦
+                            </h3>
                         </div>
                         <a href="${APP_ROOT}" class="mt-8 text-sm text-gold hover:underline">Quay về trang chủ</a>
                     </div>
 
+                    <!-- Cột Phải: Chi tiết Sự kiện và Lời nhắn -->
                     <div class="flex-1 p-8 md:p-12 ${frameClass} flex flex-col">
                         <div class="text-center">
-                            <p class="text-sm font-semibold tracking-widest text-gray-500">${info.university || ''}</p>
+                            <p class="text-sm font-semibold tracking-widest text-gray-500">${info.university}</p>
                             <h1 class="text-4xl font-serif font-black text-navy mt-2">LỄ TỐT NGHIỆP</h1>
-                            <p class="text-lg font-bold text-gray-700 mt-2">${(info.universityShort || '')} - Khóa ${new Date().getFullYear()}</p>
+                            <p class="text-lg font-bold text-gray-700 mt-2">${info.universityShort} - Khóa ${new Date().getFullYear()}</p>
                             <div class="w-full h-px bg-gray-300 my-6"></div>
                         </div>
+
+                        <!-- Chi tiết -->
                         <div class="space-y-6 mb-8">
                             <div>
                                 <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">THỜI GIAN</h3>
-                                <p class="text-xl font-bold">${info.time || ''}, Ngày ${info.date || ''}</p>
+                                <p class="text-xl font-bold">${info.time}, Ngày ${info.date}</p>
                             </div>
+                            <!-- ĐỊA ĐIỂM - Đã thêm liên kết bản đồ -->
                             <div>
                                 <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">ĐỊA ĐIỂM</h3>
+                                <!-- Sử dụng thẻ <a> để liên kết đến Google Maps -->
                                 <a href="${info.mapLink}" target="_blank" class="block group text-navy hover:text-gold transition-colors duration-200">
-                                    <p class="text-lg font-bold flex items-center">${info.venue || ''}<i data-lucide="map-pin" class="w-4 h-4 ml-2 text-navy group-hover:text-gold"></i></p>
-                                    <p class="text-sm text-gray-600 group-hover:text-gray-800">${info.address || ''}</p>
+                                    <p class="text-lg font-bold flex items-center">
+                                        ${info.venue}
+                                        <i data-lucide="map-pin" class="w-4 h-4 ml-2 text-navy group-hover:text-gold"></i>
+                                    </p>
+                                    <p class="text-sm text-gray-600 group-hover:text-gray-800">${info.address}</p>
                                     <p class="text-xs text-blue-500 group-hover:underline mt-1">Xem trên Google Maps</p>
                                 </a>
                             </div>
                         </div>
+
+                        <!-- Lời nhắn cá nhân -->
                         <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg border border-gray-200 mt-auto">
                             <img src="${guestImg}" alt="Ảnh Khách Mời" onerror="this.onerror=null;this.src='${guest.gender && guest.gender.toLowerCase() === 'female' ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT}';" class="w-16 h-16 rounded-full object-cover mb-3 border-2 border-navy">
-                            <p class="text-lg font-serif italic text-gray-700 text-center mb-4">"${inviteMsg}"</p>
+                            <p class="text-lg font-serif italic text-gray-700 text-center mb-4">
+                                "${inviteMsg}"
+                            </p>
                             <p class="text-sm font-semibold text-navy">Trân trọng từ người tốt nghiệp,</p>
                         </div>
+                        
+                        <!-- Kính mời cuối -->
                         <div class="text-center mt-6 pt-4 border-t border-gray-200">
                             <h3 class="text-lg font-bold text-navy">TRÂN TRỌNG KÍNH MỜI</h3>
                             <p class="text-2xl font-serif font-extrabold text-navy mt-1">${guestTitle} ${guestName}</p>
@@ -154,42 +294,44 @@
                 </div>
             `;
         }
+        
+        // --- 5. HÀM ĐỊNH TUYẾN (ROUTER) ---
 
         async function router() {
             renderLoading();
-            const isHttp = window.location.protocol === 'http:' || window.location.protocol === 'https:';
-            if (!isHttp) {
-                document.getElementById('app').innerHTML = `
-                    <div class="p-8 text-center max-w-2xl mx-auto bg-white rounded-xl shadow-xl mt-12 border-t-8 border-red-500">
-                        <h1 class="text-2xl font-black text-red-500 mb-3">Không thể tải dữ liệu qua file://</h1>
-                        <p class="text-base text-gray-700 mb-4">Vui lòng chạy trang qua máy chủ (http/https) để truy cập JSON.</p>
-                        <a href="http://127.0.0.1:5000/graduation" class="mt-2 inline-block text-white px-6 py-3 bg-navy rounded-full hover:bg-navy/80 font-semibold">Mở http://127.0.0.1:5000/graduation</a>
-                    </div>
-                `;
-                return;
-            }
             const { info, guests } = await initializeData();
-            const currentPath = window.location.pathname.replace(/\/+$/, '');
+
+            const path = window.location.pathname.replace(/\/+$/, '');
+            const pathParts = path.split('/').filter(part => part.length > 0);
+
             let contentHtml = '';
-            if (currentPath === APP_ROOT || currentPath === APP_ROOT + '/') {
+
+            if (pathParts.length === 1 && pathParts[0].toLowerCase() === 'graduation') {
+                // Trang chủ /graduation
                 contentHtml = `
                     <div class="p-8 text-center max-w-2xl mx-auto bg-white rounded-xl shadow-xl mt-12 border-t-8 border-navy">
-                        <h1 class="text-4xl font-serif font-black text-navy mb-4">${info.eventName || 'Lễ Tốt Nghiệp'}</h1>
+                        <h1 class="text-4xl font-serif font-black text-navy mb-4">${info.eventName}</h1>
                         <p class="text-xl text-gray-700 mb-6">Chào mừng đến với trang thiệp mời điện tử!</p>
                         <p class="text-gray-600 mb-4">Vui lòng truy cập đường dẫn cá nhân của bạn. Ví dụ:</p>
+                        
                         <div class="space-y-2 p-4 bg-navy/10 rounded-lg">
-                            ${guests.map(g => `<a href="${APP_ROOT}/${g.nameEncoded}" class="block text-base text-navy hover:underline">${APP_ROOT}/${g.nameEncoded}</a>`).slice(0, 5).join('')}
+                            ${guests.map(g => {
+                                return `<a href="${APP_ROOT}/${g.nameEncoded}" class="block text-base text-navy hover:underline">${APP_ROOT}/${g.nameEncoded}</a>`;
+                            }).slice(0, 5).join('')}
                             <p class="text-xs pt-2 text-gray-600">...và nhiều thiệp mời khác.</p>
                         </div>
                     </div>
                 `;
-            } else if (currentPath.startsWith(APP_ROOT + '/')) {
-                const guestNameEncoded = currentPath.substring(APP_ROOT.length + 1);
+            } else if (pathParts.length === 2 && pathParts[0].toLowerCase() === 'graduation') {
+                // Trang khách mời cá nhân /graduation/{Tên Khách Mời}
+                const guestNameEncoded = pathParts[1];
                 const guestName = decodeURIComponent(guestNameEncoded);
                 const guest = guests.find(g => g.name.toLowerCase() === guestName.toLowerCase());
+
                 if (guest) {
                     contentHtml = renderGuestHtml(info, guest);
                 } else {
+                    // 404 cho khách mời không tìm thấy
                     contentHtml = `
                         <div class="text-center p-12 bg-white rounded-xl shadow-lg mt-12 max-w-md border-t-8 border-red-500">
                             <h1 class="text-3xl font-bold text-red-600 mb-4">Lỗi 404 - Không tìm thấy</h1>
@@ -199,6 +341,7 @@
                     `;
                 }
             } else {
+                // 404 chung
                 contentHtml = `
                     <div class="p-8 text-center max-w-2xl mx-auto bg-white rounded-xl shadow-xl mt-12 border-t-8 border-red-500">
                         <h1 class="text-4xl font-black text-red-500 mb-4">Lỗi Đường Dẫn</h1>
@@ -207,12 +350,12 @@
                     </div>
                 `;
             }
+
             document.getElementById('app').innerHTML = contentHtml;
-            if (window.lucide && typeof lucide.createIcons === 'function') {
-                lucide.createIcons();
-            }
+            lucide.createIcons();
         }
 
+        // Khởi tạo router khi tải trang và khi điều hướng lịch sử
         window.addEventListener('load', router);
         window.addEventListener('popstate', router);
     </script>
