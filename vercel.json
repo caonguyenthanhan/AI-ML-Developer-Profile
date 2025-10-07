@@ -56,5 +56,14 @@
       "source": "/admin/29029003/upson",
       "destination": "/admin-server-control.html"
     }
+  ,
+    {
+      "source": "/graduation",
+      "destination": "/app/graduation"
+    },
+    {
+      "source": "/graduation/:guest",
+      "destination": "/app/graduation/:guest"
+    }
   ]
 }
