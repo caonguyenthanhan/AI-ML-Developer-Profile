@@ -122,6 +122,7 @@
         // Mặc định ảnh sẽ lấy từ public/image/graduation
         const ASSETS = {
             GRADUATE_IMAGE: "/image/graduation/main.png", // Ảnh người tốt nghiệp
+            MAP_IMAGE: "https://placehold.co/400x200/cccccc/ffffff?text=map.png", // Bản đồ placeholder
             MAN_DEFAULT: "/image/graduation/man.png", // Ảnh mặc định nam
             WOMEN_DEFAULT: "/image/graduation/women.png" // Ảnh mặc định nữ
         };
@@ -137,11 +138,13 @@
             "venue": "Hội trường A",
             "address": "2 Hoàng Văn Thụ, Phường 9, Quận Phú Nhuận, TP. Hồ Chí Minh",
             "mapLink": "https://maps.google.com/?q=2+Hoang+Van+Thu+Phu+Nhuan+HCMC",
-            "quote": "Hành trình học vấn kết thúc, hành trình mới bắt đầu."
+            "quote": "Hành trình học vấn kết thúc, hành trình mới bắt đầu.",
+            // Thêm trường mô phỏng Khóa học/Thông tin phụ (theo ảnh mẫu)
+            "subEventDetails": "Khoa Quản trị Kinh doanh - K48" 
         };
         const MOCK_GUESTS = [
             {"name": "Nguyễn Thị B", "title": "Bạn thân", "gender": "female", "image": "", "message": "Mình rất vui được chia sẻ khoảnh khắc đặc biệt này cùng bạn. Hy vọng bạn sẽ đến tham dự!", "special": false},
-            {"name": "Nguyễn Văn D", "title": "Cha", "gender": "male", "image": "", "message": "Con yêu quý, đây là thành quả của những năm tháng học tập vất vả. Ba rất tự hào về con!", "special": true},
+            {"name": "Nguyễn Văn D", "title": "Cha", "gender": "male", "image": "", "message": "Con yêu quý, đây là thành quả của những năm tháng học tập vất vất vả. Ba rất tự hào về con!", "special": true},
             {"name": "Cao An", "title": "Anh", "gender": "male", "image": "", "message": "", "special": false}
         ].map(g => ({...g, nameEncoded: encodeURIComponent(g.name)}));
 
@@ -187,7 +190,99 @@
             return { info, guests };
         }
 
-        // --- 4. HÀM RENDER THIỆP MỜI CÁ NHÂN HÓA ---
+        // --- 4. HÀM RENDER TRANG CHỦ (/graduation) ---
+        function renderMainPage(info, guests) {
+            // Tên người tốt nghiệp được làm nổi bật như ảnh mẫu
+            const defaultGuestName = info.graduateName || "Người Tốt Nghiệp";
+
+            // Vòng lặp để hiển thị tối đa 5 khách mời để gợi ý
+            const guestLinks = guests.slice(0, 5).map(g => {
+                return `<a href="${APP_ROOT}/${g.nameEncoded}" class="block text-base text-gold hover:underline font-semibold">${g.title} ${g.name}</a>`;
+            }).join('');
+            
+            return `
+                <div class="flex flex-col md:flex-row w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl my-8">
+                    
+                    <!-- Cột Trái: Giống ảnh mẫu (Thông báo Lễ Tốt Nghiệp) -->
+                    <div class="flex-1 p-8 md:p-12 sparkle-background bg-navy/95 text-white flex flex-col items-center justify-between">
+                        <div class="text-center w-full">
+                            <h2 class="text-2xl font-serif text-gold mb-1">Thư Mời</h2>
+                            <h1 class="text-4xl md:text-5xl font-serif font-black text-gold border-b border-gold/50 pb-2 mb-8">
+                                Tham Dự <br> LỄ TỐT NGHIỆP
+                            </h1>
+
+                            <!-- Vòng ảnh người tốt nghiệp -->
+                            <div class="my-8 flex justify-center">
+                                <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" onerror="this.onerror=null;this.src='${ASSETS.GRADUATE_IMAGE}';" class="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border">
+                            </div>
+
+                            <p class="text-base text-gold font-semibold tracking-wider">TRÂN TRỌNG KÍNH MỜI</p>
+                            <h3 class="text-3xl md:text-4xl font-serif font-bold text-gold mt-2">
+                                ♦ ${defaultGuestName} ♦
+                            </h3>
+                        </div>
+                        
+                        <!-- Hiển thị các khách mời gợi ý ở trang chủ để người dùng chọn thiệp riêng -->
+                        <div class="mt-8 text-center w-full p-4 bg-navy/20 rounded-lg border border-gold/50">
+                            <p class="text-sm text-gold mb-2 font-bold">Tìm Thiệp Mời Của Bạn:</p>
+                            <div class="space-y-1">
+                                ${guestLinks}
+                                <p class="text-xs text-gold/80 mt-2">...và nhiều thiệp mời cá nhân khác.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cột Phải: Chi tiết Sự kiện -->
+                    <div class="flex-1 p-8 md:p-12 invitation-frame bg-white text-navy flex flex-col">
+                        <div class="text-center">
+                            <p class="text-sm font-semibold tracking-widest text-gray-500">${info.university}</p>
+                            <h1 class="text-4xl font-serif font-black text-navy mt-2">LỄ TỐT NGHIỆP</h1>
+                            
+                            <!-- Thông tin phụ như khóa học/khoa -->
+                            <p class="text-base font-bold text-white bg-navy py-1 px-4 inline-block rounded-full mt-3 shadow-md">
+                                ${info.subEventDetails || 'Khóa Học/Thông Tin Phụ'}
+                            </p>
+                            <div class="w-full h-px bg-gray-300 my-6"></div>
+                        </div>
+
+                        <!-- Chi tiết -->
+                        <div class="space-y-6 mb-8">
+                            <div>
+                                <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">THỜI GIAN</h3>
+                                <p class="text-xl font-bold">${info.time}, Ngày ${info.date}</p>
+                            </div>
+                            <!-- Địa điểm có link bản đồ -->
+                            <div>
+                                <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">ĐỊA ĐIỂM</h3>
+                                <a href="${info.mapLink}" target="_blank" class="block group text-navy hover:text-gold transition-colors duration-200">
+                                    <p class="text-lg font-bold flex items-center">
+                                        ${info.venue}
+                                        <i data-lucide="map-pin" class="w-4 h-4 ml-2 text-navy group-hover:text-gold"></i>
+                                    </p>
+                                    <p class="text-sm text-gray-600 group-hover:text-gray-800">${info.address}</p>
+                                    <p class="text-xs text-blue-500 group-hover:underline mt-1">Xem trên Google Maps</p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Bản đồ/ảnh hội trường (map.png) -->
+                        <div class="mt-auto pt-4">
+                            <h3 class="text-center text-sm font-black tracking-widest text-navy uppercase mb-2">Ảnh Hội Trường (map.png)</h3>
+                            <img src="/image/graduation/map.png" alt="Ảnh dẫn đến hội trường" onerror="this.onerror=null;this.src='${ASSETS.MAP_IMAGE}';" class="w-full rounded-lg shadow-md border border-gray-200">
+                        </div>
+                        
+                        <!-- Kính mời cuối -->
+                        <div class="text-center mt-6 pt-4 border-t border-gray-200">
+                            <h3 class="text-lg font-bold text-navy">TRÂN TRỌNG KÍNH MỜI</h3>
+                            <p class="text-xl font-serif font-extrabold text-navy mt-1">Sự hiện diện của Quý Vị</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        // --- 5. HÀM RENDER THIỆP MỜI CÁ NHÂN HÓA (Không thay đổi) ---
 
         function renderGuestHtml(info, guest) {
             const guestName = guest.name;
@@ -213,7 +308,7 @@
             return `
                 <div class="flex flex-col md:flex-row w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl my-8">
                     
-                    <!-- Cột Trái: Thông tin Khách Mời -->
+                    <!-- Cột Trái: Ảnh và Tên Khách Mời -->
                     <div class="flex-1 p-8 md:p-12 sparkle-background ${mainCardClass} flex flex-col items-center justify-between">
                         <div class="text-center w-full">
                             <h2 class="text-2xl font-serif text-gold mb-1">Thư Mời</h2>
@@ -221,7 +316,7 @@
                                 Tham Dự <br> LỄ TỐT NGHIỆP
                             </h1>
 
-                            <!-- Vòng ảnh -->
+                            <!-- Vòng ảnh tốt nghiệp -->
                             <div class="my-8 flex justify-center">
                                 <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border">
                             </div>
@@ -239,7 +334,7 @@
                         <div class="text-center">
                             <p class="text-sm font-semibold tracking-widest text-gray-500">${info.university}</p>
                             <h1 class="text-4xl font-serif font-black text-navy mt-2">LỄ TỐT NGHIỆP</h1>
-                            <p class="text-lg font-bold text-gray-700 mt-2">${info.universityShort} - Khóa ${new Date().getFullYear()}</p>
+                            <p class="text-base font-bold text-gray-700 mt-2">${info.subEventDetails || info.universityShort + ' - Khóa ' + new Date().getFullYear()}</p>
                             <div class="w-full h-px bg-gray-300 my-6"></div>
                         </div>
 
@@ -249,10 +344,9 @@
                                 <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">THỜI GIAN</h3>
                                 <p class="text-xl font-bold">${info.time}, Ngày ${info.date}</p>
                             </div>
-                            <!-- ĐỊA ĐIỂM - Đã thêm liên kết bản đồ -->
+                            <!-- ĐỊA ĐIỂM - Liên kết bản đồ -->
                             <div>
                                 <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">ĐỊA ĐIỂM</h3>
-                                <!-- Sử dụng thẻ <a> để liên kết đến Google Maps -->
                                 <a href="${info.mapLink}" target="_blank" class="block group text-navy hover:text-gold transition-colors duration-200">
                                     <p class="text-lg font-bold flex items-center">
                                         ${info.venue}
@@ -295,7 +389,7 @@
             `;
         }
         
-        // --- 5. HÀM ĐỊNH TUYẾN (ROUTER) ---
+        // --- 6. HÀM ĐỊNH TUYẾN (ROUTER) ---
 
         async function router() {
             renderLoading();
@@ -307,21 +401,8 @@
             let contentHtml = '';
 
             if (pathParts.length === 1 && pathParts[0].toLowerCase() === 'graduation') {
-                // Trang chủ /graduation
-                contentHtml = `
-                    <div class="p-8 text-center max-w-2xl mx-auto bg-white rounded-xl shadow-xl mt-12 border-t-8 border-navy">
-                        <h1 class="text-4xl font-serif font-black text-navy mb-4">${info.eventName}</h1>
-                        <p class="text-xl text-gray-700 mb-6">Chào mừng đến với trang thiệp mời điện tử!</p>
-                        <p class="text-gray-600 mb-4">Vui lòng truy cập đường dẫn cá nhân của bạn. Ví dụ:</p>
-                        
-                        <div class="space-y-2 p-4 bg-navy/10 rounded-lg">
-                            ${guests.map(g => {
-                                return `<a href="${APP_ROOT}/${g.nameEncoded}" class="block text-base text-navy hover:underline">${APP_ROOT}/${g.nameEncoded}</a>`;
-                            }).slice(0, 5).join('')}
-                            <p class="text-xs pt-2 text-gray-600">...và nhiều thiệp mời khác.</p>
-                        </div>
-                    </div>
-                `;
+                // Trang chủ /graduation - Hiển thị bố cục giống ảnh mẫu
+                contentHtml = renderMainPage(info, guests);
             } else if (pathParts.length === 2 && pathParts[0].toLowerCase() === 'graduation') {
                 // Trang khách mời cá nhân /graduation/{Tên Khách Mời}
                 const guestNameEncoded = pathParts[1];
