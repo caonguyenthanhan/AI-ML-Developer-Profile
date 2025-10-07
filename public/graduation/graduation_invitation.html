@@ -73,7 +73,38 @@
             background-position: center;
             background-size: 100% 100%;
         }
-
+        /* Hiệu ứng ánh sáng mới */
+        .gold-shine {
+            color: #ffd700;
+            animation: goldShine 3.2s ease-in-out infinite;
+            text-shadow: 0 0 6px rgba(255,215,0,0.6), 0 0 2px rgba(255,215,0,0.4);
+        }
+        @keyframes goldShine {
+            0%, 100% {
+                text-shadow: 0 0 6px rgba(255,215,0,0.6), 0 0 2px rgba(255,215,0,0.4);
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 12px rgba(255,215,0,0.8), 0 0 4px rgba(255,215,0,0.6);
+                transform: scale(1.01);
+            }
+        }
+        .soft-glow {
+            position: relative;
+        }
+        .soft-glow::before {
+            content: "";
+            position: absolute;
+            inset: -10%;
+            background: radial-gradient(circle at 50% 30%, rgba(255, 215, 0, 0.12), transparent 60%);
+            filter: blur(10px);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .soft-glow > * {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -232,10 +263,10 @@
                 <div class="flex flex-col md:flex-row w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl my-8">
                     
                     <!-- Cột Trái: Giống ảnh mẫu (Thông báo Lễ Tốt Nghiệp) -->
-                    <div class="flex-1 p-8 md:p-12 sparkle-background bg-navy/95 text-white flex flex-col items-center justify-between">
+                    <div class="flex-1 p-8 md:p-12 sparkle-background soft-glow bg-navy/95 text-white flex flex-col items-center justify-between">
                         <div class="text-center w-full">
-                            <h2 class="text-2xl font-serif text-gold mb-1">Thư Mời</h2>
-                            <h1 class="text-4xl md:text-5xl font-serif font-black text-gold border-b border-gold/50 pb-2 mb-8">
+                            <h2 class="text-2xl font-serif text-gold gold-shine mb-1">Thư Mời</h2>
+                            <h1 class="text-4xl md:text-5xl font-serif font-black text-gold gold-shine border-b border-gold/50 pb-2 mb-8">
                                 Tham Dự <br> LỄ TỐT NGHIỆP
                             </h1>
 
@@ -247,7 +278,7 @@
                                 </div>
                             </div>
 
-                            <p class="text-base text-gold font-semibold tracking-wider">TRÂN TRỌNG KÍNH MỜI</p>
+                            <p class="text-base text-gold font-semibold tracking-wider">TÂN CỬ NHÂN</p>
                             <h3 class="text-3xl md:text-4xl font-serif font-bold text-gold mt-2">
                                 ♦ ${defaultGuestName} ♦
                             </h3>
@@ -336,7 +367,7 @@
                 <div class="flex flex-col md:flex-row w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl my-8">
                     
                     <!-- Cột Trái: Ảnh và Tên Khách Mời -->
-                    <div class="flex-1 p-8 md:p-12 sparkle-background ${mainCardClass} flex flex-col items-center justify-between">
+                    <div class="flex-1 p-8 md:p-12 sparkle-background soft-glow ${mainCardClass} flex flex-col items-center justify-between">
                         <div class="text-center w-full">
                             <h2 class="text-2xl font-serif text-gold mb-1">Thư Mời</h2>
                             <h1 class="text-4xl md:text-5xl font-serif font-black text-gold border-b border-gold/50 pb-2 mb-8">
@@ -352,8 +383,9 @@
                             </div>
 
                             <p class="text-base text-gold font-semibold tracking-wider">TRÂN TRỌNG KÍNH MỜI</p>
-                            <h3 class="text-3xl md:text-4xl font-serif font-bold text-gold mt-2">
-                                ♦ ${guestTitle} ${guestName} ♦
+                            <h3 class="text-3xl md:text-4xl font-serif font-bold text-gold mt-2 gold-shine">
+                                _ ${guestTitle} _
+                                ♦ ${guestName} ♦
                             </h3>
                         </div>
                         <a href="${APP_ROOT}" class="mt-8 text-sm text-gold hover:underline">Quay về trang chủ</a>
