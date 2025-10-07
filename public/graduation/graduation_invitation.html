@@ -277,7 +277,7 @@
                     <!-- Cột Trái: Giống ảnh mẫu (Thông báo Lễ Tốt Nghiệp) -->
 
                     <div class="flex-1 p-8 md:p-12 text-white flex flex-col items-center justify-between relative overflow-hidden">
-                        <div class="absolute inset-0 w-full h-full bg-navy/70 backdrop-blur-sm pointer-events-none z-[5]"></div>
+                        
                         <video id="background-video" autoplay loop muted playsinline 
                             class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0">
                             <source src="/video/sparkle-background.mp4" type="video/mp4">
@@ -310,48 +310,52 @@
                     </div>
 
                     <!-- Cột Phải: Chi tiết Sự kiện -->
-                    <div class="flex-1 p-8 md:p-12 invitation-frame gold-frame-bg bg-white text-navy flex flex-col">
-                        <div class="text-center">
-                            <p class="text-sm font-semibold tracking-widest text-gray-500">${info.university || 'Tên trường'}</p>
-                            <h1 class="text-4xl font-serif font-black text-navy mt-2">LỄ TỐT NGHIỆP</h1>
+                    <div class="flex-1 p-8 md:p-12 invitation-frame gold-frame-bg bg-white/60 backdrop-blur-sm text-navy flex flex-col relative">
+                        <!-- Lớp mờ phủ nền -->
+                        <div class="absolute inset-0 bg-white/40 backdrop-blur-sm z-0"></div>
+                        <div class="relative z-10">
+                            <div class="text-center">
+                                <p class="text-sm font-semibold tracking-widest text-gray-500">${info.university || 'Tên trường'}</p>
+                                <h1 class="text-4xl font-serif font-black text-navy mt-2">LỄ TỐT NGHIỆP</h1>
+                                
+                                <!-- Thông tin phụ như khóa học/khoa -->
+                                <p class="text-base font-bold text-white bg-navy py-1 px-4 inline-block rounded-full mt-3 shadow-md">
+                                    ${info.subEventDetails || info.universityShort || 'UEH'} - ${info.date ? `Ngày ${info.date}` : 'Thông tin phụ'}
+                                </p>
+                                <div class="w-full h-px bg-gray-300 my-6"></div>
+                            </div>
+
+                            <!-- Chi tiết -->
+                            <div class="space-y-6 mb-8">
+                                <div>
+                                    <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">THỜI GIAN</h3>
+                                    <p class="text-xl font-bold">${info.time || 'Chưa cập nhật'}, Ngày ${info.date || 'Chưa cập nhật'}</p>
+                                </div>
+                                <!-- Địa điểm có link bản đồ -->
+                                <div>
+                                    <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">ĐỊA ĐIỂM</h3>
+                                    <a href="${info.mapLink || '#'}" target="_blank" class="block group text-navy hover:text-gold transition-colors duration-200">
+                                        <p class="text-lg font-bold flex items-center">
+                                            ${info.venue || 'Chưa cập nhật'}
+                                            <i data-lucide="map-pin" class="w-4 h-4 ml-2 text-navy group-hover:text-gold"></i>
+                                        </p>
+                                        <p class="text-sm text-gray-600 group-hover:text-gray-800">${info.address || 'Chưa cập nhật địa chỉ'}</p>
+                                        <p class="text-xs text-blue-500 group-hover:underline mt-1">Xem trên Google Maps</p>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Bản đồ/ảnh hội trường (map.png) -->
+                            <div class="mt-auto pt-4">
+                                <h3 class="text-center text-sm font-black tracking-widest text-navy uppercase mb-2">Ảnh Dẫn Đường</h3>
+                                <img src="${ASSETS.MAP_IMAGE}" alt="Ảnh dẫn đến hội trường" onerror="this.onerror=null;this.src='${ASSETS.MAP_IMAGE}';" class="w-full rounded-lg shadow-md border border-gray-200">
+                            </div>
                             
-                            <!-- Thông tin phụ như khóa học/khoa -->
-                            <p class="text-base font-bold text-white bg-navy py-1 px-4 inline-block rounded-full mt-3 shadow-md">
-                                ${info.subEventDetails || info.universityShort || 'UEH'} - ${info.date ? `Ngày ${info.date}` : 'Thông tin phụ'}
-                            </p>
-                            <div class="w-full h-px bg-gray-300 my-6"></div>
-                        </div>
-
-                        <!-- Chi tiết -->
-                        <div class="space-y-6 mb-8">
-                            <div>
-                                <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">THỜI GIAN</h3>
-                                <p class="text-xl font-bold">${info.time || 'Chưa cập nhật'}, Ngày ${info.date || 'Chưa cập nhật'}</p>
+                            <!-- Kính mời cuối -->
+                            <div class="text-center mt-6 pt-4 border-t border-gray-200">
+                                <h3 class="text-lg font-bold text-navy">TRÂN TRỌNG KÍNH MỜI</h3>
+                                <p class="text-xl font-serif font-extrabold text-navy mt-1">Sự hiện diện của Quý Vị</p>
                             </div>
-                            <!-- Địa điểm có link bản đồ -->
-                            <div>
-                                <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">ĐỊA ĐIỂM</h3>
-                                <a href="${info.mapLink || '#'}" target="_blank" class="block group text-navy hover:text-gold transition-colors duration-200">
-                                    <p class="text-lg font-bold flex items-center">
-                                        ${info.venue || 'Chưa cập nhật'}
-                                        <i data-lucide="map-pin" class="w-4 h-4 ml-2 text-navy group-hover:text-gold"></i>
-                                    </p>
-                                    <p class="text-sm text-gray-600 group-hover:text-gray-800">${info.address || 'Chưa cập nhật địa chỉ'}</p>
-                                    <p class="text-xs text-blue-500 group-hover:underline mt-1">Xem trên Google Maps</p>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Bản đồ/ảnh hội trường (map.png) -->
-                        <div class="mt-auto pt-4">
-                            <h3 class="text-center text-sm font-black tracking-widest text-navy uppercase mb-2">Ảnh Dẫn Đường</h3>
-                            <img src="${ASSETS.MAP_IMAGE}" alt="Ảnh dẫn đến hội trường" onerror="this.onerror=null;this.src='${ASSETS.MAP_IMAGE}';" class="w-full rounded-lg shadow-md border border-gray-200">
-                        </div>
-                        
-                        <!-- Kính mời cuối -->
-                        <div class="text-center mt-6 pt-4 border-t border-gray-200">
-                            <h3 class="text-lg font-bold text-navy">TRÂN TRỌNG KÍNH MỜI</h3>
-                            <p class="text-xl font-serif font-extrabold text-navy mt-1">Sự hiện diện của Quý Vị</p>
                         </div>
                     </div>
                 </div>
