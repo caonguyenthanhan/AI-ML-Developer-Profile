@@ -391,14 +391,12 @@
             const guestTitle = guest.title;
             const inviteMsg = guest.message && guest.message.trim() !== '' ? guest.message : DEFAULT_INVITE_MESSAGE;
             
-            // Xác định ảnh khách mời
             const guestImg = guest.image && guest.image.trim() !== '' 
-                ? `/image/graduation/${guest.image}` // Giả định ảnh khách mời cũng lưu ở public/image/graduation
+                ? `/image/graduation/${guest.image}` 
                 : (guest.gender && guest.gender.toLowerCase() === 'female' 
                     ? ASSETS.WOMEN_DEFAULT 
                     : ASSETS.MAN_DEFAULT);
             
-            // Xử lý CSS cho Khách mời Đặc biệt
             const mainCardClass = guest.special 
                 ? 'special-card text-white' 
                 : 'bg-navy/95 text-white';
@@ -411,14 +409,18 @@
                 <div class="flex flex-col md:flex-row w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl my-8">
                     
                     <!-- Cột Trái: Ảnh và Tên Khách Mời -->
-                    <div class="flex-1 p-8 md:p-12 sparkle-background soft-glow ${mainCardClass} flex flex-col items-center justify-between">
-                        <div class="text-center w-full">
+                    <div class="flex-1 p-8 md:p-12 ${mainCardClass} text-white flex flex-col items-center justify-between relative overflow-hidden">
+                        <video id="background-video" autoplay loop muted playsinline 
+                            class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0">
+                            <source src="/video/sparkle-background.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="text-center w-full relative z-10">
                             <h2 class="text-2xl font-serif text-gold mb-1">Thư Mời</h2>
                             <h1 class="text-4xl md:text-5xl font-serif font-black text-gold border-b border-gold/50 pb-2 mb-8">
                                 Tham Dự <br> LỄ TỐT NGHIỆP
                             </h1>
 
-                            <!-- Vòng ảnh tốt nghiệp -->
                             <div class="my-8 flex justify-center">
                                 <div class="relative inline-block w-56 h-56 md:w-64 md:h-64">
                                     <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
@@ -432,7 +434,7 @@
                                 ♦ ${guestName} ♦
                             </h3>
                         </div>
-                        <a href="${APP_ROOT}" class="mt-8 text-sm text-gold hover:underline">Quay về trang chủ</a>
+                        <a href="${APP_ROOT}" class="mt-8 text-sm text-gold hover:underline relative z-10">Quay về trang chủ</a>
                     </div>
 
                     <!-- Cột Phải: Chi tiết Sự kiện và Lời nhắn -->
@@ -444,13 +446,11 @@
                             <div class="w-full h-px bg-gray-300 my-6"></div>
                         </div>
 
-                        <!-- Chi tiết -->
                         <div class="space-y-6 mb-8">
                             <div>
                                 <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">THỜI GIAN</h3>
                                 <p class="text-xl font-bold">${info.time || 'Chưa cập nhật'}, Ngày ${info.date || 'Chưa cập nhật'}</p>
                             </div>
-                            <!-- ĐỊA ĐIỂM - Liên kết bản đồ -->
                             <div>
                                 <h3 class="text-sm font-black tracking-widest text-navy uppercase mb-1">ĐỊA ĐIỂM</h3>
                                 <a href="${info.mapLink || '#'}" target="_blank" class="block group text-navy hover:text-gold transition-colors duration-200">
@@ -464,7 +464,6 @@
                             </div>
                         </div>
 
-                        <!-- Lời nhắn cá nhân -->
                         <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg border border-gray-200 mt-auto">
                             <img src="${guestImg}" alt="Ảnh Khách Mời" onerror="this.onerror=null;this.src='${guest.gender && guest.gender.toLowerCase() === 'female' ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT}';" class="w-16 h-16 rounded-full object-cover mb-3 border-2 border-navy">
                             <p class="text-lg font-serif italic text-gray-700 text-center mb-4">
@@ -473,7 +472,6 @@
                             <p class="text-sm font-semibold text-navy">Trân trọng từ người tốt nghiệp, ${info.graduateName} </p>
                         </div>
                         
-                        <!-- Kính mời cuối -->
                         <div class="text-center mt-6 pt-4 border-t border-gray-200">
                             <h3 class="text-lg font-bold text-navy">TRÂN TRỌNG KÍNH MỜI</h3>
                             <p class="text-2xl font-serif font-extrabold text-navy mt-1">${guestTitle} ${guestName}</p>
