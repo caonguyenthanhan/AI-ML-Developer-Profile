@@ -275,14 +275,15 @@
                 <div class="flex flex-col md:flex-row w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl my-8">
                     
                     <!-- Cột Trái: Giống ảnh mẫu (Thông báo Lễ Tốt Nghiệp) -->
-                    // <div class="flex-1 p-8 md:p-12 sparkle-background soft-glow bg-navy/95 text-white flex flex-col items-center justify-between">
+
                     <div class="flex-1 p-8 md:p-12 text-white flex flex-col items-center justify-between relative overflow-hidden">
-                        <!-- Nền Động Dùng GIF/Video -->
-                        <img src="URL_CUA_GIF_LAP_LANH_CUA_BAN.gif" 
-                            alt="Nền động" 
-                            class="absolute inset-0 w-full h-full object-cover opacity-75 pointer-events-none z-0">
                         
-                        <div class="text-center w-full">
+                        <video id="background-video" autoplay loop muted playsinline 
+                            class="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none z-0">
+                            <source src="/video/sparkle-background.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="text-center w-full relative z-10">
                             <h2 class="text-2xl font-serif text-gold gold-shine mb-1">Thư Mời</h2>
                             <h1 class="text-4xl md:text-5xl font-serif font-black text-gold gold-shine border-b border-gold/50 pb-2 mb-8">
                                 Tham Dự <br> LỄ TỐT NGHIỆP
