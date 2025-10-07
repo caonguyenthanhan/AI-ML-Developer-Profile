@@ -1083,5 +1083,61 @@
         "prompt": "from my photo create a pictures: A hyper-realistic, cinematic portrait of the graduate (using the exact face and joyful, radiant smile/expression from the uploaded photo). He is wearing a flawless, deep royal blue graduation gown with bright yellow trim and a matching blue mortarboard. He holds a diploma tied with a red ribbon and a blue certificate cover. The scene is a grand university hall bathed in soft, glowing golden light from above, creating a divine, celebratory atmosphere. The background is slightly blurred (shallow depth of field) to focus entirely on the subject, showing a crowd of other graduates in blue gowns, cheering subtly in the distance. The photography style is modern editorial, high-resolution 8K, with clean focus, warm color grading, and soft rim lighting emphasizing the texture of the gown and the joy on his face. Don't change the facial det.",
         "imagePath": "/image/genai/c5c3dce0-d14c-40ba-8397-1603b324cd30.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 156,
+        "title": "Bức Chân Dung Neo-Noir: Ánh Sáng Lạnh Lẽo Trên Nền Đỏ Crimson",
+        "prompt": "From my photo create a pictures: A hyper-realistic, dramatic, cinematic artistic portrait of the young person from the photo, keeping the exact proportions of the facial features (Don't change the facial det). The subject's face is mostly enveloped in deep shadow, illuminated only by a single, narrow, cool-toned horizontal beam of light cutting across the darkness—sharply highlighting the eyes and forehead. A piercing, icy blue eye must glow intensely through the high contrast. The background is a vivid, uniform crimson red, radiating intensity and emotion. The lighting evokes extreme chiaroscuro and surreal contrast, blending elements of neo-noir and minimalistic fine art photography. Include ultra-detailed skin and fabric textures, volumetric light scattering, moody atmospheric depth, high contrast, and an expressive, stoic composition. 8K resolution, Cinematic shot, shot on 85mm lens.",
+        "imagePath": "/image/genai/417051e2-8a0a-49b9-bf12-77c0a8f50f85.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 157,
+        "title": "Chân dung Nàng Thơ Áo Dài Hồng, Phong cách Chụp ảnh Cổ điển",
+        "prompt": "from my photo create a pictures: A stunning, ultra-high-resolution (8K), photorealistic half-body portrait of a young, beautiful Asian woman, with an air of gentle, traditional elegance. The subject's facial features and proportions must be preserved from the reference photo (Don't change the facial det). She wears a traditional Vietnamese Ao Dai made of pale pink silk, featuring a subtle, luminous sheen and delicate, intricate hidden patterns. She has porcelain-white skin, light, soft makeup, rosy cheeks, and natural peach lipstick. Her shiny black hair is long, loose, and voluminous. She holds two white lotus flowers tied with a pink ribbon and wears a traditional round silver choker (kiềng bạc) around her neck. She stands gracefully, leaning slightly against an ancient stone railing. The background features ancient architectural elements, bathed in soft morning golden sunlight that gently illuminates her face and the Ao Dai fabric, creating a warm, clear, and ethereal light effect. Use classic Vietnamese portrait photography style, shot with an 85mm prime lens, featuring an extremely shallow depth of field (creamy bokeh background), soft natural light, and emphasizing the gentle light reflection on the silk fabric. Serene, pure, and high-detail aesthetic.",
+        "imagePath": "/image/genai/28ac2d18-ba46-4e56-9741-4628be2fc8f8.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 158,
+        "title": "Nàng Thơ Áo Dài Hồng Duyên Dáng Cầm Quạt Dưới Nắng Sớm",
+        "prompt": "from my photo create a pictures: A breathtaking, hyper-realistic, high-resolution (8K) half-body portrait of a young, beautiful Asian woman, with an air of gentle, traditional elegance. The subject's facial features and proportions must be preserved from the reference photo (Don't change the facial det). She has fair, porcelain skin, soft makeup, rosy cheeks, and natural peach lipstick. Her shiny black hair is long, loose, and voluminous. She wears a traditional Vietnamese Ao Dai made of pale pink silk, featuring a delicate sheen and subtle, exquisite embossed patterns. Around her neck is a traditional round silver choker (kiềng bạc). She stands elegantly in front of an ancient stone railing, holding a small, finely carved wooden fan with both hands, maintaining a refined and graceful posture, and looking directly into the camera. The background features ancient architectural elements, with warm, clear morning golden sunlight gently illuminating her face and the Ao Dai fabric, creating a warm, pure, and ethereal light effect. The style is classic Vietnamese portrait photography, shot with an 85mm prime lens, featuring extremely shallow depth of field (creamy soft bokeh background), soft natural light, and emphasizing the gentle light reflection on the silk Ao Dai.\r\n\r\n",
+        "imagePath": "/image/genai/1ceddcc6-b640-4cd5-9adc-65959192b7e6.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 159,
+        "title": "Chân dung Cô Gái Áo Dài Hồng Thanh Thoát và Hoa Sen Dưới Nắng Sớm",
+        "prompt": "from my photo create a pictures: A stunning, full-body, ultra-high-resolution (8K), hyper-realistic portrait of a young, beautiful Asian woman, embodying gentle, traditional elegance. The subject's face must be 100% identical to the reference image (Don't change the facial det). She wears a traditional Vietnamese Ao Dai made of pale pink silk, featuring a delicate luminous sheen and subtle, exquisite hidden patterns. She has porcelain-white skin, soft, light makeup, rosy cheeks, and natural peach lipstick. Her shiny black hair is long, loose, and voluminous. She holds a large bouquet of fresh white lotus flowers tied with a pale pink ribbon. She stands in a graceful walking posture against an ancient stone railing. She wears a traditional round silver choker (kiềng bạc) around her neck. The background features ancient architectural elements, illuminated by soft morning golden sunlight that casts a warm, clear, and pure glow on her face and the Ao Dai. The style is classic Vietnamese portrait photography, shot with an 85mm prime lens, shallow depth of field, creamy soft bokeh background, emphasizing the gentle light reflection on the silk fabric. The overall atmosphere is serene, pure, and intimate, with high attention to detail.",
+        "imagePath": "/image/genai/90c5e3c9-a3e6-46c0-8b21-a74bcc0643fc.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 160,
+        "title": "Chân dung cô gái trẻ thanh lịch với tóc dài đen và phụ kiện tóc hoa trắng",
+        "prompt": "Một bức ảnh chân dung tuyệt đẹp, chất lượng cao của một cô gái trẻ xinh đẹp với mái tóc đen dài, thẳng và mượt mà, rẽ ngôi giữa. Cô ấy có làn da trắng sứ, trang điểm nhẹ nhàng với đôi môi màu san hô tự nhiên và đôi mắt quyến rũ. Một phụ kiện tóc hình hoa màu trắng tinh tế được cài duyên dáng bên thái dương trái của cô. Cô ấy mặc một chiếc váy quây trắng hở vai, để lộ xương quai xanh tinh tế. Cô ấy đang nhẹ nhàng dùng tay phải chạm vào ngực. Phía trước cô là một chiếc áo khoác lông vũ màu trắng sang trọng, tạo cảm giác mềm mại và bồng bềnh. Bức ảnh được chụp với bố cục chặt chẽ, lấy nửa thân trên làm trọng tâm. Phông nền màu xám trơn, dịu nhẹ làm nổi bật vẻ đẹp của cô. Phong cách nhiếp ảnh chân dung, ánh sáng tự nhiên mềm mại, độ chi tiết cao, màu sắc chân thực và độ sắc nét cao.\r\n\r\n-- phong cách nhiếp ảnh chân dung studio, ánh sáng tự nhiên, ống kính tiêu cự 85mm, độ sâu trường ảnh nông, nền mờ bokeh mềm mại, tông màu tự nhiên, độ chi tiết cao.",
+        "imagePath": "/image/genai/96e38180-7c32-4d0b-9c10-8c133d059ad9.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 161,
+        "title": " Chân dung Mộng Mị Dưới Lớp Mạng Che Mặt Tím Thủy Tinh",
+        "prompt": "from my photo create a pictures: An ultra-realistic, close-up headshot portrait of a young Asian woman (preserving the exact facial det, eye shape, and expression of the subject in the photo). She has luminous, porcelain-pale skin, high cheekbones, and dark hair neatly pulled back. Her makeup is intensely dramatic, featuring sharp winged black eyeliner and full pink lips. Her eyes are large, light blue/grey, and mesmerizing. She wears a strapless black garment. She is gently touching and posing with a sheer, translucent, violet-blue veil (tulle) that drapes mysteriously around her head and shoulders, with long black painted fingernails visible. The lighting is cinematic and low-key, utilizing cool, luminous rim lights (blue and purple tones) to create an ethereal, mysterious, and highly stylized mood. The style is Hyper-Photorealistic Digital Art, 8K resolution, with a shallow depth of field to emphasize the soft focus on the veil texture. Don't change the facial det.",
+        "imagePath": "/image/genai/a53283e1-7709-4f1e-9a61-e6dce6d4bb6d.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 162,
+        "title": "Kỳ Nghỉ Thượng Lưu: Chân Dung Nhóm Trên Bãi Biển Nhiệt Đới",
+        "prompt": "from my photo create a pictures: An ultra-realistic, vibrant, full-body group portrait taken on a luxurious tropical beach with white sand and clear turquoise water. The man's face must be 100% identical to the reference image, preserving his smile and features (Don't change the facial det). One Asian man is positioned in the foreground, lying casually on the sand, wearing an open white linen shirt and beige shorts, smiling confidently. He is surrounded by eight beautiful young women who are kneeling, sitting, and standing around him in a tight, clustered composition. The women are wearing various colorful bikinis (e.g., yellow, blue, pink, turquoise). The background features a clear blue sky and several luxurious yachts floating on the ocean. The photo style is commercial/editorial, shot in bright, high-key daylight, emphasizing vibrant, saturated colors and high resolution (8K detail) to convey a cheerful, luxurious summer vacation mood.",
+        "imagePath": "/image/genai/063ae8ea-84db-4040-83a2-4e4d7d3a327e.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 163,
+        "title": " Chân Dung Điện Ảnh: Khoảnh Khắc Lạc Lối Trong Mưa Đêm Lạnh",
+        "prompt": "from my photo create a pictures: A dramatic cinematic close-up portrait of a young man (preserving the exact facial det from the reference photo). Don't change the facial det. He has an angular face, sharp jaw, closed eyes, and head slightly tilted back, fully immersed in heavy rain. His wet, messy black hair has strands sticking to his forehead, giving him a strong yet dreamy, emotionally melting look. He is wearing a luxurious black suit over a white shirt with an open collar; the fabric is wet, clinging to his skin, and shining with a sparkling, reflective effect in the low light. The scene is set against a night sky with heavy rain. The dim light from distant street lamps and signs shines through the water, creating a shimmering reflective effect through the thick rain. Raindrops are captured sharply, appearing to pour straight into the lens. The main color tones are cold blue, silver gray, and deep black, creating a strong, lonely, and captivating atmosphere. Visual effects: slow shutter speed motion blur on the rain, highly detailed flying water droplets, light reflecting intensely off the raindrops, distant blurred bokeh. Surreal detailed photos, 4K resolution, dramatic cinematic portrait style, shallow depth of field, intense emotions, full of film grain.\r\n\r\n",
+        "imagePath": "/image/genai/2a4a40fe-1b7c-44f6-a787-417f175da843.png",
+        "category": "Portrait Photography"
     }
 ]
