@@ -303,8 +303,10 @@
                             </h3>
                         </div>
                         
-                        <!-- Hiển thị các khách mời gợi ý -->
-                        ${guestSection}
+                        <!-- Thông tin phụ như khóa học/khoa -->
+                            <p class="text-base font-bold text-white bg-navy py-1 px-4 inline-block rounded-full mt-3 shadow-md">
+                                ${info.subEventDetails || info.universityShort || 'UEH'} - ${info.date ? `Ngày ${info.date}` : 'Thông tin phụ'}
+                            </p>
                     </div>
 
                     <!-- Cột Phải: Chi tiết Sự kiện -->
