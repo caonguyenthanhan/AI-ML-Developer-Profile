@@ -120,11 +120,13 @@
         const APP_ROOT = '/graduation';
         
         // Mặc định ảnh sẽ lấy từ public/image/graduation
+        const INFO_URL = "/data/info.json";
+        const GUESTS_URL = "/data/khach.json";
         const ASSETS = {
-            GRADUATE_IMAGE: "/image/graduation/main.png", // Ảnh người tốt nghiệp
-            MAP_IMAGE: "https://placehold.co/400x200/cccccc/ffffff?text=map.png", // Bản đồ placeholder
-            MAN_DEFAULT: "/image/graduation/man.png", // Ảnh mặc định nam
-            WOMEN_DEFAULT: "/image/graduation/women.png" // Ảnh mặc định nữ
+            GRADUATE_IMAGE: "/image/graduation/main.jpg", // Ảnh người tốt nghiệp
+            MAP_IMAGE: "/image/graduation/map.jpg", // Ảnh bản đồ nội bộ
+            MAN_DEFAULT: "/image/graduation/man.jpg", // Ảnh mặc định nam
+            WOMEN_DEFAULT: "/image/graduation/women.jpg" // Ảnh mặc định nữ
         };
 
 
@@ -137,37 +139,58 @@
             let info = null;
             let guests = [];
 
-            let isUsingFirestore = await setupFirebase();
+            const isUsingFirestore = await setupFirebase();
 
             if (isUsingFirestore && isAuthReady) {
                 try {
-                    // 1. Tải Info
+                    // 1. Tải Info từ Firestore
                     const infoDoc = await getDoc(getInfoDocRef());
                     if (infoDoc.exists()) {
                         info = infoDoc.data();
                         console.log("Event info loaded from Firestore.");
                     } else {
-                        console.error("Event info document not found in Firestore.");
+                        console.warn("Event info document not found in Firestore.");
                     }
                     
-                    // 2. Tải Guests
+                    // 2. Tải Guests từ Firestore
                     const guestSnapshot = await getDocs(getGuestsCollectionRef());
-                    guests = guestSnapshot.docs.map(doc => doc.data());
+                    guests = guestSnapshot.docs.map(doc => doc.data()) || [];
                     
                     if (guests.length === 0) {
                         console.warn("No guests found in Firestore.");
                     }
                 } catch (e) {
                     console.error("Error loading data from Firestore:", e);
-                    info = null; // Gán null nếu lỗi
-                    guests = [];
                 }
-            } else {
-                console.error("Firebase setup failed. Cannot load data.");
+            }
+
+            // Fallback sang dữ liệu JSON nội bộ nếu Firestore không khả dụng hoặc thiếu dữ liệu
+            try {
+                if (!info) {
+                    const infoRes = await fetch(INFO_URL, { cache: 'no-store' });
+                    if (infoRes.ok) {
+                        info = await infoRes.json();
+                        console.log("Event info loaded from local JSON:", INFO_URL);
+                    } else {
+                        console.error("Failed to fetch local info.json", infoRes.status);
+                    }
+                }
+                if (!guests || guests.length === 0) {
+                    const guestsRes = await fetch(GUESTS_URL, { cache: 'no-store' });
+                    if (guestsRes.ok) {
+                        const guestsJson = await guestsRes.json();
+                        guests = Array.isArray(guestsJson?.guests) ? guestsJson.guests : (Array.isArray(guestsJson) ? guestsJson : []);
+                        console.log("Guests loaded from local JSON:", GUESTS_URL);
+                    } else {
+                        console.error("Failed to fetch local khach.json", guestsRes.status);
+                    }
+                }
+            } catch (e) {
+                console.error("Error loading local JSON data:", e);
             }
 
             // Thêm trường encoded name cho routing
-            guests = guests.map(g => ({...g, nameEncoded: encodeURIComponent(g.name)}));
+            guests = (guests || []).map(g => ({...g, nameEncoded: encodeURIComponent(g.name)}));
             
             return { info, guests };
         }
@@ -259,7 +282,7 @@
                         <!-- Bản đồ/ảnh hội trường (map.png) -->
                         <div class="mt-auto pt-4">
                             <h3 class="text-center text-sm font-black tracking-widest text-navy uppercase mb-2">Ảnh Dẫn Đường</h3>
-                            <img src="/image/graduation/map.png" alt="Ảnh dẫn đến hội trường" onerror="this.onerror=null;this.src='${ASSETS.MAP_IMAGE}';" class="w-full rounded-lg shadow-md border border-gray-200">
+                            <img src="${ASSETS.MAP_IMAGE}" alt="Ảnh dẫn đến hội trường" onerror="this.onerror=null;this.src='${ASSETS.MAP_IMAGE}';" class="w-full rounded-lg shadow-md border border-gray-200">
                         </div>
                         
                         <!-- Kính mời cuối -->
