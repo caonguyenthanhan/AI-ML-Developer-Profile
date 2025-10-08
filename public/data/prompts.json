@@ -1202,5 +1202,33 @@
         "prompt": "from my photo create a pictures: An ultra-realistic, close-up portrait of the man from the uploaded photo, completely transformed into a majestic ancient Egyptian Pharaoh. He wears the royal Nemes headdress, intricately striped in luminous gold and deep lapis lazuli blue, topped with the Uraeus cobra and vulture head. His chest is adorned with a colossal gold and turquoise broad collar (usekh). Glowing golden Egyptian hieroglyphs are mysteriously etched on his cheeks and forehead, radiating a soft, supernatural light. The background is a detailed relief carving of Egyptian hieroglyphs in warm, dark gold tones. The lighting is dramatic and cinematic, with soft sidelights highlighting the texture of the gold and the deep colors of the headdress, giving the image a divine, awe-inspiring, and hyper-realistic 8K photorealistic quality. Don't change the facial det.",
         "imagePath": "/image/genai/669667ee-17f8-49e0-b4f0-7b0d2f71d225.png",
         "category": "Divine & Spiritual"
+    },
+    {
+        "id": 173,
+        "title": "Chân Dung Kép Siêu Thực Giữa Núi Rừng",
+        "prompt": "from my photo create a pictures: A hyper-realistic cinematic portrait, full-body shot, of the man from the uploaded image standing on a rugged, dark grey rocky outcrop. He wears a black hooded zip-up jacket and black cargo pants. His arms are crossed over his chest, his torso is slightly tilted left, and his head is turned up and to the right, gazing dramatically towards the hazy sky. The backdrop is a vast panorama of rolling mountains and hills, densely covered with dark green foliage, softened by heavy atmospheric perspective and fog, giving a layered, dreamy, and melancholic mood. The sky is bright, almost white/pale blue, suggesting strong daylight. Key visual element: Superimposed in the upper left quadrant, integrate a large, translucent digital composite/double-exposure of the same man's close-up profile and upper chest, also looking up, with its edges subtly fading into the hazy background. Cinematic lighting, sharp focus on the man, shallow depth of field, Don't change the facial det, 8K resolution, ultra-detailed textures.",
+        "imagePath": "/image/genai/25c81ada-b9eb-43e2-bf34-7651cc320354.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 174,
+        "title": "Bước Đi Trên Gương Nước Giữa Biển Mây Thần Tiên",
+        "prompt": "from my photo create a pictures: A surreal hyper-realistic masterpiece digital artwork of a calm young man, dressed entirely in pristine white (plain white t-shirt and white pants), walking barefoot slowly and serenely across a perfectly still, mirror-like water surface. Below him, his reflection is flawless, mirroring the bright blue sky and soft, ethereal white clouds above, creating a sense of infinite symmetry. Gentle, tiny ripples radiate outwards precisely from where his bare feet touch the water, adding ultra-realism. The lighting is soft and ambient, casting a serene glow. The scene is full-body, cinematic lighting, sharp focus, 8K resolution, conveying profound peace, balance, and an otherworldly, ethereal atmosphere. keeping the exact proportions of the facial features.",
+        "imagePath": "/image/genai/d657d5f1-d0be-4a6f-9623-579f1623c626.png",
+        "category": "Ethereal Suspension"
+    },
+    {
+        "id": 175,
+        "title": "Liêu Trai: Chân Dung Lãng Mạn Ma Mị Trong Rừng Trúc",
+        "prompt": "from my photo create a pictures: A hyper-realistic cinematic Liêu Trai portrait of a handsome man (face must remain identical to the reference photo). He possesses a bold, determined expression and a slender physique. He stands firmly amidst a dense bamboo forest in heavy rain, with mist and steam rising dramatically from the ground. He is dressed in an intricate, multi-layered Hanfu-style white silk brocade court robe with elaborate silver embroidery and a platinum waist belt. His black hair is adorned with a delicate gold crown, with wet strands clinging to his face. He holds a closed fan. His eyes reflect deep wisdom and a distant, solemn resolve. Composition: A pale woman, shrouded in a sheer white Ao Dai with long, wet hair obscuring her face, embraces the man from behind, resting her head against his back. Her feet are deliberately obscured by the dense ground mist. Lighting: Soft, diffused natural light (volumetric light) powerfully highlights the intricate silver embroidery on the robe and the wet strands of the woman's hair and dress. Technical: Shot with an 85mm prime lens, ultra-shallow depth of field (bokeh), 8K ultra-detailed resolution. Don't change the facial det (keeping the exact proportions of the facial features). Mood: Eerie, solemn, romantic, cinematic.",
+        "imagePath": "/image/genai/e5ed8b91-1913-4973-a484-dc70edb48c39.png",
+        "category": "Divine & Spiritual"
+    },
+    {
+        "id": 176,
+        "title": "Vẻ Đẹp Quyến Rũ Áo Yếm Trong Sảnh Đường Châu Âu",
+        "prompt": "from my photo create a pictures: An ultra-realistic, 8K high-resolution full-body cinematic fashion portrait of a slim, elegant young Asian woman, standing gracefully indoors at a luxurious European-style staircase hall. She is dressed in a deep wine-red silk Vietnamese yếm (traditional halter top) with a soft satin sheen, complemented by a matching flowing silk outer robe draped elegantly off her shoulders. She stands tall and poised, one hand gently holding a black folding fan in front of her waist, the other lightly raised near her chin. She wears a long pearl necklace hanging down to her waist. Her hair is styled in a neat, romantic updo with soft strands framing her face, and her makeup is a soft pink Korean style (natural foundation, peachy blush, glossy lips). The background features a luxurious interior with a marble floor, ornate black wrought-iron railings, and soft diffused daylight. The lighting creates warm highlights and ultra-detailed textures. Don't change the facial det (keeping the exact proportions of the facial features). Mood: elegant, sophisticated, and serene.",
+        "imagePath": "/image/genai/b2920136-d1e0-48e6-a3d2-206eafdf1dfb.png",
+        "category": "Portrait Photography"
     }
 ]
