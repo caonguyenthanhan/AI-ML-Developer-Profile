@@ -290,10 +290,13 @@
                             </h1>
 
                             <!-- Vòng ảnh người tốt nghiệp -->
-                            <div class="my-8 flex justify-center">
+                            <div class="my-8 flex items-center justify-center gap-6">
                                 <div class="relative inline-block w-56 h-56 md:w-64 md:h-64">
                                     <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
-                                    <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" onerror="this.onerror=null;this.src='${ASSETS.GRADUATE_IMAGE}';" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+                                    <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+                                </div>
+                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64">
+                                    <img src="${guestImg}" alt="Ảnh Khách Mời" onerror="this.onerror=null;this.src='${guest.gender && guest.gender.toLowerCase() === 'female' ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT}';" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                                 </div>
                             </div>
 
@@ -330,7 +333,7 @@
 
                     <!-- Cột Phải: Chi tiết Sự kiện -->
                     <div class="flex-1 p-8 md:p-12 invitation-frame gold-frame-bg bg-white/60 backdrop-blur-sm text-navy flex flex-col relative">
-                        <img src="/image/graduation/logotruong.jpg" alt="Logo Trường" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 md:w-28 opacity-90 z-[1] pointer-events-none">
+                        <img src="/image/graduation/logotruong.png" alt="Logo Trường" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 md:w-28 opacity-90 z-[1] pointer-events-none">
                         <div class="absolute inset-0 bg-white/40 backdrop-blur-sm z-0"></div>
                         <div class="relative z-10 flex-1 flex flex-col">
                             <div class="text-center">
@@ -440,7 +443,7 @@
                     <!-- Cột Phải: Chi tiết Sự kiện và Lời nhắn -->
                     <div class="flex-1 p-8 md:p-12 ${frameClass} flex flex-col relative">
                         <div class="absolute inset-0 bg-white/40 backdrop-blur-sm z-[2]"></div>
-                        <img src="/image/graduation/logotruong.jpg" alt="Logo Trường" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 md:w-28 opacity-90 z-[1] pointer-events-none">
+                        <img src="/image/graduation/logotruong.png" alt="Logo Trường" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 md:w-28 opacity-90 z-[1] pointer-events-none">
                         <div class="relative z-[10] flex-1 flex flex-col">
                             <div class="text-center">
                             <p class="text-sm font-semibold tracking-widest text-gray-500">${info.university || 'Tên trường'}</p>
