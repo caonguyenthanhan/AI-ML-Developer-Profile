@@ -391,12 +391,35 @@
             const guestTitle = guest.title;
             const inviteMsg = guest.message && guest.message.trim() !== '' ? guest.message : DEFAULT_INVITE_MESSAGE;
             
-            // Định nghĩa guestImg ở đây (tương tự như logic đã có)
-            const guestImg = guest.image && guest.image.trim() !== '' 
-                ? `/image/graduation/${guest.image}` 
-                : (guest.gender && guest.gender.toLowerCase() === 'female' 
+            let guestImg = '';
+            if (guest.image && guest.image.trim() !== '') {
+                const imagePath = guest.image.startsWith('/') ? guest.image : `/image/graduation/${guest.image}`;
+                if (imagePath.includes("public/image/graduation/")) {
+                    guestImg = imagePath;
+                } else {
+                    guestImg = `/image/graduation/${guest.image}`;
+                }
+                if (guest.image.includes('image/graduation/')) {
+                    guestImg = guest.image.startsWith('/') ? guest.image : `/${guest.image}`;
+                } else {
+                    guestImg = `/image/graduation/${guest.image}`;
+                }
+            } else {
+                guestImg = guest.gender && guest.gender.toLowerCase() === 'female' 
                     ? ASSETS.WOMEN_DEFAULT 
-                    : ASSETS.MAN_DEFAULT);
+                    : ASSETS.MAN_DEFAULT;
+            }
+
+            const guestImagePathInJson = guest.image && guest.image.trim() !== '' ? guest.image.trim() : null;
+            if (guestImagePathInJson && guestImagePathInJson.includes('/')) {
+                guestImg = guestImagePathInJson.startsWith('/') ? guestImagePathInJson : `/${guestImagePathInJson}`;
+            } else if (guestImagePathInJson) {
+                guestImg = `/image/graduation/${guestImagePathInJson}`;
+            } else {
+                guestImg = guest.gender && guest.gender.toLowerCase() === 'female' 
+                    ? ASSETS.WOMEN_DEFAULT 
+                    : ASSETS.MAN_DEFAULT;
+            }
             
             const mainCardClass = guest.special 
                 ? 'special-card text-white' 
