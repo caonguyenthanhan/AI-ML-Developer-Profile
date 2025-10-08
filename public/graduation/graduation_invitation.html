@@ -391,12 +391,17 @@
             const guestTitle = guest.title;
             const inviteMsg = guest.message && guest.message.trim() !== '' ? guest.message : DEFAULT_INVITE_MESSAGE;
             
-            // Định nghĩa guestImg ở đây (tương tự như logic đã có)
-            const guestImg = guest.image && guest.image.trim() !== '' 
-                ? `/image/graduation/${guest.image}` 
-                : (guest.gender && guest.gender.toLowerCase() === 'female' 
+            // Định nghĩa guestImg: GHÉP ĐƯỜNG DẪN ĐƠN GIẢN
+            let guestImg;
+            if (guest.image && guest.image.trim() !== '') {
+                // Ghép tiền tố mặc định và tên file/đường dẫn tương đối từ JSON
+                // Ví dụ: guest.image = "khach/file.jpg" -> guestImg = "/image/graduation/khach/file.jpg"
+                guestImg = `/image/graduation/${guest.image}`;
+            } else {
+                 guestImg = guest.gender && guest.gender.toLowerCase() === 'female' 
                     ? ASSETS.WOMEN_DEFAULT 
-                    : ASSETS.MAN_DEFAULT);
+                    : ASSETS.MAN_DEFAULT;
+            }
             
             const mainCardClass = guest.special 
                 ? 'special-card text-white' 
@@ -477,6 +482,7 @@
                         </div>
 
                         <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg border border-gray-200 mt-auto">
+                            <!-- Vòng ảnh khách mời trong cột phải KHÔNG có vòng nguyệt quế theo thiết kế ban đầu -->
                             <img src="${guestImg}" alt="Ảnh Khách Mời" onerror="this.onerror=null;this.src='${guest.gender && guest.gender.toLowerCase() === 'female' ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT}';" class="w-16 h-16 rounded-full object-cover mb-3 border-2 border-navy">
                             <p class="text-lg font-serif italic text-gray-700 text-center mb-4">
                                 "${inviteMsg}"
