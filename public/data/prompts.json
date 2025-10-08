@@ -1230,5 +1230,12 @@
         "prompt": "from my photo create a pictures: An ultra-realistic, 8K high-resolution full-body cinematic fashion portrait of a slim, elegant young Asian woman, standing gracefully indoors at a luxurious European-style staircase hall. She is dressed in a deep wine-red silk Vietnamese yếm (traditional halter top) with a soft satin sheen, complemented by a matching flowing silk outer robe draped elegantly off her shoulders. She stands tall and poised, one hand gently holding a black folding fan in front of her waist, the other lightly raised near her chin. She wears a long pearl necklace hanging down to her waist. Her hair is styled in a neat, romantic updo with soft strands framing her face, and her makeup is a soft pink Korean style (natural foundation, peachy blush, glossy lips). The background features a luxurious interior with a marble floor, ornate black wrought-iron railings, and soft diffused daylight. The lighting creates warm highlights and ultra-detailed textures. Don't change the facial det (keeping the exact proportions of the facial features). Mood: elegant, sophisticated, and serene.",
         "imagePath": "/image/genai/b2920136-d1e0-48e6-a3d2-206eafdf1dfb.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 177,
+        "title": "Chân Dung Cưới Studio Lãng Mạn (Ôm Từ Phía Sau)",
+        "prompt": "from my photo create a pictures: A hyper-realistic studio wedding portrait of the couple (using their exact real faces, hairstyles, and skin tones from the uploaded photo). The groom is wearing a sharp black tuxedo with a black bow tie, gently embracing the bride from behind with a warm smile. The bride is dressed in a voluminous white ruffled ball gown with a strapless corset bodice and delicate veil, holding a lush bouquet of white roses and greenery. They both lean slightly forward, radiating closeness and happiness. The background features elegant white studio walls with subtle floral decorations, creating a soft, luxurious, and romantic atmosphere. Don't change the facial det.",
+        "imagePath": "/image/genai/3ea32f70-2dd3-438f-ae20-ff73ff23be40.png",
+        "category": "Wedding Day"
     }
 ]
