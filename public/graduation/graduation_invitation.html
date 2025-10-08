@@ -243,30 +243,6 @@
 
             const defaultGuestName = info.graduateName;
 
-                    // *************** LOGIC MỚI BẮT ĐẦU TỪ ĐÂY ***************
-            const defaultGuest = guests.length > 0 ? guests[0] : null;
-
-            let defaultGuestImgHtml = '';
-
-            if (defaultGuest) {
-                // Định nghĩa guestImg theo logic giống như trong renderGuestHtml
-                const guestImg = defaultGuest.image && defaultGuest.image.trim() !== '' 
-                    ? `/image/graduation/${defaultGuest.image}` 
-                    : (defaultGuest.gender && defaultGuest.gender.toLowerCase() === 'female' 
-                        ? ASSETS.WOMEN_DEFAULT 
-                        : ASSETS.MAN_DEFAULT);
-
-                // HTML để hiển thị ảnh khách mời bên cạnh ảnh người tốt nghiệp
-                defaultGuestImgHtml = `
-                    <div class="relative inline-block w-56 h-56 md:w-64 md:h-64 hidden md:block">
-                        <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
-                        <img src="${guestImg}" alt="Ảnh Khách Mời" onerror="this.onerror=null;this.src='${defaultGuest.gender && defaultGuest.gender.toLowerCase() === 'female' ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT}';" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
-                    </div>
-                `;
-            }
-            // *************** LOGIC MỚI KẾT THÚC ***************
-        
-
             // Vòng lặp để hiển thị tối đa 5 khách mời để gợi ý
             const guestLinks = guests.slice(0, 5).map(g => {
                 return `<a href="${APP_ROOT}/${g.nameEncoded}" class="block text-base text-gold hover:underline font-semibold">${g.title} ${g.name}</a>`;
@@ -313,7 +289,7 @@
                                 Tham Dự <br> LỄ TỐT NGHIỆP
                             </h1>
 
-                            <!-- Vòng ảnh người tốt nghiệp -->
+                            <!-- Vòng ảnh người tốt nghiệp (CHỈ CÓ 1 ẢNH) -->
                             <div class="my-8 flex justify-center">
                                 <div class="relative inline-block w-56 h-56 md:w-64 md:h-64">
                                     <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
@@ -415,6 +391,7 @@
             const guestTitle = guest.title;
             const inviteMsg = guest.message && guest.message.trim() !== '' ? guest.message : DEFAULT_INVITE_MESSAGE;
             
+            // Định nghĩa guestImg ở đây (tương tự như logic đã có)
             const guestImg = guest.image && guest.image.trim() !== '' 
                 ? `/image/graduation/${guest.image}` 
                 : (guest.gender && guest.gender.toLowerCase() === 'female' 
@@ -445,12 +422,19 @@
                                 Tham Dự <br> LỄ TỐT NGHIỆP
                             </h1>
 
+                            <!-- Vòng ảnh người tốt nghiệp VÀ Khách Mời Cụ Thể (TRÊN TRANG CÁ NHÂN) -->
                             <div class="my-8 flex items-center justify-center gap-6">
+                                <!-- Ảnh người tốt nghiệp -->
                                 <div class="relative inline-block w-56 h-56 md:w-64 md:h-64">
                                     <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
                                     <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                                 </div>
-                                ${defaultGuestImgHtml}
+                                
+                                <!-- Khung ảnh Khách Mời Cụ Thể (Guest) -->
+                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64 hidden md:block">
+                                    <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
+                                    <img src="${guestImg}" alt="Ảnh Khách Mời" onerror="this.onerror=null;this.src='${guest.gender && guest.gender.toLowerCase() === 'female' ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT}';" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+                                </div>
                             </div>
 
                             <p class="text-base text-gold font-semibold tracking-wider">TRÂN TRỌNG KÍNH MỜI</p>
