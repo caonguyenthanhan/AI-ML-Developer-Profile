@@ -396,8 +396,8 @@ def upload_to_github():
         
         # Thực hiện git add, commit và push
         commands = [
-            ['git', 'add', PROMPTS_FILE, CATEGORIES_FILE, 'public/image/genai/'],
-            ['git', 'commit', '-m', 'Update prompts, categories data and genai images'],
+            ['git', 'add', PROMPTS_FILE, CATEGORIES_FILE, 'public/image/genai/', 'public/video/genai/'],
+            ['git', 'commit', '-m', 'Update prompts, categories data and genai images/videos'],
             ['git', 'push', 'origin', 'main']
         ]
         
