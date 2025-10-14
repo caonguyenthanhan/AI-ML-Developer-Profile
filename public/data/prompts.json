@@ -1265,5 +1265,19 @@
         "prompt": "from my photo create a pictures: A realistic 4K portrait of a person with my identical face, working with Leonardo da Vinci at his wooden desk covered in sketches of flying machines and anatomy. I’m drawing a mechanical design while Da Vinci paints beside me. The scene is lit by warm golden candlelight, creating a natural soft glow on the parchment. The image is captured from an artistic low-angle shot, featuring painterly realism with detailed fabric texture, creating a mood of timeless collaboration between art and science. Don't change the facial det.",
         "imagePath": "/image/genai/bea66786-1257-4c66-a21d-baede37c08b4.png",
         "category": "Historical Realism"
+    },
+    {
+        "id": 182,
+        "title": "Hiệu ứng Tinh Thần Lỏng Neon",
+        "prompt": "from my photo, create a photo:\r\nCreate a stunning, surreal 3D abstract sculpture portrait of a human head, face upturned to the sky, shattering to reveal the internal structure beneath the dark exterior. The top of the head is encased in a thick, viscous liquid in neon-lime green and electric yellow, which appears to be slowly dripping down the face, evoking the psychological concept of Color Psychology. The entire bust is rendered in black, matte, shattered stone, which contrasts sharply with the glossy, translucent, highly viscous liquid. The liquid should have a subsurface scattering effect and subtle glowing neon edges. Use dramatic volumetric lighting to create deep shadows and bright highlights on the liquid, making the artwork look like a high-end digital render displayed in a dark, minimalist art gallery. The footage should be in a 16:9 aspect ratio, ultra-high definition, cinematic, and psychologically surreal. Add subtle glitch art elements to the background or textures to add to the cyberpunk/digital art feel.",
+        "imagePath": "/image/genai/f4ec1a81-3817-4190-b1e5-e3ea44611a91.png",
+        "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 183,
+        "title": "Sự Khai Sáng Neon: Tượng Trừu Tượng Ngước Lên",
+        "prompt": "liên hệ admin",
+        "imagePath": "/image/genai/4726f66f-849f-44cc-93d0-2650e989f463.png",
+        "category": "Portrait Photography"
     }
 ]
