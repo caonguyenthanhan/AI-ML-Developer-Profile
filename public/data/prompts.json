@@ -1279,5 +1279,19 @@
         "prompt": "liên hệ admin",
         "imagePath": "/image/genai/4726f66f-849f-44cc-93d0-2650e989f463.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 184,
+        "title": "Chân Dung Võ Sĩ: Sự Tập Trung Tuyệt Đối Trong Ánh Sáng Cinema",
+        "prompt": "from my photo create a pictures:\r\n\r\nA dramatic, ultra-realistic close-up action portrait of a powerful male fighter in a dimly lit, raw locker room setting. The subject is shirtless, intensely focused on tightening his boxing gloves. His chiseled abs and V-cut are sharply defined and glistening with sweat under the light. The camera angle is medium close-up, capturing the tension in his hands and face. The background features a large, slightly dirty mirror that reflects his determined, gritty expression and posture, emphasizing his focus and psychological readiness.\r\n\r\nLighting: Employ a high-contrast setup with a single overhead warm spotlight creating deep shadows and highlighting the contours of his muscles. A subtle cool blue or cyan rim light should trace the edges of his body, separating him from the dark background and adding cinematic depth.\r\n\r\nTechnical Details: Shot with a Canon EOS R3 and a 70–200 mm f/2.8 L IS USM lens, ensuring a tight frame, deep black levels, and a creamy shallow depth of field (bokeh). Apply a stylized cinematic color grading with rich, moody tones. Do not change the facial det.",
+        "imagePath": "/image/genai/4178561a-2335-4230-bcd8-3e97ae4c8cfa.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 185,
+        "title": "Khoảnh Khắc Vô Trọng Lượng: Chân Dung Ethereal Dưới Ánh Sáng Thần Thánh",
+        "prompt": "from my photo create a pictures:\r\n\r\nAn ultra-hyperrealistic photograph with a dreamlike and magical aesthetic capturing a subject partially submerged underwater. The subject's head is tilted back, gazing intensely upwards toward the illuminated water surface, conveying serenity and weightlessness. The composition is a close-up to medium shot of the upper body, taken from a low-angle perspective (slightly below water level).\r\n\r\nEnvironment & Flora: The scene is rich with vibrant aquatic plants and luminous orange and yellow blossoms creating foreground and background bokeh elements to enhance visual depth. Numerous effervescent bubbles ascend around the subject, sharply catching the light. The water surface is clearly visible across the top portion of the frame.\r\n\r\nLighting & Color: The lighting is dramatic and ethereal, defined by strong sunlight filtering directly from above. This creates intricate and shimmering golden caustic light patterns that dance across the subject's skin and hair, providing warm highlights. The dominant color palette consists of rich deep teal and aqua blues of the water, contrasted by the luminous golden-orange hues from the light refractions and flora, contributing to an overall radiant, glowing quality.\r\n\r\nTechnical Details: High fidelity detail is essential on the water refraction, the texture of light on skin, and the effervescent bubbles. Ensure subtle bokeh effects are present in both the foreground and background from dispersed light and elements, enhancing the depth of field. The subject wears no specific clothing or accessories, emphasizing natural immersion. Do not change the facial det.",
+        "imagePath": "/image/genai/7c6e7864-811b-4731-88f1-6b64fec95c74.png",
+        "category": "Ethereal Suspension"
     }
 ]

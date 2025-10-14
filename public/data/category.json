@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 82,
+        "count": 83,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -67,7 +67,7 @@
         "id": 9,
         "name": "Ethereal Suspension",
         "description": "Vẻ Đẹp Thần Tiên Lơ Lửng",
-        "count": 5,
+        "count": 6,
         "color": "#DCD0FF",
         "icon": "sparkles"
     },
