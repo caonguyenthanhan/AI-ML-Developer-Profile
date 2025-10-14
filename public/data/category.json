@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 80,
+        "count": 81,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -126,5 +126,21 @@
         "count": 1,
         "color": "#001eff",
         "icon": "🎈"
+    },
+    {
+        "id": 17,
+        "name": "Chibi & Anime Art",
+        "description": "Phong cách nghệ thuật Chibi và Anime",
+        "count": 1,
+        "color": "#A78BFA",
+        "icon": "smile"
+    },
+    {
+        "id": 18,
+        "name": "Historical Realism",
+        "description": "Chủ nghĩa Hiện thực Lịch sử ",
+        "count": 2,
+        "color": "#8D6E63",
+        "icon": "book-open"
     }
 ]

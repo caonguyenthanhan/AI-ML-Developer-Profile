@@ -1237,5 +1237,33 @@
         "prompt": "from my photo create a pictures: A hyper-realistic studio wedding portrait of the couple (using their exact real faces, hairstyles, and skin tones from the uploaded photo). The groom is wearing a sharp black tuxedo with a black bow tie, gently embracing the bride from behind with a warm smile. The bride is dressed in a voluminous white ruffled ball gown with a strapless corset bodice and delicate veil, holding a lush bouquet of white roses and greenery. They both lean slightly forward, radiating closeness and happiness. The background features elegant white studio walls with subtle floral decorations, creating a soft, luxurious, and romantic atmosphere. Don't change the facial det.",
         "imagePath": "/image/genai/3ea32f70-2dd3-438f-ae20-ff73ff23be40.png",
         "category": "Wedding Day"
+    },
+    {
+        "id": 178,
+        "title": "Giấc Ngủ Chibi Sảng Khoái",
+        "prompt": "from my photo create a pictures: A cute chibi character is blissfully sleeping in a cozy, sunlit bedroom after many days of hard work. The character is curled up under a fluffy white blanket with a joyful and utterly relaxed expression on their face. Sunlight streams through the window, creating a warm and happy atmosphere. On the floor, a laptop and some books are casually left, symbolizing the end of a busy period. The overall style is a vibrant and heartwarming digital painting, with soft lighting and an adorable chibi aesthetic. Don't change the facial det.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+        "imagePath": "/image/genai/67150b0a-a817-42ac-9495-fcbe30becaa9.png",
+        "category": "Chibi & Anime Art"
+    },
+    {
+        "id": 179,
+        "title": "Hóa Thân Trên Ghế Sofa Trắng",
+        "prompt": "from my photo create photo: Recreate the iconic scene from Makima's legendary meme, but replace the female character in the middle with the subject from my photo. The subject should be sitting cross-legged in the middle of a white couch, looking straight at the camera with a smile. Behind them, five African-American men with typical black skin are standing, looking down at the seated subject. All men are wearing uniforms with white v-neck t-shirts and white shorts. The setting is a bright, modern living room. The final image should be realistic, accurately capturing the layout and atmosphere of the original photo. Make sure the facial features, hair, and likeness from my photo are accurately transferred to the character on the couch. Do not change facial details.",
+        "imagePath": "/image/genai/de21b6ae-b07c-4c89-8ee8-69cbf11a448f.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 180,
+        "title": "Hội ngộ Lịch sử: Thảo luận Thuyết tương đối cùng Einstein",
+        "prompt": "from my photo create a pictures: An ultra-realistic cinematic photo showing a person with my identical face and natural body shape working side-by-side with Albert Einstein at a large chalkboard full of physics equations. Both are actively discussing relativity — I am holding a notebook, while Einstein is writing complex formulas on the board. The lighting is warm sunlight streaming through old lab windows, with slight chalk dust floating in the air, creating an intense, academic, and focused mood. The image is captured as if with a 50mm DSLR lens, featuring a shallow depth of field with sharp focus on both faces. The quality must be ultra-detailed with realistic skin tones, a vintage texture, and HDR clarity. Don't change the facial det.",
+        "imagePath": "/image/genai/a0dfaefa-bf6a-47b8-ae05-58855e275d5e.png",
+        "category": "Historical Realism"
+    },
+    {
+        "id": 181,
+        "title": "Hội họa và Cơ khí: Bức chân dung cùng Leonardo da Vinci",
+        "prompt": "from my photo create a pictures: A realistic 4K portrait of a person with my identical face, working with Leonardo da Vinci at his wooden desk covered in sketches of flying machines and anatomy. I’m drawing a mechanical design while Da Vinci paints beside me. The scene is lit by warm golden candlelight, creating a natural soft glow on the parchment. The image is captured from an artistic low-angle shot, featuring painterly realism with detailed fabric texture, creating a mood of timeless collaboration between art and science. Don't change the facial det.",
+        "imagePath": "/image/genai/bea66786-1257-4c66-a21d-baede37c08b4.png",
+        "category": "Historical Realism"
     }
 ]
