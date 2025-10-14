@@ -1293,5 +1293,68 @@
         "prompt": "from my photo create a pictures:\r\n\r\nAn ultra-hyperrealistic photograph with a dreamlike and magical aesthetic capturing a subject partially submerged underwater. The subject's head is tilted back, gazing intensely upwards toward the illuminated water surface, conveying serenity and weightlessness. The composition is a close-up to medium shot of the upper body, taken from a low-angle perspective (slightly below water level).\r\n\r\nEnvironment & Flora: The scene is rich with vibrant aquatic plants and luminous orange and yellow blossoms creating foreground and background bokeh elements to enhance visual depth. Numerous effervescent bubbles ascend around the subject, sharply catching the light. The water surface is clearly visible across the top portion of the frame.\r\n\r\nLighting & Color: The lighting is dramatic and ethereal, defined by strong sunlight filtering directly from above. This creates intricate and shimmering golden caustic light patterns that dance across the subject's skin and hair, providing warm highlights. The dominant color palette consists of rich deep teal and aqua blues of the water, contrasted by the luminous golden-orange hues from the light refractions and flora, contributing to an overall radiant, glowing quality.\r\n\r\nTechnical Details: High fidelity detail is essential on the water refraction, the texture of light on skin, and the effervescent bubbles. Ensure subtle bokeh effects are present in both the foreground and background from dispersed light and elements, enhancing the depth of field. The subject wears no specific clothing or accessories, emphasizing natural immersion. Do not change the facial det.",
         "imagePath": "/image/genai/7c6e7864-811b-4731-88f1-6b64fec95c74.png",
         "category": "Ethereal Suspension"
+    },
+    {
+        "id": 186,
+        "title": "Chân Dung Siêu Thực Giữa Vườn Hoa Phát Sáng",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic portrait of the subject (from the photo) standing in a surreal field filled with oversized, bioluminescent flowers that emit a soft, ethereal glow. The subject is wearing a stylish, minimalist outfit in a neutral color (like cream white or soft gray) that complements the magical environment. The lighting is a mix of a soft golden hour sunset and the gentle light emanating from the flora, creating a dreamy and enchanting atmosphere. Apply soft rim lighting to outline the subject's form. Capture a medium full-body shot, with the subject gently interacting with the flowers—perhaps touching a glowing petal or looking up at the scene with a sense of wonder. The image should have a shallow depth of field, resulting in a beautifully blurred background that emphasizes the subject. Aim for ultra-detailed, 8K photorealistic quality with a touch of film grain for a cinematic feel. Don't change the facial det.",
+        "imagePath": "/image/genai/958bf838-f864-4e55-8ff1-1a522cdeaab5.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 187,
+        "title": "Chân Dung Mùa Đông Dưới Bầu Trời Xanh",
+        "prompt": "rom my photo create a pictures: A hyper-realistic, low-angle portrait of the subject (from the photo). The subject is wrapped in a large, plush, soft white fur scarf and a matching winter coat, gazing upward with a serene and hopeful expression. The background is a vast, clear, and vibrant blue winter sky. The lighting should be bright and natural, beautifully illuminating the subject's face. The overall mood is peaceful and clean. The style should be a high-quality, photorealistic photograph. Don't change the facial det.",
+        "imagePath": "/image/genai/12f22874-30a7-4993-b90e-e9a3ee77f476.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 188,
+        "title": "Chân Dung Studio Ấm Áp Trên Nền Đỏ",
+        "prompt": "from my photo create a pictures: A hyper-realistic, close-up studio portrait of the subject (from the photo). The subject is wearing a cozy, multi-colored patterned knit sweater (with brown, white, blue, and yellow tones in a Nordic or Fair Isle style) over a clean white turtleneck. The background is a solid, vibrant, saturated red, providing a bold contrast. The lighting is soft and even, typical of a professional studio shoot, beautifully illuminating the subject's face. The subject gazes directly at the camera with a calm and engaging expression. The style is a high-resolution, photorealistic photograph. Don't change the facial det.",
+        "imagePath": "/image/genai/557e2171-bd5a-4653-a7fe-8dca5e34223d.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 189,
+        "title": "Chân Dung Anh Hùng Vũ Trụ",
+        "prompt": "from my photo create a pictures: ref_face.jpg for facial identity; ref_style.jpg for pose, armor, lighting, and background.\r\nCreate a hyperrealistic 8K cinematic portrait: replace the character’s face in ref_style.jpg with the user’s face from ref_face.jpg, keeping the same armor, glowing gauntlet, powerful stance, and apocalyptic battlefield background.\r\nFace must match user identity 99.999% — same eyes, nose, mouth, and expression. Blend naturally with the armored head shape, realistic purple-toned skin, fine pores, and detailed texture. Cinematic lighting: warm golden rim light, cool shadows, glowing stones with realistic reflections. Sharp focus on face and gauntlet, slightly blurred ruins and smoke behind. Heroic low-angle view, confident pose, strong presence, IMAX-style tone, subtle film grain, atmospheric dust and sparks. Ultra-detailed, photorealistic, seamless, believable — not cartoonish or stylized. Looks like a cinematic movie photo of the user wearing cosmic armor.\r\nNegative prompt: cartoon, anime, illustration, low quality, blurry, deformed, wrong lighting, plastic skin, oversaturated, mismatched tone, visible seam, double face, cropped, watermark, text, logo, artifacts, unrealistic anatomy, doll-like texture.",
+        "imagePath": null,
+        "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 190,
+        "title": "Giai Điệu Trên Đồng Cỏ",
+        "prompt": "from my photo create a pictures:\r\nẢnh chân thực. Tông màu xanh lá cây, gió nhẹ nhàng thổi qua đám cỏ cao, sóng cỏ nhấp nhô như đại dương gió mạnh, ống kính tele cận cảnh, nhìn xuống từ góc nhìn, bầu không khí yên tĩnh và cô đơn. Ở giữa bức ảnh, một chàng trai châu Á mặc áo sơ mi trắng đang chơi đại dương cầm. Bầu không khí chữa lành, gió nhẹ nhàng, ánh nắng nhẹ nhàng, nhi-ếp ảnh phim, kết cấu hạt thô, phong cách bìa tạp chí, nhiếp ảnh đoạt giải thưởng, kết cấu điện ảnh, ánh sáng tạo không khí, siêu thực 8K. Không có hình mờ. Don't change the facial det.",
+        "imagePath": "/image/genai/d5b809b2-e57f-4304-a796-04439e554a0c.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 191,
+        "title": "Chân Dung Kịch Tính Với Những Bàn Tay",
+        "prompt": "from my photo create a pictures: A striking black and white portrait of the subject (from the photo), captured from a top-down perspective. The subject's face is central and in sharp focus, surrounded by multiple hands delicately framing the face and neck. The hands are positioned artfully, some touching the subject's hair, some resting gently on the cheeks and chin, creating a sense of intimacy and perhaps vulnerability or support. The lighting is dramatic, highlighting the contours of the face and the intricate details of the hands. The overall aesthetic is artistic and high-contrast, with deep blacks and bright whites, typical of fine art photography. The style is hyperrealistic and highly detailed, aiming for a professional studio shot with a strong emotional impact. Don't change the facial det.",
+        "imagePath": "/image/genai/36e3b18e-6e0d-4148-bd28-c52be4569762.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 192,
+        "title": "Chân Dung Nội Tâm Qua Gương Vỡ",
+        "prompt": "from my photo create a pictures: A hyper-realistic, artistic portrait of a person, peeking through a large, shattered piece of a mirror that they hold in their hand. Their face is fragmented by the cracks in the glass, with only one eye clearly visible, creating a surreal and introspective effect. The lighting is soft and cinematic, creating a dreamy and slightly melancholic mood. The background is completely blurred with beautiful bokeh, drawing all attention to the subject's eye and the broken mirror. The style is that of a high-fashion editorial photograph, with extreme detail, high resolution, and a poignant atmosphere. Don't change the facial det.",
+        "imagePath": "/image/genai/c09ad06e-bc88-43e2-b755-be9c823b0af3.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 193,
+        "title": "Khoảnh Khắc Vui Vẻ Của Cặp Đôi",
+        "prompt": "from my photo create a pictures: A hyper-realistic, dynamic photo of a happy Asian couple (the subjects from the photo) sitting together in a jacuzzi filled with red rose petals, in front of large windows that reveal a scenic mountain view. Both are smiling and joyfully splashing water towards the camera, creating a beautiful circular water splash frozen in mid-air. The woman is wearing a playful red bikini and matching red bunny ears, and the man is in red swim trunks. The scene is illuminated by bright, natural sunlight coming through the windows, creating a radiant, romantic, and energetic atmosphere. The style should be high-speed, ultra-detailed, cinematic photography. Don't change the facial det.",
+        "imagePath": "/image/genai/8d97b80c-614e-400b-b7a2-c6fd8657fbc1.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 194,
+        "title": "Giai Điệu Trên Đồng Cỏ",
+        "prompt": "Emotional cinematic motion of a man playing piano in a vast open field as the wind blows stronger through the tall grass. The melody of “Nuvole Bianche” by Ludovico Einaudi fills the air with a sense of freedom and melancholy. The camera slowly circles around, capturing the movement of the grass flowing like ocean waves. His hair and clothes flutter in the wind while sunlight breaks through soft clouds. The atmosphere feels powerful yet calm — a harmony between music, wind, and emotion.",
+        "imagePath": null,
+        "category": "Lifestyle & Nature"
     }
 ]

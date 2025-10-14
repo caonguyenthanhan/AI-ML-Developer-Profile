@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 83,
+        "count": 87,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 26,
+        "count": 30,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -99,7 +99,7 @@
         "id": 13,
         "name": "Fantasy Sci-Fi",
         "description": "Khoa học viễn tưởng giả tưởng",
-        "count": 3,
+        "count": 4,
         "color": "#8A2BE2",
         "icon": "🌌"
     },
