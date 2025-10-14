@@ -47,13 +47,19 @@
 
             <div class="current-image">
                 {% if prompt.imagePath %}
-                <p>Ảnh hiện tại:</p>
-                <img src="{{ url_for('static', filename='image/genai/' + prompt.imagePath.split('/')[-1]) }}" alt="Current Image">
+                    {% set file_extension = prompt.imagePath.split('.')[-1].lower() %}
+                    {% if file_extension in ['mp4', 'avi', 'mov', 'wmv', 'webm', 'mkv'] %}
+                        <p>Video hiện tại:</p>
+                        <video src="{{ prompt.imagePath }}" controls muted style="max-width: 200px; border-radius: 5px;"></video>
+                    {% else %}
+                        <p>Ảnh hiện tại:</p>
+                        <img src="{{ prompt.imagePath }}" alt="Current Image" style="max-width: 200px; border-radius: 5px;">
+                    {% endif %}
                 {% endif %}
             </div>
 
-            <label for="image">Chọn ảnh mới (dưới 1MB):</label>
-            <input type="file" id="image" name="image" accept="image/*">
+            <label for="image">Chọn ảnh hoặc video mới (dưới 100MB):</label>
+            <input type="file" id="image" name="image" accept="image/*,video/*">
 
             <button type="submit">Cập nhật</button>
         </form>

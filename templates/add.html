@@ -43,8 +43,8 @@
             </select>
             <p><small>Chưa có category? <a href="{{ url_for('manage_categories') }}">Thêm mới tại đây</a>.</small></p>
 
-            <label for="image">Ảnh (dưới 1MB):</label>
-            <input type="file" id="image" name="image" accept="image/*">
+            <label for="image">Ảnh hoặc Video (dưới 100MB):</label>
+            <input type="file" id="image" name="image" accept="image/*,video/*">
 
             <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
                 <input type="checkbox" id="is_public" name="is_public" checked>

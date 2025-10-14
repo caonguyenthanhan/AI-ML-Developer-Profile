@@ -14,8 +14,9 @@ from PIL import Image, ImageOps
 # Cấu hình ứng dụng
 app = Flask(__name__, static_folder='public', static_url_path='')
 app.config['UPLOAD_FOLDER'] = 'public/image/genai'
-app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB
+app.config['VIDEO_UPLOAD_FOLDER'] = 'public/video/genai'
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'avi', 'mov', 'wmv', 'webm', 'mkv'}
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100 MB để hỗ trợ video
 
 PROMPTS_FILE = 'public/data/prompts.json'
 CATEGORIES_FILE = 'public/data/category.json'
@@ -24,6 +25,16 @@ PROMPTS_VIP_FILE = 'private/prompts_vip.json'
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+def is_video_file(filename):
+    video_extensions = {'mp4', 'avi', 'mov', 'wmv', 'webm', 'mkv'}
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in video_extensions
+
+def is_image_file(filename):
+    image_extensions = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in image_extensions
 
 def load_data(filename):
     if not os.path.exists(filename) or os.path.getsize(filename) == 0:
@@ -159,18 +170,24 @@ def add_prompt():
         category = request.form['category']
         is_public = 'is_public' in request.form  # Checkbox được tick hay không
         
-        image_path = None
+        media_path = None
         if 'image' in request.files:
             file = request.files['image']
             if file and allowed_file(file.filename):
                 filename = secure_filename(f"{uuid.uuid4()}.{file.filename.rsplit('.', 1)[1].lower()}")
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(file_path)
                 
-                # Nén ảnh nếu cần thiết
-                compress_image(file_path)
-                
-                image_path = f"/image/genai/{filename}"
+                if is_video_file(file.filename):
+                    # Lưu video
+                    file_path = os.path.join(app.config['VIDEO_UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    media_path = f"/video/genai/{filename}"
+                elif is_image_file(file.filename):
+                    # Lưu ảnh
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    # Nén ảnh nếu cần thiết
+                    compress_image(file_path)
+                    media_path = f"/image/genai/{filename}"
 
         # Lấy ID mới từ cả hai file để đảm bảo không trùng
         prompts = load_data(PROMPTS_FILE)
@@ -183,7 +200,7 @@ def add_prompt():
             "id": new_id,
             "title": title,
             "prompt": prompt_text,
-            "imagePath": image_path,
+            "imagePath": media_path,
             "category": category
         }
         
@@ -201,7 +218,7 @@ def add_prompt():
                 "id": new_id,
                 "title": title,
                 "prompt": "liên hệ admin",
-                "imagePath": image_path,
+                "imagePath": media_path,
                 "category": category
             }
             prompts.append(public_prompt)
@@ -236,13 +253,19 @@ def edit_prompt(prompt_id):
                     os.remove(prompt_to_edit['imagePath'][1:])
                 
                 filename = secure_filename(f"{uuid.uuid4()}.{file.filename.rsplit('.', 1)[1].lower()}")
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(file_path)
                 
-                # Nén ảnh nếu cần thiết
-                compress_image(file_path)
-                
-                prompt_to_edit['imagePath'] = f"/image/genai/{filename}"
+                if is_video_file(file.filename):
+                    # Lưu video
+                    file_path = os.path.join(app.config['VIDEO_UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    prompt_to_edit['imagePath'] = f"/video/genai/{filename}"
+                elif is_image_file(file.filename):
+                    # Lưu ảnh
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    # Nén ảnh nếu cần thiết
+                    compress_image(file_path)
+                    prompt_to_edit['imagePath'] = f"/image/genai/{filename}"
 
         save_data(PROMPTS_FILE, prompts)
         # Cập nhật count cho categories
@@ -528,6 +551,8 @@ def serve_vip_prompts():
 if __name__ == '__main__':
     if not os.path.exists('public/image/genai'):
         os.makedirs('public/image/genai')
+    if not os.path.exists('public/video/genai'):
+        os.makedirs('public/video/genai')
     if not os.path.exists('private'):
         os.makedirs('private')
     if not os.path.exists(PROMPTS_FILE):
