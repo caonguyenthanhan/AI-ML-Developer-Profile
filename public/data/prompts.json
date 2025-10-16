@@ -1363,5 +1363,12 @@
         "prompt": "from my photo create a pictures: A close-up portrait of a charismatic middle-aged Vietnamese man with an off-white blazer and a white dress shirt, wearing glasses and having messy black hair. He looks directly at the camera with a joyful expression. A playful black and white tuxedo cat (more white than black) is perched on his shoulder, covering one of his eyes with its paw while sticking its tongue out and winking. The background is dark to highlight the subject. The image should have sharp studio lighting, high resolution, and photorealistic quality. Don't change the facial det.",
         "imagePath": "/image/genai/d0bfacf9-849f-401b-b81d-929b43adf8cf.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 196,
+        "title": "Chạm Trán Pennywise trong Hành lang Tối",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic horror-style portrait of a man in a dark, narrow corridor. The man, as the main subject, wears a dark quilted jacket over a white t-shirt and dark glasses, with a calm yet tense facial expression, looking straight ahead. He holds a single lit candle, which is the only source of light, emitting a warm yellow glow that creates a strong chiaroscuro effect on his face and casts dramatic shadows. The overall color palette is dominated by the cool, dark tones of the corridor, creating a stark contrast with the warm candlelight. Lurking directly behind him in the shadows is the terrifying clown Pennywise from 'IT', with a menacing grin and piercing, glowing orange eyes. The atmosphere is extremely tense and suspenseful, enhanced by a shallow depth of field and high-contrast lighting. Don't change the facial det.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+        "imagePath": null,
+        "category": "Horror & Cinematic"
     }
 ]

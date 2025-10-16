@@ -142,5 +142,13 @@
         "count": 2,
         "color": "#8D6E63",
         "icon": "book-open"
+    },
+    {
+        "id": 19,
+        "name": "Horror & Cinematic",
+        "description": "Kinh dị & Điện ảnh ",
+        "count": 1,
+        "color": "#8B0000",
+        "icon": "👻"
     }
 ]
