@@ -11,7 +11,7 @@
         "id": 2,
         "name": "Art Gallery & Exhibition",
         "description": "Tác phẩm nghệ thuật trong không gian triển lãm",
-        "count": 12,
+        "count": 14,
         "color": "#8B5CF6",
         "icon": "palette"
     },
@@ -150,5 +150,13 @@
         "count": 1,
         "color": "#8B0000",
         "icon": "👻"
+    },
+    {
+        "id": 20,
+        "name": "Vietnamese Culture",
+        "description": "Văn hóa Việt Nam",
+        "count": 4,
+        "color": "#DA251D",
+        "icon": "🇻🇳"
     }
 ]

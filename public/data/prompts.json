@@ -1368,7 +1368,49 @@
         "id": 196,
         "title": "Chạm Trán Pennywise trong Hành lang Tối",
         "prompt": "from my photo create a pictures: A hyper-realistic, cinematic horror-style portrait of a man in a dark, narrow corridor. The man, as the main subject, wears a dark quilted jacket over a white t-shirt and dark glasses, with a calm yet tense facial expression, looking straight ahead. He holds a single lit candle, which is the only source of light, emitting a warm yellow glow that creates a strong chiaroscuro effect on his face and casts dramatic shadows. The overall color palette is dominated by the cool, dark tones of the corridor, creating a stark contrast with the warm candlelight. Lurking directly behind him in the shadows is the terrifying clown Pennywise from 'IT', with a menacing grin and piercing, glowing orange eyes. The atmosphere is extremely tense and suspenseful, enhanced by a shallow depth of field and high-contrast lighting. Don't change the facial det.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
-        "imagePath": null,
+        "imagePath": "/image/genai/ce431407-ea30-473f-8bc6-f0d500941518.png",
         "category": "Horror & Cinematic"
+    },
+    {
+        "id": 197,
+        "title": "Tác phẩm điêu khắc Hiện đại Khổng lồ",
+        "prompt": "from my photo create a pictures: from my create a pictures: Transform the main body of the image into a giant modern art piece, put it in the middle of the frame and keep the characteristics of the main body image. This giant sculpture shows beautiful surreal details, extremely realistic texture, with a giant shape that is delicate and elegant, ultra-high definition simulation materials, real skin and hair texture, vivid art gallery background (white wall, long ceiling light, smooth floor), many visitors (forming a commensurate contrast with the giant main body), the exhibition space is separated by a fence, surreal art style and modern art exhibition atmosphere. Under the light of the exhibition, keep the clothes. Don't change the facial det.",
+        "imagePath": "/image/genai/5e233862-8cdf-4bdc-abfd-47d09dce0a99.png",
+        "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 198,
+        "title": "Chân dung thiếu nữ Việt trong bếp quê",
+        "prompt": "from my photo create a pictures: Create an ultra-realistic 8K medium portrait of a beautiful young Vietnamese woman in a rustic countryside kitchen setting. She wears a traditional brown satin halter-neck áo yếm with a rounded neckline, layered with a thin, sheer dark-brown silk tứ thân robe draped softly over her shoulders in matching tones. On her head, she wears a simple round black silk turban (Vietnamese mấn tròn) that elegantly frames her delicate face. Her skin is fair, smooth, and glowing, complemented by natural dewy makeup — soft foundation, rosy blush, light pink lips, and subtle eyeliner that accentuates her calm and gentle expression. Her long, straight black hair flows naturally over her shoulders, with a few loose strands framing her face. She gently leans forward, one hand resting on a large traditional metal pot lid, the other touching another pot nearby, as if preparing food. The lighting is warm and cinematic, with golden sunlight streaming through bamboo slats, softly illuminating her face and highlighting the sheen of her brown silk fabric. Background: a traditional Vietnamese kitchen with large metal pots, wooden beams, and textured clay walls, evoking an authentic rural atmosphere. Style: cinematic Vietnamese countryside portrait, warm natural light, poetic realism, elegant and nostalgic tone, ultra-realistic photography.",
+        "imagePath": "/image/genai/bfcde72a-3d21-45f3-a2ca-18fa067c8bba.png",
+        "category": "Vietnamese Culture"
+    },
+    {
+        "id": 199,
+        "title": "Đám đông Chiêm ngưỡng Bức chân dung trong Viện bảo tàng",
+        "prompt": "from my photo create a pictures: A hyper-detailed, photorealistic shot in a dimly lit, grand museum gallery. A diverse crowd of visitors is gathered, their backs mostly to the camera, all gazing intently at a large, framed oil painting. Some visitors are holding up their phones to take pictures, their screens glowing faintly in the dark. The painting is a large, square-format classical oil portrait of a person with a serious, compelling expression, rendered with clear, textured brushstrokes. A powerful, focused museum spotlight illuminates only the painting, creating a dramatic contrast and casting the crowd into artistic silhouettes and soft shadows. The walls are a muted, dark gray, and the polished floor reflects the light from the painting. The overall atmosphere is one of awe and public admiration. Low-angle shot, ultra-realistic, 8K resolution, cinematic composition with deep shadows.",
+        "imagePath": "/image/genai/451da5f7-9c3d-40f4-8542-c0f263e806de.png",
+        "category": "Art Gallery & Exhibition"
+    },
+    {
+        "id": 200,
+        "title": "Nàng Thơ Dịu Dàng Giữa Đồng Lúa Vàng",
+        "prompt": "from my photo create a pictures: A cinematic, high-fashion Vogue-style close-up portrait, shot from a near-overhead angle, looking through golden rice stalks and wind-bent ears in the foreground, creating a soft, warm, natural frame. In the center of the frame is the woman from the reference photo, maintaining 100% facial fidelity and her natural, gentle expression. She is a graceful and elegant young Vietnamese woman, sitting tilted beside the ripe golden rice field. Her long black hair, tied with a small white bow at the back, flows gently in the wind, with a few strands softly framing her face and reflecting the gentle golden light of the late afternoon. She wears a soft, light turquoise silk áo bà ba with black silk trousers. A traditional black and white khăn rằn is draped around her neck, and a Vietnamese nón lá is tilted gently on her head. Her left hand delicately holds a stalk of rice, her gaze is gentle, and she has a soft smile. Shot on a Leica SL2 with an APO-Summicron-SL 90mm f/2 lens, ISO 100, f/2, 1/250s. The overall composition is intentional, poetic, and luxurious, blending human beauty with nature in the radiant gold of the rice field, creating a romantic and cinematic feel. Aspect ratio 9:16. Don't change the facial det.",
+        "imagePath": "/image/genai/fc54ed59-bbcd-4114-9eb9-f55e221a7ed3.png",
+        "category": "Vietnamese Culture"
+    },
+    {
+        "id": 201,
+        "title": "Nụ Cười Mùa Hạ Dưới Tán Phượng Vĩ",
+        "prompt": "from my photo create a pictures: An outdoor portrait of a young Vietnamese woman in a traditional white Ao Dai, standing under the canopy of a vibrant red flamboyant tree in the summer sun. She holds up a small bouquet of flamboyant flowers with one hand, flashing a radiant, joyful smile. Her long, smooth hair flows gently in the wind. The background is filled with branches heavy with red blossoms, creating a brilliant, bright, and lively scene. The style is a natural morning light portrait with clear and warm tones, capturing the gentle, pure, and youthful beauty of a Vietnamese girl. Do not change the facial features, expression, eyes, lips, or skin tone.",
+        "imagePath": "/image/genai/aaf76055-a010-4060-8243-861cc4b88337.png",
+        "category": "Vietnamese Culture"
+    },
+    {
+        "id": 202,
+        "title": "Thiếu Nữ Áo Dài Tím Giữa Vườn Xanh",
+        "prompt": "from my photo create a pictures: Use 100% my uploaded face as the identity reference, keeping the face natural and realistic with correct proportions and skin texture. An elegant young Vietnamese woman, wearing a vibrant purple traditional Ao Dai, kneeling gracefully outdoors, holding a small purple flower delicately, looking upwards with a serene thoughtful expression, long dark wavy hair, lush green garden background, blurred bokeh, soft natural diffused daylight, cinematic lighting, sharp focus, shallow depth of field, highly detailed, hyperrealistic, photorealistic, intricate fabric textures, 8k, professional portrait photography. Don't change the facial det.",
+        "imagePath": "/image/genai/1ab99ae9-37ff-4aa2-8b72-797618134994.png",
+        "category": "Vietnamese Culture"
     }
 ]
