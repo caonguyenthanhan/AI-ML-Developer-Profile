@@ -1412,5 +1412,12 @@
         "prompt": "from my photo create a pictures: Use 100% my uploaded face as the identity reference, keeping the face natural and realistic with correct proportions and skin texture. An elegant young Vietnamese woman, wearing a vibrant purple traditional Ao Dai, kneeling gracefully outdoors, holding a small purple flower delicately, looking upwards with a serene thoughtful expression, long dark wavy hair, lush green garden background, blurred bokeh, soft natural diffused daylight, cinematic lighting, sharp focus, shallow depth of field, highly detailed, hyperrealistic, photorealistic, intricate fabric textures, 8k, professional portrait photography. Don't change the facial det.",
         "imagePath": "/image/genai/1ab99ae9-37ff-4aa2-8b72-797618134994.png",
         "category": "Vietnamese Culture"
+    },
+    {
+        "id": 203,
+        "title": "Bản Giao Hưởng Của Những Bản Sao Trên Cầu Thang Rêu Phong",
+        "prompt": "from my photo create a pictures: The surreal 8K footage, shot with a professional DSLR, shows six identical Vietnamese men (faces, hair as in the accompanying photo), some wearing glasses, arranged in various poses on an old staircase (covered with moss, wild plants; peeling walls) in Vietnam in a minimalist architectural style. They are dressed in a uniform of white T-shirts and light blue jean shorts, along with crisp white sneakers. Each man strikes a different pose—some stand on the lower steps, some lean against the stair wall, some look toward the camera, some sit on the stairs, and others look in different directions. The soft, natural light from above creates subtle architectural shadows and bright neutral tones. The camera is angled slightly down to eye level, capturing the dynamic composition of the old staircase and giving it a modern, open feel. The main color tones are light gray, cream and a touch of warm neutrals, creating a contemporary fashion atmosphere and a minimalist, cinematic feel. Don't change the facial det.",
+        "imagePath": "/image/genai/93fd1bdb-1c88-4154-883d-42695eb7dd9d.png",
+        "category": "Portrait Photography"
     }
 ]
