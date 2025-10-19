@@ -5,11 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Lời Mời Tốt Nghiệp Cá Nhân Hóa</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="/image/graduation/logotruong.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="/image/graduation/logotruong.jpg">
+    <link rel="apple-touch-icon" href="/image/graduation/logotruong.jpg">
+    
+    <!-- Meta tags cho Open Graph (Facebook, Zalo) -->
     <meta property="og:title" content="Lời Mời Tham Dự Lễ Tốt Nghiệp">
-    <meta property="og:description" content="Trân trọng kính mời bạn đến tham dự buổi lễ tốt nghiệp của chúng tôi.">
+    <meta property="og:description" content="Trân trọng kính mời bạn đến tham dự buổi lễ tốt nghiệp của chúng tôi. Sự hiện diện của bạn là niềm vinh dự lớn nhất!">
     <meta property="og:image" content="/image/graduation/main-preview.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:site_name" content="Lễ Tốt Nghiệp">
+    
+    <!-- Meta tags cho Twitter -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lời Mời Tham Dự Lễ Tốt Nghiệp">
+    <meta name="twitter:description" content="Trân trọng kính mời bạn đến tham dự buổi lễ tốt nghiệp của chúng tôi.">
+    <meta name="twitter:image" content="/image/graduation/main-preview.jpg">
+    
+    <!-- Meta tags đặc biệt cho Zalo -->
+    <meta property="zalo:title" content="Lời Mời Tham Dự Lễ Tốt Nghiệp">
+    <meta property="zalo:description" content="Trân trọng kính mời bạn đến tham dự buổi lễ tốt nghiệp của chúng tôi. Sự hiện diện của bạn là niềm vinh dự lớn nhất!">
+    <meta property="zalo:image" content="/image/graduation/main-preview.jpg">
+    
+    <!-- Meta tags chung -->
+    <meta name="description" content="Lời mời tham dự lễ tốt nghiệp - Sự hiện diện của bạn là niềm vinh dự lớn nhất của chúng tôi!">
+    <meta name="keywords" content="lễ tốt nghiệp, graduation, lời mời, thiệp mời">
+    <meta name="author" content="Graduation Invitation">
     <!-- Tải Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Tải thư viện icon Lucide-React -->
@@ -604,9 +630,12 @@
         // --- 5. CÁC HÀM TIỆN ÍCH MỚI ---
 
         // Hàm cập nhật Meta Tags
+        // Hàm cập nhật Meta Tags (ĐÃ SỬA LỖI)
+        
         function updateMetaTags(info, guest = null) {
             const defaultTitle = `Lời Mời Lễ Tốt Nghiệp | ${info.graduateName}`;
             const defaultDesc = `Trân trọng kính mời bạn đến chung vui cùng ${info.graduateName} trong buổi lễ tốt nghiệp.`;
+            // Quan trọng: Đảm bảo ảnh xem trước của bạn có kích thước 1200x630 pixels
             const defaultImage = `${window.location.origin}${info.previewImage || ASSETS.GRADUATE_IMAGE}`;
 
             let title, description, image;
@@ -626,7 +655,28 @@
             document.querySelector('meta[property="og:description"]').setAttribute('content', description);
             document.querySelector('meta[property="og:image"]').setAttribute('content', image);
             document.querySelector('meta[name="twitter:card"]').setAttribute('content', 'summary_large_image');
+            
+            // === PHẦN THÊM MỚI QUAN TRỌNG ===
+            // Thêm thẻ meta cho chiều rộng
+            let ogWidth = document.querySelector('meta[property="og:image:width"]');
+            if (!ogWidth) {
+                ogWidth = document.createElement('meta');
+                ogWidth.setAttribute('property', 'og:image:width');
+                document.head.appendChild(ogWidth);
+            }
+            ogWidth.setAttribute('content', '1200'); // Kích thước khuyến nghị
+
+            // Thêm thẻ meta cho chiều cao
+            let ogHeight = document.querySelector('meta[property="og:image:height"]');
+            if (!ogHeight) {
+                ogHeight = document.createElement('meta');
+                ogHeight.setAttribute('property', 'og:image:height');
+                document.head.appendChild(ogHeight);
+            }
+            ogHeight.setAttribute('content', '630'); // Kích thước khuyến nghị
+            // === KẾT THÚC PHẦN THÊM MỚI ===
         }
+
 
         // Hàm điều khiển hiệu ứng chúc mừng
         // Biến toàn cục để theo dõi hiệu ứng hiện tại

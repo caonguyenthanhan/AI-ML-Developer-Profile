@@ -64,6 +64,10 @@
     {
       "source": "/graduation/:guest",
       "destination": "/graduation/graduation_invitation.html"
+    },
+    {
+      "source": "/graduation_preview/:guest",
+      "destination": "/graduation/preview.html"
     }
   ]
 }
