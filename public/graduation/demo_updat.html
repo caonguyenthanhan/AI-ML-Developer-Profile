@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Lời Mời Tốt Nghiệp Cá Nhân Hóa</title>
+    <meta property="og:title" content="Lời Mời Tham Dự Lễ Tốt Nghiệp">
+    <meta property="og:description" content="Trân trọng kính mời bạn đến tham dự buổi lễ tốt nghiệp của chúng tôi.">
+    <meta property="og:image" content="/image/graduation/main-preview.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <script type="module">
+        // ... (Giữ nguyên code Firebase của bạn)
+    </script>
+    <style>
+        /* ... (Giữ nguyên CSS cũ của bạn) ... */
+
+        /* HIỆU ỨNG ẢNH SINH ĐỘNG */
+        .animated-image {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% {
+                transform: translatey(0px);
+            }
+            50% {
+                transform: translatey(-10px);
+            }
+            100% {
+                transform: translatey(0px);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="app" class="flex flex-col items-center p-4 md:p-8">
+        <div class="text-center p-8">Đang tải...</div>
+    </div>
+    
+    <div id="controls" class="fixed bottom-4 right-4 z-50 space-x-2"></div>
+    <audio id="background-music" loop></audio>
+
+    <script type="module">
+        // --- GIỮ NGUYÊN TẤT CẢ CODE JAVASCRIPT CŨ TỪ DÒNG 1 ĐẾN DÒNG 80 ---
+        // ...
+        
+        // --- 8. CÁC HÀM TIỆN ÍCH MỚI ---
+
+        // Hàm cập nhật Meta Tags
+        function updateMetaTags(info, guest = null) {
+            const defaultTitle = `Lời Mời Lễ Tốt Nghiệp | ${info.graduateName}`;
+            const defaultDesc = `Trân trọng kính mời bạn đến chung vui cùng ${info.graduateName} trong buổi lễ tốt nghiệp.`;
+            const defaultImage = `${window.location.origin}${info.previewImage || ASSETS.GRADUATE_IMAGE}`;
+
+            let title, description, image;
+
+            if (guest) {
+                title = `Thân mời ${guest.title} ${guest.name}`;
+                description = `Thiệp mời đặc biệt dành cho ${guest.title} ${guest.name} từ ${info.graduateName}.`;
+                image = `${window.location.origin}${guest.previewImage || info.previewImage || ASSETS.GRADUATE_IMAGE}`;
+            } else {
+                title = defaultTitle;
+                description = defaultDesc;
+                image = defaultImage;
+            }
+
+            document.title = title;
+            document.querySelector('meta[property="og:title"]').setAttribute('content', title);
+            document.querySelector('meta[property="og:description"]').setAttribute('content', description);
+            document.querySelector('meta[property="og:image"]').setAttribute('content', image);
+            document.querySelector('meta[name="twitter:card"]').setAttribute('content', 'summary_large_image');
+        }
+
+        // Hàm điều khiển hiệu ứng chúc mừng
+        function triggerCelebration() {
+            // Hiệu ứng mưa giấy
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+
+                const particleCount = 50 * (timeLeft / duration);
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+            }, 250);
+
+            // Bắn pháo hoa ở giữa
+            setTimeout(() => confetti({
+                particleCount: 150,
+                spread: 180,
+                origin: { y: 0.6 }
+            }), 500);
+        }
+
+        // Hàm render các nút điều khiển
+        function renderControls(info) {
+            const controlsContainer = document.getElementById('controls');
+            if (!controlsContainer) return;
+            
+            let controlsHtml = `
+                <button id="celebrateBtn" title="Chúc mừng!" class="bg-gold text-navy w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                    <i data-lucide="party-popper" class="w-6 h-6"></i>
+                </button>
+            `;
+            
+            if (info.music) {
+                controlsHtml += `
+                    <button id="musicBtn" title="Tắt/Mở nhạc" class="bg-gold text-navy w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                        <i data-lucide="volume-2" class="w-6 h-6"></i>
+                    </button>
+                `;
+            }
+            controlsContainer.innerHTML = controlsHtml;
+            lucide.createIcons();
+
+            // Gắn sự kiện
+            document.getElementById('celebrateBtn')?.addEventListener('click', triggerCelebration);
+
+            if (info.music) {
+                const musicPlayer = document.getElementById('background-music');
+                const musicBtn = document.getElementById('musicBtn');
+                musicPlayer.src = info.music;
+
+                let isPlaying = false;
+                
+                const toggleMusic = () => {
+                    if (isPlaying) {
+                        musicPlayer.pause();
+                        musicBtn.innerHTML = '<i data-lucide="volume-x" class="w-6 h-6"></i>';
+                    } else {
+                        musicPlayer.play().catch(e => console.log("Autoplay bị chặn, cần tương tác của người dùng."));
+                        musicBtn.innerHTML = '<i data-lucide="volume-2" class="w-6 h-6"></i>';
+                    }
+                    isPlaying = !isPlaying;
+                    lucide.createIcons();
+                };
+
+                musicBtn.addEventListener('click', toggleMusic);
+                
+                // Thử autoplay khi có tương tác đầu tiên
+                document.body.addEventListener('click', () => {
+                    if (!isPlaying) {
+                       // toggleMusic();
+                    }
+                }, { once: true });
+            }
+        }
+        
+        // --- 9. CẬP NHẬT CÁC HÀM RENDER ---
+
+        // Cập nhật hàm renderMainPage
+        function renderMainPage(info, guests) {
+            // ... (Giữ nguyên phần đầu của hàm renderMainPage)
+            
+            // Thêm hiệu ứng cho ảnh
+            // Thay thế dòng <img src="${ASSETS.GRADUATE_IMAGE}" ... > bằng:
+            // <img src="${ASSETS.GRADUATE_IMAGE}" ... class="... animated-image">
+
+            // Thêm mục Contact
+            const contactHtml = info.contact ? `
+                <div class="mt-auto pt-6 border-t border-gray-200">
+                    <h3 class="text-center text-sm font-black tracking-widest text-navy uppercase mb-3">Liên Hệ</h3>
+                    <div class="flex justify-center items-center space-x-4">
+                        ${info.contact.phone ? `<a href="tel:${info.contact.phone}" title="Gọi điện" class="text-navy hover:text-gold"><i data-lucide="phone"></i></a>` : ''}
+                        ${info.contact.zalo ? `<a href="${info.contact.zalo}" target="_blank" title="Zalo" class="text-navy hover:text-gold"><i data-lucide="message-square"></i></a>` : ''}
+                        ${info.contact.facebook ? `<a href="${info.contact.facebook}" target="_blank" title="Facebook" class="text-navy hover:text-gold"><i data-lucide="facebook"></i></a>` : ''}
+                    </div>
+                </div>
+            ` : '';
+            
+            // ... (Trong template string của cột phải, thêm {contactHtml} vào trước thẻ </div> đóng cuối cùng)
+            
+            return `... HTML của bạn với các cập nhật ...`;
+        }
+        
+        // Cập nhật hàm renderGuestHtml
+        function renderGuestHtml(info, guest) {
+            // ... (Giữ nguyên phần đầu của hàm renderGuestHtml)
+            
+            // Thêm hiệu ứng cho ảnh
+            // Thay thế các dòng <img src="..." ... > của người tốt nghiệp và khách mời bằng:
+            // <img src="..." ... class="... animated-image">
+            
+            return `... HTML của bạn với các cập nhật ...`;
+        }
+
+
+        // --- 10. CẬP NHẬT ROUTER ĐỂ GỌI CÁC HÀM MỚI ---
+        
+        async function router() {
+            renderLoading();
+            const { info, guests } = await initializeData();
+
+            const path = window.location.pathname.replace(/\/+$/, '');
+            const pathParts = path.split('/').filter(part => part.length > 0);
+
+            let contentHtml = '';
+            let currentGuest = null;
+
+            if (!info) {
+                document.getElementById('app').innerHTML = renderDataError('Không thể tải dữ liệu sự kiện.');
+                return;
+            }
+
+            if (pathParts.length === 1 && pathParts[0].toLowerCase() === 'graduation') {
+                contentHtml = renderMainPage(info, guests);
+            } else if (pathParts.length === 2 && pathParts[0].toLowerCase() === 'graduation') {
+                const guestNameEncoded = pathParts[1];
+                const guestName = decodeURIComponent(guestNameEncoded);
+                const guest = guests.find(g => g.name.toLowerCase() === guestName.toLowerCase());
+
+                if (guest) {
+                    currentGuest = guest;
+                    contentHtml = renderGuestHtml(info, guest);
+                } else {
+                    // ... (Mã lỗi 404 cho khách)
+                }
+            } else {
+                // ... (Mã lỗi 404 chung)
+            }
+            
+            // Render nội dung, meta tags và các nút điều khiển
+            document.getElementById('app').innerHTML = contentHtml;
+            updateMetaTags(info, currentGuest);
+            renderControls(info); 
+            attachGuestForm(guests);
+            lucide.createIcons();
+        }
+
+        // Khởi tạo router khi tải trang và khi điều hướng lịch sử
+        window.addEventListener('load', router);
+        window.addEventListener('popstate', router);
+    </script>
+</body>
+</html>
