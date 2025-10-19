@@ -3,7 +3,7 @@
     {
       "name": "Hiếu Nghĩa",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
@@ -12,7 +12,7 @@
     {
       "name": "Thiên Bảo",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
@@ -21,7 +21,7 @@
     {
       "name": "Nhật Trường",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
@@ -30,7 +30,7 @@
     {
       "name": "Hữu Vĩnh",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
@@ -39,7 +39,7 @@
     {
       "name": "Ngọc Trâm",
       "title": "",
-      "gender": "",
+      "gender": "female",
       "image": "",
       "message": "",
       "special": false,
@@ -48,7 +48,7 @@
     {
       "name": "Đăng Thi",
       "title": "",
-      "gender": "",
+      "gender": "female",
       "image": "",
       "message": "",
       "special": false,
@@ -57,7 +57,7 @@
     {
       "name": "Phuơng Mai",
       "title": "",
-      "gender": "",
+      "gender": "female",
       "image": "",
       "message": "",
       "special": false,
@@ -65,9 +65,9 @@
     },
     {
       "name": "Thành An",
-      "title": "",
-      "gender": "",
-      "image": "",
+      "title": "giáo chủ",
+      "gender": "male",
+      "image": "public/image/graduation/khach/thanh_an2.png",
       "message": "",
       "special": true,
       "previewImage": ""
@@ -75,7 +75,7 @@
     {
       "name": "Trâm Anh",
       "title": "",
-      "gender": "",
+      "gender": "female",
       "image": "",
       "message": "",
       "special": false,
@@ -84,7 +84,7 @@
     {
       "name": "Minh Thông",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
@@ -93,7 +93,7 @@
     {
       "name": "Gia Kiệt",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
@@ -102,7 +102,7 @@
     {
       "name": "Tài Phát",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
@@ -111,7 +111,7 @@
     {
       "name": "chị Hân",
       "title": "",
-      "gender": "",
+      "gender": "female",
       "image": "",
       "message": "",
       "special": true,
@@ -120,7 +120,7 @@
     {
       "name": "Phúc Lâm",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
@@ -129,7 +129,7 @@
     {
       "name": "Long Nhật",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
@@ -138,7 +138,7 @@
     {
       "name": "Duy lê",
       "title": "",
-      "gender": "",
+      "gender": "male",
       "image": "",
       "message": "",
       "special": false,
