@@ -1433,5 +1433,26 @@
         "prompt": "from my photo create a pictures: A powerful tycoon (face, hair, glasses as attached) is sitting at a poker table, elbows on the table, hands clasped together, slightly tilted to one side (face not completely obscured). Wearing a black shirt. Serious expression, staring at someone in front of him. 8K cinema quality, full body portrait. The poker table is visible but only a small part, no cards on it. Two Asian-looking bodyguards wearing black baseball caps and black masks stand behind him. Lighting: a single ceiling light creates a dramatic contrast. Don't change the facial det.",
         "imagePath": "/image/genai/be3cef1a-d318-47d8-8d4b-a0b668317e7b.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 206,
+        "title": "Avatar 3D Phong Cách Hoạt Hình",
+        "prompt": "from my photo create a pictures: A hyper-realistic, 3D cartoon character bust of the person in the photo, rendered in the style of a modern Pixar character. The avatar should have exaggerated yet recognizable features, with large, expressive eyes and smooth, stylized hair. The lighting should be soft studio lighting against a clean white background, emphasizing the polished and friendly look of the character. The final image should be a high-quality, ultra-detailed 3D render, perfect for a social media profile icon. Don't change the facial det.",
+        "imagePath": "/image/genai/4f10bdfc-a5e9-4ccf-816a-b039badededf.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 207,
+        "title": "Chân Dung Đẫm Nước Mắt, Biểu Cảm Kịch Tính",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic close-up portrait of the person in the photo with an intense and emotional crying expression. Tears are streaming down their face, and their eyes are filled with sorrow and raw emotion. Use dramatic, low-key lighting (chiaroscuro) to create deep shadows and highlight the glistening tears on their skin. The focus should be razor-sharp on the eyes and tears, with a very shallow depth of field that blurs out the background completely. The style should be moody and evocative, like a shot from a dramatic film, with a 35mm film look. Don't change the facial det.",
+        "imagePath": "/image/genai/b4047adb-fcbd-4328-bc77-e91bbe313d0a.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 208,
+        "title": "Chân Dung Đau Khổ Tột Cùng, Nước Mắt Chân Thực",
+        "prompt": "from my photo create a video: A hyper-realistic, emotionally charged close-up portrait of the person in the photo, capturing a moment of intense, unrestrained sobbing. Their face is contorted in anguish, with puffy, red-rimmed eyes and visible tear tracks glistening on their cheeks. One or two tear drops should be captured mid-fall. Their mouth is slightly open, lip quivering, as if in the middle of a painful cry. Emphasize hyper-detailed skin texture, showing strained facial muscles around the eyes and mouth. Use dramatic, high-contrast lighting to sculpt the face, catching the wetness of the tears and the raw emotion. The focus must be impeccably sharp on the eyes, capturing the heartbreak within them. The background should be dark and completely out of focus to isolate the subject's suffering. The overall mood is one of profound grief and cinematic realism. Don't change the facial det.",
+        "imagePath": "/video/genai/90c6213b-c490-4060-937b-781ebfb2a616.mp4",
+        "category": "Portrait Photography"
     }
 ]
