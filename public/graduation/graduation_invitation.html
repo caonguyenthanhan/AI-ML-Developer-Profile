@@ -629,31 +629,107 @@
         }
 
         // Hàm điều khiển hiệu ứng chúc mừng
+        // Biến toàn cục để theo dõi hiệu ứng hiện tại
+        let currentEffectIndex = 0;
+        
         function triggerCelebration() {
-            // Hiệu ứng mưa giấy
-            const duration = 5 * 1000;
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+            const effects = [
+                // Hiệu ứng 1: Confetti truyền thống
+                () => {
+                    const duration = 5 * 1000;
+                    const animationEnd = Date.now() + duration;
+                    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
 
-            function randomInRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
+                    function randomInRange(min, max) {
+                        return Math.random() * (max - min) + min;
+                    }
 
-            const interval = setInterval(function() {
-                const timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
+                    const interval = setInterval(function() {
+                        const timeLeft = animationEnd - Date.now();
+                        if (timeLeft <= 0) return clearInterval(interval);
 
-                const particleCount = 50 * (timeLeft / duration);
-                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-            }, 250);
+                        const particleCount = 50 * (timeLeft / duration);
+                        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+                    }, 250);
 
-            // Bắn pháo hoa ở giữa
-            setTimeout(() => confetti({
-                particleCount: 150,
-                spread: 180,
-                origin: { y: 0.6 }
-            }), 500);
+                    setTimeout(() => confetti({
+                        particleCount: 150,
+                        spread: 180,
+                        origin: { y: 0.6 }
+                    }), 500);
+                },
+                
+                // Hiệu ứng 2: Bóng bay bay lên
+                () => {
+                    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(() => {
+                            confetti({
+                                particleCount: 20,
+                                angle: 90,
+                                spread: 45,
+                                origin: { x: Math.random(), y: 1.2 },
+                                colors: colors,
+                                shapes: ['circle'],
+                                scalar: 1.2,
+                                gravity: -0.5,
+                                drift: Math.random() - 0.5
+                            });
+                        }, i * 200);
+                    }
+                },
+                
+                // Hiệu ứng 3: Kim tuyến rơi từ trên
+                () => {
+                    const duration = 4 * 1000;
+                    const animationEnd = Date.now() + duration;
+                    
+                    const interval = setInterval(function() {
+                        const timeLeft = animationEnd - Date.now();
+                        if (timeLeft <= 0) return clearInterval(interval);
+                        
+                        confetti({
+                            particleCount: 3,
+                            angle: 90,
+                            spread: 0,
+                            origin: { x: Math.random(), y: -0.1 },
+                            colors: ['#FFD700', '#FFA500', '#FF6347'],
+                            shapes: ['line'],
+                            scalar: 2,
+                            gravity: 0.8,
+                            ticks: 300
+                        });
+                    }, 100);
+                },
+                
+                // Hiệu ứng 4: Pháo hoa nổ tung
+                () => {
+                    const firework = (x, y) => {
+                        confetti({
+                            particleCount: 100,
+                            spread: 360,
+                            origin: { x, y },
+                            colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'],
+                            startVelocity: 45,
+                            scalar: 1.5
+                        });
+                    };
+                    
+                    // Nhiều pháo hoa nổ liên tiếp
+                    setTimeout(() => firework(0.2, 0.3), 0);
+                    setTimeout(() => firework(0.8, 0.4), 300);
+                    setTimeout(() => firework(0.5, 0.2), 600);
+                    setTimeout(() => firework(0.3, 0.6), 900);
+                    setTimeout(() => firework(0.7, 0.7), 1200);
+                }
+            ];
+            
+            // Chạy hiệu ứng hiện tại
+            effects[currentEffectIndex]();
+            
+            // Chuyển sang hiệu ứng tiếp theo
+            currentEffectIndex = (currentEffectIndex + 1) % effects.length;
         }
 
         // Hàm render các nút điều khiển
@@ -675,28 +751,10 @@
                 `;
             }
 
-            // Auto-play music and trigger confetti on first user interaction; click stops both
-            let autoPlayed = false;
-            document.addEventListener('click', () => {
-                if (!autoPlayed) {
-                    const musicPlayer = document.getElementById('background-music');
-                    if (info.music) {
-                        musicPlayer.src = info.music;
-                        musicPlayer.play().catch(() => {});
-                    }
-                    triggerCelebration();
-                    autoPlayed = true;
-                } else {
-                    // Stop music and confetti on subsequent clicks
-                    const musicPlayer = document.getElementById('background-music');
-                    musicPlayer.pause();
-                    confetti.reset();
-                }
-            }, { once: false });
             controlsContainer.innerHTML = controlsHtml;
             lucide.createIcons();
 
-            // Gắn sự kiện
+            // Gắn sự kiện cho nút celebration
             document.getElementById('celebrateBtn')?.addEventListener('click', triggerCelebration);
 
             if (info.music) {
@@ -704,7 +762,8 @@
                 const musicBtn = document.getElementById('musicBtn');
                 musicPlayer.src = info.music;
 
-                let isPlaying = false;
+                // Bắt đầu với trạng thái đang phát (true)
+                let isPlaying = true;
                 
                 const toggleMusic = () => {
                     if (isPlaying) {
@@ -720,12 +779,35 @@
 
                 musicBtn.addEventListener('click', toggleMusic);
                 
-                // Thử autoplay khi có tương tác đầu tiên
+                // Tự động phát nhạc và hiệu ứng khi tải trang
+                setTimeout(() => {
+                    // Tự động phát nhạc
+                    musicPlayer.play().catch(e => {
+                        console.log("Autoplay bị chặn, cần tương tác của người dùng.");
+                        // Nếu autoplay bị chặn, đặt trạng thái là không phát
+                        isPlaying = false;
+                        musicBtn.innerHTML = '<i data-lucide="volume-x" class="w-6 h-6"></i>';
+                        lucide.createIcons();
+                    });
+                    
+                    // Tự động chạy hiệu ứng celebration
+                    triggerCelebration();
+                }, 1000); // Delay 1 giây để trang load xong
+                
+                // Thử autoplay khi có tương tác đầu tiên (fallback)
                 document.body.addEventListener('click', () => {
-                    if (!isPlaying) {
-                       // toggleMusic();
+                    if (!isPlaying && musicPlayer.paused) {
+                        musicPlayer.play().catch(() => {});
+                        isPlaying = true;
+                        musicBtn.innerHTML = '<i data-lucide="volume-2" class="w-6 h-6"></i>';
+                        lucide.createIcons();
                     }
                 }, { once: true });
+            } else {
+                // Nếu không có nhạc, vẫn tự động chạy hiệu ứng
+                setTimeout(() => {
+                    triggerCelebration();
+                }, 1000);
             }
         }
 
