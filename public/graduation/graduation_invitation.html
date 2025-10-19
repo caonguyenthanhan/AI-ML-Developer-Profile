@@ -320,9 +320,9 @@
 
                             <!-- Vòng ảnh người tốt nghiệp (CHỈ CÓ 1 ẢNH) -->
                             <div class="my-8 flex justify-center">
-                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64">
+                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64 animated-image">
                                     <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
-                                    <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 animated-image">
+                                    <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                                 </div>
                             </div>
 
@@ -471,13 +471,13 @@
                             <!-- Vòng ảnh người tốt nghiệp VÀ Khách Mời Cụ Thể (TRÊN TRANG CÁ NHÂN) -->
                             <div class="my-8 flex items-center justify-center gap-6">
                                 <!-- Ảnh người tốt nghiệp -->
-                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64">
+                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64 animated-image">
                                     <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
-                                    <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 animated-image">
+                                    <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                                 </div>
                                 
                                 <!-- Khung ảnh Khách Mời Cụ Thể (Guest) -->
-                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64 hidden md:block">
+                                <div class="relative inline-block w-56 h-56 md:w-64 md:h-64 hidden md:block animated-image">
                                     <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
                                     <img src="${guestImg}" alt="Ảnh Khách Mời" onerror="this.onerror=null;this.src='${guest.gender && guest.gender.toLowerCase() === 'female' ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT}';" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                                 </div>
@@ -674,6 +674,25 @@
                     </button>
                 `;
             }
+
+            // Auto-play music and trigger confetti on first user interaction; click stops both
+            let autoPlayed = false;
+            document.addEventListener('click', () => {
+                if (!autoPlayed) {
+                    const musicPlayer = document.getElementById('background-music');
+                    if (info.music) {
+                        musicPlayer.src = info.music;
+                        musicPlayer.play().catch(() => {});
+                    }
+                    triggerCelebration();
+                    autoPlayed = true;
+                } else {
+                    // Stop music and confetti on subsequent clicks
+                    const musicPlayer = document.getElementById('background-music');
+                    musicPlayer.pause();
+                    confetti.reset();
+                }
+            }, { once: false });
             controlsContainer.innerHTML = controlsHtml;
             lucide.createIcons();
 
