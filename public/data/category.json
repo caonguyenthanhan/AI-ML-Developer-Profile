@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 94,
+        "count": 109,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 30,
+        "count": 32,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -158,5 +158,13 @@
         "count": 4,
         "color": "#DA251D",
         "icon": "🇻🇳"
+    },
+    {
+        "id": 21,
+        "name": "Surreal Fantasy",
+        "description": "Kỳ ảo Siêu thực",
+        "count": 2,
+        "color": "#A855F7",
+        "icon": "✨"
     }
 ]
