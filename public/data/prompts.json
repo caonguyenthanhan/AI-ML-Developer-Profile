@@ -1748,5 +1748,12 @@
         "prompt": "from my photo create a pictures: A hyper-realistic, surreal portrait of an Asian man dressed in an elegant white tuxedo with a black bow tie. He is standing calmly next to a giant, ethereal white Betta fish (Siamese fighting fish) whose flowing, translucent fins seem to wrap around him. The man has one hand raised in a gentle greeting. The background is a pure, solid black, creating a dramatic high-contrast effect. Add a subtle, realistic water reflection at the bottom of the frame. The lighting should be cinematic and soft, highlighting the textures of the tuxedo and the iridescent glow of the fish's scales. The overall mood is elegant, dreamlike, and majestic. Don't change the facial det.",
         "imagePath": "/image/genai/fce03797-8f66-4d15-aac4-49a8d2eda795.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 251,
+        "title": "Chân dung cùng Ngài Putin nhân ngày 20/10",
+        "prompt": "from my photo create a pictures: A photorealistic, high-resolution portrait of a young Vietnamese woman (from the uploaded photo) standing next to President Vladimir Putin in a formal, well-lit hall. President Putin is wearing a classic black suit and tie and is presenting a large, beautiful bouquet of red, yellow, and white flowers to the woman. The woman is wearing a simple white t-shirt and black skirt, smiling happily and making a peace sign with her hand. In the background, a red and gold banner reads \"Happy Vietnamese Women's Day 20/10\". The scene is flanked by elegant floral arrangements. The overall atmosphere is celebratory and respectful. Don't change the facial det.",
+        "imagePath": "/image/genai/44581927-72b4-4daa-8ead-de02dcb32254.png",
+        "category": "Lifestyle & Nature"
     }
 ]
