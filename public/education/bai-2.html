@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 2: Kỹ năng và Thay đổi tư duy trong thời đại AI</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #0056b3;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+        }
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #e9ecef;
+            padding: 12px 15px;
+            border-left: 5px solid #0056b3;
+            border-radius: 5px;
+            font-size: 1.8em;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 5px;
+        }
+        li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+        li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        .quote {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffeeba;
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        .practice-card {
+            background: #fdfdff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .practice-card h3 {
+            margin-top: 0;
+            color: #28a745;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #toggle-audio-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="lesson-audio" src="education/audio/bai-2.mp3" autoplay loop></audio>
+    
+    <button id="toggle-audio-btn">🔊</button>
+
+    <div class="container">
+        <h1>Bài 2: Kỹ năng và Thay đổi tư duy trong thời đại AI</h1>
+
+        <div id="ly-thuyet" class="section">
+            <h2>🧠 Lý Thuyết</h2>
+            <p>Sự phát triển của AI không chỉ đòi hỏi chúng ta học cách sử dụng công cụ mới, mà còn cần thay đổi cách chúng ta tư duy và làm việc. Con người sẽ không cạnh tranh với AI, mà là **hợp tác** với AI.</p>
+
+            <h3>Những kỹ năng và tư duy cốt lõi:</h3>
+            <ul>
+                <li><strong>Tư duy thích ứng và học hỏi liên tục:</strong> Công nghệ AI thay đổi rất nhanh, sẵn sàng học hỏi những điều mới là kỹ năng quan trọng nhất.</li>
+                <li><strong>Tư duy phản biện:</strong> Không phải mọi kết quả từ AI đều chính xác. Chúng ta cần biết cách phân tích, đánh giá và đặt câu hỏi về thông tin mà AI cung cấp.</li>
+                <li><strong>Kỹ năng đặt câu hỏi (Prompt Engineering):</strong> Chất lượng câu trả lời của AI phụ thuộc rất nhiều vào chất lượng câu hỏi của bạn.</li>
+                <li><strong>Kỹ năng giao tiếp và hợp tác:</strong> AI là công cụ hỗ trợ, còn con người vẫn làm việc với con người.</li>
+                <li><strong>Trí tuệ cảm xúc (EQ):</strong> Sự đồng cảm, thấu hiểu và làm việc nhóm là những điều AI chưa thể thay thế.</li>
+            </ul>
+             <div class="quote">
+                <p>"Trong tương lai, vai trò của con người sẽ là người 'dẫn dắt' AI, tập trung vào những công việc đòi hỏi sự sáng tạo, tư duy chiến lược và trí tuệ cảm xúc."</p>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+        <div id="thuc-hanh" class="section">
+            <h2>🚀 Thực Hành</h2>
+
+            <div class="practice-card">
+                <h3>1. "Audit" lại công việc của bạn</h3>
+                <ul>
+                    <li>Liệt kê 5 nhiệm vụ bạn thường làm nhất trong công việc hàng ngày.</li>
+                    <li>Bên cạnh mỗi nhiệm vụ, hãy xác định xem nhiệm vụ đó có thể được AI hỗ trợ hoặc tự động hóa một phần nào không.</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <h3>2. Rèn luyện tư duy phản biện</h3>
+                <ul>
+                    <li>Tìm một bài báo hoặc một tin tức do AI tạo ra (bạn có thể yêu cầu AI viết).</li>
+                    <li>Phân tích các ưu điểm, nhược điểm, và những rủi ro tiềm ẩn (ví dụ: thông tin sai lệch) của nội dung đó.</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <h3>3. Thực hành kỹ năng đặt câu hỏi</h3>
+                <ul>
+                    <li>Chọn một vấn đề trong công việc (ví dụ: "Làm sao để sắp xếp lịch họp hiệu quả hơn?").</li>
+                    <li>Sử dụng phương pháp "5 Whys" (Hỏi 'Tại sao?' 5 lần) để tìm ra gốc rễ của vấn đề.</li>
+                    <li>Sau đó, thử đặt câu hỏi cho AI (ChatGPT/Gemini) để tìm kiếm giải pháp.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('lesson-audio');
+        const toggleBtn = document.getElementById('toggle-audio-btn');
+
+        let playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                toggleBtn.innerHTML = '🔊';
+                audio.muted = false;
+            }).catch(error => {
+                console.log("Autoplay was prevented. Muting audio.");
+                toggleBtn.innerHTML = '🔇';
+                audio.muted = true;
+            });
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            if (audio.muted) {
+                audio.muted = false;
+                audio.play();
+                toggleBtn.innerHTML = '🔊';
+            } else {
+                audio.muted = true;
+                toggleBtn.innerHTML = '🔇';
+            }
+        });
+    </script>
+
+</body>
+</html>

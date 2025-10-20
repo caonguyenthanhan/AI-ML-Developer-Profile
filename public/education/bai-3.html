@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 3: Tự Động Hóa Mọi Việc</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #0056b3;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+        }
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #e9ecef;
+            padding: 12px 15px;
+            border-left: 5px solid #0056b3;
+            border-radius: 5px;
+            font-size: 1.8em;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 5px;
+        }
+        li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+        li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        .practice-card {
+            background: #fdfdff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .practice-card h3 {
+            margin-top: 0;
+            color: #28a745;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .prompt-box {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap; /* Giữ nguyên định dạng xuống dòng */
+            word-wrap: break-word;
+        }
+        #toggle-audio-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="lesson-audio" src="education/audio/bai-3.mp3" autoplay loop></audio>
+    
+    <button id="toggle-audio-btn">🔊</button>
+
+    <div class="container">
+        <h1>Bài 3: Tự Động Hóa Mọi Việc</h1>
+
+        <div id="ly-thuyet" class="section">
+            <h2>🧠 Lý Thuyết</h2>
+            <p>AI không chỉ là công cụ tra cứu thông tin mà còn là một <strong>'người trợ lý ảo'</strong> đắc lực, có khả năng tự động hóa nhiều công việc thường ngày, đặc biệt là các công việc lặp đi lặp lại hoặc tốn nhiều thời gian.</p>
+            <p>Thay vì thực hiện thủ công, bạn có thể "ra lệnh" cho AI để hoàn thành công việc một cách nhanh chóng và hiệu quả.</p>
+            
+            <h3>Một số ví dụ về tự động hóa với AI:</h3>
+            <ul>
+                <li><strong>Soạn thảo email và văn bản:</strong> Tạo email phản hồi, viết báo cáo, thông báo... theo yêu cầu.</li>
+                <li><strong>Lên kế hoạch công việc:</strong> Xây dựng lịch trình, phân chia công việc, đặt ra các mốc thời gian.</li>
+                <li><strong>Tóm tắt văn bản dài:</strong> Rút gọn các tài liệu, báo cáo, bài báo thành những ý chính.</li>
+                <li><strong>Tạo bảng biểu:</strong> Hệ thống hóa thông tin dưới dạng bảng để dễ dàng so sánh và theo dõi.</li>
+                <li><strong>Sáng tạo nội dung:</strong> Viết nội dung cho bài đăng mạng xã hội, kịch bản, ý tưởng...</li>
+            </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+        <div id="thuc-hanh" class="section">
+            <h2>🚀 Thực Hành</h2>
+
+            <div class="practice-card">
+                <h3>1. Tự động soạn thảo email</h3>
+                <ul>
+                    <li>Yêu cầu AI (ChatGPT/Gemini) viết một email thông báo cho toàn thể nhân viên về buổi họp cuối năm.</li>
+                    <li><strong>Yêu cầu nâng cao:</strong> Bổ sung thêm các yêu cầu về văn phong (trang trọng, thân thiện), độ dài, và các thông tin chi tiết cần có.</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <h3>2. Lên kế hoạch công việc với AI</h3>
+                <p>Sử dụng mẫu prompt (câu lệnh) dưới đây để yêu cầu AI lập kế hoạch công việc cho bạn.</p>
+                <div class="prompt-box">
+                    <strong>[VAI TRÒ]</strong> Hãy đóng vai là một trợ lý hành chính chuyên nghiệp.
+                    <br><br>
+                    <strong>[MỤC TIÊU]</strong> Lập cho tôi một kế hoạch làm việc chi tiết cho tuần tới.
+                    <br><br>
+                    <strong>[BỐI CẢNH]</strong> Các công việc chính của tôi bao gồm: [Liệt kê 2-3 công việc chính của bạn, ví dụ: chuẩn bị tài liệu cho cuộc họp, trả lời email, sắp xếp lịch trình cho sếp].
+                    <br><br>
+                    <strong>[ĐỊNH DẠNG]</strong> Vui lòng trình bày kế hoạch dưới dạng bảng, bao gồm các cột: Thứ, Buổi (Sáng/Chiều), Công việc ưu tiên, và Ghi chú.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('lesson-audio');
+        const toggleBtn = document.getElementById('toggle-audio-btn');
+
+        let playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                toggleBtn.innerHTML = '🔊';
+                audio.muted = false;
+            }).catch(error => {
+                console.log("Autoplay was prevented. Muting audio.");
+                toggleBtn.innerHTML = '🔇';
+                audio.muted = true;
+            });
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            if (audio.muted) {
+                audio.muted = false;
+                audio.play();
+                toggleBtn.innerHTML = '🔊';
+            } else {
+                audio.muted = true;
+                toggleBtn.innerHTML = '🔇';
+            }
+        });
+    </script>
+
+</body>
+</html>

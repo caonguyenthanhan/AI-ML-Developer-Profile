@@ -52,6 +52,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <i data-lucide="puzzle" class="w-4 h-4 mr-2 inline"></i>
                                 Extensions
                             </a>
+                            </a>
+                            <a href="/education/index.html" class="block hover:text-indigo-300 transition duration-300">
+                                <i data-lucide="puzzle" class="w-4 h-4 mr-2 inline"></i>
+                                Education
+                            </a>
                         </div>
                     </div>
 

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 1: Giới Thiệu và Khả năng của Trí Tuệ Nhân Tạo</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #0056b3;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+        }
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #e9ecef;
+            padding: 12px 15px;
+            border-left: 5px solid #0056b3;
+            border-radius: 5px;
+            font-size: 1.8em;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 5px;
+        }
+        li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+        li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        strong {
+            color: #004a7c;
+        }
+        .practice-card {
+            background: #fdfdff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .practice-card h3 {
+            margin-top: 0;
+            color: #28a745;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #toggle-audio-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="lesson-audio" src="education/audio/bai-1.mp3" autoplay loop></audio>
+    
+    <button id="toggle-audio-btn">🔊</button>
+
+    <div class="container">
+        <h1>Bài 1: Giới Thiệu và Khả năng của Trí Tuệ Nhân Tạo</h1>
+
+        <div id="ly-thuyet" class="section">
+            <h2>🧠 Lý Thuyết</h2>
+            <p><strong>AI</strong> là viết tắt của <strong>Artificial Intelligence</strong>, hay Trí tuệ nhân tạo. Đây là một lĩnh vực của khoa học máy tính, tập trung vào việc tạo ra các hệ thống máy tính có khả năng thực hiện các nhiệm vụ thường đòi hỏi trí thông minh của con người.</p>
+
+            <h3>Các nhánh quan trọng của AI:</h3>
+            <ul>
+                <li><strong>Machine learning (Học máy):</strong> Cho phép máy tính tự học hỏi từ dữ liệu mà không cần được lập trình cụ thể.</li>
+                <li><strong>Deep learning (Học sâu):</strong> Lấy cảm hứng từ cấu trúc não bộ con người, cho phép AI xử lý những vấn đề phức tạp hơn.</li>
+                <li><strong>Generative AI (AI tạo sinh):</strong> Tập trung vào việc tạo ra nội dung mới như hình ảnh, văn bản, và âm nhạc.</li>
+            </ul>
+
+            <h3>Vậy AI có thể làm được những gì?</h3>
+            <ul>
+                <li>Học hỏi và thích nghi theo thời gian.</li>
+                <li>Hiểu và diễn giải ngôn ngữ tự nhiên.</li>
+                <li>Nhận dạng hình ảnh và âm thanh.</li>
+                <li>Ra quyết định và giải quyết vấn đề.</li>
+                <li>Sáng tạo nội dung mới.</li>
+            </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+        <div id="thuc-hanh" class="section">
+            <h2>🚀 Thực Hành</h2>
+
+            <div class="practice-card">
+                <h3>1. Trải nghiệm ứng dụng AI</h3>
+                <ul>
+                    <li><strong>Trợ lý ảo:</strong> Tương tác với Siri hoặc Google Assistant để đặt lịch hẹn.</li>
+                    <li><strong>Dịch máy:</strong> Sử dụng Google Translate để dịch một đoạn văn bản.</li>
+                    <li><strong>Gợi ý tìm kiếm:</strong> Quan sát các gợi ý khi dùng Google Search.</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <h3>2. Sáng tạo với AI</h3>
+                <ul>
+                    <li><strong>Tạo ảnh với AI:</strong> Dùng Bing Image Creator để tạo ảnh từ mô tả.</li>
+                    <li><strong>Viết truyện với AI:</strong> Yêu cầu ChatGPT hoặc Gemini sáng tạo một câu chuyện ngắn.</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <h3>3. Phân tích ví dụ thực tế</h3>
+                <ul>
+                    <li>Thảo luận về các ví dụ ứng dụng AI trong y tế, giáo dục, kinh doanh.</li>
+                    <li>Phân tích cách AI hoạt động trong các dịch vụ bạn dùng (Netflix, Spotify, TikTok).</li>
+                </ul>
+            </div>
+             <div class="practice-card">
+                <h3>💡 Hoạt động nhóm</h3>
+                <ul>
+                    <li>Xây dựng một ý tưởng ứng dụng AI để giải quyết một vấn đề trong lĩnh vực hành chính.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('lesson-audio');
+        const toggleBtn = document.getElementById('toggle-audio-btn');
+
+        // Trình duyệt có thể chặn autoplay, cần tương tác của người dùng
+        // Đoạn code này cố gắng phát âm thanh, nếu thất bại, sẽ chờ người dùng click
+        let playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Autoplay đã bắt đầu thành công
+                toggleBtn.innerHTML = '🔊';
+                audio.muted = false;
+            }).catch(error => {
+                // Autoplay bị chặn, tắt tiếng và chờ người dùng bật
+                console.log("Autoplay was prevented. Muting audio.");
+                toggleBtn.innerHTML = '🔇';
+                audio.muted = true;
+            });
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            if (audio.muted) {
+                audio.muted = false;
+                audio.play(); // Thử phát lại nếu chưa chạy
+                toggleBtn.innerHTML = '🔊';
+            } else {
+                audio.muted = true;
+                toggleBtn.innerHTML = '🔇';
+            }
+        });
+    </script>
+
+</body>
+</html>

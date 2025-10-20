@@ -68,6 +68,14 @@
     {
       "source": "/graduation_preview",
       "destination": "/graduation/preview.html"
+    },
+    {
+      "source": "/education",
+      "destination": "/education/index.html"
+    },
+    {
+      "source": "/education/:guest",
+      "destination": "/education/:guest.html"
     }
   ]
 }
