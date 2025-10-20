@@ -1741,5 +1741,12 @@
         "prompt": "from my photo create a pictures: An epic, ultra-detailed fantasy portrait of the woman from the photo, envisioned as a powerful female warrior or swordswoman. She stands in a dynamic pose, holding out a beautifully crafted sword with golden intricate patterns. She wears a magnificent dark purple and black flowing gown with a sculpted bodice and sheer fabric detailing. Her hair is styled with dramatic blue and purple feathers, and strands of hair appear wind-swept. She looks directly at the viewer with an intense and determined gaze. The background is a striking abstract artwork featuring a large, swirling black circle, splatters of red, and deep red flowers, creating a sense of action and drama. The lighting is dramatic and cinematic, highlighting her fierce expression and the metallic gleam of the sword. 8K resolution, dynamic composition. Don't change the facial det.",
         "imagePath": "/image/genai/d3b36d45-61f5-4fd7-a755-df83df8cf694.png",
         "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 250,
+        "title": "Chân dung siêu thực cùng Vua cá Betta",
+        "prompt": "from my photo create a pictures: A hyper-realistic, surreal portrait of an Asian man dressed in an elegant white tuxedo with a black bow tie. He is standing calmly next to a giant, ethereal white Betta fish (Siamese fighting fish) whose flowing, translucent fins seem to wrap around him. The man has one hand raised in a gentle greeting. The background is a pure, solid black, creating a dramatic high-contrast effect. Add a subtle, realistic water reflection at the bottom of the frame. The lighting should be cinematic and soft, highlighting the textures of the tuxedo and the iridescent glow of the fish's scales. The overall mood is elegant, dreamlike, and majestic. Don't change the facial det.",
+        "imagePath": "/image/genai/fce03797-8f66-4d15-aac4-49a8d2eda795.png",
+        "category": "Portrait Photography"
     }
 ]
