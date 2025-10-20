@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 111,
+        "count": 116,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -19,7 +19,7 @@
         "id": 3,
         "name": "Divine & Spiritual",
         "description": "Hình ảnh thiêng liêng và tâm linh",
-        "count": 9,
+        "count": 12,
         "color": "#F59E0B",
         "icon": "sun"
     },
@@ -27,7 +27,7 @@
         "id": 4,
         "name": "Classical Art Styles",
         "description": "Phong cách hội họa cổ điển của các danh họa",
-        "count": 7,
+        "count": 10,
         "color": "#EF4444",
         "icon": "brush"
     },
@@ -115,7 +115,7 @@
         "id": 15,
         "name": "Fantasy Ancient Style",
         "description": "Huyền Ảo Cổ Trang",
-        "count": 1,
+        "count": 6,
         "color": "#f4fc83",
         "icon": "🦊"
     },

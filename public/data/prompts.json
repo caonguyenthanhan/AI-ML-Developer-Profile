@@ -1629,5 +1629,117 @@
         "prompt": "from my photo create a pictures: A couple (man and woman) sitting closely together on a colorful beach towel spread over soft golden sand, enjoying cold drinks from clear glass bottles with condensation. The man is casually leaning back with one hand propped on the towel, wearing light beige shorts and a short-sleeve white linen shirt slightly unbuttoned, his hair tousled by the sea breeze. The woman is sitting cross-legged beside him, leaning gently against his shoulder with a relaxed posture, wearing a light summer dress in pastel tones, her long hair flowing naturally in the breeze, with sunglasses resting on her head. Both have soft, happy smiles, radiating warmth and intimacy. The mood is carefree and romantic, under a soft golden-hour sunlight casting natural highlights on their skin. Behind them, the turquoise sea stretches toward the horizon with gentle waves, and a few seashells dot the sand around the towel. A wide-angle shot from slightly above eye level captures both the couple and the surrounding beach, emphasizing the serene coastal atmosphere. The style is ultra photo realistic, with natural lighting, vivid colors, and detailed textures of fabric, skin, sand, and water. Don't change the facial det.",
         "imagePath": "/image/genai/7f74b9b9-2505-41ca-8028-6d2862d8c4ed.png",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 234,
+        "title": "Chân dung Nàng Thơ Cổ Trang",
+        "prompt": "from my photo create a pictures: Create a hyper-realistic, ultra-detailed 8K portrait of the woman from the photo, capturing her ethereal beauty as an ancient noblewoman. She is adorned with delicate white and orange floral hair ornaments and a translucent, flowing veil. Her attire is a traditional gown in shades of orange and teal with intricate gold embroidery. The lighting should be soft and warm, reminiscent of professional studio lighting, highlighting her serene and captivating expression. The background should be a soft-focus blend of warm, artistic tones that complement her outfit. Don't change the facial det.",
+        "imagePath": "/image/genai/2688aa86-7953-4156-9829-f2731fc5a1fd.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 235,
+        "title": "Vẻ đẹp Thần tiên Huyền ảo",
+        "prompt": "from my photo create a pictures: A hyper-realistic, mystical close-up portrait of the woman from the photo, portraying her as a serene goddess or an ethereal spirit. She is adorned with a large, cream-colored flower in her hair and an intricate, translucent veil with gold and blue accents. A colorful beaded necklace graces her neck, and a distinct red dot marks her forehead. Ethereal, smoke-like white ribbons should swirl gracefully in the foreground, adding to the magical atmosphere. The lighting must be soft and frontal, creating a divine glow on her face. The style is cinematic and ultra-detailed, with a focus on the textures of the veil and fabric. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/ba21a90f-ed2a-4479-a01c-0818a15091d8.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 236,
+        "title": "Chân dung Nữ hoàng Huyền bí",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic portrait of the mysterious and powerful woman from the photo. She holds a finger to her lips in a shushing gesture, conveying a sense of secrecy and authority. She wears an ornate black and gold headdress with turquoise gems, a semi-transparent white veil, and a black robe. Her accessories include a large turquoise and gold statement necklace, matching long dangling earrings, and a turquoise ring. A key detail is the intricate, flame-like symbol on her forehead. The background is dark and atmospheric, with subtle golden cloud motifs. The lighting is dramatic and focused, creating a regal and ethereal glow that highlights her features and jewelry. Ultra-detailed, 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/7e4efb8f-dca7-4236-8360-f55fca38c100.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 237,
+        "title": "Bức họa Giai nhân",
+        "prompt": "from my photo create a pictures: An ultra-realistic and artistic portrait that emulates a classical oil painting. The subject is the beautiful woman from the photo, captured in an elegant pose, looking over her shoulder with an alluring and gentle expression. Her hair is styled in an intricate updo, adorned with delicate white and pink flowers and a string of pearls. She wears red teardrop earrings and a matching delicate necklace. Her gown is a flowing, layered silk dress in shades of pink and red. The background is a rich, textured crimson red, and soft, blurred flower petals are floating around her to create a dreamy, romantic atmosphere. The lighting should be soft and diffused, similar to the style of a Renaissance portrait. The final image should have the texture and quality of a high-resolution digital painting. Don't change the facial det.",
+        "imagePath": "/image/genai/bf171f7f-c5d9-48cf-8b5b-82b4dd3d51ba.png",
+        "category": "Classical Art Styles"
+    },
+    {
+        "id": 238,
+        "title": "Nữ thần Lửa thiêng",
+        "prompt": "from my photo create a pictures: An 8K ultra-detailed portrait of the woman from the photo, reimagined as a fiery deity or empress. She wears a flowing, off-the-shoulder gown made of translucent red silk and lace. Her dark hair is styled elegantly with delicate gold pins. A striking red cross adorns her forehead. She gazes directly at the viewer with an intense and captivating expression, her hand delicately touching her bare shoulder. The background is a dynamic gradient of deep reds, with subtle, swirling patterns creating a sense of movement and energy, evoking flames or flowing silk. The lighting is dramatic and warm, emphasizing the rich red tones and her radiant skin. Don't change the facial det.",
+        "imagePath": "/image/genai/9a81d0ff-7357-4ff3-b9c8-ee702685d48e.png",
+        "category": "Divine & Spiritual"
+    },
+    {
+        "id": 239,
+        "title": "Nàng tiên Thanh tịnh",
+        "prompt": "from my photo create a pictures: An ultra-realistic and dreamlike portrait of the woman from the photo, envisioned as an ethereal fairy or an ancient noblewoman. She is adorned with an intricate hairstyle featuring white feathers, green and red beads, and delicate turquoise ornaments. Her long, flowing earrings match her elegant jewelry. She wears a traditional blue robe with subtle patterns, and her hand gracefully reaches out to touch strands of sparkling white beads that cascade in the foreground. The background is softly blurred, hinting at an indoor setting with warm, golden light filtering in, creating a serene and magical atmosphere. The image should be 8K resolution, with a focus on capturing her delicate features and the intricate details of her attire and accessories. Don't change the facial det.",
+        "imagePath": "/image/genai/c746e394-2c7a-42d4-b951-857f1b137cf9.png",
+        "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 240,
+        "title": "Nữ thần Hoàng kim",
+        "prompt": "from my photo create a pictures: An ultra-detailed, regal portrait of the woman from the photo, portrayed as an ancient empress or deity. She wears an elaborate golden crown adorned with vibrant gemstones (red, blue, green), along with a rich golden necklace featuring multiple strands of pearls and a prominent green jewel. Her traditional attire consists of a flowing white and gold robe, with long, colorful dangling earrings (red, blue, green) that match the gems in her crown. A subtle red dot marks her forehead. The background features dynamic, swirling golden and white brushstrokes, evoking a sense of divine energy and luxury. The lighting is soft and majestic, highlighting the intricate details of her jewelry and the serene beauty of her expression. Include subtle traditional Asian calligraphy on the left side, integrated harmoniously with the golden background. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/5fec6528-4050-4413-ae2a-9fc964b960cb.png",
+        "category": "Divine & Spiritual"
+    },
+    {
+        "id": 241,
+        "title": "Nữ thần Bóng tối và Vàng kim",
+        "prompt": "from my photo create a pictures: An ultra-realistic and cinematic portrait of the woman from the photo, embodying a powerful and enigmatic empress or goddess. She is shown in a dynamic pose, looking downwards with a thoughtful expression. Her elaborate hairstyle is adorned with a stunning golden headdress featuring leaf and branch motifs, accented with small red beads, and delicate golden hairpins. She wears a rich gown in black, red, and gold, with the fabrics flowing elegantly. The background is a dramatic blend of deep blues and subtle golden speckles, with ethereal blue and gold smoky trails swirling around her, creating a mystical and powerful atmosphere. The lighting should be soft but dramatic, highlighting the textures of her garments and the intricate details of her golden accessories against the darker background. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/821bfe46-f042-40ad-b13c-c7193eab186f.png",
+        "category": "Divine & Spiritual"
+    },
+    {
+        "id": 242,
+        "title": "Nàng tiên Thanh Xuân",
+        "prompt": "from my photo create a pictures: An ultra-detailed, whimsical portrait of the woman from the photo, envisioned as a graceful forest fairy or a mystical nature spirit. She is dressed in a flowing, layered gown in shades of white and teal green, with long, delicate teal ribbons trailing around her. Her hair is styled in an elegant bun, adorned with a teal butterfly and floral accents. She looks directly at the viewer with a gentle and enchanting expression. The background is a magical, softly blurred forest scene with delicate pink blossoms, floating golden light particles, and subtle hints of butterflies, creating a dreamy and ethereal atmosphere. The lighting is soft and magical, emphasizing her delicate features and the glowing elements. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/6868f020-b809-4504-8642-501d1816d330.png",
+        "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 243,
+        "title": "Nữ thần Mặc Thủy",
+        "prompt": "from my photo create a pictures: A hyper-realistic portrait of the serene and majestic woman from the photo. She gazes directly at the viewer with a calm and powerful expression. She is dressed in multi-layered traditional robes in muted tones of gray, sage green, and dark blue, with subtle gold embroidery on the collar. Her hair is in an elegant updo, secured with an ornate dark hairpin, and she wears simple turquoise earrings. A small red dot is visible on her forehead. The background is abstract and artistic, featuring a bright sky with dynamic, swirling ink-wash or smoke patterns in shades of dark blue and gray that flow around her. The lighting is soft and frontal, creating a gentle and serene mood. The style should be a blend of photorealism for the subject and traditional ink-wash painting for the background elements. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/660cc27e-dda6-4d4c-a6ad-83bfb7b0018b.png",
+        "category": "Classical Art Styles"
+    },
+    {
+        "id": 244,
+        "title": "Nữ thần Cổ tích Hoàng gia",
+        "prompt": "from my photo create a pictures: An ultra-detailed, full-body portrait of the enchanting woman from the photo, portrayed as a royal figure or deity. She wears an elaborate, off-the-shoulder gown in rich shades of deep purple, lavender, and gold, with sheer, flowing sleeves and ribbons. Her intricate hairstyle is adorned with a magnificent golden crown featuring a prominent purple gem, along with delicate golden hair ornaments and dangling chains. A subtle red dot marks her forehead. She gazes directly at the viewer with a captivating expression. The background is a dreamy and ethereal blend of soft, golden light and elegant, swirling golden fabrics or energy, creating a luxurious and divine atmosphere. The lighting is soft and golden, highlighting her features and the rich textures of her attire. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/02be2389-000e-4f83-b20e-3a33b44ac9ac.png",
+        "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 245,
+        "title": "Nữ chiến binh Thần thoại",
+        "prompt": "from my photo create a pictures: An ultra-realistic portrait of the woman from the photo, reimagined as a mythical warrior or a powerful ancient figure. She wears a simple yet striking red dress or tunic, accented with a delicate red choker. Her long, dark hair is styled to appear wind-swept, with a red ribbon tied around her forehead and another holding a partial bun. A small, vibrant red dot marks her forehead, adding to her mystique. She gazes directly at the viewer with a strong and captivating expression. The background is a clean, neutral, light gray, allowing full focus on her. The lighting is soft and even, emphasizing her delicate features and the flowing nature of her hair and attire. 8K resolution, high-detail. Don't change the facial det.",
+        "imagePath": "/image/genai/0a44dcb9-f2c0-4a5e-aa43-948669953e36.png",
+        "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 246,
+        "title": "Nàng thơ Hồng nhan",
+        "prompt": "from my photo create a pictures: A high-fashion, ultra-realistic portrait of the beautiful woman from the photo, styled with a classical and artistic aesthetic. She wears a layered, flowing off-the-shoulder gown in red, black, and white, with the red fabric exhibiting a beautiful watercolor or ink-wash texture. Her dark hair is styled in an elegant updo with some wind-swept strands and a small ornate hairpin. A key feature is the pair of very long, elaborate dangling earrings made from turquoise, red beads, and intricate gold metalwork. The background is a soft, light gray, with blurred red petals floating around her to create a romantic and dynamic atmosphere. The lighting is bright and soft, enhancing her delicate features. The overall style should blend photorealism with the delicate beauty of a watercolor painting. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/2300804f-b170-4d89-8ea6-fdd97eb3216e.png",
+        "category": "Classical Art Styles"
+    },
+    {
+        "id": 247,
+        "title": "Nét đẹp Hồng Nhan",
+        "prompt": "from my photo create a pictures: A clean, ultra-realistic studio portrait of the elegant woman from the photo, capturing a timeless and serene beauty. She is dressed in a simple yet elegant traditional red robe with a high collar, layered over a white garment. Her dark hair is styled in a classic updo with red ribbons woven through it. She wears beautiful red tassel earrings and has a distinct red dot on her forehead. The background should be a simple, neutral, off-white or light beige. The lighting is soft, even, and frontal, beautifully illuminating her features. The style should be a high-resolution, professional studio photograph with sharp focus and natural skin textures. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/01d39b7b-0a07-4470-a772-b329b25d955d.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 248,
+        "title": "Nàng thơ Ôm dù",
+        "prompt": "from my photo create a pictures: An ultra-realistic and vibrant full-body portrait of the elegant woman from the photo. She is holding a classic paper umbrella, looking directly at the viewer with a captivating expression. Her traditional attire consists of flowing layers in shades of cream, orange, and red. Her dark hair is styled with intricate braids, adorned with delicate flowers and foliage. She wears a red beaded bracelet. The background is an ancient Asian architectural setting, possibly a temple or traditional courtyard, with soft, natural daylight creating a warm and inviting atmosphere. The image should be 8K resolution, with fine details on her clothing, hair, and the architectural elements. Don't change the facial det.",
+        "imagePath": "/image/genai/b540560d-0b13-4e5f-ac80-145cea3187a3.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 249,
+        "title": "Nữ kiếm sĩ Huyền thoại",
+        "prompt": "from my photo create a pictures: An epic, ultra-detailed fantasy portrait of the woman from the photo, envisioned as a powerful female warrior or swordswoman. She stands in a dynamic pose, holding out a beautifully crafted sword with golden intricate patterns. She wears a magnificent dark purple and black flowing gown with a sculpted bodice and sheer fabric detailing. Her hair is styled with dramatic blue and purple feathers, and strands of hair appear wind-swept. She looks directly at the viewer with an intense and determined gaze. The background is a striking abstract artwork featuring a large, swirling black circle, splatters of red, and deep red flowers, creating a sense of action and drama. The lighting is dramatic and cinematic, highlighting her fierce expression and the metallic gleam of the sword. 8K resolution, dynamic composition. Don't change the facial det.",
+        "imagePath": "/image/genai/d3b36d45-61f5-4fd7-a755-df83df8cf694.png",
+        "category": "Fantasy Ancient Style"
     }
 ]
