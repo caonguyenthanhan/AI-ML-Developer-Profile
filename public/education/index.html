@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Khóa học: Trí Tuệ Nhân Tạo Ứng Dụng trong Hành chính</title>
+    <link rel="stylesheet" href="../styles/globals.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -76,6 +79,103 @@
         .sidebar h3 {
             color: #28a745;
         }
+        
+        /* Header Styles */
+        .header-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .avatar-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .avatar-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid white;
+            transition: transform 0.3s ease;
+        }
+        
+        .avatar-image:hover {
+            transform: scale(1.1);
+        }
+        
+        .navigation {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover,
+        .nav-item.active {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Course Menu Styles */
+        .course-menu-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .course-menu h3 {
+            color: #0056b3;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .course-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .course-menu li {
+            margin-bottom: 8px;
+        }
+        
+        .course-menu a {
+            text-decoration: none;
+            color: #004085;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .course-menu a:hover,
+        .course-menu a.active {
+            background-color: #0056b3;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -84,6 +184,24 @@
         <div class="header">
             <h1>Khóa học: Trí Tuệ Nhân Tạo Ứng Dụng trong Hành chính</h1>
             <p>Chi tiết và Trực quan - Nâng cao hiệu suất công việc của bạn với AI</p>
+        </div>
+
+        <!-- Course Menu -->
+        <div class="course-menu-container">
+            <nav class="course-menu">
+                <h3>Danh sách bài học</h3>
+                <ul>
+                    <li><a href="/education/bai-1" class="active">Bài 1: Giới thiệu AI</a></li>
+                    <li><a href="/education/bai-2">Bài 2: Kỹ năng và tư duy</a></li>
+                    <li><a href="/education/bai-3">Bài 3: Tự động hóa công việc</a></li>
+                    <li><a href="/education/bai-4">Bài 4: Tự động hóa ghi chép</a></li>
+                    <li><a href="/education/bai-5">Bài 5: Tư duy viết Prompt</a></li>
+                    <li><a href="/education/bai-6">Bài 6: Cấu trúc thông tin với AI</a></li>
+                    <li><a href="/education/bai-7">Bài 7: AI cho công việc Logic</a></li>
+                    <li><a href="/education/bai-8">Bài 8: Nâng cao chất lượng Prompt</a></li>
+                    <li><a href="/education/bai-9">Bài 9: Kết hợp các công cụ AI</a></li>
+                </ul>
+            </nav>
         </div>
 
         <div class="course-content">
@@ -114,6 +232,14 @@
             </div>
         </div>
     </div>
+
+    <!-- Load Header and Footer -->
+    <script src="../assets/js/header.js"></script>
+    <script src="../assets/js/footer-only.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
 
 </body>
 </html>
