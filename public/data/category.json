@@ -166,5 +166,13 @@
         "count": 2,
         "color": "#A855F7",
         "icon": "✨"
+    },
+    {
+        "id": 22,
+        "name": "Digital Art",
+        "description": "Nghệ thuật kỹ thuật số",
+        "count": 1,
+        "color": "#8B5CF6",
+        "icon": "🎨"
     }
 ]
