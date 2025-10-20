@@ -1594,5 +1594,40 @@
         "prompt": "from my photo create a pictures: A hyper-realistic image with surreal elements, depicting a smiling Asian man with short black hair and glasses, wearing a red T-shirt, olive green cargo pants, and white sandals. He is riding a classic red Kawasaki motorcycle that is emerging from a large smartphone screen, which is positioned vertically in a vast expanse of calm blue ocean water. The motorcycle is kicking up realistic splashes of water as it moves. A small, orange tabby cat with stripes sits comfortably on the man's right shoulder, looking towards the viewer. The smartphone screen, which frames the man and the motorcycle, shows a blurred, modern living room interior in the background, complete with a sofa, table, and lamp, suggesting a transition from the digital world to reality. The sky above is clear blue with several small birds flying in the distance. The lighting is bright and natural, creating clear reflections on the water and motorcycle, with a dynamic composition that emphasizes movement and the surreal blend of digital and real worlds.",
         "imagePath": "/image/genai/b14897ca-35e4-4e67-8112-bedf6ae6fee1.png",
         "category": "Digital Art"
+    },
+    {
+        "id": 229,
+        "title": "Bé Yêu Ngọt Ngào Bên Bánh Cupcake",
+        "prompt": "from my photo create a pictures: A slightly chubby 2-year-old child posing sweetly while holding a chocolate cupcake with white cream frosting and cute decorations on top. She has long brown hair tied in two slightly voluminous pigtails, with thin bangs, adorned with small doll-shaped hair clips, 6 small ribbons in dark brown and light brown, and sweet brown-toned accessories that give an adorable impression. Her face is adorned with soft makeup, rosy pink cheeks, natural glossy lips, and large luminous eyes displaying a gentle and joyful expression. The child is wearing a tank top with straps tied at the back and a thick, slightly fluffy brown knitted sweater with long, loose sleeves that appear to be slipping off one shoulder, featuring a mini teddy bear motif, enhancing the playful and girly vibe. Her fingernails are neatly manicured with shiny white and brown nail polish, consistent with the overall sweet and elegant style. A plain pastel pink background, harmonizing with a warm white-yellowish light behind, keeps the focus entirely on the child, her fashion style, and the cake she is holding. The photo's ambiance conveys a cheerful, cute, and warm impression, like a magazine-style portrait with a kawaii and cozy feel. Don't change the facial det.",
+        "imagePath": "/image/genai/e9242921-d8cb-4b3d-8c5b-c56fb32ff979.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 230,
+        "title": "Chân Dung Cưới Studio Lãng Mạ",
+        "prompt": "from my photo create a pictures: A studio wedding portrait of a young couple in front of a burgundy red backdrop. The groom wears a black three-piece suit, a white shirt, and a patterned red tie, turning towards the bride with an affectionate gaze and a gentle smile. The bride, in a traditional burgundy red \"ao dai\" and a red veil, holds a bouquet of red and yellow flowers and smiles gracefully at the groom. The scene is lit with soft, warm studio lighting, featuring subtle rim light and a shallow depth of field. The style is minimalist portrait, photorealistic, and ultra-detailed, focusing on fabric texture, skin, and lighting. Don't change the facial det.",
+        "imagePath": "/image/genai/e2052de5-9522-4927-904e-83f9dc54d286.png",
+        "category": "Wedding Day"
+    },
+    {
+        "id": 231,
+        "title": "Em Bé Gấu Trúc Trên Đĩa Thức Ăn",
+        "prompt": "from my photo create a pictures: A cute baby dressed in a panda costume, lying on a large plate of food. The baby is surrounded by rice, broccoli, carrot sticks, cucumber slices, and chopped vegetables, holding a pair of chopsticks with a fried egg placed on the belly. The scene is styled like a playful food dish, bright and humorous photography style. Don't change the facial det.",
+        "imagePath": "/image/genai/bc65a213-7786-4eb7-a3fe-04c4401df074.png",
+        "category": "Whimsical & Humorous Food Art"
+    },
+    {
+        "id": 232,
+        "title": "Bé Gái và Cánh Đồng Oải Hương",
+        "prompt": "from my photo create a pictures: A hyper-realistic portrait of a 5-year-old girl, face taken from the original photo, with chubby cheeks and big round eyes. Female, braided hair, wearing a cute floral dress, standing in a lavender field. Captured with Canon EOS R5, ultra-detailed skin texture, 8K resolution, 85mm lens effect, f/1.8 aperture, natural soft lighting, vibrant and bright color style, shallow depth of field, smooth bokeh background. Don't change the facial det.",
+        "imagePath": "/image/genai/a0f0664a-09fc-4ad5-b2f3-c70c9f6b1a35.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 233,
+        "title": "Khoảnh Khắc Lãng Mạn trên Bãi Biển",
+        "prompt": "from my photo create a pictures: A couple (man and woman) sitting closely together on a colorful beach towel spread over soft golden sand, enjoying cold drinks from clear glass bottles with condensation. The man is casually leaning back with one hand propped on the towel, wearing light beige shorts and a short-sleeve white linen shirt slightly unbuttoned, his hair tousled by the sea breeze. The woman is sitting cross-legged beside him, leaning gently against his shoulder with a relaxed posture, wearing a light summer dress in pastel tones, her long hair flowing naturally in the breeze, with sunglasses resting on her head. Both have soft, happy smiles, radiating warmth and intimacy. The mood is carefree and romantic, under a soft golden-hour sunlight casting natural highlights on their skin. Behind them, the turquoise sea stretches toward the horizon with gentle waves, and a few seashells dot the sand around the towel. A wide-angle shot from slightly above eye level captures both the couple and the surrounding beach, emphasizing the serene coastal atmosphere. The style is ultra photo realistic, with natural lighting, vivid colors, and detailed textures of fabric, skin, sand, and water. Don't change the facial det.",
+        "imagePath": "/image/genai/7f74b9b9-2505-41ca-8028-6d2862d8c4ed.png",
+        "category": "Lifestyle & Nature"
     }
 ]

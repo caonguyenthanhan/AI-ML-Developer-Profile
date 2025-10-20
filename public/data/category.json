@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 109,
+        "count": 111,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 32,
+        "count": 33,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -51,7 +51,7 @@
         "id": 7,
         "name": "Wedding Day",
         "description": "Chụp ảnh cưới và sự kiện đặc biệt",
-        "count": 2,
+        "count": 3,
         "color": "#EC4899",
         "icon": "heart"
     },
@@ -174,5 +174,13 @@
         "count": 1,
         "color": "#8B5CF6",
         "icon": "🎨"
+    },
+    {
+        "id": 23,
+        "name": "Whimsical & Humorous Food Art",
+        "description": "Nghệ thuật Ẩm thực Vui nhộn",
+        "count": 1,
+        "color": "#FFC107",
+        "icon": "🍜"
     }
 ]
