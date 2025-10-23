@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 117,
+        "count": 126,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -182,5 +182,13 @@
         "count": 1,
         "color": "#FFC107",
         "icon": "🍜"
+    },
+    {
+        "id": 24,
+        "name": "Historical & Cultural",
+        "description": "Lịch sử & Văn hóa",
+        "count": 1,
+        "color": "#A0522D",
+        "icon": "book-open"
     }
 ]
