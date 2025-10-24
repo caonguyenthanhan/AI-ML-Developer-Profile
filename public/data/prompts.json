@@ -1965,5 +1965,12 @@
         "prompt": "from my photo create a pictures: A striking, ultra-realistic full-length portrait of a young East Asian woman. The face must match exactly the person in the reference image, preserving facial structure, skin tone, and genuine skin (do not change the faces). She possesses delicate, ethereal features, including defined arched eyebrows, long dark lashes, fair complexion with a rosy blush, and glossy red lips. Her dark, voluminous, slightly wavy hair cascades down with messy curls. She is wearing a loose-fitting dress in a deep magenta or plum color with a rich textured or patterned finish and a halter-style neckline. The focal accessory is an intricately designed handbag resembling a traditional Chinese lion dance head, featuring vibrant colors (red, orange, yellow) and a long, multi-toned purple and pink tassel. She holds a light-colored wooden stick extending upwards from the bag, leaning casually against a stone pillar or doorframe. The setting is a historic, traditional indoor architectural space with arched doorways and textured stone. Soft, dramatic, and ethereal lighting highlights the luxurious fabrics and the delicate features. Style & Quality: Ultra-detailed silk textures, intricate embroidery, high-fashion editorial photography style, HDR, 8K resolution, professional fashion shoot. Don't change the facial det.",
         "imagePath": "/image/genai/9cedb069-ebb9-4576-b95d-55f082b83931.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 282,
+        "title": "Trang Web Infographic Tĩnh: Quy trình Tạo Prompt AI",
+        "prompt": "Tạo một trang web đồ họa thông tin dựa trên nội dung của tài liệu này, đảm bảo rằng phong cách, bảng màu và các yếu tố trực quan được thiết kế chu đáo để phù hợp với chủ đề của tài liệu; Tránh sử dụng bất kỳ yếu tố chuyển động hoặc hoạt hình nào và tập trung vào việc tạo ra một thiết kế tĩnh hấp dẫn và gắn kết về mặt thị giác.",
+        "imagePath": "/image/genai/416eb9b8-6a1a-40a3-b225-000ac8dc156f.png",
+        "category": "Web Design & UI/UX "
     }
 ]

@@ -190,5 +190,13 @@
         "count": 1,
         "color": "#A0522D",
         "icon": "book-open"
+    },
+    {
+        "id": 25,
+        "name": "Web Design & UI/UX ",
+        "description": "Thiết kế Web & Giao diện",
+        "count": 1,
+        "color": "#4F46E5",
+        "icon": "<svg>...</svg>"
     }
 ]
