@@ -1972,5 +1972,19 @@
         "prompt": "Tạo một trang web đồ họa thông tin dựa trên nội dung của tài liệu này, đảm bảo rằng phong cách, bảng màu và các yếu tố trực quan được thiết kế chu đáo để phù hợp với chủ đề của tài liệu; Tránh sử dụng bất kỳ yếu tố chuyển động hoặc hoạt hình nào và tập trung vào việc tạo ra một thiết kế tĩnh hấp dẫn và gắn kết về mặt thị giác.",
         "imagePath": "/image/genai/416eb9b8-6a1a-40a3-b225-000ac8dc156f.png",
         "category": "Web Design & UI/UX "
+    },
+    {
+        "id": 283,
+        "title": "Cosplay Lưu Diệc Phi Trình Diễn Thời Trang Lộng Lẫy",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic image capturing the woman from the uploaded photo cosplaying as Liu Yifei, walking confidently down a high-fashion runway during a glamorous fashion show. She is wearing the same elegant off-the-shoulder white ball gown with intricate pink and green floral embroidery as seen in the reference image. The runway is illuminated by bright spotlights, casting dramatic lighting. The background features a blurred audience and flashes from photographers. The style should emulate high-fashion photography, glamorous, ultra-realistic, with sharp focus on the model, 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/4c5bda86-02be-425c-aa4c-3491f0f8ae0d.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 284,
+        "title": "Cosplay Lưu Diệc Phi Sải Bước Trên Sàn Diễn Thời Trang",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic photograph capturing the woman from the uploaded images cosplaying as Liu Yifei, walking confidently down a high-fashion runway. She is wearing the elegant off-the-shoulder white ball gown with intricate pink and green floral embroidery and textured fabric, exactly as shown in the references. Ensure she wears the specific ruby-colored necklace and matching bracelet. Her hair is styled in the elegant updo adorned with the prominent blue and white floral hairpiece seen in the images. Her makeup features defined eyes and bold red lipstick, matching the reference photos. The runway is illuminated by bright spotlights, creating dramatic lighting and highlighting the textures of the gown. The background shows a blurred audience and intermittent flashes from photographers. The style should be glamorous high-fashion photography, ultra-realistic, with sharp focus on the model, 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/5f66166c-7187-4fc8-885b-f68bd1869767.png",
+        "category": "Portrait Photography"
     }
 ]

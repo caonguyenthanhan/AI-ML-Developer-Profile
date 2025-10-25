@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 140,
+        "count": 142,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -198,5 +198,13 @@
         "count": 1,
         "color": "#4F46E5",
         "icon": "<svg>...</svg>"
+    },
+    {
+        "id": 26,
+        "name": "Video Generation",
+        "description": "Category Video Generation",
+        "count": 0,
+        "color": "#00B0C7",
+        "icon": "play/video"
     }
 ]
