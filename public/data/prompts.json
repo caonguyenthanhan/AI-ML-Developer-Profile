@@ -2000,5 +2000,26 @@
         "prompt": "from my photo create a pictures: A beautiful woman looking back over her shoulder with a gentle smile. She is wearing a stunning, ethereal golden dress made of shimmering, translucent fabric with large, puffy off-the-shoulder sleeves and an open back design. A matching wide-brimmed golden hat adorns her head, outlined with sparkling lights like tiny stars. Her dark hair is styled in a long, intricate braid woven with golden threads or lights. The atmosphere is magical and enchanting. The dress and hat emit a soft golden glow, covered in countless sparkles that catch the light. The background is a dark night sky filled with twinkling blue and white stars or bokeh effects. Soft, ethereal lighting highlights her features and the glittering details. Digital painting style, fantasy art, glamorous, high detail, photorealistic elements. Don't change the facial det.",
         "imagePath": "/image/genai/65e88bb0-244e-4a3d-90af-e6ff37e16147.png",
         "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 287,
+        "title": "Chân dung éditorial denim trên nền báo cũ",
+        "prompt": "from my photo create a pictures: An editorial fashion portrait of a beautiful woman standing confidently against a backdrop covered entirely in overlapping vintage newspapers. She is wearing a stylish full denim outfit: a knotted tube top, high-waisted jeans cinched with a black belt featuring a prominent gold buckle, and a denim jacket draped open over her shoulders. One hand casually rests in her jeans pocket, while the other holds a rolled-up newspaper. The scene is illuminated by warm, dramatic golden hour sunlight, casting strong, defined shadows across her figure and the newspaper background. The mood is chic and nostalgic. Photorealistic style, cinematic lighting, sharp focus on the subject. Don't change the facial det.",
+        "imagePath": "/image/genai/dd709ee3-75ec-42b1-8889-22ce5466c1fb.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 288,
+        "title": "Chân dung doanh nhân lịch lãm trong phòng làm việc",
+        "prompt": "from my photo create a pictures: A sophisticated portrait of a man (using the face from the reference image), sitting confidently in a classic brown leather armchair. He is wearing a sharp, dark pinstripe three-piece suit, including a vest, paired with a crisp white dress shirt and a dark tie. He wears glasses, has neat hair, a star-shaped lapel pin, and a silver chain accessory attached to the vest. His hands are elegantly adjusting his tie while looking directly at the camera. The background is a warm, softly blurred office or library setting with visible bookshelves. Professional studio lighting creates a warm, sophisticated ambiance with soft highlights and gentle shadows, emphasizing the textures of the suit and leather chair. The style is polished, editorial, and highly realistic. Cinematic portrait. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/cd7811ab-3b75-4b51-b546-77902b3f87df.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 289,
+        "title": "Ảo thuật gia lôi cuốn với những quân bài bay lượn",
+        "prompt": "from my photo create a pictures: A charismatic Asian male magician, maintaining the exact facial features from the reference photo, is captured in a dynamic, mid-action pose, making playing cards levitate around him in a circular pattern. He is dressed in a striking black sequined shirt, open at the collar, and dark trousers. His expression is intense and focused, looking directly at the viewer. The background is a luxurious, dimly lit interior, possibly a high-end lounge or casino, with elegant decor and soft, atmospheric lighting. The floating cards are sharply defined, creating a sense of magic and movement. Dramatic, theatrical lighting highlights the magician and the cards, emphasizing the sparkle of his shirt and the glow of the scene. Photorealistic, high-energy, and captivating. Don't change the facial det.",
+        "imagePath": "/image/genai/07a8a685-cb4b-435a-a866-b00fd9c11849.png",
+        "category": "Action & Adventure"
     }
 ]
