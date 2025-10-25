@@ -2021,5 +2021,12 @@
         "prompt": "from my photo create a pictures: A charismatic Asian male magician, maintaining the exact facial features from the reference photo, is captured in a dynamic, mid-action pose, making playing cards levitate around him in a circular pattern. He is dressed in a striking black sequined shirt, open at the collar, and dark trousers. His expression is intense and focused, looking directly at the viewer. The background is a luxurious, dimly lit interior, possibly a high-end lounge or casino, with elegant decor and soft, atmospheric lighting. The floating cards are sharply defined, creating a sense of magic and movement. Dramatic, theatrical lighting highlights the magician and the cards, emphasizing the sparkle of his shirt and the glow of the scene. Photorealistic, high-energy, and captivating. Don't change the facial det.",
         "imagePath": "/image/genai/07a8a685-cb4b-435a-a866-b00fd9c11849.png",
         "category": "Action & Adventure"
+    },
+    {
+        "id": 290,
+        "title": "Chân dung doanh nhân chuyên nghiệp với ánh sáng kịch tính",
+        "prompt": "from my photo create a pictures: A highly realistic, professional studio portrait of a man (keeping the exact facial features, glasses, and hairstyle from the reference photo). He is wearing a sharp dark suit, a white dress shirt, a grey tie, and a matching vest. He gazes slightly upwards and to the right with a thoughtful or aspirational expression. The lighting is dramatic studio lighting with high contrast, illuminating one side of his face while casting the other in deep shadow. Subtle rim lighting highlights his shoulder and hair. The background is a plain, dark or black backdrop. Close-up portrait framing (head and shoulders). The style is polished, professional, photorealistic, and cinematic. 8K resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/3afdb4d4-208c-4d82-90f3-a944e6cd07f2.png",
+        "category": "Portrait Photography"
     }
 ]
