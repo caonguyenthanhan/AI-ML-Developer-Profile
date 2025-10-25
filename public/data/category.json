@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 38,
+        "count": 39,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -99,7 +99,7 @@
         "id": 13,
         "name": "Fantasy Sci-Fi",
         "description": "Khoa học viễn tưởng giả tưởng",
-        "count": 4,
+        "count": 5,
         "color": "#8A2BE2",
         "icon": "🌌"
     },
