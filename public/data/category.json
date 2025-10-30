@@ -19,7 +19,7 @@
         "id": 3,
         "name": "Divine & Spiritual",
         "description": "Hình ảnh thiêng liêng và tâm linh",
-        "count": 15,
+        "count": 16,
         "color": "#F59E0B",
         "icon": "sun"
     },
@@ -206,5 +206,13 @@
         "count": 0,
         "color": "#00B0C7",
         "icon": "play/video"
+    },
+    {
+        "id": 27,
+        "name": "Fantasy & Seasonal",
+        "description": "Giả tưởng & Lễ hội",
+        "count": 2,
+        "color": "#FF5733",
+        "icon": "ghost"
     }
 ]
