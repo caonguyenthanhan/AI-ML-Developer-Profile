@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 147,
+        "count": 156,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -19,7 +19,7 @@
         "id": 3,
         "name": "Divine & Spiritual",
         "description": "Hình ảnh thiêng liêng và tâm linh",
-        "count": 13,
+        "count": 15,
         "color": "#F59E0B",
         "icon": "sun"
     },
@@ -35,7 +35,7 @@
         "id": 5,
         "name": "Vietnamese Mythology",
         "description": "Thần thoại và truyền thuyết Việt Nam",
-        "count": 23,
+        "count": 24,
         "color": "#10B981",
         "icon": "moon"
     },
@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 39,
+        "count": 49,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -99,7 +99,7 @@
         "id": 13,
         "name": "Fantasy Sci-Fi",
         "description": "Khoa học viễn tưởng giả tưởng",
-        "count": 5,
+        "count": 6,
         "color": "#8A2BE2",
         "icon": "🌌"
     },
