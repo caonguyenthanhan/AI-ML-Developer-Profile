@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 145,
+        "count": 147,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -27,7 +27,7 @@
         "id": 4,
         "name": "Classical Art Styles",
         "description": "Phong cách hội họa cổ điển của các danh họa",
-        "count": 11,
+        "count": 12,
         "color": "#EF4444",
         "icon": "brush"
     },
@@ -51,7 +51,7 @@
         "id": 7,
         "name": "Wedding Day",
         "description": "Chụp ảnh cưới và sự kiện đặc biệt",
-        "count": 3,
+        "count": 4,
         "color": "#EC4899",
         "icon": "heart"
     },
