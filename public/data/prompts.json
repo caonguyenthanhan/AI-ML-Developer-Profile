@@ -2301,5 +2301,82 @@
         "prompt": "from my photo create a pictures: A festive and cozy Christmas portrait of a woman (use 100% the uploaded face as the identity reference, keeping the face natural and realistic with correct proportions and skin texture), captured in warm soft indoor lighting surrounded by holiday decorations. Outfit: She wears a fuzzy oversized green sweater that looks cozy and warm, styled as a mini sweater dress. Her outfit is paired with long white socks and brown leather knee boots with buckled straps, blending comfort with a festive touch. Accessories: On her head is a whimsical mini Christmas tree hat decorated with tiny ornaments and topped with a white ribbon bow. Her hair is styled into two messy twin buns, with loose curls framing her face and pink butterfly hair clips adding a playful accent. Makeup: Youthful, sweet, and radiant — natural porcelain skin with a dewy finish, rosy blush across the cheeks and nose, glossy nude-pink lips, and bright eyes enhanced with light shimmer and curled lashes. Brows are soft brown, delicately shaped for a gentle, innocent expression. Pose: The girl kneels gracefully on a soft cream blanket with both hands pulled up near her chin, clutching the collar of her sweater shyly. Her head tilts slightly to one side with a warm, gentle smile and sparkling eyes — radiating a cozy, playful holiday charm. Lighting & Mood: Soft warm lighting from the front and side creates a dreamy glow, enhancing the cozy textures of her sweater and the softness of her skin. The atmosphere feels cheerful, tender, and festive — evoking the joy of Christmas morning. Background & Composition: Set in a simple indoor scene with minimal yet festive decorations: a snow-dusted Christmas tree adorned with red and gold baubles, a small green pine arrangement with red berries on a knitted cream blanket, and subtle bokeh lights adding depth. The neutral wall background keeps focus on her and the warm color tones. Overall Style: Playful, cozy, and heartwarming Christmas portrait — combining festive spirit with a youthful, elegant charm. Ultra-realistic detail, pastel color tones, soft cinematic lighting. Don't change the facial det.",
         "imagePath": "/image/genai/94bad892-ba7d-4d1f-a0b3-c40b179d859e.png",
         "category": "Fantasy & Seasonal"
+    },
+    {
+        "id": 330,
+        "title": "Chân dung thầy giáo dưới tán phượng vĩ giờ vàng",
+        "prompt": "from my photo create a pictures: Cinematic mid-shot of a Vietnamese male teacher, wearing a light blue shirt, standing under a flamboyant tree in the schoolyard during golden hour. Sunlight is glowing from behind, with leaves falling gently. The tone is nostalgic and inspirational. ultra-realistic 8K photograph. Don't change the facial det and hairstyle.",
+        "imagePath": "/image/genai/67d283ce-52be-40fb-a372-58d8549fd548.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 331,
+        "title": "Chân dung Lãng mạn Cận cảnh với Hoa mẫu",
+        "prompt": "from my photo create a pictures: Use the exact real face from the attached photo, 100% unchanged. A vertical, close-up portrait of a young adult female with her wavy brown hair flowing over her shoulder, surrounded by pastel pink peonies. The composition focuses on the subject's face and bare shoulder, featuring a romantic pose partially embracing the bouquet. The lighting is soft, natural light, shining from the front and above, creating a gentle glow on the skin, highlighting her porcelain skin and vibrant pink blush on the cheeks. The overall color is a warm pastel palette, combining the dusty pink of the flowers with the off-white of the attire/fabric, creating a dreamy, ethereal and classic romance feel. The subject is looking slightly down with a distant gaze and a tender, wistful expression. [Wearing sheer white or cream fabric/attire]. Close-up shot, vertical orientation, 2:3 aspect ratio, 8k, photorealistic, ultra detail. Shot with a telephoto lens with shallow depth of field.",
+        "imagePath": "/image/genai/c4ab7f3a-917a-44e8-bdfb-8cfa5dbd8014.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 332,
+        "title": "Chân dung Cận cảnh Kịch tính",
+        "prompt": "from my photo create a pictures: Use the exact real face from the attached photo, 100% unchanged. An Extreme Close-up portrait, vertical orientation. The subject's face is slightly angled, looking down, with a fierce and sultry expression. Long, dark hair is styled loosely and obscures a large portion of the face, revealing only the sharp contours of the cheek and bold red lips. The background is dark and indistinct. A hard, single light source shines from one side, creating deep, sharp cut shadows that cover most of the face and body. This light simultaneously creates a strong rim light around the hair, separating the subject from the dark background. The overall color palette is deep golden-brown and peachy pink, with high saturation and extremely high contrast between the bright highlights and the deep shadows. Extremely shallow depth of field blurs everything except the lips and cheek. The style is Moody Cinematic, Glamour, and dramatic. [She wears a dark jacket hanging loosely, a fiery red undergarment, red lipstick]. 2:3 aspect ratio, 8k, photorealistic, ultra detail, subtle film grain, shot with a Medium Format camera, Kodak Ektar 100 film",
+        "imagePath": "/image/genai/3c332e2d-2467-47d9-b8e3-6a7cc4addb58.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 333,
+        "title": "Vẻ đẹp An nhiên trên Thuyền hoa Súng",
+        "prompt": "from my photo create a pictures: A cinematic, ultra-realistic overhead (top-down) shot of a beautiful young Vietnamese woman wearing a pristine white Ao Dai, lying peacefully in a small wooden boat. She is drifting on a tranquil pond filled with green lily pads and blooming pink water lilies. Her eyes are closed, hands resting behind her head in a relaxed pose. An arc of vibrant pink water lilies frames her head at the bow of the boat. A traditional Vietnamese conical hat (Nón Lá), a small clay pot, and a folded umbrella rest beside her. The lighting is soft and natural, illuminating the scene with a serene and dreamy atmosphere. 8K, photorealistic, ultra detail. Don't change the facial det.",
+        "imagePath": "/image/genai/5afa737f-5cd3-423e-8ff0-5b87c267697c.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 334,
+        "title": "Khoảnh khắc hài hước trên đỉnh thành phố",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic shot of the man from the uploaded photo, casually sitting in a metal crane basket dangling hundreds of feet above a sprawling city skyline (like New York City). He is wearing a denim jacket, yellow t-shirt, and yellow sneakers, smiling at the camera while casually eating an ice cream cone. The image captures the humorous juxtaposition of a relaxing moment in a perilous location on a bright, sunny day. Ultra-realistic 8K. Don't change the facial det.",
+        "imagePath": "/image/genai/c4bf6b22-fbe3-4d03-9c6f-d6cb28408ca0.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 335,
+        "title": "Chân dung Mùa thu Ấm áp",
+        "prompt": "from my photo create a pictures: Keep the original face from the uploaded image. A medium close-up portrait of a young woman standing under vibrant red and orange autumn leaves. She smiles gently and winks playfully while holding a small branch of red maple leaves above her head. She wears a colorful vintage-style knit cardigan (brown, red, green, beige) over a simple white top, with long straight hair and light pink makeup, looking bright and sweet. The scene is illuminated by warm, golden afternoon natural sunlight, creating a soft, cozy autumn feeling. The background is softly blurred (bokeh effect), focusing sharply on her face and upper body. 8k, photorealistic, ultra detail.",
+        "imagePath": "/image/genai/f1b89829-a1d1-41f6-ab92-3847f4253a4b.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 336,
+        "title": "Bếp lửa đêm an yên tại làng quê",
+        "prompt": "from my photo create a pictures: A surreal 8K cinematic shot of a young man in a rural Vietnamese village at night, cooking over a small fire next to a simple house. He is gently stirring a black iron pot suspended over the fire by a handmade wooden tripod. The orange glow of the fire illuminates his face and hands, creating soft, flickering shadows on the contours and the nearby bamboo wall. The man is dressed in a simple long-sleeved shirt and rolled-up pants, his expression calm and focused as steam rises from the pot into the cool night air. Sparks from the fire fly up, glowing like fireflies. Around him are freshly chopped logs, an axe lies nearby, and the faint smoke from his previous work still lingers in the air. Behind him is a rustic house with rusty corrugated iron walls and a corrugated iron roof, dimly lit by a warm oil lamp hanging by the door. A cat curls up by the warm fire, while a few chicks quietly perch behind. The atmosphere is deeply peaceful and nostalgic — the rhythm of a simple life under the starry sky. Lighting: Cinematic low-light scene, mainly lit by campfires and oil lamps. The orange-yellow flames contrast with the deep blue of the night sky. Lens: Canon EOS R5, 50mm f/1.4, shallow depth of field, cinematic HDR tones with realistic lighting effects and gentle smoke. Color palette: deep indigo night, warm amber fire, soft orange reflections, subtle smoky gray tones. Aspect ratio: 16:9 or 4:5 vertical poster. Style: Surreal, cinematic night atmosphere, emotional storytelling about rural life. Don't change the facial det and hairstyle.",
+        "imagePath": "/image/genai/b5141d2e-96ef-460a-9a17-d474568fc2ff.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 337,
+        "title": "Thiếu nữ dưới tán hoa Sữa",
+        "prompt": "from my photo create a pictures: Keep the exact facial features and proportions from the uploaded image. A portrait of a young woman with long, dark hair, wearing a cozy brown knit sweater and a plaid scarf in shades of orange, green, and brown. She is standing outdoors on a street, under a tree with delicate white flowers (hoa sữa), which are in soft focus in the foreground and background. Her expression is gentle and serene, with a slight smile looking directly at the viewer. The lighting is soft, warm, golden hour sunlight, creating a dreamy and slightly hazy atmosphere. The background shows a blurred street scene with hints of buildings and trees, maintaining a shallow depth of field. 8K, photorealistic, ultra detail.",
+        "imagePath": "/image/genai/4e9a3679-9642-42a7-8aec-b155e72cdea0.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 338,
+        "title": "Chân dung An nhiên với Cỏ Ba lá",
+        "prompt": "from my photo create a pictures: Use the exact real face from the attached photo, 100% unchanged. A close-up portrait of a beautiful young East Asian woman with black hair and a few strands flying across her face. She has fair skin with a natural, dewy glow, high cheekbones and full, slightly parted lips with a natural warm pink color. Her dark eyes look directly at the viewer with a gentle expression. She is holding a bright green clover in front of her mouth. Soft, warm lighting, reminiscent of late afternoon sunlight, highlights her skin and hair and soft shadows highlight her facial features. The background is softly blurred with warm earth tones, reminiscent of foliage. She is wearing a simple, light-colored (possibly white or off-white) halter top. The overall mood is natural, serene and slightly intimate. 8k, photorealistic, ultra detail, shallow depth of field.",
+        "imagePath": "/image/genai/f3958616-c4ee-4530-9d2c-308f6f40441a.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 339,
+        "title": "Niềm vui bên Đầm sen",
+        "prompt": "from my photo create a pictures: A joyful young Asian woman in her early twenties, with fair skin, dark eyes, and a radiant, open-mouthed smile looking upwards, is seated on a small, rustic wooden platform or raft, positioned in a serene pond teeming with lush green water lily pads and numerous blooming pink lotus flowers, her long, glossy dark hair pulled back, with a delicate white flower tucked behind her right ear, wearing an elegant cream-colored halter neck dress, featuring a smooth, satin-like texture and wide, flowing sheer chiffon sleeves that drape gracefully, accessorized with a simple silver pendant necklace, her bare legs partially submerged in the clear green water, holding two long-stemmed, vibrant pink lotus flowers high in her right hand, from which fine water droplets are actively spraying and catching the light, the wooden platform adorned with a dark, earthy ceramic pot, brimming with a dense arrangement of vibrant magenta lotus flowers, the water's surface densely covered with large, round green lily pads and scattered, smaller blooming pink lotus flowers, with a deep emerald green body of water forming a softly blurred background, captured in a medium shot, eye-level perspective, with an extremely shallow depth of field, rendering the woman and immediate foreground in exquisite sharp focus, while the background exhibits a soft, creamy bokeh, bright, direct natural sunlight from a high angle, casting sparkling highlights on the water droplets, the woman's skin, and the lotus petals, with soft, subtle shadows, a vibrant and rich color palette dominated by lush greens and brilliant magentas, conveying a serene and joyful natural aesthetic, hyper-detailed, 8K, professional photography, masterpiece, sharp focus, high dynamic range (HDR).",
+        "imagePath": "/image/genai/2c87caba-d211-4e2f-88a6-377d33f3f593.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 340,
+        "title": "Thiếu nữ bên hồ sen thanh bình",
+        "prompt": "from my photo create a pictures: A full-length portrait of a young East Asian woman in her early twenties, with fair skin, an oval face, dark eyes, and a soft, gentle smile, looking slightly to the right. Her long, dark brown, slightly wavy hair is styled half-up with a white plumeria flower tucked behind her right ear, the rest of her hair flowing over her left shoulder. She wears an elegant, off-white or cream-colored traditional dress with a halter neckline, made of flowing, soft fabric, draped gracefully around her body and legs. She holds a small, round, white traditional fan with a delicate red and black painted design and a red tassel in her right hand. She is seated in a narrow, rustic boat made of bamboo or light wood, which is adorned with numerous vibrant pink and fuchsia water lilies arranged along its edges and in a dark, earthy-toned ceramic pot placed near her right side. The boat floats on a tranquil lotus pond, extensively covered with large, round, lush green lotus leaves and countless bright pink water lilies in various stages of bloom, some open, some buds, on long stems. The water reflects the green leaves and pink flowers, creating a serene and ethereal scene. The image is captured with bright, natural daylight, providing soft highlights and vibrant illumination, with subtle, soft shadows, a moderate depth of field with a gentle bokeh effect in the background. Ultra-photorealistic, hyper-detailed, 8K, professional photography, masterpiece, sharp focus, high dynamic range (HDR).",
+        "imagePath": "/image/genai/a50185f5-ab0c-4940-a307-9fa75f8b52a1.png",
+        "category": "Lifestyle & Nature"
     }
 ]
