@@ -2378,5 +2378,82 @@
         "prompt": "from my photo create a pictures: A full-length portrait of a young East Asian woman in her early twenties, with fair skin, an oval face, dark eyes, and a soft, gentle smile, looking slightly to the right. Her long, dark brown, slightly wavy hair is styled half-up with a white plumeria flower tucked behind her right ear, the rest of her hair flowing over her left shoulder. She wears an elegant, off-white or cream-colored traditional dress with a halter neckline, made of flowing, soft fabric, draped gracefully around her body and legs. She holds a small, round, white traditional fan with a delicate red and black painted design and a red tassel in her right hand. She is seated in a narrow, rustic boat made of bamboo or light wood, which is adorned with numerous vibrant pink and fuchsia water lilies arranged along its edges and in a dark, earthy-toned ceramic pot placed near her right side. The boat floats on a tranquil lotus pond, extensively covered with large, round, lush green lotus leaves and countless bright pink water lilies in various stages of bloom, some open, some buds, on long stems. The water reflects the green leaves and pink flowers, creating a serene and ethereal scene. The image is captured with bright, natural daylight, providing soft highlights and vibrant illumination, with subtle, soft shadows, a moderate depth of field with a gentle bokeh effect in the background. Ultra-photorealistic, hyper-detailed, 8K, professional photography, masterpiece, sharp focus, high dynamic range (HDR).",
         "imagePath": "/image/genai/a50185f5-ab0c-4940-a307-9fa75f8b52a1.png",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 341,
+        "title": "Tĩnh Lặng Giữa Cám Dỗ",
+        "prompt": "from my photo create a pictures: A hyper-realistic, cinematic portrait of a serene monk (from the uploaded photo) in a deep meditative state, sitting cross-legged on a snow-covered rock. He is flanked by two beautiful, ethereal women, resembling fox spirits (hồ ly), one in a flowing white dress and one in a striking red dress, both with visible, fluffy fox tails. The women are attempting to break his concentration; one whispers enticingly near his ear, the other rests a hand alluringly on his shoulder. The monk remains perfectly still, eyes closed, his expression one of profound peace and unshakable calm. The background is a vast, desolate snowy mountain landscape under a cold, clear sky, with light snow falling. Lighting should be dramatic and high-contrast, highlighting the monk's orange robes against the white snow and the vibrant dresses of the temptresses. Surreal photo, 8K ultra-detailed. Don't change the facial det.",
+        "imagePath": "/image/genai/a7aaf049-35c4-41c8-a405-ea21b84bef08.jpg",
+        "category": "Divine & Spiritual"
+    },
+    {
+        "id": 342,
+        "title": "Chân dung thần tiên với hoa trắng và ruy băng xanh",
+        "prompt": "from my photo create a pictures: A close-up upper body portrait, shot with high-definition photography and a realistic, ethereal art style. The background is a soft, uniform pastel green. The lighting is gentle and diffused, illuminating the subject with a soft glow and subtle highlights on the hair and skin, creating an airy and bright atmosphere. The color palette consists of delicate pastel tones, primarily light green and white. The composition frames the subject from the top of the head down to just below the chest, with a slight off-center arrangement. The camera angle is eye-level or slightly elevated, looking directly forward. The subject's pose is graceful and relaxed, with the upper body slightly turned, showcasing the collarbones and shoulders. The attire is a simple, light-colored strap top or dress, revealing the shoulders. Adorning the hair are fresh white flowers with green accents, positioned on both sides of the head. Long, light green satin ribbons are elegantly draped around the neck and shoulders, forming a gentle 'V' shape down the front of the chest, secured with a soft bow, and accompanied by small, simple stud earrings. Don't change the facial det.",
+        "imagePath": "/image/genai/b69b4161-8179-4028-8d8d-b43eb34ba166.png",
+        "category": "Ethereal Suspension"
+    },
+    {
+        "id": 343,
+        "title": "Bố Cục Ziczac Mùa Đông",
+        "prompt": "from my photo create a pictures: Create a cinematic zigzag composition featuring the same person (Face-Lock 100%, Hair-Lock 100%) across three 45°-angled frames arranged in a left–right–left diagonal sequence, forming a dynamic storytelling flow. Each frame presents a distinct camera angle and body posture for maximum variation: – Top-left frame: close-up portrait of the person looking slightly upward, snowflakes floating in the air, soft bokeh background. – Middle-right frame: waist-up view, one hand reaching forward or touching falling snow, coat fluttering gently in the breeze. – Bottom-left frame: wide shot from behind, the person walking away through a snowy path lined with pine trees and distant warm light. Environment: cinematic winter forest with soft mist, light beams filtering through trees, visible snow texture and ambient particles. Composition: frames arranged in a zigzag 45° layout ( ), each connected by subtle glowing transitions or light streaks to create movement and flow. Lighting: balanced soft natural light with golden-white highlights, cinematic contrast, visible air particles for realism. Tone & Mood: nostalgic, calm, poetic — conveys motion through stillness. Art style: ultra-realistic cinematic photography, shallow depth of field, smooth color gradient from warm to cold tones.",
+        "imagePath": "/image/genai/de46a409-2834-4f20-8c31-97f501fb598a.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 344,
+        "title": "Bộ ba chân dung mùa đông điện ảnh",
+        "prompt": "from my photo create a pictures: \"Create a cinematic triptych winter portrait of the uploaded person — showing three cohesive scenes within one frame, each divided naturally by soft lighting or composition, not visible borders. Scene setup:\r\n\r\nLeft panel: close-up view of the person looking slightly upward, snowflakes falling gently on face and hair, eyes glimmering with light.\r\n\r\nCenter panel: mid-shot of the same person standing confidently in light snowfall, wearing a white winter trench coat and red wool scarf, calm expression, elegant posture.\r\n\r\nRight panel: side view or over-the-shoulder shot as they walk through soft snow, scarf fluttering lightly in the breeze, background featuring blurred city lights or a winter street. Lighting: soft diffused daylight or twilight glow; cinematic blue-gray ambient tones with subtle warm golden rim light behind the subject. Balanced exposure between the three scenes to maintain harmony. Mood & Tone: poetic, cinematic, and introspective — combining serenity, motion, and realism. Slight blush warmth on skin; delicate snow sparkle on shoulders, scarf, and hair. Style: hyper-realistic portrait photography, seamless composition across the three scenes, unified color grading and lighting continuity. Camera setup: 85 mm lens look, shallow depth of field (f/2.0), smooth tonal roll-off, fine snow particle detail, photoreal texture on fabric and skin. Color palette: pure whites, soft blues, warm reds, neutral grays — elegant and timeless.\" Don't change the facial det.",
+        "imagePath": "/image/genai/e89c49ff-cf6b-4027-9226-022efc183c9f.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 345,
+        "title": "Ảnh ghép chân dung điện ảnh trên tàu hỏa cổ điển mùa đông",
+        "prompt": "from my photo create a pictures: “A cinematic portrait collage with a 45-degree diagonal composition, depicting a Vietnamese person sitting gracefully inside a vintage train during the golden hour. The subject wears an elegant winter coat with a fur collar, styled naturally with subtle light reflections and soft lines on the fabric. The expression is calm but radiant, capturing a sense of tranquility and warmth. Each frame shows a gentle variation of poses — looking out the window, holding a vintage silver film camera, or smiling softly as the landscape passes by, or a close-up of a pensive face looking out the train window. Outside the window, snow-covered pine forests and distant mountains glow under a warm pink-orange sunset sky. The wooden cabin interior glows under the golden sunlight, reflected from the brass accents and brown leather seats, creating a nostalgic and cinematic space. Lighting: warm yellow tones pressure, soft diffused sunlight through the window, balanced exposure, no lens flare, realistic light on skin and hair. Mood & Tone: romantic, introspective and cinematic — evoking the feeling of a peaceful winter journey at Sunset. realism, shallow depth of field, good texture detail, editorial film quality with natural harmonious colors.” Don't change the facial det.",
+        "imagePath": "/image/genai/3c7badbb-737d-468d-99db-dcbf1e73bcea.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 346,
+        "title": "Câu Chuyện Mùa Đông (Bố Cục Chéo)",
+        "prompt": "from my photo create a pictures: Create a cinematic composite image featuring the same person (Face-Lock 100%, Hair-Lock 100%) across three diagonal 45° frames within one picture. Each frame shows a different camera angle and pose for visual variation: – Top-left frame: close-up portrait of the face, soft snow falling, subject gazing forward with calm expression. – Center frame (diagonal middle): mid-shot with the person slightly turning, one hand lifted as if catching snowflakes. – Bottom-right frame: back view of the person walking away into the snowy forest, visible footprints on the snow. Environment: serene winter forest covered in snow, tall pine trees fading into mist, gentle snowfall, soft ambient light. Outfit: long white wool coat with fur collar, black scarf and gloves, elegant winter fashion. Composition: diagonal 45° arrangement of frames, seamless cinematic transition between each scene, consistent lighting and color tone. Mood & style: poetic, melancholic, ultra-realistic photo, cinematic tone mapping, soft contrast, emotional visual storytelling",
+        "imagePath": "/image/genai/0d2c9943-59fa-47c4-95fc-cbe32c0c7df5.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 347,
+        "title": "Chân dung thời trang tối giản Trắng-Đen",
+        "prompt": "from my photo create a pictures: A full-body, hyper-realistic editorial fashion portrait of the man from the photo, posing confidently on a minimalist white staircase. He is dressed in an all-white ensemble: a white suit jacket, white button-down shirt, white bermuda shorts, white knee-high socks, and white chunky boots, completed with white sunglasses. Surrounding him are several black mannequins in various poses, creating a stark, artistic contrast against the all-white environment. The lighting is bright, high-key, and clean, mimicking a professional fashion magazine shoot. The style is sharp, modern, and surreal. Don't change the facial det.",
+        "imagePath": "/image/genai/62455e36-0498-4b73-b853-02906b546b7b.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 348,
+        "title": "Nỗi Lòng Bên Khung Cửa Cổ",
+        "prompt": "from my photo create a pictures: Create a cinematic portrait with her face uploaded, A delicate young woman gazing thoughtfully out of a vintage wooden window, holding a white flower in her hand. Her expression is wistful and melancholic, with soft natural lighting illuminating her face through the glass. She wears a white lace camisole, her dark hair gently messy around her face. The atmosphere feels dreamy, nostalgic, and cinematic — like a quiet moment of longing on a rainy day. Shallow depth of field, soft focus, muted cool tones, gentle grain texture, fine art portrait photography style, captured with a 50mm lens, low light ambiance.",
+        "imagePath": "/image/genai/7bf797dc-bffd-4f6b-a4dc-8a8eafcfcb16.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 349,
+        "title": "Tự Do Giữa Đồng Hoa Vàng",
+        "prompt": "from my photo create a pictures: Preserve the original face from the uploaded photo. A cinematic portrait of a young woman running through a field of blooming yellow flowers during the golden hour. She wears a strapless ivory satin dress that flows gracefully as she runs, gently holding the dress with one hand. Her long, dark brown hair is loose and fluttering in the wind. She looks towards the camera with joy and freedom. Warm, golden sunlight illuminates her face and dress, with a soft, natural motion blur in the background. The scene is dreamy, poetic, and serene—surrounded by endless yellow flowers under a soft sunset sky. Shot full body, shallow depth of field, film-like texture, warm vintage tones, surreal lighting, 85mm lens, cinematic atmosphere, soft focus, vibrant highlights.",
+        "imagePath": "/image/genai/c75b9871-dd8a-4860-bcb2-b42201beafe4.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 350,
+        "title": "Thiếu nữ giữa cánh đồng hoa vàng hoàng hôn",
+        "prompt": "from my photo create a pictures: The original face from the uploaded photo remains intact. A beautiful young woman with long, wavy black hair, wearing a graceful, strapless ivory satin dress, stands in the middle of a field of blooming yellow flowers during the golden hour. She turns her head slightly, the sunlight illuminating her face and dress with a warm glow. The background shows distant trees and rolling hills under a pastel sky. The atmosphere in the photo is cinematic, dreamy, romantic, and peaceful — natural light photography, shallow depth of field, surreal, 8K detail, film tones, soft focus.",
+        "imagePath": "/image/genai/2966e274-afc5-472b-9c77-13eca828dc25.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 351,
+        "title": "Nàng Thơ Giữa Đồng Hoa Cải",
+        "prompt": "from my photo create a pictures: Preserve the original face from the uploaded photo. A beautiful Asian woman standing in the middle of a field of blooming yellow rapeseed flowers at golden hour, holding a bouquet of flowers close to her face, soft natural sunlight, long black hair blowing lightly in the wind, wearing a gracefully flowing strapless ivory satin dress, serene and dreamy expression, cinematic lighting, realistic skin texture, detailed background with mountains and trees, surreal portrait photography, shallow depth of field, 4K",
+        "imagePath": "/image/genai/352cb484-296c-40cf-a154-167abba13425.png",
+        "category": "Lifestyle & Nature"
     }
 ]
