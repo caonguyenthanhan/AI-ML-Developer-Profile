@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 60,
+        "count": 61,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -51,7 +51,7 @@
         "id": 7,
         "name": "Wedding Day",
         "description": "Chụp ảnh cưới và sự kiện đặc biệt",
-        "count": 4,
+        "count": 6,
         "color": "#EC4899",
         "icon": "heart"
     },

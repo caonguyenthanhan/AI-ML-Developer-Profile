@@ -2474,14 +2474,14 @@
         "id": 354,
         "title": "Nàng Thơ Giữa Vườn Hoa",
         "prompt": "from my photo create a pictures: Create a cinematic portrait with the subject's face uploaded, keeping the subject's face 100% intact, sitting gracefully on a soft white floor surrounded by delicate flowers in pastel colors. She wears an elegant off-shoulder cream tulle gown with layered ruffles, exuding a dreamy and romantic aura. Her long wavy hair is adorned with floral accessories and a pink ribbon bow. She holds a small bouquet of flowers and smiles softly, looking directly at the camera. The scene is bathed in soft, diffused natural light, creating a bright, ethereal, and fairy-tale-like atmosphere. Various glass and ceramic vases filled with pastel flowers—white, pink, peach—are arranged around her, each tied with pink ribbons. The background is minimal and bright, enhancing the soft fantasy mood. Composition: close-up angle, subject framed by soft sunlight, indoor art photography",
-        "imagePath": "/image/genai/b6c1d228-6258-4ef0-9a91-1e86ac2c94e9.png",
+        "imagePath": "/image/genai/5abcd375-78b5-4f93-845d-5e4aef90522e.png",
         "category": "Lifestyle & Nature"
     },
     {
         "id": 355,
         "title": "Hình bóng em trong khói thuốc",
         "prompt": "from my photo create a pictures: A surreal and melancholic portrait. A man with the original face from the uploaded photo, dressed in a black shirt and black pants, sits facing away on a wooden chair. His eyes are closed, and he holds a lit cigarette between his fingers, with smoke curling upwards. Emerging from the smoke above his head is the faint, ethereal, and translucent image of a beautiful young woman with long, flowing hair, looking directly forward with a somber expression. The background is a dimly lit, vintage-style room with a window and subtle details, adding to the introspective and dreamy atmosphere. The lighting is soft and moody, emphasizing the smoke and the ghostly figure. The overall tone is dark, romantic, and poignant, evoking a sense of lost love or lingering memories. Don't change the facial det for the man.",
-        "imagePath": "/image/genai/2f6564c0-a722-41ca-9060-8b1846d057f6.png",
+        "imagePath": "/image/genai/9a1a1918-156f-427e-9da7-0688bb4ea578.png",
         "category": "Portrait Photography"
     },
     {
@@ -2510,6 +2510,27 @@
         "title": "Sự Cố Rò Rỉ Nước Bất Ngờ",
         "prompt": "from my photo create a pictures: A wide-angle, photorealistic shot capturing a domestic plumbing emergency in a modern, minimalist bathroom. A stressed Asian male plumber in blue overalls and a gray t-shirt is kneeling, desperately trying to fix a white sink that is leaking severely, with water spraying upwards and splashing onto the floor. Beside him stands a surprised and anxious Asian woman (keep the face 100% intact from the uploaded photo), who is busty and barefoot, looking down at the chaotic scene. The spraying water is drenching the woman's clothes, making them wet. Various plumbing tools, including wrenches and screwdrivers, are scattered on the wet, dark-tiled floor. The bathroom features white subway-tiled walls and bright, even artificial lighting, creating a clean, high-contrast aesthetic. The composition emphasizes the powerful jet of water and the contrasting reactions of the two individuals. Don't change the facial det.",
         "imagePath": "/image/genai/e381d1f9-4bbc-4266-84cf-10261b5b423e.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 360,
+        "title": "Hôn Lễ Việt Nam Thập Niên 80-90",
+        "prompt": "from my photo create a pictures: Keep the real faces and natural expressions of the bride and groom exactly as in the uploaded photo, do not change any facial features. Create a nostalgic high-resolution Vietnamese wedding portrait. The bride wears a traditional white lace wedding gown with puffed sleeves and a classic white bridal veil, holding a bouquet of gladiolus flowers wrapped in simple brown paper, reflecting the modest yet elegant wedding style of the past. The groom sits proudly on a vintage Honda Cub motorbike, dressed in a retro black suit with a white shirt and striped red tie, styled in a classic and modest way. They hold hands lovingly, symbolizing their bond. The background shows an old wall with a house number plate and rustic details, evoking the authentic atmosphere of Vietnamese weddings in the 1980s–1990s. Apply film grain, slight fading, scratches, and a warm yellowish tint to replicate the look of aged printed wedding photographs. The overall mood is rustic, nostalgic, and full of vintage Vietnamese wedding charm.",
+        "imagePath": "/image/genai/407ba759-9604-4a4b-b9d5-101939550e9b.png",
+        "category": "Wedding Day"
+    },
+    {
+        "id": 361,
+        "title": "Ảnh cưới Studio Áo dài Đỏ tía",
+        "prompt": "from my photo create a pictures: Studio wedding photo of a young couple against a burgundy background. The groom, wearing a three-piece black suit, white shirt and red patterned tie, turns to face the bride, his eyes looking at her affectionately, a slight smile on his lips. The slender bride, wearing a burgundy ao dai, a red veil, holding a bouquet of red gladiolus on one side, looks straight ahead and smiles gently. Soft studio lighting, warm tones, subtle highlights, shallow DOF, minimalist portrait style, photorealistic, super detailed — focusing on fabric texture, skin and light. Keep the face, expression and emotional expression intact.",
+        "imagePath": "/image/genai/94c3e2e6-35dd-4f00-a585-0a3dd65c9db6.png",
+        "category": "Wedding Day"
+    },
+    {
+        "id": 362,
+        "title": "Hoàng Hôn Vàng Trên Ghế Công Viên",
+        "prompt": "from my photo create a pictures: Cinematic, hyper-realistic full-body shot of a couple (use their face with 100% accuracy) sitting on a vintage park bench under a warm streetlight at golden hour, focused on the girl smartphone. They are wearing a light biege oversized blouse tucked into beige high-waisted trousers, paired with stylish sneakers. Their wavy hair is softly tousled, a delicate leather-strap watch. Beside her on the bench lies a flower bouquet. Surroundings feature lush blooms and a blossoming cherry tree with dramatic golden clouds in the sky, creamy bokeh in the foreground, and a cable overhead. Shot in 8K RAW with shallow depth of field, warm highlights, teal shadows, and vivid textures.(use reference face)",
+        "imagePath": "/image/genai/16de8510-86d4-4d80-9ccc-1ad4fd00b4cc.png",
         "category": "Lifestyle & Nature"
     }
 ]
