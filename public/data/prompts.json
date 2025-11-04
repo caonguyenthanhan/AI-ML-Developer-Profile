@@ -2469,5 +2469,47 @@
         "prompt": "from my photo create a pictures: A cinematic triptych winter portrait of the woman from the photo, showing three cohesive scenes in one vertical frame, divided compositionally. Top panel: A close-up side view of the woman looking into the distance, snowflakes falling on her long, wavy dark hair. Center panel: A mid-shot, she holds a small bouquet of dried flowers, her breath visible in the cold air. Bottom panel: A close-up shot, she looks softly towards the camera, her face framed by a dark blue scarf. The setting is a serene, snowy landscape with blurred mountains in the background. Lighting is soft, diffused daylight with cool, cinematic blue tones. The mood is introspective, poetic, and peaceful. Style: Hyper-realistic portrait photography, shallow depth of field, 8K detail, soft focus, unified color grading. Don't change the facial det.",
         "imagePath": "/image/genai/eb843d84-dc4c-410a-95f3-d3281520e17e.jpg",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 354,
+        "title": "Nàng Thơ Giữa Vườn Hoa",
+        "prompt": "from my photo create a pictures: Create a cinematic portrait with the subject's face uploaded, keeping the subject's face 100% intact, sitting gracefully on a soft white floor surrounded by delicate flowers in pastel colors. She wears an elegant off-shoulder cream tulle gown with layered ruffles, exuding a dreamy and romantic aura. Her long wavy hair is adorned with floral accessories and a pink ribbon bow. She holds a small bouquet of flowers and smiles softly, looking directly at the camera. The scene is bathed in soft, diffused natural light, creating a bright, ethereal, and fairy-tale-like atmosphere. Various glass and ceramic vases filled with pastel flowers—white, pink, peach—are arranged around her, each tied with pink ribbons. The background is minimal and bright, enhancing the soft fantasy mood. Composition: close-up angle, subject framed by soft sunlight, indoor art photography",
+        "imagePath": "/image/genai/b6c1d228-6258-4ef0-9a91-1e86ac2c94e9.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 355,
+        "title": "Hình bóng em trong khói thuốc",
+        "prompt": "from my photo create a pictures: A surreal and melancholic portrait. A man with the original face from the uploaded photo, dressed in a black shirt and black pants, sits facing away on a wooden chair. His eyes are closed, and he holds a lit cigarette between his fingers, with smoke curling upwards. Emerging from the smoke above his head is the faint, ethereal, and translucent image of a beautiful young woman with long, flowing hair, looking directly forward with a somber expression. The background is a dimly lit, vintage-style room with a window and subtle details, adding to the introspective and dreamy atmosphere. The lighting is soft and moody, emphasizing the smoke and the ghostly figure. The overall tone is dark, romantic, and poignant, evoking a sense of lost love or lingering memories. Don't change the facial det for the man.",
+        "imagePath": "/image/genai/2f6564c0-a722-41ca-9060-8b1846d057f6.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 356,
+        "title": "Chân dung đêm đông lãng mạn dưới ánh đèn",
+        "prompt": "from my photo create a pictures: \"A cinematic, hyper-realistic winter portrait of the subject standing under softly falling snow at night. The subject wears an elegant ivory-white coat and a large soft scarf wrapped warmly around the neck. The left hand rests inside the coat pocket, while the right hand is gently extended forward with the palm open, as if catching snowflakes. The head tilts slightly upward with a calm, serene, and reflective expression, feeling the snow melt against the skin. A warm yellow streetlight above casts a gentle golden halo around the subject’s hair and shoulders, contrasting beautifully with the deep black night sky filled with softly glowing snowflakes. The atmosphere is romantic, dreamlike, and poetic, evoking the mood of a cinematic winter movie scene. Soft, detailed lighting enhances texture and depth, while the snow adds motion and emotional warmth. Editorial fashion photography style, ultra-detailed, realistic texture, 8K quality. Aspect Ratio 9:16, vertical portrait format.\" Don't change the facial det.",
+        "imagePath": "/image/genai/45987810-f7a4-4fd0-9041-e9d41b879116.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 357,
+        "title": "Bùng Nổ Thông Tin Cyberpunk",
+        "prompt": "from my photo create a pictures: Cinematic headshot of a young man with short dark hair, wearing a white t-shirt, looking intensely to the right.He is surrounded by a dynamic, abstract explosion of fragmented images and media, depicting various scenes like BTS Members, people, and digital interfaces, creating a chaotic yet glowing tunnel effect. Bright, stylized digital lighting with strong blues, yellows, and oranges, volumetric light, motion blur, cyberpunk aesthetic, digital art, high detail, ultra realistic --ar 16:9",
+        "imagePath": "/image/genai/5bf038bc-7faa-480e-97b4-dd1d34f0e61c.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 358,
+        "title": "Chân dung sơn dầu tương phản",
+        "prompt": "from my photo create a pictures: An upper-body oil painting portrait of the man from the photo, captured with a contemplative expression, looking down. The style is inspired by chiaroscuro, with dramatic, high-contrast lighting casting deep shadows on one side of his face and body. He wears a dark turtleneck sweater. The background is split, one half dark and the other half light. The painting features abstract, textured brushstrokes (black and hints of yellow/gold) applied over the lower part of the portrait and sweater, giving it a modern, deconstructed feel. Don't change the facial det.",
+        "imagePath": "/image/genai/15cde61d-7de8-4896-a3ab-9092021aeec9.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 359,
+        "title": "Sự Cố Rò Rỉ Nước Bất Ngờ",
+        "prompt": "from my photo create a pictures: A wide-angle, photorealistic shot capturing a domestic plumbing emergency in a modern, minimalist bathroom. A stressed Asian male plumber in blue overalls and a gray t-shirt is kneeling, desperately trying to fix a white sink that is leaking severely, with water spraying upwards and splashing onto the floor. Beside him stands a surprised and anxious Asian woman (keep the face 100% intact from the uploaded photo), who is busty and barefoot, looking down at the chaotic scene. The spraying water is drenching the woman's clothes, making them wet. Various plumbing tools, including wrenches and screwdrivers, are scattered on the wet, dark-tiled floor. The bathroom features white subway-tiled walls and bright, even artificial lighting, creating a clean, high-contrast aesthetic. The composition emphasizes the powerful jet of water and the contrasting reactions of the two individuals. Don't change the facial det.",
+        "imagePath": "/image/genai/e381d1f9-4bbc-4266-84cf-10261b5b423e.png",
+        "category": "Lifestyle & Nature"
     }
 ]
