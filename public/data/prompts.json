@@ -2455,5 +2455,19 @@
         "prompt": "from my photo create a pictures: Preserve the original face from the uploaded photo. A beautiful Asian woman standing in the middle of a field of blooming yellow rapeseed flowers at golden hour, holding a bouquet of flowers close to her face, soft natural sunlight, long black hair blowing lightly in the wind, wearing a gracefully flowing strapless ivory satin dress, serene and dreamy expression, cinematic lighting, realistic skin texture, detailed background with mountains and trees, surreal portrait photography, shallow depth of field, 4K",
         "imagePath": "/image/genai/352cb484-296c-40cf-a154-167abba13425.png",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 352,
+        "title": "Nàng Thơ Hoàng Hôn Giữa Đồng Hoa Vàng",
+        "prompt": "from my photo create a pictures: Preserve the original face from the uploaded photo. Candid portrait of a beautiful Asian woman in a vast field of yellow rapeseed during the golden hour. She is turned three-quarters away from the camera, her head tilted back over her shoulder, a gentle half-smile on her face, her expression dreamy. Her long, wavy black hair is loose, the strands slightly tousled in the wind. She is wearing a strapless ivory satin dress that falls gracefully, the fabric catching the light gently. She holds a bouquet of yellow rapeseed flowers near her chest/shoulders, a few stems touching her bare shoulders. Warm sunset backlight creates a soft halo on her hair and shoulders, with subtle fill light from the front illuminating her face. Warm, cinematic color effects — bright yellow field, soft warm skin tone. Shallow depth of field, smooth bokeh background, natural film-like grain, portrait feel with 85mm, f/1.8 lens, surreal, highly detailed, true-to-life like a photo.",
+        "imagePath": "/image/genai/8a415586-a7c7-4d10-ae1d-216c280013ff.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 353,
+        "title": "Bộ ba chân dung điện ảnh mùa đông",
+        "prompt": "from my photo create a pictures: A cinematic triptych winter portrait of the woman from the photo, showing three cohesive scenes in one vertical frame, divided compositionally. Top panel: A close-up side view of the woman looking into the distance, snowflakes falling on her long, wavy dark hair. Center panel: A mid-shot, she holds a small bouquet of dried flowers, her breath visible in the cold air. Bottom panel: A close-up shot, she looks softly towards the camera, her face framed by a dark blue scarf. The setting is a serene, snowy landscape with blurred mountains in the background. Lighting is soft, diffused daylight with cool, cinematic blue tones. The mood is introspective, poetic, and peaceful. Style: Hyper-realistic portrait photography, shallow depth of field, 8K detail, soft focus, unified color grading. Don't change the facial det.",
+        "imagePath": "/image/genai/eb843d84-dc4c-410a-95f3-d3281520e17e.jpg",
+        "category": "Portrait Photography"
     }
 ]
