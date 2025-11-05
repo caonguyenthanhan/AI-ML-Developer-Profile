@@ -2749,5 +2749,19 @@
         "prompt": "from my photo create a pictures: A realistic close-up outdoor photo of a young Vietnamese woman sitting peacefully in the middle of a vast green meadow under a bright blue sky, gently holding a small bouquet of wildflowers close to her face as she softly closes her eyes to smell them. The focus is on her serene expression and delicate features, while the blurred background shows hints of lush green mountains glowing under warm sunlight. She wears a cobalt blue knit sweater and a long, textured white skirt made of soft, rustic fabric — voluminous and flowing, covering her legs completely with only her white sneakers slightly visible. Her calm, tender demeanor evokes a gentle and poetic sense of connection with nature. Keep the same face, skin tone, and expression as the original photo.",
         "imagePath": "/image/genai/6e20a440-37a2-43b3-85bc-574b8196dddd.png",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 394,
+        "title": "Khoảnh Khắc Tĩnh Lặng Giữa Rừng Tuyết",
+        "prompt": "from my photo create a pictures: A realistic, cinematic medium portrait of a young East Asian man (keeping the exact proportions of the facial features), standing in a snowy forest with his eyes closed and hands in his pockets. He wears a dark charcoal overcoat over a denim shirt. Snow is falling gently around him, dusting his hair and shoulders. Soft backlight illuminates him from behind, creating a serene and moody winter atmosphere. Ultra-realistic 8K, vertical portrait, high-quality digital photography. Don't change the facial det.",
+        "imagePath": "/image/genai/94c9a5d8-4c1e-49ce-ad60-137b527e5d28.jpg",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 395,
+        "title": "Chân dung Lãng mạn Trong Bão Tuyết",
+        "prompt": "from my photo create a pictures: A cinematic, vertical portrait of a young man, shot outdoors at night during a heavy snowstorm. He is styled in a heavy, dark wool overcoat and a thick black scarf. The composition is a close-up profile, focusing on his left side, with his face turned slightly upward and looking away into the distance. Snowflakes are sharply detailed in the foreground, with one large, prominent snowflake graphic visible near the bottom of the frame. The lighting is moody and dark, using blue and cyan tones, contrasted by warm, blurred orange and bright, soft bokeh lights in the deep background to create a dramatic, chiaroscuro effect. The mood is romantic, mysterious, and serene. Cinematic, 8K ultra-realistic photo quality. Don't change the facial det.",
+        "imagePath": "/image/genai/af1d4b10-40ca-4cdb-94f5-3e3821a7990e.jpg",
+        "category": "Lifestyle & Nature"
     }
 ]
