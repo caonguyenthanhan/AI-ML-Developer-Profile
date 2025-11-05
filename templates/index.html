@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý Prompts</title>
+    <title>Trang chủ AIML Developer Profile</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -99,7 +99,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Quản lý Prompts</h1>
+        <h1>Khu vực quản trị</h1>
         <a href="{{ url_for('add_prompt') }}" class="add-link">Thêm Prompt Mới</a>
         <a href="{{ url_for('manage_categories') }}" class="add-link">Quản lý Categories</a>
         <button onclick="uploadToGitHub()" class="add-link github-btn">📤 Upload lên GitHub</button>
@@ -108,7 +108,7 @@
         <div id="message" class="message"></div>
 
         {% if prompts %}
-            <ul class="prompt-list">
+            <ul class="prompt-list" style="margin-top:16px;">
                 {% for prompt in prompts %}
                     <li class="prompt-item">
                         {% if prompt.imagePath %}
@@ -140,6 +140,14 @@
         {% else %}
             <p>Không có prompt nào.</p>
         {% endif %}
+
+        <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
+            <h2>AI & Prompt Gallery</h2>
+            <p>Khám phá thư viện prompts và ảnh AI được cập nhật liên tục.</p>
+            <a href="/genai/image_prompt_library.html" class="add-link">📚 Xem Thư Viện Prompts</a>
+        </div>
+
+        
     </div>
 
     <script>

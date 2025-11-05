@@ -56,6 +56,27 @@
              transform: translateY(-1px);
              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
          }
+         .media-zoom img {
+             transition: transform 0.25s ease;
+         }
+         .media-zoom:hover img {
+             transform: scale(1.08);
+         }
+         .image-overlay {
+             position: absolute;
+             inset: 0;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             color: #fff;
+             background: rgba(0,0,0,0.25);
+             opacity: 0;
+             transition: opacity 0.2s ease;
+             font-weight: 600;
+         }
+         .media-zoom:hover .image-overlay {
+             opacity: 1;
+         }
     </style>
 <script src="../assets/js/header.js"></script>
 </head>
@@ -450,8 +471,11 @@
                 // Cấu trúc HTML cho mỗi thẻ prompt
                 card.innerHTML = `
                     <!-- Media Showcase (Image or Video) -->
-                    <div class="aspect-[4/3] bg-gray-100 flex items-center justify-center overflow-hidden relative">
+                    <div class="aspect-[4/3] bg-gray-100 flex items-center justify-center overflow-hidden relative media-zoom">
                         ${getMediaElement(item)}
+                        <div class="image-overlay">
+                            Nhấp để xem toàn ảnh
+                        </div>
                     </div>
 
                     <!-- Content -->
@@ -500,13 +524,48 @@
                     copyToClipboard(promptText);
                 });
             });
+
+            document.querySelectorAll('#prompt-grid img').forEach(img => {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', () => {
+                    openImageModal(img.src);
+                });
+            });
         }
 
+
+        function openImageModal(src) {
+            const modal = document.getElementById('image-viewer-modal');
+            const modalImg = document.getElementById('image-viewer-src');
+            modalImg.src = src;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('image-viewer-modal');
+            const modalImg = document.getElementById('image-viewer-src');
+            modalImg.src = '';
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
 
     </script>
     <!-- Header Component -->
     
     <!-- Footer Component với Chat Box -->
     <script src="../assets/js/footer.js"></script>
+    <div id="image-viewer-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+        <div class="max-w-6xl w-[92%] relative">
+            <button onclick="closeImageModal()" class="absolute top-2 right-2 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 rounded-full px-3 py-1">Đóng</button>
+            <img id="image-viewer-src" src="" alt="Xem toàn ảnh" class="w-full h-auto rounded-lg shadow-xl">
+        </div>
+    </div>
 </body>
 </html>

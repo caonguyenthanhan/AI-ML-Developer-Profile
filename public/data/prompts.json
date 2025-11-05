@@ -2623,5 +2623,40 @@
         "prompt": "from my photo to create image: A full-body 8K hyperreal photo of a beautiful young Vietnamese woman, identical to the reference photo, dressed in a beautiful traditional red 'ao nhat binh' (royal dress) with intricate gold embroidery and a simple yet striking blue 'thanh' (turban). She holds an open traditional paper fan, its surface decorated with motifs typical of the Hue imperial city, staring into space (right side of frame). She stands behind an extremely large, prominent, weathered bronze cauldron. The cauldron is strategically placed in the foreground, occupying the lower third of the frame, with the top rim clearly visible and creating a strong visual line, the bottom rim is pushed out of frame, the bottom edge of the image cuts through the middle of the cauldron, emphasizing its significant presence. The cauldron is filled with still water, reflecting a super sharp, crystal clear and detailed image of her entire upper body, ESPECIALLY the facial features (eyes, nose, mouth) are perfectly reflected, along with the majestic Hue Citadel backdrop, with its signature yellow tiled roofs and classical Vietnamese architecture under a clear blue sky with fluffy white clouds. The scene is bathed in soft, natural daylight, highlighting the rich texture of the costume and the ancient surroundings. No changes to the facial details are made, ensuring the features, skin tone and hairstyle are identical to the reference photo provided.",
         "imagePath": "/image/genai/2229f9b8-2793-4bcd-9e9d-a4e5a083a90f.jpg",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 376,
+        "title": "Khoảnh khắc chờ đợi ở nhà ga cùng Sếp",
+        "prompt": "from my photo create a pictures: Create a hyper-realistic photo of me, sitting on the metal bench in the airport terminal, right next to the young man from the original image. The original man (wearing the blue hoodie, earphones, and paint-splatter pants) is in his original pose. I am wearing a stylish casual travel outfit (like a black bomber jacket and dark jeans) and looking at the camera with a cool expression. The setting is identical to the original: bright terminal lighting, tiled floors, glass railings, and digital signs in the background. Full-body shot, candid lifestyle aesthetic. Don't change the facial det.",
+        "imagePath": "/image/genai/444a7684-3ac4-47b8-ab9d-aa43adad580c.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 377,
+        "title": "Thần thái ở sân bay",
+        "prompt": "from my photo create a pictures: Create a hyper-realistic, full-body portrait of me sitting on the metal bench in the airport terminal. I am brightly lit and well-illuminated, and my hairstyle is spiky and textured, perfectly matching the original model's hair. I am replicating the pose of the original person, and I am wearing the exact same clothes: a blue zip-up hoodie, grey t-shirt, beige paint-splatter cargo pants, white sneakers, and white wired earphones. I am holding a white smartphone. The background is the identical airport terminal with bright, clean lighting and digital signs. The shot is candid, editorial style. Don't change the facial det.",
+        "imagePath": "/image/genai/fb9ae6d5-d441-4453-b47f-911a406fa568.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 378,
+        "title": "Cosplay Phong Cách Đường Phố Hiện Đại ",
+        "prompt": "from my photo create a pictures: a full body shot of the person in the input image, cosplaying as a stylish urban character. The setting is a brightly lit subway station with clean lines and modern architecture, similar to the original image but with a more stylized, futuristic feel. The person is wearing an oversized, distressed navy blue hoodie, light beige cargo pants with paint splatters and silver chain details, and white sneakers with a black star. The hoodie's hood is up, framing their face, and they are striking a confident, playful pose, looking directly at the camera. The lighting is bright and even, highlighting the textures of the clothing. The overall aesthetic is cool, edgy, and modern streetwear. Don't change the facial det, keeping the exact proportions of the facial features from the input photo.",
+        "imagePath": "/image/genai/fe99e68a-7ff5-402a-b5bd-26a24d074c26.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 379,
+        "title": "Dáng đi trong ga tàu",
+        "prompt": "from my photo create a pictures: Create a hyper-realistic, full-body shot of me, captured from behind, walking away from the camera. I am in a modern, brightly lit underground station hallway with grey tiled floors and posters lining the walls. I am wearing a blue zip-up hoodie with a white logo on the back, loose-fitting beige cargo pants with paint splatters, and dark brown/black sneakers. I have a black crossbody bag slung over my shoulder. The style is candid, 'follow cam' perspective, with a streetwear vibe. Don't change the facial det.",
+        "imagePath": "/image/genai/ff4878e3-099e-4d6e-b916-5dbc56b10198.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 380,
+        "title": "Nàng thơ đọc sách dưới hoa anh đào",
+        "prompt": "from my photo create a pictures: Create a hyper-realistic, full-body portrait of me, standing and leaning against an old stone wall under a large, vibrant cherry blossom tree in full bloom. The sky above is bright blue. I am wearing a dark jacket and a dark skirt. I am holding a book open and looking down at it with a peaceful, serene expression. The lighting is bright natural sunlight, creating a high-contrast, vibrant, and poetic 'nàng thơ' aesthetic. 35mm film look. Don't change the facial det.",
+        "imagePath": "/image/genai/c0daf6d0-8a2b-4e1a-907b-10decc3b4a76.png",
+        "category": "Lifestyle & Nature"
     }
 ]

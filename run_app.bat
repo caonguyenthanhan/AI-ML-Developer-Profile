@@ -1,4 +1,2 @@
 @echo off
-cd /d "d:\desktop\AIML Developer Profile"
-python app.py
-pause
+powershell -NoProfile -ExecutionPolicy Bypass -File "d:\desktop\AIML Developer Profile\run_app.ps1"

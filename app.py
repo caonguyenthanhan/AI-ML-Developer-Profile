@@ -156,7 +156,14 @@ def update_category_counts():
 def index():
     """Trang chủ hiển thị danh sách các prompts."""
     prompts = load_data(PROMPTS_FILE)
-    return render_template('index.html', prompts=prompts)
+    prompts_sorted = []
+    if isinstance(prompts, list):
+        try:
+            prompts_sorted = sorted(prompts, key=lambda p: p.get('id', 0), reverse=True)
+        except Exception:
+            prompts_sorted = prompts
+    recent_prompts = prompts_sorted[:12] if isinstance(prompts_sorted, list) else []
+    return render_template('index.html', prompts=prompts_sorted, recent_prompts=recent_prompts)
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_prompt():
@@ -226,8 +233,9 @@ def add_prompt():
         
         # Cập nhật count cho categories
         update_category_counts()
-        return redirect(url_for('index'))
-    return render_template('add.html', categories=categories)
+        return redirect(url_for('add_prompt', saved='1'))
+    saved = request.args.get('saved')
+    return render_template('add.html', categories=categories, saved=saved)
 
 @app.route('/edit/<int:prompt_id>', methods=['GET', 'POST'])
 def edit_prompt(prompt_id):
@@ -567,4 +575,6 @@ if __name__ == '__main__':
         os.makedirs(os.path.dirname(PROMPTS_VIP_FILE), exist_ok=True)
         with open(PROMPTS_VIP_FILE, 'w', encoding='utf-8') as f:
             f.write('[]')
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', '54321'))
+    host = os.environ.get('HOST', '127.0.0.1')
+    app.run(host=host, port=port, debug=True)
