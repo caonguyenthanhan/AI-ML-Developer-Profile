@@ -2609,5 +2609,12 @@
         "prompt": "from my photo create a pictures: (Face based on the reference photo). Using 100% of the face I uploaded as a face model, keeping the face natural and realistic, with accurate proportions and real skin texture. A beautiful young woman, her hair neatly braided, wearing a bright red traditional Mongolian costume with intricate embroidery, a luxurious brown fur hat and a soft fur scarf of the same color. She rides a majestic light brown horse, decorated with a brilliant saddle with multi-colored gemstones and a red saddlecloth embroidered with intricate patterns. The scene is an endless golden-brown autumn grassland, dry grass swaying in the wind, and gentle hills in the distance under a mild sky and a warm mist. The golden hour light is softly diffused, creating a warm, gentle atmosphere with cinematic depth. Medium full-body shot, slightly high angle, sharp, high detail, hyperrealistic style, photorealistic with 8K resolution, professional cinema lighting. The photo is recreated in National Geographic style, evoking the majestic beauty of nature, the elegance and pride of a Mongolian woman in the vast and silent autumn steppe. Don't change the facial expression.",
         "imagePath": "/image/genai/d505cc29-8731-4a0f-9349-e39dc80b4946.jpg",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 374,
+        "title": "Nét Huế xưa bên vạc đồng",
+        "prompt": "from my photo create a pictures: An 8K hyperrealistic full-body shot of a beautiful young Vietnamese woman, capturing her in an elegant pose next to a large, weathered bronze cauldron. She is adorned in a stunning traditional red 'áo nhật bình' (royal court dress) with intricate gold embroidery and a simple yet striking blue 'khăn vấn' (turban). She holds a delicate, traditional paper fan, gazing thoughtfully into the distance (right side of the frame). The backdrop is the majestic Hue Imperial City, featuring its distinctive yellow-tiled roofs and classical Vietnamese architecture under a clear, bright sky. The scene is bathed in soft, natural daylight, highlighting the rich textures of her attire and the ancient surroundings. Don't change the facial det, ensure the facial features, skin tone, and hairstyle are identical to the provided reference photo.",
+        "imagePath": "/image/genai/e03d31f5-9b10-4d03-bda6-379fdb71238d.jpg",
+        "category": "Portrait Photography"
     }
 ]
