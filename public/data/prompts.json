@@ -2728,5 +2728,12 @@
         "prompt": "from my photo create a pictures: Medium Artistic Portrait of a Man from the attached photo. His face must remain 100% (No change in facial details). He holds a single yellow wild sunflower in his hand, cleverly covering one eye with the flower. He is wearing a stylish white striped suit and a black shirt. The background is a thick wall covered with matching yellow wild sunflowers. The light is soft and natural, creating a fashionable, editorial feel. The image style is a combination of art photography and creative portrait, 8K resolution is super detailed.",
         "imagePath": "/image/genai/c2148d96-0563-4035-8afb-6401cb03f067.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 391,
+        "title": "Thiếu Nữ Việt Nam Giữa Đồng Cỏ Xanh Mát Với Hoa Dại",
+        "prompt": "A realistic outdoor photo of a young Vietnamese woman sitting in the middle of a vast green meadow under a bright blue sky, holding a small bouquet of wildflowers and smiling sweetly toward the camera. Majestic mountains covered with lush greenery stretch endlessly in the background, glowing under warm sunlight. She wears a cobalt blue knit sweater and a long, textured white skirt made of soft, rustic fabric — voluminous and flowing, covering her legs completely with only her white sneakers slightly visible. Her gentle smile and warm expression bring a sense of tenderness and charm to the serene highland setting.\r\nKeep the same face, skin tone, and expression as the original photo.",
+        "imagePath": "/image/genai/26a7332f-c307-4081-91d4-40507f7efe10.png",
+        "category": "Lifestyle & Nature"
     }
 ]
