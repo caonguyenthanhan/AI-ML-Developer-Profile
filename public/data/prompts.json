@@ -2532,5 +2532,82 @@
         "prompt": "from my photo create a pictures: Cinematic, hyper-realistic full-body shot of a couple (use their face with 100% accuracy) sitting on a vintage park bench under a warm streetlight at golden hour, focused on the girl smartphone. They are wearing a light biege oversized blouse tucked into beige high-waisted trousers, paired with stylish sneakers. Their wavy hair is softly tousled, a delicate leather-strap watch. Beside her on the bench lies a flower bouquet. Surroundings feature lush blooms and a blossoming cherry tree with dramatic golden clouds in the sky, creamy bokeh in the foreground, and a cable overhead. Shot in 8K RAW with shallow depth of field, warm highlights, teal shadows, and vivid textures.(use reference face)",
         "imagePath": "/image/genai/16de8510-86d4-4d80-9ccc-1ad4fd00b4cc.png",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 363,
+        "title": "Chân dung cận cảnh, tâm trạng trong gió tuyết",
+        "prompt": "from my photo create a pictures: A tight Close-up Portrait, focus eyes, Full-Face Angle, captured at an approximate eye level or slightly higher. beautiful young women look at the camera. This creates a sense of engagement, vulnerability, sad and motion. The wind blew so hard that her hair fluttered. SHORT hair, messy, windblown fashion, a few strands flying across the face, particularly covering the forehead and parts of the left cheek. Fine white particles (likely snow or sleet) are visible scattered throughout the hair. A dark brown coat. The visible texture is coarse or knitted, with small white or light-colored flecks, suggesting a heavy, warm, or tweed-like material, possibly mimicking snow or textured fabric. The shoulder/collar area is prominent. An outdoor, cold, and stark environment. The context is clearly wintry and windy, with fine white particles (snow) visibly hitting the subject's hair and jacket. The atmosphere is moody, sad, and emotionally intense. a thick, chunky knit scarf in white colors covered part of her chin. dramatic lighting that highlights the texture of the hair and the snow particles. Don't change the facial det.",
+        "imagePath": "/image/genai/643ff133-6abf-4acb-ba9e-dcf83213f786.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 364,
+        "title": "Cái nhìn ngoảnh lại trong tuyết đỏ",
+        "prompt": "from my photo create a pictures: An 8K ultra-sharp, Close-up Portrait (or medium close-up, focusing on face and upper chest/shoulders), captured at eye level or slightly higher. A beautiful young woman stands with her back turned, but her head is turned back to look at the camera. This creates a sense of engagement, vulnerability, sad, and motion. The wind blows hard, causing her SHORT, messy, windblown hair to flutter, with a few strands flying across her face. Fine white particles (snow) are visible scattered in her hair. She wears a wine-red coat. The visible texture is coarse or knitted, heavy, and warm, possibly tweed-like, mimicking snow or textured fabric. The shoulder/collar area is prominent. A thick, chunky knit scarf with a dark red and white plaid pattern covers part of her chin. The setting is an outdoor, cold, and stark environment. The context is clearly wintry and windy, with fine white snow particles visibly hitting the subject's hair and jacket. The atmosphere is moody, sad, and emotionally intense. High-contrast, dramatic lighting highlights the texture of the hair and the snow particles. The image is high-resolution, sharp, and focused on the subject's eyes. Don't change the facial det.",
+        "imagePath": "/image/genai/6370e1be-40c2-4502-8bef-4968624602b4.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 365,
+        "title": "Chân dung Đêm Đông Lạnh giá, Tâm trạng Buồn",
+        "prompt": "from my photo create a pictures: (Face based on the reference photo). Ensure the face remains consistent with the person in the uploaded image, without changing facial structure, eyes, nose, mouth, skin tone, or hairstyle. Keep the facial features from the uploaded image. A tight Close-up Portrait, focus eyes. The beautiful young woman is captured in a profile view, looking down (view to the right of the photo) at the bouquet giving an impression of sad mood with sad eyes. The wind blew so hard that her SHORT, messy hair flutters, with a few strands flying across the face, particularly covering the forehead and parts of the left cheek. Fine white particles (likely snow or sleet) are visible scattered throughout the hair. A long dark chocolate brown color coat. The visible texture is coarse or knitted, with small white or light-colored flecks, suggesting a heavy, warm, or tweed-like material. inside she wore a black shirt with a hood over her head. An outdoor, low-key, dark night, cold, and snow environment. The atmosphere is moody, sad, and emotionally intense. one hand she held a large bouquet dark red roses near her chest. Don't change the facial det.",
+        "imagePath": "/image/genai/71099d3d-e4be-49b0-90d7-95a4488eec06.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 366,
+        "title": "Chân dung Cô gái Du mục và Chú ngựa Hoàng gia",
+        "prompt": "from my photo create a pictures: (Face based on the reference photo). Use 100% of the face from the uploaded image as the model reference, keeping the face natural and realistic with exact proportions and real skin texture. A beautiful young Asian woman with a radiant and joyful smile. She is wearing a bright red traditional dress with intricate colorful embroidery, a soft brown fur hat, and elaborate carved silver earrings. She is gently embracing a majestic brown horse. The horse is decorated with an exquisite silver-inlaid traditional harness and accessories, featuring a vibrant red tassel on its head and luxurious carved details. The background is a rustic farm scene, with a wooden fence and blurred hay bales. Lit by soft, diffused natural light, creating a warm and intimate tone. The overall style is a hyperrealistic portrait, high detail, 8K Ultra HD, beautiful bokeh, subtle cinematic lighting. A professional photography masterpiece, warm, luxurious, and emotional. Don't change the facial det.",
+        "imagePath": "/image/genai/19da6cea-b7ff-4847-b2a6-052279cdb58d.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 367,
+        "title": "Thiếu nữ Việt và Quạt nghệ thuật",
+        "prompt": "from my photo create a pictures: A photorealistic, elegant close-up portrait of a beautiful young Vietnamese woman. She is wearing a traditional magenta (purple) ao dai and a striking blue 'khăn vấn' (turban). She holds a large, ornate traditional fan with intricate floral artwork (Trúc Chỉ art style), partially covering one side of her face while looking elegantly at the camera. The background is a softly blurred traditional Vietnamese architectural setting with warm yellow and red tones. Soft, natural lighting, cinematic style, sharp focus on her visible eye and the fan's details.",
+        "imagePath": "/image/genai/acbded5c-3a1b-485a-811d-dd87401f355e.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 368,
+        "title": "Phản chiếu Hoàng cung",
+        "prompt": "from my photo create a pictures: A photorealistic, medium shot of a beautiful young Vietnamese woman. She is wearing a traditional red and gold patterned royal ao dai (áo nhật bình) and a vibrant blue 'khăn vấn' (turban). She stands elegantly behind a large, dark cauldron filled with water, which creates a perfect, clear reflection of her and the background. She holds a traditional paper fan up, looking gracefully to the side. The background is a traditional Vietnamese imperial palace in Hue, with its iconic yellow tiled roof and intricate woodwork. The lighting is bright daylight, creating a clear, sharp, and culturally rich image. Cinematic, high-resolution photo. Don't change the facial det.",
+        "imagePath": "/image/genai/18d951e2-d54e-48f3-89ef-b15e28e8f87a.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 369,
+        "title": "Chân dung Đồng quê Mông Cổ: Cô gái và Bầy cừu",
+        "prompt": "from my photo create a pictures: (Face based on the reference photo). Sử dụng 100% khuôn mặt tôi tải lên làm hình mẫu nhận diện, giữ cho gương mặt tự nhiên và chân thực với tỷ lệ chuẩn xác và kết cấu da thật. Một cô gái trẻ châu Á xinh đẹp, mỉm cười dịu dàng, ngồi giữa bầy cừu và cừu con lông trắng mềm mại. Cô mặc bộ trang phục truyền thống Mông Cổ màu đỏ rực rỡ, thêu hoa văn nhiều màu tinh xảo, đội mũ lông nâu lớn sang trọng, khoác áo choàng vai viền lông mềm. Mái tóc được tết hai bím dài, điểm những quả bông đỏ nhỏ xinh, kết hợp với hoa tai dài tinh xảo. Cô đặt tay nhẹ nhàng lên chú cừu con trắng trước mặt, trong khi một chú khác đang âu yếm tựa vào người cô. Xung quanh là thảm rơm vàng óng, phía sau là những kiện rơm lớn và hàng rào gỗ cũ mờ nhẹ trong nền. Bức ảnh mang phong cách chân dung nghệ thuật siêu thực (hyperrealistic), chi tiết sắc nét, màu sắc sống động, ánh sáng tự nhiên ấm áp, độ sâu trường ảnh nông, tạo hiệu ứng mờ hậu cảnh (bokeh) mềm mại. Toàn bộ khung cảnh được thể hiện với ánh sáng điện ảnh (cinematic lighting), độ phân giải 8K, và chất lượng nhiếp ảnh chuyên nghiệp, tái hiện một khung cảnh đồng quê yên bình, ấm áp, rực rỡ và tràn đầy sức sống. Don't change the facial det.",
+        "imagePath": "/image/genai/89b12553-5747-4b48-982b-269fcbaa3458.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 370,
+        "title": "Chân dung Kỵ sĩ Mông Cổ Phong cách Vogue",
+        "prompt": "from my photo create a pictures: (Face based on the reference photo). Using 100% of the face I uploaded as a face model, keeping the face natural and realistic, with standard proportions and real skin texture. A beautiful Asian woman, riding a majestic brown horse, wearing a traditional Mongolian-inspired dress in a bright red color, embroidered with intricate patterns, with vibrant colors. She wears a luxurious brown fur hat, a matching fur shawl, braided hair with small red pom-poms, delicate earrings, light and natural makeup, and looks straight at the viewer with charm. The horse is decorated with a delicate silver-studded bridle, a large silver medallion breastplate and prominent orange tassels, and an intricately embroidered saddle with rich patterns. The background is a rustic farm scene with an old wooden fence and golden straw bales that are slightly blurred, creating a soft depth effect. The overall photo has a professional fashion portrait style, warm natural light, bright, vibrant and luxurious color tones, high definition, super detailed (8K), f/1.4 cinematic light effect. This is a cultural portrait with a high-end artistic flavor, evoking a sense of both grandeur and sophistication, like in Vogue fashion magazine. Don't change the facial details.",
+        "imagePath": "/image/genai/fee54c1f-ebfd-454d-aad4-e2b966efa1aa.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 371,
+        "title": "Chân dung Nụ cười Hoàng hôn trên Thảo nguyên Vàng",
+        "prompt": "from my photo create a pictures: (Face based on the reference photo). Using 100% of the face I uploaded as a face model, keeping the face natural and realistic, with harmonious proportions and accurate skin texture. A young Asian girl full of joy, eyes closed, smiling brightly, wearing a bright red traditional Mongolian dress with intricate multi-colored embroidery, a warm soft fur coat, and a luxurious thick fur hat. Her hair is braided in two long braids, decorated with charming little red cotton balls. She sits in the middle of a vast golden field, where tall dry grasses shimmer in the afternoon sun. Warm sunset light covers the scene, soft and diffuse, creating a soft bokeh effect and charming golden tones. The photo is presented in cinematic portrait style, low angle, shallow depth of field, high detail, photorealistic, hyperrealistic, 8K Ultra HD quality, showing an artistic masterpiece full of emotion, light and vitality. Don't change the facial det.",
+        "imagePath": "/image/genai/10463ce2-d6d0-4837-af00-d2a107eb19be.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 372,
+        "title": "Chân dung Đồng quê Ấm áp: Cô gái và Chú dê con",
+        "prompt": "from my photo create a pictures: (Face based on the reference photo). Using 100% of the face I uploaded as a face model, keeping the face natural and realistic with accurate proportions and skin texture. A beautiful young Asian girl with delicate features, fair skin, and long black braided hair, wearing a bright red traditional dress with intricate multi-colored embroidery and soft fur trim. She wears a large brown fur hat, long beaded earrings and red pompoms. She is holding a soft, light brown and white baby goat in her arms, looking straight at the viewer. The background is a rustic farm scene with an old wooden fence and hay bales. Hyperrealistic portrait, eye-level shot, soft natural light, warm tones, bokeh, sharp focus, exquisite detail, 8K resolution, cinematic style, evoking the rustic, rustic and warm feeling of the countryside. Don't change the facial features.",
+        "imagePath": "/image/genai/4818ec6e-b76a-437b-a90b-0646f559c4ab.jpg",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 373,
+        "title": "Kỵ sĩ Thảo nguyên Mông Cổ dưới Ánh hoàng hôn",
+        "prompt": "from my photo create a pictures: (Face based on the reference photo). Using 100% of the face I uploaded as a face model, keeping the face natural and realistic, with accurate proportions and real skin texture. A beautiful young woman, her hair neatly braided, wearing a bright red traditional Mongolian costume with intricate embroidery, a luxurious brown fur hat and a soft fur scarf of the same color. She rides a majestic light brown horse, decorated with a brilliant saddle with multi-colored gemstones and a red saddlecloth embroidered with intricate patterns. The scene is an endless golden-brown autumn grassland, dry grass swaying in the wind, and gentle hills in the distance under a mild sky and a warm mist. The golden hour light is softly diffused, creating a warm, gentle atmosphere with cinematic depth. Medium full-body shot, slightly high angle, sharp, high detail, hyperrealistic style, photorealistic with 8K resolution, professional cinema lighting. The photo is recreated in National Geographic style, evoking the majestic beauty of nature, the elegance and pride of a Mongolian woman in the vast and silent autumn steppe. Don't change the facial expression.",
+        "imagePath": "/image/genai/d505cc29-8731-4a0f-9349-e39dc80b4946.jpg",
+        "category": "Portrait Photography"
     }
 ]
