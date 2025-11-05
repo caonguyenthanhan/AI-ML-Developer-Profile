@@ -2658,5 +2658,75 @@
         "prompt": "from my photo create a pictures: Create a hyper-realistic, full-body portrait of me, standing and leaning against an old stone wall under a large, vibrant cherry blossom tree in full bloom. The sky above is bright blue. I am wearing a dark jacket and a dark skirt. I am holding a book open and looking down at it with a peaceful, serene expression. The lighting is bright natural sunlight, creating a high-contrast, vibrant, and poetic 'nàng thơ' aesthetic. 35mm film look. Don't change the facial det.",
         "imagePath": "/image/genai/c0daf6d0-8a2b-4e1a-907b-10decc3b4a76.png",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 381,
+        "title": "Chân dung mùa đông ấm áp bên người tuyết",
+        "prompt": "from my photo create a pictures: A portrait of a young man with soft, tousled black hair, wearing a dark navy/black puffer jacket, a light grey hoodie, black gloves, and grey sweatpants. He is squatting down and smiling genuinely at the camera. He is positioned next to a large, well-decorated snowman that has a carrot nose, green leaves and a brown dry leaf for decoration, and small branches for arms. Setting: Snowy outdoor scene, possibly a park or forest, with thick white snow covering the ground. Two more smaller, simpler snowmen are visible in the soft-focus background. Lighting & Aesthetic: Soft, even daylight, creating a gentle and radiant illumination. The overall tone is cool (white and blue) from the snow, but the subject's skin and face are rendered in a warm, vibrant tone. The aesthetic is clean, soft, and slightly Korean-inspired. Composition & Focus: Shot at eye-level/low angle. Shallow depth of field (bokeh effect) with the man and the nearby snowman in sharp focus. High-resolution, detailed photograph. Don't change the facial det.",
+        "imagePath": "/image/genai/a60cc36b-9607-4ffa-85e0-3a66dae39796.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 382,
+        "title": "Hóa thân Veera Quý Cô Dơi Tuyết (Snow Angel Veera)",
+        "prompt": "from my photo create a pictures: A hyper-realistic 8K cosplay of the character Veera in her 'Snow Angel' (Quý Cô Dơi Tuyết) skin from Arena of Valor. The face must be an exact match to the uploaded photo (Don't change the facial det). The subject wears a stylish dark blue winter coat with thick white fur trim on the collar, cuffs, and hem, paired with a large, fluffy white fur hat. The character has blonde hair and pointed elf ears. Her signature demonic wings are transformed into large, sharp, crystalline ice wings, dark blue in color. She is in a dynamic pose in a snowy mountain landscape, holding a snowball. The style is cinematic, high-fantasy, and matches the game's splash art aesthetic.",
+        "imagePath": "/image/genai/9ab34687-85a6-4cd2-ba75-c1b62f4985bb.png",
+        "category": "Cosplay & Gaming"
+    },
+    {
+        "id": 383,
+        "title": "Thiếu nữ du xuân vườn đào Tết",
+        "prompt": "from my photo create a pictures: A photorealistic portrait of a beautiful Vietnamese woman (using the face from the uploaded photo) celebrating Tết. She is wearing an elegant pink Ao Dai (áo dài) with red floral embroidery, standing gracefully in a vibrant peach blossom garden (vườn hoa đào) in full bloom. She is gently touching a blossom-filled branch, looking towards the camera with a calm and gentle expression. The atmosphere is filled with the spirit of spring and Tết. The lighting is soft, natural daylight, creating a warm glow on her face and making the pink blossoms pop. The background is a dense field of blossoms, creating a beautiful bokeh effect. High-resolution, cinematic, medium-shot. Don't change the facial det.",
+        "imagePath": "/image/genai/095dd3ae-a257-4c10-aa34-8ec67753e5da.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 384,
+        "title": "Du xuân chợ hoa Tết 2026",
+        "prompt": "from my photo create a pictures: A photorealistic, cinematic shot of a beautiful Vietnamese woman (using the face from the uploaded photo) strolling through a bustling 2026 Tết flower market (chợ hoa Tết). She is wearing an elegant floral Ao Dai (áo dài). The market is filled with vibrant yellow apricot blossoms (hoa mai), pink peach blossoms (hoa đào), and pots of yellow chrysanthemums. In the background, there is a large, decorative gate with the words \"Chúc Mừng Năm Mới 2026\" and red lanterns hanging. The crowd of people shopping around her is softly blurred. The lighting is bright, natural daylight, creating a festive and joyful atmosphere. High-resolution, medium-shot. Don't change the facial det.",
+        "imagePath": "/image/genai/0968a775-5496-4030-9895-139463137f94.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 385,
+        "title": "Áo dài đỏ rực rỡ chợ hoa Tết 2026",
+        "prompt": "from my photo create a pictures: A photorealistic, cinematic shot of the beautiful Vietnamese woman (using the face from the uploaded photo) strolling through a bustling 2026 Tết flower market (chợ hoa Tết). She is wearing a luxurious, elegant red Ao Dai (áo dài đỏ sang trọng) with intricate golden embroidery, similar to the phoenix pattern in the reference. The market is vibrant, filled with yellow apricot blossoms (hoa mai), pink peach blossoms (hoa đào), and pots of colorful chrysanthemums. In the background, a large decorative gate reads \"Chúc Mừng Năm Mới 2026\" and is adorned with red lanterns. The atmosphere is festive and joyful, with a softly blurred crowd. Lighting is bright, natural daylight. High-resolution, medium-shot, capturing her graceful walk. Don't change the facial det.",
+        "imagePath": "/image/genai/100089e9-f27c-4e98-bc52-e59def1342cd.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 386,
+        "title": "Thẻ Cầu Thủ 3D Pop-out Manchester United",
+        "prompt": "from my photo create a pictures: Use the exact real face from the attached photo, 100% unchanged (Don't change the facial det). A vertical, medium-close-up portrait of a young adult football player. The subject wears the red club jersey of [Manchester United], looking straight into the camera with a strong expression, both hands resting naturally at their sides. The entire image is overlaid with a 3D graphic effect in the shape of an off-white Playing Card. The subject is perfectly contained within the card frame, with graphic card details such as the number 16 and the red devil/crest symbol placed in the two opposite corners, along with the player's name repeated on both sides. A small quote is added along the left edge. Most importantly, the player's right arm protrudes beyond the card border, creating a realistic and dramatic 3D pop-out effect, making the image lively and outstanding. Strong, directional studio light illuminates the subject directly, highlighting the vibrant red jersey details and the player's hairstyle. The background is a dark, blurred stadium interior, with red seats creating depth. The overall image features a dominant Red and White color palette, with high saturation, conveying the feeling of a premium collectible item. The visual style is a combination of Graphic Illustration and Photorealism, with card details subtly shadowed to create a Subtle 3D Pop-out Effect. [The player has short brown hair]. Captured with a Canon EOS R5 camera using a standard prime lens, high-quality digital photography, 9:16 vertical aspect ratio, 8k, ultra-detailed.",
+        "imagePath": "/image/genai/7f0be795-5e8b-4d0f-b0e9-1e651ca9b2ad.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 387,
+        "title": "Thiếu nữ xin chữ ông đồ ngày Tết",
+        "prompt": "from my photo create a pictures: A vibrant, photorealistic image of a beautiful Vietnamese woman (using the face from the uploaded photo) wearing a stunning red Ao Dai with golden phoenix embroidery, respectfully receiving calligraphy from an elderly \"Ông Đồ\" (calligrapher). The Ông Đồ is seated at a traditional wooden table, dressed in a blue traditional Vietnamese robe (áo the khăn xếp), with a brush in hand, writing auspicious characters on red paper (giấy đỏ). The setting is a festive outdoor space during Tết, with decorative kumquat trees and yellow chrysanthemums in the background. Soft, warm sunlight illuminates the scene, highlighting the cultural richness and tradition. The woman looks on with a gentle smile and respectful demeanor. High-resolution, medium shot. Don't change the facial det.",
+        "imagePath": "/image/genai/e40a9485-b923-49c9-982f-0dd80e1a0231.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 388,
+        "title": "Chân dung cận cảnh nam thanh niên với áo hoodie đen và biểu cảm cuốn hút",
+        "prompt": "from my photo create a pictures: An ultra-realistic close-up portrait of the person (using the face from the uploaded photo) with fair, smooth skin. They are wearing a black hooded sweatshirt with the hood fully up, fitting snugly around their head. The photo is taken from a slightly low angle, just below chin level, looking up toward their face, emphasizing their jawline and lips. Their head is slightly tilted backward, and they are looking downward toward the camera with a subtle, confident, and alluring expression. Their lips are gently closed, slightly pouty, with a soft pink color. Their black hair is messy and falls naturally over their forehead, partially covering one eye and blending into the shadow of the hood. The hood is made of thick, matte black fabric with visible seams and two black drawstrings hanging loosely. The lighting is soft and diffused indoor light, coming from the front-left side, creating a gentle highlight on their nose and lips, and a mild shadow under the chin. The background is a plain beige wall with smooth gradient lighting, minimal, no objects or textures. The overall mood is moody and intimate, with a cool, realistic photographic tone, shallow depth of field, and high detail in skin texture, lips, and hair strands. No stylization, no filters - purely realistic photography, like a natural unedited portrait shot with a DSLR camera. Don't change the facial det.",
+        "imagePath": "/image/genai/e8653a11-52c3-4371-97de-dd47628116d3.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 389,
+        "title": "Nụ Cười Hoa Cúc Mùa Thu",
+        "prompt": "From my photo, create a photo: Medium Artistic Portrait of a Man from the attached photo. His face must remain 100% (No change in facial details). He holds a single yellow chrysanthemum in his hand, cleverly covering one eye with the flower. He is wearing a stylish white striped suit and a black shirt. The background is a thick wall covered with matching yellow chrysanthemums. The light is soft and natural, creating a fashionable, editorial feel. The image style is a combination of art photography and creative portrait, 8K resolution is super detailed.",
+        "imagePath": "/image/genai/40805db8-a71b-4d81-8357-41dfe8be62cb.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 390,
+        "title": "Chân Dung mùa thu Hoa hướng dương",
+        "prompt": "from my photo create a pictures: Medium Artistic Portrait of a Man from the attached photo. His face must remain 100% (No change in facial details). He holds a single yellow wild sunflower in his hand, cleverly covering one eye with the flower. He is wearing a stylish white striped suit and a black shirt. The background is a thick wall covered with matching yellow wild sunflowers. The light is soft and natural, creating a fashionable, editorial feel. The image style is a combination of art photography and creative portrait, 8K resolution is super detailed.",
+        "imagePath": "/image/genai/c2148d96-0563-4035-8afb-6401cb03f067.png",
+        "category": "Portrait Photography"
     }
 ]

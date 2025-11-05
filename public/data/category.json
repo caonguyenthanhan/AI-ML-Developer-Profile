@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 192,
+        "count": 196,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 65,
+        "count": 70,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -214,5 +214,13 @@
         "count": 3,
         "color": "#FF5733",
         "icon": "ghost"
+    },
+    {
+        "id": 28,
+        "name": "Cosplay & Gaming",
+        "description": "Cosplay & Trò chơi",
+        "count": 1,
+        "color": "#9B59B6",
+        "icon": "shield"
     }
 ]
