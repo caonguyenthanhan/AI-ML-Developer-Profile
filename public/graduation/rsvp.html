@@ -86,14 +86,22 @@
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
     const firebaseConfig = typeof __firebase_config !== "undefined" ? JSON.parse(__firebase_config) : {};
     const initialAuthToken = typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
+    const INFO_URL = "/data/info.json";
 
     let db, auth, INFO = null, RSVPS = [];
 
     async function setupFirebase() {
-      const app = initializeApp(firebaseConfig);
-      db = getFirestore(app);
-      auth = getAuth(app);
-      await signInAnonymously(auth);
+      try {
+        if (!firebaseConfig || !Object.keys(firebaseConfig).length) return false;
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+        await signInAnonymously(auth);
+        return true;
+      } catch (e) {
+        console.error("Firebase init error:", e);
+        return false;
+      }
     }
 
     async function loadInfo() {
@@ -102,10 +110,29 @@
       if (snap.exists()) INFO = snap.data();
     }
 
+    async function loadInfoJson() {
+      try {
+        const r = await fetch(INFO_URL, { cache: "no-store" });
+        if (r.ok) return await r.json();
+      } catch (e) { console.warn("Load info.json failed:", e); }
+      return null;
+    }
+
     async function loadRsvps() {
       const ref = collection(db, "artifacts", appId, "public", "data", "rsvps");
       const snap = await getDocs(ref);
       return snap.docs.map(d => d.data());
+    }
+
+    async function loadRsvpsApi() {
+      try {
+        const res = await fetch("/api/rsvp", { method: "GET" });
+        if (!res.ok) return [];
+        const j = await res.json().catch(()=>null);
+        if (!j) return [];
+        const list = Array.isArray(j?.data) ? j.data : (Array.isArray(j?.rsvps) ? j.rsvps : []);
+        return list;
+      } catch (e) { console.error("Load RSVPs API failed:", e); return []; }
     }
 
     function renderTable(data) {
@@ -162,8 +189,9 @@
     // Login & UI logic
     document.getElementById("loginForm").addEventListener("submit", async e => {
       e.preventDefault();
-      await setupFirebase();
-      await loadInfo();
+      const canFs = await setupFirebase();
+      if (canFs) { await loadInfo(); }
+      if (!INFO) { INFO = await loadInfoJson(); }
       const key = document.getElementById("adminKeyInput").value.trim();
       if (!INFO?.adminKey || key !== INFO.adminKey) {
         alert("Mã quản trị không hợp lệ!");
@@ -174,7 +202,7 @@
       document.getElementById("dashboard").classList.remove("hidden");
       document.getElementById("logoutBtn").classList.remove("hidden");
 
-      RSVPS = await loadRsvps();
+      RSVPS = canFs ? await loadRsvps() : await loadRsvpsApi();
       renderTable(RSVPS);
       lucide.createIcons();
     });
