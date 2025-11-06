@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Giả sử các tệp tĩnh (index.html, css, js) của bạn nằm ở thư mục gốc của repo
-          path: './public'
+          path: './'
           if-no-files-found: error
       - name: Deploy to GitHub Pages
         id: deployment
