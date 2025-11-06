@@ -1,0 +1,120 @@
+Tuyệt vời\! Việc thêm tính năng Xác nhận Tham dự (RSVP) là một bước nâng cấp rất chuyên nghiệp cho thiệp mời của bạn.
+
+Để tích hợp tính năng này với một server đơn giản như Vercel và sử dụng Firestore để lưu trữ dữ liệu RSVP, tôi sẽ cung cấp cho bạn một kế hoạch chi tiết bao gồm **Serverless Function (Vercel)** và cách cập nhật **Frontend (HTML/Firestore)**.
+
+Do môi trường Canvas đã cung cấp sẵn Firebase/Firestore, chúng ta sẽ tối ưu hóa việc sử dụng Firestore làm database chính, và tạo ra một Serverless Function đơn giản (trên Vercel) để xử lý các yêu cầu phức tạp hơn (như gửi email thông báo cho bạn).
+
+Dưới đây là kế hoạch triển khai:
+
+### Kế Hoạch Tích Hợp Xác Nhận Tham Dự (RSVP)
+
+#### 1\. Cập nhật Frontend (File `graduation_invitation.html`)
+
+Chúng ta cần thêm một form RSVP vào **Trang 2** hoặc tạo một trang mới (Trang 3 hoặc 4) để khách mời nhập tên/email và trạng thái tham dự.
+
+**Thêm Form RSVP:**
+
+Tôi sẽ thêm một form đơn giản vào `renderPage2(info)` (trang Chi Tiết Sự Kiện) hoặc `renderPage3(info)` và sử dụng Firestore để lưu phản hồi.
+
+**Logic Firebase/Firestore:**
+
+  * **Bộ sưu tập:** Tạo một bộ sưu tập mới tên là `rsvps` trong đường dẫn công khai: `/artifacts/{appId}/public/data/rsvps`.
+  * **Hàm `sendRsvp(name, attending, message)`:**
+      * Tạo một document mới trong bộ sưu tập `rsvps`.
+      * Document sẽ chứa: `name`, `attending` (boolean), `timestamp`, và `message` (lời nhắn từ khách).
+
+#### 2\. Cập nhật Logic Frontend (Đã sửa đổi file `graduation_invitation.html`)
+
+Tôi sẽ thêm logic form và hàm lưu RSVP vào file HTML hiện tại.
+
+**A. Thêm Form vào `renderPage2`:**
+
+Tôi sẽ thêm form vào cuối nội dung của Trang 2 (Chi Tiết Sự Kiện).
+
+**B. Thêm Hàm `sendRsvp`:**
+
+```javascript
+        // --- Hàm Gửi RSVP lên Firestore ---
+        async function sendRsvp(rsvpData) {
+            const rsvpCollectionRef = collection(db, "artifacts", appId, "public", "data", "rsvps");
+            
+            try {
+                await addDoc(rsvpCollectionRef, {
+                    ...rsvpData,
+                    timestamp: new Date().toISOString(),
+                });
+                console.log("RSVP submitted successfully to Firestore!");
+                return true;
+            } catch (error) {
+                console.error("Error submitting RSVP:", error);
+                return false;
+            }
+        }
+```
+
+#### 3\. Kế Hoạch Server Đơn Giản trên Vercel
+
+Để thông báo cho bạn ngay lập tức khi có người RSVP mà không cần bạn phải theo dõi Firestore thủ công, chúng ta cần một Serverless Function (Vercel).
+
+**Cấu trúc dự án Vercel:**
+
+| File | Mục đích | Nội dung |
+| :--- | :--- | :--- |
+| `api/rsvp.js` | Serverless Function (Node.js) | Nhận dữ liệu POST từ Frontend và gửi email thông báo cho bạn. |
+
+**Nội dung File `api/rsvp.js` (Serverless Function):**
+
+Đây là code cơ bản cho Vercel (sử dụng gói `node-fetch` hoặc tương đương để gọi API Firestore, hoặc chỉ đơn giản là nhận data từ client và gửi email):
+
+```javascript
+// api/rsvp.js - Chạy trên Vercel
+const { send } = require('micro');
+const fetch = require('node-fetch');
+
+// Cấu hình email (ví dụ dùng SendGrid hoặc API email cá nhân)
+// Do đây là Vercel Serverless Function, bạn cần cấu hình khóa API email.
+const YOUR_EMAIL = "huenhi@example.com"; // Thay bằng email của bạn
+const SENDER_EMAIL = "noreply@yourdomain.com";
+
+module.exports = async (req, res) => {
+    if (req.method === 'POST') {
+        try {
+            const rsvpData = req.body;
+            
+            // 1. Gửi email thông báo (Nếu bạn muốn nhận email)
+            // (Bước này cần tích hợp dịch vụ email như SendGrid/Nodemailer, 
+            // được đơn giản hóa trong ví dụ này)
+
+            console.log(`[Vercel Server] New RSVP: ${rsvpData.name} - Attending: ${rsvpData.attending}`);
+
+            // 2. Ghi phản hồi thành công về client
+            send(res, 200, { success: true, message: 'RSVP received and processed.' });
+
+        } catch (error) {
+            console.error('RSVP Server Error:', error);
+            send(res, 500, { success: false, message: 'Internal Server Error' });
+        }
+    } else {
+        send(res, 405, { success: false, message: 'Method Not Allowed' });
+    }
+};
+```
+
+**Lưu ý quan trọng cho Vercel:**
+
+1.  Trong thực tế, do bạn đã dùng Firestore, bạn nên **dùng Serverless Function này để kích hoạt thông báo (gửi email/Zalo/Slack)** *sau khi* dữ liệu đã được lưu vào Firestore.
+2.  Bạn cần phải thiết lập một dự án Vercel, cài đặt Node.js và triển khai Serverless Function này.
+
+### Thực hiện Sửa đổi File HTML
+
+Tôi sẽ sửa file `graduation_invitation.html` để thêm form RSVP và logic lưu trữ vào Firestore. Tôi sẽ đặt form này vào **Trang 2** (Chi Tiết Sự Kiện) để khách dễ dàng nhìn thấy.
+
+http://googleusercontent.com/immersive_entry_chip/0
+
+Tôi đã cập nhật file HTML của bạn với:
+
+1.  **Form RSVP:** Đã thêm một form Xác nhận Tham dự vào cuối Trang 2 (`renderPage2`).
+2.  **Hàm `sendRsvp`:** Đã viết hàm JavaScript để gửi dữ liệu RSVP lên collection `rsvps` trong Firestore.
+3.  **Hộp thoại thông báo:** Thay thế `alert()` bằng hộp thoại modal đơn giản để thông báo trạng thái RSVP thành công/thất bại cho khách mời.
+
+Kế hoạch của bạn đã hoàn tất\! Nếu bạn cần tôi phát triển Serverless Function Vercel hoàn chỉnh (bao gồm cả mã email), hãy cho tôi biết nhé.

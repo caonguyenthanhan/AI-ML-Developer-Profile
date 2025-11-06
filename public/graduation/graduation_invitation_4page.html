@@ -2,14 +2,14 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Thiệp Mời Tốt Nghiệp — Tân Cử nhân Ngô Tấn Tài</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/image/graduation/logotruong.png" />
   <link rel="apple-touch-icon" href="/image/graduation/logotruong.png" />
 
-  <!-- Open Graph / Zalo / Twitter -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Thiệp Mời Lễ Tốt Nghiệp" />
   <meta property="og:description" content="Trân trọng kính mời bạn đến chung vui tại Lễ Tốt Nghiệp." />
   <meta property="og:image" content="/image/graduation/main-preview.jpg" />
@@ -26,10 +26,7 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            navy: "#03204c",
-            gold: "#ffd700",
-          },
+          colors: { navy: "#03204c", gold: "#ffd700" },
           fontFamily: {
             sans: ["Inter", "ui-sans-serif", "system-ui"],
             serif: ["Playfair Display", "ui-serif"],
@@ -46,20 +43,268 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
-  <!-- Firebase -->
+  <!-- AOS (Animate On Scroll) -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    .section { min-height: 100vh; display: grid; place-items: center; padding: 4rem 1rem; }
+    .btn { @apply inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition; }
+    .btn-navy { @apply bg-navy text-white hover:bg-navy/90; }
+    .btn-gold { @apply bg-gold text-navy hover:bg-yellow-400; }
+    .maxw { max-width: 1100px; width: 100%; }
+    .hero-video::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(3,32,76,.7));
+      pointer-events: none;
+    }
+    .watermark-center { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+    .watermark-center img { opacity: .08; width: 9rem; height: 9rem; }
+    /* Modal */
+    .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; z-index: 2000; }
+    .modal { background: white; border-radius: 1rem; padding: 1.25rem; width: min(92vw, 420px); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .show { display: flex; }
+  </style>
+</head>
+<body class="font-sans bg-gradient-to-b from-slate-50 to-white text-navy">
+
+  <!-- Loading -->
+  <div id="loading" class="fixed inset-0 grid place-items-center bg-white z-[200]">
+    <div class="text-center">
+      <svg class="animate-spin h-10 w-10 text-navy mx-auto" viewBox="0 0 24 24" fill="none">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      <p class="mt-3 font-semibold text-navy">Đang tải thiệp mời...</p>
+    </div>
+  </div>
+
+  <!-- Logo overlay -->
+  <div id="logoOverlay" class="fixed top-4 right-4 z-[110] opacity-90 pointer-events-none"></div>
+
+  <!-- Controls: Music & Celebrate -->
+  <div class="fixed bottom-4 right-4 z-[110] flex items-center gap-2">
+    <button id="musicBtn" class="w-12 h-12 rounded-full flex items-center justify-center shadow-lg bg-gold text-navy hover:scale-110 transition" title="Nhạc nền">
+      <i data-lucide="volume-x" class="w-6 h-6"></i>
+    </button>
+    <button id="celebrateBtn" class="w-12 h-12 rounded-full flex items-center justify-center shadow-lg bg-gold text-navy hover:scale-110 transition" title="Chúc mừng!">
+      <i data-lucide="party-popper" class="w-6 h-6"></i>
+    </button>
+  </div>
+
+  <audio id="bgm" loop></audio>
+
+  <!-- Sections -->
+  <main id="app" class="hidden">
+    <!-- 1) HERO -->
+    <section id="s1" class="section relative text-white">
+      <div class="absolute inset-0 -z-10 hero-video">
+        <video autoplay loop muted playsinline class="w-full h-full object-cover">
+          <source id="bgVideoSrc" type="video/mp4">
+        </video>
+      </div>
+      <div class="watermark-center">
+        <img src="/image/graduation/logotruong.png" alt="logo">
+      </div>
+
+      <div class="maxw grid gap-8 place-items-center text-center" data-aos="fade-up">
+        <p class="tracking-[0.35em] text-gold font-semibold">THƯ MỜI</p>
+        <h1 class="font-serif font-black text-5xl md:text-6xl leading-tight">LỄ TỐT NGHIỆP</h1>
+        <div class="inline-flex items-center gap-3 bg-white/10 px-5 py-2 rounded-full border border-white/20">
+          <span class="text-gold font-bold">TÂN CỬ NHÂN</span>
+          <span id="graduateNameHero" class="font-serif font-black text-2xl">Tên Tân Cử Nhân</span>
+        </div>
+
+        <form id="guestSearchFormTop" class="w-full max-w-xl grid grid-cols-1 md:grid-cols-[1fr_auto] gap-2 mt-4">
+          <input name="guest" class="px-4 py-2 rounded-lg bg-white/90 text-navy placeholder-navy/50 focus:outline-none" placeholder="Nhập tên khách mời của bạn..." />
+          <button class="btn btn-gold"><i data-lucide="search" class="w-5 h-5"></i>Tìm thiệp</button>
+        </form>
+
+        <div class="flex gap-3 mt-2">
+          <a href="#s2" class="btn btn-navy"><i data-lucide="chevron-down" class="w-5 h-5"></i>Xem chi tiết</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) EVENT INFO -->
+    <section id="s2" class="section relative">
+      <div class="absolute inset-0 pointer-events-none grid place-items-center">
+        <img src="/image/graduation/logotruong.png" class="opacity-5 w-40 h-40" alt="">
+      </div>
+
+      <div class="maxw">
+        <div class="text-center" data-aos="fade-up">
+          <h2 class="font-serif text-4xl font-black">Thông Tin Sự Kiện</h2>
+          <p id="universityLabel" class="mt-2 font-semibold text-navy/70">Tên Trường</p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="rounded-xl border border-navy/10 bg-white p-6 text-center shadow-sm" data-aos="zoom-in" data-aos-delay="0">
+            <i data-lucide="calendar" class="w-8 h-8 mx-auto text-navy"></i>
+            <h3 class="mt-2 font-bold">Ngày</h3>
+            <p id="eventDate" class="text-navy/80">Chưa cập nhật</p>
+          </div>
+          <div class="rounded-xl border border-navy/10 bg-white p-6 text-center shadow-sm" data-aos="zoom-in" data-aos-delay="75">
+            <i data-lucide="clock" class="w-8 h-8 mx-auto text-navy"></i>
+            <h3 class="mt-2 font-bold">Giờ</h3>
+            <p id="eventTime" class="text-navy/80">Chưa cập nhật</p>
+          </div>
+          <div class="rounded-xl border border-navy/10 bg-white p-6 text-center shadow-sm" data-aos="zoom-in" data-aos-delay="150">
+            <i data-lucide="map-pin" class="w-8 h-8 mx-auto text-navy"></i>
+            <h3 class="mt-2 font-bold">Địa điểm</h3>
+            <p id="eventVenue" class="text-navy/80">Chưa cập nhật</p>
+          </div>
+        </div>
+
+        <div class="mt-8" data-aos="fade-up">
+          <a id="mapLinkBtn" href="#" target="_blank" class="btn btn-navy">
+            <i data-lucide="map" class="w-5 h-5"></i>Mở Google Maps
+          </a>
+        </div>
+
+        <div class="mt-6 rounded-xl overflow-hidden border shadow" data-aos="fade-up">
+          <div id="mapEmbed"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) GRADUATE -->
+    <section id="s3" class="section relative text-white">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-navy via-navy to-black"></div>
+      <div class="absolute inset-0 pointer-events-none grid place-items-center">
+        <img src="/image/vien-vang.png" class="opacity-20 w-[90%] max-w-5xl" alt="">
+      </div>
+
+      <div class="maxw grid md:grid-cols-2 gap-8 items-center">
+        <div class="flex justify-center" data-aos="zoom-in">
+          <div class="relative w-56 h-56 md:w-64 md:h-64">
+            <img src="/image/nguyet-que.png" class="absolute inset-0 w-full h-full object-contain opacity-90" alt="">
+            <img id="graduateImage" src="/image/graduation/main.jpg" class="relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-40 h-40 md:w-48 md:h-48 object-cover rounded-full ring-4 ring-gold shadow-xl" alt="">
+          </div>
+        </div>
+        <div data-aos="fade-left">
+          <h3 id="graduateNameS3" class="font-serif text-4xl font-black text-gold">Tên Tân Cử Nhân</h3>
+          <p id="graduateQuote" class="mt-3 text-white/90 italic">
+            "Cảm ơn gia đình, thầy cô và bạn bè đã đồng hành trong chặng đường này."
+          </p>
+          <div id="contactWrap" class="mt-4 flex items-center gap-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) RSVP -->
+    <section id="s4" class="section relative">
+      <div class="absolute inset-0 pointer-events-none grid place-items-center">
+        <img src="/image/graduation/logotruong.png" class="opacity-5 w-40 h-40" alt="">
+      </div>
+
+      <div class="maxw">
+        <div class="text-center" data-aos="fade-up">
+          <h2 class="font-serif text-4xl font-black">Xác Nhận Tham Dự (RSVP)</h2>
+          <p class="mt-2 text-navy/70">Vui lòng điền thông tin của bạn</p>
+        </div>
+
+        <form id="rsvpForm" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4" data-aos="fade-up">
+          <div class="grid gap-2">
+            <label class="text-sm font-semibold">Họ và tên</label>
+            <input id="rsvpName" class="px-3 py-2 rounded-lg bg-gray-50 border border-navy/10 focus:outline-none" placeholder="Nguyễn Văn A" required />
+          </div>
+          <div class="grid gap-2">
+            <label class="text-sm font-semibold">Email</label>
+            <input id="rsvpEmail" type="email" class="px-3 py-2 rounded-lg bg-gray-50 border border-navy/10 focus:outline-none" placeholder="ban@email.com" required />
+          </div>
+          <div class="grid gap-2">
+            <label class="text-sm font-semibold">Trạng thái</label>
+            <div class="flex items-center gap-4">
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="attending" value="yes" checked />
+                <span>Có tham dự</span>
+              </label>
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="attending" value="no" />
+                <span>Không thể tham dự</span>
+              </label>
+            </div>
+          </div>
+          <div class="grid gap-2 md:col-span-2">
+            <label class="text-sm font-semibold">Lời nhắn</label>
+            <textarea id="rsvpMessage" rows="3" class="px-3 py-2 rounded-lg bg-gray-50 border border-navy/10 focus:outline-none" placeholder="Lời nhắn (tuỳ chọn)"></textarea>
+          </div>
+
+          <div class="md:col-span-2 flex items-center gap-3">
+            <button class="btn btn-navy" type="submit"><i data-lucide="check-circle" class="w-5 h-5"></i> Gửi xác nhận</button>
+            <a href="#s5" class="btn btn-gold"><i data-lucide="chevron-down" class="w-5 h-5"></i> Xem thiệp cá nhân</a>
+          </div>
+        </form>
+
+        <p class="text-sm text-navy/60 mt-3" data-aos="fade-up">* Sau khi gửi, hệ thống sẽ lưu phản hồi và gửi email thông báo cho chủ lễ.</p>
+      </div>
+    </section>
+
+    <!-- 5) PERSONAL INVITE -->
+    <section id="s5" class="section relative">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-white to-amber-50"></div>
+      <div class="absolute inset-0 pointer-events-none grid place-items-center">
+        <img src="/image/graduation/logotruong.png" class="opacity-5 w-40 h-40" alt="">
+      </div>
+
+      <div class="maxw">
+        <div class="text-center" data-aos="fade-up">
+          <h2 class="font-serif text-4xl font-black">Thiệp Mời Cá Nhân</h2>
+          <p id="guestTarget" class="mt-2 text-navy/80">Dành cho bạn</p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="md:col-span-2 rounded-xl border border-navy/10 bg-white p-6 shadow-sm">
+            <p id="inviteMessage" class="text-lg font-serif italic text-navy/90">
+              "Thân mời bạn đến chung vui trong ngày tốt nghiệp — sự hiện diện của bạn là niềm vinh dự lớn nhất!"
+            </p>
+            <p id="inviterName" class="mt-3 text-sm text-navy/70">— Tân cử nhân</p>
+
+            <div id="rsvpActions" class="mt-6 flex flex-wrap items-center gap-3"></div>
+          </div>
+
+          <div class="rounded-xl border border-navy/10 bg-white p-6 text-center shadow-sm">
+            <img id="guestAvatar" src="/image/graduation/man.jpg" class="w-20 h-20 rounded-full object-cover mx-auto mb-3 ring-2 ring-navy/10" alt="">
+            <p id="guestNameLabel" class="font-semibold">Tên Khách Mời</p>
+
+            <form id="guestSearchFormBottom" class="mt-3 flex gap-2">
+              <input name="guest" class="flex-1 px-3 py-2 rounded-lg bg-gray-50 border border-navy/10 focus:outline-none" placeholder="Nhập tên khách mời..." />
+              <button class="px-3 py-2 rounded-lg bg-gold text-navy font-semibold">Tìm</button>
+            </form>
+
+            <a href="#s1" class="btn btn-navy mt-3"><i data-lucide="home" class="w-5 h-5"></i> Về trang đầu</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modalWrap" class="modal-bg">
+    <div class="modal">
+      <h3 id="modalTitle" class="text-xl font-bold"></h3>
+      <p id="modalMsg" class="mt-1 text-gray-700"></p>
+      <div class="mt-4 text-right">
+        <button id="modalClose" class="btn btn-gold">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCRIPT (Firebase + Logic) ====== -->
   <script type="module">
+    // ===== Firebase SDK =====
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, getDocs, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // ========= Global setup & constants =========
+    // ===== Globals & Config =====
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
     const firebaseConfig = typeof __firebase_config !== "undefined" ? JSON.parse(__firebase_config) : {};
     const initialAuthToken = typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
     const APP_ROOT = "/graduation";
-
-    const DEFAULT_INVITE_MESSAGE =
-      "Thân gửi bạn, hãy đến chung vui cùng tôi trong buổi lễ trọng đại này. Sự hiện diện của bạn là niềm vinh dự lớn nhất!";
 
     const ASSETS = {
       GRADUATE_IMAGE: "/image/graduation/main.jpg",
@@ -75,537 +320,304 @@
     const INFO_URL = "/data/info.json";
     const GUESTS_URL = "/data/khach.json";
 
-    let db, auth;
-    let isAuthReady = false;
+    let db, auth, isAuthReady = false;
+    let INFO = null;
+    let GUESTS = [];
 
+    const $ = (s, r=document) => r.querySelector(s);
+    const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+    // ===== Utilities =====
+    function showModal(title, msg) {
+      $("#modalTitle").textContent = title;
+      $("#modalMsg").textContent = msg;
+      $("#modalWrap").classList.add("show");
+    }
+    $("#modalClose").addEventListener("click", ()=> $("#modalWrap").classList.remove("show"));
+
+    function goldBurst() {
+      confetti({ particleCount: 150, spread: 90, origin: { y: .6 }, colors: ["#FFD700","#FFF3B0","#FDE047","#FACC15"] });
+    }
+
+    function normalize(s) {
+      return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+    }
+
+    function updateMeta(info, guest=null) {
+      const title = guest ? `Thư mời dành cho ${guest.title||""} ${guest.name}` : `Thiệp Mời Lễ Tốt Nghiệp | ${info?.graduateName||"Graduate"}`;
+      const desc = guest ? `Thiệp mời đặc biệt từ ${info?.graduateName||"Tân cử nhân"} dành cho ${guest.title||""} ${guest.name}.`
+                         : `Trân trọng kính mời bạn đến chung vui cùng ${info?.graduateName||"tân cử nhân"}.`;
+      const img  = guest?.previewImage || info?.previewImage || ASSETS.GRADUATE_IMAGE;
+      document.title = title;
+      const set=(sel,attr,val)=>{const m=$(sel); if(m) m.setAttribute(attr,val);};
+      set('meta[property="og:title"]', "content", title);
+      set('meta[property="og:description"]', "content", desc);
+      set('meta[property="og:image"]', "content", img.startsWith("http")?img:`${location.origin}${img}`);
+      set('meta[property="og:image:width"]',"content","1200");
+      set('meta[property="og:image:height"]',"content","630");
+      set('meta[name="twitter:card"]',"content","summary_large_image");
+    }
+
+    // ===== Firebase Setup & Data Load =====
     async function setupFirebase() {
       try {
-        if (!firebaseConfig || Object.keys(firebaseConfig).length === 0) {
-          console.warn("Missing firebaseConfig — sẽ dùng dữ liệu JSON fallback.");
-          return false;
-        }
+        if (!firebaseConfig || !Object.keys(firebaseConfig).length) { console.warn("Missing firebaseConfig; will fallback JSON."); return false; }
         const app = initializeApp(firebaseConfig);
         db = getFirestore(app);
         auth = getAuth(app);
-        if (initialAuthToken) await signInWithCustomToken(auth, initialAuthToken);
-        else await signInAnonymously(auth);
-        isAuthReady = true;
-        return true;
-      } catch (e) {
-        console.error("Firebase init error:", e);
-        return false;
-      }
+        if (initialAuthToken) await signInWithCustomToken(auth, initialAuthToken); else await signInAnonymously(auth);
+        isAuthReady = true; return true;
+      } catch (e) { console.error("Firebase init error:", e); return false; }
     }
-
-    const infoDocRef = () => doc(db, "artifacts", appId, "public", "data", "info", "event_details");
+    const infoDocRef   = () => doc(db, "artifacts", appId, "public", "data", "info", "event_details");
     const guestsColRef = () => collection(db, "artifacts", appId, "public", "data", "khach");
+    const rsvpsColRef  = () => collection(db, "artifacts", appId, "public", "data", "rsvps");
 
     async function loadData() {
       let info = null, guests = [];
-      const canUseFs = await setupFirebase();
-      if (canUseFs && isAuthReady) {
+      const canFs = await setupFirebase();
+      if (canFs && isAuthReady) {
         try {
           const infoSnap = await getDoc(infoDocRef());
           if (infoSnap.exists()) info = infoSnap.data();
           const guestsSnap = await getDocs(guestsColRef());
-          guests = guestsSnap.docs.map(d => d.data());
-        } catch (e) {
-          console.warn("Firestore read failed, fallback JSON...", e);
-        }
+          guests = guestsSnap.docs.map(d=>d.data());
+        } catch (e) { console.warn("Firestore read failed; fallback JSON...", e); }
       }
       try {
         if (!info) {
-          const r = await fetch(INFO_URL, { cache: "no-store" });
-          if (r.ok) info = await r.json();
+          const r = await fetch(INFO_URL, { cache: "no-store" }); if (r.ok) info = await r.json();
         }
         if (!guests?.length) {
-          const r = await fetch(GUESTS_URL, { cache: "no-store" });
-          if (r.ok) {
-            const j = await r.json();
-            guests = Array.isArray(j?.guests) ? j.guests : Array.isArray(j) ? j : [];
-          }
+          const r = await fetch(GUESTS_URL, { cache: "no-store" }); if (r.ok) { const j = await r.json(); guests = Array.isArray(j?.guests)? j.guests : Array.isArray(j)? j : []; }
         }
-      } catch (e) {
-        console.error("Local JSON load error:", e);
-      }
-      guests = (guests || []).map(g => ({ ...g, nameEncoded: encodeURIComponent(g.name) }));
+      } catch(e){ console.error("Local JSON load error:", e); }
+      guests = (guests||[]).map(g=>({...g, nameEncoded: encodeURIComponent(g.name)}));
       return { info, guests };
     }
 
-    // ========= UI helpers =========
-    const $ = (sel, root = document) => root.querySelector(sel);
-    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-
-    function updateMeta(info, guest) {
-      const title = guest
-        ? `Thư mời dành cho ${guest.title} ${guest.name}`
-        : `Thiệp Mời Lễ Tốt Nghiệp | ${info?.graduateName || "Graduate"}`;
-      const desc = guest
-        ? `Thiệp mời đặc biệt từ ${info?.graduateName || "Tân cử nhân"} dành cho ${guest.title} ${guest.name}.`
-        : `Trân trọng kính mời bạn đến chung vui cùng ${info?.graduateName || "tân cử nhân"}.`;
-      const img = guest?.previewImage || info?.previewImage || ASSETS.GRADUATE_IMAGE;
-      document.title = title;
-      const set = (sel, attr, val) => { const m = $(sel); if (m) m.setAttribute(attr, val); };
-      set('meta[property="og:title"]', "content", title);
-      set('meta[property="og:description"]', "content", desc);
-      set('meta[property="og:image"]', "content", img.startsWith("http") ? img : `${location.origin}${img}`);
-      set('meta[name="twitter:card"]', "content", "summary_large_image");
-      set('meta[property="og:image:width"]', "content", "1200");
-      set('meta[property="og:image:height"]', "content", "630");
-    }
-
-    function goldConfettiBurst() {
-      confetti({
-        particleCount: 140,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ["#FFD700", "#FFF3B0", "#FDE047"],
-      });
-    }
-
-    function toast(msg) {
-      const t = document.createElement("div");
-      t.className = "fixed bottom-6 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm z-[120] shadow";
-      t.textContent = msg;
-      document.body.appendChild(t);
-      setTimeout(() => t.remove(), 1800);
-    }
-
-    // ========= Slider (4 pages) =========
-    let currentSlide = 0;
-    const totalSlides = 4;
-
-    function goTo(i) {
-      currentSlide = Math.max(0, Math.min(totalSlides - 1, i));
-      const track = $("#track");
-      track?.style.setProperty("--idx", currentSlide);
-      // update dots
-      $$(".dot").forEach((d, idx) => {
-        if (idx === currentSlide) d.classList.add("bg-gold", "scale-110");
-        else d.classList.remove("bg-gold", "scale-110");
-      });
-    }
-    function next() { goTo(currentSlide + 1); }
-    function prev() { goTo(currentSlide - 1); }
-
-    // ========= Music control =========
+    // ===== Music & Celebrate =====
     function setupMusic(info) {
-      const audio = $("#bgm");
-      const btn = $("#musicBtn");
+      const audio = $("#bgm"), btn = $("#musicBtn");
       if (!audio || !btn) return;
-      if (info?.music) audio.src = info.music;
-
+      audio.src = info?.music || "";
       let playing = false;
-      const render = () => btn.innerHTML = playing
-        ? '<i data-lucide="volume-2" class="w-6 h-6"></i>'
-        : '<i data-lucide="volume-x" class="w-6 h-6"></i>';
-
-      const tryPlay = () => audio.play().then(() => {
-        playing = true; render(); lucide.createIcons();
-      }).catch(() => { playing = false; render(); lucide.createIcons(); });
-
-      btn.addEventListener("click", () => {
-        if (!playing) tryPlay(); else { audio.pause(); playing = false; render(); lucide.createIcons(); }
-      });
-
-      // Autoplay attempt
-      setTimeout(() => tryPlay(), 600);
-      // first click fallback
-      document.addEventListener("click", () => { if (!playing) tryPlay(); }, { once: true });
+      const render = () => btn.innerHTML = playing ? '<i data-lucide="volume-2" class="w-6 h-6"></i>' : '<i data-lucide="volume-x" class="w-6 h-6"></i>';
+      const tryPlay = () => audio.play().then(()=>{playing=true;render();lucide.createIcons();}).catch(()=>{playing=false;render();lucide.createIcons();});
+      btn.addEventListener("click", ()=>{ if(!playing) tryPlay(); else { audio.pause(); playing=false; render(); lucide.createIcons(); }});
+      setTimeout(()=>tryPlay(), 600);
+      document.addEventListener("click", ()=>{ if(!playing) tryPlay(); }, { once: true });
     }
 
-    // ========= Guest search & routing =========
-    function normalize(s) {
-      return (s || "")
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase().trim();
-    }
-
-    function bindSearch(guests) {
-      $$("#guestSearchForm").forEach(form => {
+    // ===== Render Helpers =====
+    function bindGuestSearch(forms, guests) {
+      forms.forEach(form=>{
         const input = form.querySelector("input[name='guest']");
-        form.addEventListener("submit", e => {
+        form.addEventListener("submit", e=>{
           e.preventDefault();
           const q = normalize(input.value);
           if (!q) { input.focus(); return; }
-          let target = guests.find(g => normalize(g.name) === q) || guests.find(g => normalize(g.name).includes(q));
+          let target = guests.find(g=>normalize(g.name)===q) || guests.find(g=>normalize(g.name).includes(q));
           if (target) {
+            sessionStorage.setItem("guestName", target.name);
             history.pushState({}, "", `${APP_ROOT}/${encodeURIComponent(target.name)}`);
-            // re-render page 4 in personalized mode
-            renderPage4(window.__INFO__, target);
-            updateMeta(window.__INFO__, target);
-            goldConfettiBurst();
-            goTo(3);
+            renderPersonalInvite(INFO, target);
+            updateMeta(INFO, target);
+            goldBurst();
+            document.getElementById("s5").scrollIntoView({ behavior: "smooth" });
           } else {
-            input.classList.add("ring-2", "ring-red-500"); setTimeout(() => input.classList.remove("ring-2", "ring-red-500"), 1200);
+            // chưa có trong danh sách → vẫn cho qua RSVP
+            sessionStorage.setItem("guestName", input.value);
+            showModal("Thông báo", "Không tìm thấy trong danh sách khách. Bạn có thể tiếp tục gửi RSVP ở Trang 4.");
+            document.getElementById("s4").scrollIntoView({ behavior: "smooth" });
           }
         });
       });
     }
 
-    // ========= Render pages =========
-    function renderPage1(info) {
-      const el = $("#page1");
-      el.innerHTML = `
-        <div class="absolute inset-0 -z-10">
-          <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-80">
-            <source src="${ASSETS.BG_VIDEO}" type="video/mp4">
-          </video>
-          <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-navy/70"></div>
-        </div>
+    function renderEventInfo(info) {
+      $("#graduateNameHero").textContent = info?.graduateName || "Tên Tân Cử Nhân";
+      $("#universityLabel").textContent  = info?.university || "Tên Trường";
+      $("#eventDate").textContent        = info?.date || "Chưa cập nhật";
+      $("#eventTime").textContent        = info?.time || "Chưa cập nhật";
+      $("#eventVenue").textContent       = info?.venue || "Chưa cập nhật";
 
-        <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <img src="${ASSETS.LOGO}" alt="Logo" class="opacity-10 w-48 h-48">
-        </div>
+      const mapLink = info?.mapLink || "#";
+      $("#mapLinkBtn").setAttribute("href", mapLink);
+      $("#mapEmbed").innerHTML = info?.mapLink
+        ? `<iframe src="${info.mapLink}" width="100%" height="360" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
+        : `<img src="${ASSETS.MAP_IMAGE}" class="w-full h-80 object-cover" alt="Map" />`;
 
-        <div class="text-center text-white">
-          <p class="tracking-[0.35em] text-gold font-semibold">THƯ MỜI</p>
-          <h1 class="mt-3 font-serif font-black text-5xl md:text-6xl">
-            LỄ TỐT NGHIỆP
-          </h1>
-          <p class="mt-4 text-lg">Trân trọng kính mời</p>
-          <div class="mt-6 inline-flex items-center gap-3 bg-white/10 px-5 py-2 rounded-full border border-white/20">
-            <span class="text-gold font-bold">TÂN CỬ NHÂN</span>
-            <span class="font-serif font-black text-2xl">${info?.graduateName || "Tên Tân Cử Nhân"}</span>
-          </div>
+      $("#graduateImage").src = info?.graduateImage || ASSETS.GRADUATE_IMAGE;
+      $("#graduateNameS3").textContent = info?.graduateName || "Tên Tân Cử Nhân";
+      $("#graduateQuote").textContent  = info?.graduateQuote || "Cảm ơn gia đình, thầy cô và bạn bè đã đồng hành trong chặng đường này.";
 
-          <div class="mt-8">
-            <form id="guestSearchForm" class="mx-auto max-w-md flex gap-2">
-              <input name="guest" class="flex-1 px-4 py-2 rounded-lg bg-white/90 text-navy placeholder-navy/50 focus:outline-none" placeholder="Nhập tên khách mời của bạn..." />
-              <button class="px-4 py-2 rounded-lg bg-gold text-navy font-semibold">Tìm thiệp</button>
-            </form>
-            <p class="mt-3 text-sm text-white/80">Hoặc bấm mũi tên phải để xem thông tin</p>
-          </div>
-        </div>
-      `;
+      const c = info?.contact || {};
+      const cont = [];
+      if (c.phone)    cont.push(`<a href="tel:${c.phone}" class="hover:text-gold" title="Gọi"><i data-lucide="phone" class="w-5 h-5"></i></a>`);
+      if (c.zalo)     cont.push(`<a href="${c.zalo}" target="_blank" class="hover:text-gold" title="Zalo"><i data-lucide="message-square" class="w-5 h-5"></i></a>`);
+      if (c.facebook) cont.push(`<a href="${c.facebook}" target="_blank" class="hover:text-gold" title="Facebook"><i data-lucide="facebook" class="w-5 h-5"></i></a>`);
+      $("#contactWrap").innerHTML = cont.join("");
+
+      // bg video & logo overlay
+      $("#bgVideoSrc").src = ASSETS.BG_VIDEO;
+      $("#logoOverlay").innerHTML = `<img src="${ASSETS.LOGO}" class="w-10 h-10 md:w-12 md:h-12" alt="">`;
     }
 
-    function renderPage2(info) {
-      const el = $("#page2");
-      el.innerHTML = `
-        <div class="absolute inset-0 -z-10 bg-gradient-to-br from-white via-white to-yellow-50"></div>
-        <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <img src="${ASSETS.LOGO}" alt="Logo" class="opacity-10 w-40 h-40">
-        </div>
-
-        <div class="w-full max-w-5xl mx-auto px-6">
-          <div class="text-center">
-            <h2 class="font-serif text-4xl font-black text-navy">Thông Tin Sự Kiện</h2>
-            <p class="mt-2 font-semibold text-navy/70">${info?.university || "Tên Trường"}</p>
-          </div>
-
-          <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="rounded-xl border border-navy/10 bg-white p-6 text-center shadow-sm">
-              <i data-lucide="calendar" class="w-8 h-8 mx-auto text-navy"></i>
-              <h3 class="mt-2 font-bold text-navy">Ngày</h3>
-              <p class="text-navy/80">${info?.date || "Chưa cập nhật"}</p>
-            </div>
-            <div class="rounded-xl border border-navy/10 bg-white p-6 text-center shadow-sm">
-              <i data-lucide="clock" class="w-8 h-8 mx-auto text-navy"></i>
-              <h3 class="mt-2 font-bold text-navy">Giờ</h3>
-              <p class="text-navy/80">${info?.time || "Chưa cập nhật"}</p>
-            </div>
-            <div class="rounded-xl border border-navy/10 bg-white p-6 text-center shadow-sm">
-              <i data-lucide="map-pin" class="w-8 h-8 mx-auto text-navy"></i>
-              <h3 class="mt-2 font-bold text-navy">Địa điểm</h3>
-              <p class="text-navy/80">${info?.venue || "Chưa cập nhật"}</p>
-            </div>
-          </div>
-
-          <div class="mt-8">
-            <a href="${info?.mapLink || '#'}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-navy text-white hover:bg-navy/90">
-              <i data-lucide="map" class="w-5 h-5"></i> Mở Google Maps
-            </a>
-          </div>
-
-          <div class="mt-6 rounded-xl overflow-hidden border shadow">
-            ${info?.mapLink
-              ? `<iframe src="${info.mapLink}" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
-              : `<img src="${ASSETS.MAP_IMAGE}" class="w-full h-80 object-cover" alt="Map" />`
-            }
-          </div>
-        </div>
-      `;
-      lucide.createIcons();
-    }
-
-    function renderPage3(info) {
-      const el = $("#page3");
-      el.innerHTML = `
-        <div class="absolute inset-0 -z-10 bg-gradient-to-br from-navy via-navy to-black"></div>
-        <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <img src="${ASSETS.GOLD_FRAME}" class="opacity-20 w-[90%] max-w-5xl" alt="">
-        </div>
-
-        <div class="w-full max-w-5xl mx-auto px-6 text-center text-white">
-          <h2 class="font-serif text-4xl font-black text-gold">Tân Cử Nhân</h2>
-          <p class="mt-2 text-white/80">${info?.subEventDetails || info?.universityShort || ""}</p>
-
-          <div class="mt-8 flex flex-col md:flex-row items-center justify-center gap-8">
-            <div class="relative w-56 h-56 md:w-64 md:h-64">
-              <img src="${ASSETS.LAUREL_WREATH}" class="absolute inset-0 w-full h-full object-contain opacity-90" alt="">
-              <img src="${info?.graduateImage || ASSETS.GRADUATE_IMAGE}" class="relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-40 h-40 md:w-48 md:h-48 object-cover rounded-full ring-4 ring-gold shadow-xl" alt="">
-            </div>
-            <div class="text-left max-w-lg">
-              <h3 class="font-serif text-3xl font-black text-white">${info?.graduateName || "Tên Tân Cử Nhân"}</h3>
-              <p class="mt-3 text-white/90 italic">
-                "${info?.graduateQuote || "Cảm ơn gia đình, thầy cô và bạn bè đã đồng hành trong chặng đường này."}"
-              </p>
-              ${info?.contact ? `
-                <div class="mt-4 flex items-center gap-4">
-                  ${info.contact.phone ? `<a href="tel:${info.contact.phone}" class="hover:text-gold"><i data-lucide="phone" class="w-5 h-5"></i></a>` : ""}
-                  ${info.contact.zalo ? `<a href="${info.contact.zalo}" target="_blank" class="hover:text-gold"><i data-lucide="message-square" class="w-5 h-5"></i></a>` : ""}
-                  ${info.contact.facebook ? `<a href="${info.contact.facebook}" target="_blank" class="hover:text-gold"><i data-lucide="facebook" class="w-5 h-5"></i></a>` : ""}
-                </div>
-              ` : ``}
-            </div>
-          </div>
-        </div>
-      `;
-      lucide.createIcons();
-    }
-
-    function renderPage4(info, guest = null) {
-      const el = $("#page4");
-      const guestName = guest?.name;
-      const guestTitle = guest?.title || "";
-      const inviteMsg = (guest?.message && guest.message.trim()) ? guest.message : DEFAULT_INVITE_MESSAGE;
-
-      let guestImg = guest?.image ? `/image/graduation/${guest.image}` : null;
-      if (!guestImg) guestImg = guest?.gender?.toLowerCase() === "female" ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT;
-
-      el.innerHTML = `
-        <div class="absolute inset-0 -z-10 bg-gradient-to-br from-white to-amber-50"></div>
-        <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <img src="${ASSETS.LOGO}" class="opacity-10 w-40 h-40" alt="">
-        </div>
-
-        <div class="w-full max-w-5xl mx-auto px-6">
-          <div class="text-center">
-            <h2 class="font-serif text-4xl font-black text-navy">Thiệp Mời Cá Nhân</h2>
-            ${guest ? `<p class="mt-2 text-navy/80">Dành cho <span class="font-semibold">${guestTitle} ${guestName}</span></p>` : `<p class="mt-2 text-navy/80">Tìm thiệp mời theo tên của bạn</p>`}
-          </div>
-
-          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="md:col-span-2 rounded-xl border border-navy/10 bg-white p-6 shadow-sm">
-              <p class="text-lg font-serif italic text-navy/90">"${inviteMsg}"</p>
-              <p class="mt-3 text-sm text-navy/70">— ${info?.graduateName || "Tân cử nhân"}</p>
-
-              <div class="mt-6 flex flex-wrap items-center gap-3">
-                ${info?.rsvpLink ? `
-                  <a href="${info.rsvpLink}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-navy text-white hover:bg-navy/90">
-                    <i data-lucide="check-circle" class="w-5 h-5"></i> Xác nhận tham dự (RSVP)
-                  </a>` : ``
-                }
-                <a href="${APP_ROOT}" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold text-navy hover:bg-yellow-400">
-                  <i data-lucide="home" class="w-5 h-5"></i> Về trang đầu
-                </a>
-              </div>
-            </div>
-
-            <div class="rounded-xl border border-navy/10 bg-white p-6 text-center shadow-sm">
-              <img src="${guestImg}" class="w-20 h-20 rounded-full object-cover mx-auto mb-3 ring-2 ring-navy/10" alt="">
-              <p class="font-semibold">${guest ? `${guestTitle} ${guestName}` : "Tìm thiệp theo tên"}</p>
-              <form id="guestSearchForm" class="mt-3 flex gap-2">
-                <input name="guest" class="flex-1 px-3 py-2 rounded-lg bg-gray-50 border border-navy/10 focus:outline-none" placeholder="Nhập tên khách mời..." />
-                <button class="px-3 py-2 rounded-lg bg-gold text-navy font-semibold">Tìm</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      `;
-      lucide.createIcons();
-    }
-
-    // ========= Controls & bindings =========
-    function bindControls() {
-      $("#nextBtn")?.addEventListener("click", next);
-      $("#prevBtn")?.addEventListener("click", prev);
-      $$(".dot").forEach((d, idx) => d.addEventListener("click", () => goTo(idx)));
-
-      // keyboard
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowRight") next();
-        if (e.key === "ArrowLeft") prev();
-      });
-
-      // touch swipe
-      let sx = null;
-      $("#track").addEventListener("touchstart", e => sx = e.touches[0].clientX, { passive: true });
-      $("#track").addEventListener("touchend", e => {
-        if (sx == null) return;
-        const dx = e.changedTouches[0].clientX - sx;
-        if (dx < -40) next();
-        if (dx > 40) prev();
-        sx = null;
-      });
-    }
-
-    function mountChrome(info) {
-      // music
-      setupMusic(info);
-
-      // fireworks on first page load
-      setTimeout(() => goldConfettiBurst(), 800);
-
-      // watermark logo overlay (always-on small logo at corner)
-      $("#logoOverlay").innerHTML = `
-        <div class="pointer-events-none opacity-90">
-          <img src="${ASSETS.LOGO}" class="w-10 h-10 md:w-12 md:h-12" alt="">
-        </div>
-      `;
-    }
-
-    // ========= Router (keep /graduation + personalized guest) =========
-    function getCurrentGuest(guests) {
+    function currentGuestFromURL(guests) {
       const parts = location.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
-      if (parts.length === 2 && parts[0].toLowerCase() === "graduation") {
+      if (parts.length===2 && parts[0].toLowerCase()==="graduation") {
         const name = decodeURIComponent(parts[1]);
-        return guests.find(g => g.name.toLowerCase() === name.toLowerCase()) || null;
+        return guests.find(g=>g.name.toLowerCase()===name.toLowerCase()) || null;
       }
       return null;
     }
 
-    async function main() {
-      $("#app").classList.remove("hidden");
-      $("#loading").classList.add("hidden");
+    function renderPersonalInvite(info, guest=null) {
+      const guestName   = guest?.name || sessionStorage.getItem("guestName") || "Bạn";
+      const guestTitle  = guest?.title ? `${guest.title} ` : "";
+      const inviteMsg   = (guest?.message && guest.message.trim()) ? guest.message :
+                          info?.personalInviteDefault || "Sự hiện diện của bạn là niềm vinh dự lớn nhất!";
+      const img = guest?.image ? `/image/graduation/${guest.image}`
+                : guest?.gender?.toLowerCase()==="female" ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT;
 
+      $("#guestTarget").textContent     = `Dành cho ${guestTitle}${guestName}`;
+      $("#inviteMessage").textContent   = `"${inviteMsg}"`;
+      $("#inviterName").textContent     = `— ${info?.graduateName || "Tân cử nhân"}`;
+      $("#guestAvatar").src             = img;
+      $("#guestNameLabel").textContent  = `${guestTitle}${guestName}`;
+
+      const rsvpBtn = info?.rsvpLink ? `<a href="${info.rsvpLink}" target="_blank" class="btn btn-navy"><i data-lucide="calendar-check" class="w-5 h-5"></i> Mở trang RSVP</a>` : "";
+      $("#rsvpActions").innerHTML = `
+        ${rsvpBtn}
+        <a href="#s1" class="btn btn-gold"><i data-lucide="home" class="w-5 h-5"></i> Về trang đầu</a>
+      `;
+      lucide.createIcons();
+    }
+
+    // ===== RSVP Actions =====
+    async function sendRsvpToFirestore(data) {
+      if (!db) return false;
+      try {
+        await addDoc(rsvpsColRef(), { ...data, timestamp: new Date().toISOString() });
+        return true;
+      } catch (e) { console.error("RSVP Firestore error:", e); return false; }
+    }
+
+    async function sendRsvpEmail(data, info) {
+      try {
+        const res = await fetch("/api/rsvp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, eventInfo: { email: info?.email, university: info?.university, date: info?.date } })
+        });
+        const j = await res.json();
+        return !!j?.success;
+      } catch (e) { console.error("RSVP Email error:", e); return false; }
+    }
+
+    function bindRsvpForm(info) {
+      $("#rsvpForm").addEventListener("submit", async (e)=>{
+        e.preventDefault();
+        const name  = $("#rsvpName").value.trim();
+        const email = $("#rsvpEmail").value.trim();
+        const attending = (document.querySelector("input[name='attending']:checked")?.value==="yes");
+        const message   = $("#rsvpMessage").value.trim();
+
+        if (!name || !email) {
+          showModal("Thiếu thông tin", "Vui lòng nhập Họ tên và Email."); return;
+        }
+
+        const rsvpData = { name, email, attending, message };
+
+        // Save local guestName for page 5
+        sessionStorage.setItem("guestName", name);
+
+        // 1) Firestore
+        const okFs = await sendRsvpToFirestore(rsvpData);
+        // 2) Email via Vercel
+        const okMail = await sendRsvpEmail(rsvpData, info);
+
+        if (okFs && okMail) {
+          showModal("🎉 RSVP thành công!", "Cảm ơn bạn đã xác nhận tham dự!");
+          goldBurst();
+          // Render personal invite (no guest object yet)
+          renderPersonalInvite(info, null);
+          document.getElementById("s5").scrollIntoView({ behavior: "smooth" });
+        } else if (okFs && !okMail) {
+          showModal("Đã lưu RSVP", "Hệ thống lưu thành công, nhưng chưa gửi email thông báo. Vui lòng kiểm tra cấu hình Vercel.");
+          renderPersonalInvite(info, null);
+          document.getElementById("s5").scrollIntoView({ behavior: "smooth" });
+        } else {
+          showModal("Lỗi gửi RSVP", "Không thể gửi phản hồi lúc này. Vui lòng thử lại.");
+        }
+      });
+    }
+
+    // ===== Main =====
+    async function main() {
       const { info, guests } = await loadData();
+      INFO = info; GUESTS = guests;
+
       if (!info) {
-        $("#app").innerHTML = `
-          <div class="p-8 bg-white rounded-xl shadow max-w-md mx-auto mt-16 border-t-4 border-red-500 text-center">
+        $("#loading").innerHTML = `
+          <div class="text-center">
             <h2 class="text-2xl font-bold text-red-600">Không thể tải dữ liệu</h2>
-            <p class="mt-2 text-gray-700">Vui lòng kiểm tra Firestore hoặc file JSON fallback.</p>
+            <p class="mt-2 text-gray-700">Kiểm tra Firestore hoặc file JSON fallback.</p>
             <ul class="mt-3 text-left text-sm text-gray-600 list-disc list-inside">
               <li>/artifacts/{appId}/public/data/info/event_details</li>
               <li>/artifacts/{appId}/public/data/khach</li>
             </ul>
-          </div>`;
+          </div>
+        `;
         return;
       }
 
-      window.__INFO__ = info;
+      // Fill UI
+      $("#app").classList.remove("hidden");
+      $("#loading").classList.add("hidden");
+      renderEventInfo(info);
+      AOS.init({ duration: 700, once: true, offset: 40 });
 
-      // Render pages
-      renderPage1(info);
-      renderPage2(info);
-      renderPage3(info);
+      // Icons
+      lucide.createIcons();
 
-      const currentGuest = getCurrentGuest(guests);
-      renderPage4(info, currentGuest);
-      updateMeta(info, currentGuest);
+      // Music
+      setupMusic(info);
 
-      // Bind search
-      bindSearch(guests);
+      // Celebrate button
+      $("#celebrateBtn")?.addEventListener("click", goldBurst);
 
-      // Chrome (music, overlay, confetti)
-      mountChrome(info);
+      // Guest search forms
+      bindGuestSearch([$("#guestSearchFormTop"), $("#guestSearchFormBottom")], guests);
 
-      // Controls
-      bindControls();
+      // If URL includes guest
+      const currentGuest = currentGuestFromURL(guests);
+      if (currentGuest) {
+        renderPersonalInvite(info, currentGuest);
+        updateMeta(info, currentGuest);
+      } else {
+        renderPersonalInvite(info, null);
+        updateMeta(info, null);
+      }
 
-      // nav dots
-      goTo(0);
+      // RSVP form
+      bindRsvpForm(info);
 
-      // handle back/forward -> re-render page4 if guest changes
-      window.addEventListener("popstate", () => {
-        const g = getCurrentGuest(guests);
-        renderPage4(info, g);
-        updateMeta(info, g);
+      // When back/forward
+      window.addEventListener("popstate", ()=>{
+        const cg = currentGuestFromURL(guests);
+        renderPersonalInvite(info, cg);
+        updateMeta(info, cg);
       });
     }
 
-    // bootstrap
     window.addEventListener("load", main);
   </script>
 
-  <style>
-    :root { --idx: 0; }
-    /* Horizontal slider track for 4 full-screen slides */
-    #track {
-      display: grid;
-      grid-template-columns: repeat(4, 100vw);
-      width: 400vw;
-      height: 100vh;
-      transform: translateX(calc(-1 * var(--idx, 0) * 100vw));
-      transition: transform 500ms ease;
-    }
-    .slide {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      padding: 2rem;
-    }
-    .btn-fab {
-      @apply w-12 h-12 rounded-full flex items-center justify-center shadow-lg bg-gold text-navy hover:scale-110 transition;
-    }
-  </style>
-</head>
-<body class="min-h-screen font-sans bg-gradient-to-b from-slate-50 to-white">
-
-  <!-- Loading -->
-  <div id="loading" class="fixed inset-0 grid place-items-center bg-white z-[200]">
-    <div class="text-center">
-      <svg class="animate-spin h-10 w-10 text-navy mx-auto" viewBox="0 0 24 24" fill="none">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-      </svg>
-      <p class="mt-3 font-semibold text-navy">Đang tải thiệp mời...</p>
-    </div>
-  </div>
-
-  <!-- App -->
-  <div id="app" class="hidden">
-    <!-- Track (4 slides) -->
-    <div id="track" style="--idx:0">
-      <section id="page1" class="slide text-white"></section>
-      <section id="page2" class="slide"></section>
-      <section id="page3" class="slide"></section>
-      <section id="page4" class="slide"></section>
-    </div>
-
-    <!-- Controls -->
-    <div class="fixed bottom-4 left-4 z-[110] flex items-center gap-2">
-      <button id="prevBtn" class="btn-fab" title="Trang trước"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
-      <div class="flex items-center gap-2">
-        <button class="dot w-2.5 h-2.5 rounded-full bg-black/20"></button>
-        <button class="dot w-2.5 h-2.5 rounded-full bg-black/20"></button>
-        <button class="dot w-2.5 h-2.5 rounded-full bg-black/20"></button>
-        <button class="dot w-2.5 h-2.5 rounded-full bg-black/20"></button>
-      </div>
-      <button id="nextBtn" class="btn-fab" title="Trang sau"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
-    </div>
-
-    <!-- Music & Celebrate -->
-    <div class="fixed bottom-4 right-4 z-[110] flex items-center gap-2">
-      <button id="musicBtn" class="btn-fab" title="Nhạc nền"><i data-lucide="volume-x" class="w-6 h-6"></i></button>
-      <button id="celebrateBtn" class="btn-fab" title="Chúc mừng!"><i data-lucide="party-popper" class="w-6 h-6"></i></button>
-    </div>
-
-    <!-- Logo overlay -->
-    <div id="logoOverlay" class="fixed top-4 right-4 z-[110]"></div>
-
-    <!-- Audio -->
-    <audio id="bgm" loop></audio>
-  </div>
-
   <script>
-    // Small inline script for celebrate button (no Firebase needed)
-    document.addEventListener("click", (e) => {
-      const btn = e.target.closest("#celebrateBtn");
-      if (!btn) return;
-      confetti({
-        particleCount: 180,
-        spread: 100,
-        origin: { y: 0.6 },
-        colors: ["#FFD700","#FFF3B0","#FDE047","#FACC15"]
-      });
-    });
-    // init icons after static HTML
-    window.addEventListener("load", () => { try { lucide.createIcons(); } catch(_){} });
+    // Init icons for static HTML
+    window.addEventListener("load", ()=>{ try { lucide.createIcons(); } catch(_){} });
   </script>
 </body>
 </html>
