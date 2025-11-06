@@ -63,7 +63,8 @@ export default async function handler(req, res) {
       try {
         // Import động để tránh crash khi module không có trong dependencies
         const nodemailerMod = await import('nodemailer');
-        const transporter = nodemailerMod.createTransport({
+        const nodemailerLib = nodemailerMod.default || nodemailerMod;
+        const transporter = nodemailerLib.createTransport({
           service: 'gmail',
           auth: { user, pass },
         });
@@ -82,7 +83,7 @@ export default async function handler(req, res) {
           html,
         });
       } catch (e) {
-        console.warn('Email send skipped or failed (nodemailer not installed?):', e);
+        console.warn('Email send skipped or failed (nodemailer missing or unusable):', e?.message || e);
       }
     }
 

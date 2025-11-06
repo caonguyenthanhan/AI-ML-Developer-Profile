@@ -149,6 +149,7 @@
       </div>
     </section>
 
+
     <!-- 2) EVENT INFO + COUNTDOWN -->
     <section id="s2" class="section relative">
       <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
@@ -644,8 +645,7 @@
         const fsOK = await sendRsvpToFirestore(payload);
         const mailOK = await sendRsvpEmail(payload, INFO);
         goldConfetti();
-        if (fsOK && mailOK) showModal("🎉 Cảm ơn bạn!", "Rất hân hạnh được đón tiếp bạn tại buổi lễ.");
-        else if (fsOK)      showModal("Đã ghi nhận tham dự", "Gửi email không thành công — kiểm tra cấu hình API.");
+        if (fsOK || mailOK) showModal("🎉 Cảm ơn bạn!", "Đã ghi nhận tham dự của bạn.");
         else                showModal("Lỗi", "Không thể ghi nhận RSVP lúc này. Vui lòng thử lại.");
       });
 
@@ -661,12 +661,10 @@
         const payload = { name, email: "", attending: false, message: msg };
         const fsOK = await sendRsvpToFirestore(payload);
         const mailOK = await sendRsvpEmail(payload, INFO);
-        if (fsOK && mailOK) {
+        if (fsOK || mailOK) {
           regretForm.reset();
           regretForm.classList.add("hidden");
-          showModal("💌 Cảm ơn bạn", "Rất tiếc bạn không thể tham dự. Lời nhắn của bạn đã được gửi.");
-        } else if (fsOK) {
-          showModal("Đã lưu lời nhắn", "Gửi email không thành công — kiểm tra cấu hình API.");
+          showModal("💌 Cảm ơn bạn", "Rất tiếc bạn không thể tham dự. Lời nhắn/RSVP đã được ghi nhận.");
         } else {
           showModal("Lỗi", "Không thể gửi phản hồi lúc này. Vui lòng thử lại.");
         }
