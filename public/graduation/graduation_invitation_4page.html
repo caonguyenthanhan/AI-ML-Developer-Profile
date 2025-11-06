@@ -511,8 +511,20 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...data, eventInfo: { email: info?.email, university: info?.university, date: info?.date } })
         });
-        const j = await res.json();
-        return !!j?.success;
+        const ct = res.headers.get("content-type") || "";
+        if (!res.ok) {
+          const t = await res.text();
+          console.error("RSVP Email HTTP error:", res.status, t.slice(0,200));
+          return false;
+        }
+        if (ct.includes("application/json")) {
+          const j = await res.json();
+          return !!(j && j.success);
+        } else {
+          const t = await res.text();
+          console.warn("RSVP Email non-JSON:", t.slice(0,200));
+          return false;
+        }
       } catch (e) { console.error("RSVP Email error:", e); return false; }
     }
 

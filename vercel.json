@@ -74,6 +74,14 @@
       "destination": "/graduation/graduation_invitation_4page.html"
     },
     {
+      "source": "/graduation4/:guest",
+      "destination": "/graduation/graduation_invitation_4page.html"
+    },
+    {
+      "source": "/graduation4/admin",
+      "destination": "/graduation/rsvp.html"
+    },
+    {
       "source": "/education",
       "destination": "/education/index.html"
     },

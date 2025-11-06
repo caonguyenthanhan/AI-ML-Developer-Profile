@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quản trị RSVP — Graduation</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { navy: "#03204c", gold: "#ffd700" },
+          fontFamily: { sans: ["Inter", "ui-sans-serif"], serif: ["Playfair Display"] },
+        },
+      },
+    };
+  </script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 text-navy font-sans">
+
+  <!-- Header -->
+  <header class="bg-navy text-white p-4 flex items-center justify-between">
+    <h1 class="text-xl font-bold flex items-center gap-2">
+      <i data-lucide="calendar-check"></i> Quản trị RSVP
+    </h1>
+    <button id="logoutBtn" class="hidden px-3 py-1 rounded bg-gold text-navy font-semibold hover:bg-yellow-400">
+      Đăng xuất
+    </button>
+  </header>
+
+  <!-- Login Panel -->
+  <section id="loginPanel" class="min-h-[80vh] grid place-items-center">
+    <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md border-t-4 border-gold">
+      <h2 class="text-center text-2xl font-bold mb-4">Đăng nhập Quản trị</h2>
+      <p class="text-center text-gray-600 mb-6">Nhập khóa quản trị để xem danh sách RSVP.</p>
+      <form id="loginForm" class="grid gap-4">
+        <input id="adminKeyInput" type="password" placeholder="Mã quản trị (adminKey)" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold" required />
+        <button class="bg-navy text-white py-2 rounded-lg font-semibold hover:bg-navy/90">Đăng nhập</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Dashboard -->
+  <main id="dashboard" class="hidden p-6 max-w-6xl mx-auto">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <div class="flex items-center gap-2">
+        <select id="filterStatus" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-gold focus:outline-none">
+          <option value="all">Tất cả</option>
+          <option value="yes">Có tham dự</option>
+          <option value="no">Không tham dự</option>
+        </select>
+        <input id="searchBox" type="text" placeholder="Tìm theo tên hoặc email..." class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-gold focus:outline-none" />
+      </div>
+      <button id="exportBtn" class="bg-gold text-navy px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 flex items-center gap-2">
+        <i data-lucide="download"></i> Xuất CSV
+      </button>
+    </div>
+
+    <div class="overflow-x-auto rounded-lg shadow bg-white">
+      <table class="min-w-full border-collapse text-sm" id="rsvpTable">
+        <thead class="bg-navy text-white">
+          <tr>
+            <th class="px-3 py-2 text-left">Tên</th>
+            <th class="px-3 py-2 text-left">Email</th>
+            <th class="px-3 py-2 text-center">Tham dự</th>
+            <th class="px-3 py-2 text-left">Lời nhắn</th>
+            <th class="px-3 py-2 text-center">Thời gian</th>
+          </tr>
+        </thead>
+        <tbody id="rsvpBody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
+    const firebaseConfig = typeof __firebase_config !== "undefined" ? JSON.parse(__firebase_config) : {};
+    const initialAuthToken = typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
+
+    let db, auth, INFO = null, RSVPS = [];
+
+    async function setupFirebase() {
+      const app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      auth = getAuth(app);
+      await signInAnonymously(auth);
+    }
+
+    async function loadInfo() {
+      const ref = doc(db, "artifacts", appId, "public", "data", "info", "event_details");
+      const snap = await getDoc(ref);
+      if (snap.exists()) INFO = snap.data();
+    }
+
+    async function loadRsvps() {
+      const ref = collection(db, "artifacts", appId, "public", "data", "rsvps");
+      const snap = await getDocs(ref);
+      return snap.docs.map(d => d.data());
+    }
+
+    function renderTable(data) {
+      const body = document.getElementById("rsvpBody");
+      body.innerHTML = "";
+      if (!data.length) {
+        body.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-gray-500">Không có dữ liệu RSVP</td></tr>`;
+        return;
+      }
+      for (const r of data) {
+        const attend = r.attending ? "✅" : "❌";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="border-t px-3 py-2">${r.name || "-"}</td>
+          <td class="border-t px-3 py-2">${r.email || "-"}</td>
+          <td class="border-t px-3 py-2 text-center">${attend}</td>
+          <td class="border-t px-3 py-2">${r.message || ""}</td>
+          <td class="border-t px-3 py-2 text-center text-gray-500">${new Date(r.timestamp || "").toLocaleString("vi-VN")}</td>
+        `;
+        body.appendChild(tr);
+      }
+    }
+
+    function filterData() {
+      const status = document.getElementById("filterStatus").value;
+      const search = document.getElementById("searchBox").value.toLowerCase().trim();
+
+      let filtered = RSVPS;
+      if (status !== "all") filtered = filtered.filter(r => r.attending === (status === "yes"));
+      if (search) filtered = filtered.filter(r => (r.name || "").toLowerCase().includes(search) || (r.email || "").toLowerCase().includes(search));
+      renderTable(filtered);
+    }
+
+    function exportCSV() {
+      if (!RSVPS.length) return alert("Không có dữ liệu để xuất.");
+      const rows = [["Tên", "Email", "Tham dự", "Lời nhắn", "Thời gian"]];
+      RSVPS.forEach(r => {
+        rows.push([
+          r.name || "",
+          r.email || "",
+          r.attending ? "Có" : "Không",
+          r.message || "",
+          new Date(r.timestamp || "").toLocaleString("vi-VN")
+        ]);
+      });
+      const csv = rows.map(e => e.map(x => `"${(x || "").replace(/"/g, '""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "RSVP_List.csv";
+      a.click();
+    }
+
+    // Login & UI logic
+    document.getElementById("loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      await setupFirebase();
+      await loadInfo();
+      const key = document.getElementById("adminKeyInput").value.trim();
+      if (!INFO?.adminKey || key !== INFO.adminKey) {
+        alert("Mã quản trị không hợp lệ!");
+        return;
+      }
+
+      document.getElementById("loginPanel").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
+      document.getElementById("logoutBtn").classList.remove("hidden");
+
+      RSVPS = await loadRsvps();
+      renderTable(RSVPS);
+      lucide.createIcons();
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => location.reload());
+    document.getElementById("filterStatus").addEventListener("change", filterData);
+    document.getElementById("searchBox").addEventListener("input", filterData);
+    document.getElementById("exportBtn").addEventListener("click", exportCSV);
+  </script>
+</body>
+</html>
