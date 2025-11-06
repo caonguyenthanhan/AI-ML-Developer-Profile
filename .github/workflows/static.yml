@@ -31,20 +31,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
-      - name: Build and deploy
-        env:
-          # Chỉ hiển thị trong quá trình build, không được thêm vào mã nguồn công khai.
-          BUILD_GEMINI_KEY: ${{ secrets.GEMINI_API_KEY }} 
-        run: |
-          # Ví dụ: Sử dụng biến này trong lệnh build của bạn
-          npm run build -- --key=$BUILD_GEMINI_KEY
+          # Giả sử các tệp tĩnh (index.html, css, js) của bạn nằm ở thư mục gốc của repo
+          path: './public'
+          if-no-files-found: error
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

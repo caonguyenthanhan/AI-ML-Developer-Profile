@@ -121,8 +121,30 @@
         <p id="inviteLine" class="mt-4 text-lg text-charcoal">
           Trân trọng kính mời <span id="guestNameHero" class="font-extrabold text-navy text-2xl tracking-wide drop-shadow-md">bạn</span> đến tham dự lễ tốt nghiệp.
         </p>
+      </div>
+      <div class="mt-10">
+        <a href="#s2" class="btn btn-gold text-lg px-8 py-3">Thông tin giản lược</a>
         
+      </div>
+      <div class="mt-4 mx-auto max-w-xl" data-aos="fade-up">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="card p-3 text-center">
+            <span class="font-bold text-gold">Ngày</span>
+            <div id="sumDate" class="text-charcoal text-sm md:text-base">Chưa cập nhật</div>
+          </div>
+          <div class="card p-3 text-center">
+            <span class="font-bold text-gold">Giờ</span>
+            <div id="sumTime" class="text-charcoal text-sm md:text-base">Chưa cập nhật</div>
+          </div>
+          <div class="card p-3 text-center">
+            <span class="font-bold text-gold">Địa điểm</span>
+            <div id="sumVenue" class="text-charcoal text-sm md:text-base">Chưa cập nhật</div>
+          </div>
+        </div>
+      </div>
 
+      <div class="absolute bottom-4 inset-x-0 z-10">
+        <img src="/image/graduation/congratulations.png" alt="Congratulations" class="mx-auto w-full max-w-[720px] h-auto drop-shadow-lg" />
       </div>
     </section>
 
@@ -308,6 +330,34 @@
 
     function goldConfetti() {
       confetti({ particleCount: 160, spread: 100, origin: { y: .6 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+    }
+
+    function sideBurst() {
+      confetti({ particleCount: 120, angle: 60, spread: 55, origin: { x: 0, y: 0.7 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+      confetti({ particleCount: 120, angle: 120, spread: 55, origin: { x: 1, y: 0.7 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+    }
+
+    function streamersConfetti() {
+      confetti({ particleCount: 180, spread: 90, startVelocity: 40, origin: { y: 0.6 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+    }
+
+    function fireworksBurst() {
+      const cfg = { spread: 360, ticks: 80, gravity: 0.8, decay: 0.94, startVelocity: 25, colors: ["#D4AF37","#FFFFFF","#FACC15","#FDE047"] };
+      const fire = (x, y) => confetti(Object.assign({ origin: { x, y }, particleCount: 90 }, cfg));
+      setTimeout(() => fire(0.2, 0.3), 0);
+      setTimeout(() => fire(0.8, 0.4), 300);
+      setTimeout(() => fire(0.5, 0.2), 600);
+      setTimeout(() => fire(0.3, 0.6), 900);
+      setTimeout(() => fire(0.7, 0.7), 1200);
+    }
+
+    function autoConfettiSequence() {
+      const seq = [goldConfetti, sideBurst, fireworksBurst, streamersConfetti];
+      let i = 0;
+      const run = () => seq[i++ % seq.length]();
+      run();
+      const iv = setInterval(run, 5000);
+      setTimeout(() => clearInterval(iv), 25000);
     }
 
     function normalize(s) { return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim(); }
@@ -509,6 +559,7 @@
       $("#bgVideoSrc").src = ASSETS.BG_VIDEO;
       setupMusic(info);
       $("#celebrateBtn").addEventListener("click", goldConfetti);
+      autoConfettiSequence();
 
       // fill hero + event
       $("#graduateNameHero").textContent = info?.graduateName || "Tên Tân Cử Nhân";
@@ -516,6 +567,9 @@
       $("#eventDate").textContent        = info?.date || "Chưa cập nhật";
       $("#eventTime").textContent        = info?.time || "Chưa cập nhật";
       $("#eventVenue").textContent       = info?.venue || "Chưa cập nhật";
+      $("#sumDate").textContent          = info?.date || "Chưa cập nhật";
+      $("#sumTime").textContent          = info?.time || "Chưa cập nhật";
+      $("#sumVenue").textContent         = info?.venue || "Chưa cập nhật";
       $("#eventAddress").textContent     = info?.address || "Chưa cập nhật";
       $("#graduateImage").src            = info?.graduateImage || ASSETS.GRADUATE_IMAGE;
       $("#graduateNameS3").textContent   = info?.graduateName || "Tên Tân Cử Nhân";
