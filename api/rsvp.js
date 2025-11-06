@@ -1,22 +1,25 @@
 const path = require('path');
 const fs = require('fs/promises');
 
-const DATA_FILE = path.join(process.cwd(), 'public', 'data', 'rsvps.json');
+const TMP_FILE = path.join('/tmp', 'rsvps.json');
+const STATIC_FILE = path.join(process.cwd(), 'public', 'data', 'rsvps.json');
 
 async function readRsvps() {
-  try {
-    const raw = await fs.readFile(DATA_FILE, 'utf8');
-    const j = JSON.parse(raw || '[]');
-    return Array.isArray(j) ? j : (Array.isArray(j?.rsvps) ? j.rsvps : []);
-  } catch (_) {
-    return [];
+  for (const f of [TMP_FILE, STATIC_FILE]) {
+    try {
+      const raw = await fs.readFile(f, 'utf8');
+      const j = JSON.parse(raw || '[]');
+      return Array.isArray(j) ? j : (Array.isArray(j?.rsvps) ? j.rsvps : []);
+    } catch (_) {}
   }
+  return [];
 }
 
 async function writeRsvps(list) {
   const out = JSON.stringify(list, null, 2);
-  await fs.mkdir(path.dirname(DATA_FILE), { recursive: true }).catch(() => {});
-  await fs.writeFile(DATA_FILE, out, 'utf8');
+  try {
+    await fs.writeFile(TMP_FILE, out, 'utf8');
+  } catch (_) {}
 }
 
 module.exports = async (req, res) => {

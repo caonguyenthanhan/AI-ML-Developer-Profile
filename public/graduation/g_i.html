@@ -191,7 +191,7 @@
         </div>
         <div data-aos="fade-left">
           <h3 id="graduateNameS3" class="font-serif text-4xl font-black text-gold">Tên Tân Cử Nhân</h3>
-          <p id="graduateQuote" class="mt-3 text-taupe italic max-w-3xl mx-auto text-center" data-thanks="info.json/thanksMessage"></p>
+          <p id="graduateQuote" class="mt-3 text-taupe italic max-w-3xl mx-auto text-center px-10" data-thanks="info.json/thanksMessage"></p>
           <div id="contactWrap" class="mt-4 flex items-center gap-4"></div>
         </div>
       </div>
@@ -211,7 +211,7 @@
         <!-- Chỉ dẫn khi "Đi chứ" -->
         <div id="instructionCard" class="hidden mt-6 card p-4">
           <h3 class="font-serif text-2xl text-gold mb-3">Chỉ dẫn tham dự</h3>
-          <img src="/image/graduation/map.jpg" class="w-full rounded-lg shadow border border-gold/40" alt="Map hướng dẫn" />
+          <img src="/image/graduation/map.jpg" class="w-full rounded-lg shadow border border-gold/40 cursor-pointer" alt="Map hướng dẫn" onclick="window.open(this.src, '_blank')" />
         </div>
 
         <!-- Form khi "Tiếc quá" -->
@@ -470,13 +470,15 @@
 
     async function sendRsvpEmail(data, info) {
       try {
-        const res = await fetch("https://hethongthongminh.id.vn/api/rsvp", {
+        const base = location.hostname === "localhost" ? "http://localhost:5000" : "";
+        const res = await fetch(`${base}/api/rsvp`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...data, eventInfo: { email: info?.email, university: info?.university, date: info?.date } })
         });
+        if (!res.ok) return false;
         const j = await res.json().catch(()=>({success:false}));
-        return !!j?.success;
+        return !!j?.success || !!j?.ok;
       } catch (e) { console.error("RSVP Email error:", e); return false; }
     }
 
