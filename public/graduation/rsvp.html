@@ -5,18 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quản trị RSVP — Graduation</title>
 
-  <!-- Tailwind -->
+  <!-- Tailwind (đã build bằng CLI) -->
 <link href="/assets/css/tw.css" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { navy: "#03204c", gold: "#ffd700" },
-          fontFamily: { sans: ["Inter", "ui-sans-serif"], serif: ["Playfair Display"] },
-        },
-      },
-    };
-  </script>
 
   <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -297,7 +287,19 @@
       const id = tr?.dataset?.id || "";
       const ts = tr?.dataset?.ts || "";
       const res = await fetch("/api/rsvp", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, timestamp: ts }) });
-      if (!res.ok) return alert("Xóa thất bại");
+      if (!res.ok) {
+        const status = res.status;
+        let msg = "Xóa thất bại";
+        try {
+          const j = await res.json();
+          if (j && j.error) msg = j.error;
+        } catch (_) {}
+        if (status === 501) {
+          msg = "Chưa cấu hình KV trên Vercel. Vui lòng thêm KV_REST_API_URL và KV_REST_API_TOKEN trong Project Settings.";
+        }
+        alert(msg);
+        return;
+      }
       RSVPS = RSVPS.filter(r => (id ? r.id !== id : r.timestamp !== ts));
       renderTable(RSVPS);
     });
