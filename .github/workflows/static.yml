@@ -38,6 +38,13 @@ jobs:
         with:
           # Upload entire repository
           path: '.'
+      - name: Build and deploy
+        env:
+          # Chỉ hiển thị trong quá trình build, không được thêm vào mã nguồn công khai.
+          BUILD_GEMINI_KEY: ${{ secrets.GEMINI_API_KEY }} 
+        run: |
+          # Ví dụ: Sử dụng biến này trong lệnh build của bạn
+          npm run build -- --key=$BUILD_GEMINI_KEY
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
