@@ -59,11 +59,11 @@
   ,
     {
       "source": "/graduation",
-      "destination": "/graduation/graduation_invitation.html"
+      "destination": "/graduation/g_i.html"
     },
     {
       "source": "/graduation/:guest",
-      "destination": "/graduation/graduation_invitation.html"
+      "destination": "/graduation/g_i.html"
     },
     {
       "source": "/graduation_preview",

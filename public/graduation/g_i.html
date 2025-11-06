@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thiệp Mời Tốt Nghiệp — Navy & Gold</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Thiệp Mời Lễ Tốt Nghiệp" />
+  <meta property="og:description" content="Trân trọng kính mời bạn đến chung vui tại Lễ Tốt Nghiệp." />
+  <meta property="og:image" content="/image/graduation/main-preview.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { navy: "#03204C", gold: "#FFD700" },
+          fontFamily: {
+            sans: ["Inter","ui-sans-serif","system-ui"],
+            serif: ["Playfair Display","ui-serif"],
+            cursive: ["Great Vibes","cursive"],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- Icons + Confetti + AOS -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: white; background: linear-gradient(180deg, #03204C, #0f2b60); }
+    .section { min-height: 100vh; display: grid; place-items: center; padding: 3rem 1rem; }
+    .card { background: rgba(255,255,255,.10); border: 1px solid rgba(255,215,0,.35); border-radius: 1.25rem; backdrop-filter: blur(6px); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .btn { @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-semibold transition; }
+    .btn-gold { background:#FFD700; color:#03204C; }
+    .btn-gold:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    .btn-navy { background:#03204C; color:#FFD700; border:1px solid #FFD700; }
+    .btn-navy:hover { background:#082a63; transform: translateY(-1px); }
+    .watermark-center { position:absolute; inset:0; display:grid; place-items:center; pointer-events:none }
+    .watermark-center img { opacity:.08; width:9rem; height:9rem }
+    .hero-overlay::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(3,32,76,.70)); pointer-events:none; }
+    .count-box { @apply flex flex-col items-center justify-center gap-1 rounded-[10px] bg-navy/90 p-3 text-white shadow; }
+  </style>
+</head>
+<body>
+
+  <!-- Loading -->
+  <div id="loading" class="fixed inset-0 grid place-items-center bg-white/90 text-navy z-[200]">
+    <div class="text-center">
+      <svg class="animate-spin h-10 w-10 mx-auto" viewBox="0 0 24 24" fill="none">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      <p class="mt-3 font-semibold">Đang tải dữ liệu...</p>
+    </div>
+  </div>
+
+  <!-- Overlay: logo + controls -->
+  <div id="logoOverlay" class="fixed top-4 right-4 z-[110] pointer-events-none opacity-90"></div>
+  <div class="fixed bottom-4 right-4 z-[110] flex items-center gap-2">
+    <button id="musicBtn" class="w-12 h-12 rounded-full flex items-center justify-center shadow-lg btn-gold" title="Nhạc nền">
+      <i data-lucide="volume-x" class="w-6 h-6"></i>
+    </button>
+    <button id="celebrateBtn" class="w-12 h-12 rounded-full flex items-center justify-center shadow-lg btn-gold" title="Chúc mừng!">
+      <i data-lucide="party-popper" class="w-6 h-6"></i>
+    </button>
+  </div>
+  <audio id="bgm" loop></audio>
+
+  <!-- App -->
+  <main id="app" class="hidden">
+
+    <!-- 1) HERO -->
+    <section id="s1" class="section relative text-white">
+      <div class="absolute inset-0 -z-10 hero-overlay">
+        <video id="bgVideo" autoplay loop muted playsinline class="w-full h-full object-cover">
+          <source id="bgVideoSrc" type="video/mp4">
+        </video>
+      </div>
+      <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
+
+      <div class="max-w-3xl w-full text-center" data-aos="fade-up">
+        <p class="font-semibold tracking-[0.35em] text-gold">THƯ MỜI</p>
+        <h1 class="font-serif font-black text-5xl md:text-6xl mt-2">LỄ TỐT NGHIỆP</h1>
+
+        <div class="mt-5 inline-flex items-center gap-3 bg-white/10 px-5 py-2 rounded-full border border-white/20">
+          <span class="text-gold font-bold">TÂN CỬ NHÂN</span>
+          <span id="graduateNameHero" class="font-serif font-black text-2xl">Tên Tân Cử Nhân</span>
+        </div>
+
+        <p id="inviteLine" class="mt-4 text-lg text-white/90">
+          Trân trọng kính mời bạn đến tham dự lễ tốt nghiệp.
+        </p>
+      </div>
+    </section>
+
+    <!-- 2) EVENT INFO + COUNTDOWN -->
+    <section id="s2" class="section relative">
+      <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
+
+      <div class="max-w-5xl w-full">
+        <div class="text-center" data-aos="fade-up">
+          <h2 class="font-serif text-4xl font-black">Thông Tin Sự Kiện</h2>
+          <p id="universityLabel" class="mt-2 font-semibold text-white/80">Tên Trường</p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card p-6 text-center" data-aos="zoom-in">
+            <i data-lucide="calendar" class="w-8 h-8 mx-auto text-gold"></i>
+            <h3 class="mt-2 font-bold text-gold">Ngày</h3>
+            <p id="eventDate" class="text-white/90">Chưa cập nhật</p>
+          </div>
+          <div class="card p-6 text-center" data-aos="zoom-in" data-aos-delay="100">
+            <i data-lucide="clock" class="w-8 h-8 mx-auto text-gold"></i>
+            <h3 class="mt-2 font-bold text-gold">Giờ</h3>
+            <p id="eventTime" class="text-white/90">Chưa cập nhật</p>
+          </div>
+          <div class="card p-6 text-center" data-aos="zoom-in" data-aos-delay="200">
+            <i data-lucide="map-pin" class="w-8 h-8 mx-auto text-gold"></i>
+            <h3 class="mt-2 font-bold text-gold">Địa điểm</h3>
+            <p id="eventVenue" class="text-white/90">Chưa cập nhật</p>
+          </div>
+        </div>
+
+        <!-- Countdown -->
+        <div class="mt-10 card p-6" data-aos="fade-up">
+          <div class="text-center mb-4">
+            <p class="text-white/90">Đếm ngược tới thời khắc trọng đại</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="count-box"><div id="cdDays" class="text-4xl font-extrabold">0</div><div class="text-sm">Ngày</div></div>
+            <div class="count-box"><div id="cdHours" class="text-4xl font-extrabold">0</div><div class="text-sm">Giờ</div></div>
+            <div class="count-box"><div id="cdMinutes" class="text-4xl font-extrabold">0</div><div class="text-sm">Phút</div></div>
+            <div class="count-box"><div id="cdSeconds" class="text-4xl font-extrabold">0</div><div class="text-sm">Giây</div></div>
+          </div>
+          <p id="cdStatus" class="mt-3 text-center text-white/70 text-sm"></p>
+        </div>
+
+        <div class="mt-8 rounded-xl overflow-hidden border border-gold/30 shadow" data-aos="fade-up">
+          <div id="mapEmbed"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) GRADUATE -->
+    <section id="s3" class="section relative text-white">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-navy via-navy to-black"></div>
+      <div class="absolute inset-0 pointer-events-none grid place-items-center">
+        <img src="/image/vien-vang.png" class="opacity-20 w-[90%] max-w-5xl" alt="">
+      </div>
+
+      <div class="max-w-5xl w-full grid md:grid-cols-2 gap-8 items-center">
+        <div class="flex justify-center" data-aos="zoom-in">
+          <div class="relative w-56 h-56 md:w-64 md:h-64">
+            <img src="/image/nguyet-que.png" class="absolute inset-0 w-full h-full object-contain opacity-90" alt="">
+            <img id="graduateImage" src="/image/graduation/main.jpg" class="relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-40 h-40 md:w-48 md:h-48 object-cover rounded-full ring-4 ring-gold shadow-xl" alt="">
+          </div>
+        </div>
+        <div data-aos="fade-left">
+          <h3 id="graduateNameS3" class="font-serif text-4xl font-black text-gold">Tên Tân Cử Nhân</h3>
+          <p id="graduateQuote" class="mt-3 text-white/90 italic">"Cảm ơn gia đình, thầy cô và bạn bè đã đồng hành trong chặng đường này."</p>
+          <div id="contactWrap" class="mt-4 flex items-center gap-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) RSVP -->
+    <section id="s4" class="section relative">
+      <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
+      <div class="max-w-2xl w-full card p-6 text-center" data-aos="fade-up">
+        <h2 class="font-serif text-3xl text-gold mb-1">Bạn sẽ đến dự chứ?</h2>
+        <p class="text-white/80 mb-6">(Chọn đáp án!)</p>
+        <div class="flex justify-center gap-6">
+          <button id="btnYes" class="btn btn-gold text-lg px-6 py-3">Đi chứ</button>
+          <button id="btnNo" class="btn btn-navy text-lg px-6 py-3">Tiếc quá</button>
+        </div>
+
+        <!-- Chỉ dẫn khi "Đi chứ" -->
+        <div id="instructionCard" class="hidden mt-6 card p-4">
+          <h3 class="font-serif text-2xl text-gold mb-3">Chỉ dẫn tham dự</h3>
+          <img src="/image/graduation/map.jpg" class="w-full rounded-lg shadow border border-gold/40" alt="Map hướng dẫn" />
+        </div>
+
+        <!-- Form khi "Tiếc quá" -->
+        <form id="regretForm" class="hidden mt-6 grid gap-3 card p-4 text-left">
+          <label class="text-sm font-semibold">Lời nhắn (tuỳ chọn)</label>
+          <textarea id="rsvpMessage" rows="3" class="px-3 py-2 rounded-lg bg-white/80 text-navy focus:outline-none" placeholder="Gửi lời chúc hoặc lý do bạn không thể đến..."></textarea>
+          <button type="submit" class="btn btn-gold self-start">Gửi lời nhắn</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 5) PERSONAL INVITE -->
+    <section id="s5" class="section relative">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-white/10 to-amber-100/20"></div>
+      <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
+
+      <div class="max-w-3xl w-full card p-6 text-center" data-aos="fade-up">
+        <h2 class="font-serif text-4xl font-black text-gold">Thiệp Mời Cá Nhân</h2>
+        <p id="guestTarget" class="mt-2 text-white/80">Dành cho bạn</p>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 text-left">
+            <p id="inviteMessage" class="text-lg font-serif italic text-white/90">
+              "Sự hiện diện của bạn là niềm vinh dự lớn nhất!"
+            </p>
+            <p id="inviterName" class="mt-3 text-sm text-white/70">— Tân cử nhân</p>
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <a href="#s1" class="btn btn-gold"><i data-lucide="home" class="w-5 h-5"></i> Về trang đầu</a>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <img id="guestAvatar" src="/image/graduation/man.jpg" class="w-20 h-20 rounded-full object-cover mx-auto mb-3 ring-2 ring-white/20" alt="">
+            <p id="guestNameLabel" class="font-cursive text-3xl text-gold">Tên Khách Mời</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modalWrap" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-[2000]">
+    <div class="bg-white text-navy rounded-2xl p-6 w-[min(92vw,420px)] shadow-xl">
+      <h3 id="modalTitle" class="text-xl font-bold"></h3>
+      <p id="modalMsg" class="mt-1 text-gray-700"></p>
+      <div class="mt-4 text-right">
+        <button id="modalClose" class="btn btn-navy">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCRIPT (Firebase + Logic) ====== -->
+  <script type="module">
+    // Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, getDocs, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // ===== Config & Globals =====
+    const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
+    const firebaseConfig = typeof __firebase_config !== "undefined" ? JSON.parse(__firebase_config) : {};
+    const initialAuthToken = typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
+    const APP_ROOT = "/graduation4"; // theo yêu cầu URL
+
+    const ASSETS = {
+      LOGO: "/image/graduation/logotruong.png",
+      BG_VIDEO: "/video/sparkle-background.mp4",
+      GRADUATE_IMAGE: "/image/graduation/main.jpg",
+      MAN_DEFAULT: "/image/graduation/man.jpg",
+      WOMEN_DEFAULT: "/image/graduation/women.jpg",
+      MAP_IMAGE: "/image/graduation/map.jpg",
+    };
+
+    const INFO_URL = "/data/info.json";
+    const GUESTS_URL = "/data/khach.json";
+
+    let db, auth, INFO=null, GUESTS=[];
+    let countdownTimer = null;
+
+    const $ = (s, r=document) => r.querySelector(s);
+    const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+    // ===== UI helpers =====
+    function showModal(title, msg) {
+      $("#modalTitle").textContent = title;
+      $("#modalMsg").textContent = msg;
+      $("#modalWrap").classList.remove("hidden");
+      $("#modalWrap").classList.add("flex");
+    }
+    $("#modalClose").addEventListener("click", ()=> {
+      $("#modalWrap").classList.add("hidden");
+      $("#modalWrap").classList.remove("flex");
+    });
+
+    function goldConfetti() {
+      confetti({ particleCount: 160, spread: 100, origin: { y: .6 }, colors: ["#FFD700","#FFF3B0","#FDE047","#FACC15"] });
+    }
+
+    function normalize(s) { return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim(); }
+    function beautifyName(name) {
+      return (name||"").split(/[\s_]+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(" ").trim();
+    }
+
+    function getGuestFromUrl() {
+      const parts = location.pathname.replace(/\/+$/,"").split("/").filter(Boolean);
+      if (parts.length >= 2 && parts[0].toLowerCase() === "graduation4") return decodeURIComponent(parts[1]);
+      return null;
+    }
+
+    function updateMeta(info, guest=null) {
+      const title = guest ? `Thư mời dành cho ${guest.title?guest.title+" ":""}${guest.name}`
+                          : `Thiệp Mời Lễ Tốt Nghiệp | ${info?.graduateName||"Graduate"}`;
+      const desc = guest ? `Thiệp mời từ ${info?.graduateName || "Tân cử nhân"} dành cho ${guest.title?guest.title+" ":""}${guest.name}.`
+                         : `Trân trọng kính mời bạn đến chung vui cùng ${info?.graduateName||"tân cử nhân"}.`;
+      const img  = guest?.previewImage || info?.previewImage || ASSETS.GRADUATE_IMAGE;
+      document.title = title;
+      const set=(sel,attr,val)=>{const m=$(sel); if(m) m.setAttribute(attr,val);};
+      set('meta[property="og:title"]', "content", title);
+      set('meta[property="og:description"]', "content", desc);
+      set('meta[property="og:image"]', "content", img.startsWith("http")?img:`${location.origin}${img}`);
+    }
+
+    // ===== Firebase Setup & Data load =====
+    async function setupFirebase() {
+      try {
+        if (!firebaseConfig || !Object.keys(firebaseConfig).length) return false;
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+        if (initialAuthToken) await signInWithCustomToken(auth, initialAuthToken);
+        else await signInAnonymously(auth);
+        return true;
+      } catch (e) { console.error("Firebase init error:", e); return false; }
+    }
+    const infoDocRef   = () => doc(db, "artifacts", appId, "public", "data", "info", "event_details");
+    const guestsColRef = () => collection(db, "artifacts", appId, "public", "data", "khach");
+    const rsvpsColRef  = () => collection(db, "artifacts", appId, "public", "data", "rsvps");
+
+    async function loadData() {
+      let info=null, guests=[];
+      const canFs = await setupFirebase();
+      if (canFs) {
+        try {
+          const infoSnap = await getDoc(infoDocRef());
+          if (infoSnap.exists()) info = infoSnap.data();
+          const guestsSnap = await getDocs(guestsColRef());
+          guests = guestsSnap.docs.map(d=>d.data());
+        } catch (e) { console.warn("Firestore read failed; fallback JSON...", e); }
+      }
+      try {
+        if (!info) {
+          const r = await fetch(INFO_URL, { cache: "no-store" }); if (r.ok) info = await r.json();
+        }
+        if (!guests?.length) {
+          const r = await fetch(GUESTS_URL, { cache: "no-store" }); if (r.ok) {
+            const j = await r.json(); guests = Array.isArray(j?.guests)? j.guests : Array.isArray(j)? j : [];
+          }
+        }
+      } catch(e){ console.error("Local JSON load error:", e); }
+      guests = (guests||[]).map(g=>({...g, nameEncoded: encodeURIComponent(g.name)}));
+      return { info, guests };
+    }
+
+    // ===== Music & chrome =====
+    function setupMusic(info) {
+      const audio = $("#bgm"), btn = $("#musicBtn");
+      if (info?.music) audio.src = info.music;
+      let playing=false;
+      const render = () => btn.innerHTML = playing ? '<i data-lucide="volume-2" class="w-6 h-6"></i>' : '<i data-lucide="volume-x" class="w-6 h-6"></i>';
+      const tryPlay = () => audio.play().then(()=>{playing=true;render();lucide.createIcons();}).catch(()=>{playing=false;render();lucide.createIcons();});
+      btn.addEventListener("click", ()=>{ if(!playing) tryPlay(); else { audio.pause(); playing=false; render(); lucide.createIcons(); }});
+      setTimeout(()=>tryPlay(), 600);
+      document.addEventListener("click", ()=>{ if(!playing) tryPlay(); }, { once: true });
+    }
+
+    // ===== Countdown =====
+    function parseEventDateTime(info) {
+      // cố gắng ghép info.date + info.time thành Date
+      const dateStr = (info?.date || "").trim();   // ví dụ: "27/06/2025" hoặc "2025-06-27"
+      const timeStr = (info?.time || "00:00").trim(); // "15:30"
+      let d = null;
+
+      // Thử dạng dd/mm/yyyy
+      const m = dateStr.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+      if (m) {
+        const [_, dd, mm, yyyy] = m;
+        d = new Date(`${yyyy}-${mm.padStart(2,"0")}-${dd.padStart(2,"0")}T${timeStr}:00`);
+      } else if (!isNaN(Date.parse(dateStr))) {
+        d = new Date(`${dateStr}T${timeStr}:00`);
+      }
+
+      if (!d || isNaN(d.getTime())) {
+        // fallback: +7 ngày
+        d = new Date(Date.now() + 7*24*3600*1000);
+      }
+      return d;
+    }
+
+    function startCountdown(target) {
+      const daysEl = $("#cdDays"), hoursEl = $("#cdHours"), minutesEl = $("#cdMinutes"), secondsEl = $("#cdSeconds"), statusEl=$("#cdStatus");
+      function tick() {
+        const now = new Date();
+        let diff = Math.floor((target.getTime() - now.getTime())/1000);
+        if (diff <= 0) {
+          daysEl.textContent=hoursEl.textContent=minutesEl.textContent=secondsEl.textContent="0";
+          statusEl.textContent = "Sự kiện đã diễn ra. Cảm ơn bạn đã quan tâm!";
+          clearInterval(countdownTimer);
+          return;
+        }
+        const d = Math.floor(diff / (24*3600)); diff -= d*24*3600;
+        const h = Math.floor(diff / 3600); diff -= h*3600;
+        const m = Math.floor(diff / 60); const s = diff - m*60;
+        daysEl.textContent  = String(d);
+        hoursEl.textContent = String(h);
+        minutesEl.textContent = String(m);
+        secondsEl.textContent = String(s);
+        statusEl.textContent = "";
+      }
+      tick();
+      countdownTimer = setInterval(tick, 1000);
+    }
+
+    // ===== Personal Invite render =====
+    function renderPersonalInvite(info, guest=null) {
+      const guestName = beautifyName(guest?.name || sessionStorage.getItem("guestName") || "Bạn");
+      const guestTitle = guest?.title ? `${guest.title} ` : "";
+      const inviteMsg = (guest?.message && guest.message.trim()) ? guest.message
+                        : (info?.personalInviteDefault || "Sự hiện diện của bạn là niềm vinh dự lớn nhất!");
+      const avatar = guest?.image ? guest.image
+                    : (guest?.gender && guest.gender.toLowerCase()==="female" ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT);
+
+      $("#guestTarget").textContent = `Dành cho ${guestTitle}${guestName}`;
+      $("#guestNameLabel").textContent = `${guestTitle}${guestName}`;
+      $("#inviteMessage").textContent = `"${inviteMsg}"`;
+      $("#inviterName").textContent = `— ${info?.graduateName || "Tân cử nhân"}`;
+      $("#guestAvatar").src = avatar.startsWith("/") ? avatar : `/image/graduation/${avatar}`;
+    }
+
+    // ===== RSVP senders =====
+    async function sendRsvpToFirestore(data) {
+      if (!db) return false;
+      try {
+        await addDoc(rsvpsColRef(), { ...data, timestamp: new Date().toISOString() });
+        return true;
+      } catch (e) { console.error("RSVP Firestore error:", e); return false; }
+    }
+
+    async function sendRsvpEmail(data, info) {
+      try {
+        const res = await fetch("https://hethongthongminh.id.vn/api/rsvp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, eventInfo: { email: info?.email, university: info?.university, date: info?.date } })
+        });
+        const j = await res.json().catch(()=>({success:false}));
+        return !!j?.success;
+      } catch (e) { console.error("RSVP Email error:", e); return false; }
+    }
+
+    // ===== Main =====
+    async function main() {
+      AOS.init({ duration: 700, once: true, offset: 40 });
+      lucide.createIcons();
+
+      // load data
+      const { info, guests } = await loadData();
+      INFO=info; GUESTS=guests;
+
+      if (!info) {
+        $("#loading").innerHTML = `
+          <div class="text-center text-navy">
+            <h2 class="text-2xl font-bold text-red-600">Không thể tải dữ liệu</h2>
+            <p class="mt-2">Kiểm tra Firestore hoặc /data/info.json.</p>
+          </div>`;
+        return;
+      }
+
+      // show app
+      $("#app").classList.remove("hidden");
+      $("#loading").classList.add("hidden");
+
+      // chrome
+      $("#logoOverlay").innerHTML = `<img src="${ASSETS.LOGO}" class="w-10 h-10 md:w-12 md:h-12" alt="">`;
+      $("#bgVideoSrc").src = ASSETS.BG_VIDEO;
+      setupMusic(info);
+      $("#celebrateBtn").addEventListener("click", goldConfetti);
+
+      // fill hero + event
+      $("#graduateNameHero").textContent = info?.graduateName || "Tên Tân Cử Nhân";
+      $("#universityLabel").textContent  = info?.university || "Tên Trường";
+      $("#eventDate").textContent        = info?.date || "Chưa cập nhật";
+      $("#eventTime").textContent        = info?.time || "Chưa cập nhật";
+      $("#eventVenue").textContent       = info?.venue || "Chưa cập nhật";
+      $("#graduateImage").src            = info?.graduateImage || ASSETS.GRADUATE_IMAGE;
+      $("#graduateNameS3").textContent   = info?.graduateName || "Tên Tân Cử Nhân";
+      $("#graduateQuote").textContent    = info?.graduateQuote || $("#graduateQuote").textContent;
+
+      // contact
+      const c = info?.contact || {};
+      const cont = [];
+      if (c.phone)    cont.push(`<a href="tel:${c.phone}" class="hover:text-gold" title="Gọi"><i data-lucide="phone" class="w-5 h-5"></i></a>`);
+      if (c.zalo)     cont.push(`<a href="${c.zalo}" target="_blank" class="hover:text-gold" title="Zalo"><i data-lucide="message-square" class="w-5 h-5"></i></a>`);
+      if (c.facebook) cont.push(`<a href="${c.facebook}" target="_blank" class="hover:text-gold" title="Facebook"><i data-lucide="facebook" class="w-5 h-5"></i></a>`);
+      $("#contactWrap").innerHTML = cont.join("");
+      lucide.createIcons();
+
+      // map
+      $("#mapEmbed").innerHTML = info?.mapLink
+        ? `<iframe src="${info.mapLink}" width="100%" height="360" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
+        : `<img src="${ASSETS.MAP_IMAGE}" class="w-full h-80 object-cover" alt="Map" />`;
+
+      // countdown
+      const targetTime = parseEventDateTime(info);
+      startCountdown(targetTime);
+
+      // guest from URL
+      const rawFromUrl = getGuestFromUrl();
+      let currentGuest = null;
+      if (rawFromUrl) {
+        currentGuest = GUESTS.find(g => normalize(g.name) === normalize(rawFromUrl)) || { name: beautifyName(rawFromUrl) };
+        sessionStorage.setItem("guestName", currentGuest.name);
+        const titleTxt = currentGuest.title ? `${currentGuest.title} ` : "";
+        $("#inviteLine").textContent = `Trân trọng kính mời ${titleTxt}${currentGuest.name} đến tham dự lễ tốt nghiệp.`;
+        renderPersonalInvite(INFO, currentGuest);
+        updateMeta(INFO, currentGuest);
+      } else {
+        renderPersonalInvite(INFO, null);
+        updateMeta(INFO, null);
+      }
+
+      // RSVP logic
+      const btnYes = $("#btnYes"), btnNo = $("#btnNo"), instruction = $("#instructionCard"), regretForm = $("#regretForm");
+      const getCurrentName = () => beautifyName(sessionStorage.getItem("guestName") || currentGuest?.name || "Bạn");
+
+      btnYes.addEventListener("click", async ()=>{
+        instruction.classList.remove("hidden");
+        regretForm.classList.add("hidden");
+        const name = getCurrentName();
+        const payload = { name, email: "", attending: true, message: "" };
+        const fsOK = await sendRsvpToFirestore(payload);
+        const mailOK = await sendRsvpEmail(payload, INFO);
+        goldConfetti();
+        if (fsOK && mailOK) showModal("🎉 Cảm ơn bạn!", "Rất hân hạnh được đón tiếp bạn tại buổi lễ.");
+        else if (fsOK)      showModal("Đã ghi nhận tham dự", "Gửi email không thành công — kiểm tra cấu hình API.");
+        else                showModal("Lỗi", "Không thể ghi nhận RSVP lúc này. Vui lòng thử lại.");
+      });
+
+      btnNo.addEventListener("click", ()=>{
+        instruction.classList.add("hidden");
+        regretForm.classList.remove("hidden");
+      });
+
+      regretForm.addEventListener("submit", async (e)=>{
+        e.preventDefault();
+        const name = getCurrentName();
+        const msg = $("#rsvpMessage").value.trim();
+        const payload = { name, email: "", attending: false, message: msg };
+        const fsOK = await sendRsvpToFirestore(payload);
+        const mailOK = await sendRsvpEmail(payload, INFO);
+        if (fsOK && mailOK) {
+          regretForm.reset();
+          regretForm.classList.add("hidden");
+          showModal("💌 Cảm ơn bạn", "Rất tiếc bạn không thể tham dự. Lời nhắn của bạn đã được gửi.");
+        } else if (fsOK) {
+          showModal("Đã lưu lời nhắn", "Gửi email không thành công — kiểm tra cấu hình API.");
+        } else {
+          showModal("Lỗi", "Không thể gửi phản hồi lúc này. Vui lòng thử lại.");
+        }
+      });
+    }
+
+    window.addEventListener("load", main);
+  </script>
+
+  <script>
+    // Init for static parts
+    window.addEventListener("load", ()=>{ try { AOS.init({ duration: 700, once: true }); lucide.createIcons(); } catch(_){} });
+  </script>
+</body>
+</html>

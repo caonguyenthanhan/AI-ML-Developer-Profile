@@ -508,6 +508,35 @@ def server_status():
             'message': f'Lỗi khi kiểm tra trạng thái: {str(e)}'
         })
 
+@app.route('/api/rsvp', methods=['POST'])
+def rsvp_api():
+    data = request.get_json(silent=True) or {}
+    entry = {
+        'name': data.get('name') or '',
+        'email': data.get('email') or '',
+        'attending': bool(data.get('attending')),
+        'message': data.get('message') or '',
+        'timestamp': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+    }
+    try:
+        path = os.path.join('public', 'data', 'rsvps.json')
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        rows = []
+        if os.path.exists(path) and os.path.getsize(path) > 0:
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    rows = json.load(f)
+                if not isinstance(rows, list):
+                    rows = []
+            except Exception:
+                rows = []
+        rows.append(entry)
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
+        return jsonify({'success': True, 'message': 'RSVP saved'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': 'Internal Server Error', 'error': str(e)}), 500
+
 @app.route('/api/server/restart', methods=['POST'])
 def restart_server():
     """API endpoint để restart server."""
