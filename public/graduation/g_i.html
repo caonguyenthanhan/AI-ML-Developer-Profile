@@ -106,7 +106,7 @@
       <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
 
       <div class="absolute top-4 left-1/2 -translate-x-1/2 z-10">
-        <img src="/image/graduation/graduate-caps.png" alt="Graduate Cap" class="w-16 h-16 drop-shadow-lg" />
+        <img src="/image/graduation/graduate-caps.png" alt="Graduate Cap" class="w-[18vw] h-auto max-w-[4rem] drop-shadow-lg" />
       </div>
 
       <div class="max-w-3xl w-full text-center" data-aos="fade-up">
@@ -119,7 +119,7 @@
         </div>
 
         <p id="inviteLine" class="mt-4 text-lg text-charcoal">
-          Trân trọng kính mời <span id="guestNameHero" class="font-bold text-gold text-2xl tracking-wide drop-shadow-md">bạn</span> đến tham dự lễ tốt nghiệp.
+          Trân trọng kính mời <span id="guestNameHero" class="font-extrabold text-navy text-2xl tracking-wide drop-shadow-md">bạn</span> đến tham dự lễ tốt nghiệp.
         </p>
         
 
@@ -132,44 +132,45 @@
 
       <div class="max-w-5xl w-full">
         <div class="text-center" data-aos="fade-up">
-          <h2 class="font-serif text-4xl font-black">Thông Tin Sự Kiện</h2>
-          <p id="universityLabel" class="mt-2 font-semibold text-taupe">Tên Trường</p>
+          <h2 class="font-serif text-5xl md:text-6xl font-black">Thông Tin Sự Kiện</h2>
+          <p id="universityLabel" class="mt-2 font-semibold text-taupe text-xl md:text-2xl">Tên Trường</p>
         </div>
 
         <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="card p-6 text-center" data-aos="zoom-in">
-            <i data-lucide="calendar" class="w-8 h-8 mx-auto text-gold"></i>
-            <h3 class="mt-2 font-bold text-gold">Ngày</h3>
-            <p id="eventDate" class="text-charcoal">Chưa cập nhật</p>
+            <i data-lucide="calendar" class="w-10 h-10 mx-auto text-gold"></i>
+            <h3 class="mt-2 font-bold text-gold text-xl">Ngày</h3>
+            <p id="eventDate" class="text-charcoal text-xl">Chưa cập nhật</p>
           </div>
           <div class="card p-6 text-center" data-aos="zoom-in" data-aos-delay="100">
-            <i data-lucide="clock" class="w-8 h-8 mx-auto text-gold"></i>
-            <h3 class="mt-2 font-bold text-gold">Giờ</h3>
-            <p id="eventTime" class="text-charcoal">Chưa cập nhật</p>
+            <i data-lucide="clock" class="w-10 h-10 mx-auto text-gold"></i>
+            <h3 class="mt-2 font-bold text-gold text-xl">Giờ</h3>
+            <p id="eventTime" class="text-charcoal text-xl">Chưa cập nhật</p>
           </div>
           <div class="card p-6 text-center" data-aos="zoom-in" data-aos-delay="200">
-            <i data-lucide="map-pin" class="w-8 h-8 mx-auto text-gold"></i>
-            <h3 class="mt-2 font-bold text-gold">Địa điểm</h3>
-            <p id="eventVenue" class="text-charcoal">Chưa cập nhật</p>
+            <i data-lucide="map-pin" class="w-10 h-10 mx-auto text-gold"></i>
+            <h3 class="mt-2 font-bold text-gold text-xl">Địa điểm</h3>
+            <p id="eventVenue" class="text-charcoal text-xl">Chưa cập nhật</p>
           </div>
         </div>
 
         <!-- Countdown -->
         <div class="mt-10 card p-6" data-aos="fade-up">
           <div class="text-center mb-4">
-            <p class="text-white/90">Đếm ngược tới thời khắc trọng đại</p>
+            <p class="text-white/90 text-xl md:text-2xl">Đếm ngược tới thời khắc trọng đại</p>
           </div>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="count-box"><div id="cdDays" class="text-4xl font-extrabold">0</div><div class="text-sm">Ngày</div></div>
-            <div class="count-box"><div id="cdHours" class="text-4xl font-extrabold">0</div><div class="text-sm">Giờ</div></div>
-            <div class="count-box"><div id="cdMinutes" class="text-4xl font-extrabold">0</div><div class="text-sm">Phút</div></div>
-            <div class="count-box"><div id="cdSeconds" class="text-4xl font-extrabold">0</div><div class="text-sm">Giây</div></div>
+            <div class="count-box"><div id="cdDays" class="text-5xl md:text-6xl font-extrabold">0</div><div class="text-sm">Ngày</div></div>
+            <div class="count-box"><div id="cdHours" class="text-5xl md:text-6xl font-extrabold">0</div><div class="text-sm">Giờ</div></div>
+            <div class="count-box"><div id="cdMinutes" class="text-5xl md:text-6xl font-extrabold">0</div><div class="text-sm">Phút</div></div>
+            <div class="count-box"><div id="cdSeconds" class="text-5xl md:text-6xl font-extrabold">0</div><div class="text-sm">Giây</div></div>
           </div>
-          <p id="cdStatus" class="mt-3 text-center text-taupe text-sm"></p>
+          <p id="cdStatus" class="mt-3 text-center text-taupe text-base"></p>
         </div>
 
         <div class="mt-8 rounded-xl overflow-hidden border border-gold/30 shadow" data-aos="fade-up">
           <div id="mapEmbed"></div>
+          <p id="eventAddress" class="text-center text-taupe text-base mt-3"></p>
         </div>
       </div>
     </section>
@@ -190,7 +191,7 @@
         </div>
         <div data-aos="fade-left">
           <h3 id="graduateNameS3" class="font-serif text-4xl font-black text-gold">Tên Tân Cử Nhân</h3>
-          <p id="graduateQuote" class="mt-3 text-taupe italic" data-thanks="info.json/thanksMessage"></p>
+          <p id="graduateQuote" class="mt-3 text-taupe italic max-w-3xl mx-auto text-center" data-thanks="info.json/thanksMessage"></p>
           <div id="contactWrap" class="mt-4 flex items-center gap-4"></div>
         </div>
       </div>
@@ -390,23 +391,30 @@
 
     // ===== Countdown =====
     function parseEventDateTime(info) {
-      // cố gắng ghép info.date + info.time thành Date
-      const dateStr = (info?.date || "").trim();   // ví dụ: "27/06/2025" hoặc "2025-06-27"
-      const timeStr = (info?.time || "00:00").trim(); // "15:30"
-      let d = null;
+      const dateStr = (info?.date || "").trim();
+      const timeRaw = (info?.time || "").trim();
 
-      // Thử dạng dd/mm/yyyy
-      const m = dateStr.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
-      if (m) {
-        const [_, dd, mm, yyyy] = m;
-        d = new Date(`${yyyy}-${mm.padStart(2,"0")}-${dd.padStart(2,"0")}T${timeStr}:00`);
+      let h = 0, m = 0;
+      const tm1 = timeRaw.match(/^(\d{1,2}):(\d{1,2})$/);
+      const tm2 = timeRaw.match(/(\d{1,2})\D+(\d{1,2})/);
+      if (tm1) { h = parseInt(tm1[1], 10); m = parseInt(tm1[2], 10); }
+      else if (tm2) { h = parseInt(tm2[1], 10); m = parseInt(tm2[2], 10); }
+      else if (/^\d{1,2}$/.test(timeRaw)) { h = parseInt(timeRaw, 10); m = 0; }
+
+      let d = null;
+      const dm = dateStr.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);
+      if (dm) {
+        const dd = parseInt(dm[1], 10);
+        const mm = parseInt(dm[2], 10);
+        const yyyy = parseInt(dm[3], 10);
+        d = new Date(yyyy, mm - 1, dd, h, m, 0, 0);
       } else if (!isNaN(Date.parse(dateStr))) {
-        d = new Date(`${dateStr}T${timeStr}:00`);
+        const base = new Date(dateStr);
+        d = new Date(base.getFullYear(), base.getMonth(), base.getDate(), h, m, 0, 0);
       }
 
       if (!d || isNaN(d.getTime())) {
-        // fallback: +7 ngày
-        d = new Date(Date.now() + 7*24*3600*1000);
+        d = new Date(Date.now() + 7 * 24 * 3600 * 1000);
       }
       return d;
     }
@@ -506,6 +514,7 @@
       $("#eventDate").textContent        = info?.date || "Chưa cập nhật";
       $("#eventTime").textContent        = info?.time || "Chưa cập nhật";
       $("#eventVenue").textContent       = info?.venue || "Chưa cập nhật";
+      $("#eventAddress").textContent     = info?.address || "Chưa cập nhật";
       $("#graduateImage").src            = info?.graduateImage || ASSETS.GRADUATE_IMAGE;
       $("#graduateNameS3").textContent   = info?.graduateName || "Tên Tân Cử Nhân";
       const tq = $("#graduateQuote");
@@ -549,9 +558,7 @@
         const guestNameEl = $("#guestNameHero");
         if (guestNameEl) guestNameEl.textContent = nameTxt;
 
-        const inviteLineEl = $("#inviteLine");
-        if (inviteLineEl)
-          inviteLineEl.textContent = `Trân trọng kính mời ${nameTxt} đến tham dự lễ tốt nghiệp.`;
+        
 
         renderPersonalInvite(INFO, currentGuest);
         updateMeta(INFO, currentGuest);
@@ -561,9 +568,7 @@
         const guestNameEl = $("#guestNameHero");
         if (guestNameEl) guestNameEl.textContent = "bạn";
 
-        const inviteLineEl = $("#inviteLine");
-        if (inviteLineEl)
-          inviteLineEl.textContent = "Trân trọng kính mời bạn đến tham dự lễ tốt nghiệp.";
+        
 
         renderPersonalInvite(INFO, null);
         updateMeta(INFO, null);
