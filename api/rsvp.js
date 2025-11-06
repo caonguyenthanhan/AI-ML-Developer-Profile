@@ -1,5 +1,5 @@
-import path from 'path';
-import fs from 'fs/promises';
+const path = require('path');
+const fs = require('fs/promises');
 
 // Helper: chỉ import KV khi cần để tránh lỗi top-level await/initialization
 async function getKv() {
@@ -31,7 +31,7 @@ function setCors(res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   try {
     setCors(res);
     res.setHeader('Content-Type', 'application/json');
@@ -60,8 +60,32 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'DELETE') {
-      // Không hỗ trợ xoá vì API này không lưu trữ cục bộ.
-      return res.status(501).json({ ok: false, error: 'Not Implemented' });
+      try {
+        const kv = await getKv();
+        if (!kv) {
+          return res.status(501).json({ ok: false, error: 'Delete requires KV configured' });
+        }
+        const { id, timestamp } = req.body || {};
+        const rawList = await kv.lrange('rsvps', 0, -1);
+        const list = (rawList || []).map(x => { try { return JSON.parse(x); } catch { return x; } });
+        const filtered = list.filter(item => {
+          const itemId = item?.id || '';
+          const ts = item?.timestamp || '';
+          if (id) return itemId !== id;
+          if (timestamp) return ts !== timestamp;
+          return true; // nếu không có tiêu chí, không xóa gì
+        });
+        // rebuild list
+        await kv.del('rsvps');
+        if (filtered.length) {
+          await kv.rpush('rsvps', ...filtered.map(x => JSON.stringify(x)));
+        }
+        if (id) await kv.del(`rsvp:${id}`);
+        return res.status(200).json({ ok: true, deleted: (list.length - filtered.length) });
+      } catch (e) {
+        console.warn('KV DELETE failed:', e?.message || e);
+        return res.status(500).json({ ok: false, error: 'Delete failed' });
+      }
     }
 
     if (req.method !== 'POST') {
