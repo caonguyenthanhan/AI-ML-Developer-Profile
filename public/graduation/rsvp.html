@@ -187,15 +187,14 @@
     }
 
     // Login & UI logic
-    document.getElementById("loginForm").addEventListener("submit", async e => {
-      e.preventDefault();
+    async function doLoginWithKey(keyInput) {
       const canFs = await setupFirebase();
       if (canFs) { await loadInfo(); }
       if (!INFO) { INFO = await loadInfoJson(); }
-      const key = document.getElementById("adminKeyInput").value.trim();
+      const key = String(keyInput || "").trim();
       if (!INFO?.adminKey || key !== INFO.adminKey) {
         alert("Mã quản trị không hợp lệ!");
-        return;
+        return false;
       }
 
       document.getElementById("loginPanel").classList.add("hidden");
@@ -205,7 +204,26 @@
       RSVPS = canFs ? await loadRsvps() : await loadRsvpsApi();
       renderTable(RSVPS);
       lucide.createIcons();
+      return true;
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const val = document.getElementById("adminKeyInput").value;
+      await doLoginWithKey(val);
     });
+
+    // Auto-login via URL query: ?pass=ADMINKEY or ?password=ADMINKEY
+    (async function autoLoginFromUrl(){
+      try {
+        const qp = new URLSearchParams(window.location.search);
+        const urlPass = qp.get("pass") || qp.get("password");
+        if (!urlPass) return; // no query pass provided
+        const input = document.getElementById("adminKeyInput");
+        input.value = urlPass;
+        await doLoginWithKey(urlPass);
+      } catch (e) { console.warn("Auto-login via URL failed:", e); }
+    })();
 
     document.getElementById("logoutBtn").addEventListener("click", () => location.reload());
     document.getElementById("filterStatus").addEventListener("change", filterData);
