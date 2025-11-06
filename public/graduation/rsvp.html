@@ -56,10 +56,32 @@
         </select>
         <input id="searchBox" type="text" placeholder="Tìm theo tên hoặc email..." class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-gold focus:outline-none" />
       </div>
-      <button id="exportBtn" class="bg-gold text-navy px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 flex items-center gap-2">
-        <i data-lucide="download"></i> Xuất CSV
-      </button>
+      <div class="flex items-center gap-2">
+        <button id="addManualBtn" class="bg-navy text-white px-4 py-2 rounded-lg font-semibold hover:bg-navy/90 flex items-center gap-2">
+          <i data-lucide="plus"></i> Thêm thủ công
+        </button>
+        <button id="exportBtn" class="bg-gold text-navy px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 flex items-center gap-2">
+          <i data-lucide="download"></i> Xuất CSV
+        </button>
+      </div>
     </div>
+
+    <div id="statsBar" class="grid grid-cols-3 gap-3 mb-4">
+      <div class="rounded-lg bg-white border p-3 text-center"><div class="text-sm text-gray-500">Tổng số</div><div id="countTotal" class="text-2xl font-bold">0</div></div>
+      <div class="rounded-lg bg-white border p-3 text-center"><div class="text-sm text-gray-500">Có tham dự</div><div id="countYes" class="text-2xl font-bold text-green-600">0</div></div>
+      <div class="rounded-lg bg-white border p-3 text-center"><div class="text-sm text-gray-500">Không tham dự</div><div id="countNo" class="text-2xl font-bold text-red-600">0</div></div>
+    </div>
+
+    <form id="manualForm" class="hidden mb-4 grid grid-cols-1 md:grid-cols-4 gap-3 bg-white border rounded-lg p-4">
+      <input id="mName" placeholder="Họ tên" class="px-3 py-2 border rounded" required />
+      <input id="mEmail" type="email" placeholder="Email" class="px-3 py-2 border rounded" />
+      <select id="mAttend" class="px-3 py-2 border rounded">
+        <option value="yes">Có tham dự</option>
+        <option value="no">Không tham dự</option>
+      </select>
+      <input id="mMessage" placeholder="Lời nhắn" class="px-3 py-2 border rounded" />
+      <button id="mSubmit" class="md:col-span-4 bg-navy text-white px-4 py-2 rounded font-semibold">Thêm</button>
+    </form>
 
     <div class="overflow-x-auto rounded-lg shadow bg-white">
       <table class="min-w-full border-collapse text-sm" id="rsvpTable">
@@ -70,6 +92,7 @@
             <th class="px-3 py-2 text-center">Tham dự</th>
             <th class="px-3 py-2 text-left">Lời nhắn</th>
             <th class="px-3 py-2 text-center">Thời gian</th>
+            <th class="px-3 py-2 text-center">Thao tác</th>
           </tr>
         </thead>
         <tbody id="rsvpBody"></tbody>
@@ -145,15 +168,19 @@
       for (const r of data) {
         const attend = r.attending ? "✅" : "❌";
         const tr = document.createElement("tr");
+        tr.dataset.id = r.id || "";
+        tr.dataset.ts = r.timestamp || "";
         tr.innerHTML = `
           <td class="border-t px-3 py-2">${r.name || "-"}</td>
           <td class="border-t px-3 py-2">${r.email || "-"}</td>
           <td class="border-t px-3 py-2 text-center">${attend}</td>
           <td class="border-t px-3 py-2">${r.message || ""}</td>
           <td class="border-t px-3 py-2 text-center text-gray-500">${new Date(r.timestamp || "").toLocaleString("vi-VN")}</td>
+          <td class="border-t px-3 py-2 text-center"><button class="delBtn bg-red-600 text-white px-2 py-1 rounded">Xóa</button></td>
         `;
         body.appendChild(tr);
       }
+      updateStats(data);
     }
 
     function filterData() {
@@ -164,6 +191,15 @@
       if (status !== "all") filtered = filtered.filter(r => r.attending === (status === "yes"));
       if (search) filtered = filtered.filter(r => (r.name || "").toLowerCase().includes(search) || (r.email || "").toLowerCase().includes(search));
       renderTable(filtered);
+    }
+
+    function updateStats(data) {
+      const total = data.length;
+      const yes = data.filter(r => r.attending).length;
+      const no = total - yes;
+      document.getElementById("countTotal").textContent = String(total);
+      document.getElementById("countYes").textContent = String(yes);
+      document.getElementById("countNo").textContent = String(no);
     }
 
     function exportCSV() {
@@ -229,6 +265,42 @@
     document.getElementById("filterStatus").addEventListener("change", filterData);
     document.getElementById("searchBox").addEventListener("input", filterData);
     document.getElementById("exportBtn").addEventListener("click", exportCSV);
+
+    document.getElementById("addManualBtn").addEventListener("click", () => {
+      const fm = document.getElementById("manualForm");
+      fm.classList.toggle("hidden");
+    });
+
+    document.getElementById("mSubmit").addEventListener("click", async e => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("mName").value.trim(),
+        email: document.getElementById("mEmail").value.trim(),
+        attending: document.getElementById("mAttend").value === "yes",
+        message: document.getElementById("mMessage").value.trim(),
+      };
+      if (!data.name) return alert("Vui lòng nhập họ tên");
+      const res = await fetch("/api/rsvp", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+      const ok = res.ok;
+      if (!ok) return alert("Thêm thất bại");
+      const j = await res.json().catch(()=>({}));
+      const entry = { ...data, timestamp: new Date().toISOString(), id: j.id || "" };
+      RSVPS.push(entry);
+      renderTable(RSVPS);
+      document.getElementById("manualForm").classList.add("hidden");
+    });
+
+    document.getElementById("rsvpBody").addEventListener("click", async e => {
+      const btn = e.target.closest(".delBtn");
+      if (!btn) return;
+      const tr = btn.closest("tr");
+      const id = tr?.dataset?.id || "";
+      const ts = tr?.dataset?.ts || "";
+      const res = await fetch("/api/rsvp", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, timestamp: ts }) });
+      if (!res.ok) return alert("Xóa thất bại");
+      RSVPS = RSVPS.filter(r => (id ? r.id !== id : r.timestamp !== ts));
+      renderTable(RSVPS);
+    });
   </script>
 </body>
 </html>

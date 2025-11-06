@@ -24,7 +24,7 @@ async function writeRsvps(list) {
 
 function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
@@ -39,12 +39,31 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, data: list });
     }
 
+    if (req.method === 'DELETE') {
+      const body = req.body || {};
+      const id = body.id || '';
+      const ts = body.timestamp || '';
+      const list = await readRsvps();
+      const before = list.length;
+      const filtered = list.filter(x => {
+        if (id && x.id) return x.id !== id;
+        if (ts && x.timestamp) return x.timestamp !== ts;
+        return true;
+      });
+      if (filtered.length === before) {
+        return res.status(404).json({ ok: false, error: 'Not found' });
+      }
+      await writeRsvps(filtered);
+      return res.status(200).json({ ok: true, message: 'RSVP deleted' });
+    }
+
     if (req.method !== 'POST') {
       return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
     }
 
     const body = req.body || {};
     const entry = {
+      id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2,8)}`,
       name: body.name || '',
       email: body.email || '',
       attending: !!body.attending,
@@ -90,7 +109,7 @@ export default async function handler(req, res) {
     const list = await readRsvps();
     list.push(entry);
     await writeRsvps(list);
-    return res.status(200).json({ ok: true, message: 'RSVP saved' });
+    return res.status(200).json({ ok: true, message: 'RSVP saved', id: entry.id });
   } catch (err) {
     console.error('RSVP API Error:', err);
     return res.status(500).json({ ok: false, error: String(err?.message || err) });
