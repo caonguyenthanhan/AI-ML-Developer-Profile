@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Lời Mời Tốt Nghiệp Huệ Nhi</title>
+    
+    <!-- Meta tags (giữ nguyên để tối ưu chia sẻ) -->
+    <meta property="og:title" content="Lời Mời Tham Dự Lễ Tốt Nghiệp Huệ Nhi">
+    <meta property="og:description" content="Trân trọng kính mời bạn đến tham dự buổi lễ tốt nghiệp của Huệ Nhi.">
+    <meta property="og:image" content="/image/graduation/main-preview.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    
+    <!-- Tải Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tải thư viện icon Lucide-React -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tải thư viện confetti cho hiệu ứng chúc mừng -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <!-- Tải Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, getDocs, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // Cấu hình Tailwind CSS cho tông màu Xanh Navy và Vàng Kim
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#03204c', // Màu xanh navy đậm
+                        'gold': '#ffd700', // Màu vàng kim
+                        'primary': '#03204c',
+                        'secondary': '#ffd700',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* CSS tuỳ chỉnh để thêm hiệu ứng lấp lánh và kiểu thiệp mời */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;600;700&display=swap');
+        
+        body {
+            background-color: #eef2ff;
+            /* Thiết lập cuộn ngang cho bố cục 4 trang */
+            overflow-x: hidden;
+        }
+
+        /* Container chứa các trang, sử dụng Flexbox để xếp ngang */
+        #page-container {
+            display: flex;
+            width: 400vw; /* 4 trang * 100vw */
+            transition: transform 0.6s ease-in-out;
+        }
+        
+        /* Định nghĩa kích thước cho từng trang (mô phỏng 1 trang PDF) */
+        .page-section {
+            width: 100vw;
+            min-height: 100vh;
+            flex-shrink: 0;
+            padding: 32px 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            
+        }
+
+        /* Lớp phủ logo (Watermark) */
+        .logo-overlay::before {
+            content: "";
+            background-image: url('/image/graduation/logotruong.jpg'); /* Sử dụng logo trường */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 150px;
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* Hiệu ứng nền video (giữ nguyên từ file cũ) */
+        .video-background {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Hiệu ứng ánh sáng mới */
+        .gold-shine {
+            color: #ffd700;
+            animation: goldShine 3.2s ease-in-out infinite;
+            text-shadow: 0 0 6px rgba(255,215,0,0.6), 0 0 2px rgba(255,215,0,0.4);
+        }
+        @keyframes goldShine {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+        }
+
+        /* Viền vàng lấp lánh cho ảnh */
+        .golden-border {
+            border: 4px solid transparent;
+            box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8), 0 0 5px 2px rgba(255, 215, 0, 0.6);
+        }
+        
+        /* Hiệu ứng ảnh sinh động */
+        .animated-image {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translatey(0px); }
+            50% { transform: translatey(-10px); }
+            100% { transform: translatey(0px); }
+        }
+
+        /* Thanh điều hướng trang (Pagination) */
+        .page-indicator {
+            background-color: #ffd700;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        .page-indicator.active {
+            width: 20px;
+            border-radius: 6px;
+            background-color: #03204c;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Container chính để render nội dung -->
+    <div id="app" class="relative">
+        <div class="flex flex-col items-center p-4 md:p-8">
+            <!-- Container của 4 trang -->
+            <div id="page-container">
+                <!-- Nội dung 4 trang sẽ được render bởi JavaScript -->
+                <div class="text-center p-8 w-screen">Đang tải...</div>
+            </div>
+        </div>
+        
+        <!-- Thanh điều hướng trang (Pagination) -->
+        <div id="pagination" class="fixed top-1/2 left-4 md:left-8 transform -translate-y-1/2 flex flex-col space-y-3 z-50">
+            <!-- Indicators sẽ được thêm bởi JS -->
+        </div>
+
+    </div>
+    
+    <!-- Container cho các nút điều khiển (Nhạc/Hiệu ứng) -->
+    <div id="controls" class="fixed bottom-4 right-4 z-[100] space-x-2"></div>
+    <!-- Audio player cho nhạc nền -->
+    <audio id="background-music" loop></audio>
+
+    <script type="module">
+        // Biến toàn cục từ môi trường Canvas
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth;
+        let isAuthReady = false;
+        let currentPage = 0; // Biến theo dõi trang hiện tại
+
+        // --- 1. SETUP FIREBASE VÀ AUTH ---
+        async function setupFirebase() {
+            try {
+                if (Object.keys(firebaseConfig).length === 0) {
+                    // Môi trường dev/test, bỏ qua Firebase
+                    console.warn("Firebase config is missing. Proceeding without Firestore.");
+                    isAuthReady = true; 
+                    return false;
+                }
+                
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                // Ghi log để debug (nếu cần)
+                // setLogLevel('Debug');
+
+                // Đăng nhập bằng Custom Token hoặc ẩn danh
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                console.log("Firebase initialized and user signed in:", auth.currentUser.uid);
+                isAuthReady = true;
+                return true;
+            } catch (error) {
+                console.error("Error setting up Firebase:", error);
+                return false;
+            }
+        }
+
+        // --- 2. CẤU HÀNH CỐ ĐỊNH & DỮ LIỆU MẪU TỪ PDF ---
+        const DEFAULT_INVITE_MESSAGE = "Sự hiện diện của bạn sẽ là món quà ý nghĩa nhất cho Huệ Nhi trong khoảng khắc đáng nhớ này.";
+        const ASSETS = {
+            GRADUATE_IMAGE: "/image/graduation/main.jpg",
+            MAP_IMAGE: "/image/graduation/map.jpg", // Ảnh bản đồ nội bộ (dùng cho Page 3)
+            LAUREL_WREATH: "/image/nguyet-que.png",
+            VIDEO_BACKGROUND: "/video/sparkle-background.mp4",
+        };
+        
+        const MOCK_INFO = {
+            graduateName: "Huệ Nhi",
+            university: "Trường Đại học Tôn Đức Thắng",
+            address: "19 Nguyễn Hữu Thọ, Quận T", // Lấy từ PDF
+            date: "31.10.2025 (Thứ 6)",
+            time: "9:30 - 11:30",
+            mapLink: "https://maps.app.goo.gl/YourMapLinkHere", // Thay bằng link Google Maps thực tế
+            contact: {
+                phone: "090xxxxxxx", // Lấy từ PDF
+                zalo: "#",
+            },
+            music: "https://example.com/happy-graduation-song.mp3", // Thay bằng link nhạc nền
+            previewImage: "/image/graduation/main-preview.jpg",
+        };
+        
+        // --- 3. LOGIC XỬ LÝ DỮ LIỆU TỪ FIRESTORE (Dùng onSnapshot để lắng nghe thay đổi) ---
+        
+        const getInfoDocRef = () => doc(db, "artifacts", appId, "public", "data", "info", "event_details");
+        
+        function initializeData() {
+            return new Promise(async (resolve) => {
+                let info = MOCK_INFO;
+                const isUsingFirestore = await setupFirebase();
+
+                if (isUsingFirestore && isAuthReady) {
+                    try {
+                        const infoRef = getInfoDocRef();
+                        // Dùng onSnapshot để lấy dữ liệu lần đầu và lắng nghe thay đổi
+                        const unsubscribe = onSnapshot(infoRef, (docSnapshot) => {
+                            if (docSnapshot.exists()) {
+                                info = { ...MOCK_INFO, ...docSnapshot.data() }; // Ưu tiên dữ liệu Firestore
+                                console.log("Event info updated from Firestore.");
+                            } else {
+                                console.warn("Event info document not found in Firestore. Using MOCK data.");
+                            }
+                            // Dùng resolve() để trả về dữ liệu info đã sẵn sàng
+                            resolve({ info, unsubscribe }); 
+                            
+                            // Gỡ listener sau khi resolve để tránh lặp lại logic render phức tạp, 
+                            // thay vào đó, bạn có thể gọi lại router() để render lại khi có thay đổi.
+                            // Tuy nhiên, ở đây ta sẽ dùng cách đơn giản là resolve ngay lần đầu tiên.
+                            
+                            // Nếu muốn cập nhật real-time:
+                            // router(info); // Gọi router để render lại với dữ liệu mới
+                        }, (error) => {
+                            console.error("Error listening to Firestore:", error);
+                            resolve({ info: MOCK_INFO }); // Fallback
+                        });
+                        // Đặt unsubscribe để có thể hủy sau (nếu cần)
+                        window.unsubscribe = unsubscribe; 
+                    } catch (e) {
+                        console.error("Error loading data from Firestore:", e);
+                        resolve({ info: MOCK_INFO }); // Fallback
+                    }
+                } else {
+                    resolve({ info: MOCK_INFO }); // Nếu không dùng Firestore
+                }
+            });
+        }
+
+
+        // --- 4. HÀM TẠO NỘI DUNG 4 TRANG (Dựa trên bố cục PDF) ---
+        
+        function renderPage1(info) {
+            // Trang 1: Trang bìa và Thông điệp chính
+            return `
+                <div class="max-w-xl w-full p-8 md:p-12 text-white flex flex-col items-center justify-center relative z-10 bg-navy/90 rounded-2xl shadow-xl logo-overlay border-4 border-gold">
+                    
+                    <h2 class="text-3xl font-serif text-gold mb-1">INVITATION</h2>
+                    <h1 class="text-5xl md:text-6xl font-serif font-black text-gold gold-shine border-b-2 border-gold/70 pb-3 mb-8 text-center">
+                        <span class="block text-2xl mb-1 font-normal">Tham Dự</span> LỄ TỐT NGHIỆP
+                    </h1>
+
+                    <!-- Ảnh chính Huệ Nhi -->
+                    <div class="my-6 flex justify-center">
+                        <div class="relative inline-block w-64 h-64 animated-image">
+                            <img src="${ASSETS.LAUREL_WREATH}" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none" aria-hidden="true">
+                            <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="relative w-48 h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" onerror="this.src='/image/graduation/main.jpg';">
+                        </div>
+                    </div>
+
+                    <p class="text-xl text-gold font-semibold tracking-wider mt-4">TÂN CỬ NHÂN</p>
+                    <h3 class="text-4xl md:text-5xl font-serif font-black text-gold mt-2 drop-shadow-[0_0_6px_rgba(255,215,0,0.8)]">
+                        ♦ ${info.graduateName} ♦
+                    </h3>
+                    
+                    <div class="w-full text-center mt-6 p-4 bg-gold/10 rounded-lg border border-gold/50">
+                        <p class="text-lg font-bold">THÂN MỜI BẠN ĐẾN CHUNG VUI CÙNG</p>
+                        <p class="text-2xl font-serif font-extrabold text-gold mt-1">${info.graduateName}</p>
+                    </div>
+
+                    <div class="mt-8 text-center">
+                        <p class="text-sm font-semibold text-white/80">
+                            ${DEFAULT_INVITE_MESSAGE}
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPage2(info) {
+            // Trang 2: Chi tiết sự kiện + Lời Gửi Yêu Thương
+            return `
+                <div class="max-w-xl w-full p-8 md:p-12 bg-white flex flex-col relative z-10 rounded-2xl shadow-xl logo-overlay border-4 border-navy">
+                    <h1 class="text-4xl font-serif font-black text-navy text-center mb-6">Chi Tiết Sự Kiện</h1>
+                    
+                    <div class="space-y-6 mb-8 text-center">
+                        <div class="flex flex-wrap justify-center gap-4 md:gap-8">
+                            <div class="p-4 rounded-xl bg-purple-50 flex-1 min-w-[150px]">
+                                <i data-lucide="calendar" class="w-8 h-8 text-purple-600 mb-2 mx-auto"></i>
+                                <h3 class="font-bold text-gray-700">NGÀY</h3>
+                                <p class="text-lg font-serif text-navy font-bold">${info.date || 'Chưa cập nhật'}</p>
+                            </div>
+                            
+                            <div class="p-4 rounded-xl bg-indigo-50 flex-1 min-w-[150px]">
+                                <i data-lucide="clock" class="w-8 h-8 text-indigo-600 mb-2 mx-auto"></i>
+                                <h3 class="font-bold text-gray-700">GIỜ</h3>
+                                <p class="text-lg font-serif text-navy font-bold">${info.time || 'Chưa cập nhật'}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 rounded-xl bg-blue-50">
+                            <i data-lucide="map-pin" class="w-8 h-8 text-blue-600 mb-2 mx-auto"></i>
+                            <h3 class="font-bold text-gray-700">ĐỊA ĐIỂM</h3>
+                            <a href="${info.mapLink || '#'}" target="_blank" class="block text-xl font-bold text-navy hover:text-blue-700 transition-colors duration-200">
+                                ${info.university || 'Chưa cập nhật'}
+                            </a>
+                            <p class="text-sm text-gray-600">${info.address || 'Chưa cập nhật địa chỉ'}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full h-px bg-gray-300 my-4"></div>
+
+                    <h2 class="text-2xl font-serif font-black text-navy text-center mb-4">LỜI GỬI YÊU THƯƠNG</h2>
+                    <div class="text-sm space-y-3 text-gray-700">
+                        <p class="italic">
+                            Bốn năm khép lại một hành trình dài để ${info.graduateName} trưởng thành. Giữa những chông chênh và áp lực, điều quý giá nhất ${info.graduateName} có được không chỉ là tấm bằng tốt nghiệp, mà là tình yêu thương từ những người đã đồng hành cùng ${info.graduateName}.
+                        </p>
+                        <p class="font-semibold text-navy flex items-start">
+                            <i data-lucide="heart" class="w-4 h-4 mr-2 mt-1 text-red-500 flex-shrink-0"></i> 
+                            Cảm ơn gia đình vì đã luôn là điểm tựa vững vàng, là động lực để ${info.graduateName} cố gắng mỗi ngày.
+                        </p>
+                        <p class="font-semibold text-navy flex items-start">
+                            <i data-lucide="book-open" class="w-4 h-4 mr-2 mt-1 text-teal-500 flex-shrink-0"></i>
+                            Cảm ơn thầy cô đã thắp sáng ngọn đèn tri thức, kiên nhẫn dẫn lối và dạy ${info.graduateName} cách sống tử tế trước khi học cách thành công.
+                        </p>
+                        <p class="font-semibold text-navy flex items-start">
+                            <i data-lucide="smile" class="w-4 h-4 mr-2 mt-1 text-orange-500 flex-shrink-0"></i>
+                            Cám ơn những người bạn vì những nụ cười, những lần sẻ chia, những kỷ niệm không thể đếm hết.
+                        </p>
+                        <p class="text-center font-bold italic text-base mt-4">
+                            Cảm ơn vì đã ở lại, vì đã tin tưởng, vì đã góp phần tạo nên ${info.graduateName} của ngày hôm nay.
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPage3(info) {
+            // Trang 3: Bản đồ chi tiết + Hướng dẫn thông hành + Lưu ý quan trọng
+            return `
+                <div class="max-w-xl w-full p-8 md:p-12 bg-white flex flex-col relative z-10 rounded-2xl shadow-xl logo-overlay border-4 border-gold">
+                    <h1 class="text-4xl font-serif font-black text-navy text-center mb-6">Hướng Dẫn Tham Dự</h1>
+                    
+                    <!-- Bản đồ -->
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold text-navy border-b pb-2 mb-3 flex items-center">
+                            <i data-lucide="map" class="w-5 h-5 mr-2 text-gold"></i>
+                            TỔNG QUAN VÀ VỊ TRÍ
+                        </h2>
+                        <img src="${ASSETS.MAP_IMAGE}" alt="Bản đồ trường" class="w-full rounded-lg shadow-md mb-3 border border-gray-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <!-- Fallback nếu ảnh không tải được -->
+                        <div class="text-center text-sm text-gray-500 p-4 bg-gray-100 rounded-lg border border-dashed border-gray-300" style="display:none;">
+                                                        <p class="mt-2">Vị trí: Toà Ai Sảnh A</p>
+                        </div>
+                        <p class="text-sm italic text-gray-600 text-center mt-2">Vị trí của ${info.graduateName} là tại **Toà Ai Sảnh A**</p>
+                    </div>
+
+                    <!-- Hướng dẫn thông hành -->
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold text-navy border-b pb-2 mb-3 flex items-center">
+                            <i data-lucide="car" class="w-5 h-5 mr-2 text-gold"></i>
+                            HƯỚNG DẪN THÔNG HÀNH
+                        </h2>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-sm">
+                            <li>Đi xe công nghệ: Vào cổng 1, 2, 3, 4, 5 đều được. Ưu tiên cổng **1, 2** để đỡ đi bộ.</li>
+                            <li>Đi xe máy: Vào cổng **7** và **9**.</li>
+                            <li>Đi xe ô tô: Vào cổng **9**.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Lưu ý quan trọng -->
+                    <div>
+                        <h2 class="text-xl font-bold text-red-600 border-b pb-2 mb-3 flex items-center">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 mr-2 text-red-600"></i>
+                            LƯU Ý VÔ CÙNG QUAN TRỌNG
+                        </h2>
+                        <p class="text-sm italic text-gray-600 mb-2">Để buổi gặp mặt diễn ra thuận lợi, mọi người nhờ đọc note giúp ${info.graduateName} nha!</p>
+                        <ul class="list-decimal list-inside text-gray-700 space-y-1 text-sm bg-red-50 p-3 rounded-lg border border-red-200">
+                            <li>Mang theo **CCCD** để xuất trình khi vào cổng.</li>
+                            <li>Đọc mã số **721H0667** (trường hợp bảo vệ có hỏi).</li>
+                            <li>Mang ít đồ có giá trị, tự trang bị cẩn thận phòng trường hợp đông người.</li>
+                            <li>Trong lúc không gọi được ${info.graduateName}, hãy tìm chỗ nghỉ chân và gọi ngay số hotline.</li>
+                        </ul>
+                        ${info.contact?.phone ? `<p class="mt-3 text-sm font-bold text-red-600">Liên hệ Hotline: ${info.contact.phone}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderPage4(info) {
+            // Trang 4: Trang cảm ơn và Lời hẹn
+            return `
+                <div class="max-w-xl w-full p-8 md:p-12 text-navy flex flex-col items-center justify-center relative z-10 bg-white/90 rounded-2xl shadow-xl logo-overlay border-4 border-navy">
+                    
+                    <h1 class="text-6xl font-serif font-black text-gold gold-shine mb-8">THANK YOU!</h1>
+                    
+                    <!-- Ảnh chính Huệ Nhi (Holding Cap) -->
+                    <div class="my-6 flex justify-center">
+                        <img src="${ASSETS.GRADUATE_IMAGE}" alt="Ảnh người tốt nghiệp" class="w-48 h-auto object-contain rounded-lg golden-border animated-image" style="transform: rotate(-5deg);" onerror="this.src='/image/graduation/main.jpg';">
+                    </div>
+                    
+                    <div class="text-center mt-6">
+                        <p class="text-xl font-serif italic text-gray-700 mb-4">
+                            Cảm ơn bạn đã đọc đến đây, ${info.graduateName} rất mong sẽ được gặp bạn và có tấm ảnh kỷ niệm trong ngày lễ.
+                        </p>
+                        <p class="text-xl font-bold text-navy">
+                            Đối với bạn không thể đến được, mình hẹn gặp ở dịp khác nhoa!!
+                        </p>
+                    </div>
+
+                    <div class="w-full text-center mt-8 pt-4 border-t border-gray-300">
+                        <h3 class="text-lg font-bold text-navy">TRÂN TRỌNG KÍNH MỜI</h3>
+                        <p class="text-2xl font-serif font-extrabold text-navy mt-1">Sự hiện diện của Quý Vị</p>
+                    </div>
+
+                    ${info.contact?.phone ? `
+                        <div class="mt-6">
+                            <a href="tel:${info.contact.phone}" class="flex items-center text-navy font-semibold hover:text-gold transition-colors">
+                                <i data-lucide="phone" class="w-5 h-5 mr-2"></i>
+                                Liên hệ: ${info.contact.phone}
+                            </a>
+                        </div>
+                    ` : ''}
+                    
+                </div>
+            `;
+        }
+
+        // --- 5. HÀM ĐIỀU KHIỂN & TIỆN ÍCH ---
+
+        function updateContent(info) {
+            const pageContainer = document.getElementById('page-container');
+            if (!pageContainer) return;
+
+            // Xây dựng nội dung cho 4 trang
+            const pagesHtml = [
+                renderPage1(info),
+                renderPage2(info),
+                renderPage3(info),
+                renderPage4(info)
+            ].map((content, index) => `
+                <div class="page-section" id="page-${index}">
+                    <video class="video-background" autoplay loop muted playsinline>
+                        <source src="${ASSETS.VIDEO_BACKGROUND}" type="video/mp4">
+                    </video>
+                    ${content}
+                </div>
+            `).join('');
+
+            pageContainer.innerHTML = pagesHtml;
+            lucide.createIcons(); // Khởi tạo icon Lucide
+
+            // Tạo thanh pagination
+            const paginationContainer = document.getElementById('pagination');
+            paginationContainer.innerHTML = '';
+            for (let i = 0; i < 4; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'page-indicator';
+                if (i === currentPage) indicator.classList.add('active');
+                indicator.dataset.pageIndex = i;
+                indicator.addEventListener('click', () => goToPage(i));
+                paginationContainer.appendChild(indicator);
+            }
+            
+            // Cập nhật vị trí trang ban đầu
+            updatePageVisual();
+        }
+
+        // Hàm chuyển trang
+        function goToPage(index) {
+            if (index < 0 || index >= 4 || index === currentPage) return;
+            currentPage = index;
+            updatePageVisual();
+        }
+        
+        // Cập nhật trực quan (dùng CSS transform để cuộn ngang)
+        function updatePageVisual() {
+            const pageContainer = document.getElementById('page-container');
+            const indicators = document.querySelectorAll('.page-indicator');
+            
+            if (pageContainer) {
+                // Cuộn ngang
+                pageContainer.style.transform = `translateX(-${currentPage * 100}vw)`;
+            }
+            
+            // Cập nhật trạng thái active của indicator
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentPage);
+            });
+        }
+        
+        // Thêm tính năng vuốt (swipe) để chuyển trang
+        function addSwipeListener() {
+            const container = document.getElementById('page-container');
+            if (!container) return;
+            let touchstartX = 0;
+            let touchendX = 0;
+
+            const handleGesture = () => {
+                if (touchendX < touchstartX - 50) { // Vuốt sang trái (Chuyển đến trang tiếp theo)
+                    goToPage(currentPage + 1);
+                }
+                if (touchendX > touchstartX + 50) { // Vuốt sang phải (Chuyển đến trang trước đó)
+                    goToPage(currentPage - 1);
+                }
+            }
+
+            container.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+            }, false);
+
+            container.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleGesture();
+            }, false);
+            
+            // Thêm phím mũi tên cho desktop
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    goToPage(currentPage + 1);
+                } else if (e.key === 'ArrowLeft') {
+                    goToPage(currentPage - 1);
+                }
+            });
+        }
+
+
+        // Hàm điều khiển hiệu ứng chúc mừng (giữ nguyên)
+        let currentEffectIndex = 0;
+        
+        function triggerCelebration() {
+            const effects = [
+                () => {
+                    const duration = 5 * 1000;
+                    const animationEnd = Date.now() + duration;
+                    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+                    function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+                    const interval = setInterval(function() {
+                        const timeLeft = animationEnd - Date.now();
+                        if (timeLeft <= 0) return clearInterval(interval);
+                        const particleCount = 50 * (timeLeft / duration);
+                        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+                    }, 250);
+                },
+                () => {
+                    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(() => {
+                            confetti({
+                                particleCount: 20, angle: 90, spread: 45, origin: { x: Math.random(), y: 1.2 },
+                                colors: colors, shapes: ['circle'], scalar: 1.2, gravity: -0.5, drift: Math.random() - 0.5
+                            });
+                        }, i * 200);
+                    }
+                },
+            ];
+            
+            effects[currentEffectIndex]();
+            currentEffectIndex = (currentEffectIndex + 1) % effects.length;
+        }
+
+        // Hàm render các nút điều khiển (Nhạc/Hiệu ứng)
+        function renderControls(info) {
+            const controlsContainer = document.getElementById('controls');
+            if (!controlsContainer) return;
+            
+            let controlsHtml = `
+                <button id="celebrateBtn" title="Chúc mừng!" class="bg-gold text-navy w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                    <i data-lucide="party-popper" class="w-6 h-6"></i>
+                </button>
+            `;
+            
+            if (info.music) {
+                controlsHtml += `
+                    <button id="musicBtn" title="Tắt/Mở nhạc" class="bg-gold text-navy w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                        <i data-lucide="volume-2" class="w-6 h-6"></i>
+                    </button>
+                `;
+            }
+
+            controlsContainer.innerHTML = controlsHtml;
+            lucide.createIcons();
+
+            // Gắn sự kiện cho nút celebration
+            document.getElementById('celebrateBtn')?.addEventListener('click', triggerCelebration);
+
+            if (info.music) {
+                const musicPlayer = document.getElementById('background-music');
+                const musicBtn = document.getElementById('musicBtn');
+                musicPlayer.src = info.music;
+
+                let isPlaying = false; // Bắt đầu là paused để chờ tương tác người dùng
+                
+                const toggleMusic = () => {
+                    if (isPlaying) {
+                        musicPlayer.pause();
+                        musicBtn.innerHTML = '<i data-lucide="volume-x" class="w-6 h-6"></i>';
+                    } else {
+                        musicPlayer.play().catch(e => console.log("Autoplay bị chặn."));
+                        musicBtn.innerHTML = '<i data-lucide="volume-2" class="w-6 h-6"></i>';
+                    }
+                    isPlaying = !isPlaying;
+                    lucide.createIcons();
+                };
+
+                musicBtn.addEventListener('click', toggleMusic);
+                
+                // Fallback: Thử phát nhạc khi có tương tác đầu tiên (Quan trọng cho mobile)
+                document.body.addEventListener('click', () => {
+                    if (!isPlaying && musicPlayer.paused) {
+                        musicPlayer.play().then(() => {
+                            isPlaying = true;
+                            musicBtn.innerHTML = '<i data-lucide="volume-2" class="w-6 h-6"></i>';
+                            lucide.createIcons();
+                        }).catch(() => {
+                            // Vẫn bị chặn, đặt icon tắt tiếng
+                            musicBtn.innerHTML = '<i data-lucide="volume-x" class="w-6 h-6"></i>';
+                            lucide.createIcons();
+                        });
+                    }
+                }, { once: true });
+                
+                // Khởi tạo nút nhạc với trạng thái tắt tiếng ban đầu
+                musicBtn.innerHTML = '<i data-lucide="volume-x" class="w-6 h-6"></i>';
+                lucide.createIcons();
+            } else {
+                // Nếu không có nhạc, vẫn tự động chạy hiệu ứng khi load
+                setTimeout(() => {
+                    triggerCelebration();
+                }, 1000);
+            }
+        }
+
+
+        // --- 6. HÀM KHỞI TẠO CHÍNH (ROUTER) ---
+
+        async function router() {
+            // Hiển thị loading (đã có trong HTML)
+            const { info } = await initializeData();
+
+            // Render 4 trang nội dung
+            updateContent(info);
+            
+            // Thêm Listener cho thao tác vuốt/phím mũi tên
+            addSwipeListener();
+
+            // Render các nút điều khiển (Nhạc/Hiệu ứng)
+            renderControls(info);
+        }
+
+        // Khởi tạo router khi tải trang
+        window.addEventListener('load', router);
+    </script>
+</body>
+</html>

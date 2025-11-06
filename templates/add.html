@@ -15,19 +15,34 @@
             width: 100%;
         }
         textarea { resize: vertical; height: 150px; }
-        button {
+        .btn {
             padding: 10px 15px;
-            background-color: #008CBA;
-            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 600;
         }
+        .btn-primary { background-color: #008CBA; color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-success { background-color: #28a745; color: white; }
+        .btn-lg { padding: 14px 22px; font-size: 16px; }
+        .btn-wide { min-width: 240px; }
+        .btn-group { display: flex; gap: 10px; }
+        .message { padding: 10px; margin: 10px 0; border-radius: 5px; display: none; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert { padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Thêm Prompt Mới</h1>
+        {% if saved %}
+        <div class="alert alert-success">Lưu thành công! Form đã được làm mới.</div>
+        {% endif %}
         <form method="post" enctype="multipart/form-data">
             <label for="title">Tiêu đề:</label>
             <input type="text" id="title" name="title" required>
@@ -35,12 +50,13 @@
             <label for="prompt">Prompt:</label>
             <textarea id="prompt" name="prompt" required></textarea>
 
-            <label for="category">Category:</label>
-            <select id="category" name="category" required>
+            <label for="category">Thể loại:</label>
+            <input type="text" id="category" name="category" list="categoryOptions" placeholder="Nhập hoặc chọn thể loại" required>
+            <datalist id="categoryOptions">
                 {% for cat in categories %}
-                <option value="{{ cat }}">{{ cat }}</option>
+                <option value="{{ cat }}"></option>
                 {% endfor %}
-            </select>
+            </datalist>
             <p><small>Chưa có category? <a href="{{ url_for('manage_categories') }}">Thêm mới tại đây</a>.</small></p>
 
             <label for="image">Ảnh hoặc Video (dưới 100MB):</label>
@@ -51,9 +67,68 @@
                 <label for="is_public" style="font-weight: normal;">Công khai prompt (bỏ tick nếu muốn giữ riêng tư)</label>
             </div>
 
-            <button type="submit">Lưu</button>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary btn-lg btn-wide">Lưu</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Quay lại</a>
+                <button type="button" id="uploadGithubBtn" class="btn btn-success" onclick="uploadToGitHub(event)">Up GitHub</button>
+            </div>
+            <div id="uploadMessage" class="message"></div>
         </form>
-        <a href="{{ url_for('index') }}">Quay lại</a>
     </div>
-</body>
-</html>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var input = document.getElementById('category');
+            var list = document.getElementById('categoryOptions');
+            if (!input || !list) return;
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    var v = input.value.toLowerCase().trim();
+                    var opts = list.querySelectorAll('option');
+                    var found = null;
+                    for (var i = 0; i < opts.length; i++) {
+                        var val = (opts[i].value || '').toLowerCase();
+                        if (!v || val.startsWith(v)) { found = opts[i].value; break; }
+                    }
+                    if (found) { input.value = found; }
+                }
+            });
+        });
+
+        function uploadToGitHub(event) {
+            var messageDiv = document.getElementById('uploadMessage');
+            var button = event && event.target ? event.target : document.getElementById('uploadGithubBtn');
+            if (!button || !messageDiv) return;
+
+            button.disabled = true;
+            button.textContent = '⏳ Đang upload...';
+
+            fetch('/upload_to_github', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                messageDiv.style.display = 'block';
+                if (data.success) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = data.message;
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = data.message;
+                }
+                setTimeout(function() { messageDiv.style.display = 'none'; }, 5000);
+            })
+            .catch(function(error) {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'Lỗi kết nối: ' + error.message;
+                setTimeout(function() { messageDiv.style.display = 'none'; }, 5000);
+            })
+            .finally(function() {
+                button.disabled = false;
+                button.textContent = 'Up GitHub';
+            });
+        }
+    </script>
+    </body>
+    </html>

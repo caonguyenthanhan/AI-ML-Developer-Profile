@@ -70,6 +70,10 @@
       "destination": "/graduation/preview.html"
     },
     {
+      "source": "/graduation4",
+      "destination": "/graduation/graduation_invitation_4page.html"
+    },
+    {
       "source": "/education",
       "destination": "/education/index.html"
     },
