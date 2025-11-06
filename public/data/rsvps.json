@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Test User",
+    "email": "test@example.com",
+    "attending": true,
+    "message": "Hello",
+    "timestamp": "2025-11-06T16:58:08Z"
+  }
+]

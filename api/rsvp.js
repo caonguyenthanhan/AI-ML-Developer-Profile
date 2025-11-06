@@ -1,57 +1,49 @@
-// api/rsvp.js
+// /api/rsvp.js
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ success: false, message: "Method Not Allowed" });
-  }
-
   try {
+    if (req.method !== "POST")
+      return res.status(405).json({ success: false, error: "Method not allowed" });
+
     const { name, email, attending, message, eventInfo } = req.body || {};
 
-    if (!name || !email) {
-      return res.status(400).json({ success: false, message: "Thiếu tên hoặc email." });
-    }
-    if (!eventInfo?.email) {
-      return res.status(400).json({ success: false, message: "Thiếu email người nhận (info.email)." });
-    }
+    if (!name)
+      return res.status(400).json({ success: false, error: "Missing name" });
 
-    // Cấu hình SMTP (Gmail) — dùng App Password (không dùng mật khẩu thường)
-    // Vào Google Account -> Security -> App passwords
+    // 📨 Gửi email qua Gmail
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.gmail.com",
-      port: Number(process.env.SMTP_PORT || 465),
-      secure: true,
+      service: "gmail",
       auth: {
-        user: process.env.SENDER_EMAIL,
-        pass: process.env.SENDER_PASS,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
+    const subject = attending
+      ? `✅ ${name} sẽ tham dự lễ tốt nghiệp`
+      : `❌ ${name} không thể tham dự`;
+
     const html = `
-      <div style="font-family:Arial,sans-serif;line-height:1.6;">
-        <h2>📩 RSVP mới</h2>
-        <p><b>Tên khách:</b> ${name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Tham dự:</b> ${attending ? "✅ Có" : "❌ Không"}</p>
-        <p><b>Lời nhắn:</b> ${message || "(Không có)"}</p>
-        <hr>
-        <p><b>Sự kiện:</b> ${eventInfo?.university || ""} – ${eventInfo?.date || ""}</p>
-        <p><i>RSVP được gửi tự động từ website thiệp mời tốt nghiệp.</i></p>
-      </div>
+      <h2>${subject}</h2>
+      <p><b>Tên khách:</b> ${name}</p>
+      <p><b>Email:</b> ${email || "(không có)"}</p>
+      <p><b>Trạng thái:</b> ${attending ? "Tham dự" : "Không tham dự"}</p>
+      ${message ? `<p><b>Lời nhắn:</b> ${message}</p>` : ""}
+      ${eventInfo ? `<hr><p><b>Sự kiện:</b> ${eventInfo.university || ""} - ${eventInfo.date || ""}</p>` : ""}
     `;
 
-    const infoSent = await transporter.sendMail({
-      from: `"Graduation RSVP" <${process.env.SENDER_EMAIL}>`,
-      to: eventInfo.email, // email người nhận từ info.json/email
-      subject: `🎓 RSVP mới từ ${name}`,
+    await transporter.sendMail({
+      from: `"Thiệp Mời Lễ Tốt Nghiệp" <${process.env.EMAIL_USER}>`,
+      to: eventInfo?.email || process.env.EMAIL_USER,
+      subject,
       html,
     });
 
-    console.log("✅ RSVP email sent:", infoSent.messageId);
-    return res.status(200).json({ success: true, message: "RSVP submitted and email sent." });
+    return res.status(200).json({ success: true, message: "RSVP email sent successfully" });
+
   } catch (error) {
-    console.error("RSVP Server Error:", error);
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
+    console.error("RSVP API Error:", error);
+    return res.status(500).json({ success: false, error: error.message });
   }
 }

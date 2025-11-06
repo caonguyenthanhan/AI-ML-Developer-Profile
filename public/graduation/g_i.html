@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thiệp Mời Tốt Nghiệp — Navy & Gold</title>
+  <title>Thiệp Mời Tốt Nghiệp — Tân Cử nhân Ngô Tấn Tài</title>
 
   <!-- Open Graph -->
   <meta property="og:title" content="Thiệp Mời Lễ Tốt Nghiệp" />
@@ -21,7 +21,13 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: { navy: "#03204C", gold: "#FFD700" },
+          colors: {
+            ivory: "#FFFBF7",
+            gold: "#D4AF37",
+            charcoal: "#242424",
+            taupe: "#5D5C61",
+            navy: "#03204C" // giữ để tương thích nếu còn dùng
+          },
           fontFamily: {
             sans: ["Inter","ui-sans-serif","system-ui"],
             serif: ["Playfair Display","ui-serif"],
@@ -43,24 +49,26 @@
 
   <style>
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; color: white; background: linear-gradient(180deg, #03204C, #0f2b60); }
+    body { font-family: 'Inter', sans-serif; color: #242424; background: #FFFBF7; }
     .section { min-height: 100vh; display: grid; place-items: center; padding: 3rem 1rem; }
-    .card { background: rgba(255,255,255,.10); border: 1px solid rgba(255,215,0,.35); border-radius: 1.25rem; backdrop-filter: blur(6px); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .card { background: rgba(255,255,255,.85); border: 1px solid rgba(212,175,55,.35); border-radius: 1.25rem; backdrop-filter: blur(6px); box-shadow: 0 10px 30px rgba(0,0,0,.06); }
     .btn { @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-semibold transition; }
-    .btn-gold { background:#FFD700; color:#03204C; }
+    .btn-gold { background:#D4AF37; color:#242424; }
     .btn-gold:hover { filter: brightness(1.05); transform: translateY(-1px); }
-    .btn-navy { background:#03204C; color:#FFD700; border:1px solid #FFD700; }
-    .btn-navy:hover { background:#082a63; transform: translateY(-1px); }
+    .btn-navy { background:#242424; color:#FFFBF7; border:1px solid #D4AF37; }
+    .btn-navy:hover { background:#333333; transform: translateY(-1px); }
     .watermark-center { position:absolute; inset:0; display:grid; place-items:center; pointer-events:none }
     .watermark-center img { opacity:.08; width:9rem; height:9rem }
-    .hero-overlay::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(3,32,76,.70)); pointer-events:none; }
-    .count-box { @apply flex flex-col items-center justify-center gap-1 rounded-[10px] bg-navy/90 p-3 text-white shadow; }
+    .hero-overlay::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(212,175,55,.06), rgba(255,251,247,.85)); pointer-events:none; }
+    .count-box { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.25rem; border-radius:10px; background:#242424; color:#FFFBF7; padding:.75rem; box-shadow:0 6px 16px rgba(0,0,0,.15); }
+    /* Đảm bảo chữ có độ tương phản tốt trên nền mới */
+    [class*="text-white"] { color: #242424 !important; }
   </style>
 </head>
 <body>
 
   <!-- Loading -->
-  <div id="loading" class="fixed inset-0 grid place-items-center bg-white/90 text-navy z-[200]">
+  <div id="loading" class="fixed inset-0 grid place-items-center bg-white/90 text-charcoal z-[200]">
     <div class="text-center">
       <svg class="animate-spin h-10 w-10 mx-auto" viewBox="0 0 24 24" fill="none">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -86,7 +94,7 @@
   <main id="app" class="hidden">
 
     <!-- 1) HERO -->
-    <section id="s1" class="section relative text-white">
+    <section id="s1" class="section relative text-charcoal">
       <div class="absolute inset-0 -z-10 hero-overlay">
         <video id="bgVideo" autoplay loop muted playsinline class="w-full h-full object-cover">
           <source id="bgVideoSrc" type="video/mp4">
@@ -98,13 +106,13 @@
         <p class="font-semibold tracking-[0.35em] text-gold">THƯ MỜI</p>
         <h1 class="font-serif font-black text-5xl md:text-6xl mt-2">LỄ TỐT NGHIỆP</h1>
 
-        <div class="mt-5 inline-flex items-center gap-3 bg-white/10 px-5 py-2 rounded-full border border-white/20">
+        <div class="mt-5 inline-flex items-center gap-3 bg-white/70 px-5 py-2 rounded-full border border-[#E6E2D8]/60">
           <span class="text-gold font-bold">TÂN CỬ NHÂN</span>
           <span id="graduateNameHero" class="font-serif font-black text-2xl">Tên Tân Cử Nhân</span>
         </div>
 
-        <p id="inviteLine" class="mt-4 text-lg text-white/90">
-          Trân trọng kính mời bạn đến tham dự lễ tốt nghiệp.
+        <p id="inviteLine" class="mt-4 text-lg text-charcoal">
+          Trân trọng kính mời <span id="guestNameHero" class="font-semibold text-gold">bạn</span> đến tham dự lễ tốt nghiệp.
         </p>
       </div>
     </section>
@@ -116,24 +124,24 @@
       <div class="max-w-5xl w-full">
         <div class="text-center" data-aos="fade-up">
           <h2 class="font-serif text-4xl font-black">Thông Tin Sự Kiện</h2>
-          <p id="universityLabel" class="mt-2 font-semibold text-white/80">Tên Trường</p>
+          <p id="universityLabel" class="mt-2 font-semibold text-taupe">Tên Trường</p>
         </div>
 
         <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="card p-6 text-center" data-aos="zoom-in">
             <i data-lucide="calendar" class="w-8 h-8 mx-auto text-gold"></i>
             <h3 class="mt-2 font-bold text-gold">Ngày</h3>
-            <p id="eventDate" class="text-white/90">Chưa cập nhật</p>
+            <p id="eventDate" class="text-charcoal">Chưa cập nhật</p>
           </div>
           <div class="card p-6 text-center" data-aos="zoom-in" data-aos-delay="100">
             <i data-lucide="clock" class="w-8 h-8 mx-auto text-gold"></i>
             <h3 class="mt-2 font-bold text-gold">Giờ</h3>
-            <p id="eventTime" class="text-white/90">Chưa cập nhật</p>
+            <p id="eventTime" class="text-charcoal">Chưa cập nhật</p>
           </div>
           <div class="card p-6 text-center" data-aos="zoom-in" data-aos-delay="200">
             <i data-lucide="map-pin" class="w-8 h-8 mx-auto text-gold"></i>
             <h3 class="mt-2 font-bold text-gold">Địa điểm</h3>
-            <p id="eventVenue" class="text-white/90">Chưa cập nhật</p>
+            <p id="eventVenue" class="text-charcoal">Chưa cập nhật</p>
           </div>
         </div>
 
@@ -148,7 +156,7 @@
             <div class="count-box"><div id="cdMinutes" class="text-4xl font-extrabold">0</div><div class="text-sm">Phút</div></div>
             <div class="count-box"><div id="cdSeconds" class="text-4xl font-extrabold">0</div><div class="text-sm">Giây</div></div>
           </div>
-          <p id="cdStatus" class="mt-3 text-center text-white/70 text-sm"></p>
+          <p id="cdStatus" class="mt-3 text-center text-taupe text-sm"></p>
         </div>
 
         <div class="mt-8 rounded-xl overflow-hidden border border-gold/30 shadow" data-aos="fade-up">
@@ -158,8 +166,8 @@
     </section>
 
     <!-- 3) GRADUATE -->
-    <section id="s3" class="section relative text-white">
-      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-navy via-navy to-black"></div>
+    <section id="s3" class="section relative text-charcoal">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-[#FFFBF7] via-[#FFF6EB] to-[#F3EEE4]"></div>
       <div class="absolute inset-0 pointer-events-none grid place-items-center">
         <img src="/image/vien-vang.png" class="opacity-20 w-[90%] max-w-5xl" alt="">
       </div>
@@ -173,7 +181,7 @@
         </div>
         <div data-aos="fade-left">
           <h3 id="graduateNameS3" class="font-serif text-4xl font-black text-gold">Tên Tân Cử Nhân</h3>
-          <p id="graduateQuote" class="mt-3 text-white/90 italic">"Cảm ơn gia đình, thầy cô và bạn bè đã đồng hành trong chặng đường này."</p>
+          <p id="graduateQuote" class="mt-3 text-taupe italic" data-thanks="info.json/thanksMessage"></p>
           <div id="contactWrap" class="mt-4 flex items-center gap-4"></div>
         </div>
       </div>
@@ -184,7 +192,7 @@
       <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
       <div class="max-w-2xl w-full card p-6 text-center" data-aos="fade-up">
         <h2 class="font-serif text-3xl text-gold mb-1">Bạn sẽ đến dự chứ?</h2>
-        <p class="text-white/80 mb-6">(Chọn đáp án!)</p>
+        <p class="text-taupe mb-6">(Chọn đáp án!)</p>
         <div class="flex justify-center gap-6">
           <button id="btnYes" class="btn btn-gold text-lg px-6 py-3">Đi chứ</button>
           <button id="btnNo" class="btn btn-navy text-lg px-6 py-3">Tiếc quá</button>
@@ -207,26 +215,26 @@
 
     <!-- 5) PERSONAL INVITE -->
     <section id="s5" class="section relative">
-      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-white/10 to-amber-100/20"></div>
+      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-[#FFF6EB]/40 to-[#D4AF37]/10"></div>
       <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
 
       <div class="max-w-3xl w-full card p-6 text-center" data-aos="fade-up">
         <h2 class="font-serif text-4xl font-black text-gold">Thiệp Mời Cá Nhân</h2>
-        <p id="guestTarget" class="mt-2 text-white/80">Dành cho bạn</p>
+        <p id="guestTarget" class="mt-2 text-taupe">Dành cho bạn</p>
 
         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="md:col-span-2 text-left">
-            <p id="inviteMessage" class="text-lg font-serif italic text-white/90">
+            <p id="inviteMessage" class="text-lg font-serif italic text-charcoal">
               "Sự hiện diện của bạn là niềm vinh dự lớn nhất!"
             </p>
-            <p id="inviterName" class="mt-3 text-sm text-white/70">— Tân cử nhân</p>
+            <p id="inviterName" class="mt-3 text-sm text-taupe">— Tân cử nhân</p>
             <div class="mt-6 flex flex-wrap items-center gap-3">
               <a href="#s1" class="btn btn-gold"><i data-lucide="home" class="w-5 h-5"></i> Về trang đầu</a>
             </div>
           </div>
 
           <div class="text-center">
-            <img id="guestAvatar" src="/image/graduation/man.jpg" class="w-20 h-20 rounded-full object-cover mx-auto mb-3 ring-2 ring-white/20" alt="">
+            <img id="guestAvatar" src="/image/graduation/man.jpg" class="w-20 h-20 rounded-full object-cover mx-auto mb-3 ring-2 ring-gold/30" alt="">
             <p id="guestNameLabel" class="font-cursive text-3xl text-gold">Tên Khách Mời</p>
           </div>
         </div>
@@ -236,7 +244,7 @@
 
   <!-- Modal -->
   <div id="modalWrap" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-[2000]">
-    <div class="bg-white text-navy rounded-2xl p-6 w-[min(92vw,420px)] shadow-xl">
+    <div class="bg-white text-charcoal rounded-2xl p-6 w-[min(92vw,420px)] shadow-xl">
       <h3 id="modalTitle" class="text-xl font-bold"></h3>
       <p id="modalMsg" class="mt-1 text-gray-700"></p>
       <div class="mt-4 text-right">
@@ -289,7 +297,7 @@
     });
 
     function goldConfetti() {
-      confetti({ particleCount: 160, spread: 100, origin: { y: .6 }, colors: ["#FFD700","#FFF3B0","#FDE047","#FACC15"] });
+      confetti({ particleCount: 160, spread: 100, origin: { y: .6 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
     }
 
     function normalize(s) { return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim(); }
@@ -464,7 +472,7 @@
 
       if (!info) {
         $("#loading").innerHTML = `
-          <div class="text-center text-navy">
+          <div class="text-center text-charcoal">
             <h2 class="text-2xl font-bold text-red-600">Không thể tải dữ liệu</h2>
             <p class="mt-2">Kiểm tra Firestore hoặc /data/info.json.</p>
           </div>`;
