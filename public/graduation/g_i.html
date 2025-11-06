@@ -527,31 +527,44 @@
       const targetTime = parseEventDateTime(info);
       startCountdown(targetTime);
 
-      // guest from URL
+      // ===== Guest from URL logic (cập nhật chuẩn) =====
       const rawFromUrl = getGuestFromUrl();
       let currentGuest = null;
+
       if (rawFromUrl) {
         const q = normalize(rawFromUrl);
-        currentGuest = GUESTS.find(g => normalize(g.name) === q)
-                      || GUESTS.find(g => normalize(g.name).includes(q))
-                      || { name: beautifyName(rawFromUrl) };
+        currentGuest =
+          GUESTS.find(g => normalize(g.name) === q) ||
+          GUESTS.find(g => normalize(g.name).includes(q)) ||
+          { name: beautifyName(rawFromUrl) };
+
         sessionStorage.setItem("guestName", currentGuest.name);
         const titleTxt = currentGuest.title ? `${currentGuest.title} ` : "";
         const nameTxt = `${titleTxt}${currentGuest.name}`;
+
         const guestNameEl = $("#guestNameHero");
         if (guestNameEl) guestNameEl.textContent = nameTxt;
+
         const inviteLineEl = $("#inviteLine");
-        if (inviteLineEl) inviteLineEl.textContent = `Trân trọng kính mời ${nameTxt} đến tham dự lễ tốt nghiệp.`;
+        if (inviteLineEl)
+          inviteLineEl.textContent = `Trân trọng kính mời ${nameTxt} đến tham dự lễ tốt nghiệp.`;
+
         renderPersonalInvite(INFO, currentGuest);
         updateMeta(INFO, currentGuest);
+
       } else {
+        // Fallback nếu không có :guest trong URL
         const guestNameEl = $("#guestNameHero");
         if (guestNameEl) guestNameEl.textContent = "bạn";
+
         const inviteLineEl = $("#inviteLine");
-        if (inviteLineEl) inviteLineEl.textContent = "Trân trọng kính mời bạn đến tham dự lễ tốt nghiệp.";
+        if (inviteLineEl)
+          inviteLineEl.textContent = "Trân trọng kính mời bạn đến tham dự lễ tốt nghiệp.";
+
         renderPersonalInvite(INFO, null);
         updateMeta(INFO, null);
       }
+
 
       // RSVP logic
       const btnYes = $("#btnYes"), btnNo = $("#btnNo"), instruction = $("#instructionCard"), regretForm = $("#regretForm");
