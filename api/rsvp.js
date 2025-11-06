@@ -78,6 +78,17 @@ export default async function handler(req, res) {
     // Optional email notification via Gmail App Password
     const user = process.env.EMAIL_USER;
     const pass = process.env.EMAIL_PASS;
+    // Lấy địa chỉ nhận từ public/data/info.json nếu có, fallback về EMAIL_USER
+    let recipient = user;
+    try {
+      const infoPath = path.join(process.cwd(), 'public', 'data', 'info.json');
+      const infoRaw = await fs.readFile(infoPath, 'utf8');
+      const infoObj = JSON.parse(infoRaw || '{}');
+      if (infoObj && typeof infoObj.email === 'string' && infoObj.email.trim()) {
+        recipient = infoObj.email.trim();
+      }
+    } catch (_) {}
+
     if (user && pass) {
       try {
         // Import động để tránh crash khi module không có trong dependencies
@@ -97,7 +108,7 @@ export default async function handler(req, res) {
         `;
         await transporter.sendMail({
           from: `"Thiệp Mời Lễ Tốt Nghiệp" <${user}>`,
-          to: user,
+          to: recipient,
           subject,
           html,
         });
