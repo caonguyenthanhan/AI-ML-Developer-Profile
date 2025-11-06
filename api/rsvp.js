@@ -1,12 +1,17 @@
 import path from 'path';
 import fs from 'fs/promises';
-// Vercel KV cho lưu trữ bền
-let kv = null;
-try {
-  const kvMod = await import('@vercel/kv');
-  kv = kvMod.kv || kvMod.default || null;
-} catch (_) {
-  kv = null; // Không có KV trong dev hoặc chưa cài dependency
+
+// Helper: chỉ import KV khi cần để tránh lỗi top-level await/initialization
+async function getKv() {
+  try {
+    const kvMod = await import('@vercel/kv');
+    const kvRef = kvMod.kv || kvMod.default || null;
+    const hasEnv = (process.env.KV_URL || process.env.KV_REST_API_URL || process.env.KV_REST_API_TOKEN);
+    if (kvRef && hasEnv) return kvRef;
+    return null;
+  } catch (_) {
+    return null;
+  }
 }
 
 // Chỉ đọc từ file tĩnh trong repo nếu tồn tại. Không ghi vào /tmp để tránh hiểu nhầm.
@@ -29,6 +34,7 @@ function setCors(res) {
 export default async function handler(req, res) {
   try {
     setCors(res);
+    res.setHeader('Content-Type', 'application/json');
 
     if (req.method === 'OPTIONS') return res.status(204).end();
 
@@ -36,8 +42,8 @@ export default async function handler(req, res) {
       // Ưu tiên đọc dữ liệu từ Vercel KV nếu được cấu hình
       let storage = 'none';
       try {
-        const hasKV = kv && (process.env.KV_URL || process.env.KV_REST_API_URL || process.env.KV_REST_API_TOKEN);
-        if (hasKV) {
+        const kv = await getKv();
+        if (kv) {
           const rawList = await kv.lrange('rsvps', 0, -1);
           const list = (rawList || []).map(x => {
             try { return JSON.parse(x); } catch { return x; }
@@ -122,8 +128,8 @@ export default async function handler(req, res) {
     let persisted = false;
     let storage = 'none';
     try {
-      const hasKV = kv && (process.env.KV_URL || process.env.KV_REST_API_URL || process.env.KV_REST_API_TOKEN);
-      if (hasKV) {
+      const kv = await getKv();
+      if (kv) {
         await kv.lpush('rsvps', JSON.stringify(entry));
         await kv.set(`rsvp:${entry.id}`, entry);
         persisted = true;

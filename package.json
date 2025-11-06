@@ -4,7 +4,8 @@
   "description": "Web CV with AI Chatbot integration.",
   "main": "api/chat.js",
   "scripts": {
-    "start": "echo 'No start script needed for static deployment'"
+    "start": "echo 'No start script needed for static deployment'",
+    "build:css": "tailwindcss -i ./public/assets/css/tailwind.css -o ./public/assets/css/tw.css -m"
   },
   "keywords": [
     "vercel",
@@ -24,6 +25,9 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "@vercel/node": "^3.0.0"
+    "@vercel/node": "^3.0.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.18"
   }
 }

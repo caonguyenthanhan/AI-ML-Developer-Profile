@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Tool - Update Prompt Library</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<link href="/assets/css/tw.css" rel="stylesheet">
 <script src="assets/js/header.js"></script>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 py-8">
@@ -172,7 +172,7 @@
                 var imagePath = previewImg.src || 'https://placehold.co/600x450/e0e0e0/333333?text=No+Image';
                 
                 var previewWindow = window.open('', '_blank', 'width=800,height=600');
-                var previewHTML = '<!DOCTYPE html><html><head><title>Preview</title><script src="https://cdn.tailwindcss.com"><\/script></head><body class="bg-gray-100 p-8"><div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden"><div class="aspect-[4/3] bg-gray-100 flex items-center justify-center overflow-hidden"><img src="' + imagePath + '" alt="Preview" class="w-full h-full object-cover"></div><div class="p-6"><h2 class="text-xl font-bold text-gray-800 mb-2">' + title + '</h2><div class="text-gray-600 text-sm italic bg-gray-50 p-3 rounded-lg border border-gray-100 max-h-40 overflow-y-auto">' + prompt + '</div></div></div></body></html>';
+var previewHTML = '<!DOCTYPE html><html><head><title>Preview</title><link href="/assets/css/tw.css" rel="stylesheet"></head><body class="bg-gray-100 p-8"><div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden"><div class="aspect-[4/3] bg-gray-100 flex items-center justify-center overflow-hidden"><img src="' + imagePath + '" alt="Preview" class="w-full h-full object-cover"></div><div class="p-6"><h2 class="text-xl font-bold text-gray-800 mb-2">' + title + '</h2><div class="text-gray-600 text-sm italic bg-gray-50 p-3 rounded-lg border border-gray-100 max-h-40 overflow-y-auto">' + prompt + '</div></div></div></body></html>';
                 previewWindow.document.write(previewHTML);
                 showStatus('Preview opened in new window!');
             });
