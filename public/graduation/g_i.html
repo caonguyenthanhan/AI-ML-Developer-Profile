@@ -114,6 +114,8 @@
         <p id="inviteLine" class="mt-4 text-lg text-charcoal">
           Trân trọng kính mời <span id="guestNameHero" class="font-semibold text-gold">bạn</span> đến tham dự lễ tốt nghiệp.
         </p>
+        
+
       </div>
     </section>
 
@@ -497,7 +499,10 @@
       $("#eventVenue").textContent       = info?.venue || "Chưa cập nhật";
       $("#graduateImage").src            = info?.graduateImage || ASSETS.GRADUATE_IMAGE;
       $("#graduateNameS3").textContent   = info?.graduateName || "Tên Tân Cử Nhân";
-      $("#graduateQuote").textContent    = info?.graduateQuote || $("#graduateQuote").textContent;
+      const tq = $("#graduateQuote");
+      if (tq) {
+        tq.innerHTML = info?.thanksMessage || info?.quote || tq.innerHTML;
+      }
 
       // contact
       const c = info?.contact || {};
@@ -524,10 +529,14 @@
         currentGuest = GUESTS.find(g => normalize(g.name) === normalize(rawFromUrl)) || { name: beautifyName(rawFromUrl) };
         sessionStorage.setItem("guestName", currentGuest.name);
         const titleTxt = currentGuest.title ? `${currentGuest.title} ` : "";
-        $("#inviteLine").textContent = `Trân trọng kính mời ${titleTxt}${currentGuest.name} đến tham dự lễ tốt nghiệp.`;
+        const nameTxt = `${titleTxt}${currentGuest.name}`;
+        const guestNameEl = $("#guestNameHero");
+        if (guestNameEl) guestNameEl.textContent = nameTxt;
         renderPersonalInvite(INFO, currentGuest);
         updateMeta(INFO, currentGuest);
       } else {
+        const guestNameEl = $("#guestNameHero");
+        if (guestNameEl) guestNameEl.textContent = "bạn";
         renderPersonalInvite(INFO, null);
         updateMeta(INFO, null);
       }
