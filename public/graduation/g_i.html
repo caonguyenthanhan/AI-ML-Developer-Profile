@@ -269,7 +269,7 @@
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
     const firebaseConfig = typeof __firebase_config !== "undefined" ? JSON.parse(__firebase_config) : {};
     const initialAuthToken = typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
-    const APP_ROOT = "/graduation4"; // theo yêu cầu URL
+    const APP_ROOT = "/graduation"; // theo yêu cầu URL
 
     const ASSETS = {
       LOGO: "/image/graduation/logotruong.png",
@@ -312,7 +312,7 @@
 
     function getGuestFromUrl() {
       const parts = location.pathname.replace(/\/+$/,"").split("/").filter(Boolean);
-      if (parts.length >= 2 && parts[0].toLowerCase() === "graduation4") return decodeURIComponent(parts[1]);
+      if (parts.length >= 2 && parts[0].toLowerCase() === "graduation") return decodeURIComponent(parts[1]);
       return null;
     }
 
