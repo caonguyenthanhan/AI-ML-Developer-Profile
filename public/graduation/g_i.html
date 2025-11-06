@@ -14,6 +14,9 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="" />
   <meta name="twitter:card" content="summary_large_image" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/image/graduation/logotruong.png" />
+  <link rel="shortcut icon" href="/image/graduation/logotruong.png" />
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -314,12 +317,14 @@
     }
 
     function updateMeta(info, guest=null) {
+      const baseTitle = `Thiệp Mời Tốt Nghiệp — ${info?.graduateName || "Tân Cử nhân"}`;
       const title = guest ? `Thư mời dành cho ${guest.title?guest.title+" ":""}${guest.name}`
-                          : `Thiệp Mời Lễ Tốt Nghiệp | ${info?.graduateName||"Graduate"}`;
+                          : baseTitle;
       const desc = guest ? `Thiệp mời từ ${info?.graduateName || "Tân cử nhân"} dành cho ${guest.title?guest.title+" ":""}${guest.name}.`
                          : `Trân trọng kính mời bạn đến chung vui cùng ${info?.graduateName||"tân cử nhân"}.`;
       const img  = guest?.previewImage || info?.previewImage || ASSETS.GRADUATE_IMAGE;
-      document.title = title;
+      // Giữ title tab theo cấu trúc thống nhất
+      document.title = baseTitle;
       const set=(sel,attr,val)=>{const m=$(sel); if(m) m.setAttribute(attr,val);};
       set('meta[property="og:title"]', "content", title);
       set('meta[property="og:description"]', "content", desc);
@@ -526,7 +531,10 @@
       const rawFromUrl = getGuestFromUrl();
       let currentGuest = null;
       if (rawFromUrl) {
-        currentGuest = GUESTS.find(g => normalize(g.name) === normalize(rawFromUrl)) || { name: beautifyName(rawFromUrl) };
+        const q = normalize(rawFromUrl);
+        currentGuest = GUESTS.find(g => normalize(g.name) === q)
+                      || GUESTS.find(g => normalize(g.name).includes(q))
+                      || { name: beautifyName(rawFromUrl) };
         sessionStorage.setItem("guestName", currentGuest.name);
         const titleTxt = currentGuest.title ? `${currentGuest.title} ` : "";
         const nameTxt = `${titleTxt}${currentGuest.name}`;

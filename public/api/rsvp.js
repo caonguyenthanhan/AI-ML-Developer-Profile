@@ -1,8 +1,26 @@
 // /api/rsvp.js
 import nodemailer from "nodemailer";
+import fs from "fs/promises";
+import path from "path";
+
+const RSVPS_FILE = path.join(process.cwd(), "public", "data", "rsvps.json");
 
 export default async function handler(req, res) {
   try {
+    if (req.method === "GET") {
+      try {
+        const raw = await fs.readFile(RSVPS_FILE, "utf8").catch(() => null);
+        let list = [];
+        if (raw) {
+          const j = JSON.parse(raw);
+          list = Array.isArray(j) ? j : (Array.isArray(j?.rsvps) ? j.rsvps : []);
+        }
+        return res.status(200).json({ success: true, rsvps: list });
+      } catch (e) {
+        return res.status(500).json({ success: false, error: e.message });
+      }
+    }
+
     if (req.method !== "POST")
       return res.status(405).json({ success: false, error: "Method not allowed" });
 
@@ -39,6 +57,21 @@ export default async function handler(req, res) {
       subject,
       html,
     });
+
+    try {
+      const raw = await fs.readFile(RSVPS_FILE, "utf8").catch(() => null);
+      let list = [];
+      if (raw) {
+        const j = JSON.parse(raw);
+        list = Array.isArray(j) ? j : (Array.isArray(j?.rsvps) ? j.rsvps : []);
+      }
+      list.push({ name, email, attending, message, eventInfo, timestamp: new Date().toISOString() });
+      const outputIsArray = raw ? Array.isArray(JSON.parse(raw)) : true;
+      const out = outputIsArray ? JSON.stringify(list, null, 2) : JSON.stringify({ rsvps: list }, null, 2);
+      await fs.writeFile(RSVPS_FILE, out, "utf8");
+    } catch (e) {
+      console.warn("Failed to persist RSVP:", e);
+    }
 
     return res.status(200).json({ success: true, message: "RSVP email sent successfully" });
 
