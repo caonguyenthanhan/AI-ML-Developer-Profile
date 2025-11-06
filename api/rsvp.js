@@ -1,25 +1,15 @@
 import path from 'path';
 import fs from 'fs/promises';
 
-const TMP_FILE = path.join('/tmp', 'rsvps.json');
+// Chỉ đọc từ file tĩnh trong repo nếu tồn tại. Không ghi vào /tmp để tránh hiểu nhầm.
 const STATIC_FILE = path.join(process.cwd(), 'public', 'data', 'rsvps.json');
 
-async function readRsvps() {
-  for (const f of [TMP_FILE, STATIC_FILE]) {
-    try {
-      const raw = await fs.readFile(f, 'utf8');
-      const j = JSON.parse(raw || '[]');
-      return Array.isArray(j) ? j : (Array.isArray(j?.rsvps) ? j.rsvps : []);
-    } catch (_) {}
-  }
-  return [];
-}
-
-async function writeRsvps(list) {
-  const out = JSON.stringify(list, null, 2);
+async function readStaticRsvps() {
   try {
-    await fs.writeFile(TMP_FILE, out, 'utf8');
-  } catch (_) {}
+    const raw = await fs.readFile(STATIC_FILE, 'utf8');
+    const j = JSON.parse(raw || '[]');
+    return Array.isArray(j) ? j : (Array.isArray(j?.rsvps) ? j.rsvps : []);
+  } catch (_) { return []; }
 }
 
 function setCors(res) {
@@ -35,26 +25,13 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(204).end();
 
     if (req.method === 'GET') {
-      const list = await readRsvps();
+      const list = await readStaticRsvps();
       return res.status(200).json({ ok: true, data: list });
     }
 
     if (req.method === 'DELETE') {
-      const body = req.body || {};
-      const id = body.id || '';
-      const ts = body.timestamp || '';
-      const list = await readRsvps();
-      const before = list.length;
-      const filtered = list.filter(x => {
-        if (id && x.id) return x.id !== id;
-        if (ts && x.timestamp) return x.timestamp !== ts;
-        return true;
-      });
-      if (filtered.length === before) {
-        return res.status(404).json({ ok: false, error: 'Not found' });
-      }
-      await writeRsvps(filtered);
-      return res.status(200).json({ ok: true, message: 'RSVP deleted' });
+      // Không hỗ trợ xoá vì API này không lưu trữ cục bộ.
+      return res.status(501).json({ ok: false, error: 'Not Implemented' });
     }
 
     if (req.method !== 'POST') {
@@ -117,10 +94,8 @@ export default async function handler(req, res) {
       }
     }
 
-    const list = await readRsvps();
-    list.push(entry);
-    await writeRsvps(list);
-    return res.status(200).json({ ok: true, message: 'RSVP saved', id: entry.id });
+    // Không ghi dữ liệu vào /tmp hay filesystem. Lưu trữ bền vững được thực hiện ở client qua Firestore.
+    return res.status(200).json({ ok: true, message: 'RSVP processed (email sent if configured)', id: entry.id });
   } catch (err) {
     console.error('RSVP API Error:', err);
     return res.status(500).json({ ok: false, error: String(err?.message || err) });
