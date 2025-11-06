@@ -36,7 +36,7 @@
     <meta name="description" content="Lời mời tham dự lễ tốt nghiệp - Sự hiện diện của bạn là niềm vinh dự lớn nhất của chúng tôi!">
     <meta name="keywords" content="lễ tốt nghiệp, graduation, lời mời, thiệp mời">
     <meta name="author" content="Graduation Invitation">
-    <!-- Tải Tailwind CSS CDN -->
+    <!-- Tailwind CSS (build bằng CLI) -->
 <link href="/assets/css/tw.css" rel="stylesheet">
     <!-- Tải thư viện icon Lucide-React -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -47,24 +47,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
-        // Cấu hình Tailwind CSS cho tông màu Xanh Navy và Vàng Kim
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'navy': '#03204c', // Màu xanh navy đậm
-                        'gold': '#ffd700', // Màu vàng kim
-                        'primary': '#03204c', // Đặt primary là navy
-                        'secondary': '#ffd700', // Đặt secondary là gold
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'], // Font cho tiêu đề lớn
-                    },
-                }
-            }
-        }
+        // Cấu hình Tailwind đã chuyển sang tailwind.config.js; không cần đặt tailwind.config trong HTML.
     </script>
     <style>
         /* CSS tuỳ chỉnh để thêm hiệu ứng lấp lánh và kiểu thiệp mời */
