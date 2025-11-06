@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test API RSVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <main class="max-w-xl mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-4">Test API: /api/rsvp</h1>
+
+    <form id="rsvpForm" class="space-y-3 bg-white p-4 rounded shadow">
+      <div>
+        <label class="block text-sm font-medium">Tên</label>
+        <input id="name" class="mt-1 w-full border rounded px-3 py-2" placeholder="Nguyễn Văn A" required />
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Email (tuỳ chọn)</label>
+        <input id="email" class="mt-1 w-full border rounded px-3 py-2" placeholder="email@example.com" />
+      </div>
+      <div class="flex items-center gap-2">
+        <input id="attending" type="checkbox" class="h-4 w-4" />
+        <label for="attending">Sẽ tham dự</label>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Lời nhắn</label>
+        <textarea id="message" class="mt-1 w-full border rounded px-3 py-2" rows="3" placeholder="Hẹn gặp lại!"></textarea>
+      </div>
+      <button class="btn btn-gold bg-yellow-500 text-white px-4 py-2 rounded" type="submit">Gửi RSVP</button>
+    </form>
+
+    <div id="result" class="mt-4 p-3 bg-white rounded shadow text-sm"></div>
+
+    <div class="mt-6">
+      <button id="loadBtn" class="px-4 py-2 rounded bg-gray-800 text-white">Tải danh sách RSVP (GET)</button>
+      <pre id="list" class="mt-3 text-xs bg-white p-3 rounded shadow overflow-auto max-h-48"></pre>
+    </div>
+  </main>
+
+  <script>
+    const result = document.getElementById('result');
+    document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      result.textContent = 'Đang gửi...';
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        attending: document.getElementById('attending').checked,
+        message: document.getElementById('message').value.trim(),
+      };
+      try {
+        const res = await fetch('/api/rsvp', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const j = await res.json().catch(()=>({}));
+        result.textContent = `Status: ${res.status}\n` + JSON.stringify(j, null, 2);
+      } catch (err) {
+        result.textContent = 'Lỗi: ' + err;
+      }
+    });
+
+    document.getElementById('loadBtn').addEventListener('click', async () => {
+      const el = document.getElementById('list');
+      el.textContent = 'Đang tải...';
+      try {
+        const res = await fetch('/api/rsvp');
+        const j = await res.json().catch(()=>({}));
+        el.textContent = JSON.stringify(j, null, 2);
+      } catch (err) {
+        el.textContent = 'Lỗi: ' + err;
+      }
+    });
+  </script>
+</body>
+</html>
