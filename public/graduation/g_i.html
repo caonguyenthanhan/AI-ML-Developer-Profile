@@ -540,11 +540,15 @@
         const nameTxt = `${titleTxt}${currentGuest.name}`;
         const guestNameEl = $("#guestNameHero");
         if (guestNameEl) guestNameEl.textContent = nameTxt;
+        const inviteLineEl = $("#inviteLine");
+        if (inviteLineEl) inviteLineEl.textContent = `Trân trọng kính mời ${nameTxt} đến tham dự lễ tốt nghiệp.`;
         renderPersonalInvite(INFO, currentGuest);
         updateMeta(INFO, currentGuest);
       } else {
         const guestNameEl = $("#guestNameHero");
         if (guestNameEl) guestNameEl.textContent = "bạn";
+        const inviteLineEl = $("#inviteLine");
+        if (inviteLineEl) inviteLineEl.textContent = "Trân trọng kính mời bạn đến tham dự lễ tốt nghiệp.";
         renderPersonalInvite(INFO, null);
         updateMeta(INFO, null);
       }
