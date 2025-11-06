@@ -506,10 +506,10 @@
 
     async function sendRsvpEmail(data, info) {
       try {
-        const res = await fetch("/api/rsvp", {
+        const res = await fetch("https://hethongthongminh.id.vn/api/rsvp", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...data, eventInfo: { email: info?.email, university: info?.university, date: info?.date } })
+          body: JSON.stringify({ ...data, eventInfo: { email: info?.email, ... } })
         });
         const ct = res.headers.get("content-type") || "";
         if (!res.ok) {
