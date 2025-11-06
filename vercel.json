@@ -71,11 +71,11 @@
     },
     {
       "source": "/graduation4",
-      "destination": "/graduation/graduation_invitation_4page.html"
+      "destination": "/graduation/graduation_invitation_4page_guest_decor.html"
     },
     {
       "source": "/graduation4/:guest",
-      "destination": "/graduation/graduation_invitation_4page.html"
+      "destination": "/graduation/graduation_invitation_4page_guest_decor.html"
     },
     {
       "source": "/graduation4/admin",

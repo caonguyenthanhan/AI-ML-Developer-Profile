@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thiệp Mời Tốt Nghiệp 2025</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(to bottom, #03204C, #0f2b60); color: white; scroll-behavior: smooth; }
+    .btn { @apply px-4 py-2 rounded-full font-semibold transition; }
+    .btn-gold { background-color: #FFD700; color: #03204C; }
+    .btn-navy { background-color: #03204C; color: #FFD700; border: 1px solid #FFD700; }
+    section { min-height: 100vh; display: grid; place-items: center; padding: 2rem; }
+  </style>
+</head>
+<body>
+  <!-- Trang 1 -->
+  <section id="s1" data-aos="fade-up">
+    <div class="text-center max-w-2xl">
+      <h1 class="font-serif text-5xl text-gold mb-4">Lễ Tốt Nghiệp</h1>
+      <p id="inviteLine" class="text-lg">Trân trọng kính mời ... đến tham dự lễ tốt nghiệp.</p>
+    </div>
+  </section>
+
+  <!-- Trang 2 -->
+  <section id="s2" data-aos="fade-up">
+    <div class="text-center">
+      <h2 class="font-serif text-3xl text-gold mb-6">Thông Tin Sự Kiện</h2>
+      <p id="eventDate">Ngày: ...</p>
+      <p id="eventTime">Giờ: ...</p>
+      <p id="eventVenue">Địa điểm: ...</p>
+    </div>
+  </section>
+
+  <!-- Trang 3 -->
+  <section id="s3" data-aos="fade-up">
+    <div class="text-center">
+      <h2 class="font-serif text-3xl text-gold mb-4">Tân Cử Nhân</h2>
+      <img src="/image/graduation/main.jpg" class="w-40 h-40 rounded-full mx-auto border-4 border-gold" />
+      <p id="graduateName" class="mt-3 font-semibold text-lg">Tên Tân Cử Nhân</p>
+    </div>
+  </section>
+
+  <!-- Trang 4 RSVP -->
+  <section id="s4" data-aos="fade-up">
+    <div class="text-center max-w-md bg-white/10 backdrop-blur-md border border-gold/30 rounded-2xl p-6">
+      <h2 class="font-serif text-3xl text-gold mb-4">Bạn sẽ đến dự chứ?</h2>
+      <p class="text-white/80 mb-6">(Chọn đáp án!)</p>
+      <div class="flex justify-center gap-6">
+        <button id="btnYes" class="btn btn-gold">Đi chứ</button>
+        <button id="btnNo" class="btn btn-navy">Tiếc quá</button>
+      </div>
+
+      <div id="instructionCard" class="hidden mt-6 bg-white/20 p-4 rounded-lg">
+        <img src="/image/graduation/map.jpg" class="w-full rounded-lg shadow-lg border border-gold/40" alt="Map hướng dẫn" />
+      </div>
+
+      <form id="regretForm" class="hidden mt-6 grid gap-3 bg-white/20 p-4 rounded-lg">
+        <textarea id="rsvpMessage" rows="3" placeholder="Gửi lời chúc hoặc lý do bạn không thể đến..." class="px-3 py-2 rounded-lg bg-white/70 text-navy"></textarea>
+        <button type="submit" class="btn btn-gold">Gửi lời nhắn</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Trang 5 -->
+  <section id="s5" data-aos="fade-up">
+    <div class="text-center max-w-2xl bg-white/10 backdrop-blur-md border border-gold/30 rounded-2xl p-6">
+      <h2 class="font-serif text-3xl text-gold mb-4">Thiệp Mời Cá Nhân</h2>
+      <p id="guestName" class="font-cursive text-3xl text-gold mb-2">Tên khách</p>
+      <p class="text-white/80 italic">"Sự hiện diện của bạn là niềm vinh dự lớn nhất!"</p>
+    </div>
+  </section>
+
+  <script>
+    AOS.init({ duration: 700, once: true });
+
+    function getGuestFromUrl() {
+      const parts = location.pathname.split('/').filter(Boolean);
+      if (parts.length >= 2 && parts[0].toLowerCase() === 'graduation4') {
+        return decodeURIComponent(parts[1]);
+      }
+      return null;
+    }
+
+    const guest = getGuestFromUrl();
+    if (guest) {
+      document.getElementById('inviteLine').textContent = `Trân trọng kính mời ${guest} đến tham dự lễ tốt nghiệp.`;
+      document.getElementById('guestName').textContent = guest;
+    }
+
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+    const instruction = document.getElementById('instructionCard');
+    const regretForm = document.getElementById('regretForm');
+
+    btnYes.addEventListener('click', () => {
+      instruction.classList.remove('hidden');
+      regretForm.classList.add('hidden');
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#FFD700', '#FFF3B0'] });
+      // gửi RSVP attending true (placeholder)
+      fetch('https://hethongthongminh.id.vn/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: guest, attending: true, message: '' })
+      });
+    });
+
+    btnNo.addEventListener('click', () => {
+      instruction.classList.add('hidden');
+      regretForm.classList.remove('hidden');
+    });
+
+    regretForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const message = document.getElementById('rsvpMessage').value;
+      fetch('https://hethongthongminh.id.vn/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: guest, attending: false, message })
+      });
+      regretForm.reset();
+      regretForm.innerHTML = '<p class="text-gold font-semibold">Cảm ơn bạn đã gửi lời nhắn 💌</p>';
+    });
+  </script>
+</body>
+</html>
