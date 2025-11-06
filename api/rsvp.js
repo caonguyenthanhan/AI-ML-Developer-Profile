@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'fs/promises';
-import nodemailer from 'nodemailer';
 
 const TMP_FILE = path.join('/tmp', 'rsvps.json');
 const STATIC_FILE = path.join(process.cwd(), 'public', 'data', 'rsvps.json');
@@ -62,7 +61,9 @@ export default async function handler(req, res) {
     const pass = process.env.EMAIL_PASS;
     if (user && pass) {
       try {
-        const transporter = nodemailer.createTransport({
+        // Import động để tránh crash khi module không có trong dependencies
+        const nodemailerMod = await import('nodemailer');
+        const transporter = nodemailerMod.createTransport({
           service: 'gmail',
           auth: { user, pass },
         });
@@ -81,7 +82,7 @@ export default async function handler(req, res) {
           html,
         });
       } catch (e) {
-        console.warn('Email send failed:', e);
+        console.warn('Email send skipped or failed (nodemailer not installed?):', e);
       }
     }
 
