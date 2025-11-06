@@ -17,10 +17,11 @@
     "node": "22.x"
   },
   "dependencies": {
+    "@vercel/kv": "^1.0.1",
     "formidable": "^3.5.1",
     "fs": "^0.0.1-security",
-    "path": "^0.12.7",
-    "nodemailer": "^6.9.11"
+    "nodemailer": "^6.9.11",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@vercel/node": "^3.0.0"

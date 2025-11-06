@@ -1,5 +1,13 @@
 import path from 'path';
 import fs from 'fs/promises';
+// Vercel KV cho lưu trữ bền
+let kv = null;
+try {
+  const kvMod = await import('@vercel/kv');
+  kv = kvMod.kv || kvMod.default || null;
+} catch (_) {
+  kv = null; // Không có KV trong dev hoặc chưa cài dependency
+}
 
 // Chỉ đọc từ file tĩnh trong repo nếu tồn tại. Không ghi vào /tmp để tránh hiểu nhầm.
 const STATIC_FILE = path.join(process.cwd(), 'public', 'data', 'rsvps.json');
@@ -25,8 +33,24 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(204).end();
 
     if (req.method === 'GET') {
+      // Ưu tiên đọc dữ liệu từ Vercel KV nếu được cấu hình
+      let storage = 'none';
+      try {
+        const hasKV = kv && (process.env.KV_URL || process.env.KV_REST_API_URL || process.env.KV_REST_API_TOKEN);
+        if (hasKV) {
+          const rawList = await kv.lrange('rsvps', 0, -1);
+          const list = (rawList || []).map(x => {
+            try { return JSON.parse(x); } catch { return x; }
+          });
+          storage = 'kv';
+          return res.status(200).json({ ok: true, data: list, storage });
+        }
+      } catch (e) {
+        // fallback xuống static file nếu KV lỗi hoặc chưa cấu hình
+        console.warn('KV GET fallback:', e?.message || e);
+      }
       const list = await readStaticRsvps();
-      return res.status(200).json({ ok: true, data: list });
+      return res.status(200).json({ ok: true, data: list, storage });
     }
 
     if (req.method === 'DELETE') {
@@ -94,8 +118,23 @@ export default async function handler(req, res) {
       }
     }
 
-    // Không ghi dữ liệu vào /tmp hay filesystem. Lưu trữ bền vững được thực hiện ở client qua Firestore.
-    return res.status(200).json({ ok: true, message: 'RSVP processed (email sent if configured)', id: entry.id });
+    // Lưu bền vào Vercel KV nếu có cấu hình
+    let persisted = false;
+    let storage = 'none';
+    try {
+      const hasKV = kv && (process.env.KV_URL || process.env.KV_REST_API_URL || process.env.KV_REST_API_TOKEN);
+      if (hasKV) {
+        await kv.lpush('rsvps', JSON.stringify(entry));
+        await kv.set(`rsvp:${entry.id}`, entry);
+        persisted = true;
+        storage = 'kv';
+      }
+    } catch (e) {
+      console.warn('KV POST store failed:', e?.message || e);
+    }
+
+    // Không ghi dữ liệu vào /tmp hay filesystem.
+    return res.status(200).json({ ok: true, message: 'RSVP processed (email sent if configured)', id: entry.id, persisted, storage });
   } catch (err) {
     console.error('RSVP API Error:', err);
     return res.status(500).json({ ok: false, error: String(err?.message || err) });
