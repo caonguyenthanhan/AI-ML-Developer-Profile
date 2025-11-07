@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 197,
+        "count": 202,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 75,
+        "count": 77,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -67,7 +67,7 @@
         "id": 9,
         "name": "Ethereal Suspension",
         "description": "Vẻ Đẹp Thần Tiên Lơ Lửng",
-        "count": 7,
+        "count": 8,
         "color": "#DCD0FF",
         "icon": "sparkles"
     },
@@ -222,5 +222,13 @@
         "count": 1,
         "color": "#9B59B6",
         "icon": "shield"
+    },
+    {
+        "id": 29,
+        "name": "Dark Fashion Portrait",
+        "description": "Chân dung Thời trang Tối",
+        "count": 5,
+        "color": "#9d174d",
+        "icon": "scissors"
     }
 ]

@@ -2777,5 +2777,96 @@
         "prompt": "from my photo create a pictures: a 64K DSLR shot resolution portrait of a highly detailed and realistic image of an young king with a regal and wise expression, emerging dramatically from a large, cracked playing card of the King of Spades. The king has short hair & well-groomed beard, and wears an ornate, gold-embellished crown. He is dressed in luxurious, richly patterned robes with intricate gold and red designs, draped over his shoulders. His right arm is extended forward with a commanding gesture, and his left arm rests at his side, revealing a tattoo on his hand. The background features a dark, gradient tone, emphasizing the contrast and dramatic lighting. The playing card is textured, with a realistic stone-like appearance, and the cracked edges reveal debris and dust falling as if the king is breaking free from the card. The name \"[Add Text]\" is printed on the lower right corner of the card, adding a personalized touch. The overall composition should evoke a sense of grandeur, fantasy, and authority. Octane render & Unreal Engine 5.",
         "imagePath": "/image/genai/870879ce-a144-4184-b108-becf426b8d10.png",
         "category": "Surreal Fantasy"
+    },
+    {
+        "id": 398,
+        "title": "Chân Dung Mùa Thu Mơ Màng",
+        "prompt": "from my photo create a pictures: A beautiful young East Asian woman, mid-shot, looking upwards with a serene, contemplative gaze, wearing a cozy beige knitted beanie and a warm, rustic plaid shawl with fringes. Her long, wavy reddish-brown hair frames her face with soft bangs. She gently holds her hands over her chest. The background is a dreamy, soft-focus autumn forest of golden yellow and amber foliage. The scene is illuminated by magical golden hour light, with strong backlighting creating a glowing halo effect and soft rim light on her hair. Prominent bokeh, atmospheric light particles shimmering in the air, professional outdoor portrait photography, hyperrealistic, highly detailed, photorealistic, 8k, cinematic lighting, shallow depth of field, soft glow, warm color palette, autumn aesthetic.",
+        "imagePath": "/image/genai/78494df2-40df-452a-bae9-8037073bc4a4.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 399,
+        "title": "Chân dung Đa phơi sáng, Phong cách Tâm lý (Đen trắng)",
+        "prompt": "from my photo create a pictures: A striking black and white studio portrait of an Asian man (Don't change the facial det) in a sharp business suit and tie. The central figure faces the camera with a serious, intense expression. Employ a multiple exposure effect to layer two semi-transparent profile views of the same man on each side, facing outward. The profiles should be slightly blurred or faded compared to the sharp central face. Use dramatic, low-key lighting, with a vignette effect to darken the background to a deep gray or black. The overall aesthetic should be intense, psychological, and high-contrast. Shot on a Hasselblad with a 85mm lens.",
+        "imagePath": "/image/genai/0f90715d-6a93-404e-ae78-c4f4f61d7740.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 400,
+        "title": "Nàng thơ giữa đồng cỏ muhly hồng",
+        "prompt": "from my photo create a pictures: A beautiful young Asian woman, wearing a soft pink off-the-shoulder knitted sweater and a flowy white tiered midi skirt, standing with arms gracefully outstretched, looking directly at the viewer with a joyful smile, in a vast field of fluffy pink muhly grass, soft natural daylight, golden hour glow, dreamy bokeh, shallow depth of field, pastel color palette, highly detailed, hyperrealistic, cinematic lighting, award-winning photography, 8k, ultra high resolution.",
+        "imagePath": "/image/genai/c5b5d0a6-f4f3-4271-8a39-7bb6406d74c4.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 401,
+        "title": "Chân dung Lễ hội Quyến rũ với Nơ Đỏ",
+        "prompt": "from my photo create a pictures: Keep the face and expression from the uploaded photo. A portrait of a young woman looking directly at the camera with an elegant and slightly seductive expression. She has long, dark, wavy hair, with small red bows tied into sections near her temples. She is wearing a strapless, dark red gown with a draped and voluminous skirt. Her accessories include sparkling earrings, a necklace, rings on both hands, and a bracelet. Her makeup features bold red lipstick and defined eyes. She poses gracefully, with her hands near her chest and neck. The background is a vibrant red, featuring a large, stylized red bow at the top, suggesting a gift or celebratory theme. Don't change the facial det.",
+        "imagePath": "/image/genai/2a8c8403-c32c-4972-9129-51d7bbd90149.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 402,
+        "title": "Nữ Hoàng Táo Đỏ và Móng Vuốt",
+        "prompt": "from my photo create a pictures: A hyper-realistic, high-fashion portrait of an Asian woman with long, sleek, dark black hair styled in a half-up ponytail, with strands framing her face and the rest flowing down her back. Her complexion is fair, and her makeup is bold and edgy, featuring dark, defined eyebrows, sharp eyeliner, and dark red/ burgundy lipstick. Her expression is intense and piercing, looking direct-y at the viewer with a strong, confident gaze. She is dressed in a stylish black leather motorcycle jacket with silver zippers and studs, worn over a black crop top or bralette, revealing a hint of her midriff. A black choker necklace is visible around her neck. Her fingernails are exceptionally long, pointed, and painted in a striking metallic silver color, giving them a claw-like appearance. She holds a perfectly ripe, glossy red apple firmly in both hands, positioned at her chest level. Around her, emerging from the dark background, are multiple disembodied hands with extremely long, sharp, bright red claw-like fingernails. These hands are positioned in various angles, some pointing towards her or the apple, others just creating a menacing aura, adding to the dramatic and mysterious narrative. The overall lighting is dark and moody, with focused spotlights on the woman and the apple, creating strong contrasts and highlights on the leather jacket and the metallic nails. The background is completely black, emphasizing the figures and creating a sense of isolation and focus. Ultra-detailed, cinematic photography, sharp focus, professional studio shot, dramatic lighting, high-resolution.",
+        "imagePath": "/image/genai/27000b02-4609-4b5e-973d-c21e86a77f94.png",
+        "category": "Dark Fashion Portrait"
+    },
+    {
+        "id": 403,
+        "title": "Cô dâu ma mị và chú rể bộ xương",
+        "prompt": "from my photo create a pictures: A hauntingly beautiful bride with long, dark hair and pale skin, wearing a flowing white wedding veil and a delicate white lace dress. Her eyes are accentuated with a touch of red makeup, giving her a dramatic and slightly eerie look. She holds a bouquet of deep red and black roses. Seated beside her is a skeletal groom, dressed in a black suit with a white shirt and a dark tie with a subtle red pattern. The background is dark and moody, with rich, deep red drapes creating a sense of drama and mystery. There are subtle hints of dry grass or dark foliage in the foreground, adding to the melancholic atmosphere. The lighting is soft and ethereal, highlighting the subjects while keeping the overall scene dark and dramatic. Photorealistic, high detail, cinematic lighting, gothic romance, dark fantasy.",
+        "imagePath": "/image/genai/2633a68f-df8b-47fa-ae21-932b8056b0ed.png",
+        "category": "Dark Fashion Portrait"
+    },
+    {
+        "id": 404,
+        "title": "Nữ Hoàng Gothic bên Bàn Cờ",
+        "prompt": "from my photo create a pictures: Hyper-detailed, photorealistic portrait of a stunning, young Gothic Queen. She has long, wavy platinum blonde hair styled in an elegant, voluminous updo with cascading curls. Her skin is extremely pale, almost porcelain, and her eyes are striking white or light grey (ghostly/haunting eyes) with an intense or slightly sorrowful expression. (Don't change the facial det). She is wearing an ornate, textured black lace and velvet Gothic dress with an elegant, low-cut sweetheart neckline and delicate puff sleeves. Over her head, she wears a large, heavy black metal crown (or tiara) adorned with a crucifix and intricate detailing. Around her neck is a black choker with a detailed silver or black gemstone cross pendant. This is a Medium Close-up shot, centered on the woman and the chessboard. She is sitting outdoors in a moody, misty forest or park setting, with a soft-focus, blurry background of autumn or winter leaves (bokeh effect). She is leaning forward, intensely focused on a dark wooden chessboard in front of her, with black and cream/white wood pieces. The lighting is dramatic, cinematic, soft natural light with deep, rich shadows (Chiaroscuro). ultra photorealism, cinematic quality, professional studio portrait, 8k, hyperdetailed, insanely detailed, sharp focus, volumetric lighting, DSLR photo, award-winning photography, high contrast, smooth skin, extremely realistic face. --ar 9:16",
+        "imagePath": "/image/genai/91814fc3-cb9b-4a5a-b87b-2a91304777b9.png",
+        "category": "Dark Fashion Portrait"
+    },
+    {
+        "id": 405,
+        "title": "Nữ hoàng Gothic và Bầy Quạ",
+        "prompt": "from my photo create a pictures: A highly detailed, photorealistic portrait of a beautiful queen with fair skin, dark brown hair styled in an elegant updo, wearing an intricate black lace crown and a matching black lace choker with a prominent black jewel pendant. She has striking brown eyes with dark eyeliner and bold, dark red lipstick. She is dressed in a luxurious black gothic-style gown with lace details and a low neckline, subtly showing cleavage. The queen is surrounded by several large, ominous black ravens perched on her shoulders and forearms, as well as flying in the cloudy, overcast sky above. The background features a majestic, ancient gothic castle partially visible through a slight mist, under a dramatic, dark, and gloomy sky. The lighting is soft and natural, emphasizing the textures of the lace, feathers, and the queen's skin, with a slightly desaturated color palette to enhance the gothic atmosphere. Ultra-realistic, cinematic lighting, professional studio shot, 8K resolution, incredibly detailed, sharp focus, natural skin texture.",
+        "imagePath": "/image/genai/7e8c3ea6-3909-4d9b-adc7-bb185b66b27e.png",
+        "category": "Dark Fashion Portrait"
+    },
+    {
+        "id": 406,
+        "title": "Cái Ôm Lãng Mạn của Tử Thần",
+        "prompt": "from my photo create a pictures: A hauntingly beautiful gothic portrait. A young woman with long, flowing dark hair, fair skin, and delicate features, wearing a flowing white lace gown with intricate patterns and long lace gloves, holds a single vibrant red rose in her right hand. She stands beside a life-sized anatomical skeleton, which gently cradles her with its left arm. The skeleton is slightly aged, with a subtle bone texture. In the background, there's a deep crimson velvet curtain draped elegantly, and a large, ornate antique birdcage with a small white bird perched on top. Scattered around the base of the scene are several rich red roses. The lighting is soft and dramatic, highlighting the figures and creating deep shadows. The overall mood is melancholic, romantic, and ethereal. Photorealistic, ultra-detailed, cinematic quality, natural light, 8K, highly detailed, realistic skin texture, sharp focus, depth of field.",
+        "imagePath": "/image/genai/613f0135-2203-4a26-8c06-d1491138fc44.png",
+        "category": "Dark Fashion Portrait"
+    },
+    {
+        "id": 407,
+        "title": "Thực thể Kim cương Mắt Lục",
+        "prompt": "from my photo create a pictures: A full-body portrait of an ethereal character whose entire body is sculpted from diamond and crystal. The skin texture is composed of multiple, sharp geometric facets, like a cut gemstone. The character's color palette is predominantly metallic white and translucent crystal, reflecting light intensely and emitting a strong, brilliant internal glow, creating a sparkling and precious glistening effect. The character's eyes are a striking, vibrant emerald green, contrasting sharply with the crystalline body. The background is a dark, moody setting, filled with large, blurred black crystal formations (like obsidian) that glitter subtly, enhancing the luxurious and magical atmosphere. 8K ultra full HD, photorealistic rendering, cinematic lighting focusing on reflections and refractions.",
+        "imagePath": "/image/genai/ddb7b068-5896-4261-b8d6-bcc1bbdbd174.jpg",
+        "category": "Ethereal Suspension"
+    },
+    {
+        "id": 408,
+        "title": "Nàng Thơ Đông Lãng Mạn",
+        "prompt": "from my photo create a pictures: Keep the facial features and expression of the woman from the uploaded photo, ensuring the exact proportions of her facial features are maintained. A beautiful young woman with long, wavy dark hair, wearing glasses, a warm plum-colored coat, and a beige scarf wrapped elegantly around her neck. She is seated on a snow-covered wooden bench, looking down with a gentle, serene expression, her hands delicately adjusting her scarf. Snowflakes gently fall around her, illuminated by a soft, warm golden hour light coming from the upper left, creating beautiful bokeh effects and a magical winter atmosphere. The background is a softly blurred winter park scene, covered in snow. The overall mood is cozy, romantic, and slightly melancholic. High detail, photorealistic, cinematic lighting, 8k, ultra high resolution.",
+        "imagePath": "/image/genai/1a7a4068-d152-4d17-96bd-ebbbc5a72f2d.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 409,
+        "title": "Chân Dung Mùa Đông",
+        "prompt": "from my photo create a pictures: A photorealistic, split-screen (diptych-style) image, resembling a winter beauty advertisement. The main, larger bottom panel is a close-up portrait of a beautiful young East Asian woman with long dark hair and rosy cheeks. She is looking directly at the camera, wearing a dark coat and a vibrant, fluffy, bright blue scarf. Soft snowflakes are falling around her. The background is a blurred snowy landscape at dusk or dawn. The smaller, top panel shows a wider, side-profile shot of the same woman from a distance, looking up at the sky. She wears the same coat, scarf, and blue gloves, and is holding a small bouquet of flowers. The background in this top panel clearly shows small, snow-covered cabins. The overall lighting is soft, cinematic, and diffused, creating a cozy and professional feel. Don't change the facial det.",
+        "imagePath": "/image/genai/476dbff6-2b42-416e-aa91-d0cb7351d2f4.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 410,
+        "title": " Mùa Đông Vượt Khung",
+        "prompt": "from my photo create a pictures: A surreal and highly detailed photorealistic image, designed as a winter beauty advertisement with a unique 'out-of-bounds' effect. The composition features two stacked panels, resembling a diptych. The lower panel displays a stunning, bright close-up portrait of a beautiful young East Asian woman. She has long dark hair, soft rosy cheeks, and is looking directly at the viewer with an engaging expression. She wears a warm dark coat and a vibrant, fluffy blue scarf. Crucially, her head and shoulders are significantly enlarged, clearly extending upwards and 'breaking out' of the boundary of the lower panel, visually overlapping into the space of the upper panel. Soft, gentle snowflakes are falling around her. The upper panel, though partially obscured by the woman's 'out-of-bounds' presence, should still subtly hint at a wider scene: a snowy landscape with small, softly lit cabins in the background. The overall lighting is cinematic, diffused, and warm, creating a magical, cozy, and professional winter aesthetic. Don't change the facial det.",
+        "imagePath": "/image/genai/d1c2999e-88cf-4bcf-93cb-7485bede1b68.png",
+        "category": "Portrait Photography"
     }
 ]
