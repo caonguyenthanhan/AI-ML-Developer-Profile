@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 196,
+        "count": 197,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -163,7 +163,7 @@
         "id": 21,
         "name": "Surreal Fantasy",
         "description": "Kỳ ảo Siêu thực",
-        "count": 2,
+        "count": 3,
         "color": "#A855F7",
         "icon": "✨"
     },

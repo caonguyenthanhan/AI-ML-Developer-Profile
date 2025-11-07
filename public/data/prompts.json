@@ -2763,5 +2763,19 @@
         "prompt": "from my photo create a pictures: A cinematic, vertical portrait of a young man, shot outdoors at night during a heavy snowstorm. He is styled in a heavy, dark wool overcoat and a thick black scarf. The composition is a close-up profile, focusing on his left side, with his face turned slightly upward and looking away into the distance. Snowflakes are sharply detailed in the foreground, with one large, prominent snowflake graphic visible near the bottom of the frame. The lighting is moody and dark, using blue and cyan tones, contrasted by warm, blurred orange and bright, soft bokeh lights in the deep background to create a dramatic, chiaroscuro effect. The mood is romantic, mysterious, and serene. Cinematic, 8K ultra-realistic photo quality. Don't change the facial det.",
         "imagePath": "/image/genai/af1d4b10-40ca-4cdb-94f5-3e3821a7990e.jpg",
         "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 396,
+        "title": "Chân Dung Nam Giới Lịch Lãm Trong Bóng Tối",
+        "prompt": "from my photo create a pictures: A close-up portrait of a young man (photo attached) (keeping the exact proportions of the facial features) standing in the dark, illuminated by strong front lighting. He has fair skin, slightly wavy black hair, and wears thin round metal glasses. The man is dressed in a stylish black suit, with the blazer slightly open to reveal a partially buttoned white shirt underneath, giving a relaxed yet elegant look. Both hands are adjusting the front of his suit near the chest. The photo is taken from a side angle, capturing his calm expression as he gazes to the left. The lighting highlights his face and upper body while the background fades into deep nighttime shadows. Don't change the facial det.",
+        "imagePath": "/image/genai/aa97154c-10d2-45d4-83c3-5969313f5bdd.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 397,
+        "title": "Vị Vua Già Bích Phá Vỡ Lá Bài",
+        "prompt": "from my photo create a pictures: a 64K DSLR shot resolution portrait of a highly detailed and realistic image of an young king with a regal and wise expression, emerging dramatically from a large, cracked playing card of the King of Spades. The king has short hair & well-groomed beard, and wears an ornate, gold-embellished crown. He is dressed in luxurious, richly patterned robes with intricate gold and red designs, draped over his shoulders. His right arm is extended forward with a commanding gesture, and his left arm rests at his side, revealing a tattoo on his hand. The background features a dark, gradient tone, emphasizing the contrast and dramatic lighting. The playing card is textured, with a realistic stone-like appearance, and the cracked edges reveal debris and dust falling as if the king is breaking free from the card. The name \"[Add Text]\" is printed on the lower right corner of the card, adding a personalized touch. The overall composition should evoke a sense of grandeur, fantasy, and authority. Octane render & Unreal Engine 5.",
+        "imagePath": "/image/genai/870879ce-a144-4184-b108-becf426b8d10.png",
+        "category": "Surreal Fantasy"
     }
 ]
