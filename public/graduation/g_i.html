@@ -43,8 +43,8 @@
     .btn-navy:hover { background:#333333; transform: translateY(-1px); }
     .watermark-center { position:absolute; inset:0; display:grid; place-items:center; pointer-events:none }
     .watermark-center img { opacity:.08; width:9rem; height:9rem }
-    .circle-wrap { position: relative; width: 5.5rem; height: 5.5rem; }
-    .circle-wrap svg { position: absolute; inset: -0.35rem; width: 6.2rem; height: 6.2rem; }
+    .circle-wrap { position: relative; width: 6.5rem; height: 6.5rem; }
+    .circle-wrap svg { position: absolute; inset: -0.5rem; width: 7.5rem; height: 7.5rem; }
     .circle-text { animation: spinSlow 18s linear infinite; transform-origin: 50% 50%; }
     @keyframes spinSlow { to { transform: rotate(360deg); } }
     .hero-overlay::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(212,175,55,.06), rgba(255,251,247,.85)); pointer-events:none; }
@@ -301,7 +301,7 @@
 
           <div class="text-center">
             <div class="circle-wrap mx-auto mb-3">
-              <img id="guestAvatar" src="/image/graduation/man.jpg" class="w-20 h-20 rounded-full object-cover ring-2 ring-gold/30 mx-auto block" alt="">
+              <img id="guestAvatar" src="/image/graduation/man.jpg" class="w-24 h-24 rounded-full object-cover ring-2 ring-gold/30 mx-auto block" alt="">
               <svg class="circle-text" viewBox="0 0 100 100">
                 <defs>
                   <path id="circlePath" d="M50,50 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0" />
@@ -345,7 +345,14 @@
     const ASSETS = {
       LOGO: "/image/graduation/logotruong.png",
       BG_VIDEO: "/video/sparkle-background.mp4",
-      GRADUATE_IMAGE: "/image/graduation/main.jpg",
+      GRADUATE_IMAGES: [
+        "/image/graduation/main.jpg",
+        "/image/graduation/main2.jpg",
+        "/image/graduation/main3.jpg",
+        "/image/graduation/main4.jpg",
+        "/image/graduation/main5.jpg",
+        "/image/graduation/main6.jpg"
+      ],
       MAN_DEFAULT: "/image/graduation/man.jpg",
       WOMEN_DEFAULT: "/image/graduation/women.jpg",
       MAP_IMAGE: "/image/graduation/map.jpg",
@@ -371,6 +378,21 @@
       $("#modalWrap").classList.add("hidden");
       $("#modalWrap").classList.remove("flex");
     });
+
+    // ===== Graduate image rotation =====
+    const GRAD_ROTATE_INTERVAL_MS = 2000;
+    function startGraduateImageRotation(images, intervalMs = GRAD_ROTATE_INTERVAL_MS) {
+      const els = $$("#graduateImage");
+      if (!els.length || !images || !images.length) return;
+      let idx = 0;
+      const apply = () => {
+        const src = images[idx % images.length];
+        els.forEach(el => { if (el) el.src = src; });
+        idx = (idx + 1) % images.length;
+      };
+      apply();
+      setInterval(apply, intervalMs);
+    }
 
     const contactBtn = $("#contactPopupBtn");
     const contactCard = $("#contactPopupCard");
@@ -674,7 +696,10 @@
       $("#sumTime").textContent          = info?.time || "Chưa cập nhật";
   $("#sumVenue").innerHTML           = info?.venue || "Chưa cập nhật";
       $("#eventAddress").textContent     = info?.address || "Chưa cập nhật";
-      $("#graduateImage").src            = info?.graduateImage || ASSETS.GRADUATE_IMAGE;
+      const gradImgs = (Array.isArray(info?.graduateImages) && info.graduateImages.length)
+        ? info.graduateImages
+        : ASSETS.GRADUATE_IMAGES;
+      startGraduateImageRotation(gradImgs);
       $("#graduateNameS3").textContent   = info?.graduateName || "Tên Tân Cử Nhân";
       const tq = $("#graduateQuote");
       if (tq) {
@@ -687,7 +712,7 @@
         const msg = info?.invitationMessage || im.textContent;
         im.innerHTML = `<strong><em>${msg}</em></strong>`;
       }
-
+      // chữ chạy viền trong circle
       const ict = $("#inviteCircleText");
       if (ict) {
         const phrase = `Mời bạn đến chung vui cùng ${info?.graduateName || ""} • `;
