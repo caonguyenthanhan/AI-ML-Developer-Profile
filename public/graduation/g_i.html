@@ -96,7 +96,16 @@
   <audio id="bgm" loop></audio>
 
   <!-- App -->
-  <main id="app" class="hidden">
+  <main id="app" class="hidden relative">
+    <!-- Viền chữ động bao quanh toàn bộ thiệp (tất cả 5 section) -->
+    <svg class="pointer-events-none" data-global-border="true" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; z-index:50;">
+      <defs>
+        <path id="outerRectPathGlobal" d="M6,6 H94 V94 H6 Z" />
+      </defs>
+      <text style="fill:#D4AF37; font-size:10px; letter-spacing:0.25em; font-weight:600; dominant-baseline:middle;">
+        <textPath id="outerInviteTextGlobal" href="#outerRectPathGlobal" startOffset="0%" method="align" spacing="auto" dy="10">Mời bạn đến chung vui cùng • </textPath>
+      </text>
+    </svg>
 
     <!-- 1) HERO -->
     <section id="s1" class="section relative text-charcoal">
@@ -283,19 +292,29 @@
 
     <!-- 5) PERSONAL INVITE -->
     <section id="s5" class="section relative">
-      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-[#FFF6EB]/40 to-[#D4AF37]/10"></div>
       <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
 
-      <div class="max-w-3xl w-full card p-6 text-center" data-aos="fade-up">
+      <div id="personalInviteCardWrap" class="relative inline-block" data-aos="fade-up">
+
+        <div class="max-w-3xl w-full card p-6 text-center">
+        <!-- Nền: ảnh tốt nghiệp -->
+        <div class="absolute inset-0 -z-10">
+          <img src="/image/graduation/Graduation Background.jpg" alt="Graduation Background" class="w-full h-full object-cover" />
+        </div>
+        <!-- Lớp overlay trắng mờ  -->
+        <div class="absolute inset-0 -z-10 bg-white/40"></div>
+        <!-- <div class="absolute inset-0 -z-20 bg-gradient-to-br from-[#FFF6EB]/40 to-[#D4AF37]/15"></div> -->
         <h2 class="font-serif text-4xl font-black text-gold">Thiệp Mời Cá Nhân</h2>
         <p id="guestTarget" class="mt-2 text-taupe">Dành cho bạn</p>
 
         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="md:col-span-2 text-left">
             <p id="inviteMessage" class="text-lg font-serif italic text-charcoal text-center break-words" style="text-wrap: balance;"><strong><em></em></strong></p>
-            <p id="inviterName" class="mt-3 text-sm text-taupe">— Tân cử nhân</p>
-            <div class="mt-6 flex flex-wrap items-center gap-3">
-              <a href="#s1" class="btn btn-gold"><i data-lucide="home" class="w-5 h-5"></i> Về trang đầu</a>
+            <div class="mt-3 xl:w-1/2 md:w-1/2 lg:w-3/5 mx-auto text-center">
+              <p id="inviterName" class="text-sm text-taupe text-center">— Tân cử nhân</p>
+              <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <a href="#s1" class="btn btn-gold"><i data-lucide="home" class="w-5 h-5"></i> Về trang đầu</a>
+              </div>
             </div>
           </div>
 
@@ -314,6 +333,16 @@
             <p id="guestNameLabel" class="font-cursive text-3xl text-gold">Tên Khách Mời</p>
           </div>
         </div>
+        </div>
+        <!-- Viền chữ chạy ngoài khung chữ nhật -->
+        <svg class="pointer-events-none" data-outer-border="true" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%;">
+          <defs>
+            <path id="outerRectPath" d="M6,6 H94 V94 H6 Z" />
+          </defs>
+          <text style="fill:#242424; font-size:10px; letter-spacing:0.25em; font-weight:600;">
+            <textPath id="outerInviteText" href="#outerRectPath" startOffset="0%" method="align" spacing="auto">Mời bạn đến chung vui cùng • </textPath>
+          </text>
+        </svg>
       </div>
     </section>
   </main>
@@ -691,10 +720,10 @@
       $("#universityLabel").textContent  = info?.university || "Tên Trường";
       $("#eventDate").textContent        = info?.date || "Chưa cập nhật";
       $("#eventTime").textContent        = info?.time || "Chưa cập nhật";
-      $("#eventVenue").textContent       = info?.venue || "Chưa cập nhật";
+      $("#eventVenue").innerHTML         = info?.venue || "Chưa cập nhật";
       $("#sumDate").textContent          = info?.date || "Chưa cập nhật";
       $("#sumTime").textContent          = info?.time || "Chưa cập nhật";
-  $("#sumVenue").innerHTML           = info?.venue || "Chưa cập nhật";
+      $("#sumVenue").innerHTML           = info?.venue || "Chưa cập nhật";
       $("#eventAddress").textContent     = info?.address || "Chưa cập nhật";
       const gradImgs = (Array.isArray(info?.graduateImages) && info.graduateImages.length)
         ? info.graduateImages
@@ -717,6 +746,149 @@
       if (ict) {
         const phrase = `Mời bạn đến chung vui cùng ${info?.graduateName || ""} • `;
         ict.textContent = `${phrase}${phrase}${phrase}`.trim();
+      }
+
+      // viền chạy ngoài khung chữ nhật (nội dung độc lập)
+      const oit = $("#outerInviteText");
+      if (oit) {
+        const phraseOuter = `Mời bạn đến chung vui cùng ${info?.graduateName  || ""} • ${info?.thanksMessage || ""} • `;
+        oit.textContent = `${phraseOuter}${phraseOuter}${phraseOuter}${phraseOuter}${phraseOuter}${phraseOuter}`.trim();
+        // Căn chỉnh hình học để viền chữ khớp kích thước card
+        const wrap = document.getElementById("personalInviteCardWrap");
+        const card = wrap?.querySelector(".card");
+        const svg = wrap?.querySelector("svg[data-outer-border]");
+        const path = wrap?.querySelector("#outerRectPath");
+        if (wrap && card && svg && path) {
+          const rect = card.getBoundingClientRect();
+          const m = 10; // khoảng cách viền bên trong
+          // đặt viewBox theo pixel của card
+          svg.setAttribute("viewBox", `0 0 ${rect.width} ${rect.height}`);
+          // phủ đúng bên trong wrapper
+          svg.style.inset = `0px`;
+          svg.style.width = `100%`;
+          svg.style.height = `100%`;
+          // vẽ hình chữ nhật bên trong card với margin m
+          path.setAttribute("d", `M${m},${m} H${rect.width - m} V${rect.height - m} H${m} Z`);
+          // điều chỉnh kích thước chữ theo bề rộng
+          const textEl = svg.querySelector("text");
+          const fontSize = Math.max(12, Math.round(rect.width * 0.016));
+          textEl.style.fontSize = `${fontSize}px`;
+          // đảm bảo nội dung phủ kín chu vi, không khoảng trống
+          oit.textContent = phraseOuter;
+          let pLen = path.getTotalLength();
+          let tLen = textEl.getComputedTextLength();
+          let reps = 1;
+          while (tLen < pLen * 1.25 && reps < 256) {
+            reps *= 2;
+            oit.textContent = phraseOuter.repeat(reps);
+            tLen = textEl.getComputedTextLength();
+          }
+          while (tLen < pLen * 1.25 && reps < 1024) {
+            reps += 1;
+            oit.textContent = phraseOuter.repeat(reps);
+            tLen = textEl.getComputedTextLength();
+          }
+          // Hoạt ảnh chạy tức thời và mượt bằng requestAnimationFrame
+          const periodSec = 30;
+          let startT = performance.now();
+          const rafLoop = (now) => {
+            const elapsed = (now - startT) / 1000;
+            const offset = (((elapsed % periodSec) / periodSec)) * 100;
+            oit.setAttribute("startOffset", `${offset}%`);
+            requestAnimationFrame(rafLoop);
+          };
+          requestAnimationFrame(rafLoop);
+          // cập nhật lại khi cửa sổ đổi kích thước
+          window.addEventListener("resize", () => {
+            const r = card.getBoundingClientRect();
+            svg.setAttribute("viewBox", `0 0 ${r.width} ${r.height}`);
+            path.setAttribute("d", `M${m},${m} H${r.width - m} V${r.height - m} H${m} Z`);
+            const fs = Math.max(9, Math.round(r.width * 0.012));
+            textEl.style.fontSize = `${fs}px`;
+            oit.textContent = phraseOuter;
+            pLen = path.getTotalLength();
+            tLen = textEl.getComputedTextLength();
+            reps = 1;
+            while (tLen < pLen * 1.25 && reps < 256) {
+              reps *= 2;
+              oit.textContent = phraseOuter.repeat(reps);
+              tLen = textEl.getComputedTextLength();
+            }
+            while (tLen < pLen * 1.25 && reps < 1024) {
+              reps += 1;
+              oit.textContent = phraseOuter.repeat(reps);
+              tLen = textEl.getComputedTextLength();
+            }
+          });
+        }
+      }
+
+      // Viền chữ động bao quanh toàn bộ 5 section (toàn trang thiệp mời)
+      const oitGlobal = document.getElementById("outerInviteTextGlobal");
+      const svgGlobal = document.querySelector('svg[data-global-border]');
+      const pathGlobal = document.getElementById("outerRectPathGlobal");
+      const appMain = document.getElementById("app");
+      if (oitGlobal && svgGlobal && pathGlobal && appMain) {
+        const phraseAll = `Mời bạn đến chung vui cùng ${info?.graduateName || ""} • `;
+        oitGlobal.textContent = phraseAll;
+        const mAll = 12; // khoảng cách viền bao ngoài
+        const rectMain = appMain.getBoundingClientRect();
+        const wAll = rectMain.width;
+        const hAll = appMain.scrollHeight; // toàn bộ chiều cao nội dung
+        svgGlobal.setAttribute("viewBox", `0 0 ${wAll} ${hAll}`);
+        pathGlobal.setAttribute("d", `M${mAll},${mAll} H${wAll - mAll} V${hAll - mAll} H${mAll} Z`);
+        const textElAll = svgGlobal.querySelector("text");
+        const fsAll = Math.max(12, Math.round(wAll * 0.014));
+        textElAll.style.fontSize = `${fsAll}px`;
+        // đảm bảo nội dung phủ kín chu vi, không khoảng trống
+        oitGlobal.textContent = phraseAll;
+        let pLenAll = pathGlobal.getTotalLength();
+        let tLenAll = textElAll.getComputedTextLength();
+        let repsAll = 1;
+        while (tLenAll < pLenAll * 1.25 && repsAll < 256) {
+          repsAll *= 2;
+          oitGlobal.textContent = phraseAll.repeat(repsAll);
+          tLenAll = textElAll.getComputedTextLength();
+        }
+        while (tLenAll < pLenAll * 1.25 && repsAll < 1024) {
+          repsAll += 1;
+          oitGlobal.textContent = phraseAll.repeat(repsAll);
+          tLenAll = textElAll.getComputedTextLength();
+        }
+        // Animation chạy mượt và theo chiều ngược lại
+        const periodSecAll = 400;
+        let startAll = performance.now();
+        const rafAll = (now) => {
+          const elapsed = (now - startAll) / 1000;
+          const offset = (((elapsed % periodSecAll) / periodSecAll)) * 100;
+          oitGlobal.setAttribute("startOffset", `${offset}%`);
+          requestAnimationFrame(rafAll);
+        };
+        requestAnimationFrame(rafAll);
+        // Cập nhật khi thay đổi kích thước cửa sổ
+        window.addEventListener("resize", () => {
+          const rMain = appMain.getBoundingClientRect();
+          const wN = rMain.width;
+          const hN = appMain.scrollHeight;
+          svgGlobal.setAttribute("viewBox", `0 0 ${wN} ${hN}`);
+          pathGlobal.setAttribute("d", `M${mAll},${mAll} H${wN - mAll} V${hN - mAll} H${mAll} Z`);
+          const fsN = Math.max(12, Math.round(wN * 0.014));
+          textElAll.style.fontSize = `${fsN}px`;
+          oitGlobal.textContent = phraseAll;
+          pLenAll = pathGlobal.getTotalLength();
+          tLenAll = textElAll.getComputedTextLength();
+          repsAll = 1;
+          while (tLenAll < pLenAll * 1.25 && repsAll < 256) {
+            repsAll *= 2;
+            oitGlobal.textContent = phraseAll.repeat(repsAll);
+            tLenAll = textElAll.getComputedTextLength();
+          }
+          while (tLenAll < pLenAll * 1.25 && repsAll < 1024) {
+            repsAll += 1;
+            oitGlobal.textContent = phraseAll.repeat(repsAll);
+            tLenAll = textElAll.getComputedTextLength();
+          }
+        });
       }
 
       // contact
