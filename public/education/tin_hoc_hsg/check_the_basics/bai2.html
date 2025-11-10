@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Thay đổi title cho Đề 2 -->
+    <title>Đề kiểm tra Tin học 10 (Đề 2)</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Sử dụng font Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Thêm style cho code block */
+        pre {
+            background-color: #1f2937; /* gray-800 */
+            color: #f9fafb; /* gray-50 */
+            padding: 1rem;
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow-x: auto;
+            font-size: 0.875rem; /* text-sm */
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header id="examHeader" class="bg-blue-700 text-white py-3 px-4 flex items-center justify-between">
+        <div class="font-semibold">Bài kiểm tra Tin học 10 (Đề 2)</div>
+        <div id="timerDisplay" class="font-mono">Thời gian: --:--</div>
+    </header>
+
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-center">
+            <h2 class="text-xl font-bold mb-2">Bắt đầu làm bài</h2>
+            <p class="text-gray-700 mb-4">Thời gian làm: 45 phút. Nhấn Bắt đầu để hiện đề và bắt đầu tính giờ.</p>
+            <div class="grid gap-2 mb-3">
+                <input id="passParam" type="text" class="px-3 py-2 border rounded" placeholder="Pass từ link (nếu có)" />
+                <button id="startBtn" class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700">Bắt đầu làm</button>
+            </div>
+            <p id="overlayStatus" class="text-sm text-gray-600"></p>
+        </div>
+    </div>
+
+    <div class="container max-w-4xl mx-auto p-4 sm:p-8">
+        <!-- Tiêu đề (cập nhật cho Đề 2) -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">ĐỀ KIỂM TRA TIN HỌC LỚP 10 (ĐỀ SỐ 2)</h1>
+            <h2 class="text-xl font-semibold text-gray-700 mt-2">Môn: Lập trình C++</h2>
+            <h3 class="text-lg text-gray-600">Thời gian: 45 phút</h3>
+        </header>
+
+        <!-- Thông tin thí sinh (giữ nguyên từ bai1.html) -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-2xl font-bold text-blue-700 border-b pb-2">Thông tin thí sinh</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <div>
+                    <label for="studentName" class="block text-sm font-medium text-gray-700">Họ và tên</label>
+                    <input id="studentName" type="text" class="mt-1 w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập họ tên" />
+                </div>
+                <div>
+                    <label for="studentEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input id="studentEmail" type="email" class="mt-1 w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="nhap@email.com" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Form bài kiểm tra -->
+        <form id="quizForm" class="space-y-6">
+
+            <!-- PHẦN TRẮC NGHIỆM -->
+            <h2 class="text-2xl font-bold text-blue-700 border-b pb-2">I. PHẦN TRẮC NGHIỆM (6.0 điểm)</h2>
+
+            <!-- Câu 1 (Đề 2) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 1: Cho mảng `int A[100];` và số nguyên `N` là số phần tử thực tế đang được sử dụng (`N < 100`). Lệnh nào sau đây dùng để in ra phần tử **cuối cùng** của mảng?</p>
+                <div class="space-y-2">
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q1" value="A" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">A. `cout << A[N];`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q1" value="B" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">B. `cout << A[N-1];`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q1" value="C" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">C. `cout << A[100];`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q1" value="D" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">D. `cout << A.last();`</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 2 (Đề 2) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 2: Để kiểm tra số nguyên `N` (với `N > 1`) có phải là số nguyên tố hay không, một cách tối ưu, vòng lặp `for` kiểm tra ước nên chạy như thế nào?</p>
+                <div class="space-y-2">
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q2" value="A" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">A. `for (int i = 2; i < N; i++)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q2" value="B" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">B. `for (int i = 2; i <= N / 2; i++)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q2" value="C" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">C. `for (int i = 2; i * i <= N; i++)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q2" value="D" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">D. `for (int i = 2; i < N - 1; i++)`</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 3 (Đề 2) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 3: Cho đoạn code kiểm tra chuỗi đối xứng (palindrome):</p>
+<pre><code class="language-cpp">
+string s; 
+cin &gt;&gt; s;
+int L = s.length();
+bool is_palindrome = true;
+for (int i = 0; i &lt; L / 2; i++) {
+    // [ĐIỀU KIỆN SO SÁNH]
+    if ( ... ) { 
+        is_palindrome = false;
+        break;
+    }
+}
+</code></pre>
+                <p class="mt-4 mb-2">Điều kiện so sánh đúng để điền vào `if(...)` là:</p>
+                <div class="space-y-2">
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q3" value="A" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">A. `s[i] != s[L - 1 - i]`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q3" value="B" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">B. `s[i] == s[i+1]`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q3" value="C" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">C. `s[i] != s[L - i]`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q3" value="D" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">D. `s[0] == s[L-1]`</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 4 (Đề 2) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 4: Điều kiện `if` nào sau đây kiểm tra chính xác năm `y` là một năm nhuận?</p>
+                <div class="space-y-2">
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q4" value="A" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">A. `if (y % 4 == 0)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q4" value="B" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">B. `if (y % 4 == 0 && y % 100 != 0)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q4" value="C" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">C. `if (y % 100 == 0 || y % 400 == 0)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q4" value="D" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">D. `if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))`</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 5 (Đề 2) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 5: Trong trường hợp nào sau đây, việc sử dụng kiểu `long long` thay cho `int` là **bắt buộc** để tránh tràn số (giả sử `int` 4 bytes)?</p>
+                <div class="space-y-2">
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q5" value="A" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">A. Khi tính tổng hai số `a = 1000`, `b = 2000`.</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q5" value="B" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">B. Khi tính tích của hai số `a = 1000`, `b = 1000`.</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q5" value="C" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">C. Khi tính tổng của hai số `a = 1,000,000`, `b = 2,000,000`.</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q5" value="D" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">D. Khi tính tích của hai số `a = 1,000,000`, `b = 2,000,000`.</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 6 (Đề 2) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 6: Cho đoạn code C++ sau để tính tổng các phần tử chẵn trong mảng `A` (gồm `N` phần tử):</p>
+<pre><code class="language-cpp">
+// ... (phần khai báo và nhập mảng A, N) ...
+long long sum; // Dòng 4
+for (int i = 0; i &lt; N; i++) {
+    if (A[i] % 2 == 0) {
+        sum += A[i]; // Dòng 7
+    }
+}
+cout &lt;&lt; sum;
+</code></pre>
+                <p class="mt-4 mb-2">Đoạn code trên có một lỗi logic. Lỗi đó là gì?</p>
+                <div class="space-y-2">
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q6" value="A" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">A. Khai báo `long long sum;` là sai, phải là `int sum;`.</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q6" value="B" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">B. Vòng lặp `for (int i = 0; i < N; i++)` sẽ bị lặp vô hạn.</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q6" value="C" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">C. Biến `sum` ở dòng 4 chưa được khởi tạo giá trị ban đầu.</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q6" value="D" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">D. `sum += A[i];` ở dòng 7 là sai cú pháp.</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- PHẦN TỰ LUẬN -->
+            <h2 class="text-2xl font-bold text-blue-700 border-b pb-2 pt-4">II. PHẦN TỰ LUẬN (4.0 điểm)</h2>
+
+            <!-- Câu 7 (Đề 2) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 7 (2.0 điểm): Viết chương trình C++ hoàn chỉnh.</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-700 mb-4">
+                    <li><strong>Đầu vào:</strong>
+                        <ul class="list-disc list-inside ml-6">
+                            <li>Dòng 1: Nhập số nguyên `N` (số lượng phần tử của mảng).</li>
+                            <li>Dòng 2: Nhập `N` số nguyên của mảng `A`.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Xử lý:</strong> Tìm số lớn **thứ hai** trong mảng `A`. (Số lớn thứ hai là số nhỏ hơn số lớn nhất, và là lớn nhất trong các số còn lại).</li>
+                    <li><strong>Đầu ra:</strong> In ra số lớn thứ hai tìm được. Nếu không tồn tại (ví dụ: mảng chỉ có 1 phần tử, hoặc tất cả các phần tử đều bằng nhau), in ra `NOT FOUND`.</li>
+                </ul>
+                <p class="font-medium">Ví dụ 1:</p>
+                <pre class="text-sm">Input:
+5
+1 5 3 5 2
+Output: 3</pre>
+                <p class="font-medium mt-2">Ví dụ 2:</p>
+                <pre class="text-sm">Input:
+3
+10 10 10
+Output: NOT FOUND</pre>
+                <label for="q7_code" class="block font-medium text-gray-700 mt-4 mb-2">Bài làm của bạn (Câu 7):</label>
+                <textarea id="q7_code" rows="12" class="w-full p-3 border border-gray-300 rounded-lg font-mono text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập code C++ của bạn tại đây..."></textarea>
+            </div>
+
+            <!-- Câu 8 (Đề 2) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 8 (2.0 điểm): Viết chương trình C++ hoàn chỉnh.</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-700 mb-4">
+                    <li><strong>Đầu vào:</strong> Nhập vào một chuỗi ký tự `S` (có thể chứa chữ hoa, chữ thường và khoảng trắng).</li>
+                    <li><strong>Xử lý:</strong> Đếm số lượng nguyên âm (`u`, `e`, `o`, `a`, `i`) có trong chuỗi `S`. Chương trình **không** phân biệt chữ hoa hay chữ thường (tức là `A` vẫn được đếm là `a`).</li>
+                    <li><strong>Đầu ra:</strong> In ra tổng số lượng nguyên âm tìm được.</li>
+                </ul>
+                <p class="font-medium">Ví dụ 1:</p>
+                <pre class="text-sm">Input: Hello World
+Output: 3
+(Giải thích: Các nguyên âm là e, o, o)</pre>
+                <p class="font-medium mt-2">Ví dụ 2:</p>
+                <pre class="text-sm">Input: Programming is FUN
+Output: 5
+(Giải thích: Các nguyên âm là o, a, i, i, U)</pre>
+                <label for="q8_code" class="block font-medium text-gray-700 mt-4 mb-2">Bài làm của bạn (Câu 8):</label>
+                <textarea id="q8_code" rows="12" class="w-full p-3 border border-gray-300 rounded-lg font-mono text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập code C++ của bạn tại đây..."></textarea>
+            </div>
+
+            <!-- Nút Chấm điểm -->
+            <button type="button" id="gradeButton" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out text-lg">
+                Nộp bài và Chấm điểm
+            </button>
+
+        </form>
+    </div>
+
+    <!-- Modal Kết quả (giữ nguyên từ bai1.html) -->
+    <div id="resultsModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="relative bg-white w-full max-w-3xl max-h-[90vh] rounded-lg shadow-xl p-6 sm:p-8 overflow-y-auto">
+            <!-- Header Modal -->
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h2 class="text-2xl font-bold text-gray-800">Kết quả bài làm (Đề 2)</h2>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
+            </div>
+
+            <!-- Nội dung Modal -->
+            <div class="space-y-6">
+                <!-- Điểm trắc nghiệm -->
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-700">Phần Trắc nghiệm</h3>
+                    <p id="scoreText" class="text-lg text-gray-700 mt-2"></p>
+                    <div id="answersReview" class="mt-4 space-y-2 text-sm"></div>
+                </div>
+
+                <!-- Chấm Tự luận -->
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-700 border-t pt-4 mt-4">Phần Tự luận (Giáo viên chấm)</h3>
+                    <p class="text-gray-600">Đây là code bạn đã nộp. Giáo viên sẽ chấm điểm phần này thủ công.</p>
+                </div>
+
+                <!-- Bài làm Câu 7 -->
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800">Bài làm Câu 7:</h4>
+                    <pre id="code7Review" class="mt-2 text-sm max-h-60 overflow-y-auto"></pre>
+                </div>
+
+                <!-- Bài làm Câu 8 -->
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800">Bài làm Câu 8:</h4>
+                    <pre id="code8Review" class="mt-2 text-sm max-h-60 overflow-y-auto"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const timerDisplay = document.getElementById('timerDisplay');
+        const overlay = document.getElementById('overlay');
+        const startBtn = document.getElementById('startBtn');
+        const overlayStatus = document.getElementById('overlayStatus');
+        const passParam = document.getElementById('passParam');
+        const DEFAULT_MINUTES = 45;
+        let remaining = 0;
+        let tickHandle = null;
+
+        function fmt(ms) {
+            const s = Math.max(0, Math.floor(ms / 1000));
+            const m = Math.floor(s / 60);
+            const sec = s % 60;
+            return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+        }
+
+        function render() {
+            timerDisplay.textContent = `Thời gian: ${fmt(remaining * 1000)}`;
+        }
+
+        function startCountdown(minutes) {
+            remaining = minutes * 60;
+            render();
+            if (tickHandle) clearInterval(tickHandle);
+            tickHandle = setInterval(() => {
+                remaining -= 1;
+                if (remaining <= 0) {
+                    remaining = 0;
+                    render();
+                    clearInterval(tickHandle);
+                    autoCloseExam();
+                } else {
+                    render();
+                }
+            }, 1000);
+        }
+
+        function autoCloseExam() {
+            overlay.classList.remove('hidden');
+            overlayStatus.textContent = 'Hết giờ — Bài thi đã kết thúc.';
+            document.querySelectorAll('input, textarea, button').forEach(el => {
+                if (el.id !== 'closeModal') el.disabled = true;
+            });
+        }
+
+        async function verifyPass(pass) {
+            try {
+                const res = await fetch('/api/exam_passkey', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'verify', pass })
+                });
+                const j = await res.json().catch(()=>({ ok:false }));
+                return j.ok && j.valid;
+            } catch { return false; }
+        }
+
+        async function initOverlay() {
+            const url = new URL(window.location.href);
+            const pass = url.searchParams.get('pass') || '';
+            if (pass) passParam.value = pass;
+            const hasValidPass = pass ? await verifyPass(pass) : false;
+            if (hasValidPass) {
+                overlay.classList.add('hidden');
+                timerDisplay.textContent = 'Bỏ đếm ngược (pass hợp lệ)';
+            } else {
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        startBtn.addEventListener('click', async () => {
+            const pass = (passParam.value || '').trim();
+            if (pass) {
+                const ok = await verifyPass(pass);
+                if (ok) {
+                    overlay.classList.add('hidden');
+                    timerDisplay.textContent = 'Bỏ đếm ngược (pass hợp lệ)';
+                    return;
+                } else {
+                    overlayStatus.textContent = 'Pass không hợp lệ — sẽ tính giờ.';
+                }
+            }
+            overlay.classList.add('hidden');
+            const minutes = Number(new URL(window.location.href).searchParams.get('duration')) || DEFAULT_MINUTES;
+            startCountdown(minutes);
+        });
+
+        initOverlay();
+
+        // Lấy các phần tử DOM
+        const gradeButton = document.getElementById('gradeButton');
+        const resultsModal = document.getElementById('resultsModal');
+        const closeModal = document.getElementById('closeModal');
+        const scoreText = document.getElementById('scoreText');
+        const answersReview = document.getElementById('answersReview');
+        const code7Review = document.getElementById('code7Review');
+        const code8Review = document.getElementById('code8Review');
+        const quizForm = document.getElementById('quizForm');
+
+        // Cập nhật Đáp án đúng cho Đề 2
+        const correctAnswers = {
+            q1: "B",
+            q2: "C",
+            q3: "A",
+            q4: "D",
+            q5: "D",
+            q6: "C"
+        };
+        const totalMcq = Object.keys(correctAnswers).length;
+
+        // Xử lý sự kiện khi nhấn nút chấm điểm
+        gradeButton.addEventListener('click', () => {
+            let score = 0;
+            let reviewHtml = '';
+
+            // Chấm điểm trắc nghiệm
+            for (let i = 1; i <= totalMcq; i++) {
+                const qName = `q${i}`;
+                const selected = quizForm.querySelector(`input[name="${qName}"]:checked`);
+                
+                if (selected) {
+                    const isCorrect = selected.value === correctAnswers[qName];
+                    if (isCorrect) {
+                        score++;
+                        reviewHtml += `<p class="text-green-600"><strong>Câu ${i}:</strong> Bạn đã chọn ${selected.value} (Đúng)</p>`;
+                    } else {
+                        reviewHtml += `<p class="text-red-600"><strong>Câu ${i}:</strong> Bạn đã chọn ${selected.value} (Sai). Đáp án đúng là ${correctAnswers[qName]}.</p>`;
+                    }
+                } else {
+                    reviewHtml += `<p class="text-yellow-600"><strong>Câu ${i}:</strong> Bạn chưa chọn đáp án.</p>`;
+                }
+            }
+
+            // Lấy code từ phần tự luận
+            const code7 = document.getElementById('q7_code').value;
+            const code8 = document.getElementById('q8_code').value;
+
+            // Hiển thị kết quả
+            scoreText.textContent = `Bạn đã trả lời đúng ${score}/${totalMcq} câu trắc nghiệm.`;
+            answersReview.innerHTML = reviewHtml;
+            
+            // Hiển thị code đã nộp
+            code7Review.textContent = code7 || "(Chưa làm bài)";
+            code8Review.textContent = code8 || "(Chưa làm bài)";
+
+            // Hiển thị modal
+            resultsModal.classList.remove('hidden');
+
+            // Gửi email bài kiểm tra
+            const answers = {};
+            for (let i = 1; i <= totalMcq; i++) {
+                const qName = `q${i}`;
+                const selected = quizForm.querySelector(`input[name="${qName}"]:checked`);
+                answers[qName] = selected ? selected.value : '';
+            }
+            const studentName = document.getElementById('studentName').value.trim();
+            const studentEmail = document.getElementById('studentEmail').value.trim();
+            const payload = {
+                score,
+                totalMcq,
+                answers,
+                code7,
+                code8,
+                studentName,
+                studentEmail,
+                pageUrl: window.location.href,
+                userAgent: navigator.userAgent,
+            };
+            const statusElId = 'emailStatus';
+            let statusEl = document.getElementById(statusElId);
+            if (!statusEl) {
+                statusEl = document.createElement('p');
+                statusEl.id = statusElId;
+                statusEl.className = 'text-sm mt-2';
+                scoreText.parentElement.appendChild(statusEl);
+            }
+            statusEl.textContent = 'Đang gửi bài kiểm tra qua email...';
+            statusEl.classList.remove('text-green-600', 'text-red-600');
+            statusEl.classList.add('text-gray-600');
+            fetch('/api/send_exam', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(r => r.json().catch(() => ({ ok: false })))
+            .then(j => {
+                if (j && j.ok && j.emailSent) {
+                    statusEl.textContent = 'Đã gửi bài kiểm tra về email thành công.';
+                    statusEl.classList.remove('text-gray-600');
+                    statusEl.classList.add('text-green-600');
+                } else {
+                    statusEl.textContent = 'Gửi email chưa thành công. Bài vẫn được ghi nhận.';
+                    statusEl.classList.remove('text-gray-600');
+                    statusEl.classList.add('text-red-600');
+                }
+            })
+            .catch(() => {
+                statusEl.textContent = 'Lỗi mạng khi gửi email.';
+                statusEl.classList.remove('text-gray-600');
+                statusEl.classList.add('text-red-600');
+            });
+        });
+
+        // Xử lý sự kiện khi đóng modal
+        closeModal.addEventListener('click', () => {
+            resultsModal.classList.add('hidden');
+        });
+
+        // Đóng modal khi nhấp ra ngoài
+        resultsModal.addEventListener('click', (event) => {
+            if (event.target === resultsModal) {
+                resultsModal.classList.add('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

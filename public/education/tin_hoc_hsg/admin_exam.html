@@ -12,6 +12,34 @@
       <h1 class="text-3xl font-bold text-gray-800">Quản trị bài nộp</h1>
       <p class="text-gray-600">Danh sách submissions từ bài kiểm tra Tin học 10</p>
     </header>
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h2 class="text-xl font-semibold mb-2">Quản lý Pass Key</h2>
+        <p class="text-sm text-gray-600 mb-3">Pass key dùng để bỏ qua đếm ngược thời gian trên đề thi.</p>
+        <div class="flex items-center gap-2 mb-3">
+          <input id="passInput" type="text" class="flex-1 px-3 py-2 border rounded" placeholder="Nhập pass key" />
+          <button id="savePassBtn" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Lưu</button>
+        </div>
+        <div class="text-sm text-gray-700">
+          <p>Pass hiện tại: <span id="currentPass" class="font-mono"></span></p>
+          <p class="mt-2">Link chia sẻ:</p>
+          <ul class="list-disc ml-5 text-blue-700">
+            <li><a id="linkBai1" class="underline" target="_blank">Đề 1</a></li>
+            <li><a id="linkBai2" class="underline" target="_blank">Đề 2</a></li>
+          </ul>
+          <p class="mt-2 text-xs text-gray-500">Thêm tham số <code>?pass=...</code> vào URL để bỏ đếm ngược.</p>
+        </div>
+        <p id="passStatus" class="text-xs text-gray-600 mt-2"></p>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h2 class="text-xl font-semibold mb-2">Hướng dẫn</h2>
+        <ul class="list-disc ml-5 text-sm text-gray-700">
+          <li>Đặt pass key, hệ thống lưu vào server.</li>
+          <li>Gửi link đề thi kèm <code>?pass=PASS</code> cho thí sinh cần bỏ đếm ngược.</li>
+          <li>Nếu không có pass hoặc sai pass: đề sẽ hiện lớp phủ và đếm giờ.</li>
+        </ul>
+      </div>
+    </div>
     <div class="bg-white rounded-lg shadow-md p-4">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-2">
@@ -55,6 +83,12 @@
     const modal = document.getElementById('modal');
     const closeModal = document.getElementById('closeModal');
     const detail = document.getElementById('detail');
+    const passStatus = document.getElementById('passStatus');
+    const passInput = document.getElementById('passInput');
+    const currentPass = document.getElementById('currentPass');
+    const savePassBtn = document.getElementById('savePassBtn');
+    const linkBai1 = document.getElementById('linkBai1');
+    const linkBai2 = document.getElementById('linkBai2');
 
     async function load() {
       statusText.textContent = 'Đang tải...';
@@ -130,7 +164,46 @@
       const j = res ? await res.json().catch(()=>({ items: [] })) : { items: [] };
       window.__items = Array.isArray(j.items) ? j.items : [];
       await load();
+      await loadPass();
     })();
+
+    async function loadPass() {
+      passStatus.textContent = 'Đang kiểm tra pass key...';
+      try {
+        const res = await fetch('/api/exam_passkey', { headers: { 'x-admin-token': (window.ADMIN_TOKEN || '') } });
+        const j = await res.json().catch(()=>({ ok:false }));
+        if (j.ok) {
+          const pass = j.passkey || '';
+          currentPass.textContent = pass ? pass : '(chưa thiết lập)';
+          const origin = window.location.origin;
+          linkBai1.href = `${origin}/education/tin_hoc_hsg/check_the_basics/bai1.html${pass ? `?pass=${encodeURIComponent(pass)}` : ''}`;
+          linkBai1.textContent = linkBai1.href;
+          linkBai2.href = `${origin}/education/tin_hoc_hsg/check_the_basics/bai2.html${pass ? `?pass=${encodeURIComponent(pass)}` : ''}`;
+          linkBai2.textContent = linkBai2.href;
+          passStatus.textContent = 'Đã tải pass key.';
+        } else {
+          passStatus.textContent = 'Không thể tải pass key.';
+        }
+      } catch {
+        passStatus.textContent = 'Lỗi tải pass key.';
+      }
+    }
+
+    savePassBtn.addEventListener('click', async () => {
+      const pass = (passInput.value || '').trim();
+      if (!pass) { passStatus.textContent = 'Vui lòng nhập pass key.'; return; }
+      passStatus.textContent = 'Đang lưu...';
+      try {
+        const res = await fetch('/api/exam_passkey', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-token': (window.ADMIN_TOKEN || '') },
+          body: JSON.stringify({ action: 'set', passkey: pass })
+        });
+        const j = await res.json().catch(()=>({ ok:false }));
+        if (j.ok) { passStatus.textContent = 'Đã lưu pass key.'; passInput.value=''; await loadPass(); }
+        else { passStatus.textContent = 'Lưu thất bại.'; }
+      } catch { passStatus.textContent = 'Lỗi mạng khi lưu.'; }
+    });
   </script>
 </body>
 </html>

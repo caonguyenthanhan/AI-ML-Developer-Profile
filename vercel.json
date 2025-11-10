@@ -102,8 +102,8 @@
       "destination": "/education/:guest.html"
     },
     {
-      "source": "/eduit/testbase",
-      "destination": "/education/tin_hoc_hsg/check_the_basics.html"
+      "source": "/eduit/testbase/:guest",
+      "destination": "/education/tin_hoc_hsg/check_the_basics/:guest.html"
     },
     {
       "source": "/admin/exam",

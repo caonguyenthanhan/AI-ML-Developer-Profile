@@ -28,6 +28,23 @@
 </head>
 <body class="bg-gray-100">
 
+    <header id="examHeader" class="bg-blue-700 text-white py-3 px-4 flex items-center justify-between">
+        <div class="font-semibold">Bài kiểm tra Tin học 10</div>
+        <div id="timerDisplay" class="font-mono">Thời gian: --:--</div>
+    </header>
+
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-center">
+            <h2 class="text-xl font-bold mb-2">Bắt đầu làm bài</h2>
+            <p class="text-gray-700 mb-4">Thời gian làm: 45 phút. Nhấn Bắt đầu để hiện đề và bắt đầu tính giờ.</p>
+            <div class="grid gap-2 mb-3">
+                <input id="passParam" type="text" class="px-3 py-2 border rounded" placeholder="Pass từ link (nếu có)" />
+                <button id="startBtn" class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700">Bắt đầu làm</button>
+            </div>
+            <p id="overlayStatus" class="text-sm text-gray-600"></p>
+        </div>
+    </div>
+
     <div class="container max-w-4xl mx-auto p-4 sm:p-8">
         <!-- Tiêu đề -->
         <header class="text-center mb-8">
@@ -373,6 +390,96 @@ Output: 3
     </div>
 
     <script>
+        const timerDisplay = document.getElementById('timerDisplay');
+        const overlay = document.getElementById('overlay');
+        const startBtn = document.getElementById('startBtn');
+        const overlayStatus = document.getElementById('overlayStatus');
+        const passParam = document.getElementById('passParam');
+        const DEFAULT_MINUTES = 45;
+        let remaining = 0;
+        let tickHandle = null;
+
+        function fmt(ms) {
+            const s = Math.max(0, Math.floor(ms / 1000));
+            const m = Math.floor(s / 60);
+            const sec = s % 60;
+            return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+        }
+
+        function render() {
+            timerDisplay.textContent = `Thời gian: ${fmt(remaining * 1000)}`;
+        }
+
+        function startCountdown(minutes) {
+            remaining = minutes * 60;
+            render();
+            if (tickHandle) clearInterval(tickHandle);
+            tickHandle = setInterval(() => {
+                remaining -= 1;
+                if (remaining <= 0) {
+                    remaining = 0;
+                    render();
+                    clearInterval(tickHandle);
+                    autoCloseExam();
+                } else {
+                    render();
+                }
+            }, 1000);
+        }
+
+        function autoCloseExam() {
+            overlay.classList.remove('hidden');
+            overlayStatus.textContent = 'Hết giờ — Bài thi đã kết thúc.';
+            // Khoá form
+            document.querySelectorAll('input, textarea, button').forEach(el => {
+                if (el.id !== 'closeModal') el.disabled = true;
+            });
+        }
+
+        async function verifyPass(pass) {
+            try {
+                const res = await fetch('/api/exam_passkey', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'verify', pass })
+                });
+                const j = await res.json().catch(()=>({ ok:false }));
+                return j.ok && j.valid;
+            } catch { return false; }
+        }
+
+        async function initOverlay() {
+            const url = new URL(window.location.href);
+            const pass = url.searchParams.get('pass') || '';
+            if (pass) passParam.value = pass;
+            const hasValidPass = pass ? await verifyPass(pass) : false;
+            if (hasValidPass) {
+                overlay.classList.add('hidden');
+                timerDisplay.textContent = 'Bỏ đếm ngược (pass hợp lệ)';
+            } else {
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        startBtn.addEventListener('click', async () => {
+            const pass = (passParam.value || '').trim();
+            if (pass) {
+                const ok = await verifyPass(pass);
+                if (ok) {
+                    overlay.classList.add('hidden');
+                    timerDisplay.textContent = 'Bỏ đếm ngược (pass hợp lệ)';
+                    return;
+                } else {
+                    overlayStatus.textContent = 'Pass không hợp lệ — sẽ tính giờ.';
+                }
+            }
+            overlay.classList.add('hidden');
+            const minutes = Number(new URL(window.location.href).searchParams.get('duration')) || DEFAULT_MINUTES;
+            startCountdown(minutes);
+        });
+
+        initOverlay();
+
         // Lấy các phần tử DOM
         const gradeButton = document.getElementById('gradeButton');
         const resultsModal = document.getElementById('resultsModal');
