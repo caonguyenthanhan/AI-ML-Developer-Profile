@@ -115,8 +115,8 @@
         return;
       }
       if (!res.ok) { statusText.textContent = 'Lỗi tải dữ liệu'; return; }
-      const j = await res.json().catch(() => ({ items: [] }));
-      const items = Array.isArray(j.items) ? j.items : [];
+      const j = await res.json().catch(() => ({ items: [], data: [] }));
+      const items = Array.isArray(j.items) ? j.items : (Array.isArray(j.data) ? j.data : []);
       window.__items = items;
       tbody.innerHTML = items.map(r => {
         const t = r.timestamp || '';

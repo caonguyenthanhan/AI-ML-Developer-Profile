@@ -10,8 +10,19 @@ async function getKv() {
   }
 }
 
+function setCors(res) {
+  try {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  } catch (_) {}
+}
+
 module.exports = async (req, res) => {
   try {
+    setCors(res);
+    try { res.setHeader('Content-Type', 'application/json'); } catch (_) {}
+    if (req.method === 'OPTIONS') return res.status(204).end();
     if (req.method !== 'GET') {
       return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
     }
@@ -27,7 +38,7 @@ module.exports = async (req, res) => {
       try { return JSON.parse(x); } catch (_) { return null; }
     }).filter(Boolean);
     items.sort((a, b) => String(b.timestamp).localeCompare(String(a.timestamp)));
-    return res.status(200).json({ ok: true, items });
+    return res.status(200).json({ ok: true, items, data: items, storage: 'kv' });
   } catch (err) {
     return res.status(500).json({ ok: false, error: String(err?.message || err) });
   }

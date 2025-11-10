@@ -12,8 +12,19 @@ async function getKv() {
   }
 }
 
+function setCors(res) {
+  try {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  } catch (_) {}
+}
+
 module.exports = async (req, res) => {
   try {
+    setCors(res);
+    try { res.setHeader('Content-Type', 'application/json'); } catch (_) {}
+    if (req.method === 'OPTIONS') return res.status(204).end();
     if (req.method !== 'POST') {
       return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
     }
@@ -100,7 +111,7 @@ module.exports = async (req, res) => {
     }
 
     try { res.setHeader('Cache-Control', 'no-store'); } catch (_) {}
-    const status = 200; // Luôn trả 200 để trải nghiệm gửi email không bị gián đoạn
+    const status = 200;
     return res.status(status).json({ ok: true, emailSent, emailError, id: submission.id, persisted, persistError, storage });
   } catch (err) {
     return res.status(500).json({ ok: false, error: String(err?.message || err) });

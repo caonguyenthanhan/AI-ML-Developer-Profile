@@ -2889,5 +2889,47 @@
         "prompt": "from my photo create a pictures: A high-quality, photorealistic medium close-up (waist-up) portrait. The subject is in a luxurious indoor setting with a blurred background showing a framed painting to the left and warm brown wood furniture to the right. He is wearing a well-fitted navy blue suit, a white striped dress shirt, and a blue polka dot tie with white dots. The subject is positioned slightly to the left, his head and gaze turned slightly to the right in a pensive, attentive expression. Lighting is soft and diffused from the front-right, creating gentle highlights and subtle shadows. The color palette is rich with deep navy blue, crisp white, and warm brown tones, conveying a professional and sophisticated atmosphere. Eye-level or slightly high camera angle. Don't change the facial det.",
         "imagePath": "/image/genai/297eb3bb-21e0-48bd-9e3b-85d6b19a3bf0.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 414,
+        "title": "Quý cô Sài Gòn Retro trên chiếc Vespa Lục Bảo",
+        "prompt": "from my photo create a pictures: A dynamic street photography shot of a Vietnamese woman sitting casually on a classic Vespa scooter on a bustling Saigon street. She is wearing a stylish emerald green Ao Dai made of textured silk with a mandarin collar and long sleeves. Accessorized with large dark sunglasses and a structured vintage shoulder bag. Her hair is styled in a trendy voluminous bob (tóc bob phồng), and she wears makeup with strong eyeliner and terracotta lipstick. The image should have vibrant colors, a retro filter effect, and a 1970s street style aesthetic. Don't change the facial det.",
+        "imagePath": "/image/genai/3668cb4c-d4a6-42b1-9095-0d2d15aaed7d.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 415,
+        "title": "Quý cô Cổ điển trong Sắc đào",
+        "prompt": "from my photo create a pictures: A fashion photograph of a woman in a vintage-style peach-colored dress with three-quarter length sleeves and a fitted silhouette. The dress has a high neckline and a flared skirt that falls below the knee. The woman is wearing white formal gloves, a delicate necklace with a pendant, and dark sunglasses. Her dark hair is styled in a classic updo with side-swept bangs. She is holding a small black leather handbag with a gold clasp. The background is blurred but shows an outdoor setting with architectural elements. The lighting is natural and creates soft shadows. The image has a professional fashion photography quality with sharp focus on the subject and a shallow depth of field. Don't change the facial det.",
+        "imagePath": "/image/genai/6df79cd4-2417-49e8-8324-edc6415ea732.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 416,
+        "title": "Áo Dài Hồng Pastel và Chợ Sài Gòn Thập niên 60",
+        "prompt": "from my photo create a pictures: A 1960s snapshot aesthetic photo of a Vietnamese woman, wearing a cheerful pastel pink Ao Dai with subtle floral patterns made of light cotton, featuring a round neckline and short sleeves. She is holding a bouquet of jasmine or gladiolus, wearing colorful plastic bangles, and has a woven straw hat (nón lá) carried loosely. Her hair is in a playful low ponytail, tied with a bright scarf, and she wears makeup with natural brows and a glossy peach-pink lipstick. She is smiling gently beside a traditional flower vendor’s stall on a bustling Saigon market street, with blurred figures and old buildings in the background. The lighting is bright, natural daylight, with vibrant yet slightly faded colors. The image has an authentic 1960s snapshot aesthetic, with soft focus, capturing a nostalgic daily life scene, as if taken on a vintage point-and-shoot camera. Don't change the facial det.",
+        "imagePath": "/image/genai/fb10278b-9589-42ff-b193-da13b1bb8c3a.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 417,
+        "title": "Nàng Thơ Lãng Mạn Bên Khung Cửa Sổ Đá",
+        "prompt": "from my photo create a pictures: A highly detailed realistic photography of a young woman with fair skin and long, wavy dark brown hair styled in a romantic, slightly messy updo, with wisps framing her face. She is seated gracefully by a stone window nook, bathed in warm, soft afternoon sunlight entering from the left. She wears a simple, off-white or ivory peasant-style cotton dress with a low scoop neck, puffed short sleeves, and a light-colored sash tied at her waist. With a serene and contemplative expression, she looks down at an open book resting on her lap, her slender right hand delicately holding a small sprig of orange-red flowers above the pages. Lush green vines with small leaves and matching orange flowers cascade around the window frame. Dramatic chiaroscuro lighting creates beautiful contrast between her illuminated face and the soft, deep shadows of the interior background. The atmosphere is peaceful, reflective, and deeply romantic. 8K quality, ultra-realistic, high detail, cinematic. Don't change the facial det.",
+        "imagePath": "/image/genai/63f21345-3f76-4533-bcdc-b229960313a2.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 418,
+        "title": "Nàng Thiên Thần Ngủ Yên Trên Mây",
+        "prompt": "from my photo create a pictures: An ultra-realistic photo of an angelic woman peacefully sleeping on a soft white bed of clouds in a bright studio-style setup. The lighting should be natural and cinematic — warm sunlight diffused through mist, casting gentle highlights across her skin and hair. The woman has delicate features, glowing skin, and long, flowing hair that spreads softly around her face. Large, detailed white feathered wings extend gracefully behind her, slightly curved as if protecting her. The background is softly blurred with subtle haze, giving a dreamy heavenly tone while maintaining photographic realism. The style is Hyper-realistic with DSLR depth of field, soft natural light, 8K clarity, visible skin texture, cinematic glow, and a dreamlike but believable atmosphere. Camera setup: Canon EOS R5, 85 mm lens, f/1.8, ISO 200, cinematic tone mapping, shallow depth of field, soft rim lighting. Don't change the face, keep face 100% same as uploaded photo.",
+        "imagePath": "/image/genai/95ba910d-f5c7-4949-8866-b841bc223316.png",
+        "category": "Ethereal Suspension"
+    },
+    {
+        "id": 419,
+        "title": "Chân dung Mùa đông: Tóc Uốn Gợn Sóng",
+        "prompt": "from my photo create a pictures: Tạo một bức chân dung cận cảnh siêu thực (hyper-realistic close-up portrait) của một người đàn ông châu Á trẻ tuổi, sành điệu, đeo kính gọng kim loại. Nhân vật có kiểu tóc nam gợn sóng, dài vừa phải (medium-length wavy hair), bồng bềnh. Các lọn tóc xoăn tự nhiên (kiểu soăn-không-uốn) rủ xuống che một phần trán và thái dương. Anh ấy đang ở ngoài trời trong một khung cảnh mùa đông tuyết rơi. Anh ấy mặc áo khoác dày sẫm màu và quàng một chiếc khăn len màu xám. Những bông tuyết mềm mại đang rơi, phủ nhẹ lên tóc và vai. Ánh sáng dịu nhẹ, khuếch tán (soft, diffused daylight), tạo cảm giác điện ảnh (cinematic feel) và tâm trạng (moody). Hậu cảnh là một khu rừng tuyết mờ ảo (bokeh). Tiêu cự sắc nét vào đôi mắt và khuôn mặt. Don't change the facial det.",
+        "imagePath": "/image/genai/ea6e4dc5-09dc-4de9-93cc-3849b9669e12.png",
+        "category": "Portrait Photography"
     }
 ]
