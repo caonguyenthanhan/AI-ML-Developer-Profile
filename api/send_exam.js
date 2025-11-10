@@ -3,7 +3,7 @@ const path = require('path');
 async function getKv() {
   try {
     const kvMod = await import('@vercel/kv');
-    const kv = kvMod?.kv;
+    const kv = kvMod?.kv || kvMod?.default || null;
     const hasEnv = (process.env.KV_URL || process.env.KV_REST_API_URL || process.env.KV_REST_API_TOKEN);
     if (!hasEnv) return null;
     return kv || null;
