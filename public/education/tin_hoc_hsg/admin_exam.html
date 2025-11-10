@@ -186,15 +186,16 @@
       try {
         const res = await fetch('/api/exam_passkey', { headers: { 'x-admin-token': token } });
         const j = await res.json().catch(()=>({ ok:false }));
-        const authorized = j && j.ok && Object.prototype.hasOwnProperty.call(j, 'passkey');
-        if (authorized) {
+        const canEnter = Boolean(j && j.ok);
+        if (canEnter) {
           window.ADMIN_TOKEN = token;
           loginPanel.classList.add('hidden');
           adminApp.classList.remove('hidden');
           await load();
           await loadPass();
+          loginStatus.textContent = '';
         } else {
-          loginStatus.textContent = 'Mật khẩu không đúng.';
+          loginStatus.textContent = 'Mật khẩu không đúng hoặc lỗi xác thực.';
         }
       } catch {
         loginStatus.textContent = 'Lỗi mạng khi xác thực.';
