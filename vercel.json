@@ -104,6 +104,10 @@
     {
       "source": "/eduit/testbase",
       "destination": "/education/tin_hoc_hsg/check_the_basics.html"
+    },
+    {
+      "source": "/admin/exam",
+      "destination": "/education/tin_hoc_hsg/admin_exam.html"
     }
   ]
 }

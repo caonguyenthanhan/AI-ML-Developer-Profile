@@ -1,6 +1,3 @@
-// api/send_exam.js
-// Serverless function on Vercel to email exam submissions
-
 const path = require('path');
 
 async function getKv() {
@@ -27,12 +24,13 @@ module.exports = async (req, res) => {
       answers: body.answers || {},
       code7: String(body.code7 || ''),
       code8: String(body.code8 || ''),
+      studentName: String(body.studentName || ''),
+      studentEmail: String(body.studentEmail || ''),
       pageUrl: String(body.pageUrl || ''),
       userAgent: String(body.userAgent || ''),
       timestamp: new Date().toISOString(),
     };
 
-    // Prepare email content
     const answersHtml = Object.keys(submission.answers || {})
       .map(k => `<li><b>${k}:</b> ${submission.answers[k] || '(chưa chọn)'}</li>`)
       .join('');
@@ -41,6 +39,8 @@ module.exports = async (req, res) => {
       <h2>📨 Bài kiểm tra Tin học 10</h2>
       <p><b>Điểm trắc nghiệm:</b> ${submission.score}/${submission.totalMcq}</p>
       <p><b>Thời gian nộp:</b> ${submission.timestamp}</p>
+      ${submission.studentName ? `<p><b>Họ tên:</b> ${submission.studentName}</p>` : ''}
+      ${submission.studentEmail ? `<p><b>Email:</b> ${submission.studentEmail}</p>` : ''}
       ${submission.pageUrl ? `<p><b>Trang:</b> ${submission.pageUrl}</p>` : ''}
       ${submission.userAgent ? `<p><b>Thiết bị:</b> ${submission.userAgent}</p>` : ''}
       <h3>Đáp án đã chọn</h3>
@@ -51,10 +51,9 @@ module.exports = async (req, res) => {
       <pre style="background:#111;color:#f8f8f2;padding:12px;border-radius:8px;white-space:pre-wrap">${escapeHtml(submission.code8 || '(Chưa làm bài)')}</pre>
     `;
 
-    // Email configuration
     const user = process.env.EMAIL_USER;
     const pass = process.env.EMAIL_PASS;
-    const recipient = 'caonguyenthanhan.aa@gmail.com';
+    const recipient = 'caonguyenthanhan.aaa@gmail.com';
 
     let emailSent = false;
     let emailError = '';
@@ -80,7 +79,6 @@ module.exports = async (req, res) => {
       emailError = 'EMAIL_USER/EMAIL_PASS chưa được cấu hình';
     }
 
-    // Optional: persist to KV
     let persisted = false;
     let storage = 'none';
     try {

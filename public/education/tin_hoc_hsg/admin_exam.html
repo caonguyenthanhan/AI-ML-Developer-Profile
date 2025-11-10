@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản trị bài nộp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="container max-w-6xl mx-auto p-4 sm:p-8">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Quản trị bài nộp</h1>
+      <p class="text-gray-600">Danh sách submissions từ bài kiểm tra Tin học 10</p>
+    </header>
+    <div class="bg-white rounded-lg shadow-md p-4">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <button id="refreshBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tải lại</button>
+          <span id="statusText" class="text-sm text-gray-600"></span>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full border">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-3 py-2 text-left border">Thời gian</th>
+              <th class="px-3 py-2 text-left border">ID</th>
+              <th class="px-3 py-2 text-left border">Điểm</th>
+              <th class="px-3 py-2 text-left border">Họ tên</th>
+              <th class="px-3 py-2 text-left border">Email</th>
+              <th class="px-3 py-2 text-left border">Trang</th>
+              <th class="px-3 py-2 text-left border">Xem</th>
+            </tr>
+          </thead>
+          <tbody id="tbody" class="divide-y"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-3xl rounded-lg p-6 overflow-y-auto max-h-[90vh]">
+      <div class="flex justify-between items-center border-b pb-2 mb-4">
+        <h2 class="text-xl font-semibold">Chi tiết bài nộp</h2>
+        <button id="closeModal" class="text-2xl">&times;</button>
+      </div>
+      <div id="detail" class="space-y-4 text-sm"></div>
+    </div>
+  </div>
+
+  <script>
+    const tbody = document.getElementById('tbody');
+    const statusText = document.getElementById('statusText');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    const detail = document.getElementById('detail');
+
+    async function load() {
+      statusText.textContent = 'Đang tải...';
+      const res = await fetch('/api/exam_submissions').catch(() => null);
+      if (!res || !res.ok) {
+        statusText.textContent = 'Lỗi tải dữ liệu';
+        return;
+      }
+      const j = await res.json().catch(() => ({ items: [] }));
+      const items = Array.isArray(j.items) ? j.items : [];
+      window.__items = items;
+      tbody.innerHTML = items.map(r => {
+        const t = r.timestamp || '';
+        const id = r.id || '';
+        const score = `${r.score || 0}/${r.totalMcq || 0}`;
+        const name = r.studentName || '';
+        const email = r.studentEmail || '';
+        const url = r.pageUrl || '';
+        return `
+          <tr>
+            <td class="px-3 py-2 border">${t}</td>
+            <td class="px-3 py-2 border">${id}</td>
+            <td class="px-3 py-2 border">${score}</td>
+            <td class="px-3 py-2 border">${escapeHtml(name)}</td>
+            <td class="px-3 py-2 border">${escapeHtml(email)}</td>
+            <td class="px-3 py-2 border"><a class="text-blue-600 underline" href="${url}" target="_blank">Mở</a></td>
+            <td class="px-3 py-2 border"><button class="px-3 py-1 bg-gray-800 text-white rounded viewBtn" data-id="${id}">Xem</button></td>
+          </tr>
+        `;
+      }).join('');
+      statusText.textContent = `Đã tải ${items.length} bài nộp`;
+    }
+
+    tbody.addEventListener('click', e => {
+      const btn = e.target.closest('.viewBtn');
+      if (!btn) return;
+      const tr = btn.closest('tr');
+      const cells = tr.querySelectorAll('td');
+      const ts = cells[0].textContent;
+      const id = cells[1].textContent;
+      const score = cells[2].textContent;
+      const name = cells[3].textContent;
+      const email = cells[4].textContent;
+      detail.innerHTML = `
+        <p><b>Thời gian:</b> ${ts}</p>
+        <p><b>ID:</b> ${id}</p>
+        <p><b>Điểm:</b> ${score}</p>
+        <p><b>Họ tên:</b> ${escapeHtml(name)}</p>
+        <p><b>Email:</b> ${escapeHtml(email)}</p>
+        <h3 class="text-lg font-semibold mt-3">Code Câu 7</h3>
+        <pre class="bg-gray-900 text-gray-100 p-3 rounded">${getCodeById(id, 'code7')}</pre>
+        <h3 class="text-lg font-semibold">Code Câu 8</h3>
+        <pre class="bg-gray-900 text-gray-100 p-3 rounded">${getCodeById(id, 'code8')}</pre>
+      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    });
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function getCodeById(id, field) {
+      return window.__items?.find(x => x.id === id)?.[field] || '(Không khả dụng)';
+    }
+
+    refreshBtn.addEventListener('click', load);
+    closeModal.addEventListener('click', () => { modal.classList.add('hidden'); modal.classList.remove('flex'); });
+    modal.addEventListener('click', e => { if (e.target === modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); } });
+
+    (async () => {
+      const res = await fetch('/api/exam_submissions').catch(() => null);
+      const j = res ? await res.json().catch(()=>({ items: [] })) : { items: [] };
+      window.__items = Array.isArray(j.items) ? j.items : [];
+      await load();
+    })();
+  </script>
+</body>
+</html>
