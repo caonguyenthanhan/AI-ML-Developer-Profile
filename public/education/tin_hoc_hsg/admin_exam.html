@@ -7,7 +7,18 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-  <div class="container max-w-6xl mx-auto p-4 sm:p-8">
+  <section id="loginPanel" class="min-h-[60vh] grid place-items-center p-4">
+    <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md border-t-4 border-blue-600">
+      <h2 class="text-center text-2xl font-bold mb-4">Đăng nhập Quản trị</h2>
+      <p class="text-center text-gray-600 mb-6">Nhập mật khẩu quản trị để truy cập trang.</p>
+      <div class="grid gap-3">
+        <input id="adminLoginKey" type="password" placeholder="Mật khẩu quản trị" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" required />
+        <button id="adminLoginBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Đăng nhập</button>
+        <span id="loginStatus" class="text-sm text-gray-600"></span>
+      </div>
+    </div>
+  </section>
+  <div id="adminApp" class="container max-w-6xl mx-auto p-4 sm:p-8">
     <header class="mb-6">
       <h1 class="text-3xl font-bold text-gray-800">Quản trị bài nộp</h1>
       <p class="text-gray-600">Danh sách submissions từ bài kiểm tra Tin học 10</p>
@@ -77,6 +88,11 @@
   </div>
 
   <script>
+    const loginPanel = document.getElementById('loginPanel');
+    const adminApp = document.getElementById('adminApp');
+    const adminLoginKey = document.getElementById('adminLoginKey');
+    const adminLoginBtn = document.getElementById('adminLoginBtn');
+    const loginStatus = document.getElementById('loginStatus');
     const tbody = document.getElementById('tbody');
     const statusText = document.getElementById('statusText');
     const refreshBtn = document.getElementById('refreshBtn');
@@ -159,12 +175,41 @@
     closeModal.addEventListener('click', () => { modal.classList.add('hidden'); modal.classList.remove('flex'); });
     modal.addEventListener('click', e => { if (e.target === modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); } });
 
-    (async () => {
-      const res = await fetch('/api/exam_submissions').catch(() => null);
-      const j = res ? await res.json().catch(()=>({ items: [] })) : { items: [] };
-      window.__items = Array.isArray(j.items) ? j.items : [];
-      await load();
-      await loadPass();
+    adminLoginBtn.addEventListener('click', async () => {
+      const token = (adminLoginKey.value || '').trim();
+      if (!token) { loginStatus.textContent = 'Vui lòng nhập mật khẩu.'; return; }
+      loginStatus.textContent = 'Đang xác thực...';
+      try {
+        const res = await fetch('/api/exam_passkey', { headers: { 'x-admin-token': token } });
+        const j = await res.json().catch(()=>({ ok:false }));
+        const authorized = j && j.ok && Object.prototype.hasOwnProperty.call(j, 'passkey');
+        if (authorized) {
+          window.ADMIN_TOKEN = token;
+          loginPanel.classList.add('hidden');
+          await loadPass();
+        } else {
+          loginStatus.textContent = 'Mật khẩu không đúng.';
+        }
+      } catch {
+        loginStatus.textContent = 'Lỗi mạng khi xác thực.';
+      }
+    });
+
+    // Tự động đăng nhập qua URL: ?password=ADMIN_TOKEN hoặc ?token=ADMIN_TOKEN
+    (async function autoLoginFromUrl(){
+      try {
+        const qp = new URLSearchParams(window.location.search);
+        const urlPass = qp.get('password') || qp.get('token');
+        if (!urlPass) { return; }
+        adminLoginKey.value = urlPass;
+        const ev = new Event('click');
+        adminLoginBtn.dispatchEvent(ev);
+      } catch (_) {}
+    })();
+
+    // Luồng tải dữ liệu submissions mặc định khi mở trang
+    (async function initLoad(){
+      try { await load(); } catch (_) {}
     })();
 
     async function loadPass() {
