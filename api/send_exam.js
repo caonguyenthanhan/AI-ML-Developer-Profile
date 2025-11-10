@@ -83,18 +83,25 @@ module.exports = async (req, res) => {
 
     let persisted = false;
     let storage = 'none';
+    let persistError = '';
     try {
       const kv = await getKv();
       if (kv) {
+        // Ghi vào danh sách và bản ghi chi tiết (dùng JSON string để tránh lỗi serialization)
         await kv.lpush('exam_submissions', JSON.stringify(submission));
-        await kv.set(`exam:${submission.id}`, submission);
+        await kv.set(`exam:${submission.id}`, JSON.stringify(submission));
         persisted = true;
         storage = 'kv';
+      } else {
+        persistError = 'kv_not_configured';
       }
-    } catch (_) {}
+    } catch (e) {
+      persistError = e?.message || String(e);
+    }
 
-    const status = emailSent ? 200 : 200; // return 200 to not break UX
-    return res.status(status).json({ ok: true, emailSent, emailError, id: submission.id, persisted, storage });
+    try { res.setHeader('Cache-Control', 'no-store'); } catch (_) {}
+    const status = 200; // Luôn trả 200 để trải nghiệm gửi email không bị gián đoạn
+    return res.status(status).json({ ok: true, emailSent, emailError, id: submission.id, persisted, persistError, storage });
   } catch (err) {
     return res.status(500).json({ ok: false, error: String(err?.message || err) });
   }

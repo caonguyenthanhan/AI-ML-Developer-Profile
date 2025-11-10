@@ -522,12 +522,13 @@ Output: 5
             })
             .then(r => r.json().catch(() => ({ ok: false })))
             .then(j => {
+                const persistedMsg = (j && j.persisted) ? 'Đã lưu vào hệ thống.' : `Chưa lưu vào KV${j?.persistError? ' - ' + j.persistError: ''}.`;
                 if (j && j.ok && j.emailSent) {
-                    statusEl.textContent = 'Đã gửi bài kiểm tra về email thành công.';
+                    statusEl.textContent = `Đã gửi bài kiểm tra về email thành công. ${persistedMsg}`;
                     statusEl.classList.remove('text-gray-600');
                     statusEl.classList.add('text-green-600');
                 } else {
-                    statusEl.textContent = 'Gửi email chưa thành công. Bài vẫn được ghi nhận.';
+                    statusEl.textContent = `Gửi email chưa thành công. ${persistedMsg}`;
                     statusEl.classList.remove('text-gray-600');
                     statusEl.classList.add('text-red-600');
                 }

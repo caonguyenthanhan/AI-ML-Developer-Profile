@@ -2868,5 +2868,26 @@
         "prompt": "from my photo create a pictures: A surreal and highly detailed photorealistic image, designed as a winter beauty advertisement with a unique 'out-of-bounds' effect. The composition features two stacked panels, resembling a diptych. The lower panel displays a stunning, bright close-up portrait of a beautiful young East Asian woman. She has long dark hair, soft rosy cheeks, and is looking directly at the viewer with an engaging expression. She wears a warm dark coat and a vibrant, fluffy blue scarf. Crucially, her head and shoulders are significantly enlarged, clearly extending upwards and 'breaking out' of the boundary of the lower panel, visually overlapping into the space of the upper panel. Soft, gentle snowflakes are falling around her. The upper panel, though partially obscured by the woman's 'out-of-bounds' presence, should still subtly hint at a wider scene: a snowy landscape with small, softly lit cabins in the background. The overall lighting is cinematic, diffused, and warm, creating a magical, cozy, and professional winter aesthetic. Don't change the facial det.",
         "imagePath": "/image/genai/d1c2999e-88cf-4bcf-93cb-7485bede1b68.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 411,
+        "title": "Treo Mình Trên Vách Kính (Góc Nhìn Cực Cao)",
+        "prompt": "my photo create a pictures: Một cảnh hành động chân thực, điện ảnh, độ phân giải cao, chụp từ góc nhìn cực kỳ cao (extreme high-angle shot, top-down view). Một nhân vật đang treo mình trên mặt ngoài bằng kính của một tòa nhà chọc trời cao ngất. Cánh tay phải của nhân vật đang nắm chặt một thiết bị leo núi hình cốc hút trên bề mặt kính, cánh tay trái hơi duỗi ra, và đôi chân gập lại, tựa vào tòa nhà. Toàn bộ trang phục của nhân vật là màu đen chiến thuật (tactical black gear), bao gồm áo dài tay, quần, găng tay và ủng chắc chắn, với một bộ dây đai an toàn và đai leo núi rõ ràng. Găng tay có chi tiết màu xanh lam/xám nhạt. Phản chiếu của thành phố và nhân vật có thể thấy rõ trên bề mặt kính. Bối cảnh là khung cảnh thành phố rộng lớn bên dưới, với những con đường cao tốc phức tạp và các tòa nhà khác trải dài đến tận chân trời. Ánh sáng tự nhiên ban ngày rõ ràng, tạo ra sự tương phản cao giữa tông màu tối của nhân vật và bảng màu hơi trầm của thành phố bên dưới. Bố cục nhấn mạnh chiều cao và sự nguy hiểm, với nhân vật là tiêu điểm chính. 35mm film look.",
+        "imagePath": "/image/genai/7c89684b-b646-4e5f-bbc5-efc5149a4932.png",
+        "category": "Cinematic Action"
+    },
+    {
+        "id": 412,
+        "title": "Chân dung Mùa đông: Tóc Xoăn Tự nhiên và Tuyết Rơi",
+        "prompt": " from my photo create a pictures: Tạo một bức chân dung cận cảnh siêu thực (hyper-realistic close-up portrait) của một người đàn ông châu Á trẻ tuổi, sành điệu, có mái tóc xoăn tự nhiên (kiểu tóc soăn-không-uốn). Anh ấy đang ở ngoài trời trong một khung cảnh mùa đông tuyết rơi. Anh ấy mặc áo khoác dày sẫm màu và quàng một chiếc khăn len màu xám. Những bông tuyết mềm mại đang rơi, phủ nhẹ lên tóc và vai anh. Ánh sáng dịu nhẹ, khuếch tán (soft, diffused daylight), tạo cảm giác điện ảnh (cinematic feel) và tâm trạng (moody). Hậu cảnh là một khu rừng tuyết mờ ảo (bokeh). Tiêu cự sắc nét vào đôi mắt và khuôn mặt. Don't change the facial det.",
+        "imagePath": "/image/genai/d92fabc6-e323-4c46-8cfb-504fd5256bb3.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 413,
+        "title": "Chân dung Doanh nhân Suy tư",
+        "prompt": "from my photo create a pictures: A high-quality, photorealistic medium close-up (waist-up) portrait. The subject is in a luxurious indoor setting with a blurred background showing a framed painting to the left and warm brown wood furniture to the right. He is wearing a well-fitted navy blue suit, a white striped dress shirt, and a blue polka dot tie with white dots. The subject is positioned slightly to the left, his head and gaze turned slightly to the right in a pensive, attentive expression. Lighting is soft and diffused from the front-right, creating gentle highlights and subtle shadows. The color palette is rich with deep navy blue, crisp white, and warm brown tones, conveying a professional and sophisticated atmosphere. Eye-level or slightly high camera angle. Don't change the facial det.",
+        "imagePath": "/image/genai/297eb3bb-21e0-48bd-9e3b-85d6b19a3bf0.png",
+        "category": "Portrait Photography"
     }
 ]

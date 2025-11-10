@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 202,
+        "count": 204,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -230,5 +230,13 @@
         "count": 5,
         "color": "#9d174d",
         "icon": "scissors"
+    },
+    {
+        "id": 30,
+        "name": "Cinematic Action",
+        "description": "Hành động Điện ảnh",
+        "count": 1,
+        "color": "#FF4500",
+        "icon": "film"
     }
 ]
