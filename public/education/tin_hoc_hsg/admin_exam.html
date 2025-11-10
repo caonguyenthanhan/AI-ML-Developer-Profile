@@ -108,7 +108,7 @@
 
     async function load() {
       statusText.textContent = 'Đang tải...';
-      const res = await fetch('/api/exam_submissions').catch(() => null);
+      const res = await fetch('/api/exam_submissions', { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } }).catch(() => null);
       if (!res) { statusText.textContent = 'Lỗi mạng khi tải dữ liệu'; return; }
       if (res.status === 501) {
         statusText.textContent = 'Chưa cấu hình KV trên Vercel. Thêm KV_REST_API_URL và KV_REST_API_TOKEN trong Project Settings.';
