@@ -1,14 +1,16 @@
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   try {
-    const hasEnv = Boolean(process.env.KV_REST_API_URL) && Boolean(process.env.KV_REST_API_TOKEN);
+    const hasEnv = Boolean(process.env.KV_URL || process.env.KV_REST_API_URL || process.env.KV_REST_API_TOKEN);
     if (!hasEnv) {
       try { res.setHeader('Cache-Control', 'no-store'); } catch (_) {}
       return res.status(501).json({ ok: false, hasKV: false, error: 'kv_not_configured' });
     }
 
-    const { kv } = await import('@vercel/kv');
-    try { res.setHeader('Cache-Control', 'no-store'); } catch (_) {}
+    const kvMod = await import('@vercel/kv');
+    const kv = kvMod?.kv || kvMod?.default || null;
+    if (!kv) return res.status(500).json({ ok: false, error: 'kv_import_failed' });
 
+    try { res.setHeader('Cache-Control', 'no-store'); } catch (_) {}
     const raw = await kv.lrange('exam_submissions', 0, -1);
     const items = (raw || []).map(x => { try { return JSON.parse(x); } catch { return null; } }).filter(Boolean);
     const count = items.length;
@@ -17,4 +19,4 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(500).json({ ok: false, error: String(err?.message || err) });
   }
-}
+};

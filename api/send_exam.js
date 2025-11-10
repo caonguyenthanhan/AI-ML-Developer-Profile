@@ -95,12 +95,17 @@ module.exports = async (req, res) => {
     let persisted = false;
     let storage = 'none';
     let persistError = '';
+    let listCountAfterWrite = -1;
     try {
       const kv = await getKv();
       if (kv) {
         // Ghi vào danh sách và bản ghi chi tiết (dùng JSON string để tránh lỗi serialization)
         await kv.lpush('exam_submissions', JSON.stringify(submission));
         await kv.set(`exam:${submission.id}`, JSON.stringify(submission));
+        try {
+          const rawList = await kv.lrange('exam_submissions', 0, -1);
+          listCountAfterWrite = (rawList || []).length;
+        } catch (_) {}
         persisted = true;
         storage = 'kv';
       } else {
@@ -112,7 +117,7 @@ module.exports = async (req, res) => {
 
     try { res.setHeader('Cache-Control', 'no-store'); } catch (_) {}
     const status = 200;
-    return res.status(status).json({ ok: true, emailSent, emailError, id: submission.id, persisted, persistError, storage });
+    return res.status(status).json({ ok: true, emailSent, emailError, id: submission.id, persisted, persistError, storage, listCountAfterWrite });
   } catch (err) {
     return res.status(500).json({ ok: false, error: String(err?.message || err) });
   }
