@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Portrait Photography",
         "description": "Chân dung nghệ thuật với ánh sáng và góc chụp chuyên nghiệp",
-        "count": 205,
+        "count": 206,
         "color": "#3B82F6",
         "icon": "camera"
     },
@@ -43,7 +43,7 @@
         "id": 6,
         "name": "Lifestyle & Nature",
         "description": "Phong cách sống và thiên nhiên",
-        "count": 81,
+        "count": 88,
         "color": "#06B6D4",
         "icon": "leaf"
     },
@@ -83,7 +83,7 @@
         "id": 11,
         "name": "Action & Adventure",
         "description": "Hành động & Phiêu lưu",
-        "count": 4,
+        "count": 6,
         "color": "#FFBF00",
         "icon": "sword"
     },
@@ -115,7 +115,7 @@
         "id": 15,
         "name": "Fantasy Ancient Style",
         "description": "Huyền Ảo Cổ Trang",
-        "count": 6,
+        "count": 10,
         "color": "#f4fc83",
         "icon": "🦊"
     },

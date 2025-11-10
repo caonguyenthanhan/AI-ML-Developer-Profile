@@ -2931,5 +2931,103 @@
         "prompt": "from my photo create a pictures: Tạo một bức chân dung cận cảnh siêu thực (hyper-realistic close-up portrait) của một người đàn ông châu Á trẻ tuổi, sành điệu, đeo kính gọng kim loại. Nhân vật có kiểu tóc nam gợn sóng, dài vừa phải (medium-length wavy hair), bồng bềnh. Các lọn tóc xoăn tự nhiên (kiểu soăn-không-uốn) rủ xuống che một phần trán và thái dương. Anh ấy đang ở ngoài trời trong một khung cảnh mùa đông tuyết rơi. Anh ấy mặc áo khoác dày sẫm màu và quàng một chiếc khăn len màu xám. Những bông tuyết mềm mại đang rơi, phủ nhẹ lên tóc và vai. Ánh sáng dịu nhẹ, khuếch tán (soft, diffused daylight), tạo cảm giác điện ảnh (cinematic feel) và tâm trạng (moody). Hậu cảnh là một khu rừng tuyết mờ ảo (bokeh). Tiêu cự sắc nét vào đôi mắt và khuôn mặt. Don't change the facial det.",
         "imagePath": "/image/genai/ea6e4dc5-09dc-4de9-93cc-3849b9669e12.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 420,
+        "title": "Nàng Thơ Bên Biển Ngọc",
+        "prompt": "from my photo create a pictures: Use 100% my uploaded face as the identity reference, keeping the face natural and realistic with correct proportions and skin texture. A beautiful young East Asian woman, smiling, with long wavy brown hair and a white plumeria flower behind her ear, wearing a flowing turquoise off-the-shoulder halter-neck dress, lying gracefully on her side on a patterned blanket on pristine white sand, looking directly at the viewer, with a breathtaking crystal clear turquoise ocean and a light blue sky in the background, gentle waves approaching the shore, photorealistic, hyperdetailed, professional photography, natural daylight, soft shadows, vibrant colors, 8k, ultra HD, sharp focus, intricate details, highly detailed skin texture, cinematic lighting, tropical paradise atmosphere.",
+        "imagePath": "/image/genai/3ea12915-4ed0-4411-a2df-42c1a6f7a8eb.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 421,
+        "title": "Thanh thản trên Gành đá Nhiệt đới",
+        "prompt": "from my photo create a pictures: Use 100% my uploaded face as the identity reference, keeping the face natural and realistic with correct proportions and skin texture.. A beautiful young East Asian woman with long wavy brown hair, a white plumeria flower tucked behind her ear, wearing an elegant turquoise blue halter-neck maxi dress with off-shoulder sleeves, sitting gracefully on rough grey rocks on a tropical beach, smiling serenely and looking up towards the bright clear blue sky, crystal clear turquoise ocean water in the background, bright natural sunlight, soft shadows, vibrant colors, hyperrealistic photography, highly detailed, cinematic lighting, 8k, ultra-HD, sharp focus, natural light, joyful atmosphere, medium shot, wide angle.",
+        "imagePath": "/image/genai/fdba4772-85e6-4e1f-85ef-8238f418e686.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 422,
+        "title": "Nàng Thơ Ánh Sáng Vàng",
+        "prompt": "from my photo create a pictures: A young Asian woman, mid-shot, happily smiling and looking up towards the right, wearing a beautiful white strapless dress with intricate lace patterns, long brown hair styled in a braid adorned with small white daisies, bangs framing her face, holding a vibrant bouquet of yellow roses and white daisies behind her back, soft golden hour lighting, cinematic rim light, lush green natural background with beautiful bokeh, soft focus, shallow depth of field, hyperrealistic, highly detailed, professional photography, 8k, vibrant colors, dreamy atmosphere, canon eos r5. Don't change the facial det.",
+        "imagePath": "/image/genai/d5e6d568-78f2-4a56-9e13-eb631fa94853.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 423,
+        "title": "Khoảnh khắc thơ mộng bên hồ",
+        "prompt": "from my photo create a pictures: Use 100% my uploaded face as the identity reference, keeping the face natural and realistic with correct proportions and skin texture.. A joyful young Asian woman, smiling brightly at the camera, arms outstretched upwards in a celebratory pose, wearing a light green knitted cardigan, a white crop top, a long flowing cream-colored skirt, and a straw hat, standing next to a vintage white bicycle with a front wicker basket overflowing with beautiful vibrant pink peonies, by a tranquil lake or river, with distant majestic mountains, charming European architecture, and an arched stone bridge across the water, sunny day, clear blue sky with soft white clouds, wide-angle lens, natural light, high key, bright and airy, highly detailed, hyperrealistic, sharp focus, vibrant colors, professional outdoor photography, 8k, cinematic lighting.",
+        "imagePath": "/image/genai/1fed763f-effd-4642-885d-97c4fdd937ba.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 424,
+        "title": "Nàng Thơ Biển Xanh và Váy Lụa Bạc Hà",
+        "prompt": "from my photo create a pictures: A beautiful young Asian woman smiling and looking slightly to the side, standing knee-deep in crystal clear turquoise ocean water, wearing a flowy mint green dress with intricate gold floral embroidery and thin spaghetti straps, a wide-brimmed straw hat with a white ribbon, gently lifting her dress to reveal her leg, sun-drenched tropical beach background with a distant blurred island, soft natural daylight, warm tones, sparkling water reflections, full body shot, eye-level perspective, vibrant, cinematic lighting, hyperrealistic, ultra-detailed, photorealistic, 8k, professional photography, Canon EOS R5. Don't change the facial det.",
+        "imagePath": "/image/genai/628e01fe-0a67-4e61-87f7-9bad45b2754a.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 425,
+        "title": "Nàng thơ Vườn Hoa Tím",
+        "prompt": "from my photo create a pictures: Use 100% my uploaded face as the identity reference, keeping the face natural and realistic with correct proportions and skin texture.. A beautiful young East Asian woman, wearing an elegant long purple halter-neck gown with a sheer lavender shawl, a small sparkling hair clip in her dark hair, smiling brightly and looking upwards with a joyful expression, one hand gently raised, standing in a soft focus blossoming garden, surrounded by trees with abundant light purple and white flowers, soft natural daylight, golden hour lighting, ethereal atmosphere, highly detailed, hyperrealistic, photorealistic, professional photography, cinematic lighting, shallow depth of field, bokeh, 8k.",
+        "imagePath": "/image/genai/dea2e325-39e9-493b-9106-4dcd0980db8d.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 426,
+        "title": "Chân dung studio thanh lịch_ Ánh sáng",
+        "prompt": "from my photo create a pictures: Use 100% my uploaded face as the identity reference, keeping the face natural and realistic with correct proportions and skin texture.. A beautiful young Asian woman, mid-shot portrait, smiling joyfully with radiant skin, wearing a white elegant halter-neck dress, long wavy brown hair tied in a ponytail, pearl earrings, holding a delicate bouquet of white roses, vibrant orange lilies, and fresh eucalyptus leaves close to her chest. Soft natural golden hour light from the left, creating beautiful highlights and subtle shadows on her face and hair. Plain dark teal textured background with a hint of dappled light. Professional studio photography, highly detailed, hyperrealistic, shallow depth of field, bokeh, cinematic lighting, volumetric light, 8k, ultra HD.",
+        "imagePath": "/image/genai/ea514207-b9cd-43cd-bf0a-71e40353895c.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 427,
+        "title": "Nụ cười trong Vườn Bưởi",
+        "prompt": "from my photo create a pictures: Use 100% my uploaded face as the identity reference, keeping the face natural and realistic with correct proportions and skin texture.. A beautiful young Vietnamese woman sitting on the ground, laughing joyfully with a beaming smile showing teeth, wearing a traditional yellow Vietnamese Ao Dai top and white wide-leg pants, holding delicate white pomelo blossoms with green leaves. Her dark brown hair with bangs is styled in a long side braid. The setting is a lush pomelo orchard with numerous trees laden with ripe yellow pomelos, soft dappled sunlight filtering through the leaves, creating a beautiful bokeh background. Natural golden hour lighting, warm glow, photorealistic, highly detailed, sharp focus on the subject, shallow depth of field, cinematic lighting, ultra-high resolution, 8k, award-winning photography, vibrant colors.",
+        "imagePath": "/image/genai/d158d6bc-a9a1-4e3c-adf8-20135fa636ef.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 428,
+        "title": "Nữ Thần Hán Phục Trong Tuyết",
+        "prompt": "from my photo create a pictures: Using the original photo as a facial reference, the expression is 100% identical. Ultra-realistic, hyper-detailed cinematic full-body portrait of a young East Asian woman with porcelain-fair skin, smooth luminous complexion, and soft natural blush highlighting her refined beauty. Her long, straight jet-black hair flows elegantly down her back, strands lifted slightly by the winter breeze, catching glimmers of falling snow under the pale light. Her expression is calm and distant — eyes half-lidded, lips relaxed — exuding a serene yet cold allure, the aura of an untouchable beauty lost in her own world.\r\n\r\nShe stands gracefully in a poised, sculptural pose — her slender body subtly turned away from the viewer, but her head turned gently over her shoulder, gazing back with a composed and enigmatic look. One hand holds the flowing edge of her sleeve near her waist, the other rests lightly by her side, fingers relaxed. The posture accentuates the elegant line of her neck and shoulders, while the sweeping layers of her Hanfu cascade naturally around her, creating soft folds that echo the shape of drifting snow.\r\n\r\nShe wears a stunning white Han Dynasty Hanfu, crafted from layered translucent silk, with silver lotus embroidery along the cuffs, collar, and sash. The delicate fabric catches ambient light, shimmering with subtle iridescence. Her makeup remains refined — faint blush on the cheeks, subtle pink lips, and a touch of silver shimmer on the eyes, emphasizing her cold elegance and distant grace.\r\n\r\nThe background depicts a tranquil winter landscape — a field blanketed in snow, frost-covered branches, and soft drifting mist blending heaven and earth. Snowflakes float gently through the air, landing on her hair and shoulders, adding an ethereal touch. The overall atmosphere conveys solitude, silence, and noble melancholy, as though she stands alone between dreams and memory.\r\n\r\nIlluminated by soft, diffused natural light reflecting off the snow, enhanced by cool blue tones and subtle backlighting that outlines her silhouette. Shot from a medium-low cinematic angle, full-body framing, using an 85mm f/1.2 lens to emphasize depth, texture, and the curvature of her pose. The shallow depth of field isolates her form against the dreamy background, while the snow bokeh sparkles like suspended pearls.\r\n\r\nRendered in a fine-art, cinematic, fantasy style emphasizing elegance, stillness, and emotional distance. Post-processing includes delicate color grading in icy pastel tones, fabric texture sharpening, micro-contrast for snow detail, and subtle bloom to enhance the mystical light. The final image radiates cold serenity and divine beauty — a timeless portrait of a Han Dynasty goddess caught in a moment of quiet contemplation, frozen in 8K ultra-realistic perfection.",
+        "imagePath": "/image/genai/48e41149-637b-4cf1-8727-36fc4bb83aef.png",
+        "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 429,
+        "title": "Nàng Thơ Hán Phục và Bông Sen Tuyết",
+        "prompt": "from my photo create a pictures: Use the original reference photo to reference the face,100% similar to the face in terms of expression.Ultra-realistic, hyper-detailed cinematic portrait of a young East Asian woman with flawless porcelain skin and a soft, luminous glow under the winter light. She has long, silky jet-black hair cascading over her shoulders, with a single loose strand framing her delicate face. Snowflakes gently rest on her hair, shimmering subtly in the cold air. Her makeup is soft and ethereal — pale pink blush, rosy gradient lips, and misty eyeshadow accentuating her expressive, almond-shaped eyes, giving her a serene and dreamlike beauty.\r\n\r\nShe is dressed in an elegant white Hanfu from the Han dynasty, exquisitely layered with flowing translucent silk sleeves and intricate embroidery along the collar and cuffs. The fabric shimmers faintly like morning frost, moving gracefully with her pose. The robe’s wide sleeves and long draping layers convey a sense of timeless grace and purity, perfectly matching the snow-kissed ambiance.\r\n\r\nShe gently holds a blooming pink lotus flower close to her chest, its petals contrasting against the pristine white of her Hanfu. Her expression is calm and introspective, gazing softly into the distance, evoking a sense of nostalgic melancholy and quiet strength. Snow falls around her in delicate flakes, enhancing the ethereal atmosphere of purity and transcendence.\r\n\r\nThe background is a pale gray-white gradient, resembling mist and snowfall merging into infinity. The lighting is soft, diffused, and cool-toned, illuminating her features with cinematic delicacy. Captured in a close-up portrait composition using an 85mm f/1.4 DSLR lens, creating shallow depth of field and smooth bokeh that isolates her from the dreamy backdrop.\r\n\r\nRendered in cinematic, ultra-realistic style with meticulous attention to texture — from the silk fibers of the Hanfu to the natural pores on her skin. Post-processing enhances the emotional tone with subtle film grain, pastel color grading, luminous highlights, and volumetric snow haze. The final image conveys poetic stillness, Han dynasty elegance, and 8K-level visual depth, blending historical beauty and winter serenity in one mesmerizing portrait.",
+        "imagePath": "/image/genai/8214fc90-3375-44fa-b741-a08084a7e861.png",
+        "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 430,
+        "title": "Nữ Thần Đêm Trăng Trên Vách Đá Cẩm Thạch",
+        "prompt": "from my photo create a pictures: Inspired by the reference likeness, ensure consistent facial detail, balance, and realism throughout. A cinematic, ultra-realistic portrait of a young woman. She is standing gracefully on a white marble cliff under a glowing full moon — ocean horizon behind her, soft mist, tranquil night fantasy atmosphere. She is wearing a flowing pearl white gown with subtle shimmer that softly moves with the wind — divine, elegant, celestial energy. Her hair is long, luminous, moonlit waves. Mood feels like a goddess of night serenity — poetic, peaceful, dreamlike Vogue fantasy editorial. Camera / Technical Notes: full body / 50mm / UHD / gentle moonlight glow / surreal calm blue tones / high resolution editorial finish. Don't change the facial det.",
+        "imagePath": "/image/genai/7128a0ab-7859-4157-87ec-177d40047c14.png",
+        "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 431,
+        "title": "Nỗi Buồn Sân Ga Cũ",
+        "prompt": "from my photo create a pictures: Một bức ảnh chân dung toàn thân của một người đang ngồi trên sân ga xe lửa cũ kỹ, nhìn về phía trước với vẻ trầm tư. Chủ thể mặc áo dài tay màu trắng với cổ áo thủy thủ và cổ tay áo màu xanh navy đậm có sọc trắng, cùng với chân váy xếp ly màu xanh navy. Mang vớ trắng và giày kiểu Mary Jane màu nâu sẫm. Một chiếc túi xách da màu nâu được đặt trên ghế gỗ bên cạnh. Phía sau là đường ray xe lửa chạy dọc theo sân ga, xa hơn là mặt biển xanh biếc và đường bờ biển xa xa. Hậu cảnh có bức tường gỗ trắng bạc màu, bong tróc sơn và kiến trúc ga cũ với vòm cong cùng các biển báo. Ánh sáng ban ngày tự nhiên, mềm mại, tạo bóng đổ nhẹ nhàng. Bảng màu trầm, hơi khử bão hòa, với các tông màu trắng, nâu, xanh biển và xanh đậm. Phong cách nhiếp ảnh chân thực, lấy nét mềm mại, hơi hướng vintage hoặc ảnh phim. Bố cục tập trung vào chủ thể ngồi hơi lệch về phía bên phải, với góc máy hơi thấp. Don't change the facial det.",
+        "imagePath": "/image/genai/198eabe6-1168-4863-8413-bad4b9126a47.png",
+        "category": "Action & Adventure"
+    },
+    {
+        "id": 432,
+        "title": "Sân ga hoài niệm bên bờ biển",
+        "prompt": "from my photo create a pictures: A full-body shot of a subject sitting in a rustic waiting hut at a seaside train station. The background includes train tracks leading to a blue sea with gentle waves, a clear cloudless blue sky, and utility poles. Bright natural sunlight creates soft and clear shadows, indicating a sunny day. The color palette is dominated by white, blue, light grey, and natural aged wood, giving a bright yet nostalgic feeling. The art style is realistic photography with slightly saturated colors. The composition focuses on the subject sitting on a wooden bench, framed by the hut's wooden structure with window panes behind. The camera angle is eye-level or slightly low, emphasizing the subject's presence. The subject sits on a wooden bench, knees bent, feet flat on the ground, hands resting gently near their cheek. Attire includes a white short-sleeve shirt with a dark sailor collar, a grey or navy pleated skirt, white low-cut socks, and light beige sneakers. A large black leather shoulder bag with multiple compartments and straps is placed on the bench beside the subject. Don't change the facial det.",
+        "imagePath": "/image/genai/923966b2-26bb-4060-8d35-7f63d09bb669.png",
+        "category": "Action & Adventure"
+    },
+    {
+        "id": 433,
+        "title": "Nàng Công Chúa Trong Vườn Hồng",
+        "prompt": "from my photo create a pictures: Inspired by the reference likeness, ensure consistent facial detail, balance, and realism throughout. A cinematic, ultra-realistic portrait of a young woman. She is sitting gently in a royal courtyard garden filled with blooming roses — pink, white, soft pastel florals surrounding her. She is wearing a pastel blush couture gown with layered airy fabrics that move softly. Her hair is styled loose romantic curls. Mood feels youthful, pure, enchanting — princess cinematic fantasy with a gentle Vogue editorial mood. Camera / Technical Notes: medium shot / 85mm / UHD / soft daylight glow / soft floral depth / elegant romantic fashion editorial. Don't change the facial det.",
+        "imagePath": "/image/genai/5eaec880-0ec8-4cfc-8937-00913dfdc5bc.png",
+        "category": "Fantasy Ancient Style"
     }
 ]
