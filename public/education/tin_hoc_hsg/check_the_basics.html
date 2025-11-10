@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề kiểm tra Tin học 10</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Sử dụng font Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Thêm style cho code block */
+        pre {
+            background-color: #1f2937; /* gray-800 */
+            color: #f9fafb; /* gray-50 */
+            padding: 1rem;
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow-x: auto;
+            font-size: 0.875rem; /* text-sm */
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container max-w-4xl mx-auto p-4 sm:p-8">
+        <!-- Tiêu đề -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">ĐỀ KIỂM TRA TIN HỌC LỚP 10</h1>
+            <h2 class="text-xl font-semibold text-gray-700 mt-2">Môn: Lập trình C++</h2>
+            <h3 class="text-lg text-gray-600">Thời gian: 45 phút</h3>
+        </header>
+
+        <!-- Form bài kiểm tra -->
+        <form id="quizForm" class="space-y-6">
+
+            <!-- PHẦN TRẮC NGHIỆM -->
+            <h2 class="text-2xl font-bold text-blue-700 border-b pb-2">I. PHẦN TRẮC NGHIỆM (6.0 điểm)</h2>
+
+            <!-- Câu 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 1: Cho đoạn chương trình C++ sau để tìm số nhỏ nhất trong ba số nguyên `a`, `b`, `c`:</p>
+<pre><code class="language-cpp">
+#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a, b, c;
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+    cout &lt;&lt; "So nho nhat: ";
+    if (a &lt;= b, a &lt;= c)      // Dòng 8
+        cout &lt;&lt; a;
+    else if (b &lt;= a, b &lt;= c) // Dòng 10
+        cout &lt;&lt; b;
+    else
+        cout &lt;&lt; c;
+    return 0;
+}
+</code></pre>
+                <p class="mt-4 mb-2">Đoạn chương trình trên bị lỗi cú pháp. Để sửa lỗi, ta cần sửa các dòng 8 và 10 thành:</p>
+                <div class="space-y-2">
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q1" value="A" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">A. `if (a &lt;= b && a &lt;= c)` và `else if (b &lt;= a && b &lt;= c)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q1" value="B" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">B. `if (a &lt;= b || a &lt;= c)` và `else if (b &lt;= a || b &lt;= c)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q1" value="C" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">C. `if (a &lt;= b AND a &lt;= c)` và `else if (b &lt;= a AND b &lt;= c)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q1" value="D" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">D. `if (a, b, c)` và `else if (b, a, c)`</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 2: Đâu là đoạn chương trình C++ đúng cú pháp để nhập vào một mảng `A` gồm `N` số nguyên?</p>
+                <div class="space-y-2">
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q2" value="A" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">A.<pre><code class="language-cpp">int N, A[100];
+cin &gt;&gt; N;
+for (int i = 0; i &lt; N; i++) {
+    cin &gt;&gt; A;
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q2" value="B" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">B.<pre><code class="language-cpp">int N, A[100];
+cin &gt;&gt; N;
+for (int i = 0; i &lt; N; i++) {
+    cin &gt;&gt; A[i];
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q2" value="C" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">C.<pre><code class="language-cpp">int N, A[100];
+for (int i = 0; i &lt; N; i++) {
+    cin &gt;&gt; A[i];
+}
+cin &gt;&gt; N;</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q2" value="D" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">D.<pre><code class="language-cpp">int N;
+cin &gt;&gt; N;
+int A[N];
+for (int i = 0; i &lt; N; i++) {
+    cin &gt;&gt; A[i];
+}</code></pre></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 3: Cho mảng `A` gồm `N` phần tử. Đoạn code nào sau đây dùng để tìm kiếm giá trị `x` trong mảng, nếu tìm thấy thì in ra "YES" và dừng lại?</p>
+                <div class="space-y-2">
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q3" value="A" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">A.<pre><code class="language-cpp">bool tim_thay = false;
+for (int i = 0; i &lt; N; i++) {
+    if (A[i] == x) {
+        tim_thay = true;
+    }
+}
+if (tim_thay) cout &lt;&lt; "YES";</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q3" value="B" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">B.<pre><code class="language-cpp">for (int i = 0; i &lt; N; i++) {
+    if (A[i] == x) {
+        cout &lt;&lt; "YES";
+        break;
+    }
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q3" value="C" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">C.<pre><code class="language-cpp">for (int i = 0; i &lt; N; i++) {
+    if (A[i] == x) {
+        cout &lt;&lt; "YES";
+    }
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q3" value="D" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">D.<pre><code class="language-cpp">bool tim_thay = false;
+while (A[i] == x) {
+    cout &lt;&lt; "YES";
+}</code></pre></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 4: Cấu trúc nào sau đây là đúng nhất để tìm giá trị lớn nhất (`max_val`) và vị trí (`max_pos`) của nó trong mảng `A` gồm `N` phần tử?</p>
+                <div class="space-y-2">
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q4" value="A" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">A.<pre><code class="language-cpp">int max_val = A[0];
+int max_pos = 0;
+for (int i = 1; i &lt; N; i++) {
+    if (A[i] &gt; max_val) {
+        max_val = A[i];
+        max_pos = i;
+    }
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q4" value="B" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">B.<pre><code class="language-cpp">int max_val = 0;
+int max_pos = 0;
+for (int i = 0; i &lt; N; i++) {
+    if (A[i] &gt; max_val) {
+        max_val = A[i];
+        max_pos = i;
+    }
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q4" value="C" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">C.<pre><code class="language-cpp">int max_val = A[0];
+int max_pos = 0;
+for (int i = 1; i &lt; N; i++) {
+    if (A[i] &gt;= max_val) {
+        max_val = A[i];
+    }
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q4" value="D" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">D.<pre><code class="language-cpp">int max_val = A[0];
+int max_pos = 0;
+for (int i = 0; i &lt; N; i++) {
+    if (A[i] == max_val) {
+        max_pos = i;
+    }
+}</code></pre></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 5 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 5: Cho mảng `A` gồm `N` phần tử. Đoạn code nào sau đây in ra mảng theo thứ tự đảo ngược?</p>
+                <div class="space-y-2">
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q5" value="A" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">A.<pre><code class="language-cpp">for (int i = 0; i &lt; N; i++) {
+    cout &lt;&lt; A[N - 1 - i] &lt;&lt; " ";
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q5" value="B" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">B.<pre><code class="language-cpp">for (int i = N; i &gt; 0; i--) {
+    cout &lt;&lt; A[i] &lt;&lt; " ";
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q5" value="C" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">C.<pre><code class="language-cpp">for (int i = 0; i &lt; N / 2; i++) {
+    cout &lt;&lt; A[i] &lt;&lt; " ";
+}</code></pre></span>
+                    </label>
+                    <label class="flex items-start p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q5" value="D" class="form-radio text-blue-600 mt-1">
+                        <span class="ml-3 text-gray-700">D.<pre><code class="language-cpp">for (int i = N - 1; i &gt;= 0; i--) {
+    cout &lt;&lt; A[0] &lt;&lt; " ";
+}</code></pre></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Câu 6 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 6: Cho mảng `A` gồm `N` phần tử. Ta muốn đếm số lượng cặp phần tử liền kề bằng nhau (tức là `A[i] == A[i+1]`). Vòng lặp `for` nào sau đây là đúng để thực hiện việc này?</p>
+                <div class="space-y-2">
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q6" value="A" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">A. `for (int i = 0; i &lt; N; i++)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q6" value="B" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">B. `for (int i = 0; i &lt; N - 1; i++)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q6" value="C" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">C. `for (int i = 1; i &lt; N + 1; i++)`</span>
+                    </label>
+                    <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                        <input type="radio" name="q6" value="D" class="form-radio text-blue-600">
+                        <span class="ml-3 text-gray-700">D. `for (int i = 0; i &lt;= N; i++)`</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- PHẦN TỰ LUẬN -->
+            <h2 class="text-2xl font-bold text-blue-700 border-b pb-2 pt-4">II. PHẦN TỰ LUẬN (4.0 điểm)</h2>
+
+            <!-- Câu 7 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 7 (2.0 điểm): Viết chương trình C++ hoàn chỉnh.</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-700 mb-4">
+                    <li><strong>Đầu vào:</strong> Nhập vào một chuỗi ký tự `S` (có thể chứa chữ cái, chữ số, và các ký tự khác).</li>
+                    <li><strong>Xử lý:</strong> Tìm số lớn nhất xuất hiện trong chuỗi `S`. (Giả sử các số trong chuỗi đều là số nguyên dương, chữ cái và ký tự khác được bỏ qua).</li>
+                    <li><strong>Đầu ra:</strong> In ra số lớn nhất tìm được. Nếu không có số nào, in ra 0.</li>
+                </ul>
+                <p class="font-medium">Ví dụ:</p>
+                <pre class="text-sm">Input: abc123def45gh9
+Output: 123
+(Giải thích: Các số trong chuỗi là 123, 45, và 9. Số lớn nhất là 123)</pre>
+                <label for="q7_code" class="block font-medium text-gray-700 mt-4 mb-2">Bài làm của bạn (Câu 7):</label>
+                <textarea id="q7_code" rows="12" class="w-full p-3 border border-gray-300 rounded-lg font-mono text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập code C++ của bạn tại đây..."></textarea>
+            </div>
+
+            <!-- Câu 8 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="font-semibold mb-2">Câu 8 (2.0 điểm): Viết chương trình C++ hoàn chỉnh.</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-700 mb-4">
+                    <li><strong>Đầu vào:</strong>
+                        <ul class="list-disc list-inside ml-6">
+                            <li>Dòng 1: Nhập số nguyên `N` (số lượng phần tử của mảng) và số nguyên `x`.</li>
+                            <li>Dòng 2: Nhập `N` số nguyên của mảng `A`.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Xử lý:</strong> Đếm số lượng phần tử trong mảng `A` có giá trị nhỏ hơn `x`.</li>
+                    <li><strong>Đầu ra:</strong> In ra số lượng đếm được.</li>
+                </ul>
+                <p class="font-medium">Ví dụ:</p>
+                <pre class="text-sm">Input:
+5 10
+1 15 4 8 20
+
+Output: 3
+(Giải thích: Các số nhỏ hơn 10 trong mảng là 1, 4, 8. Có 3 số.)</pre>
+                <label for="q8_code" class="block font-medium text-gray-700 mt-4 mb-2">Bài làm của bạn (Câu 8):</label>
+                <textarea id="q8_code" rows="12" class="w-full p-3 border border-gray-300 rounded-lg font-mono text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập code C++ của bạn tại đây..."></textarea>
+            </div>
+
+            <!-- Nút Chấm điểm -->
+            <button type="button" id="gradeButton" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out text-lg">
+                Nộp bài và Chấm điểm
+            </button>
+
+        </form>
+    </div>
+
+    <!-- Modal Kết quả -->
+    <div id="resultsModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="relative bg-white w-full max-w-3xl max-h-[90vh] rounded-lg shadow-xl p-6 sm:p-8 overflow-y-auto">
+            <!-- Header Modal -->
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h2 class="text-2xl font-bold text-gray-800">Kết quả bài làm</h2>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
+            </div>
+
+            <!-- Nội dung Modal -->
+            <div class="space-y-6">
+                <!-- Điểm trắc nghiệm -->
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-700">Phần Trắc nghiệm</h3>
+                    <p id="scoreText" class="text-lg text-gray-700 mt-2"></p>
+                    <div id="answersReview" class="mt-4 space-y-2 text-sm"></div>
+                </div>
+
+                <!-- Chấm Tự luận -->
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-700 border-t pt-4 mt-4">Phần Tự luận (Giáo viên chấm)</h3>
+                    <p class="text-gray-600">Đây là code bạn đã nộp. Giáo viên sẽ chấm điểm phần này thủ công.</p>
+                </div>
+
+                <!-- Bài làm Câu 7 -->
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800">Bài làm Câu 7:</h4>
+                    <pre id="code7Review" class="mt-2 text-sm max-h-60 overflow-y-auto"></pre>
+                </div>
+
+                <!-- Bài làm Câu 8 -->
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800">Bài làm Câu 8:</h4>
+                    <pre id="code8Review" class="mt-2 text-sm max-h-60 overflow-y-auto"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy các phần tử DOM
+        const gradeButton = document.getElementById('gradeButton');
+        const resultsModal = document.getElementById('resultsModal');
+        const closeModal = document.getElementById('closeModal');
+        const scoreText = document.getElementById('scoreText');
+        const answersReview = document.getElementById('answersReview');
+        const code7Review = document.getElementById('code7Review');
+        const code8Review = document.getElementById('code8Review');
+        const quizForm = document.getElementById('quizForm');
+
+        // Đáp án đúng cho phần trắc nghiệm
+        const correctAnswers = {
+            q1: "A",
+            q2: "B",
+            q3: "B",
+            q4: "A",
+            q5: "A",
+            q6: "B"
+        };
+        const totalMcq = Object.keys(correctAnswers).length;
+
+        // Xử lý sự kiện khi nhấn nút chấm điểm
+        gradeButton.addEventListener('click', () => {
+            let score = 0;
+            let reviewHtml = '';
+
+            // Chấm điểm trắc nghiệm
+            for (let i = 1; i <= totalMcq; i++) {
+                const qName = `q${i}`;
+                const selected = quizForm.querySelector(`input[name="${qName}"]:checked`);
+                
+                if (selected) {
+                    const isCorrect = selected.value === correctAnswers[qName];
+                    if (isCorrect) {
+                        score++;
+                        reviewHtml += `<p class="text-green-600"><strong>Câu ${i}:</strong> Bạn đã chọn ${selected.value} (Đúng)</p>`;
+                    } else {
+                        reviewHtml += `<p class="text-red-600"><strong>Câu ${i}:</strong> Bạn đã chọn ${selected.value} (Sai). Đáp án đúng là ${correctAnswers[qName]}.</p>`;
+                    }
+                } else {
+                    reviewHtml += `<p class="text-yellow-600"><strong>Câu ${i}:</strong> Bạn chưa chọn đáp án.</p>`;
+                }
+            }
+
+            // Lấy code từ phần tự luận
+            const code7 = document.getElementById('q7_code').value;
+            const code8 = document.getElementById('q8_code').value;
+
+            // Hiển thị kết quả
+            scoreText.textContent = `Bạn đã trả lời đúng ${score}/${totalMcq} câu trắc nghiệm.`;
+            answersReview.innerHTML = reviewHtml;
+            
+            // Hiển thị code đã nộp
+            code7Review.textContent = code7 || "(Chưa làm bài)";
+            code8Review.textContent = code8 || "(Chưa làm bài)";
+
+            // Hiển thị modal
+            resultsModal.classList.remove('hidden');
+
+            // Gửi email bài kiểm tra
+            const answers = {};
+            for (let i = 1; i <= totalMcq; i++) {
+                const qName = `q${i}`;
+                const selected = quizForm.querySelector(`input[name="${qName}"]:checked`);
+                answers[qName] = selected ? selected.value : '';
+            }
+            const payload = {
+                score,
+                totalMcq,
+                answers,
+                code7,
+                code8,
+                pageUrl: window.location.href,
+                userAgent: navigator.userAgent,
+            };
+            const statusElId = 'emailStatus';
+            let statusEl = document.getElementById(statusElId);
+            if (!statusEl) {
+                statusEl = document.createElement('p');
+                statusEl.id = statusElId;
+                statusEl.className = 'text-sm mt-2';
+                scoreText.parentElement.appendChild(statusEl);
+            }
+            statusEl.textContent = 'Đang gửi bài kiểm tra qua email...';
+            statusEl.classList.remove('text-green-600', 'text-red-600');
+            statusEl.classList.add('text-gray-600');
+            fetch('/api/send_exam', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(r => r.json().catch(() => ({ ok: false })))
+            .then(j => {
+                if (j && j.ok && j.emailSent) {
+                    statusEl.textContent = 'Đã gửi bài kiểm tra về email thành công.';
+                    statusEl.classList.remove('text-gray-600');
+                    statusEl.classList.add('text-green-600');
+                } else {
+                    statusEl.textContent = 'Gửi email chưa thành công. Bài vẫn được ghi nhận.';
+                    statusEl.classList.remove('text-gray-600');
+                    statusEl.classList.add('text-red-600');
+                }
+            })
+            .catch(() => {
+                statusEl.textContent = 'Lỗi mạng khi gửi email.';
+                statusEl.classList.remove('text-gray-600');
+                statusEl.classList.add('text-red-600');
+            });
+        });
+
+        // Xử lý sự kiện khi đóng modal
+        closeModal.addEventListener('click', () => {
+            resultsModal.classList.add('hidden');
+        });
+
+        // Đóng modal khi nhấp ra ngoài
+        resultsModal.addEventListener('click', (event) => {
+            if (event.target === resultsModal) {
+                resultsModal.classList.add('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>
