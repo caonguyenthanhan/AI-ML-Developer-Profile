@@ -109,10 +109,12 @@
     async function load() {
       statusText.textContent = 'Đang tải...';
       const res = await fetch('/api/exam_submissions').catch(() => null);
-      if (!res || !res.ok) {
-        statusText.textContent = 'Lỗi tải dữ liệu';
+      if (!res) { statusText.textContent = 'Lỗi mạng khi tải dữ liệu'; return; }
+      if (res.status === 501) {
+        statusText.textContent = 'Chưa cấu hình KV trên Vercel. Thêm KV_REST_API_URL và KV_REST_API_TOKEN trong Project Settings.';
         return;
       }
+      if (!res.ok) { statusText.textContent = 'Lỗi tải dữ liệu'; return; }
       const j = await res.json().catch(() => ({ items: [] }));
       const items = Array.isArray(j.items) ? j.items : [];
       window.__items = items;
@@ -137,6 +139,8 @@
       }).join('');
       statusText.textContent = `Đã tải ${items.length} bài nộp`;
     }
+
+    refreshBtn.addEventListener('click', () => { load(); });
 
     tbody.addEventListener('click', e => {
       const btn = e.target.closest('.viewBtn');

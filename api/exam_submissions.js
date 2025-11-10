@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     }
     const kv = await getKv();
     if (!kv) {
-      return res.status(200).json({ ok: true, items: [] });
+      return res.status(501).json({ ok: false, error: 'kv_not_configured' });
     }
     const raw = await kv.lrange('exam_submissions', 0, -1);
     const items = (raw || []).map(x => {
