@@ -3029,5 +3029,68 @@
         "prompt": "from my photo create a pictures: Inspired by the reference likeness, ensure consistent facial detail, balance, and realism throughout. A cinematic, ultra-realistic portrait of a young woman. She is sitting gently in a royal courtyard garden filled with blooming roses — pink, white, soft pastel florals surrounding her. She is wearing a pastel blush couture gown with layered airy fabrics that move softly. Her hair is styled loose romantic curls. Mood feels youthful, pure, enchanting — princess cinematic fantasy with a gentle Vogue editorial mood. Camera / Technical Notes: medium shot / 85mm / UHD / soft daylight glow / soft floral depth / elegant romantic fashion editorial. Don't change the facial det.",
         "imagePath": "/image/genai/5eaec880-0ec8-4cfc-8937-00913dfdc5bc.png",
         "category": "Fantasy Ancient Style"
+    },
+    {
+        "id": 434,
+        "title": "Chân dung Cổ tích: Nàng Bạch Tuyết và Bảy Chú Lùn",
+        "prompt": "from my photo create a pictures: Create a photorealistic, full-body portrait of the woman from the reference image, transformed into Snow White. She is wearing the iconic Snow White costume: a blue velvet bodice with gold embroidery, puffed red and blue sleeves, a high white collar, and a flowing yellow skirt. She has a red bow in her dark, braided hair. She is sitting gracefully in a rustic wooden rocking chair, holding a bright red apple in both hands close to her chest. The setting is a cozy, warm cottage interior with a stone fireplace. On the mantelpiece behind her, a collection of the Seven Dwarfs figurines is clearly visible. The lighting is soft and warm, creating a gentle, classic fairytale atmosphere. The style is highly detailed and photorealistic. Don't change the facial det.",
+        "imagePath": "/image/genai/0b8438d6-d8a6-41f4-af30-b0620cfc6127.png",
+        "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 435,
+        "title": "Chân dung Cổ tích: Công chúa Tóc Mây và Chiếc Chảo",
+        "prompt": "from my photo create a pictures: Create a photorealistic, full-body portrait of the woman from the reference image, transformed into Rapunzel from 'Tangled'. She is wearing her iconic purple and pink dress, featuring a lavender bodice with corset lacing, puffed striped sleeves, and a flowing pink skirt. She has an exceptionally long, thick blonde braid, which she holds in one hand. In her other hand, she confidently holds a black frying pan. The background is the interior of a rustic stone tower, with warm, dim lighting from wall sconces, suggesting her secluded home. The style is highly detailed, photorealistic, and cinematic, capturing the magical and adventurous spirit of the character. Don't change the facial det.",
+        "imagePath": "/image/genai/46154622-8718-4db4-9b31-aaafd9a8eec4.png",
+        "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 436,
+        "title": "Chân dung Cổ tích: Nàng Lọ Lem tại Vũ hội",
+        "prompt": "from my photo create a pictures: Create a photorealistic, full-body portrait of the woman from the reference image, transformed into Cinderella. She is wearing her iconic light blue satin ballgown, featuring intricate silver embroidery on the bodice, puffed shoulders, long white gloves, a black choker necklace, and a light blue headband in her elegant blonde updo. She is posed gracefully, sitting or curtsying low on the reflective floor of a grand, opulent ballroom. The background features high ceilings, golden curtains, ornate pillars, and warm, glowing chandeliers, creating a magical and regal atmosphere. The style is highly detailed, photorealistic, and cinematic. Don't change the facial det.",
+        "imagePath": "/image/genai/73a10efe-8582-4ce3-8eec-37336155c588.png",
+        "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 437,
+        "title": "Chân dung Cổ tích: Nữ hoàng Băng giá Elsa",
+        "prompt": "from my photo create a pictures: Create a photorealistic, medium-shot portrait of the woman from the reference image, transformed into Queen Elsa. She is wearing her iconic ice dress: a sparkling blue velvet gown with a sheer, snowflake-embroidered cape and sleeves, and a sweetheart neckline. She has platinum blonde hair styled in a thick, elegant braid over her shoulder. The background is a magical, blurry ice palace interior, with soft blue lighting and gentle particles of falling snow. The lighting is ethereal and cool, highlighting the icy textures and her serene expression. The style is highly detailed, photorealistic, and cinematic. Don't change the facial det.",
+        "imagePath": "/image/genai/ce371952-8d1b-47b2-96c1-6ce544f735e5.png",
+        "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 438,
+        "title": "Hóa thân thành Tiên Tinker Bell",
+        "prompt": "from my photo create a pictures: A hyper-realistic, full-body portrait of the person from the photo, transformed into the character Tinker Bell, based on the uploaded reference image. Wearing an iconic, sparkling green sequin dress with a sweetheart neckline and a leafy, jagged hem. Large, intricate, translucent fairy wings emerge from the back, glowing with a soft, magical light and shimmering particles. Hair is transformed into a stylish blonde bun, matching the character. Posing on a grand, enchanted staircase at night, lit by warm, magical lamps. Surrounded by swirling trails of golden, sparkling pixie dust. Cinematic lighting, ultra-detailed, 8K resolution, photorealistic. Don't change the facial det (eyes, nose, mouth structure, and glasses).",
+        "imagePath": "/image/genai/8c0d8ab7-ba0b-4d7d-bed6-86efc1e69d25.png",
+        "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 439,
+        "title": "Chân dung Cổ tích: Công chúa Anna xứ Arendelle",
+        "prompt": "from my photo create a pictures: Create a photorealistic, full-body portrait of the woman from the reference image, transformed into Princess Anna from Frozen. She is wearing her iconic travel outfit: a black velvet bodice with green, pink, and blue floral embroidery, a sky-blue long-sleeved shirt, a vibrant royal blue skirt, and a rich burgundy cape with decorative trim. On her head, she wears a small, dark purple cap. Her auburn hair is styled in a single braid falling over one shoulder, with her bangs visible. She stands confidently with her hands on her hips. The background is an enchanting, snow-dusted forest scene, with tall evergreen trees and a hint of a majestic castle in the distance under a softly lit, overcast sky, evoking the adventurous spirit of Arendelle. The style is highly detailed and photorealistic. Don't change the facial det.",
+        "imagePath": "/image/genai/cd2ecb5f-0250-40f4-b71f-383a3086bca2.png",
+        "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 440,
+        "title": "Chân dung Nàng tiên cá Ariel",
+        "prompt": "from my photo create a pictures: A hyper-realistic, full-body portrait of the person from the photo, transformed into the Disney character Ariel, the Little Mermaid. Her hair is transformed into long, flowing, vibrant red hair. She is depicted as a mermaid, wearing her iconic purple seashell bra. Her lower body is a sparkling, emerald-green mermaid tail with translucent fins. She is sitting gracefully on a moss-covered rock in a magical underwater grotto, with a vibrant coral reef and colorful fish in the background. Beams of sunlight filter down through the water, creating a serene and ethereal atmosphere. Cinematic lighting, ultra-detailed, 8K resolution, photorealistic. Don't change the facial det (eyes, nose, mouth structure).",
+        "imagePath": "/image/genai/6b0cbbc5-0e55-42e7-aad1-e6315f669538.png",
+        "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 441,
+        "title": "Hóa thân thành Nữ chiến binh Mulan",
+        "prompt": "from my photo create a pictures: A hyper-realistic, full-body portrait of the person from the photo, transformed into the Disney character Mulan. She is wearing her iconic warrior armor, including a green and black tunic, chest plate, and shoulder guards. She is holding a \"Jian\" sword in one hand, in a ready stance, and has a determined, warrior's expression. The background is a dramatic, misty mountain range in ancient China, with a red sun visible through the fog, evoking a cinematic and epic feel. Cinematic lighting, ultra-detailed, 8K resolution, photorealistic. Don't change the facial det (eyes, nose, mouth structure).",
+        "imagePath": "/image/genai/9a17e18e-2924-4c10-b388-0f91600ff4a0.png",
+        "category": "Fantasy Sci-Fi"
+    },
+    {
+        "id": 442,
+        "title": "Hóa thân thành Công chúa Jasmine",
+        "prompt": "from my photo create a pictures: A hyper-realistic, full-body portrait of the person from the photo, transformed into the Disney character Princess Jasmine. She is wearing her iconic teal-blue (cyan) off-the-shoulder top and matching harem pants, adorned with a gold belt. She wears a matching teal headband with a blue gemstone and large gold earrings. Her hair is transformed into long, thick, black hair, styled in her signature bubble ponytail. She is posing gracefully on a balcony of the Sultan's palace in Agrabah, with a view of the city at night and a starry sky. A magical and romantic atmosphere. Cinematic lighting, ultra-detailed, 8K resolution, photorealistic. Don't change the facial det (eyes, nose, mouth structure).",
+        "imagePath": "/image/genai/a4896114-1ac4-4df8-b2f8-39abf5d5a4a0.png",
+        "category": "Fantasy Sci-Fi"
     }
 ]
