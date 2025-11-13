@@ -2,7 +2,7 @@
   "guests": [
     {
       "name": "Hiếu Nghĩa",
-      "title": "Bạn bè",
+      "title": "Cốt",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Chúc mừng bạn đã làm được!",
@@ -11,7 +11,7 @@
     },
     {
       "name": "Thiên Bảo",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Một chặng đường mới bắt đầu, chúc bạn thành công!",
@@ -20,7 +20,7 @@
     },
     {
       "name": "Nhật Trường",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Tự hào về bạn!",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Hữu Vĩnh",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Chúc mọi điều tốt đẹp nhất sẽ đến với bạn.",
@@ -38,7 +38,7 @@
     },
     {
       "name": "Ngọc Trâm",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "female",
       "image": "public/image/default_avatar.png",
       "message": "Bay cao, bay xa nhé!",
@@ -47,7 +47,7 @@
     },
     {
       "name": "Đăng Thi",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "female",
       "image": "public/image/default_avatar.png",
       "message": "Chúc mừng bạn đã làm được!",
@@ -56,7 +56,7 @@
     },
     {
       "name": "Phuơng Mai",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "female",
       "image": "public/image/default_avatar.png",
       "message": "Một chặng đường mới bắt đầu, chúc bạn thành công!",
@@ -74,7 +74,7 @@
     },
     {
       "name": "Trâm Anh",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "female",
       "image": "public/image/default_avatar.png",
       "message": "Chúc mọi điều tốt đẹp nhất sẽ đến với bạn.",
@@ -83,7 +83,7 @@
     },
     {
       "name": "Minh Thông",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Bay cao, bay xa nhé!",
@@ -92,7 +92,7 @@
     },
     {
       "name": "Gia Kiệt",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Chúc mừng bạn đã làm được!",
@@ -101,7 +101,7 @@
     },
     {
       "name": "Tài Phát",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Một chặng đường mới bắt đầu, chúc bạn thành công!",
@@ -110,7 +110,7 @@
     },
     {
       "name": "chị Hân",
-      "title": "Bạn bè",
+      "title": "",
       "gender": "female",
       "image": "public/image/default_avatar.png",
       "message": "Tự hào về bạn!",
@@ -119,7 +119,7 @@
     },
     {
       "name": "Phúc Lâm",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Chúc mọi điều tốt đẹp nhất sẽ đến với bạn.",
@@ -128,7 +128,7 @@
     },
     {
       "name": "Long Nhật",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Bay cao, bay xa nhé!",
@@ -137,7 +137,7 @@
     },
     {
       "name": "Duy lê",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Chúc mừng bạn đã làm được!",
@@ -146,7 +146,7 @@
     },
     {
       "name": "Ngọc Hân",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "female",
       "image": "public/image/default_avatar.png",
       "message": "Một chặng đường mới bắt đầu, chúc bạn thành công!",
@@ -155,7 +155,7 @@
     },
     {
       "name": "Tấn Tài",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Tự hào về bạn!",
@@ -164,7 +164,7 @@
     },
     {
       "name": "Đăng Khoa",
-      "title": "Bạn bè",
+      "title": "Bạn",
       "gender": "male",
       "image": "public/image/default_avatar.png",
       "message": "Chúc mọi điều tốt đẹp nhất sẽ đến với bạn.",
