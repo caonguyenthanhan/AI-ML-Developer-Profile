@@ -30,6 +30,7 @@
       if (!firebaseConfig || !Object.keys(firebaseConfig).length) return false;
       var app = (firebase.apps && firebase.apps.length) ? firebase.app() : firebase.initializeApp(firebaseConfig);
       db = firebase.firestore(app);
+      try { db.settings({ experimentalForceLongPolling: true, useFetchStreams: false }); } catch(_) {}
       auth = firebase.auth(app);
       if (initialAuthToken) {
         return auth.signInWithCustomToken(initialAuthToken).then(function(){ isAuthReady=true; return true; }).catch(function(){ return auth.signInAnonymously().then(function(){ isAuthReady=true; return true; }); });

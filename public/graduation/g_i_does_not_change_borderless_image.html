@@ -368,8 +368,6 @@
  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script>
 
     // ===== Config & Globals =====
@@ -545,15 +543,26 @@
     // ===== Firebase Setup & Data load =====
     async function setupFirebase() {
       try {
-        if (!firebaseConfig || !Object.keys(firebaseConfig).length) return false;
+        if (!firebaseConfig || !Object.keys(firebaseConfig).length) {
+          console.warn("No firebaseConfig found → using JSON fallback.");
+          return false;  // CHẶN firebase crash trên iOS
+        }
         firebase.initializeApp(firebaseConfig);
         db = firebase.firestore();
         auth = firebase.auth();
-        if (initialAuthToken) await auth.signInWithCustomToken(initialAuthToken);
-        else await auth.signInAnonymously();
+
+        if (initialAuthToken)
+            await auth.signInWithCustomToken(initialAuthToken);
+        else
+            await auth.signInAnonymously();
+
         return true;
-      } catch (e) { console.error("Firebase init error:", e); return false; }
+      } catch (e) {
+        console.error("Firebase init failed → fallback JSON", e);
+        return false;
+      }
     }
+
     const infoDocPath   = () => `artifacts/${appId}/public/data/info/event_details`;
     const guestsColPath = () => `artifacts/${appId}/public/data/khach`;
     const rsvpsColPath  = () => `artifacts/${appId}/public/data/rsvps`;
@@ -963,6 +972,8 @@
   <script>
     // Init for static parts
     window.addEventListener("load", ()=>{ try { AOS.init({ duration: 700, once: true }); lucide.createIcons(); } catch(_){} });
+    window.__firebase_config = "{}";
+    window.__app_id = "graduation2025";
   </script>
 </body>
 </html>

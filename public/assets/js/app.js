@@ -19,6 +19,7 @@ function setupFirebase(){
       app=firebase.initializeApp(cfg);
     }
     window.db=firebase.firestore(app);
+    try{ window.db.settings({ experimentalForceLongPolling: true, useFetchStreams: false }); }catch(_){ }
     window.auth=firebase.auth(app);
     var tok=typeof initialAuthToken!="undefined"?initialAuthToken:null;
     return tok?auth.signInWithCustomToken(tok).then(()=>true).catch(()=>false):auth.signInAnonymously().then(()=>true).catch(()=>false);
