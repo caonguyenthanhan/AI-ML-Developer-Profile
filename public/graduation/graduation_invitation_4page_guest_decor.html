@@ -34,6 +34,9 @@
   <!-- AOS (Animate On Scroll) -->
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
 
   <style>
     html { scroll-behavior: smooth; }
@@ -91,7 +94,7 @@
     <!-- 1) HERO -->
     <section id="s1" class="section relative text-white">
       <div class="absolute inset-0 -z-10 hero-video">
-        <video autoplay loop muted playsinline class="w-full h-full object-cover">
+        <video autoplay loop muted playsinline class="w-full h-full object-cover" poster="/image/graduation/main-preview.jpg">
           <source id="bgVideoSrc" type="video/mp4">
         </video>
       </div>
@@ -304,6 +307,7 @@
 
   <!-- ====== SCRIPT (Firebase + Logic) ====== -->
   <script type="module">
+    if (false) {
     // ===== Firebase SDK =====
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -741,7 +745,9 @@
     }
 
     window.addEventListener("load", main);
+    }
   </script>
+  <script src="/assets/js/graduation_app.js"></script>
 
   <script>
     // Init icons for static HTML
