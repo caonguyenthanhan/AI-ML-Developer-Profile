@@ -61,12 +61,12 @@
     #s1 .flex.flex-wrap.gap-3 { gap: 0.5rem !important; }
     #s1 h1 { margin-top: 0.25rem !important; line-height: 1.1 !important; }
     #s1 .card { padding: 0.5rem !important; }
-    /* Ẩn hai khối avatar & banner khi màn hình nằm ngang hoặc dùng máy tính */
+    /* Ẩn avatar khi màn hình nằm ngang hoặc dùng máy tính; giữ banner hiển thị */
     @media (orientation: landscape) {
-      #heroAvatarWrap, #congratsBannerWrap { display: none !important; }
+      #heroAvatarWrap { display: none !important; }
     }
     @media (hover: hover) and (pointer: fine) {
-      #heroAvatarWrap, #congratsBannerWrap { display: none !important; }
+      #heroAvatarWrap { display: none !important; }
     }
 
     /* Fallback cho iOS/Messenger không hỗ trợ backdrop-filter */
