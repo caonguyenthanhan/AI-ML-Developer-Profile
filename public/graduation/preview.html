@@ -1,31 +1,12 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preview Thiệp Tốt Nghiệp</title>
-
-    <link rel="stylesheet" href="/assets/css/tw.css">
-    <link rel="stylesheet" href="/assets/css/preview.css">
-</head>
-
-<body class="bg-[#f7f7f7] flex items-center justify-center min-h-screen">
-
-<!-- KHUNG CHỤP 1200x630 -->
 <div id="capture-container">
 
-    <!-- VIỀN 1200x630 PNG -->
-    <img id="gold-frame" src="/assets/frame/graduation-frame-1200x630.png" alt="frame">
+    <img id="gold-frame" src="/assets/frame/graduation-frame-1200x630.png">
 
     <!-- LEFT -->
     <div class="left-col">
         <p class="label">THƯ MỜI</p>
         <h1 class="title">LỄ TỐT NGHIỆP</h1>
-
-        <div class="degree-tag">
-            <span class="gold">TÂN CỬ NHÂN</span>
-            <span id="graduate-name" class="grad-name"></span>
-        </div>
+        <h3 class="grad-box">TÂN CỬ NHÂN <span id="graduate-name"></span></h3>
 
         <div class="avatar-wrap">
             <img src="/image/nguyet-que.png" class="avatar-frame">
@@ -35,7 +16,6 @@
         <p class="invite-text">
             Trân trọng kính mời <span id="guestNameHero" class="guest">bạn</span> đến tham dự lễ tốt nghiệp.
         </p>
-
         <p id="graduate-info" class="sub-info"></p>
     </div>
 
@@ -72,15 +52,5 @@
         <h3 class="map-label">Ảnh Dẫn Đường</h3>
         <img id="map-img" src="/image/graduation/map.jpg" class="map-img">
 
-        <div class="footer">
-            <h3>TRÂN TRỌNG KÍNH MỜI</h3>
-            <p class="footer-sub">Sự hiện diện của Quý Vị</p>
-        </div>
-
     </div>
 </div>
-
-<script src="/assets/js/preview.js"></script>
-
-</body>
-</html>

@@ -1,15 +1,15 @@
 #capture-container {
-    width: 1200px !important;
-    height: 630px !important;
+    width: 1200px;
+    height: 630px;
     position: relative;
-    display: flex;
-    overflow: hidden;
-    border-radius: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     background: #FFFBF7;
-    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    border-radius: 16px;
+    overflow: hidden;
 }
 
-/* FRAME PNG */
+/* Frame */
 #gold-frame {
     position: absolute;
     inset: 0;
@@ -17,15 +17,19 @@
     height: 100%;
     object-fit: cover;
     z-index: 3;
-    pointer-events: none;
 }
 
-.left-col,
-.right-col {
-    width: 50%;
-    padding: 28px 32px;
+/* Columns */
+.left-col, .right-col {
+    padding: 32px;
     z-index: 4;
     position: relative;
+}
+
+/* Logo nhỏ lại */
+.uni-logo {
+    width: 120px;
+    height: auto;
 }
 
 /* Avatar */
@@ -40,6 +44,7 @@
     width: 100%;
     height: 100%;
     position: absolute;
+    object-fit: contain;
 }
 
 .avatar {
@@ -47,23 +52,9 @@
     height: 140px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #D4AF37;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-/* Info cards */
-.info-grid {
-    display: grid;
-    gap: 12px;
-    margin-top: 12px;
-}
-
-.info-card {
-    background: #FFFFFFE6;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(212,175,55,.35);
+    border: 4px solid #D4AF37;
 }
