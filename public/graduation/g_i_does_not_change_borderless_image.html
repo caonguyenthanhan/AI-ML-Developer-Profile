@@ -68,6 +68,11 @@
     @media (hover: hover) and (pointer: fine) {
       #heroAvatarWrap, #congratsBannerWrap { display: none !important; }
     }
+
+    /* Fallback cho iOS/Messenger không hỗ trợ backdrop-filter */
+    @supports (not (backdrop-filter: blur(5px))) {
+      .card { background: rgba(255,255,255,0.95); backdrop-filter: none; }
+    }
   </style>
 </head>
 <body>
@@ -102,7 +107,7 @@
     <!-- 1) HERO -->
     <section id="s1" class="section relative text-charcoal">
       <div class="absolute inset-0 -z-10 hero-overlay">
-        <video id="bgVideo" autoplay loop muted playsinline class="w-full h-full object-cover">
+        <video id="bgVideo" autoplay loop muted playsinline poster="/image/graduation/Graduation Background.jpg" class="w-full h-full object-cover">
           <source id="bgVideoSrc" type="video/mp4">
         </video>
       </div>
@@ -155,7 +160,7 @@
         </div>
       </div>
 
-      <div id="congratsBannerWrap" class="relative mt-2 z-10 md:block"></div>
+      <div id="congratsBannerWrap" class="relative mt-2 z-10 md:block">
         <img src="/image/graduation/congratulations.png" alt="Congratulations" class="mx-auto w-full max-w-[720px] h-auto drop-shadow-lg" />
       </div>
     </section>
@@ -358,12 +363,12 @@
     </div>
   </div>
 
-  <!-- ====== SCRIPT (Firebase + Logic) ====== -->
-  <script type="module">
-    // Firebase SDK
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, getDocs, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  <!-- ====== SCRIPT (Firebase compat + Logic) ====== -->
+  <!-- Firebase COMPAT (non-module) -->
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
+  <script>
 
     // ===== Config & Globals =====
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
@@ -539,26 +544,26 @@
     async function setupFirebase() {
       try {
         if (!firebaseConfig || !Object.keys(firebaseConfig).length) return false;
-        const app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        auth = getAuth(app);
-        if (initialAuthToken) await signInWithCustomToken(auth, initialAuthToken);
-        else await signInAnonymously(auth);
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        auth = firebase.auth();
+        if (initialAuthToken) await auth.signInWithCustomToken(initialAuthToken);
+        else await auth.signInAnonymously();
         return true;
       } catch (e) { console.error("Firebase init error:", e); return false; }
     }
-    const infoDocRef   = () => doc(db, "artifacts", appId, "public", "data", "info", "event_details");
-    const guestsColRef = () => collection(db, "artifacts", appId, "public", "data", "khach");
-    const rsvpsColRef  = () => collection(db, "artifacts", appId, "public", "data", "rsvps");
+    const infoDocPath   = () => `artifacts/${appId}/public/data/info/event_details`;
+    const guestsColPath = () => `artifacts/${appId}/public/data/khach`;
+    const rsvpsColPath  = () => `artifacts/${appId}/public/data/rsvps`;
 
     async function loadData() {
       let info=null, guests=[];
       const canFs = await setupFirebase();
       if (canFs) {
         try {
-          const infoSnap = await getDoc(infoDocRef());
-          if (infoSnap.exists()) info = infoSnap.data();
-          const guestsSnap = await getDocs(guestsColRef());
+          const infoSnap = await db.doc(infoDocPath()).get();
+          if (infoSnap.exists) info = infoSnap.data();
+          const guestsSnap = await db.collection(guestsColPath()).get();
           guests = guestsSnap.docs.map(d=>d.data());
         } catch (e) { console.warn("Firestore read failed; fallback JSON...", e); }
       }
@@ -667,7 +672,7 @@
     async function sendRsvpToFirestore(data) {
       if (!db) return false;
       try {
-        await addDoc(rsvpsColRef(), { ...data, timestamp: new Date().toISOString() });
+        await db.collection(rsvpsColPath()).add({ ...data, timestamp: new Date().toISOString() });
         return true;
       } catch (e) { console.error("RSVP Firestore error:", e); return false; }
     }
@@ -688,7 +693,7 @@
 
     // ===== Main =====
     async function main() {
-      AOS.init({ duration: 700, once: true, offset: 40 });
+      AOS.init({ duration: 400, once: true, offset: 40 });
       lucide.createIcons();
 
       // load data

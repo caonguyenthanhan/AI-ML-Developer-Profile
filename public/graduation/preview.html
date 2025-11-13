@@ -1,133 +1,84 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preview Thiệp Mời Tốt Nghiệp</title>
-    <link href="/assets/css/tw.css" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700&display=swap');
-        body { display:flex; justify-content:center; align-items:center; min-height:100vh; background:#FFFBF7; font-family:'Inter',sans-serif; }
-        #capture-container { width:1200px; height:630px; display:flex; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.15); border-radius:12px; background:#FFFBF7; position: relative; }
-        #capture-container::before { content:""; position:absolute; inset:0; background-image:url('/image/vien-vang.png'); background-repeat:no-repeat; background-position:center; background-size:100% 100%; transform: rotate(90deg); transform-origin:center; pointer-events:none; z-index:0; }
-        .left-hero { position:relative; width:50%; padding:24px; color:#242424; }
-        /* Loại bỏ lớp phủ mờ/overlay để giữ ảnh gốc sắc nét */
-        .right-info { width:50%; padding:24px; position:relative; color:#242424; }
-        .card { background: rgba(255,255,255,.9); border: 1px solid rgba(212,175,55,.35); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
-        .font-serif { font-family:'Playfair Display',serif; }
-        .text-gold { color:#D4AF37; }
-        .ring-gold { --tw-ring-color:#D4AF37; }
-        /* Xoay background-image 90° bằng pseudo-element để không ảnh hưởng nội dung */
-        .gold-frame-bg { position: relative; }
-        .left-hero, .right-info { position: relative; z-index: 1; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thiệp Mời Tốt Nghiệp — Preview</title>
 
-    </style>
+    <link href="/assets/css/tw.css" rel="stylesheet" />
+    <link href="/assets/css/preview.css" rel="stylesheet" />
 </head>
-<body>
 
-    <!-- KHUNG CHÍNH ĐỂ CHỤP ẢNH MÀN HÌNH -->
-    <div id="capture-container">
-        <div class="left-hero hero-overlay flex flex-col items-center justify-between">
-            <div class="text-center w-full">
-                <p class="text-sm font-semibold tracking-[0.35em] text-gold">THƯ MỜI</p>
-                <h1 class="text-5xl font-serif font-black mt-2">LỄ TỐT NGHIỆP</h1>
-                <div class="my-4 inline-flex items-center gap-2 bg-white/70 px-5 py-2 rounded-full border border-[#E6E2D8]/60">
-                    <span class="text-gold font-bold">TÂN CỬ NHÂN</span>
-                    <span id="graduate-name" class="font-serif font-black text-3xl">Tên Tân Cử Nhân</span>
-                </div>
-                <div class="my-5 flex justify-center">
-                    <div class="relative inline-block w-56 h-56">
-                        <img src="/image/nguyet-que.png" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain opacity-90 rotate-180">
-                        <img id="graduate-image" src="/image/graduation/main.jpg" alt="Ảnh người tốt nghiệp" class="relative w-40 h-40 md:w-48 md:h-48 object-cover rounded-full ring-4 ring-gold left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 shadow-xl rotate--90">
-                    </div>
-                </div>
-                <p id="invite-line" class="text-lg">Trân trọng kính mời <span id="guestNameHero" class="font-extrabold text-navy text-2xl md:text-3xl tracking-wide drop-shadow-md">bạn</span> đến tham dự lễ tốt nghiệp.</p>
-                <p id="graduate-info" class="text-sm font-semibold text-[#242424] bg-white/80 px-4 py-1 inline-block rounded-full mt-3 border border-[#E6E2D8]/60"></p>
-            </div>
+<body class="bg-[#FFFBF7] flex items-center justify-center min-h-screen">
+
+<div id="capture-container">
+
+    <!-- Viền PNG 1200x630 mới -->
+    <img id="gold-frame" src="/assets/frame/graduation-frame-1200x630.png" alt="">
+
+
+    <div class="left-col">
+        <p class="label">THƯ MỜI</p>
+        <h1 class="title">LỄ TỐT NGHIỆP</h1>
+
+        <div class="degree-tag">
+            <span class="gold">TÂN CỬ NHÂN</span>
+            <span id="graduate-name" class="grad-name"></span>
         </div>
-        <div class="right-info gold-frame-bg">
-            <div class="relative z-10 flex-1 flex flex-col">
-                <div class="text-center">
-                    <div class="flex items-center justify-center gap-2">
-                        <img src="/image/graduation/logotruong.jpg" alt="Logo Trường" class="h-6 w-auto object-contain rounded-sm shadow-sm" loading="lazy">
-                        <p id="university-name" class="text-sm md:text-base font-semibold tracking-widest text-[#5c5c5c]"></p>
-                    </div>
-                    <h1 class="text-4xl font-serif font-black mt-2">Thông Tin Sự Kiện</h1>
-                    <div class="w-full h-px bg-gray-300 my-4"></div>
-                </div>
-                <div class="grid grid-cols-1 gap-3">
-                    <div class="card p-3 text-center">
-                        <h3 class="text-gold font-bold text-sm">Ngày</h3>
-                        <p id="event-date" class="text-base"></p>
-                    </div>
-                    <div class="card p-3 text-center">
-                        <h3 class="text-gold font-bold text-sm">Giờ</h3>
-                        <p id="event-time" class="text-base"></p>
-                    </div>
-                    <div class="card p-3 text-center">
-                        <h3 class="text-gold font-bold text-sm">Địa điểm</h3>
-                        <p id="event-venue" class="text-sm md:text-base font-medium"></p>
-                        <p id="event-address" class="text-sm text-gray-600"></p>
-                    </div>
-                </div>
-                <div class="mt-auto pt-3">
-                    <h3 class="text-center text-sm font-black tracking-widest text-[#242424] uppercase mb-2">Ảnh Dẫn Đường</h3>
-                    <img src="/image/graduation/map.jpg" alt="Bản đồ" class="w-full rounded-lg shadow-md border border-gray-200">
-                </div>
-                <div class="text-center mt-3 pt-3 border-t border-gray-200">
-                    <h3 class="text-lg font-bold">TRÂN TRỌNG KÍNH MỜI</h3>
-                    <p class="text-xl font-serif font-extrabold mt-1">Sự hiện diện của Quý Vị</p>
-                </div>
-            </div>
+
+        <div class="avatar-wrap">
+            <img src="/image/nguyet-que.png" class="avatar-frame">
+            <img id="graduate-image" class="avatar">
         </div>
+
+        <p id="invite-line" class="invite-text">
+            Trân trọng kính mời <span id="guestNameHero" class="guest"></span> đến tham dự lễ tốt nghiệp.
+        </p>
+
+        <p id="graduate-info" class="sub-info"></p>
     </div>
 
-    <script type="module">
-        async function loadPreviewData() {
-            try {
-                const response = await fetch('/data/info.json', { cache: 'no-store' });
-                if (!response.ok) throw new Error('Không thể tải file info.json');
-                const info = await response.json();
+    <div class="right-col">
+        <div class="uni-header">
+            <img src="/image/graduation/logotruong.jpg" class="uni-logo">
+            <p id="university-name" class="uni-name"></p>
+        </div>
 
-                const nameEl = document.getElementById('graduate-name');
-                const imgEl = document.getElementById('graduate-image');
-                const infoEl = document.getElementById('graduate-info');
-                const inviteEl = document.getElementById('invite-line');
-                const guestSpanEl = document.getElementById('guestNameHero');
+        <h1 class="info-title">Thông Tin Sự Kiện</h1>
+        <div class="divider"></div>
 
-                const gradImage = info.graduateImage
-                  || (Array.isArray(info.graduateImages) && info.graduateImages[0])
-                  || '/image/graduation/main.jpg';
+        <div class="info-grid">
 
-                nameEl.textContent = info.graduateName || 'Tên Tân Cử Nhân';
-                imgEl.src = gradImage;
-                infoEl.textContent = `${info.universityShort || info.university || ''} — Ngày ${info.date || ''}`.trim();
-                // Lấy guest từ query, path /graduation_preview/:guest hoặc sessionStorage
-                const paramsGuest = new URLSearchParams(window.location.search).get('guest');
-                const pathSegments = window.location.pathname.split('/').filter(Boolean);
-                const gpIndex = pathSegments.indexOf('graduation_preview');
-                const pathGuest = gpIndex !== -1 && pathSegments[gpIndex + 1] ? decodeURIComponent(pathSegments[gpIndex + 1]) : null;
-                const ssGuest = sessionStorage.getItem('guest') || sessionStorage.getItem('returnName');
-                const guestName = paramsGuest || pathGuest || ssGuest || 'bạn';
+            <div class="info-card">
+                <h3 class="gold small-title">Ngày</h3>
+                <p id="event-date"></p>
+            </div>
 
-                // Hiển thị câu mời theo định dạng của g_i.html
-                inviteEl.innerHTML = `Trân trọng kính mời <span id="guestNameHero" class="font-extrabold text-navy text-2xl md:text-3xl tracking-wide drop-shadow-md">${guestName}</span> đến tham dự lễ tốt nghiệp.`;
-                if (guestSpanEl) guestSpanEl.textContent = guestName;
+            <div class="info-card">
+                <h3 class="gold small-title">Giờ</h3>
+                <p id="event-time"></p>
+            </div>
 
-                document.getElementById('university-name').textContent = info.university || '';
-                document.getElementById('event-date').textContent = info.date || '';
-                document.getElementById('event-time').textContent = info.time || '';
-                const venueText = (info.venue || '').replace(/<br\s*\/?>/gi, ' ').replace(/\s{2,}/g, ' ').trim();
-                document.getElementById('event-venue').textContent = venueText;
-                document.getElementById('event-address').textContent = info.address || '';
+            <div class="info-card">
+                <h3 class="gold small-title">Địa điểm</h3>
+                <p id="event-venue"></p>
+                <p id="event-address" class="address"></p>
+            </div>
 
-                lucide.createIcons();
-            } catch (error) {
-                document.getElementById('capture-container').innerHTML = `<div class="text-red-500 font-bold p-8">${error.message}</div>`;
-            }
-        }
-        window.onload = loadPreviewData;
-    </script>
+        </div>
+
+        <h3 class="map-label">Ảnh Dẫn Đường</h3>
+        <img src="/image/graduation/map.jpg" id="map-img" class="map-img">
+
+        <div class="footer">
+            <h3>TRÂN TRỌNG KÍNH MỜI</h3>
+            <p class="footer-sub">Sự hiện diện của Quý Vị</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/assets/js/preview.js"></script>
 </body>
 </html>
