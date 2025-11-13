@@ -142,9 +142,19 @@
       const { info, guests } = await loadData();
       $("#app").classList.remove("hidden");
       $("#loading").classList.add("hidden");
-      const urlGuest = new URLSearchParams(location.search).get("guest");
+      const paramsGuest = new URLSearchParams(location.search).get("guest");
+      const parts = (location.pathname || "").split('/').filter(Boolean);
+      let pathGuest = "";
+      // Hỗ trợ đọc tên khách từ path: /graduation-simple/:guest hoặc /graduation2025/:guest
+      const idxSimple = parts.indexOf('graduation-simple');
+      const idx2025 = parts.indexOf('graduation2025');
+      if (idxSimple !== -1 && parts[idxSimple+1]) pathGuest = decodeURIComponent(parts[idxSimple+1]);
+      else if (idx2025 !== -1 && parts[idx2025+1]) pathGuest = decodeURIComponent(parts[idx2025+1]);
+      else if (parts.length >= 2 && (parts[parts.length-2] === 'graduation-simple' || parts[parts.length-2] === 'graduation2025')) {
+        pathGuest = decodeURIComponent(parts[parts.length-1]);
+      }
       const ssGuest = sessionStorage.getItem("guestName");
-      let guestName = urlGuest || ssGuest || "";
+      let guestName = paramsGuest || pathGuest || ssGuest || "";
       render(info, guests, guestName);
       const wrap = $("#guestNameFormWrap");
       const form = $("#guestNameForm");
