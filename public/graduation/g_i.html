@@ -701,11 +701,22 @@
 
     // ===== Main =====
     async function main() {
-      AOS.init({ duration: 700, once: true, offset: 40 });
-      lucide.createIcons();
+      try { AOS.init({ duration: 700, once: true, offset: 40 }); } catch(_){}
+      try { lucide.createIcons(); } catch(_){}
 
       // load data
-      const { info, guests } = await loadData();
+      let info, guests;
+      try {
+        const data = await loadData();
+        info = data.info; guests = data.guests;
+      } catch (err) {
+        $("#loading").innerHTML = `
+          <div class="text-center text-charcoal">
+            <h2 class="text-2xl font-bold text-red-600">Không thể tải dữ liệu</h2>
+            <p class="mt-2">Lỗi khi tải dữ liệu. Kiểm tra Firestore hoặc /data/*.json.</p>
+          </div>`;
+        return;
+      }
       INFO=info; GUESTS=guests;
 
       if (!info) {
@@ -718,8 +729,10 @@
       }
 
       // show app
-      $("#app").classList.remove("hidden");
-      $("#loading").classList.add("hidden");
+      const appEl = $("#app");
+      if (appEl) appEl.classList.remove("hidden");
+      const loadingEl = $("#loading");
+      if (loadingEl) loadingEl.classList.add("hidden");
 
       // chrome
       $("#logoOverlay").innerHTML = `<img src="${ASSETS.LOGO}" class="w-10 h-10 md:w-12 md:h-12" alt="">`;
