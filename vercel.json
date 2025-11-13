@@ -74,6 +74,10 @@
       "destination": "/graduation/preview.html"
     },
     {
+      "source": "/graduation_preview/:guest",
+      "destination": "/graduation/preview.html"
+    },
+    {
       "source": "/grad2025",
       "destination": "/graduation/g_i_simple.html"
     },
