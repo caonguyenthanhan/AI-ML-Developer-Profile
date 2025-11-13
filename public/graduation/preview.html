@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thiệp Mời Tốt Nghiệp — Preview</title>
 
-    <link href="/assets/css/tw.css" rel="stylesheet" />
-    <link href="/assets/css/preview.css" rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <link href="/assets/css/tw.css" rel="stylesheet">
+
+    <!-- Custom preview CSS -->
+    <link href="/assets/css/preview.css" rel="stylesheet">
 </head>
 
 <body class="bg-[#FFFBF7] flex items-center justify-center min-h-screen">
 
+<!-- KHUNG CHỤP PREVIEW -->
 <div id="capture-container">
 
-    <!-- Viền PNG 1200x630 mới -->
-    <img id="gold-frame" src="/assets/frame/graduation-frame-1200x630.png" alt="">
+    <!-- VIỀN PNG 1200×630 -->
+    <img id="gold-frame" src="/assets/frame/graduation-frame-1200x630.png" alt="Frame">
 
-
+    <!-- CỘT TRÁI -->
     <div class="left-col">
         <p class="label">THƯ MỜI</p>
         <h1 class="title">LỄ TỐT NGHIỆP</h1>
@@ -32,13 +36,15 @@
         </div>
 
         <p id="invite-line" class="invite-text">
-            Trân trọng kính mời <span id="guestNameHero" class="guest"></span> đến tham dự lễ tốt nghiệp.
+            Trân trọng kính mời <span id="guestNameHero" class="guest">bạn</span> đến tham dự lễ tốt nghiệp.
         </p>
 
         <p id="graduate-info" class="sub-info"></p>
     </div>
 
+    <!-- CỘT PHẢI -->
     <div class="right-col">
+
         <div class="uni-header">
             <img src="/image/graduation/logotruong.jpg" class="uni-logo">
             <p id="university-name" class="uni-name"></p>
@@ -80,5 +86,6 @@
 </div>
 
 <script src="/assets/js/preview.js"></script>
+
 </body>
 </html>

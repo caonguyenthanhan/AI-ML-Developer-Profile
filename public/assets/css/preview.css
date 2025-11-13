@@ -1,0 +1,155 @@
+#capture-container {
+    width: 1200px;
+    height: 630px;
+    position: relative;
+    background: #FFFBF7;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+/* VIỀN PNG */
+#gold-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* CỘT TRÁI + PHẢI */
+.left-col,
+.right-col {
+    width: 50%;
+    padding: 32px;
+    z-index: 4;
+}
+
+/* TEXT */
+.label { 
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: #D4AF37;
+}
+
+.title {
+    font-size: 42px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+}
+
+.degree-tag {
+    margin: 16px auto;
+    padding: 6px 16px;
+    background: white;
+    border: 1px solid #E6E2D8;
+    border-radius: 50px;
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.gold { color: #D4AF37; }
+
+.grad-name {
+    font-size: 26px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+}
+
+.invite-text {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.guest {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1d2d45;
+}
+
+/* AVATAR */
+.avatar-wrap {
+    width: 220px;
+    height: 220px;
+    margin: 24px auto;
+    position: relative;
+}
+
+.avatar-frame {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: contain;
+}
+
+.avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #D4AF37;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* CỘT PHẢI */
+.uni-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.uni-logo {
+    height: 32px;
+    width: auto;
+}
+
+.info-title {
+    font-size: 32px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    margin-top: 10px;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background: #ccc;
+    margin: 10px 0;
+}
+
+/* CARDS */
+.info-grid {
+    display: grid;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.info-card {
+    background: #FFFFFFE6;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 12px;
+}
+
+.map-label {
+    margin-top: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.map-img {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    margin-top: 6px;
+}
+
+.foote
