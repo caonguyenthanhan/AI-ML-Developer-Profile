@@ -10,6 +10,10 @@
 
   <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Firebase compat -->
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
 </head>
 <body class="bg-gray-50 text-navy font-sans">
 
@@ -90,12 +94,8 @@
     </div>
   </main>
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
+  <!-- Firebase SDK (compat) + App JS -->
+  <script>
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
     const firebaseConfig = typeof __firebase_config !== "undefined" ? JSON.parse(__firebase_config) : {};
     const initialAuthToken = typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
@@ -106,10 +106,10 @@
     async function setupFirebase() {
       try {
         if (!firebaseConfig || !Object.keys(firebaseConfig).length) return false;
-        const app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        auth = getAuth(app);
-        await signInAnonymously(auth);
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        auth = firebase.auth();
+        await auth.signInAnonymously();
         return true;
       } catch (e) {
         console.error("Firebase init error:", e);
@@ -118,9 +118,9 @@
     }
 
     async function loadInfo() {
-      const ref = doc(db, "artifacts", appId, "public", "data", "info", "event_details");
-      const snap = await getDoc(ref);
-      if (snap.exists()) INFO = snap.data();
+      const ref = db.doc(`artifacts/${appId}/public/data/info/event_details`);
+      const snap = await ref.get();
+      if (snap.exists) INFO = snap.data();
     }
 
     async function loadInfoJson() {
@@ -132,8 +132,8 @@
     }
 
     async function loadRsvps() {
-      const ref = collection(db, "artifacts", appId, "public", "data", "rsvps");
-      const snap = await getDocs(ref);
+      const ref = db.collection(`artifacts/${appId}/public/data/rsvps`);
+      const snap = await ref.get();
       return snap.docs.map(d => d.data());
     }
 
@@ -304,5 +304,6 @@
       renderTable(RSVPS);
     });
   </script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>
