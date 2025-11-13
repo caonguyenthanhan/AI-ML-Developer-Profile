@@ -1,15 +1,23 @@
-#capture-container {
-    width: 1200px;
-    height: 630px;
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background: #FFFBF7;
-    border-radius: 16px;
-    overflow: hidden;
+.preview-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
+    background: white;
 }
 
-/* Frame */
+#capture-container {
+    width: 1200px !important;
+    height: 630px !important;
+    background: #FFFBF7;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Frame PNG */
 #gold-frame {
     position: absolute;
     inset: 0;
@@ -17,25 +25,25 @@
     height: 100%;
     object-fit: cover;
     z-index: 3;
+    pointer-events: none;
 }
 
-/* Columns */
 .left-col, .right-col {
     padding: 32px;
     z-index: 4;
     position: relative;
 }
 
-/* Logo nhỏ lại */
+/* Logo fix */
 .uni-logo {
-    width: 120px;
+    width: 100px;
     height: auto;
 }
 
 /* Avatar */
 .avatar-wrap {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
     margin: 20px auto;
     position: relative;
 }
@@ -48,13 +56,13 @@
 }
 
 .avatar {
-    width: 140px;
-    height: 140px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
+    border: 4px solid #D4AF37;
     object-fit: cover;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 4px solid #D4AF37;
 }
