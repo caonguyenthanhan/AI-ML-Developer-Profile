@@ -84,13 +84,8 @@
     #s1 .flex.flex-wrap.gap-3 { gap: 0.5rem !important; }
     #s1 h1 { margin-top: 0.25rem !important; line-height: 1.1 !important; }
     #s1 .card { padding: 0.5rem !important; }
-    /* Ẩn hai khối avatar & banner khi màn hình nằm ngang hoặc dùng máy tính */
-    @media (orientation: landscape) {
-      #heroAvatarWrap, #congratsBannerWrap { display: none !important; }
-    }
-    @media (hover: hover) and (pointer: fine) {
-      #heroAvatarWrap, #congratsBannerWrap { display: none !important; }
-    }
+    /* Hiển thị avatar & banner trên mọi thiết bị và hướng màn hình */
+    #heroAvatarWrap, #congratsBannerWrap { display: block; }
   </style>
 </head>
 <body>
@@ -133,9 +128,7 @@
     <!-- 1) HERO -->
     <section id="s1" class="section relative text-charcoal">
       <div class="absolute inset-0 -z-10 hero-overlay">
-        <video id="bgVideo" autoplay loop muted playsinline poster="/image/graduation/preview/main-preview.jpg" class="w-full h-full object-cover">
-          <source id="bgVideoSrc" type="video/mp4">
-        </video>
+        <img id="bgHeroImage" src="/image/graduation/Graduation Background.jpg" alt="Graduation Background" class="w-full h-full object-cover" />
       </div>
       <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
 
@@ -186,7 +179,7 @@
         </div>
       </div>
 
-      <div id="congratsBannerWrap" class="relative mt-2 z-10 md:block"></div>
+      <div id="congratsBannerWrap" class="relative mt-2 z-10">
         <img src="/image/graduation/congratulations.png" alt="Congratulations" class="mx-auto w-full max-w-[720px] h-auto drop-shadow-lg" />
       </div>
     </section>
@@ -437,12 +430,8 @@
   </div>
 
   <!-- ====== SCRIPT (Firebase + Logic) ====== -->
-  <script type="text/plain" data-disabled="esm">
-    if (false) {
-    // Firebase SDK
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, getDocs, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  <script>
+    // Firebase SDK (compat v9.23.0 đã được load trong <head>)
 
     // ===== Config & Globals =====
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
@@ -618,26 +607,27 @@
     async function setupFirebase() {
       try {
         if (!firebaseConfig || !Object.keys(firebaseConfig).length) return false;
-        const app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        auth = getAuth(app);
-        if (initialAuthToken) await signInWithCustomToken(auth, initialAuthToken);
-        else await signInAnonymously(auth);
+        const app = firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore(app);
+        try { db.settings({ experimentalForceLongPolling: true, useFetchStreams: false }); } catch(_){}
+        auth = firebase.auth(app);
+        if (initialAuthToken) await auth.signInWithCustomToken(initialAuthToken);
+        else await auth.signInAnonymously();
         return true;
       } catch (e) { console.error("Firebase init error:", e); return false; }
     }
-    const infoDocRef   = () => doc(db, "artifacts", appId, "public", "data", "info", "event_details");
-    const guestsColRef = () => collection(db, "artifacts", appId, "public", "data", "khach");
-    const rsvpsColRef  = () => collection(db, "artifacts", appId, "public", "data", "rsvps");
+    const infoDocRef   = () => db.doc(`artifacts/${appId}/public/data/info/event_details`);
+    const guestsColRef = () => db.collection(`artifacts/${appId}/public/data/khach`);
+    const rsvpsColRef  = () => db.collection(`artifacts/${appId}/public/data/rsvps`);
 
     async function loadData() {
       let info=null, guests=[];
       const canFs = await setupFirebase();
       if (canFs) {
         try {
-          const infoSnap = await getDoc(infoDocRef());
-          if (infoSnap.exists()) info = infoSnap.data();
-          const guestsSnap = await getDocs(guestsColRef());
+          const infoSnap = await infoDocRef().get();
+          if (infoSnap.exists) info = infoSnap.data();
+          const guestsSnap = await guestsColRef().get();
           guests = guestsSnap.docs.map(d=>d.data());
         } catch (e) { console.warn("Firestore read failed; fallback JSON...", e); }
       }
@@ -746,7 +736,7 @@
     async function sendRsvpToFirestore(data) {
       if (!db) return false;
       try {
-        await addDoc(rsvpsColRef(), { ...data, timestamp: new Date().toISOString() });
+        await rsvpsColRef().add({ ...data, timestamp: new Date().toISOString() });
         return true;
       } catch (e) { console.error("RSVP Firestore error:", e); return false; }
     }
@@ -802,7 +792,8 @@
 
       // chrome
       $("#logoOverlay").innerHTML = `<img src="${ASSETS.LOGO}" class="w-10 h-10 md:w-12 md:h-12" alt="">`;
-      $("#bgVideoSrc").src = ASSETS.BG_VIDEO;
+      const heroImg = $("#bgHeroImage");
+      if (heroImg) { heroImg.src = "/image/graduation/Graduation Background.jpg"; }
       setupMusic(info);
       $("#celebrateBtn").addEventListener("click", goldConfetti);
       autoConfettiSequence();
@@ -865,23 +856,13 @@
           const textEl = svg.querySelector("text");
           const fontSize = Math.max(12, Math.round(rect.width * 0.016));
           textEl.style.fontSize = `${fontSize}px`;
-          // đảm bảo nội dung phủ kín chu vi, không khoảng trống
-          oit.textContent = phraseOuter;
-          let pLen = path.getTotalLength();
-          let tLen = textEl.getComputedTextLength();
-          let reps = 1;
-          while (tLen < pLen * 1.25 && reps < 256) {
-            reps *= 2;
-            oit.textContent = phraseOuter.repeat(reps);
-            tLen = textEl.getComputedTextLength();
-          }
-          while (tLen < pLen * 1.25 && reps < 1024) {
-            reps += 1;
-            oit.textContent = phraseOuter.repeat(reps);
-            tLen = textEl.getComputedTextLength();
-          }
-          // Hoạt ảnh chạy tức thời và mượt bằng requestAnimationFrame
-          const periodSec = 30;
+          // Phủ kín chu vi ổn định bằng textLength/spacing (không lặp vô hạn)
+          const pLen = path.getTotalLength();
+          textEl.setAttribute("lengthAdjust", "spacing");
+          textEl.setAttribute("textLength", String(pLen));
+          oit.textContent = phraseOuter.repeat(10);
+          // Hoạt ảnh chạy mượt bằng requestAnimationFrame
+          const periodSec = 25;
           let startT = performance.now();
           const rafLoop = (now) => {
             const elapsed = (now - startT) / 1000;
@@ -897,20 +878,9 @@
             path.setAttribute("d", `M${m},${m} H${r.width - m} V${r.height - m} H${m} Z`);
             const fs = Math.max(9, Math.round(r.width * 0.012));
             textEl.style.fontSize = `${fs}px`;
-            oit.textContent = phraseOuter;
-            pLen = path.getTotalLength();
-            tLen = textEl.getComputedTextLength();
-            reps = 1;
-            while (tLen < pLen * 1.25 && reps < 256) {
-              reps *= 2;
-              oit.textContent = phraseOuter.repeat(reps);
-              tLen = textEl.getComputedTextLength();
-            }
-            while (tLen < pLen * 1.25 && reps < 1024) {
-              reps += 1;
-              oit.textContent = phraseOuter.repeat(reps);
-              tLen = textEl.getComputedTextLength();
-            }
+            const newLen = path.getTotalLength();
+            textEl.setAttribute("textLength", String(newLen));
+            oit.textContent = phraseOuter.repeat(10);
           });
         }
       }
@@ -932,23 +902,13 @@
         const textElAll = svgGlobal.querySelector("text");
         const fsAll = Math.max(12, Math.round(wAll * 0.014));
         textElAll.style.fontSize = `${fsAll}px`;
-        // đảm bảo nội dung phủ kín chu vi, không khoảng trống
-        oitGlobal.textContent = phraseAll;
-        let pLenAll = pathGlobal.getTotalLength();
-        let tLenAll = textElAll.getComputedTextLength();
-        let repsAll = 1;
-        while (tLenAll < pLenAll * 1.25 && repsAll < 256) {
-          repsAll *= 2;
-          oitGlobal.textContent = phraseAll.repeat(repsAll);
-          tLenAll = textElAll.getComputedTextLength();
-        }
-        while (tLenAll < pLenAll * 1.25 && repsAll < 1024) {
-          repsAll += 1;
-          oitGlobal.textContent = phraseAll.repeat(repsAll);
-          tLenAll = textElAll.getComputedTextLength();
-        }
-        // Animation chạy mượt và theo chiều ngược lại
-        const periodSecAll = 400;
+        // Phủ kín chu vi ổn định bằng textLength/spacing (không lặp vô hạn)
+        const pLenAll = pathGlobal.getTotalLength();
+        textElAll.setAttribute("lengthAdjust", "spacing");
+        textElAll.setAttribute("textLength", String(pLenAll));
+        oitGlobal.textContent = phraseAll.repeat(12);
+        // Animation chạy mượt
+        const periodSecAll = 120;
         let startAll = performance.now();
         const rafAll = (now) => {
           const elapsed = (now - startAll) / 1000;
@@ -966,20 +926,9 @@
           pathGlobal.setAttribute("d", `M${mAll},${mAll} H${wN - mAll} V${hN - mAll} H${mAll} Z`);
           const fsN = Math.max(12, Math.round(wN * 0.014));
           textElAll.style.fontSize = `${fsN}px`;
-          oitGlobal.textContent = phraseAll;
-          pLenAll = pathGlobal.getTotalLength();
-          tLenAll = textElAll.getComputedTextLength();
-          repsAll = 1;
-          while (tLenAll < pLenAll * 1.25 && repsAll < 256) {
-            repsAll *= 2;
-            oitGlobal.textContent = phraseAll.repeat(repsAll);
-            tLenAll = textElAll.getComputedTextLength();
-          }
-          while (tLenAll < pLenAll * 1.25 && repsAll < 1024) {
-            repsAll += 1;
-            oitGlobal.textContent = phraseAll.repeat(repsAll);
-            tLenAll = textElAll.getComputedTextLength();
-          }
+          const newLenAll = pathGlobal.getTotalLength();
+          textElAll.setAttribute("textLength", String(newLenAll));
+          oitGlobal.textContent = phraseAll.repeat(12);
         });
       }
 
@@ -1109,7 +1058,6 @@
     }
 
     window.addEventListener("load", main);
-    }
   </script>
 
   <script>
