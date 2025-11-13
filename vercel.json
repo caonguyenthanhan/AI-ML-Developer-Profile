@@ -65,12 +65,8 @@
       "destination": "/graduation/g_i.html"
     },
     {
-      "source": "/image/graduation/main-preview.jpg",
-      "destination": "/image/graduation/preview/main-preview.jpg"
-    },
-        {
-      "source": "/image/graduation/main-preview.png",
-      "destination": "/image/graduation/preview/main-preview.png"
+      "source": "/image/:guest",
+      "destination": "/image/:guest"
     },
     {
       "source": "/graduation/:guest",
