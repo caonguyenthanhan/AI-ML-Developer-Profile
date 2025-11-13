@@ -676,7 +676,7 @@
       const imEl = $("#inviteMessage");
       if (imEl) imEl.innerHTML = `<strong><em>${inviteMsg}</em></strong>`;
       $("#inviterName").textContent = `— ${info?.graduateName || "Tân cử nhân"}`;
-      $("#guestAvatar").src = avatar.startsWith("/") ? avatar : `/image/graduation/${avatar}`;
+      $("#guestAvatar").src = avatar.startsWith("/") ? avatar : `${avatar}`;
     }
 
     // ===== RSVP senders =====

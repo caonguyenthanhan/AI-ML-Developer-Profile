@@ -115,15 +115,7 @@
 
   <!-- App -->
   <main id="app" class="hidden relative">
-    <!-- Viền chữ động bao quanh toàn bộ thiệp (tất cả 5 section) -->
-    <svg class="pointer-events-none" data-global-border="true" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; z-index:50;">
-      <defs>
-        <path id="outerRectPathGlobal" d="M6,6 H94 V94 H6 Z" />
-      </defs>
-      <text style="fill:#D4AF37; font-size:10px; letter-spacing:0.25em; font-weight:600; dominant-baseline:middle;">
-        <textPath id="outerInviteTextGlobal" href="#outerRectPathGlobal" startOffset="0%" method="align" spacing="auto" dy="10">Mời bạn đến chung vui cùng • </textPath>
-      </text>
-    </svg>
+    <!-- Bỏ viền chạy toàn trang: yêu cầu chỉ giữ viền chạy ảnh khách -->
 
     <!-- 1) HERO -->
     <section id="s1" class="section relative text-charcoal">
@@ -358,15 +350,7 @@
           </div>
         </div>
         </div>
-        <!-- Viền chữ chạy ngoài khung chữ nhật -->
-        <svg class="pointer-events-none" data-outer-border="true" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%;">
-          <defs>
-            <path id="outerRectPath" d="M6,6 H94 V94 H6 Z" />
-          </defs>
-          <text style="fill:#242424; font-size:10px; letter-spacing:0.25em; font-weight:600;">
-            <textPath id="outerInviteText" href="#outerRectPath" startOffset="0%" method="align" spacing="auto">Mời bạn đến chung vui cùng • </textPath>
-          </text>
-        </svg>
+        <!-- Bỏ viền chạy khung chữ nhật của s5 theo yêu cầu -->
       </div>
     </section>
 
@@ -729,7 +713,7 @@
       const imEl = $("#inviteMessage");
       if (imEl) imEl.innerHTML = `<strong><em>${inviteMsg}</em></strong>`;
       $("#inviterName").textContent = `— ${info?.graduateName || "Tân cử nhân"}`;
-      $("#guestAvatar").src = avatar.startsWith("/") ? avatar : `/image/graduation/${avatar}`;
+      $("#guestAvatar").src = avatar.startsWith("/") ? avatar : `${avatar}`;
     }
 
     // ===== RSVP senders =====
@@ -831,106 +815,9 @@
         ict.textContent = `${phrase}${phrase}${phrase}`.trim();
       }
 
-      // viền chạy ngoài khung chữ nhật (nội dung độc lập)
-      const oit = $("#outerInviteText");
-      if (oit) {
-        const phraseOuter = `Mời bạn đến chung vui cùng ${info?.graduateName  || ""} • ${info?.thanksMessage || ""} • `;
-        oit.textContent = `${phraseOuter}${phraseOuter}${phraseOuter}${phraseOuter}${phraseOuter}${phraseOuter}`.trim();
-        // Căn chỉnh hình học để viền chữ khớp kích thước card
-        const wrap = document.getElementById("personalInviteCardWrap");
-        const card = wrap?.querySelector(".card");
-        const svg = wrap?.querySelector("svg[data-outer-border]");
-        const path = wrap?.querySelector("#outerRectPath");
-        if (wrap && card && svg && path) {
-          const rect = card.getBoundingClientRect();
-          const m = 10; // khoảng cách viền bên trong
-          // đặt viewBox theo pixel của card
-          svg.setAttribute("viewBox", `0 0 ${rect.width} ${rect.height}`);
-          // phủ đúng bên trong wrapper
-          svg.style.inset = `0px`;
-          svg.style.width = `100%`;
-          svg.style.height = `100%`;
-          // vẽ hình chữ nhật bên trong card với margin m
-          path.setAttribute("d", `M${m},${m} H${rect.width - m} V${rect.height - m} H${m} Z`);
-          // điều chỉnh kích thước chữ theo bề rộng
-          const textEl = svg.querySelector("text");
-          const fontSize = Math.max(12, Math.round(rect.width * 0.016));
-          textEl.style.fontSize = `${fontSize}px`;
-          // Phủ kín chu vi ổn định bằng textLength/spacing (không lặp vô hạn)
-          const pLen = path.getTotalLength();
-          textEl.setAttribute("lengthAdjust", "spacing");
-          textEl.setAttribute("textLength", String(pLen));
-          oit.textContent = phraseOuter.repeat(10);
-          // Hoạt ảnh chạy mượt bằng requestAnimationFrame
-          const periodSec = 25;
-          let startT = performance.now();
-          const rafLoop = (now) => {
-            const elapsed = (now - startT) / 1000;
-            const offset = (((elapsed % periodSec) / periodSec)) * 100;
-            oit.setAttribute("startOffset", `${offset}%`);
-            requestAnimationFrame(rafLoop);
-          };
-          requestAnimationFrame(rafLoop);
-          // cập nhật lại khi cửa sổ đổi kích thước
-          window.addEventListener("resize", () => {
-            const r = card.getBoundingClientRect();
-            svg.setAttribute("viewBox", `0 0 ${r.width} ${r.height}`);
-            path.setAttribute("d", `M${m},${m} H${r.width - m} V${r.height - m} H${m} Z`);
-            const fs = Math.max(9, Math.round(r.width * 0.012));
-            textEl.style.fontSize = `${fs}px`;
-            const newLen = path.getTotalLength();
-            textEl.setAttribute("textLength", String(newLen));
-            oit.textContent = phraseOuter.repeat(10);
-          });
-        }
-      }
+      // Bỏ viền chữ chạy khung chữ nhật của s5 theo yêu cầu
 
-      // Viền chữ động bao quanh toàn bộ 5 section (toàn trang thiệp mời)
-      const oitGlobal = document.getElementById("outerInviteTextGlobal");
-      const svgGlobal = document.querySelector('svg[data-global-border]');
-      const pathGlobal = document.getElementById("outerRectPathGlobal");
-      const appMain = document.getElementById("app");
-      if (oitGlobal && svgGlobal && pathGlobal && appMain) {
-        const phraseAll = `Mời bạn đến chung vui cùng ${info?.graduateName || ""} • `;
-        oitGlobal.textContent = phraseAll;
-        const mAll = 12; // khoảng cách viền bao ngoài
-        const rectMain = appMain.getBoundingClientRect();
-        const wAll = rectMain.width;
-        const hAll = appMain.scrollHeight; // toàn bộ chiều cao nội dung
-        svgGlobal.setAttribute("viewBox", `0 0 ${wAll} ${hAll}`);
-        pathGlobal.setAttribute("d", `M${mAll},${mAll} H${wAll - mAll} V${hAll - mAll} H${mAll} Z`);
-        const textElAll = svgGlobal.querySelector("text");
-        const fsAll = Math.max(12, Math.round(wAll * 0.014));
-        textElAll.style.fontSize = `${fsAll}px`;
-        // Phủ kín chu vi ổn định bằng textLength/spacing (không lặp vô hạn)
-        const pLenAll = pathGlobal.getTotalLength();
-        textElAll.setAttribute("lengthAdjust", "spacing");
-        textElAll.setAttribute("textLength", String(pLenAll));
-        oitGlobal.textContent = phraseAll.repeat(12);
-        // Animation chạy mượt
-        const periodSecAll = 120;
-        let startAll = performance.now();
-        const rafAll = (now) => {
-          const elapsed = (now - startAll) / 1000;
-          const offset = (((elapsed % periodSecAll) / periodSecAll)) * 100;
-          oitGlobal.setAttribute("startOffset", `${offset}%`);
-          requestAnimationFrame(rafAll);
-        };
-        requestAnimationFrame(rafAll);
-        // Cập nhật khi thay đổi kích thước cửa sổ
-        window.addEventListener("resize", () => {
-          const rMain = appMain.getBoundingClientRect();
-          const wN = rMain.width;
-          const hN = appMain.scrollHeight;
-          svgGlobal.setAttribute("viewBox", `0 0 ${wN} ${hN}`);
-          pathGlobal.setAttribute("d", `M${mAll},${mAll} H${wN - mAll} V${hN - mAll} H${mAll} Z`);
-          const fsN = Math.max(12, Math.round(wN * 0.014));
-          textElAll.style.fontSize = `${fsN}px`;
-          const newLenAll = pathGlobal.getTotalLength();
-          textElAll.setAttribute("textLength", String(newLenAll));
-          oitGlobal.textContent = phraseAll.repeat(12);
-        });
-      }
+      // Bỏ viền chữ chạy bao quanh toàn trang theo yêu cầu
 
       // contact
       const c = info?.contact || {};
