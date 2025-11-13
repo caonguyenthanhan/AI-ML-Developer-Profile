@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thiệp Mời Tốt Nghiệp — Phiên bản đơn giản</title>
+  <meta property="og:title" content="Thiệp Mời Lễ Tốt Nghiệp — Bản đơn giản" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="/image/graduation/logotruong.png" />
+  <link href="/assets/css/tw.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; color: #242424; background: #FFFBF7; }
+    .section { min-height: 60vh; display: grid; place-items: center; padding: 2rem 1rem; }
+    .card { background: rgba(255,255,255,.9); border: 1px solid rgba(212,175,55,.35); border-radius: 1rem; box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.5rem 1rem; border-radius:999px; font-weight:600; }
+    .btn-gold { background:#D4AF37; color:#242424; }
+    .text-gold { color:#D4AF37; }
+    .text-navy { color:#242424; }
+    .count-box { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.25rem; border-radius:10px; background:#242424; color:#FFFBF7; padding:.75rem; }
+    .container { width:100%; max-width:1000px; margin:0 auto; }
+  </style>
+</head>
+<body>
+  <div id="loading" class="fixed inset-0 grid place-items-center bg-white/90 text-charcoal z-[200]">
+    <div class="text-center">
+      <p class="mt-3 font-semibold">Đang tải dữ liệu...</p>
+    </div>
+  </div>
+
+  <main id="app" class="hidden">
+    <section class="section">
+      <div class="container text-center">
+        <p class="font-semibold tracking-[0.35em] text-gold text-sm">THƯ MỜI</p>
+        <h1 class="font-serif font-black text-4xl leading-none mt-2">LỄ TỐT NGHIỆP</h1>
+        <div class="mt-4 inline-flex items-center gap-2 bg-white/70 px-5 py-2 rounded-full border border-[#E6E2D8]/60">
+          <span class="text-gold font-bold text-sm">TÂN CỬ NHÂN</span>
+          <span id="graduateNameHero" class="font-serif font-black text-2xl">Tên Tân Cử Nhân</span>
+        </div>
+        <p id="inviteLine" class="mt-3 text-xl text-charcoal">
+          Trân trọng kính mời <span id="guestNameHero" class="font-extrabold text-navy text-2xl">bạn</span> đến tham dự lễ tốt nghiệp.
+        </p>
+        <div id="guestNameFormWrap" class="mt-3 hidden">
+          <form id="guestNameForm" class="w-full max-w-xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_auto] gap-2">
+            <input id="guestNameInput" type="text" class="px-4 py-2 rounded-lg bg-white/90 text-navy placeholder-navy/50 focus:outline-none" placeholder="Nhập tên của bạn..." />
+            <button type="submit" class="btn btn-gold">Xác nhận</button>
+          </form>
+          <p class="text-sm text-[#7A6E61] mt-2 text-center">Nhập tên để cá nhân hóa thiệp mời.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div class="card p-4">
+            <span class="font-bold text-gold text-sm">Ngày</span>
+            <div id="sumDate" class="text-charcoal text-sm">Chưa cập nhật</div>
+          </div>
+          <div class="card p-4">
+            <span class="font-bold text-gold text-sm">Giờ</span>
+            <div id="sumTime" class="text-charcoal text-sm">Chưa cập nhật</div>
+          </div>
+          <div class="card p-4">
+            <span class="font-bold text-gold text-sm">Địa điểm</span>
+            <div id="sumVenue" class="text-charcoal text-sm">Chưa cập nhật</div>
+          </div>
+        </div>
+        <div class="mt-6 card p-4 text-center">
+          <p id="eventAddress" class="text-center text-[#7A6E61] text-base font-semibold"></p>
+          <div id="mapEmbed" class="mt-2"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="max-w-3xl w-full card p-6 text-center mx-auto">
+          <h2 class="font-serif text-3xl font-black text-gold">Thiệp Mời Cá Nhân</h2>
+          <p id="guestTarget" class="mt-2 text-[#7A6E61]">Dành cho bạn</p>
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="md:col-span-2 text-left">
+              <p id="inviteMessage" class="text-lg font-serif italic text-charcoal text-center"></p>
+              <div class="mt-3 mx-auto text-center">
+                <p id="inviterName" class="text-sm text-[#7A6E61] text-center">— Tân cử nhân</p>
+              </div>
+            </div>
+            <div class="text-center">
+              <img id="guestAvatar" src="/image/graduation/man.jpg" class="w-24 h-24 rounded-full object-cover ring-2 ring-gold/30 mx-auto block" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const INFO_URL = "/data/info.json";
+    const GUESTS_URL = "/data/khach.json";
+    const $ = (s, r=document) => r.querySelector(s);
+    const normalize = s => (s||"").toLowerCase().trim().replace(/\s+/g," ");
+    const beautifyName = s => (s||"").split(" ").map(w=>w? w[0].toUpperCase()+w.slice(1).toLowerCase(): w).join(" ");
+    const cleanImagePath = p => (p||"").replace(/^public\//, "/");
+
+    async function loadData() {
+      let info=null, guests=[];
+      try { const r = await fetch(INFO_URL, { cache: "no-store" }); if (r.ok) info = await r.json(); } catch(e){}
+      try {
+        const r = await fetch(GUESTS_URL, { cache: "no-store" });
+        if (r.ok) { const j = await r.json(); guests = Array.isArray(j?.guests)? j.guests : Array.isArray(j)? j : []; }
+      } catch(e){}
+      guests = (guests||[]).map(g=>({ ...g, nameEncoded: encodeURIComponent(g.name) }));
+      return { info, guests };
+    }
+
+    function pickGuest(guests, name) {
+      const q = normalize(name);
+      return guests.find(g=>normalize(g.name)===q) || guests.find(g=>normalize(g.name).includes(q));
+    }
+
+    function render(info, guests, guestName) {
+      $("#graduateNameHero").textContent = info?.graduateName || "Tên Tân Cử Nhân";
+      $("#sumDate").textContent = info?.date || "Chưa cập nhật";
+      $("#sumTime").textContent = info?.time || "Chưa cập nhật";
+      $("#sumVenue").textContent = info?.venue || "Chưa cập nhật";
+      $("#eventAddress").textContent = info?.address || "";
+      const m = info?.mapLink ? `<a href="${info.mapLink}" target="_blank" class="text-blue-600 underline">Xem bản đồ</a>` : "";
+      $("#mapEmbed").innerHTML = m;
+      const inviteMsg = info?.inviteMessage || info?.thanksMessage || "Rất mong được đón tiếp bạn tại buổi lễ.";
+      $("#inviteMessage").textContent = inviteMsg;
+      $("#inviterName").textContent = `— ${info?.inviterName || info?.graduateName || "Tân cử nhân"}`;
+      if (guestName) {
+        const b = beautifyName(guestName);
+        $("#guestNameHero").textContent = b;
+        $("#guestTarget").textContent = `Dành cho ${b}`;
+        const g = pickGuest(guests, guestName);
+        const avatar = cleanImagePath(g?.image) || cleanImagePath(g?.previewImage) || "/image/graduation/man.jpg";
+        $("#guestAvatar").src = avatar;
+      }
+    }
+
+    async function main() {
+      const { info, guests } = await loadData();
+      $("#app").classList.remove("hidden");
+      $("#loading").classList.add("hidden");
+      const urlGuest = new URLSearchParams(location.search).get("guest");
+      const ssGuest = sessionStorage.getItem("guestName");
+      let guestName = urlGuest || ssGuest || "";
+      render(info, guests, guestName);
+      const wrap = $("#guestNameFormWrap");
+      const form = $("#guestNameForm");
+      const input = $("#guestNameInput");
+      if (!guestName && wrap && form && input) {
+        wrap.classList.remove("hidden");
+        form.addEventListener("submit", e=>{
+          e.preventDefault();
+          const v = input.value.trim();
+          if (!v) return;
+          sessionStorage.setItem("guestName", v);
+          wrap.classList.add("hidden");
+          render(info, guests, v);
+        });
+      }
+    }
+
+    window.addEventListener("load", main);
+  </script>
+</body>
+</html>
