@@ -2,174 +2,174 @@
   "guests": [
     {
       "name": "Hiếu Nghĩa",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Chúc mừng bạn đã làm được!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Thiên Bảo",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Một chặng đường mới bắt đầu, chúc bạn thành công!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Nhật Trường",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Tự hào về bạn!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Hữu Vĩnh",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Chúc mọi điều tốt đẹp nhất sẽ đến với bạn.",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Ngọc Trâm",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "female",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Bay cao, bay xa nhé!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Đăng Thi",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "female",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Chúc mừng bạn đã làm được!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Phuơng Mai",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "female",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Một chặng đường mới bắt đầu, chúc bạn thành công!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Thành An",
       "title": "giáo chủ",
       "gender": "male",
       "image": "public/image/graduation/khach/thanh_an2.png",
-      "message": "",
+      "message": "Tự hào về bạn!",
       "special": true,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Trâm Anh",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "female",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Chúc mọi điều tốt đẹp nhất sẽ đến với bạn.",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Minh Thông",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Bay cao, bay xa nhé!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Gia Kiệt",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Chúc mừng bạn đã làm được!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Tài Phát",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Một chặng đường mới bắt đầu, chúc bạn thành công!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "chị Hân",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "female",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Tự hào về bạn!",
       "special": true,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Phúc Lâm",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Chúc mọi điều tốt đẹp nhất sẽ đến với bạn.",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Long Nhật",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Bay cao, bay xa nhé!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Duy lê",
-      "title": "",
+      "title": "Bạn bè",
       "gender": "male",
-      "image": "",
-      "message": "",
+      "image": "public/image/default_avatar.png",
+      "message": "Chúc mừng bạn đã làm được!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Ngọc Hân",
-      "title": "",
-      "gender": "",
-      "image": "",
-      "message": "",
+      "title": "Bạn bè",
+      "gender": "female",
+      "image": "public/image/default_avatar.png",
+      "message": "Một chặng đường mới bắt đầu, chúc bạn thành công!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Tấn Tài",
-      "title": "",
-      "gender": "",
-      "image": "",
-      "message": "",
+      "title": "Bạn bè",
+      "gender": "male",
+      "image": "public/image/default_avatar.png",
+      "message": "Tự hào về bạn!",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     },
     {
       "name": "Đăng Khoa",
-      "title": "",
-      "gender": "",
-      "image": "",
-      "message": "",
+      "title": "Bạn bè",
+      "gender": "male",
+      "image": "public/image/default_avatar.png",
+      "message": "Chúc mọi điều tốt đẹp nhất sẽ đến với bạn.",
       "special": false,
-      "previewImage": ""
+      "previewImage": "public/image/default_avatar.png"
     }
   ]
 }
