@@ -42,12 +42,28 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Tải thư viện confetti cho hiệu ứng chúc mừng -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-    <!-- Firebase compat SDKs -->
- <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
- <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
- <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
+    <!-- Firebase compat SDKs (9.23.0, chỉ load 1 lần) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Guard: iPhone/Messenger tắt video & AOS, limit confetti -->
+    <script>
+      (function(){
+        var ua = navigator.userAgent || '';
+        var isIOS = /iPhone|iPad|iPod/i.test(ua);
+        var isMessenger = /FBAN|FBAV|Messenger/i.test(ua);
+        window.__isIOS = isIOS; window.__isMessenger = isMessenger;
+        window.__confettiMax = (isIOS || isMessenger) ? 80 : 120;
+        if (isIOS || isMessenger) {
+          window.addEventListener('DOMContentLoaded', function(){
+            var v = document.querySelector('#bgVideo, #background-video, .hero-video video');
+            if (v) { try{ v.pause(); }catch(_){} v.removeAttribute('autoplay'); v.removeAttribute('loop'); v.style.display='none'; }
+            document.querySelectorAll('[data-aos]').forEach(function(el){ el.removeAttribute('data-aos'); });
+          });
+          try { if (window.AOS && AOS.init) { AOS.init = function(){ return; }; } } catch(_){}
+        }
+      })();
+    </script>
     <style>
         /* CSS tuỳ chỉnh để thêm hiệu ứng lấp lánh và kiểu thiệp mời */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;600;700&display=swap');

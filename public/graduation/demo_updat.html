@@ -15,9 +15,28 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
+    <!-- Firebase compat 9.23.0 (ổn định) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Guard: iPhone/Messenger tắt video & AOS, limit confetti -->
+    <script>
+      (function(){
+        var ua = navigator.userAgent || '';
+        var isIOS = /iPhone|iPad|iPod/i.test(ua);
+        var isMessenger = /FBAN|FBAV|Messenger/i.test(ua);
+        window.__isIOS = isIOS; window.__isMessenger = isMessenger;
+        window.__confettiMax = (isIOS || isMessenger) ? 80 : 120;
+        if (isIOS || isMessenger) {
+          window.addEventListener('DOMContentLoaded', function(){
+            var v = document.querySelector('#bgVideo, #background-video, .hero-video video');
+            if (v) { try{ v.pause(); }catch(_){} v.removeAttribute('autoplay'); v.removeAttribute('loop'); v.style.display='none'; }
+            document.querySelectorAll('[data-aos]').forEach(function(el){ el.removeAttribute('data-aos'); });
+          });
+          try { if (window.AOS && AOS.init) { AOS.init = function(){ return; }; } } catch(_){}
+        }
+      })();
+    </script>
     <style>
         /* ... (Giữ nguyên CSS cũ của bạn) ... */
 

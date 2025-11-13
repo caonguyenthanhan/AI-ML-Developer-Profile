@@ -28,7 +28,7 @@
   function setupFirebaseCompat(){
     try {
       if (!firebaseConfig || !Object.keys(firebaseConfig).length) return false;
-      var app = firebase.initializeApp(firebaseConfig);
+      var app = (firebase.apps && firebase.apps.length) ? firebase.app() : firebase.initializeApp(firebaseConfig);
       db = firebase.firestore(app);
       auth = firebase.auth(app);
       if (initialAuthToken) {
@@ -81,7 +81,7 @@
     });
   }
 
-  function goldBurst(){ try { confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, colors: ['#FFD700','#FFF3B0'] }); } catch(_){} }
+  function goldBurst(){ try { var maxP=(typeof window.__confettiMax!=='undefined'?window.__confettiMax:90); confetti({ particleCount: Math.min(maxP, 80), spread: 65, origin: { y: 0.6 }, colors: ['#FFD700','#FFF3B0'] }); } catch(_){} }
 
   function runInvitationMain(){
     var DEFAULT_INVITE_MESSAGE = 'Thân gửi bạn, hãy đến chung vui cùng tôi trong buổi lễ trọng đại này, đánh dấu một cột mốc quan trọng trên con đường sắp tới. Sự hiện diện của bạn là niềm vinh dự lớn nhất của tôi!';
