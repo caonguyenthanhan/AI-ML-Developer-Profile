@@ -101,14 +101,6 @@
       "destination": "/graduation/g_i_does_not_change_borderless_image.html"
     },
     {
-      "source": "/graduation_admin",
-      "destination": "/graduation/rsvp.html"
-    },
-    {
-      "source": "/rsvp-admin",
-      "destination": "/graduation/rsvp.html"
-    },
-    {
       "source": "/admin/rsvp",
       "destination": "/graduation/rsvp.html"
     },
