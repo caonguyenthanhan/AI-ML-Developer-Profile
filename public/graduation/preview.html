@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thiệp Mời Tốt Nghiệp — Preview</title>
+    <title>Preview Thiệp Tốt Nghiệp</title>
 
-    <!-- Tailwind CSS -->
-    <link href="/assets/css/tw.css" rel="stylesheet">
-
-    <!-- Custom preview CSS -->
-    <link href="/assets/css/preview.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/tw.css">
+    <link rel="stylesheet" href="/assets/css/preview.css">
 </head>
 
-<body class="bg-[#FFFBF7] flex items-center justify-center min-h-screen">
+<body class="bg-[#f7f7f7] flex items-center justify-center min-h-screen">
 
-<!-- KHUNG CHỤP PREVIEW -->
+<!-- KHUNG CHỤP 1200x630 -->
 <div id="capture-container">
 
-    <!-- VIỀN PNG 1200×630 -->
-    <img id="gold-frame" src="/assets/frame/graduation-frame-1200x630.png" alt="Frame">
+    <!-- VIỀN 1200x630 PNG -->
+    <img id="gold-frame" src="/assets/frame/graduation-frame-1200x630.png" alt="frame">
 
-    <!-- CỘT TRÁI -->
+    <!-- LEFT -->
     <div class="left-col">
         <p class="label">THƯ MỜI</p>
         <h1 class="title">LỄ TỐT NGHIỆP</h1>
@@ -35,14 +32,14 @@
             <img id="graduate-image" class="avatar">
         </div>
 
-        <p id="invite-line" class="invite-text">
+        <p class="invite-text">
             Trân trọng kính mời <span id="guestNameHero" class="guest">bạn</span> đến tham dự lễ tốt nghiệp.
         </p>
 
         <p id="graduate-info" class="sub-info"></p>
     </div>
 
-    <!-- CỘT PHẢI -->
+    <!-- RIGHT -->
     <div class="right-col">
 
         <div class="uni-header">
@@ -50,8 +47,7 @@
             <p id="university-name" class="uni-name"></p>
         </div>
 
-        <h1 class="info-title">Thông Tin Sự Kiện</h1>
-        <div class="divider"></div>
+        <h2 class="info-title">Thông Tin Sự Kiện</h2>
 
         <div class="info-grid">
 
@@ -74,7 +70,7 @@
         </div>
 
         <h3 class="map-label">Ảnh Dẫn Đường</h3>
-        <img src="/image/graduation/map.jpg" id="map-img" class="map-img">
+        <img id="map-img" src="/image/graduation/map.jpg" class="map-img">
 
         <div class="footer">
             <h3>TRÂN TRỌNG KÍNH MỜI</h3>
@@ -82,7 +78,6 @@
         </div>
 
     </div>
-
 </div>
 
 <script src="/assets/js/preview.js"></script>
