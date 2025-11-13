@@ -3,167 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tạo Ảnh Xem Trước Thiệp Mời</title>
-    <!-- Tải Tailwind CSS CDN -->
-<link href="/assets/css/tw.css" rel="stylesheet">
-    <!-- Tải thư viện icon Lucide-React -->
+    <title>Preview Thiệp Mời Tốt Nghiệp</title>
+    <link href="/assets/css/tw.css" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Import fonts giống như file gốc */
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;600;700&display=swap');
-        
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #555;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Khung chính với kích thước cố định 1200x630 */
-        #capture-container {
-            width: 1200px;
-            height: 630px;
-            display: flex;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        /* Sao chép các style cần thiết từ file gốc */
-        .sparkle-background {
-            background-color: #03204c;
-            background-image: 
-                radial-gradient(circle at top right, rgba(255, 215, 0, 0.1) 1px, transparent 0), 
-                radial-gradient(circle at bottom left, rgba(255, 215, 0, 0.1) 1px, transparent 0);
-            background-size: 20px 20px;
-        }
-
-        .golden-border {
-            border: 4px solid transparent;
-            box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8), 0 0 5px 2px rgba(255, 215, 0, 0.6);
-        }
-
-        .invitation-frame {
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-        }
-        
-        .gold-frame-bg {
-            background-image: url('/image/vien-vang.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 100% 100%;
-        }
-
-        .gold-shine {
-            color: #ffd700;
-            text-shadow: 0 0 6px rgba(255,215,0,0.6), 0 0 2px rgba(255,215,0,0.4);
-        }
-
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700&display=swap');
+        body { display:flex; justify-content:center; align-items:center; min-height:100vh; background:#FFFBF7; font-family:'Inter',sans-serif; }
+        #capture-container { width:1200px; height:630px; display:flex; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.15); border-radius:12px; background:#FFFBF7; }
+        .left-hero { position:relative; width:50%; padding:24px; color:#242424; }
+        .hero-overlay::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(212,175,55,.06), rgba(255,251,247,.85)); pointer-events:none; }
+        .right-info { width:50%; padding:24px; position:relative; color:#242424; }
+        .card { background: rgba(255,255,255,.85); border: 1px solid rgba(212,175,55,.35); border-radius: 16px; backdrop-filter: blur(6px); box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+        .font-serif { font-family:'Playfair Display',serif; }
+        .text-gold { color:#D4AF37; }
+        .ring-gold { --tw-ring-color:#D4AF37; }
+        .gold-frame-bg { background-image:url('/image/vien-vang.png'); background-repeat:no-repeat; background-position:center; background-size:100% 100%; }
     </style>
 </head>
 <body>
 
     <!-- KHUNG CHÍNH ĐỂ CHỤP ẢNH MÀN HÌNH -->
     <div id="capture-container">
-        
-        <!-- Cột Trái: Thông báo Lễ Tốt Nghiệp -->
-        <div class="w-1/2 p-8 text-white flex flex-col items-center justify-between sparkle-background relative">
+        <div class="left-hero hero-overlay flex flex-col items-center justify-between">
             <div class="text-center w-full">
-                <h2 class="text-2xl font-serif text-yellow-400 mb-1">Thư Mời</h2>
-                <h1 class="text-5xl font-serif font-black text-yellow-400 gold-shine border-b border-yellow-400/50 pb-2 mb-8">
-                    Tham Dự <br> LỄ TỐT NGHIỆP
-                </h1>
-
-                <!-- Ảnh người tốt nghiệp -->
+                <p class="text-sm font-semibold tracking-[0.35em] text-gold">THƯ MỜI</p>
+                <h1 class="text-5xl font-serif font-black mt-2">LỄ TỐT NGHIỆP</h1>
+                <div class="my-4 inline-flex items-center gap-2 bg-white/70 px-5 py-2 rounded-full border border-[#E6E2D8]/60">
+                    <span class="text-gold font-bold">TÂN CỬ NHÂN</span>
+                    <span id="graduate-name" class="font-serif font-black text-3xl">Tên Tân Cử Nhân</span>
+                </div>
                 <div class="my-6 flex justify-center">
-                    <div class="relative inline-block w-64 h-64">
-                        <img src="/image/nguyet-que.png" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain">
-                        <img id="graduate-image" src="/image/graduation/main.jpg" alt="Ảnh người tốt nghiệp" class="relative w-48 h-48 object-cover rounded-full golden-border left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+                    <div class="relative inline-block w-56 h-56">
+                        <img src="/image/nguyet-que.png" alt="Vòng nguyệt quế" class="absolute inset-0 w-full h-full object-contain opacity-90">
+                        <img id="graduate-image" src="/image/graduation/main.jpg" alt="Ảnh người tốt nghiệp" class="relative w-40 h-40 object-cover rounded-full ring-4 ring-gold left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 shadow-xl">
                     </div>
                 </div>
-
-                <p class="text-base text-yellow-400 font-semibold tracking-wider">TÂN CỬ NHÂN</p>
-                <h3 id="graduate-name" class="text-4xl font-serif font-black text-yellow-400 mt-2 drop-shadow-[0_0_6px_rgba(255,215,0,0.8)]">
-                    <!-- Tên sẽ được tải vào đây -->
-                </h3>
-                <p id="graduate-info" class="text-base font-bold text-white bg-[#03204c] py-1 px-4 inline-block rounded-full mt-3 shadow-md">
-                    <!-- Thông tin trường và ngày -->
-                </p>
+                <p id="invite-line" class="text-lg">Trân trọng kính mời Quý khách đến tham dự lễ tốt nghiệp.</p>
+                <p id="graduate-info" class="text-sm font-semibold text-[#242424] bg-white/80 px-4 py-1 inline-block rounded-full mt-3 border border-[#E6E2D8]/60"></p>
             </div>
         </div>
-
-        <!-- Cột Phải: Chi tiết Sự kiện -->
-        <div class="w-1/2 p-8 invitation-frame gold-frame-bg bg-white/60 backdrop-blur-sm text-[#03204c] flex flex-col relative">
-            <div class="absolute inset-0 bg-white/40 backdrop-blur-sm z-0"></div>
+        <div class="right-info gold-frame-bg">
             <div class="relative z-10 flex-1 flex flex-col">
                 <div class="text-center">
-                    <p id="university-name" class="text-sm font-semibold tracking-widest text-gray-500"></p>
-                    <h1 class="text-4xl font-serif font-black text-[#03204c] mt-2">LỄ TỐT NGHIỆP</h1>
+                    <p id="university-name" class="text-sm font-semibold tracking-widest text-[#5c5c5c]"></p>
+                    <h1 class="text-4xl font-serif font-black mt-2">Thông Tin Sự Kiện</h1>
                     <div class="w-full h-px bg-gray-300 my-6"></div>
                 </div>
-
-                <!-- Chi tiết -->
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="text-sm font-black tracking-widest text-[#03204c] uppercase mb-1">THỜI GIAN</h3>
-                        <p id="event-time" class="text-xl font-bold"></p>
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="card p-4 text-center">
+                        <h3 class="text-gold font-bold text-sm">Ngày</h3>
+                        <p id="event-date" class="text-base"></p>
                     </div>
-                    <div>
-                        <h3 class="text-sm font-black tracking-widest text-[#03204c] uppercase mb-1">ĐỊA ĐIỂM</h3>
-                        <p id="event-venue" class="text-lg font-bold"></p>
+                    <div class="card p-4 text-center">
+                        <h3 class="text-gold font-bold text-sm">Giờ</h3>
+                        <p id="event-time" class="text-base"></p>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <h3 class="text-gold font-bold text-sm">Địa điểm</h3>
+                        <p id="event-venue" class="text-base"></p>
                         <p id="event-address" class="text-sm text-gray-600"></p>
                     </div>
                 </div>
-
-                <!-- Bản đồ tĩnh (thay cho iframe) -->
                 <div class="mt-auto pt-4">
-                    <h3 class="text-center text-sm font-black tracking-widest text-[#03204c] uppercase mb-2">Ảnh Dẫn Đường</h3>
+                    <h3 class="text-center text-sm font-black tracking-widest text-[#242424] uppercase mb-2">Ảnh Dẫn Đường</h3>
                     <img src="/image/graduation/map.jpg" alt="Bản đồ" class="w-full rounded-lg shadow-md border border-gray-200">
                 </div>
-                
-                <!-- Kính mời cuối -->
                 <div class="text-center mt-4 pt-4 border-t border-gray-200">
-                    <h3 class="text-lg font-bold text-[#03204c]">TRÂN TRỌNG KÍNH MỜI</h3>
-                    <p class="text-xl font-serif font-extrabold text-[#03204c] mt-1">Sự hiện diện của Quý Vị</p>
+                    <h3 class="text-lg font-bold">TRÂN TRỌNG KÍNH MỜI</h3>
+                    <p class="text-xl font-serif font-extrabold mt-1">Sự hiện diện của Quý Vị</p>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script type="module">
-        // Hàm để tải và hiển thị dữ liệu từ info.json
         async function loadPreviewData() {
             try {
                 const response = await fetch('/data/info.json', { cache: 'no-store' });
-                if (!response.ok) {
-                    throw new Error('Không thể tải file info.json');
-                }
+                if (!response.ok) throw new Error('Không thể tải file info.json');
                 const info = await response.json();
 
-                // Điền dữ liệu vào các phần tử HTML
-                document.getElementById('graduate-name').textContent = `♦ ${info.graduateName} ♦`;
-                document.getElementById('graduate-info').textContent = `${info.universityShort} - Ngày ${info.date}`;
-                document.getElementById('university-name').textContent = info.university;
-                document.getElementById('event-time').textContent = `${info.time}, Ngày ${info.date}`;
-                document.getElementById('event-venue').textContent = info.venue;
-                document.getElementById('event-address').textContent = info.address;
+                const nameEl = document.getElementById('graduate-name');
+                const imgEl = document.getElementById('graduate-image');
+                const infoEl = document.getElementById('graduate-info');
+                const inviteEl = document.getElementById('invite-line');
 
-                // Cập nhật các icon sau khi DOM đã sẵn sàng
+                const gradImage = info.graduateImage
+                  || (Array.isArray(info.graduateImages) && info.graduateImages[0])
+                  || '/image/graduation/main.jpg';
+
+                nameEl.textContent = info.graduateName || 'Tên Tân Cử Nhân';
+                imgEl.src = gradImage;
+                infoEl.textContent = `${info.universityShort || info.university || ''} — Ngày ${info.date || ''}`.trim();
+                inviteEl.textContent = info.invitationMessage || 'Trân trọng kính mời Quý khách đến tham dự lễ tốt nghiệp.';
+
+                document.getElementById('university-name').textContent = info.university || '';
+                document.getElementById('event-date').textContent = info.date || '';
+                document.getElementById('event-time').textContent = info.time || '';
+                document.getElementById('event-venue').textContent = info.venue || '';
+                document.getElementById('event-address').textContent = info.address || '';
+
                 lucide.createIcons();
-
             } catch (error) {
-                console.error('Lỗi khi tải dữ liệu xem trước:', error);
                 document.getElementById('capture-container').innerHTML = `<div class="text-red-500 font-bold p-8">${error.message}</div>`;
             }
         }
-
-        // Chạy hàm khi trang được tải
         window.onload = loadPreviewData;
     </script>
 </body>

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thiệp Mời Tốt Nghiệp — Tân Cử nhân Ngô Tấn Tài</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Thiệp Mời Lễ Tốt Nghiệp — Tân Cử nhân Ngô Tấn Tài" />
+  <meta property="og:description" content="Trân trọng kính mời bạn đến chung vui tại Lễ Tốt Nghiệp của cử nhân Ngô Tấn Tài." />
+  <meta property="og:image" content="/image/graduation/main-preview.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/image/graduation/logotruong.png" />
+  <link rel="shortcut icon" href="/image/graduation/logotruong.png" />
+
+  <!-- Tailwind -->
+<link href="/assets/css/tw.css" rel="stylesheet">
+  <!-- Tailwind config moved to tailwind.config.js; không cần script CDN config -->
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- Icons + Confetti + AOS -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #242424; background: #FFFBF7; }
+    .section { min-height: 100vh; display: grid; place-items: center; padding: 3rem 1rem; }
+    .card { background: rgba(255,255,255,.85); border: 1px solid rgba(212,175,55,.35); border-radius: 1.25rem; backdrop-filter: blur(6px); box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+    .btn { @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-semibold transition; }
+    .btn-gold { background:#D4AF37; color:#242424; }
+    .btn-gold:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    .btn-navy { background:#242424; color:#FFFBF7; border:1px solid #D4AF37; }
+    .btn-navy:hover { background:#333333; transform: translateY(-1px); }
+    .watermark-center { position:absolute; inset:0; display:grid; place-items:center; pointer-events:none }
+    .watermark-center img { opacity:.08; width:9rem; height:9rem }
+    .circle-wrap { position: relative; width: 6.5rem; height: 6.5rem; }
+    .circle-wrap svg { position: absolute; inset: -0.5rem; width: 7.5rem; height: 7.5rem; }
+    .circle-text { animation: spinSlow 18s linear infinite; transform-origin: 50% 50%; }
+    @keyframes spinSlow { to { transform: rotate(360deg); } }
+    .hero-overlay::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(212,175,55,.06), rgba(255,251,247,.85)); pointer-events:none; }
+    .count-box { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.25rem; border-radius:10px; background:#242424; color:#FFFBF7; padding:.75rem; box-shadow:0 6px 16px rgba(0,0,0,.15); }
+    /* Đảm bảo chữ có độ tương phản tốt trên nền mới */
+    [class*="text-white"] { color: #242424 !important; }
+
+    /* Giảm khoảng cách trang 1 (hero) */
+    #s1.section { min-height: auto; padding: 1.25rem 0.75rem; }
+    #s1 .absolute.top-4 { top: 0.5rem; }
+    #s1 .mt-4 { margin-top: 0.75rem !important; }
+    #s1 .mt-3 { margin-top: 0.5rem !important; }
+    #s1 .inline-flex.gap-2 { gap: 0.5rem !important; }
+    #s1 .flex.flex-wrap.gap-3 { gap: 0.5rem !important; }
+    #s1 h1 { margin-top: 0.25rem !important; line-height: 1.1 !important; }
+    #s1 .card { padding: 0.5rem !important; }
+    /* Ẩn hai khối avatar & banner khi màn hình nằm ngang hoặc dùng máy tính */
+    @media (orientation: landscape) {
+      #heroAvatarWrap, #congratsBannerWrap { display: none !important; }
+    }
+    @media (hover: hover) and (pointer: fine) {
+      #heroAvatarWrap, #congratsBannerWrap { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading -->
+  <div id="loading" class="fixed inset-0 grid place-items-center bg-white/90 text-charcoal z-[200]">
+    <div class="text-center">
+      <svg class="animate-spin h-10 w-10 mx-auto" viewBox="0 0 24 24" fill="none">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      <p class="mt-3 font-semibold">Đang tải dữ liệu...</p>
+    </div>
+  </div>
+
+  <!-- Overlay: logo + controls -->
+  <div id="logoOverlay" class="fixed top-4 right-4 z-[110] pointer-events-none opacity-90"></div>
+  <div class="fixed bottom-4 right-4 z-[110] flex items-center gap-2">
+    <button id="musicBtn" class="w-12 h-12 rounded-full flex items-center justify-center shadow-lg btn-gold" title="Nhạc nền">
+      <i data-lucide="volume-x" class="w-6 h-6"></i>
+    </button>
+    <button id="celebrateBtn" class="w-12 h-12 rounded-full flex items-center justify-center shadow-lg btn-gold" title="Chúc mừng!">
+      <i data-lucide="party-popper" class="w-6 h-6"></i>
+    </button>
+  </div>
+  <audio id="bgm" loop></audio>
+
+  <!-- App -->
+  <main id="app" class="hidden relative">
+    
+
+    <!-- 1) HERO -->
+    <section id="s1" class="section relative text-charcoal">
+      <div class="absolute inset-0 -z-10 hero-overlay">
+        <video id="bgVideo" autoplay loop muted playsinline class="w-full h-full object-cover">
+          <source id="bgVideoSrc" type="video/mp4">
+        </video>
+      </div>
+      <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
+
+      <div id="capsOverlay" class="relative mx-auto my-2 flex justify-center">
+        <img src="/image/graduation/graduate-caps.png" alt="Graduate Cap" class="mx-auto w-full max-w-[640px] h-auto drop-shadow-lg" />
+      </div>
+      <div class="relative z-20 flex justify-center" data-aos="zoom-in">
+        <div id="heroAvatarWrap" class="relative w-56 h-56 md:w-64 md:h-64 block">
+          <img src="/image/nguyet-que.png" class="absolute inset-0 w-full h-full object-contain opacity-90" alt="">
+          <img id="graduateImage" src="/image/graduation/main.jpg" class="relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-40 h-40 md:w-48 md:h-48 object-cover rounded-full ring-4 ring-gold shadow-xl" alt="">
+        </div>
+      </div>
+      <div class="relative z-20 max-w-3xl w-full text-center" data-aos="fade-up">
+        <p class="font-semibold tracking-[0.35em] text-gold text-sm md:text-base leading-tight">THƯ MỜI</p>
+        <h1 class="font-serif font-black text-5xl md:text-6xl leading-none mt-2 whitespace-nowrap">LỄ TỐT NGHIỆP</h1>
+
+        <div class="mt-4 inline-flex items-center gap-2 bg-white/70 px-5 py-2 rounded-full border border-[#E6E2D8]/60">
+          <span class="text-gold font-bold text-sm md:text-base leading-tight">TÂN CỬ NHÂN</span>
+          <span id="graduateNameHero" class="font-serif font-black text-3xl md:text-4xl leading-tight">Tên Tân Cử Nhân</span>
+        </div>
+
+        <p id="inviteLine" class="mt-3 text-xl md:text-2xl leading-snug text-charcoal">
+          Trân trọng kính mời <span id="guestNameHero" class="font-extrabold text-navy text-2xl md:text-3xl tracking-wide drop-shadow-md">bạn</span> đến tham dự lễ tốt nghiệp.
+        </p>
+        <!-- Form nhập tên khách khi không có guest trong URL/session -->
+        <div id="guestNameFormWrap" class="mt-3 hidden">
+          <form id="guestNameForm" class="w-full max-w-xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_auto] gap-2">
+            <input id="guestNameInput" type="text" class="px-4 py-2 rounded-lg bg-white/90 text-navy placeholder-navy/50 focus:outline-none" placeholder="Nhập tên của bạn..." />
+            <button type="submit" class="btn btn-gold">Xác nhận</button>
+          </form>
+          <p class="text-sm text-taupe mt-2 text-center">Nhập tên để cá nhân hóa thiệp mời.</p>
+        </div>
+      </div>
+      <div class="mt-4 mx-auto max-w-xl" data-aos="fade-up">
+        <div class="flex flex-wrap justify-center gap-3">
+          <div class="card p-3 text-center">
+            <span class="font-bold text-gold text-sm md:text-base leading-tight">Ngày</span>
+            <div id="sumDate" class="text-charcoal text-sm md:text-base leading-tight text-center break-words" style="text-wrap: balance;">Chưa cập nhật</div>
+          </div>
+          <div class="card p-3 text-center">
+            <span class="font-bold text-gold text-sm md:text-base leading-tight">Giờ</span>
+            <div id="sumTime" class="text-charcoal text-sm md:text-base leading-tight text-center break-words" style="text-wrap: balance;">Chưa cập nhật</div>
+          </div>
+          <div class="card p-3 text-center">
+            <span class="font-bold text-gold text-sm md:text-base leading-tight">Địa điểm</span>
+            <div id="sumVenue" class="text-charcoal text-sm md:text-base leading-tight text-center break-words" style="text-wrap: balance;">Chưa cập nhật</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="congratsBannerWrap" class="relative mt-2 z-10 md:block"></div>
+        <img src="/image/graduation/congratulations.png" alt="Congratulations" class="mx-auto w-full max-w-[720px] h-auto drop-shadow-lg" />
+      </div>
+    </section>
+
+
+    <!-- 2) EVENT INFO + COUNTDOWN -->
+    <section id="s2" class="section relative">
+      <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
+
+      <div class="max-w-5xl w-full">
+        <div class="text-center" data-aos="fade-up">
+          <h2 class="font-serif text-5xl md:text-6xl font-black">Thông Tin Sự Kiện</h2>
+          <p id="universityLabel" class="mt-2 font-semibold text-taupe text-xl md:text-2xl">Tên Trường</p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card p-6 text-center" data-aos="zoom-in">
+            <i data-lucide="calendar" class="w-10 h-10 mx-auto text-gold"></i>
+            <h3 class="mt-2 font-bold text-gold text-xl">Ngày</h3>
+            <p id="eventDate" class="text-charcoal text-xl">Chưa cập nhật</p>
+          </div>
+          <div class="card p-6 text-center" data-aos="zoom-in" data-aos-delay="100">
+            <i data-lucide="clock" class="w-10 h-10 mx-auto text-gold"></i>
+            <h3 class="mt-2 font-bold text-gold text-xl">Giờ</h3>
+            <p id="eventTime" class="text-charcoal text-xl">Chưa cập nhật</p>
+          </div>
+          <div class="card p-6 text-center" data-aos="zoom-in" data-aos-delay="200">
+            <i data-lucide="map-pin" class="w-10 h-10 mx-auto text-gold"></i>
+            <h3 class="mt-2 font-bold text-gold text-xl">Địa điểm</h3>
+            <p id="eventVenue" class="text-charcoal text-xl">Chưa cập nhật</p>
+          </div>
+        </div>
+
+        <!-- Countdown -->
+        <div class="mt-10 card p-6" data-aos="fade-up">
+          <div class="text-center mb-4">
+            <p class="text-white/90 text-xl md:text-2xl">Đếm ngược tới thời khắc trọng đại</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="count-box"><div id="cdDays" class="text-5xl md:text-6xl font-extrabold">0</div><div class="text-sm">Ngày</div></div>
+            <div class="count-box"><div id="cdHours" class="text-5xl md:text-6xl font-extrabold">0</div><div class="text-sm">Giờ</div></div>
+            <div class="count-box"><div id="cdMinutes" class="text-5xl md:text-6xl font-extrabold">0</div><div class="text-sm">Phút</div></div>
+            <div class="count-box"><div id="cdSeconds" class="text-5xl md:text-6xl font-extrabold">0</div><div class="text-sm">Giây</div></div>
+          </div>
+          <p id="cdStatus" class="mt-3 text-center text-taupe text-base"></p>
+        </div>
+
+        <div class="mt-8 rounded-xl overflow-hidden border border-gold/30 shadow" data-aos="fade-up">
+          <p id="eventAddress" class="text-center text-taupe text-xl md:text-2xl font-semibold mt-4"></p>
+          <div id="mapEmbed"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) GRADUATE -->
+    <section id="s3" class="section relative text-charcoal">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-[#FFFBF7] via-[#FFF6EB] to-[#F3EEE4]"></div>
+      <div class="absolute inset-0 pointer-events-none grid place-items-center">
+        <img src="/image/vien-vang.png" class="opacity-20 w-[90%] max-w-5xl" alt="">
+      </div>
+
+      <div class="max-w-5xl w-full grid md:grid-cols-2 gap-8 items-center">
+        <div class="flex justify-center" data-aos="zoom-in">
+          <div class="relative w-56 h-56 md:w-64 md:h-64">
+            <img src="/image/nguyet-que.png" class="absolute inset-0 w-full h-full object-contain opacity-90" alt="">
+            <img id="graduateImage" src="/image/graduation/main.jpg" class="relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-40 h-40 md:w-48 md:h-48 object-cover rounded-full ring-4 ring-gold shadow-xl" alt="">
+          </div>
+        </div>
+        <div data-aos="fade-left">
+          <h3 id="graduateNameS3" class="font-serif text-4xl font-black text-gold ml-[1cm] text-center">Tên Tân Cử Nhân</h3>
+          <p id="graduateQuote" class="mt-3 text-taupe italic max-w-3xl mx-auto text-center px-10" data-thanks="info.json/thanksMessage"></p>
+          <div class="text-center mb-4">
+            <!-- Popup contact info -->
+            <button id="contactPopupBtn" class="mt-2 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gold text-charcoal font-semibold shadow hover:brightness-105 transition mx-auto">
+              <i data-lucide="phone" class="w-5 h-5"></i> Thông tin liên hệ
+            </button>
+            <div id="contactPopupCard" class="hidden mt-3 card p-4 inline-block text-left">
+              <p id="contactTextName" class="font-semibold text-gold"></p>
+              <p id="contactTextPhone" class="mt-1 text-charcoal"></p>
+              <p id="contactTextZalo" class="mt-1 text-charcoal"></p>
+              <p id="contactTextFacebook" class="mt-1 text-charcoal"></p>
+            </div>
+          </div>
+
+          <!-- Contact Popup -->
+          <div id="contactPopup" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-[2000]">
+            <div class="bg-white text-charcoal rounded-2xl p-6 w-[min(90vw,380px)] shadow-xl relative">
+              <button id="closeContactPopup" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800">
+                <i data-lucide="x" class="w-6 h-6"></i>
+              </button>
+              <h3 class="text-xl font-bold mb-3 text-center">Thông tin liên hệ</h3>
+              <div class="flex items-center justify-center gap-3 mb-2 text-gold">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+                <i data-lucide="mail" class="w-5 h-5"></i>
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                <i data-lucide="facebook" class="w-5 h-5"></i>
+              </div>
+              <div id="contactText" class="space-y-2 text-base"></div>
+            </div>
+          </div>
+
+          <div id="contactWrap" class="mt-4 flex items-center gap-4 justify-center"></div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) RSVP -->
+    <section id="s4" class="section relative">
+      <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
+      <div class="max-w-2xl w-full card p-6 text-center" data-aos="fade-up">
+        <h2 class="font-serif text-3xl text-gold mb-1">Bạn sẽ đến dự chứ?</h2>
+        <p class="text-taupe mb-6">(Chọn đáp án!)</p>
+        <div class="flex justify-center gap-6">
+          <button id="btnYes" class="btn btn-gold text-lg px-6 py-3">Đi chứ</button>
+          <button id="btnNo" class="btn btn-navy text-lg px-6 py-3">Tiếc quá</button>
+        </div>
+
+        <!-- Chỉ dẫn khi "Đi chứ" -->
+        <div id="instructionCard" class="hidden mt-6 card p-4">
+          <h3 class="font-serif text-2xl text-gold mb-3">Chỉ dẫn tham dự</h3>
+          <img src="/image/graduation/map.jpg" class="w-full rounded-lg shadow border border-gold/40 cursor-pointer" alt="Map hướng dẫn" onclick="window.open(this.src, '_blank')" />
+        </div>
+
+        <!-- Form khi "Tiếc quá" -->
+        <form id="regretForm" class="hidden mt-6 grid gap-3 card p-4 text-left">
+          <label class="text-sm font-semibold">Lời nhắn (tuỳ chọn)</label>
+          <textarea id="rsvpMessage" rows="3" class="px-3 py-2 rounded-lg bg-white/80 text-navy focus:outline-none" placeholder="Gửi lời chúc hoặc lý do bạn không thể đến..."></textarea>
+          <button type="submit" class="btn btn-gold self-start">Gửi lời nhắn</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 5) PERSONAL INVITE -->
+    <section id="s5" class="section relative">
+      <div class="watermark-center"><img src="/image/graduation/logotruong.png" alt="logo" /></div>
+
+      <div id="personalInviteCardWrap" class="relative inline-block" data-aos="fade-up">
+
+        <div class="max-w-3xl w-full card p-6 text-center">
+        <!-- Nền: ảnh tốt nghiệp -->
+        <div class="absolute inset-0 -z-10">
+          <img src="/image/graduation/Graduation Background.jpg" alt="Graduation Background" class="w-full h-full object-cover" />
+        </div>
+        <!-- Lớp overlay trắng mờ  -->
+        <div class="absolute inset-0 -z-10 bg-white/40"></div>
+        <!-- <div class="absolute inset-0 -z-20 bg-gradient-to-br from-[#FFF6EB]/40 to-[#D4AF37]/15"></div> -->
+        <h2 class="font-serif text-4xl font-black text-gold">Thiệp Mời Cá Nhân</h2>
+        <p id="guestTarget" class="mt-2 text-taupe">Dành cho bạn</p>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 text-left">
+            <p id="inviteMessage" class="text-lg font-serif italic text-charcoal text-center break-words" style="text-wrap: balance;"><strong><em></em></strong></p>
+            <div class="mt-3 xl:w-1/2 md:w-1/2 lg:w-3/5 mx-auto text-center">
+              <p id="inviterName" class="text-sm text-taupe text-center">— Tân cử nhân</p>
+              <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <a href="#s1" class="btn btn-gold"><i data-lucide="home" class="w-5 h-5"></i> Về trang đầu</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <div class="circle-wrap mx-auto mb-3">
+              <img id="guestAvatar" src="/image/graduation/man.jpg" class="w-24 h-24 rounded-full object-cover ring-2 ring-gold/30 mx-auto block" alt="">
+              <svg class="circle-text" viewBox="0 0 100 100">
+                <defs>
+                  <path id="circlePath" d="M50,50 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0" />
+                </defs>
+                <text class="fill-[#D4AF37] text-[9px] tracking-widest">
+                  <textPath id="inviteCircleText" href="#circlePath" startOffset="0%"></textPath>
+                </text>
+              </svg>
+            </div>
+            <p id="guestNameLabel" class="font-cursive text-3xl text-gold">Tên Khách Mời</p>
+          </div>
+        </div>
+        </div>
+        <!-- Viền chữ chạy ngoài khung chữ nhật -->
+        <svg class="pointer-events-none" data-outer-border="true" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%;">
+          <defs>
+            <path id="outerRectPath" d="M6,6 H94 V94 H6 Z" />
+          </defs>
+          <text style="fill:#242424; font-size:10px; letter-spacing:0.25em; font-weight:600;">
+            <textPath id="outerInviteText" href="#outerRectPath" startOffset="0%" method="align" spacing="auto">Mời bạn đến chung vui cùng • </textPath>
+          </text>
+        </svg>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modalWrap" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-[2000]">
+    <div class="bg-white text-charcoal rounded-2xl p-6 w-[min(92vw,420px)] shadow-xl">
+      <h3 id="modalTitle" class="text-xl font-bold"></h3>
+      <p id="modalMsg" class="mt-1 text-gray-700"></p>
+      <div class="mt-4 text-right">
+        <button id="modalClose" class="btn btn-navy">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCRIPT (Firebase + Logic) ====== -->
+  <script type="module">
+    // Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, getDocs, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // ===== Config & Globals =====
+    const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
+    const firebaseConfig = typeof __firebase_config !== "undefined" ? JSON.parse(__firebase_config) : {};
+    const initialAuthToken = typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
+    const APP_ROOT = "/graduation"; // theo yêu cầu URL
+
+    const ASSETS = {
+      LOGO: "/image/graduation/logotruong.png",
+      BG_VIDEO: "/video/sparkle-background.mp4",
+      GRADUATE_IMAGES: [
+        "/image/graduation/main.jpg",
+        "/image/graduation/main2.jpg",
+        "/image/graduation/main3.jpg",
+        "/image/graduation/main4.jpg",
+        "/image/graduation/main5.jpg",
+        "/image/graduation/main6.jpg"
+      ],
+      MAN_DEFAULT: "/image/graduation/man.jpg",
+      WOMEN_DEFAULT: "/image/graduation/women.jpg",
+      MAP_IMAGE: "/image/graduation/map.jpg",
+    };
+
+    const INFO_URL = "/data/info.json";
+    const GUESTS_URL = "/data/khach.json";
+
+    let db, auth, INFO=null, GUESTS=[];
+    let countdownTimer = null;
+
+    const $ = (s, r=document) => r.querySelector(s);
+    const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+    // ===== UI helpers =====
+    function showModal(title, msg) {
+      $("#modalTitle").textContent = title;
+      $("#modalMsg").textContent = msg;
+      $("#modalWrap").classList.remove("hidden");
+      $("#modalWrap").classList.add("flex");
+    }
+    $("#modalClose").addEventListener("click", ()=> {
+      $("#modalWrap").classList.add("hidden");
+      $("#modalWrap").classList.remove("flex");
+    });
+
+    // ===== Graduate image rotation =====
+    const GRAD_ROTATE_INTERVAL_MS = 2000;
+    function startGraduateImageRotation(images, intervalMs = GRAD_ROTATE_INTERVAL_MS) {
+      const els = $$("#graduateImage");
+      if (!els.length || !images || !images.length) return;
+      let idx = 0;
+      const apply = () => {
+        const src = images[idx % images.length];
+        els.forEach(el => { if (el) el.src = src; });
+        idx = (idx + 1) % images.length;
+      };
+      apply();
+      setInterval(apply, intervalMs);
+    }
+
+    const contactBtn = $("#contactPopupBtn");
+    const contactCard = $("#contactPopupCard");
+    if (contactBtn && contactCard) {
+      contactBtn.addEventListener("click", async () => {
+        contactCard.classList.toggle("hidden");
+        if (!contactCard.dataset.filled) {
+          let info = INFO;
+          if (!info) {
+            try {
+              const r = await fetch(INFO_URL);
+              info = await r.json();
+            } catch (e) {}
+          }
+          const name = (info && (info.inviterName || info.graduateName || info.hostName)) || "Liên hệ";
+          const phone = (info && info.contact && info.contact.phone) || "";
+          const email = (info && info.email) || "";
+          const note = (info && (info.contactNote || info.thanksMessage)) || "";
+          const zaloLink = (info && (info.contact && info.contact.zaloLink || info.zalo || (info.contact && info.contact.zalo))) || "";
+          const zaloText = zaloLink ? zaloLink.replace(/^https:\/\/zalo\.me\//, "") : "";
+          const facebookLink = (info && (info.contact && info.contact.facebookLink || info.facebook || (info.contact && info.contact.facebook))) || "";
+          const facebookName = (info && (info.contact && info.contact.facebookName || info.facebookName)) || "";
+          const nameEl = $("#contactTextName");
+          const phoneEl = $("#contactTextPhone");
+          const emailEl = $("#contactTextEmail");
+          const noteEl = $("#contactTextNote");
+          const zaloEl = $("#contactTextZalo");
+          const facebookEl = $("#contactTextFacebook");
+          if (nameEl) nameEl.textContent = name;
+          if (phoneEl) {
+            if (phone) {
+              phoneEl.innerHTML = `Điện thoại: <a href="tel:${phone}" class="text-gold underline">${phone}</a>`;
+              phoneEl.style.cursor = "pointer";
+              phoneEl.addEventListener("click", ()=>{ try { window.location.href = `tel:${phone}`; } catch(_){} });
+            } else {
+              phoneEl.textContent = "";
+            }
+          }
+          if (emailEl) emailEl.textContent = email ? `Email: ${email}` : "";
+          if (zaloEl) {
+            if (zaloLink) {
+              zaloEl.innerHTML = `Zalo: <a href="${zaloLink}" target="_blank" rel="noopener" class="text-gold underline">${zaloText || zaloLink}</a>`;
+            } else {
+              zaloEl.textContent = "";
+            }
+          }
+          if (facebookEl) {
+            if (facebookLink) {
+              facebookEl.innerHTML = `Facebook: <a href="${facebookLink}" target="_blank" rel="noopener" class="text-gold underline">${facebookName || facebookLink}</a>`;
+            } else {
+              facebookEl.textContent = "";
+            }
+          }
+          if (noteEl) noteEl.innerHTML = note;
+          contactCard.dataset.filled = "1";
+        }
+      });
+    }
+
+    function goldConfetti() {
+      confetti({ particleCount: 160, spread: 100, origin: { y: .6 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+    }
+
+    function sideBurst() {
+      confetti({ particleCount: 120, angle: 60, spread: 55, origin: { x: 0, y: 0.7 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+      confetti({ particleCount: 120, angle: 120, spread: 55, origin: { x: 1, y: 0.7 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+    }
+
+    function streamersConfetti() {
+      confetti({ particleCount: 180, spread: 90, startVelocity: 40, origin: { y: 0.6 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+    }
+
+    function fireworksBurst() {
+      const cfg = { spread: 360, ticks: 80, gravity: 0.8, decay: 0.94, startVelocity: 25, colors: ["#D4AF37","#FFFFFF","#FACC15","#FDE047"] };
+      const fire = (x, y) => confetti(Object.assign({ origin: { x, y }, particleCount: 90 }, cfg));
+      setTimeout(() => fire(0.2, 0.3), 0);
+      setTimeout(() => fire(0.8, 0.4), 300);
+      setTimeout(() => fire(0.5, 0.2), 600);
+      setTimeout(() => fire(0.3, 0.6), 900);
+      setTimeout(() => fire(0.7, 0.7), 1200);
+    }
+
+    function autoConfettiSequence() {
+      fireworksBurst();
+      setInterval(fireworksBurst, 5000);
+    }
+
+    function normalize(s) { return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim(); }
+    function beautifyName(name) {
+      return (name||"").split(/[\s_]+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(" ").trim();
+    }
+
+    function getGuestFromUrl() {
+      const parts = location.pathname.replace(/\/+$/,"").split("/").filter(Boolean);
+      if (parts.length >= 2 && parts[0].toLowerCase() === "graduation") return decodeURIComponent(parts[1]);
+      return null;
+    }
+
+    function updateMeta(info, guest=null) {
+      const baseTitle = `Thiệp Mời Tốt Nghiệp — ${info?.graduateName || "Tân Cử nhân"}`;
+      const title = guest ? `Thư mời dành cho ${guest.title?guest.title+" ":""}${guest.name}`
+                          : baseTitle;
+      const desc = guest ? `Thiệp mời từ ${info?.graduateName || "Tân cử nhân"} dành cho ${guest.title?guest.title+" ":""}${guest.name}.`
+                         : `Trân trọng kính mời bạn đến chung vui cùng ${info?.graduateName||"tân cử nhân"}.`;
+      const img  = guest?.previewImage || info?.previewImage || ASSETS.GRADUATE_IMAGE;
+      // Giữ title tab theo cấu trúc thống nhất
+      document.title = baseTitle;
+      const set=(sel,attr,val)=>{const m=$(sel); if(m) m.setAttribute(attr,val);};
+      set('meta[property="og:title"]', "content", title);
+      set('meta[property="og:description"]', "content", desc);
+      set('meta[property="og:image"]', "content", img.startsWith("http")?img:`${location.origin}${img}`);
+    }
+
+    // ===== Firebase Setup & Data load =====
+    async function setupFirebase() {
+      try {
+        if (!firebaseConfig || !Object.keys(firebaseConfig).length) return false;
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+        if (initialAuthToken) await signInWithCustomToken(auth, initialAuthToken);
+        else await signInAnonymously(auth);
+        return true;
+      } catch (e) { console.error("Firebase init error:", e); return false; }
+    }
+    const infoDocRef   = () => doc(db, "artifacts", appId, "public", "data", "info", "event_details");
+    const guestsColRef = () => collection(db, "artifacts", appId, "public", "data", "khach");
+    const rsvpsColRef  = () => collection(db, "artifacts", appId, "public", "data", "rsvps");
+
+    async function loadData() {
+      let info=null, guests=[];
+      const canFs = await setupFirebase();
+      if (canFs) {
+        try {
+          const infoSnap = await getDoc(infoDocRef());
+          if (infoSnap.exists()) info = infoSnap.data();
+          const guestsSnap = await getDocs(guestsColRef());
+          guests = guestsSnap.docs.map(d=>d.data());
+        } catch (e) { console.warn("Firestore read failed; fallback JSON...", e); }
+      }
+      try {
+        if (!info) {
+          const r = await fetch(INFO_URL, { cache: "no-store" }); if (r.ok) info = await r.json();
+        }
+        if (!guests?.length) {
+          const r = await fetch(GUESTS_URL, { cache: "no-store" }); if (r.ok) {
+            const j = await r.json(); guests = Array.isArray(j?.guests)? j.guests : Array.isArray(j)? j : [];
+          }
+        }
+      } catch(e){ console.error("Local JSON load error:", e); }
+      guests = (guests||[]).map(g=>({...g, nameEncoded: encodeURIComponent(g.name)}));
+      return { info, guests };
+    }
+
+    // ===== Music & chrome =====
+    function setupMusic(info) {
+      const audio = $("#bgm"), btn = $("#musicBtn");
+      if (info?.music) audio.src = info.music;
+      let playing=false;
+      const render = () => btn.innerHTML = playing ? '<i data-lucide="volume-2" class="w-6 h-6"></i>' : '<i data-lucide="volume-x" class="w-6 h-6"></i>';
+      const tryPlay = () => audio.play().then(()=>{playing=true;render();lucide.createIcons();}).catch(()=>{playing=false;render();lucide.createIcons();});
+      btn.addEventListener("click", ()=>{ if(!playing) tryPlay(); else { audio.pause(); playing=false; render(); lucide.createIcons(); }});
+      setTimeout(()=>tryPlay(), 600);
+      document.addEventListener("click", ()=>{ if(!playing) tryPlay(); }, { once: true });
+    }
+
+    // ===== Countdown =====
+    function parseEventDateTime(info) {
+      const dateStr = (info?.date || "").trim();
+      const timeRaw = (info?.time || "").trim();
+
+      let h = 0, m = 0;
+      const tm1 = timeRaw.match(/^(\d{1,2}):(\d{1,2})$/);
+      const tm2 = timeRaw.match(/(\d{1,2})\D+(\d{1,2})/);
+      if (tm1) { h = parseInt(tm1[1], 10); m = parseInt(tm1[2], 10); }
+      else if (tm2) { h = parseInt(tm2[1], 10); m = parseInt(tm2[2], 10); }
+      else if (/^\d{1,2}$/.test(timeRaw)) { h = parseInt(timeRaw, 10); m = 0; }
+
+      let d = null;
+      const dm = dateStr.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);
+      if (dm) {
+        const dd = parseInt(dm[1], 10);
+        const mm = parseInt(dm[2], 10);
+        const yyyy = parseInt(dm[3], 10);
+        d = new Date(yyyy, mm - 1, dd, h, m, 0, 0);
+      } else if (!isNaN(Date.parse(dateStr))) {
+        const base = new Date(dateStr);
+        d = new Date(base.getFullYear(), base.getMonth(), base.getDate(), h, m, 0, 0);
+      }
+
+      if (!d || isNaN(d.getTime())) {
+        d = new Date(Date.now() + 7 * 24 * 3600 * 1000);
+      }
+      return d;
+    }
+
+    function startCountdown(target) {
+      const daysEl = $("#cdDays"), hoursEl = $("#cdHours"), minutesEl = $("#cdMinutes"), secondsEl = $("#cdSeconds"), statusEl=$("#cdStatus");
+      function tick() {
+        const now = new Date();
+        let diff = Math.floor((target.getTime() - now.getTime())/1000);
+        if (diff <= 0) {
+          daysEl.textContent=hoursEl.textContent=minutesEl.textContent=secondsEl.textContent="0";
+          statusEl.textContent = "Sự kiện đã diễn ra. Cảm ơn bạn đã quan tâm!";
+          clearInterval(countdownTimer);
+          return;
+        }
+        const d = Math.floor(diff / (24*3600)); diff -= d*24*3600;
+        const h = Math.floor(diff / 3600); diff -= h*3600;
+        const m = Math.floor(diff / 60); const s = diff - m*60;
+        daysEl.textContent  = String(d);
+        hoursEl.textContent = String(h);
+        minutesEl.textContent = String(m);
+        secondsEl.textContent = String(s);
+        statusEl.textContent = "";
+      }
+      tick();
+      countdownTimer = setInterval(tick, 1000);
+    }
+
+    // ===== Personal Invite render =====
+    function renderPersonalInvite(info, guest=null) {
+      const guestName = beautifyName(guest?.name || sessionStorage.getItem("guestName") || "Bạn");
+      const guestTitle = guest?.title ? `${guest.title} ` : "";
+      const avatar = guest?.image ? guest.image
+                    : (guest?.gender && guest.gender.toLowerCase()==="female" ? ASSETS.WOMEN_DEFAULT : ASSETS.MAN_DEFAULT);
+
+      // Ưu tiên: guest.message -> info.invitationMessage -> info.personalInviteDefault -> fallback
+      let inviteMsg = (guest?.message && guest.message.trim()) ? guest.message
+                    : (info?.invitationMessage || info?.personalInviteDefault || "Sự hiện diện của bạn là niềm vinh dự lớn nhất!");
+      // Thay thế placeholder FileName bằng tên khách (in vàng)
+      inviteMsg = inviteMsg.replace(/FileName/g, `<span class="text-gold font-semibold">${guestName}</span>`);
+
+      $("#guestTarget").textContent = `Dành cho ${guestTitle}${guestName}`;
+      $("#guestNameLabel").textContent = `${guestTitle}${guestName}`;
+      const imEl = $("#inviteMessage");
+      if (imEl) imEl.innerHTML = `<strong><em>${inviteMsg}</em></strong>`;
+      $("#inviterName").textContent = `— ${info?.graduateName || "Tân cử nhân"}`;
+      $("#guestAvatar").src = avatar.startsWith("/") ? avatar : `/image/graduation/${avatar}`;
+    }
+
+    // ===== RSVP senders =====
+    async function sendRsvpToFirestore(data) {
+      if (!db) return false;
+      try {
+        await addDoc(rsvpsColRef(), { ...data, timestamp: new Date().toISOString() });
+        return true;
+      } catch (e) { console.error("RSVP Firestore error:", e); return false; }
+    }
+
+    async function sendRsvpEmail(data, info) {
+      try {
+        const base = location.hostname === "localhost" ? "http://localhost:5000" : "";
+        const res = await fetch(`${base}/api/rsvp`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, eventInfo: { email: info?.email, university: info?.university, date: info?.date } })
+        });
+        if (!res.ok) return false;
+        const j = await res.json().catch(()=>({success:false}));
+        return !!j?.success || !!j?.ok;
+      } catch (e) { console.error("RSVP Email error:", e); return false; }
+    }
+
+    // ===== Main =====
+    async function main() {
+      AOS.init({ duration: 700, once: true, offset: 40 });
+      lucide.createIcons();
+
+      // load data
+      const { info, guests } = await loadData();
+      INFO=info; GUESTS=guests;
+
+      if (!info) {
+        $("#loading").innerHTML = `
+          <div class="text-center text-charcoal">
+            <h2 class="text-2xl font-bold text-red-600">Không thể tải dữ liệu</h2>
+            <p class="mt-2">Kiểm tra Firestore hoặc /data/info.json.</p>
+          </div>`;
+        return;
+      }
+
+      // show app
+      $("#app").classList.remove("hidden");
+      $("#loading").classList.add("hidden");
+
+      // chrome
+      $("#logoOverlay").innerHTML = `<img src="${ASSETS.LOGO}" class="w-10 h-10 md:w-12 md:h-12" alt="">`;
+      $("#bgVideoSrc").src = ASSETS.BG_VIDEO;
+      setupMusic(info);
+      $("#celebrateBtn").addEventListener("click", goldConfetti);
+      autoConfettiSequence();
+
+      // fill hero + event
+      $("#graduateNameHero").textContent = info?.graduateName || "Tên Tân Cử Nhân";
+      $("#universityLabel").textContent  = info?.university || "Tên Trường";
+      $("#eventDate").textContent        = info?.date || "Chưa cập nhật";
+      $("#eventTime").textContent        = info?.time || "Chưa cập nhật";
+      $("#eventVenue").innerHTML         = info?.venue || "Chưa cập nhật";
+      $("#sumDate").textContent          = info?.date || "Chưa cập nhật";
+      $("#sumTime").textContent          = info?.time || "Chưa cập nhật";
+      $("#sumVenue").innerHTML           = info?.venue || "Chưa cập nhật";
+      $("#eventAddress").textContent     = info?.address || "Chưa cập nhật";
+      const gradImgs = (Array.isArray(info?.graduateImages) && info.graduateImages.length)
+        ? info.graduateImages
+        : ASSETS.GRADUATE_IMAGES;
+      
+      $("#graduateNameS3").textContent   = info?.graduateName || "Tên Tân Cử Nhân";
+      const tq = $("#graduateQuote");
+      if (tq) {
+        const qm = info?.thanksMessage || info?.quote || tq.textContent;
+        tq.innerHTML = `<strong><em>${qm}</em></strong>`;
+      }
+
+      const im = $("#inviteMessage");
+      if (im) {
+        const msg = info?.invitationMessage || im.textContent;
+        im.innerHTML = `<strong><em>${msg}</em></strong>`;
+      }
+      // chữ chạy viền trong circle
+      const ict = $("#inviteCircleText");
+      if (ict) {
+        const phrase = `Mời bạn đến chung vui cùng ${info?.graduateName || ""} • `;
+        ict.textContent = `${phrase}${phrase}${phrase}`.trim();
+      }
+
+      // viền chạy ngoài khung chữ nhật (nội dung độc lập)
+      const oit = $("#outerInviteText");
+      if (oit) {
+        const phraseOuter = `Mời bạn đến chung vui cùng ${info?.graduateName  || ""} • ${info?.thanksMessage || ""} • `;
+        oit.textContent = `${phraseOuter}${phraseOuter}${phraseOuter}${phraseOuter}${phraseOuter}${phraseOuter}`.trim();
+        // Căn chỉnh hình học để viền chữ khớp kích thước card
+        const wrap = document.getElementById("personalInviteCardWrap");
+        const card = wrap?.querySelector(".card");
+        const svg = wrap?.querySelector("svg[data-outer-border]");
+        const path = wrap?.querySelector("#outerRectPath");
+        if (wrap && card && svg && path) {
+          const rect = card.getBoundingClientRect();
+          const m = 10; // khoảng cách viền bên trong
+          // đặt viewBox theo pixel của card
+          svg.setAttribute("viewBox", `0 0 ${rect.width} ${rect.height}`);
+          // phủ đúng bên trong wrapper
+          svg.style.inset = `0px`;
+          svg.style.width = `100%`;
+          svg.style.height = `100%`;
+          // vẽ hình chữ nhật bên trong card với margin m
+          path.setAttribute("d", `M${m},${m} H${rect.width - m} V${rect.height - m} H${m} Z`);
+          // điều chỉnh kích thước chữ theo bề rộng
+          const textEl = svg.querySelector("text");
+          const fontSize = Math.max(12, Math.round(rect.width * 0.016));
+          textEl.style.fontSize = `${fontSize}px`;
+          // đảm bảo nội dung phủ kín chu vi, không khoảng trống
+          oit.textContent = phraseOuter;
+          let pLen = path.getTotalLength();
+          let tLen = textEl.getComputedTextLength();
+          let reps = 1;
+          while (tLen < pLen * 1.25 && reps < 256) {
+            reps *= 2;
+            oit.textContent = phraseOuter.repeat(reps);
+            tLen = textEl.getComputedTextLength();
+          }
+          while (tLen < pLen * 1.25 && reps < 1024) {
+            reps += 1;
+            oit.textContent = phraseOuter.repeat(reps);
+            tLen = textEl.getComputedTextLength();
+          }
+          // Hoạt ảnh chạy tức thời và mượt bằng requestAnimationFrame
+          const periodSec = 30;
+          let startT = performance.now();
+          const rafLoop = (now) => {
+            const elapsed = (now - startT) / 1000;
+            const offset = (((elapsed % periodSec) / periodSec)) * 100;
+            oit.setAttribute("startOffset", `${offset}%`);
+            requestAnimationFrame(rafLoop);
+          };
+          requestAnimationFrame(rafLoop);
+          // cập nhật lại khi cửa sổ đổi kích thước
+          window.addEventListener("resize", () => {
+            const r = card.getBoundingClientRect();
+            svg.setAttribute("viewBox", `0 0 ${r.width} ${r.height}`);
+            path.setAttribute("d", `M${m},${m} H${r.width - m} V${r.height - m} H${m} Z`);
+            const fs = Math.max(9, Math.round(r.width * 0.012));
+            textEl.style.fontSize = `${fs}px`;
+            oit.textContent = phraseOuter;
+            pLen = path.getTotalLength();
+            tLen = textEl.getComputedTextLength();
+            reps = 1;
+            while (tLen < pLen * 1.25 && reps < 256) {
+              reps *= 2;
+              oit.textContent = phraseOuter.repeat(reps);
+              tLen = textEl.getComputedTextLength();
+            }
+            while (tLen < pLen * 1.25 && reps < 1024) {
+              reps += 1;
+              oit.textContent = phraseOuter.repeat(reps);
+              tLen = textEl.getComputedTextLength();
+            }
+          });
+        }
+      }
+
+      
+
+      // contact
+      const c = info?.contact || {};
+      const cont = [];
+      const zaloUrl = c.zaloLink || c.zalo;
+      const fbUrl   = c.facebookLink || c.facebook;
+      const email   = info?.email;
+      if (c.phone)  cont.push(`<a href="tel:${c.phone}" class="hover:text-gold" title="Gọi"><i data-lucide="phone" class="w-5 h-5"></i></a>`);
+      if (email)    cont.push(`<a href="mailto:${email}" class="hover:text-gold" title="Email"><i data-lucide="mail" class="w-5 h-5"></i></a>`);
+      if (zaloUrl)  cont.push(`<a href="${zaloUrl}" target="_blank" rel="noopener" class="hover:text-gold" title="Zalo"><i data-lucide="message-circle" class="w-5 h-5"></i></a>`);
+      if (fbUrl)    cont.push(`<a href="${fbUrl}" target="_blank" rel="noopener" class="hover:text-gold" title="Facebook"><i data-lucide="facebook" class="w-5 h-5"></i></a>`);
+      $("#contactWrap").innerHTML = cont.join("");
+      lucide.createIcons();
+
+      // map
+      $("#mapEmbed").innerHTML = info?.mapLink
+        ? `<iframe src="${info.mapLink}" width="100%" height="360" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
+        : `<img src="${ASSETS.MAP_IMAGE}" class="w-full h-80 object-cover" alt="Map" />`;
+
+      // countdown
+      const targetTime = parseEventDateTime(info);
+      startCountdown(targetTime);
+
+      // ===== Guest from URL logic (cập nhật chuẩn) =====
+      const rawFromUrl = getGuestFromUrl();
+      let currentGuest = null;
+
+      if (rawFromUrl) {
+        const q = normalize(rawFromUrl);
+        currentGuest =
+          GUESTS.find(g => normalize(g.name) === q) ||
+          GUESTS.find(g => normalize(g.name).includes(q)) ||
+          { name: beautifyName(rawFromUrl) };
+
+        sessionStorage.setItem("guestName", currentGuest.name);
+        const titleTxt = currentGuest.title ? `${currentGuest.title} ` : "";
+        const nameTxt = `${titleTxt}${currentGuest.name}`;
+
+        const guestNameEl = $("#guestNameHero");
+        if (guestNameEl) guestNameEl.textContent = nameTxt;
+
+        
+
+        renderPersonalInvite(INFO, currentGuest);
+        updateMeta(INFO, currentGuest);
+
+      } else {
+        // Fallback nếu không có :guest trong URL
+        const guestNameEl = $("#guestNameHero");
+        if (guestNameEl) guestNameEl.textContent = "bạn";
+
+        
+
+        renderPersonalInvite(INFO, null);
+        updateMeta(INFO, null);
+
+        // Hiển thị form nhập tên nếu không có guest trong URL và chưa có trong session
+        (function(){
+          const storedGuest = (sessionStorage.getItem("guestName") || "").trim();
+          const formWrap = document.getElementById("guestNameFormWrap");
+          const form = document.getElementById("guestNameForm");
+          const input = document.getElementById("guestNameInput");
+          if (!storedGuest && formWrap && form && input) {
+            formWrap.classList.remove("hidden");
+            form.addEventListener("submit", (e) => {
+              e.preventDefault();
+              const name = beautifyName(input.value.trim());
+              if (!name) return;
+              sessionStorage.setItem("guestName", name);
+              const heroEl = document.getElementById("guestNameHero");
+              if (heroEl) heroEl.textContent = name;
+              const guestObj = { name };
+              renderPersonalInvite(INFO, guestObj);
+              updateMeta(INFO, guestObj);
+              formWrap.classList.add("hidden");
+            });
+          } else if (storedGuest) {
+            const heroEl = document.getElementById("guestNameHero");
+            if (heroEl) heroEl.textContent = beautifyName(storedGuest);
+            const guestObj = { name: beautifyName(storedGuest) };
+            renderPersonalInvite(INFO, guestObj);
+            updateMeta(INFO, guestObj);
+            if (formWrap) formWrap.classList.add("hidden");
+          }
+        })();
+      }
+
+
+      // RSVP logic
+      const btnYes = $("#btnYes"), btnNo = $("#btnNo"), instruction = $("#instructionCard"), regretForm = $("#regretForm");
+      const getCurrentName = () => beautifyName(sessionStorage.getItem("guestName") || currentGuest?.name || "Bạn");
+
+      btnYes.addEventListener("click", async ()=>{
+        instruction.classList.remove("hidden");
+        regretForm.classList.add("hidden");
+        const name = getCurrentName();
+        const payload = { name, email: "", attending: true, message: "" };
+        const fsOK = await sendRsvpToFirestore(payload);
+        const mailOK = await sendRsvpEmail(payload, INFO);
+        goldConfetti();
+        if (fsOK || mailOK) showModal("🎉 Cảm ơn bạn!", "Đã ghi nhận tham dự của bạn.");
+        else                showModal("Lỗi", "Không thể ghi nhận RSVP lúc này. Vui lòng thử lại.");
+      });
+
+      btnNo.addEventListener("click", ()=>{
+        instruction.classList.add("hidden");
+        regretForm.classList.remove("hidden");
+      });
+
+      regretForm.addEventListener("submit", async (e)=>{
+        e.preventDefault();
+        const name = getCurrentName();
+        const msg = $("#rsvpMessage").value.trim();
+        const payload = { name, email: "", attending: false, message: msg };
+        const fsOK = await sendRsvpToFirestore(payload);
+        const mailOK = await sendRsvpEmail(payload, INFO);
+        if (fsOK || mailOK) {
+          regretForm.reset();
+          regretForm.classList.add("hidden");
+          showModal("💌 Cảm ơn bạn", "Rất tiếc bạn không thể tham dự. Lời nhắn/RSVP đã được ghi nhận.");
+        } else {
+          showModal("Lỗi", "Không thể gửi phản hồi lúc này. Vui lòng thử lại.");
+        }
+      });
+    }
+
+    window.addEventListener("load", main);
+  </script>
+
+  <script>
+    // Init for static parts
+    window.addEventListener("load", ()=>{ try { AOS.init({ duration: 700, once: true }); lucide.createIcons(); } catch(_){} });
+  </script>
+</body>
+</html>

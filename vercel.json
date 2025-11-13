@@ -74,12 +74,20 @@
       "destination": "/graduation/preview.html"
     },
     {
-      "source": "/graduation2025",
+      "source": "/grad2025",
       "destination": "/graduation/g_i_simple.html"
     },
     {
-      "source": "/graduation2025/:guest",
+      "source": "/grad2025/:guest",
       "destination": "/graduation/g_i_simple.html"
+    },
+    {
+      "source": "/graduation2025",
+      "destination": "/graduation/g_i_does_not_change_borderless_image.html"
+    },
+    {
+      "source": "/graduation2025/:guest",
+      "destination": "/graduation/g_i_does_not_change_borderless_image.html"
     },
     {
       "source": "/graduation_admin",
