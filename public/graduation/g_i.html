@@ -637,8 +637,9 @@
       const render = () => btn.innerHTML = playing ? '<i data-lucide="volume-2" class="w-6 h-6"></i>' : '<i data-lucide="volume-x" class="w-6 h-6"></i>';
       const tryPlay = () => audio.play().then(()=>{playing=true;render();lucide.createIcons();}).catch(()=>{playing=false;render();lucide.createIcons();});
       btn.addEventListener("click", ()=>{ if(!playing) tryPlay(); else { audio.pause(); playing=false; render(); lucide.createIcons(); }});
-      setTimeout(()=>tryPlay(), 600);
       document.addEventListener("click", ()=>{ if(!playing) tryPlay(); }, { once: true });
+      document.addEventListener("touchstart", ()=>{ if(!playing) tryPlay(); }, { once: true });
+      document.addEventListener("pointerdown", ()=>{ if(!playing) tryPlay(); }, { once: true });
     }
 
     // ===== Countdown =====
@@ -817,7 +818,7 @@
 
       // Bỏ viền chữ chạy khung chữ nhật của s5 theo yêu cầu
 
-      // Bỏ viền chữ chạy bao quanh toàn trang theo yêu cầu
+      // Bỏ viền chữ chạy khung chữ nhật của s5 theo yêu cầu
 
       // contact
       const c = info?.contact || {};
