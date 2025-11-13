@@ -30,9 +30,8 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
- <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
- <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
- <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   
 
   <style>
@@ -357,6 +356,53 @@
         </svg>
       </div>
     </section>
+
+    <script>
+      (function(){
+        const ua = navigator.userAgent || navigator.vendor || '';
+        const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isMessenger = /FBAN|FBAV|FB_IAB|Instagram|Messenger/i.test(ua);
+
+        if (isIOS || isMessenger) {
+          const v = document.getElementById('bgVideo');
+          if (v) {
+            v.pause();
+            const src = document.getElementById('bgVideoSrc');
+            if (src) src.removeAttribute('src');
+            v.removeAttribute('src');
+            v.style.display = 'none';
+          }
+        }
+
+        const hideLoading = () => {
+          const app = document.getElementById('app');
+          const loading = document.getElementById('loading');
+          if (app) app.classList.remove('hidden');
+          if (loading) loading.classList.add('hidden');
+        };
+
+        try { if (!isIOS) { if (window.AOS) window.AOS.init({ duration: 600, once: true, easing: 'ease-out' }); } } catch(e){}
+        try { if (window.lucide) window.lucide.createIcons(); } catch(e){}
+
+        hideLoading();
+
+        const confBtn = document.getElementById('celebrateBtn');
+        if (confBtn && window.confetti) {
+          let last = 0;
+          const minInterval = 2000;
+          confBtn.addEventListener('click', () => {
+            const now = Date.now();
+            if (now - last < minInterval) return;
+            last = now;
+            window.confetti({ particleCount: 40, spread: 60, ticks: 120, origin: { y: 0.8 } });
+          });
+        }
+
+        if (window.firebase && !window.__firebase_loaded) {
+          window.__firebase_loaded = true;
+        }
+      })();
+    </script>
   </main>
 
   <!-- Modal -->
@@ -1045,11 +1091,21 @@
     window.addEventListener("load", main);
     }
   </script>
- <script src="/assets/js/app.js"></script>
 
   <script>
     // Init for static parts
     window.addEventListener("load", ()=>{ try { AOS.init({ duration: 700, once: true }); lucide.createIcons(); } catch(_){} });
+  </script>
+  <script>
+    // Hiển thị ứng dụng và ẩn overlay tải khi trang đã sẵn sàng
+    window.addEventListener("load", ()=>{
+      try {
+        var appEl = document.getElementById("app");
+        if (appEl) appEl.classList.remove("hidden");
+        var loadingEl = document.getElementById("loading");
+        if (loadingEl) loadingEl.classList.add("hidden");
+      } catch(_){}
+    });
   </script>
 </body>
 </html>
