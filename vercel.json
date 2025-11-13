@@ -59,11 +59,18 @@
     {
       "source": "/admin/29029003/upson",
       "destination": "/admin-server-control.html"
-    }
-  ,
+    },
     {
       "source": "/graduation",
       "destination": "/graduation/g_i.html"
+    },
+    {
+      "source": "image/graduation/main-preview.jpg",
+      "destination": "image/graduation/preview/main-preview.jpg"
+    },
+        {
+      "source": "image/graduation/main-preview.png",
+      "destination": "image/graduation/preview/main-preview.png"
     },
     {
       "source": "/graduation/:guest",

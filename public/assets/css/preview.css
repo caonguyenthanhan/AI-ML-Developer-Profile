@@ -35,6 +35,9 @@
     z-index: 4;
     text-align: center;
 }
+.left-col {
+    padding-top: 180px ;
+}
 
 .label {
     font-size: 14px;
@@ -55,6 +58,8 @@
     background: #fff;
     border: 1px solid #E7C76D;
     margin-bottom: 16px;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Avatar */
@@ -113,6 +118,11 @@
     margin-bottom: 8px;
 }
 
+/* University name bold */
+.uni-name {
+    font-weight: 700;
+}
+
 .info-grid {
     display: grid;
     gap: 8px;
@@ -130,10 +140,12 @@
     grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin-bottom: 12px;
+    white-space: nowrap;  
 }
 
 .info-card.half {
     width: 100%;
+   white-space: normal;  
 }
 
 /* MAP SECTION */
@@ -143,8 +155,41 @@
     margin-bottom: 6px;
 }
 
+.map-container {
+    width: 100%;
+    background: #ffffffd8;
+    border: 1px solid #e7c76d;
+    border-radius: 14px;
+    padding: 10px;
+    margin-top: 6px;
+}
+
 .map-img {
-    width: 92%;
+    width: 100%;
     border-radius: 10px;
-    border: 1px solid #ddd;
+    object-fit: cover;
+    display: block;
+}
+
+body {
+    background: #ffffff !important;
+    overflow-x: hidden;
+}
+
+/* Ngăn header + footer tự động injected */
+header, footer, #chat-toggle, #chat-widget {
+    display: none !important;
+}
+
+
+.right-col{
+    transform: translateX(-80px);
+}
+.grad-name{
+    font-weight: 700;
+    display: block;
+    white-space: normal;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-top: 4px;
 }

@@ -1,59 +1,88 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Preview Thiệp Tốt Nghiệp</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/tw.css">
     <link rel="stylesheet" href="/assets/css/preview.css">
+
 </head>
 
-<body style="background:#ffffff;">
+<body>
 
 <div class="preview-wrapper">
     <div id="capture-container">
 
-        <img id="gold-frame" src="/assets/frame/graduation-frame-1200x630.png">
+        <!-- Border chuẩn -->
+        <img id="gold-frame" src="/assets/frame/graduation-frame-1200x630.png" alt="frame">
 
-        <!-- LEFT -->
+        <!-- LEFT SIDE -->
         <div class="left-col">
             <p class="label">THƯ MỜI</p>
             <h1 class="title">LỄ TỐT NGHIỆP</h1>
 
             <div class="degree-tag">
-                <span class="gold">TÂN CỬ NHÂN</span>
+                <span class="gold">TÂN CỬ NHÂN </span>
                 <span id="graduate-name" class="grad-name"></span>
             </div>
 
+            <!-- Avatar -->
             <div class="avatar-wrap">
                 <img src="/image/nguyet-que.png" class="avatar-frame">
                 <img id="graduate-image" class="avatar">
             </div>
 
+
             <p class="invite-text">
-                Trân trọng kính mời <span id="guestNameHero" class="guest">bạn</span> đến tham dự lễ tốt nghiệp.
+                Trân trọng kính mời <span id="guestNameHero">bạn</span> đến tham dự lễ tốt nghiệp.
             </p>
+
 
             <p id="graduate-info" class="sub-info"></p>
         </div>
 
-        <!-- RIGHT -->
+        <!-- RIGHT SIDE -->
         <div class="right-col">
 
             <div class="uni-header">
                 <img src="/image/graduation/logotruong.jpg" class="uni-logo">
+
                 <p id="university-name" class="uni-name"></p>
             </div>
 
             <h2 class="info-title">Thông Tin Sự Kiện</h2>
 
             <div class="info-grid">
-
-                <div class="info-card">
-                    <h3 class="gold small-title">Ngày</h3>
-                    <p id="event-date"></p>
+                <div class="info-row">
+                    <div class="info-card half">
+                        <p><span class="gold small-title">Ngày: </span><span id="event-date"></span></p>
+                    </div>
+                    <div class="info-card half">
+                        <p><span class="gold small-title">Giờ: </span><span id="event-time"></span></p>
+                    </div>
+                </div>
+                <div class="info-row-map">
+                    <div class="info-card half">
+                        <p><span class="gold small-title">Địa điểm: </span><span id="event-venue"></span></p>
+                        <p id="event-address" class="address"></p>
+                    </div>
+                </div>
+                <div class="map-container">
+                     <img id="map-img" src="/image/graduation/map.jpg" class="map-img">
                 </div>
 
-                <div class="info-card">
-                    <h3 class="gold small-title">Giờ</h3>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/preview.js"></script>
+
+
+</body>
+</html>
