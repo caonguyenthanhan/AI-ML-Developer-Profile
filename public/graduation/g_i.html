@@ -567,8 +567,23 @@
     }
 
     function getGuestFromUrl() {
+      // 1) Ưu tiên đọc từ query: ?guest=... | ?g=... | ?name=...
+      const qp = new URLSearchParams(location.search);
+      const qGuest = qp.get("guest") || qp.get("g") || qp.get("name") || "";
+      if (qGuest && qGuest.trim()) return decodeURIComponent(qGuest.trim());
+
+      // 2) Hỗ trợ path dạng: /graduation/<guest>/..., bỏ các segment là file .html
       const parts = location.pathname.replace(/\/+$/,"").split("/").filter(Boolean);
-      if (parts.length >= 2 && parts[0].toLowerCase() === "graduation") return decodeURIComponent(parts[1]);
+      const idx = parts.findIndex(p => p.toLowerCase() === "graduation");
+      if (idx !== -1) {
+        const tail = parts.slice(idx+1);
+        const slug = tail.filter(s => !/\.html?$/i.test(s)).pop();
+        if (slug) return decodeURIComponent(slug);
+      }
+
+      // 3) Fallback: nếu segment cuối không phải file, dùng nó
+      const last = parts[parts.length-1];
+      if (last && !/\.html?$/i.test(last)) return decodeURIComponent(last);
       return null;
     }
 
