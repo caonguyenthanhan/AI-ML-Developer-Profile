@@ -569,8 +569,11 @@
     function getGuestFromUrl() {
       // 1) Ưu tiên đọc từ query: ?guest=... | ?g=... | ?name=...
       const qp = new URLSearchParams(location.search);
-      const qGuest = qp.get("guest") || qp.get("g") || qp.get("name") || "";
-      if (qGuest && qGuest.trim()) return decodeURIComponent(qGuest.trim());
+      const qRaw = (qp.get("guest") || qp.get("g") || qp.get("name") || "").trim();
+      if (qRaw) {
+        const low = qRaw.toLowerCase();
+        if (low !== "nan" && low !== "undefined" && low !== "null") return decodeURIComponent(qRaw);
+      }
 
       // 2) Hỗ trợ path dạng: /graduation/<guest>/..., bỏ các segment là file .html
       const parts = location.pathname.replace(/\/+$/,"").split("/").filter(Boolean);
@@ -584,7 +587,7 @@
       // 3) Fallback: nếu segment cuối không phải file, dùng nó
       const last = parts[parts.length-1];
       if (last && !/\.html?$/i.test(last)) return decodeURIComponent(last);
-      return null;
+      return "bạn";
     }
 
     function updateMeta(info, guest=null) {
