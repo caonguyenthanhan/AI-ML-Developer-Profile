@@ -410,6 +410,22 @@
       <div class="mt-4 text-right">
         <button id="modalClose" class="btn btn-navy">Đóng</button>
       </div>
+  </div>
+  </div>
+
+  <div id="rsvpPopup" class="fixed inset-0 bg-black/50 hidden items-center justify-center" style="z-index:2147483647;">
+    <div class="bg-white text-charcoal rounded-2xl p-6 w-[min(92vw,420px)] shadow-xl relative" style="z-index:2147483647;">
+      <h3 id="rsvpPopupTitle" class="text-xl font-bold mb-2">Bạn sẽ đến chung vui cùng "Tân Cử Nhân" chứ?</h3>
+      <div class="space-y-1 text-sm">
+        <div><strong>Ngày:</strong> <span id="sumDatePopup"></span></div>
+        <div><strong>Giờ:</strong> <span id="sumTimePopup"></span></div>
+        <div><strong>Địa điểm:</strong> <span id="sumVenuePopup"></span></div>
+        <div><strong>Địa chỉ:</strong> <span id="sumAddressPopup"></span></div>
+      </div>
+      <div class="mt-4 flex justify-center gap-4">
+        <button id="rsvpPopupYes" class="btn btn-gold">Đi chứ</button>
+        <button id="rsvpPopupNo" class="btn btn-navy">Tiếc quá</button>
+      </div>
     </div>
   </div>
 
@@ -444,6 +460,7 @@
 
     let db, auth, INFO=null, GUESTS=[];
     let countdownTimer = null;
+    let rsvpPopupShown = false;
 
     const $ = (s, r=document) => r.querySelector(s);
     const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
@@ -459,6 +476,87 @@
       $("#modalWrap").classList.add("hidden");
       $("#modalWrap").classList.remove("flex");
     });
+
+    function generateMapEmbed(info) {
+      return info?.mapLink
+        ? `<iframe src="${info.mapLink}" width="100%" height="360" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
+        : `<img src="${ASSETS.MAP_IMAGE}" class="w-full rounded-lg shadow border border-gold/40" alt="Map" />`;
+    }
+
+    function setS3Accepted(info) {
+      const statusEl = document.getElementById("s3RsvpStatus");
+      if (statusEl) statusEl.textContent = "Bạn đã xác nhận tham dự";
+      const mapEl = document.getElementById("mapS3");
+      if (mapEl) {
+        mapEl.innerHTML = generateMapEmbed(info);
+        mapEl.classList.remove("hidden");
+      }
+    }
+
+    function setS3Ask() {
+      const statusEl = document.getElementById("s3RsvpStatus");
+      if (statusEl) statusEl.textContent = "Bạn sẽ đến dự chứ?";
+      const mapEl = document.getElementById("mapS3");
+      if (mapEl) {
+        mapEl.innerHTML = "";
+        mapEl.classList.add("hidden");
+      }
+    }
+
+    function openRsvpPopup(info) {
+      const p = document.getElementById("rsvpPopup");
+      if (!p) return;
+      const dateEl = document.getElementById("sumDatePopup");
+      const timeEl = document.getElementById("sumTimePopup");
+      const venueEl = document.getElementById("sumVenuePopup");
+      const addrEl = document.getElementById("sumAddressPopup");
+      const titleEl = document.getElementById("rsvpPopupTitle");
+      if (dateEl) dateEl.textContent = INFO?.date || "";
+      if (timeEl) timeEl.textContent = INFO?.time || "";
+      if (venueEl) venueEl.innerHTML = INFO?.venue || "";
+      if (addrEl) addrEl.textContent = INFO?.address || "";
+      if (titleEl) {
+        const gName = INFO?.graduateName || (document.getElementById("graduateNameHero")?.textContent || "Tân Cử Nhân");
+        titleEl.textContent = `Bạn sẽ đến chung vui cùng "${gName}" chứ?`;
+      }
+      p.classList.remove("hidden");
+      p.classList.add("flex");
+    }
+
+    function ensurePopupOnBody() {
+      const p = document.getElementById("rsvpPopup");
+      if (p && p.parentElement !== document.body) {
+        document.body.appendChild(p);
+      }
+    }
+
+    function bindRsvpPopup(info) {
+      const popup = document.getElementById("rsvpPopup");
+      if (!popup) return;
+      const btnYes = document.getElementById("rsvpPopupYes");
+      const btnNo = document.getElementById("rsvpPopupNo");
+      const getName = () => {
+        const n = (sessionStorage.getItem("guestName") || "").trim();
+        return n ? beautifyName(n) : "Bạn";
+      };
+
+      if (btnYes) btnYes.addEventListener("click", async ()=> {
+        setS3Accepted(info);
+        const payload = { name: getName(), email: "", attending: true, message: "" };
+        const fsOK = await sendRsvpToFirestore(payload);
+        const mailOK = await sendRsvpEmail(payload, INFO);
+        if (fsOK || mailOK) showModal("🎉 Cảm ơn bạn!", "Đã ghi nhận tham dự của bạn.");
+        else showModal("Lỗi", "Không thể ghi nhận RSVP lúc này. Vui lòng thử lại.");
+        popup.classList.add("hidden");
+        popup.classList.remove("flex");
+      });
+
+      if (btnNo) btnNo.addEventListener("click", ()=> {
+        setS3Ask();
+        popup.classList.add("hidden");
+        popup.classList.remove("flex");
+      });
+    }
 
     // ===== Graduate image rotation =====
     const GRAD_ROTATE_INTERVAL_MS = 2000;
@@ -534,20 +632,20 @@
     }
 
     function goldConfetti() {
-      confetti({ particleCount: 160, spread: 100, origin: { y: .6 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+      confetti({ particleCount: 160, spread: 100, origin: { y: .6 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"], zIndex: 9998 });
     }
 
     function sideBurst() {
-      confetti({ particleCount: 120, angle: 60, spread: 55, origin: { x: 0, y: 0.7 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
-      confetti({ particleCount: 120, angle: 120, spread: 55, origin: { x: 1, y: 0.7 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+      confetti({ particleCount: 120, angle: 60, spread: 55, origin: { x: 0, y: 0.7 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"], zIndex: 9998 });
+      confetti({ particleCount: 120, angle: 120, spread: 55, origin: { x: 1, y: 0.7 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"], zIndex: 9998 });
     }
 
     function streamersConfetti() {
-      confetti({ particleCount: 180, spread: 90, startVelocity: 40, origin: { y: 0.6 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"] });
+      confetti({ particleCount: 180, spread: 90, startVelocity: 40, origin: { y: 0.6 }, colors: ["#D4AF37","#FFF3B0","#FDE047","#FACC15"], zIndex: 9998 });
     }
 
     function fireworksBurst() {
-      const cfg = { spread: 360, ticks: 80, gravity: 0.8, decay: 0.94, startVelocity: 25, colors: ["#D4AF37","#FFFFFF","#FACC15","#FDE047"] };
+      const cfg = { spread: 360, ticks: 80, gravity: 0.8, decay: 0.94, startVelocity: 25, colors: ["#D4AF37","#FFFFFF","#FACC15","#FDE047"], zIndex: 9998 };
       const fire = (x, y) => confetti(Object.assign({ origin: { x, y }, particleCount: 90 }, cfg));
       setTimeout(() => fire(0.2, 0.3), 0);
       setTimeout(() => fire(0.8, 0.4), 300);
@@ -653,7 +751,7 @@
       if (info?.music) audio.src = info.music;
       let playing=false;
       const render = () => btn.innerHTML = playing ? '<i data-lucide="volume-2" class="w-6 h-6"></i>' : '<i data-lucide="volume-x" class="w-6 h-6"></i>';
-      const tryPlay = () => audio.play().then(()=>{playing=true;render();lucide.createIcons();}).catch(()=>{playing=false;render();lucide.createIcons();});
+      const tryPlay = () => audio.play().then(()=>{playing=true;render();lucide.createIcons(); if (!rsvpPopupShown) { openRsvpPopup(info); rsvpPopupShown = true; }}).catch(()=>{playing=false;render();lucide.createIcons();});
       btn.addEventListener("click", ()=>{ if(!playing) tryPlay(); else { audio.pause(); playing=false; render(); lucide.createIcons(); }});
       document.addEventListener("click", ()=>{ if(!playing) tryPlay(); }, { once: true });
       document.addEventListener("touchstart", ()=>{ if(!playing) tryPlay(); }, { once: true });
@@ -798,6 +896,9 @@
       const heroImg = $("#bgHeroImage");
       if (heroImg) { heroImg.src = "/image/graduation/Graduation Background.jpg"; }
       setupMusic(info);
+      ensurePopupOnBody();
+      bindRsvpPopup(info);
+      setS3Ask();
       $("#celebrateBtn").addEventListener("click", goldConfetti);
       autoConfettiSequence();
 
