@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thiệp Mời Tốt Nghiệp</title>
+  <style>
+    /* Định nghĩa biến màu của dự án */
+    :root{
+      --gold:#D4AF37;
+      --navy:#0b1830;
+      --charcoal:#2c3e50;
+      --bg:#f7f7f7; /* Background ngoài thiệp */
+      --text-main: #000000; /* Chữ chính màu đen như thiệp gốc */
+    }
+    
+    /* Thiết lập chung */
+    *{box-sizing:border-box}
+    body{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      margin:0;
+      background-color:var(--bg);
+      overflow-x:hidden;
+      font-family:'Inter', Arial, sans-serif; /* Dùng font dự án (Inter) nếu có, hoặc Arial */
+      color:var(--text-main);
+    }
+
+    /* Nền xa nhất phủ viewport */
+    .main-background{
+      position:fixed;
+      top:0; left:0; width:100vw; height:100vh;
+      background-image:url('/image/graduation/Graduation Background.jpg');
+      background-size:cover; background-position:center; background-repeat:no-repeat;
+      z-index:-3; pointer-events:none;
+    }
+    
+    /* Khung chứa card & viền */
+    .card-container{
+      position:relative;
+      width:100%;
+      max-width:400px; /* Bố cục dọc */
+      margin:0 auto;
+    }
+    /* Thẻ Thiệp Mời */
+    .invitation-card{
+      width:100%;
+      position:relative;
+      z-index:40;
+      background:linear-gradient(135deg, #fffbea 0%, #ffffff 45%, #fff4cc 100%);
+      box-shadow:0 12px 28px rgba(0,0,0,.18), 0 10px 18px rgba(212,175,55,.20);
+      text-align:center;
+      padding-bottom:20px;
+    }
+    .invitation-card::before{
+      content:"";
+      position:absolute;
+      inset:-6px;
+      border-radius:8px;
+      background:linear-gradient(135deg, rgba(212,175,55,.35) 0%, rgba(11,24,48,.20) 60%, rgba(255,255,255,0) 100%);
+      filter:blur(16px);
+      z-index:-1;
+    }
+
+    
+    /* Phần Ảnh Header */
+    .header-image{
+      width:100%;
+      height:360px;
+      /* Dùng placeholder, bạn nên thay bằng ảnh thật */
+      background-image:url('/image/graduation/women.jpg'); 
+      background-size:cover;
+      background-position:center top;
+      position:relative;
+      /* Thêm hiệu ứng mờ nhẹ ở dưới ảnh để chuyển tiếp mượt mà */
+      mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+      z-index:1;
+    }
+    .header-image::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(11,24,48,.18) 0%, rgba(212,175,55,.22) 55%, rgba(255,255,255,0) 85%);
+      pointer-events:none;
+    }
+
+        /* Viền vàng bao quanh card-container */
+    .gold-border{
+      position:absolute;
+      top:-12px; left:-12px; right:-12px; bottom:-12px;
+      background-image:url('/image/vien-vang.png');
+      background-size:100% 100%;
+      background-repeat:no-repeat;
+      z-index:5;
+      pointer-events:none;
+    }
+    /* Dải mũ tốt nghiệp lặp ngang */
+    .graduate-caps-overlay{
+      position:absolute;
+      top:0; left:0; right:0; height:120px;
+      background-image:url('/image/graduation/graduate-caps.png');
+      background-repeat:repeat-x;
+      background-position:top center;
+      background-size:240px auto;
+      z-index:999;
+      pointer-events:none;
+      filter:drop-shadow(0 6px 12px rgba(0,0,0,.25));
+    }
+    .overlay-content{
+      position:absolute;
+      bottom:10px;
+      width:100%;
+      color:rgba(0,0,0,.08); /* Chữ S mờ */
+      font-size:150px;
+      font-weight:bold;
+      font-family:'Playfair Display', 'Times New Roman', serif; /* Font chữ serif từ dự án */
+      line-height:1;
+    }
+    
+    /* Icons */
+    .icons{
+      margin-top:0;
+      font-size:28px;
+      color:var(--gold); /* Dùng màu Gold */
+      position:relative;
+      z-index:4;
+    }
+    
+    /* Nội dung chung */
+    .content{
+      padding:0 20px;
+      position:relative;
+      z-index:4;
+    }
+    
+    /* THÂN MỜI */
+    .title{
+      font-family:'Playfair Display', 'Times New Roman', serif; /* Dùng font serif của dự án */
+      font-size:20px;
+      font-weight:bold;
+      margin-bottom:6px;
+      margin-top:16px;
+      color:var(--text-main);
+      letter-spacing:1px; /* Chữ to, rõ ràng */
+    }
+    
+    /* ĐẾN THAM DỰ... */
+    .subtitle{
+      font-size:14px;
+      margin-bottom:10px;
+      color:var(--text-main);
+    }
+    
+    /* Tên người được mời */
+    .name{
+      font-family:'FS Southamton', cursive;
+      font-size:60px; /* Lớn hơn một chút */
+      margin:10px 0 18px 0;
+      line-height:1;
+      color:var(--gold);
+      -webkit-text-stroke:1px #000;
+      text-shadow:0 2px 6px rgba(0,0,0,.12), 0 1px 0 rgba(212,175,55,.25);
+      text-shadow:0 2px 6px rgba(0,0,0,.12), 0 1px 0 rgba(212,175,55,.25);
+    }
+    
+    /* Ngày tháng */
+    .date-container{
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+      margin-bottom:8px;
+      gap:8px;
+    }
+    .date-container span{
+      font-family:'Inter', Arial, sans-serif; /* Font không chân, đậm, hiện đại */
+      color:var(--text-main);
+      line-height: 1; /* Cân đối chiều cao số */
+    }
+    .date-day{
+      font-size:140px; /* Cực lớn, nổi bật */
+      font-weight: 900; /* Rất đậm */
+    }
+    .date-month-year{
+      font-size:32px; /* Lớn hơn */
+      font-weight: 700;
+      line-height:1.15;
+    }
+    
+    /* Thời gian */
+    .time{
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:22px;
+      color:var(--text-main);
+    }
+    
+    /* Địa điểm & Liên hệ */
+    .location{
+      font-weight:bold;
+      line-height:1.5;
+      margin-bottom:18px;
+      color:var(--text-main);
+    }
+    .school-name{
+      font-size:18px;
+      text-transform:uppercase;
+      color:var(--navy); /* Tên trường dùng màu Navy */
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .address{
+      font-size:14px;
+    }
+
+    /* Badge (ẩn đi nếu không cần) */
+    .badge {
+        display: none; /* Ẩn đi phần badge không có trong thiệp gốc */
+    }
+    
+    /* Đường kẻ ngang */
+    .hr{
+      width:80%;
+      height:1px;
+      background:linear-gradient(to right,transparent,rgba(0,0,0,.15),transparent);
+      margin:0 auto;
+    }
+    
+    /* Lời kết */
+    .footer-message{
+      font-size:12px;
+      margin-top:26px;
+      padding:0 30px;
+      text-transform:uppercase;
+      font-weight:600; /* Đậm hơn */
+      line-height:1.5;
+      z-index:40;
+      color:var(--charcoal); /* Dùng màu Charcoal */
+    }
+    
+    /* Responsive tweaks */
+    @media (max-width: 360px){
+      .header-image{ height:300px; }
+      .date-day{ font-size:120px; }
+      .name{ font-size:46px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Nền xa nhất phủ viewport -->
+  <div class="main-background" aria-hidden="true"></div>
+
+  <!-- Khung chứa card + viền vàng + dải mũ -->
+  <div class="card-container">
+    <div class="gold-border" aria-hidden="true"></div>
+    <div class="graduate-caps-overlay" aria-hidden="true"></div>
+
+    <div class="invitation-card">
+    <div class="header-image" id="cardHeaderImage">
+      <div class="overlay-content">S</div>
+    </div>
+    
+    
+    <div class="icons">
+      <span role="img" aria-label="girl-emoji">👩‍🎓</span>
+      <span role="img" aria-label="graduation-cap">🎓</span>
+    </div>
+    
+    <div class="content">
+      <div class="title">THÂN MỜI</div>
+      <div class="subtitle">ĐẾN THAM DỰ BUỔI LỄ TỐT NGHIỆP CỦA:</div>
+      
+      <div class="name" id="cardName">Mai Minh Huệ</div>
+      
+      <div class="date-container">
+        <span class="date-day" id="cardDay">25</span>
+        <span class="date-month-year" id="cardMonthYear">11<br>2025</span>
+      </div>
+      <div class="time" id="cardTime">THỜI GIAN: 7:00–11:30</div>
+      
+      <div class="location">
+        <div class="school-name" id="cardSchool">TRƯỜNG ĐẠI HỌC CÔNG THƯƠNG TP.HCM</div>
+        <div class="address" id="cardAddr1">140 LÊ TRỌNG TẤN</div>
+        <div class="address" id="cardAddr2">PHƯỜNG TÂY THẠNH, QUẬN TÂN PHÚ, TP.HCM</div>
+        <div class="address" id="cardPhone">LIÊN HỆ SĐT: 0932172995</div>
+        <div class="badge"></div> 
+      </div>
+      
+      <div class="hr"></div>
+      
+      <div class="footer-message" id="cardFooter">MỜI MỌI NGƯỜI ĐẾN CHUNG VUI VÀ LƯU GIỮ KỶ NIỆM NGÀY TỐT NGHIỆP CÙNG MINH HUỆ</div>
+    </div>
+    </div>
+  </div>
+  <script>
+    (function(){
+      function t(id,v){var e=document.getElementById(id);if(e) e.textContent=v;}
+      function h(id,v){var e=document.getElementById(id);if(e) e.innerHTML=v;}
+      function pd(s){var m=(s||'').match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);return m?{d:m[1],m:m[2],y:m[3]}:{d:'',m:'',y:''};}
+      fetch('/data/info.json',{cache:'no-store'})
+        .then(function(r){return r.json();})
+        .then(function(info){
+          var name=info&&info.graduateName?info.graduateName:'Tân Cử Nhân';
+          var date=info&&info.date?info.date:'';var tm=info&&info.time?info.time:'';
+          var uni=info&&info.university?info.university:'Trường Đại học';
+          var addr=info&&info.address?info.address:'';
+          var phone=(info&&info.contact&&info.contact.phone)?info.contact.phone:'';
+          var footer=info&&info.invitationMessage?info.invitationMessage.replace(/<br\s*\/>/g,' ').replace(/FileName/g,name):'Mời mọi người đến chung vui và lưu giữ kỷ niệm ngày tốt nghiệp.';
+          t('cardName',name);
+          var dm=pd(date); t('cardDay',dm.d); h('cardMonthYear',(dm.m||'')+'<br>'+(dm.y||''));
+          t('cardTime',tm?('THỜI GIAN: '+tm):''); t('cardSchool',uni);
+          var segs=(addr||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
+          var a1=segs.shift()||''; var a2=segs.join(', ');
+          t('cardAddr1',a1); t('cardAddr2',a2); t('cardPhone',phone?('LIÊN HỆ SĐT: '+phone):'');
+          t('cardFooter',footer.replace(/<[^>]+>/g,''));
+          var img=(info&&info.graduateImage)?info.graduateImage:(info&&info.previewImage?info.previewImage:'/image/graduation/women.jpg');
+          var hd=document.getElementById('cardHeaderImage'); if(hd) hd.style.backgroundImage="url('"+img+"')";
+          document.title='Thiệp Mời Tốt Nghiệp - '+name;
+        })
+        .catch(function(){});
+    })();
+  </script>
+</body>
+</html>

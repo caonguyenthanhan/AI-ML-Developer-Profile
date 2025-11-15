@@ -77,6 +77,10 @@
       "destination": "/graduation/g_i.html?guest=:guest"
     },
     {
+      "source": "/graduation_sc",
+      "destination": "/graduation/standing card.html"
+    },
+    {
       "source": "/graduation_preview",
       "destination": "/graduation/preview.html"
     },
