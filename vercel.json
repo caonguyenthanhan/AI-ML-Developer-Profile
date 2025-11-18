@@ -127,6 +127,10 @@
     {
       "source": "/GOV-ARX",
       "destination": "/GOV-ARX.html"
+    },
+    {
+      "source": "/GOV-ARX/demo",
+      "destination": "/GOV-ARX Demo.html"
     }
   ]
 }
