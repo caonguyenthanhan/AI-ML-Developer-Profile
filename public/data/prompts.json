@@ -3099,5 +3099,12 @@
         "prompt": "from my photo create a pictures: A high-resolution, ultra-realistic photo. Use the exact face and outfit of the man from the first reference image (sitting on the salon chair, facing camera). Place this man in the exact central composition seen in the second reference image. He is sitting on a sofa, socializing and drinking with at least six (6) beautiful Vietnamese women who are dressed sexily. The setting is an indoor party room. The table in front of them is covered with various drinking dishes (snacks) and beer cans. The lighting should be cinematic and high-quality. Don't change the facial det of the main man.",
         "imagePath": "/image/genai/6763744d-b63a-48a9-86b3-aff0b1d6e596.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 444,
+        "title": "Chân dung Biểu cảm Hoảng hốt Kịch tính",
+        "prompt": "from my photo create a pictures: A hyper-realistic portrait of the subject (from the reference photo) but modified to show an exaggerated expression of shock or terror. The subject's eyes must be wide open, eyebrows raised high, and mouth agape, similar to a 'scream' or 'home alone' reaction. Optional: The subject's hands are pressed firmly against their cheeks. The lighting should be dramatic, high-contrast, possibly with harsh shadows, to emphasize the shocked expression. Maintain the subject's core facial identity and features, but completely alter the expression and pose. Don't change the facial identity, only the expression.",
+        "imagePath": "/image/genai/b9a558ea-9e4c-4889-bbb2-a6b7c14dee66.png",
+        "category": "Portrait Photography"
     }
 ]
