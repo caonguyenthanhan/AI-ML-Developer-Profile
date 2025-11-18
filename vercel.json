@@ -127,6 +127,10 @@
     {
       "source": "/GOV-ARX",
       "destination": "/GOV-ARX.html"
+    },
+    {
+      "source": "/GOV-ARX/PNG",
+      "destination": "/PIPELINE AGENTIC RAG HOÀN CHỈNH.png"
     }
   ]
 }
