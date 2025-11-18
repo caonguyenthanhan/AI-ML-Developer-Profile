@@ -123,6 +123,10 @@
     {
       "source": "/admin/exam",
       "destination": "/education/tin_hoc_hsg/admin_exam.html"
+    },
+    {
+      "source": "/GOV-ARX",
+      "destination": "/GOV-ARX.html"
     }
   ]
 }
