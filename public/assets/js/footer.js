@@ -277,18 +277,18 @@ function initializeChatBox() {
                 body: JSON.stringify(payload)
             });
 
-            if (!response.ok) {
-                throw new Error(`Proxy error: ${response.status} ${response.statusText}`);
+            let result = {};
+            try { result = await response.json(); } catch (_) { result = {}; }
+
+            let aiResponseText = "Rất tiếc, máy chủ trung gian (Proxy) chưa được cấu hình hoặc gặp lỗi. Vui lòng thử lại sau.";
+            if (response.ok) {
+                if (result && result.text) {
+                    aiResponseText = result.text;
+                }
+            } else {
+                aiResponseText = (result && result.text) || `Máy chủ Proxy trả về lỗi ${response.status}`;
             }
 
-            const result = await response.json();
-            
-            let aiResponseText = "Rất tiếc, máy chủ trung gian (Proxy) chưa được cấu hình hoặc gặp lỗi. Vui lòng thử lại sau.";
-            
-            if (result.text) {
-                aiResponseText = result.text;
-            }
-            
             loadingIndicator.remove();
             displayMessage(aiResponseText);
 

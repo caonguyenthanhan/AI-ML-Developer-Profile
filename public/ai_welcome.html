@@ -8,18 +8,20 @@
 <link href="/assets/css/tw.css" rel="stylesheet">
     <!-- Cấu hình Tailwind cho font Inter và màu sắc cơ bản -->
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary-blue': '#1e40af', // Blue 700
-                        'accent-yellow': '#fcd34d', // Amber 300
+        if (window.tailwind) {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                        },
+                        colors: {
+                            'primary-blue': '#1e40af', // Blue 700
+                            'accent-yellow': '#fcd34d', // Amber 300
+                        }
                     }
                 }
-            }
+            };
         }
     </script>
     <!-- Font Inter -->

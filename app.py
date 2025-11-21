@@ -10,6 +10,10 @@ from flask import Flask, request, render_template, redirect, url_for, flash, jso
 from werkzeug.utils import secure_filename
 import uuid
 from PIL import Image, ImageOps
+import urllib.request
+import urllib.error
+import json as jsonlib
+from pathlib import Path
 
 # Cấu hình ứng dụng
 app = Flask(__name__, static_folder='public', static_url_path='')
@@ -21,6 +25,24 @@ app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100 MB để hỗ trợ 
 PROMPTS_FILE = 'public/data/prompts.json'
 CATEGORIES_FILE = 'public/data/category.json'
 PROMPTS_VIP_FILE = 'private/prompts_vip.json'
+
+def load_env_from_file():
+    try:
+        env_path = Path('private/.env')
+        if env_path.exists() and env_path.is_file():
+            with env_path.open('r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith('#'):
+                        continue
+                    if '=' in line:
+                        k, v = line.split('=', 1)
+                        k = k.strip()
+                        v = v.strip()
+                        if k and v and not os.environ.get(k):
+                            os.environ[k] = v
+    except Exception:
+        pass
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -508,6 +530,78 @@ def server_status():
             'message': f'Lỗi khi kiểm tra trạng thái: {str(e)}'
         })
 
+@app.route('/api/chat', methods=['POST'])
+def api_chat():
+    try:
+        data = request.get_json(silent=True) or {}
+        user_query = (data.get('userQuery') or '').strip()
+        system_instruction = (data.get('systemInstruction') or '').strip()
+
+        api_key = os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY') or os.environ.get('GENAI_API_KEY')
+        if not api_key:
+            return jsonify({'ok': False, 'error': 'missing_api_key', 'text': 'Máy chủ chưa cấu hình API key.'}), 501
+
+        endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
+        payload = {
+            'contents': [
+                {'parts': [{'text': system_instruction}]} if system_instruction else {'parts': [{'text': ''}]},
+                {'parts': [{'text': user_query or 'Hi'}]}
+            ]
+        }
+
+        req = urllib.request.Request(
+            url=endpoint,
+            data=jsonlib.dumps(payload).encode('utf-8'),
+            headers={
+                'Content-Type': 'application/json',
+                'X-goog-api-key': api_key
+            },
+            method='POST'
+        )
+
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                raw = resp.read().decode('utf-8')
+                j = jsonlib.loads(raw)
+        except urllib.error.HTTPError as e:
+            try:
+                raw = e.read().decode('utf-8')
+                j = jsonlib.loads(raw)
+            except Exception:
+                j = {'error': f'http_error_{e.code}'}
+
+        text = ''
+        try:
+            candidates = j.get('candidates') or []
+            if candidates:
+                parts = ((candidates[0].get('content') or {}).get('parts')) or []
+                if parts:
+                    text = parts[0].get('text') or ''
+        except Exception:
+            text = ''
+
+        if not text:
+            text = (j.get('error') or {}).get('message') or 'Không nhận được phản hồi từ mô hình.'
+
+        return jsonify({'ok': True, 'text': text})
+    except Exception as e:
+        return jsonify({'ok': False, 'error': 'server_error', 'text': f'Lỗi máy chủ: {str(e)}'}), 500
+
+@app.route('/api/debug/env_key', methods=['GET'])
+def debug_env_key():
+    present = bool(os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY') or os.environ.get('GENAI_API_KEY'))
+    return jsonify({'present': present})
+
+@app.route('/api/debug/cwd', methods=['GET'])
+def debug_cwd():
+    try:
+        cwd = os.getcwd()
+        env_path = str(Path('private/.env').resolve())
+        exists = Path('private/.env').exists()
+        return jsonify({'cwd': cwd, 'env_path': env_path, 'env_exists': exists})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 @app.route('/api/rsvp', methods=['POST'])
 def rsvp_api():
     data = request.get_json(silent=True) or {}
@@ -586,6 +680,7 @@ def serve_vip_prompts():
         return "[]", 200, {'Content-Type': 'application/json'}
 
 if __name__ == '__main__':
+    load_env_from_file()
     if not os.path.exists('public/image/genai'):
         os.makedirs('public/image/genai')
     if not os.path.exists('public/video/genai'):
@@ -606,4 +701,4 @@ if __name__ == '__main__':
             f.write('[]')
     port = int(os.environ.get('PORT', '54321'))
     host = os.environ.get('HOST', '127.0.0.1')
-    app.run(host=host, port=port, debug=True)
+    app.run(host=host, port=port, debug=True, use_reloader=False)
