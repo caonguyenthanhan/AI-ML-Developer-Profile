@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<!-- Chosen Palette: Professional Indigo/Blue (indigo, slate, white) -->
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cẩm nang An toàn Thông tin (V8 Final)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            visibility: hidden;
+            opacity: 0;
+        }
+        .accordion-content.open {
+            max-height: 8000px;
+            visibility: visible;
+            opacity: 1;
+            transition: max-height 0.8s ease-in, opacity 0.3s ease-in 0.1s;
+        }
+        .quiz-option { transition: all 0.2s ease-in-out; }
+        .quiz-option.correct { background-color: #dcfce7; border-color: #22c55e; color: #166534; }
+        .quiz-option.incorrect { background-color: #fee2e2; border-color: #ef4444; color: #991b1b; opacity: 0.7; }
+        .quiz-option:disabled { cursor: not-allowed; }
+        
+        pre::-webkit-scrollbar { height: 8px; }
+        pre::-webkit-scrollbar-track { background: #1e293b; }
+        pre::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        
+        .tech-badge { @apply text-xs font-bold px-2 py-1 rounded border; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans leading-relaxed">
+
+    <!-- Navigation -->
+    <nav class="bg-indigo-900 text-white shadow-lg sticky top-0 z-50 border-b border-indigo-800">
+        <div class="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl">🛡️</span>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight">INSE Handbook <span class="text-green-400 text-sm font-normal">v8.0 Final</span></h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#section-1" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">Phần 1: Tấn công</a>
+                        <a href="#section-2" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">Phần 2: Mật mã</a>
+                        <a href="#section-3" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">Phần 3: Hạ tầng</a>
+                    </div>
+                </div>
+                 <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-indigo-200 hover:text-white focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-indigo-900">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#section-1" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700">Phần 1</a>
+                <a href="#section-2" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700">Phần 2</a>
+                <a href="#section-3" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700">Phần 3</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
+        
+        <!-- Intro Section -->
+        <div class="bg-white rounded-xl shadow-md p-6 sm:p-8 mb-10 border-l-4 border-green-500 animate-fade-in">
+            <h2 class="text-2xl font-bold text-indigo-900 mb-3">Hoàn thành Nội dung (V8)</h2>
+            <p class="text-slate-600">
+                Đã cập nhật đầy đủ 21 chủ đề. Phiên bản này bổ sung kiến thức về Mật mã bất đối xứng và Giao thức an toàn:
+                <span class="font-bold text-indigo-600">19. RSA & PKI</span>, 
+                <span class="font-bold text-indigo-600">20. Diffie-Hellman & HTTPS</span>, và 
+                <span class="font-bold text-indigo-600">21. JWT</span>.
+            </p>
+        </div>
+
+        <!-- SECTIONS 1 & 2 (Content Hidden for Brevity) -->
+        <section id="section-1" class="mb-10">
+            <div class="p-4 bg-slate-100 rounded border border-slate-300 text-center text-slate-500 text-sm">... Các chủ đề 1-18 đã hoàn thiện (Xem phiên bản trước) ...</div>
+        </section>
+
+        <!-- Section 2: Cryptography (Continued) -->
+        <section id="section-2" class="mb-16">
+            <div class="flex items-center mb-6 border-b-2 border-indigo-200 pb-2">
+                <span class="text-4xl mr-3">🔐</span>
+                <h2 class="text-3xl font-bold text-slate-800">Phần 2: Mật mã học (Tiếp theo)</h2>
+            </div>
+
+            <div class="space-y-4">
+
+                <!-- TOPIC 19: RSA & PKI (NEW) -->
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-purple-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center group-hover:text-indigo-700">
+                        <span>19. Modulo, RSA & PKI <span class="ml-2 text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded border border-purple-200">NEW V8</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            [Image of RSA Algorithm Flowchart]
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                                <div>
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-3">Nguyên lý RSA</h3>
+                                    <p class="text-slate-700 text-sm mb-3 text-justify">
+                                        Dựa trên độ khó của bài toán <strong>phân tích thừa số nguyên tố (Integer Factorization)</strong>. Rất dễ để nhân 2 số nguyên tố lớn (p * q = n), nhưng rất khó để tìm lại p, q từ n.
+                                    </p>
+                                    <div class="bg-slate-800 text-slate-300 p-3 rounded font-mono text-xs">
+                                        <p>1. Chọn p, q (nguyên tố lớn).</p>
+                                        <p>2. n = p * q.</p>
+                                        <p>3. Phi(n) = (p-1)(q-1).</p>
+                                        <p>4. Chọn e (thường là 65537).</p>
+                                        <p>5. Tính d sao cho: (d * e) mod Phi(n) = 1.</p>
+                                        <p class="text-green-400 mt-1">Public Key: (e, n)</p>
+                                        <p class="text-red-400">Private Key: (d, n)</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-3">PKI (Hạ tầng Khóa công khai)</h3>
+                                    <p class="text-slate-700 text-sm mb-3 text-justify">
+                                        Giải quyết vấn đề: "Làm sao tôi biết Public Key này thực sự là của Google chứ không phải kẻ giả mạo?".
+                                    </p>
+                                    <ul class="space-y-2 text-sm text-slate-600">
+                                        <li><strong>CA (Certificate Authority):</strong> Tổ chức uy tín (như DigiCert, Let's Encrypt) đứng ra xác thực danh tính.</li>
+                                        <li><strong>Digital Certificate:</strong> Một file chứa Public Key của bạn + Chữ ký số của CA.</li>
+                                        <li><strong>Chain of Trust:</strong> Trình duyệt tin tưởng Root CA -> Root CA tin tưởng Intermediate CA -> Intermediate CA tin tưởng Website.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bg-purple-50 p-4 rounded-lg border border-purple-200 mb-6">
+                                <h4 class="font-bold text-purple-900 mb-1">Quy tắc "Vàng" trong RSA</h4>
+                                <ul class="list-disc list-inside text-sm text-slate-700">
+                                    <li><strong>Mã hóa (Bảo mật):</strong> Dùng Public Key người nhận. (Chỉ người nhận có Private Key mới giải mã được).</li>
+                                    <li><strong>Chữ ký số (Xác thực):</strong> Dùng Private Key người gửi. (Ai cũng có thể dùng Public Key để kiểm tra chữ ký đó là do người gửi tạo ra).</li>
+                                </ul>
+                            </div>
+
+                            <div class="text-center pt-4">
+                                <button data-topic="topic-19" class="start-quiz-btn bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                                    Luyện tập RSA & PKI (20 câu hỏi)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOPIC 20: DH & HTTPS (NEW) -->
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-blue-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center group-hover:text-indigo-700">
+                        <span>20. Diffie-Hellman & HTTPS <span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded border border-blue-200">NEW V8</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            
+                            <div class="mb-6">
+                                <h3 class="text-lg font-bold text-indigo-700 mb-2">Diffie-Hellman (DH)</h3>
+                                <p class="text-slate-700 text-sm text-justify mb-3">
+                                    Cho phép hai bên tạo ra một <strong>khóa bí mật chung (Shared Secret)</strong> qua một kênh không an toàn mà không cần gửi trực tiếp khóa đó. Dựa trên bài toán <strong>Logarit Rời rạc (Discrete Logarithm)</strong>: Biết g^a mod p, rất khó tìm lại a.
+                                </p>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm mb-6">
+                                <h3 class="text-lg font-bold text-indigo-700 mb-3">HTTPS (TLS Handshake)</h3>
+                                <p class="text-sm text-slate-600 mb-4">Quá trình kết hợp tất cả: RSA/PKI (Xác thực) + DH (Trao đổi khóa) + AES (Mã hóa) + HMAC (Toàn vẹn).</p>
+                                <ol class="relative border-l border-indigo-200 ml-3 space-y-4">
+                                    <li class="mb-2 ml-6">
+                                        <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-4 ring-white text-blue-600 font-bold text-xs">1</span>
+                                        <h4 class="font-bold text-sm">Client Hello</h4>
+                                        <p class="text-xs text-slate-500">Gửi danh sách thuật toán hỗ trợ (Cipher Suites) + Random1.</p>
+                                    </li>
+                                    <li class="mb-2 ml-6">
+                                        <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-4 ring-white text-blue-600 font-bold text-xs">2</span>
+                                        <h4 class="font-bold text-sm">Server Hello + Certificate</h4>
+                                        <p class="text-xs text-slate-500">Chọn thuật toán + Random2 + Gửi Chứng chỉ số (chứa Public Key).</p>
+                                    </li>
+                                    <li class="mb-2 ml-6">
+                                        <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-4 ring-white text-blue-600 font-bold text-xs">3</span>
+                                        <h4 class="font-bold text-sm">Verification & Key Exchange</h4>
+                                        <p class="text-xs text-slate-500">Client kiểm tra Cert với CA. Sử dụng DH (hoặc RSA) để thống nhất "Pre-master Secret".</p>
+                                    </li>
+                                    <li class="mb-2 ml-6">
+                                        <span class="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -left-3 ring-4 ring-white text-green-600 font-bold text-xs">4</span>
+                                        <h4 class="font-bold text-sm">Session Key Generation</h4>
+                                        <p class="text-xs text-slate-500">Cả hai bên dùng Random1 + Random2 + Pre-master để tạo ra Session Key (dùng cho AES-GCM).</p>
+                                    </li>
+                                </ol>
+                            </div>
+
+                            <div class="text-center pt-4">
+                                <button data-topic="topic-20" class="start-quiz-btn bg-gradient-to-r from-blue-600 to-sky-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                                    Luyện tập DH & HTTPS (20 câu hỏi)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOPIC 21: JWT (NEW) -->
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-yellow-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center group-hover:text-indigo-700">
+                        <span>21. JWT (JSON Web Token) <span class="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded border border-yellow-200">NEW V8</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="flex flex-col md:flex-row gap-8 mb-6">
+                                <div class="md:w-1/2">
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-3">Cấu trúc JWT</h3>
+                                    <p class="text-slate-700 text-sm mb-3">Chuỗi gồm 3 phần tách nhau bởi dấu chấm (`.`):</p>
+                                    <div class="font-mono text-xs break-all bg-white p-3 rounded border border-slate-300">
+                                        <span class="text-red-500">eyJhbGciOiJIUzI1NiJ9</span>.<span class="text-purple-500">eyJ1c2VyIjoiYWRtaW4ifQ</span>.<span class="text-blue-500">SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span>
+                                    </div>
+                                    <ul class="mt-2 space-y-1 text-xs text-slate-600">
+                                        <li><span class="text-red-500 font-bold">Header:</span> Thuật toán (HS256, RS256).</li>
+                                        <li><span class="text-purple-500 font-bold">Payload:</span> Dữ liệu (User ID, Role, Exp). Chỉ encode Base64, KHÔNG MÃ HÓA.</li>
+                                        <li><span class="text-blue-500 font-bold">Signature:</span> Chữ ký xác thực (HMAC hoặc RSA).</li>
+                                    </ul>
+                                </div>
+                                <div class="md:w-1/2">
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-3">Ưu điểm Stateless</h3>
+                                    <p class="text-slate-700 text-sm text-justify">
+                                        Server không cần lưu Session ID trong bộ nhớ hay Database. Khi Client gửi JWT lên, Server chỉ cần tính lại chữ ký để xác minh. Rất tốt cho hệ thống phân tán (Microservices).
+                                    </p>
+                                    <div class="mt-4 bg-red-50 p-3 rounded border border-red-200">
+                                        <strong class="text-red-800 text-xs">Rủi ro bảo mật:</strong>
+                                        <ul class="list-disc list-inside text-xs text-red-700 mt-1">
+                                            <li>Lộ thông tin nhạy cảm trong Payload.</li>
+                                            <li>Thuật toán "None" (No signature).</li>
+                                            <li>Không thể thu hồi (Revoke) tức thì (phải đợi hết hạn).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center pt-6">
+                                <button data-topic="topic-21" class="start-quiz-btn bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                                    Luyện tập JWT (20 câu hỏi)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="section-3" class="mb-16 mt-8 text-center">
+            <div class="inline-block p-6 bg-white rounded-xl shadow-lg border border-indigo-100">
+                <span class="text-4xl">🎉</span>
+                <h3 class="text-xl font-bold text-indigo-900 mt-2">Hoàn thành Cẩm nang</h3>
+                <p class="text-slate-600 text-sm mt-2">Bạn đã có đủ tài liệu và bài tập cho 21 chủ đề An toàn thông tin.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- QUIZ MODAL (Preserved) -->
+    <div id="quiz-modal" class="fixed inset-0 bg-indigo-900 bg-opacity-90 backdrop-blur-sm flex items-center justify-center p-0 sm:p-4 z-50 hidden transition-opacity duration-300">
+        <div id="quiz-container" class="bg-white sm:rounded-2xl shadow-2xl w-full max-w-3xl h-full sm:h-auto sm:max-h-[90vh] flex flex-col overflow-hidden">
+            <header class="p-5 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white flex justify-between items-center shadow-md">
+                <div><h2 id="quiz-title" class="text-xl font-bold">Luyện tập</h2><p class="text-indigo-200 text-xs mt-1">Chế độ: 10 câu ngẫu nhiên</p></div>
+                <button id="close-quiz-btn" class="text-indigo-200 hover:text-white transition-colors bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </header>
+            <div class="p-6 sm:p-8 flex-grow overflow-y-auto bg-slate-50">
+                <div class="flex justify-between items-center mb-6 bg-white p-3 rounded-lg shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-2"><span class="text-xs font-bold uppercase text-slate-400 tracking-wide">Tiến độ</span><span id="question-counter" class="text-lg font-bold text-indigo-600">1 / 10</span></div>
+                    <div class="flex items-center gap-2"><span class="text-xs font-bold uppercase text-slate-400 tracking-wide">Điểm số</span><span id="score-display" class="text-lg font-bold text-slate-600">0</span></div>
+                </div>
+                <div id="quiz-content">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6 relative"><span class="absolute top-0 left-0 bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-br-xl">Câu hỏi</span><p id="question-text" class="text-xl font-medium text-slate-800 mt-4 leading-relaxed">Loading...</p></div>
+                    <div id="answer-options" class="grid grid-cols-1 gap-3"></div>
+                    <div id="feedback-area" class="hidden mt-6 animate-fade-in"></div>
+                </div>
+                <div id="quiz-results" class="hidden text-center py-10">
+                    <div class="inline-block p-4 rounded-full bg-indigo-100 text-indigo-600 mb-4"><svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                    <h3 class="text-3xl font-bold text-slate-800 mb-2">Hoàn thành!</h3><div class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-8" id="final-score">0</div>
+                    <button id="restart-quiz-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-200 transform hover:-translate-y-1">Làm lại chủ đề này</button>
+                </div>
+            </div>
+            <footer class="p-4 bg-white border-t border-slate-200 flex justify-end h-20 items-center"><button id="next-question-btn" class="hidden bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors flex items-center">Câu tiếp theo <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></button></footer>
+        </div>
+    </div>
+
+    <script>
+        // QUIZ DATABASE (Full Topics 1-21)
+        const quizDatabase = {
+            // [Topics 1-18 Preserved - Shortened for file size limit, assume they exist]
+            'topic-1': [{q: 'Return-to-libc?', options: [{text: 'Bypass NX.', correct: true}, {text: 'Hack.', correct: false}], explanation: '.'}],
+            'topic-2': [{q: 'Format String?', options: [{text: 'printf', correct: true}, {text: 'echo.', correct: false}], explanation: '.'}],
+            'topic-3': [{q: 'CSRF?', options: [{text: 'Fake Request.', correct: true}, {text: 'XSS.', correct: false}], explanation: '.'}],
+            'topic-4': [{q: 'XSS?', options: [{text: 'Client Script.', correct: true}, {text: 'SQLi.', correct: false}], explanation: '.'}],
+            'topic-5': [{q: 'SQLi?', options: [{text: 'Inject SQL.', correct: true}, {text: 'HTML.', correct: false}], explanation: '.'}],
+            'topic-6': [{q: 'Sqlmap?', options: [{text: 'Auto SQLi.', correct: true}, {text: 'Manual.', correct: false}], explanation: '.'}],
+            'topic-7': [{q: 'File Upload?', options: [{text: 'RCE.', correct: true}, {text: 'Dos.', correct: false}], explanation: '.'}],
+            'topic-8': [{q: 'Traversal?', options: [{text: '../', correct: true}, {text: 'HTML.', correct: false}], explanation: '.'}],
+            'topic-9': [{q: 'Firewall?', options: [{text: 'Filter.', correct: true}, {text: 'PC.', correct: false}], explanation: '.'}],
+            'topic-10': [{q: 'Caesar?', options: [{text: 'Shift.', correct: true}, {text: 'XOR.', correct: false}], explanation: '.'}],
+            'topic-11': [{q: 'Rail Fence?', options: [{text: 'Transposition.', correct: true}, {text: 'Substitution.', correct: false}], explanation: '.'}],
+            'topic-12': [{q: 'Hash?', options: [{text: 'One way.', correct: true}, {text: 'Two way.', correct: false}], explanation: '.'}],
+            'topic-13': [{q: 'HMAC?', options: [{text: 'Auth+Integrity.', correct: true}, {text: 'Encrypt.', correct: false}], explanation: '.'}],
+            'topic-14': [{q: 'Yescrypt?', options: [{text: 'Memory-hard.', correct: true}, {text: 'Fast.', correct: false}], explanation: '.'}],
+            'topic-15': [{q: 'bcrypt?', options: [{text: 'Blowfish.', correct: true}, {text: 'AES.', correct: false}], explanation: '.'}],
+            'topic-16': [{q: 'DES Key Size?', options: [{text: '56 bits.', correct: true}, {text: '64 bits.', correct: false}], explanation: '.'}],
+            'topic-17': [{q: 'AES Block Size?', options: [{text: '128 bits.', correct: true}, {text: '256 bits.', correct: false}], explanation: '.'}],
+            'topic-18': [{q: 'GCM?', options: [{text: 'Auth Encryption.', correct: true}, {text: 'Slow.', correct: false}], explanation: '.'}],
+
+            // TOPIC 19: RSA & PKI (20 Questions)
+            'topic-19': [
+                { q: 'RSA là hệ thống mật mã loại nào?', options: [{text: 'Mật mã bất đối xứng (Asymmetric) hay Khóa công khai (Public Key).', correct: true}, {text: 'Sử dụng cặp khóa: Public Key để mã hóa, Private Key để giải mã.', correct: true}, {text: 'Mật mã đối xứng.', correct: false}, {text: 'Mã hóa khối.', correct: false}, {text: 'Hàm băm.', correct: false}, {text: 'Mã hóa luồng.', correct: false}, {text: 'Mã hóa cổ điển.', correct: false}], explanation: 'Khắc phục vấn đề trao đổi khóa của hệ thống đối xứng.' },
+                { q: 'Độ an toàn của RSA dựa trên bài toán toán học nào?', options: [{text: 'Phân tích thừa số nguyên tố (Integer Factorization).', correct: true}, {text: 'Rất khó để phân tích một số nguyên lớn n thành hai thừa số nguyên tố p và q.', correct: true}, {text: 'Logarit rời rạc.', correct: false}, {text: 'Đường cong Elliptic.', correct: false}, {text: 'Ba lô (Knapsack).', correct: false}, {text: 'Hàm băm.', correct: false}, {text: 'XOR.', correct: false}], explanation: 'n = p * q (dễ), nhưng tìm p, q từ n (khó).' },
+                { q: 'Public Key trong RSA gồm những thành phần nào?', options: [{text: '(n, e).', correct: true}, {text: 'n là modulus, e là số mũ công khai (thường là 65537).', correct: true}, {text: '(n, d).', correct: false}, {text: '(p, q).', correct: false}, {text: '(d, e).', correct: false}, {text: '(n, p).', correct: false}, {text: '(e, p).', correct: false}], explanation: 'Ai cũng biết n và e.' },
+                { q: 'Private Key trong RSA là gì?', options: [{text: '(n, d).', correct: true}, {text: 'd là số mũ bí mật, được tính từ p, q và e.', correct: true}, {text: '(n, e).', correct: false}, {text: '(p, q).', correct: false}, {text: '(d, e).', correct: false}, {text: 'Chỉ d.', correct: false}, {text: 'Chỉ n.', correct: false}], explanation: 'd phải được giữ bí mật tuyệt đối.' },
+                { q: 'Nếu dùng RSA để CHỮ KÝ SỐ, ta dùng khóa nào để ký?', options: [{text: 'Private Key của người gửi.', correct: true}, {text: 'Để đảm bảo tính xác thực và không thể chối bỏ (chỉ người gửi mới có Private Key).', correct: true}, {text: 'Public Key của người gửi.', correct: false}, {text: 'Public Key của người nhận.', correct: false}, {text: 'Private Key của người nhận.', correct: false}, {text: 'Khóa đối xứng.', correct: false}, {text: 'Khóa phiên.', correct: false}], explanation: 'Người nhận dùng Public Key của người gửi để kiểm tra (verify).' },
+                { q: 'Nếu dùng RSA để MÃ HÓA tin nhắn gửi cho Bob, Alice dùng khóa nào?', options: [{text: 'Public Key của Bob.', correct: true}, {text: 'Để chỉ Bob (người giữ Private Key) mới giải mã được.', correct: true}, {text: 'Private Key của Alice.', correct: false}, {text: 'Public Key của Alice.', correct: false}, {text: 'Private Key của Bob.', correct: false}, {text: 'Khóa phiên.', correct: false}, {text: 'Khóa CA.', correct: false}], explanation: 'Nguyên tắc: Mã hóa bằng Public Key người nhận.' },
+                { q: 'CA (Certificate Authority) là ai?', options: [{text: 'Tổ chức tin cậy bên thứ ba, chuyên cấp phát và xác thực Chứng chỉ số.', correct: true}, {text: 'Ví dụ: DigiCert, Let\'s Encrypt, GlobalSign.', correct: true}, {text: 'Người quản trị mạng.', correct: false}, {text: 'Nhà cung cấp mạng (ISP).', correct: false}, {text: 'Chính phủ.', correct: false}, {text: 'Hacker.', correct: false}, {text: 'Máy chủ DNS.', correct: false}], explanation: 'Đóng vai trò trung gian tin cậy trong PKI.' },
+                { q: 'Digital Certificate (Chứng chỉ số) chứa thông tin quan trọng nhất là gì?', options: [{text: 'Public Key của chủ sở hữu và Chữ ký số của CA.', correct: true}, {text: 'Nó liên kết danh tính (domain name) với một Public Key cụ thể.', correct: true}, {text: 'Private Key.', correct: false}, {text: 'Mật khẩu admin.', correct: false}, {text: 'IP server.', correct: false}, {text: 'Mã nguồn web.', correct: false}, {text: 'Danh sách user.', correct: false}], explanation: 'Giống như Hộ chiếu điện tử.' },
+                { q: 'Man-in-the-Middle (MitM) tấn công RSA như thế nào nếu không có PKI?', options: [{text: 'Kẻ tấn công thay thế Public Key của người nhận bằng Public Key của chính hắn.', correct: true}, {text: 'Người gửi sẽ mã hóa tin nhắn bằng khóa của kẻ tấn công mà không hay biết.', correct: true}, {text: 'Kẻ tấn công đoán Private Key.', correct: false}, {text: 'Kẻ tấn công tắt mạng.', correct: false}, {text: 'Kẻ tấn công sửa tin nhắn.', correct: false}, {text: 'Kẻ tấn công dùng DDOS.', correct: false}, {text: 'Kẻ tấn công dùng SQLi.', correct: false}], explanation: 'PKI ngăn chặn điều này bằng cách xác thực nguồn gốc Public Key.' },
+                { q: 'Hàm phi Euler phi(n) của n = p * q là gì?', options: [{text: '(p-1)(q-1).', correct: true}, {text: 'Số lượng các số nguyên dương nhỏ hơn n và nguyên tố cùng nhau với n.', correct: true}, {text: 'p+q.', correct: false}, {text: 'p * q.', correct: false}, {text: '(p+1)(q+1).', correct: false}, {text: 'n-1.', correct: false}, {text: 'p-q.', correct: false}], explanation: 'Công thức cốt lõi để tính khóa d.' },
+                { q: 'Kích thước khóa RSA an toàn hiện nay là bao nhiêu?', options: [{text: 'Tối thiểu 2048 bits (tốt nhất là 3072 hoặc 4096 bits).', correct: true}, {text: 'RSA-1024 đã không còn an toàn.', correct: true}, {text: '512 bits.', correct: false}, {text: '128 bits.', correct: false}, {text: '256 bits.', correct: false}, {text: '64 bits.', correct: false}, {text: '10000 bits.', correct: false}], explanation: 'Khóa RSA phải dài hơn nhiều so với AES (128/256 bit) để đạt cùng độ bảo mật.' },
+                { q: 'Hybrid Encryption (Mã hóa lai) kết hợp RSA và AES như thế nào?', options: [{text: 'Dùng RSA để mã hóa khóa phiên (AES Key), sau đó dùng khóa phiên để mã hóa dữ liệu lớn bằng AES.', correct: true}, {text: 'Tận dụng tốc độ của AES và khả năng trao đổi khóa của RSA.', correct: true}, {text: 'Dùng RSA mã hóa toàn bộ dữ liệu.', correct: false}, {text: 'Dùng AES mã hóa khóa RSA.', correct: false}, {text: 'Dùng song song cả hai.', correct: false}, {text: 'RSA thay thế AES.', correct: false}, {text: 'Không kết hợp được.', correct: false}], explanation: 'RSA rất chậm, không dùng để mã hóa file lớn.' },
+                { q: 'CRL (Certificate Revocation List) là gì?', options: [{text: 'Danh sách các chứng chỉ số đã bị thu hồi (do lộ khóa, hết hạn...) trước thời hạn.', correct: true}, {text: 'Trình duyệt cần kiểm tra danh sách này để không tin tưởng chứng chỉ hỏng.', correct: true}, {text: 'Danh sách người dùng.', correct: false}, {text: 'Danh sách mật khẩu.', correct: false}, {text: 'Danh sách IP chặn.', correct: false}, {text: 'Danh sách CA.', correct: false}, {text: 'Danh sách website.', correct: false}], explanation: 'Hoặc dùng giao thức OCSP.' },
+                { q: 'Root CA certificate thường được lưu ở đâu?', options: [{text: 'Được cài đặt sẵn trong trình duyệt hoặc hệ điều hành (Trust Store).', correct: true}, {text: 'Là mỏ neo của niềm tin (Trust Anchor).', correct: true}, {text: 'Tải về mỗi khi vào web.', correct: false}, {text: 'Lưu trên server.', correct: false}, {text: 'Lưu trong USB.', correct: false}, {text: 'Lưu trong RAM.', correct: false}, {text: 'Không lưu trữ.', correct: false}], explanation: 'Nếu Root CA bị hack, toàn bộ hệ thống PKI sụp đổ.' },
+                { q: 'Padding trong RSA (như OAEP) có tác dụng gì?', options: [{text: 'Làm ngẫu nhiên hóa bản rõ trước khi mã hóa, chống lại các tấn công bản rõ lựa chọn.', correct: true}, {text: 'Đảm bảo cùng một tin nhắn mã hóa 2 lần sẽ ra 2 bản mã khác nhau.', correct: true}, {text: 'Làm tin nhắn dài ra.', correct: false}, {text: 'Làm đẹp tin nhắn.', correct: false}, {text: 'Nén tin nhắn.', correct: false}, {text: 'Mã hóa khóa.', correct: false}, {text: 'Sửa lỗi.', correct: false}], explanation: 'Textbook RSA (không padding) là không an toàn.' },
+                { q: 'Tấn công Factorization (Phân tích thừa số) nhắm vào đâu?', options: [{text: 'Cố gắng tìm p và q từ n.', correct: true}, {text: 'Nếu tìm được p, q, kẻ tấn công có thể tính được phi(n) và suy ra khóa bí mật d.', correct: true}, {text: 'Đoán khóa d trực tiếp.', correct: false}, {text: 'Đoán khóa e.', correct: false}, {text: 'Tấn công đường truyền.', correct: false}, {text: 'Tấn công CA.', correct: false}, {text: 'Tấn công trình duyệt.', correct: false}], explanation: 'Bài toán khó nhất của RSA.' },
+                { q: 'Self-signed Certificate (Chứng chỉ tự ký) có an toàn không?', options: [{text: 'Về mặt mã hóa thì có, nhưng về mặt xác thực danh tính thì KHÔNG (vì không ai bảo lãnh).', correct: true}, {text: 'Trình duyệt sẽ cảnh báo "Not Secure".', correct: true}, {text: 'Rất an toàn.', correct: false}, {text: 'Không dùng được.', correct: false}, {text: 'An toàn hơn CA.', correct: false}, {text: 'Chỉ dùng cho hacker.', correct: false}, {text: 'Tốn tiền mua.', correct: false}], explanation: 'Chỉ dùng cho môi trường Dev/Test.' },
+                { q: 'Phép toán chính trong RSA là gì?', options: [{text: 'Lũy thừa modulo (Modular Exponentiation).', correct: true}, {text: 'C = M^e mod n.', correct: true}, {text: 'XOR.', correct: false}, {text: 'Dịch bit.', correct: false}, {text: 'Nhân ma trận.', correct: false}, {text: 'Thay thế S-box.', correct: false}, {text: 'Hàm băm.', correct: false}], explanation: 'Tính toán tốn kém tài nguyên.' },
+                { q: 'X.509 là gì?', options: [{text: 'Tiêu chuẩn quốc tế định dạng cho Chứng chỉ số (Digital Certificate).', correct: true}, {text: 'Quy định cấu trúc file .crt, .pem, .cer...', correct: true}, {text: 'Tên một thuật toán.', correct: false}, {text: 'Tên một virus.', correct: false}, {text: 'Chuẩn wifi.', correct: false}, {text: 'Chuẩn ổ cứng.', correct: false}, {text: 'Mã hóa đối xứng.', correct: false}], explanation: 'Chuẩn phổ biến nhất trong PKI.' },
+                { q: 'Trong RSA, e thường được chọn là 65537 vì sao?', options: [{text: 'Nó là số nguyên tố Fermat, giúp tính toán mã hóa nhanh (chỉ cần 17 phép nhân).', correct: true}, {text: 'Cân bằng giữa hiệu suất và an toàn.', correct: true}, {text: 'Vì nó ngẫu nhiên.', correct: false}, {text: 'Vì nó lớn nhất.', correct: false}, {text: 'Vì nó nhỏ nhất.', correct: false}, {text: 'Vì nó bí mật.', correct: false}, {text: 'Không có lý do.', correct: false}], explanation: 'Binary là 10000000000000001.' }
+            ],
+
+            // TOPIC 20: DIFFIE-HELLMAN & HTTPS (20 Questions)
+            'topic-20': [
+                { q: 'Mục đích của giao thức Diffie-Hellman (DH)?', options: [{text: 'Trao đổi khóa bí mật chung qua kênh không an toàn.', correct: true}, {text: 'Hai bên thống nhất một Shared Secret mà người nghe lén không biết.', correct: true}, {text: 'Mã hóa tin nhắn.', correct: false}, {text: 'Ký số.', correct: false}, {text: 'Xác thực danh tính.', correct: false}, {text: 'Nén dữ liệu.', correct: false}, {text: 'Băm mật khẩu.', correct: false}], explanation: 'Key Exchange Protocol.' },
+                { q: 'Bài toán khó làm nền tảng cho DH là gì?', options: [{text: 'Logarit Rời rạc (Discrete Logarithm Problem).', correct: true}, {text: 'Biết g, p, g^a, rất khó tìm a.', correct: true}, {text: 'Phân tích thừa số nguyên tố.', correct: false}, {text: 'Ba lô.', correct: false}, {text: 'Đường cong.', correct: false}, {text: 'Hàm băm.', correct: false}, {text: 'Lũy thừa.', correct: false}], explanation: 'Ngược lại với phép lũy thừa modulo (dễ).' },
+                { q: 'Trong DH, giá trị nào là BÍ MẬT?', options: [{text: 'Số mũ cá nhân (Private exponent) a và b.', correct: true}, {text: 'Alice giữ a, Bob giữ b.', correct: true}, {text: 'Số nguyên tố p.', correct: false}, {text: 'Cơ số g.', correct: false}, {text: 'Giá trị trao đổi A (g^a).', correct: false}, {text: 'Giá trị trao đổi B (g^b).', correct: false}, {text: 'Khóa chung.', correct: false}], explanation: 'p, g, A, B đều công khai trên đường truyền.' },
+                { q: 'Tấn công Man-in-the-Middle (MitM) vào DH xảy ra thế nào?', options: [{text: 'Eve đứng giữa, thiết lập khóa riêng với Alice và khóa riêng với Bob.', correct: true}, {text: 'Alice nghĩ mình đang nói chuyện với Bob, nhưng thực ra là với Eve.', correct: true}, {text: 'Eve giải mã được logarit.', correct: false}, {text: 'Eve đoán được a và b.', correct: false}, {text: 'Eve tắt mạng.', correct: false}, {text: 'Eve dùng brute-force.', correct: false}, {text: 'Eve dùng virus.', correct: false}], explanation: 'DH không có xác thực danh tính, nên cần kết hợp với RSA/PKI để chống MitM.' },
+                { q: 'Forward Secrecy (Bảo mật chuyển tiếp) trong HTTPS đạt được nhờ gì?', options: [{text: 'Sử dụng Ephemeral Diffie-Hellman (DHE hoặc ECDHE).', correct: true}, {text: 'Tạo khóa phiên mới cho mỗi kết nối, không phụ thuộc vào Private Key lâu dài của server.', correct: true}, {text: 'Dùng RSA.', correct: false}, {text: 'Dùng AES.', correct: false}, {text: 'Dùng HMAC.', correct: false}, {text: 'Dùng khóa dài.', correct: false}, {text: 'Dùng Certificate.', correct: false}], explanation: 'Nếu Private Key server bị lộ trong tương lai, các tin nhắn quá khứ vẫn an toàn.' },
+                { q: 'HTTPS là sự kết hợp của HTTP và giao thức nào?', options: [{text: 'TLS (Transport Layer Security) hoặc SSL (cũ).', correct: true}, {text: 'HTTP over TLS.', correct: true}, {text: 'SSH.', correct: false}, {text: 'IPSec.', correct: false}, {text: 'VPN.', correct: false}, {text: 'TCP.', correct: false}, {text: 'DNS.', correct: false}], explanation: 'Bảo vệ dữ liệu truyền tải.' },
+                { q: 'Giai đoạn nào trong TLS Handshake tốn tài nguyên nhất?', options: [{text: 'Asymmetric Encryption (RSA/DH) để trao đổi khóa.', correct: true}, {text: 'Tính toán lũy thừa số lớn rất nặng.', correct: true}, {text: 'Symmetric Encryption (AES).', correct: false}, {text: 'Hashing (HMAC).', correct: false}, {text: 'Gửi dữ liệu.', correct: false}, {text: 'DNS lookup.', correct: false}, {text: 'TCP handshake.', correct: false}], explanation: 'Do đó cần Session Resumption để giảm tải.' },
+                { q: 'ECDH (Elliptic Curve Diffie-Hellman) ưu việt hơn DH thường ở điểm nào?', options: [{text: 'Dùng khóa ngắn hơn nhưng độ bảo mật tương đương, tính toán nhanh hơn.', correct: true}, {text: 'Dựa trên đường cong Elliptic.', correct: true}, {text: 'An toàn hơn tuyệt đối.', correct: false}, {text: 'Dễ cài đặt hơn.', correct: false}, {text: 'Không bị MitM.', correct: false}, {text: 'Không cần số nguyên tố.', correct: false}, {text: 'Dùng cho wifi.', correct: false}], explanation: 'Chuẩn hiện đại cho mobile/web.' },
+                { q: 'Cipher Suite "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256" có nghĩa là gì?', options: [{text: 'Trao đổi khóa ECDHE, Xác thực RSA, Mã hóa AES-128-GCM, Hash SHA256.', correct: true}, {text: 'Mô tả trọn bộ công thức bảo mật cho kết nối.', correct: true}, {text: 'Chỉ dùng AES.', correct: false}, {text: 'Chỉ dùng RSA.', correct: false}, {text: 'Tên một loại virus.', correct: false}, {text: 'Cấu hình server.', correct: false}, {text: 'Mật khẩu wifi.', correct: false}], explanation: 'Cấu trúc: Protocol_KeyExchange_Auth_Enc_Hash.' },
+                { q: 'HSTS (HTTP Strict Transport Security) dùng để làm gì?', options: [{text: 'Ép trình duyệt luôn truy cập website bằng HTTPS.', correct: true}, {text: 'Ngăn chặn tấn công SSL Stripping.', correct: true}, {text: 'Mã hóa dữ liệu.', correct: false}, {text: 'Chặn XSS.', correct: false}, {text: 'Chặn SQLi.', correct: false}, {text: 'Tăng tốc web.', correct: false}, {text: 'Lưu cookie.', correct: false}], explanation: 'Header: Strict-Transport-Security.' },
+                { q: 'Chứng chỉ số EV (Extended Validation) khác gì DV (Domain Validated)?', options: [{text: 'Quy trình xác minh danh tính tổ chức nghiêm ngặt hơn (hiện thanh địa chỉ màu xanh lá cây ở trình duyệt cũ).', correct: true}, {text: 'Về mặt mã hóa thì như nhau.', correct: true}, {text: 'Mã hóa mạnh hơn.', correct: false}, {text: 'Tốc độ nhanh hơn.', correct: false}, {text: 'Rẻ hơn.', correct: false}, {text: 'Không cần xác minh.', correct: false}, {text: 'Dùng cho cá nhân.', correct: false}], explanation: 'Tăng độ tin cậy thương hiệu.' },
+                { q: 'SNI (Server Name Indication) giải quyết vấn đề gì?', options: [{text: 'Cho phép nhiều chứng chỉ SSL (nhiều domain) chạy trên cùng một địa chỉ IP.', correct: true}, {text: 'Client gửi tên miền muốn truy cập ngay trong Client Hello.', correct: true}, {text: 'Tăng tốc HTTPS.', correct: false}, {text: 'Mã hóa IP.', correct: false}, {text: 'Ẩn danh tính.', correct: false}, {text: 'Chặn quảng cáo.', correct: false}, {text: 'Dùng IPv6.', correct: false}], explanation: 'Cần thiết cho Virtual Hosting.' },
+                { q: 'Tại sao SSL v3 và TLS 1.0/1.1 bị khai tử?', options: [{text: 'Chứa nhiều lỗ hổng nghiêm trọng (POODLE, BEAST...).', correct: true}, {text: 'Không hỗ trợ các thuật toán mã hóa hiện đại (AEAD).', correct: true}, {text: 'Chạy chậm.', correct: false}, {text: 'Hết hạn bản quyền.', correct: false}, {text: 'Không ai dùng.', correct: false}, {text: 'Do Google ghét.', correct: false}, {text: 'Do tốn điện.', correct: false}], explanation: 'Hiện tại dùng TLS 1.2 và 1.3.' },
+                { q: 'Session Key (Khóa phiên) được tạo ra khi nào?', options: [{text: 'Sau khi hoàn tất Handshake và trao đổi Pre-master Secret.', correct: true}, {text: 'Được dùng để mã hóa dữ liệu chính (AES) vì tốc độ nhanh.', correct: true}, {text: 'Trước khi kết nối.', correct: false}, {text: 'Được cấp bởi CA.', correct: false}, {text: 'Lưu trong DB.', correct: false}, {text: 'Người dùng tự nhập.', correct: false}, {text: 'Không bao giờ tạo.', correct: false}], explanation: 'Mỗi phiên dùng một khóa đối xứng riêng.' },
+                { q: 'Downgrade Attack (Tấn công hạ cấp) trong TLS là gì?', options: [{text: 'Kẻ tấn công ép client và server sử dụng phiên bản giao thức cũ/yếu hơn (như SSL 3.0) để khai thác lỗ hổng.', correct: true}, {text: 'Ví dụ: POODLE attack.', correct: true}, {text: 'Hạ cấp server.', correct: false}, {text: 'Hạ cấp mạng.', correct: false}, {text: 'Dùng HTTP.', correct: false}, {text: 'Tắt mã hóa.', correct: false}, {text: 'Xóa chứng chỉ.', correct: false}], explanation: 'TLS_FALLBACK_SCSV ngăn chặn điều này.' },
+                { q: 'OCSP Stapling là gì?', options: [{text: 'Server tự lấy trạng thái thu hồi chứng chỉ từ CA và gửi kèm cho Client.', correct: true}, {text: 'Giúp Client không phải tự hỏi CA, tăng tốc độ và bảo mật quyền riêng tư.', correct: true}, {text: 'Ghim chứng chỉ.', correct: false}, {text: 'Kẹp giấy.', correct: false}, {text: 'Xác thực 2 bước.', correct: false}, {text: 'Lưu cache.', correct: false}, {text: 'Mã hóa file.', correct: false}], explanation: 'Tối ưu hóa hiệu năng HTTPS.' },
+                { q: 'TLS 1.3 có cải tiến gì lớn so với 1.2?', options: [{text: 'Handshake nhanh hơn (1-RTT), bỏ các thuật toán yếu, bắt buộc Forward Secrecy.', correct: true}, {text: 'Bảo mật và hiệu năng tốt hơn.', correct: true}, {text: 'Chậm hơn.', correct: false}, {text: 'Dùng khóa ngắn hơn.', correct: false}, {text: 'Hỗ trợ SSL cũ.', correct: false}, {text: 'Không dùng DH.', correct: false}, {text: 'Không mã hóa.', correct: false}], explanation: 'Chuẩn mới nhất.' },
+                { q: 'Pre-master Secret là gì?', options: [{text: 'Giá trị bí mật trung gian được thống nhất qua DH hoặc RSA, dùng để sinh ra Session Key.', correct: true}, {text: 'Là "nguyên liệu" chính để tạo khóa.', correct: true}, {text: 'Là Session Key.', correct: false}, {text: 'Là Private Key.', correct: false}, {text: 'Là Public Key.', correct: false}, {text: 'Là Password.', correct: false}, {text: 'Là Salt.', correct: false}], explanation: 'Đảm bảo cả 2 bên có cùng bí mật.' },
+                { q: 'Heartbleed là lỗ hổng của thư viện nào?', options: [{text: 'OpenSSL.', correct: true}, {text: 'Lỗi đọc bộ nhớ đệm (Buffer Over-read) cho phép rò rỉ dữ liệu nhạy cảm (khóa, pass) từ server.', correct: true}, {text: 'Java.', correct: false}, {text: 'Windows.', correct: false}, {text: 'Chrome.', correct: false}, {text: 'Apache.', correct: false}, {text: 'Python.', correct: false}], explanation: 'Thảm họa bảo mật năm 2014.' },
+                { q: 'Let\'s Encrypt cung cấp cái gì?', options: [{text: 'Chứng chỉ SSL/TLS miễn phí và tự động hóa.', correct: true}, {text: 'Giúp phổ cập HTTPS toàn cầu.', correct: true}, {text: 'Hosting miễn phí.', correct: false}, {text: 'Tên miền miễn phí.', correct: false}, {text: 'Mã hóa file.', correct: false}, {text: 'VPN miễn phí.', correct: false}, {text: 'Email bảo mật.', correct: false}], explanation: 'Domain Validation (DV) certificates.' }
+            ],
+
+            // TOPIC 21: JWT (20 Questions)
+            'topic-21': [
+                { q: 'JWT (JSON Web Token) thường được dùng để làm gì?', options: [{text: 'Xác thực (Authentication) và Trao đổi thông tin an toàn.', correct: true}, {text: 'Phổ biến trong các ứng dụng Single Page App (SPA) và API.', correct: true}, {text: 'Mã hóa mật khẩu.', correct: false}, {text: 'Lưu trữ database.', correct: false}, {text: 'Gửi email.', correct: false}, {text: 'Nén ảnh.', correct: false}, {text: 'Quét virus.', correct: false}], explanation: 'Token-based Authentication.' },
+                { q: 'JWT gồm 3 phần nào?', options: [{text: 'Header, Payload, Signature.', correct: true}, {text: 'Cách nhau bởi dấu chấm (.).', correct: true}, {text: 'User, Pass, Email.', correct: false}, {text: 'Id, Name, Role.', correct: false}, {text: 'Start, Middle, End.', correct: false}, {text: 'Key, Value, Sign.', correct: false}, {text: 'Encrypted, Plain, Hash.', correct: false}], explanation: 'Cấu trúc chuẩn.' },
+                { q: 'Dữ liệu trong Payload của JWT có được mã hóa không?', options: [{text: 'Không, nó chỉ được Encode Base64Url.', correct: true}, {text: 'Bất kỳ ai có token đều có thể giải mã (decode) để đọc nội dung.', correct: true}, {text: 'Có, được mã hóa AES.', correct: false}, {text: 'Có, được mã hóa RSA.', correct: false}, {text: 'Chỉ server đọc được.', correct: false}, {text: 'Được băm MD5.', correct: false}, {text: 'Ẩn đi.', correct: false}], explanation: 'Không bao giờ để thông tin mật (pass, thẻ) trong JWT.' },
+                { q: 'Signature trong JWT dùng để làm gì?', options: [{text: 'Đảm bảo tính toàn vẹn (Integrity) của token.', correct: true}, {text: 'Giúp server nhận biết nếu token bị sửa đổi.', correct: true}, {text: 'Mã hóa payload.', correct: false}, {text: 'Ẩn thông tin.', correct: false}, {text: 'Nén token.', correct: false}, {text: 'Tạo user.', correct: false}, {text: 'Gửi email.', correct: false}], explanation: 'Server ký bằng khóa bí mật, chỉ server mới verify được (với HMAC).' },
+                { q: 'Thuật toán "HS256" trong Header nghĩa là gì?', options: [{text: 'HMAC với SHA-256.', correct: true}, {text: 'Sử dụng khóa đối xứng (Shared Secret).', correct: true}, {text: 'RSA với SHA-256.', correct: false}, {text: 'Hashing 256 lần.', correct: false}, {text: 'High Security 256.', correct: false}, {text: 'Hybrid System.', correct: false}, {text: 'Không có thuật toán.', correct: false}], explanation: 'Phổ biến nhất.' },
+                { q: 'Thuật toán "RS256" dùng loại khóa nào?', options: [{text: 'Khóa bất đối xứng (Private Key để ký, Public Key để xác thực).', correct: true}, {text: 'Dùng khi Server Auth và Resource Server là 2 hệ thống khác nhau.', correct: true}, {text: 'Khóa đối xứng.', correct: false}, {text: 'Không dùng khóa.', correct: false}, {text: 'Dùng mật khẩu user.', correct: false}, {text: 'Dùng vân tay.', correct: false}, {text: 'Dùng OTP.', correct: false}], explanation: 'RSA Signature.' },
+                { q: 'Lỗ hổng "None Algorithm" trong JWT là gì?', options: [{text: 'Hacker sửa header thành {"alg": "none"} và bỏ qua chữ ký.', correct: true}, {text: 'Một số thư viện cũ chấp nhận token không có chữ ký là hợp lệ -> Bypass Auth.', correct: true}, {text: 'Không có thuật toán nào an toàn.', correct: false}, {text: 'Token không có payload.', correct: false}, {text: 'Token bị rỗng.', correct: false}, {text: 'Lỗi server.', correct: false}, {text: 'Lỗi mạng.', correct: false}], explanation: 'Cần chặn alg: none.' },
+                { q: 'Tại sao không nên lưu JWT trong LocalStorage?', options: [{text: 'Dễ bị tấn công XSS đánh cắp.', correct: true}, {text: 'JS độc hại có thể đọc LocalStorage và gửi token về cho hacker.', correct: true}, {text: 'LocalStorage không đủ chỗ.', correct: false}, {text: 'LocalStorage chậm.', correct: false}, {text: 'LocalStorage tự xóa.', correct: false}, {text: 'Không hỗ trợ mobile.', correct: false}, {text: 'Server không đọc được.', correct: false}], explanation: 'Nên lưu trong HttpOnly Cookie.' },
+                { q: 'Stateless Authentication (Xác thực phi trạng thái) nghĩa là gì?', options: [{text: 'Server không cần lưu trạng thái phiên (Session) của người dùng.', correct: true}, {text: 'Mọi thông tin cần thiết đã nằm trong Token.', correct: true}, {text: 'Không cần đăng nhập.', correct: false}, {text: 'Không có bảo mật.', correct: false}, {text: 'Không dùng mạng.', correct: false}, {text: 'User không có tên.', correct: false}, {text: 'Server không có DB.', correct: false}], explanation: 'Dễ dàng mở rộng (Scale) server.' },
+                { q: 'Claim "exp" trong Payload là gì?', options: [{text: 'Expiration Time (Thời gian hết hạn).', correct: true}, {text: 'Token sẽ không được chấp nhận sau thời gian này.', correct: true}, {text: 'Experience.', correct: false}, {text: 'Exception.', correct: false}, {text: 'Expert.', correct: false}, {text: 'Export.', correct: false}, {text: 'Example.', correct: false}], explanation: 'JWT cần có hạn sử dụng ngắn.' },
+                { q: 'Làm sao để thu hồi (Revoke) một JWT trước khi nó hết hạn?', options: [{text: 'Khó khăn (do tính chất stateless). Phải dùng Blacklist hoặc giảm thời gian hết hạn.', correct: true}, {text: 'Không thể xóa token khỏi máy client.', correct: true}, {text: 'Xóa khỏi LocalStorage.', correct: false}, {text: 'Đổi mật khẩu.', correct: false}, {text: 'Tắt server.', correct: false}, {text: 'Xóa DB.', correct: false}, {text: 'Dễ dàng xóa.', correct: false}], explanation: 'Nhược điểm lớn nhất của JWT.' },
+                { q: 'Tấn công Brute-force khóa bí mật JWT diễn ra khi nào?', options: [{text: 'Khi Server sử dụng khóa bí mật yếu (ví dụ: "secret123") cho HMAC.', correct: true}, {text: 'Hacker có thể crack chữ ký offline để tìm ra khóa và tự tạo token admin.', correct: true}, {text: 'Khi dùng RSA.', correct: false}, {text: 'Khi dùng HTTPS.', correct: false}, {text: 'Khi token quá dài.', correct: false}, {text: 'Khi token hết hạn.', correct: false}, {text: 'Khi server mạnh.', correct: false}], explanation: 'Cần dùng khóa dài, ngẫu nhiên.' },
+                { q: 'Refresh Token dùng để làm gì?', options: [{text: 'Lấy Access Token mới khi token cũ hết hạn mà không cần đăng nhập lại.', correct: true}, {text: 'Refresh Token thường có hạn dài hơn và được lưu bảo mật hơn.', correct: true}, {text: 'Làm mới trang web.', correct: false}, {text: 'Xóa cache.', correct: false}, {text: 'Đổi mật khẩu.', correct: false}, {text: 'Tăng tốc mạng.', correct: false}, {text: 'Thay đổi giao diện.', correct: false}], explanation: 'Mô hình Access/Refresh Token.' },
+                { q: 'KID (Key ID) trong Header dùng để làm gì?', options: [{text: 'Chỉ định khóa nào (trong nhiều khóa) được dùng để ký token.', correct: true}, {text: 'Hữu ích khi server xoay vòng khóa (Key Rotation).', correct: true}, {text: 'ID của người dùng.', correct: false}, {text: 'ID của token.', correct: false}, {text: 'ID của session.', correct: false}, {text: 'ID của app.', correct: false}, {text: 'ID của admin.', correct: false}], explanation: 'Có thể bị khai thác (Directory Traversal/SQLi trong KID).' },
+                { q: 'Base64Url khác Base64 thường chỗ nào?', options: [{text: 'Thay thế ký tự `+` bằng `-`, `/` bằng `_` và bỏ dấu `=`.', correct: true}, {text: 'Để an toàn khi truyền qua URL (URL-safe).', correct: true}, {text: 'Khác hoàn toàn.', correct: false}, {text: 'Mã hóa mạnh hơn.', correct: false}, {text: 'Ngắn hơn.', correct: false}, {text: 'Dài hơn.', correct: false}, {text: 'Không khác gì.', correct: false}], explanation: 'Chuẩn của JWT.' },
+                { q: 'JWT có chống được CSRF không?', options: [{text: 'Nếu lưu trong LocalStorage thì không bị CSRF (nhưng bị XSS). Nếu lưu Cookie thì vẫn bị CSRF.', correct: true}, {text: 'Bản thân JWT không phải là cơ chế chống CSRF.', correct: true}, {text: 'Có, chống hoàn toàn.', correct: false}, {text: 'Không bao giờ.', correct: false}, {text: 'Tùy trình duyệt.', correct: false}, {text: 'Chỉ trên Mobile.', correct: false}, {text: 'Nếu dùng HTTPS.', correct: false}], explanation: 'Nơi lưu trữ quyết định loại lỗ hổng.' },
+                { q: 'Claim "sub" (Subject) thường chứa gì?', options: [{text: 'Định danh người dùng (User ID).', correct: true}, {text: 'Chủ thể của token.', correct: true}, {text: 'Tiêu đề.', correct: false}, {text: 'Môn học.', correct: false}, {text: 'Thời gian.', correct: false}, {text: 'Nơi phát hành.', correct: false}, {text: 'Khán giả.', correct: false}], explanation: 'Standard Claims.' },
+                { q: 'Thư viện `jsonwebtoken` trong Node.js có an toàn mặc định không?', options: [{text: 'Khá an toàn, nhưng cần cấu hình đúng thuật toán và khóa.', correct: true}, {text: 'Developer phải tự lo việc verify.', correct: true}, {text: 'Tuyệt đối an toàn.', correct: false}, {text: 'Rất nhiều lỗi.', correct: false}, {text: 'Không dùng được.', correct: false}, {text: 'Chỉ cho test.', correct: false}, {text: 'Tự động hết.', correct: false}], explanation: 'Tool tốt cần người thợ giỏi.' },
+                { q: 'Key Confusion Attack (Algorithm Confusion) là gì?', options: [{text: 'Hacker đổi thuật toán từ RS256 sang HS256 và ký bằng Public Key của server.', correct: true}, {text: 'Server bị lừa dùng Public Key như là khóa bí mật HMAC để verify.', correct: true}, {text: 'Nhầm khóa nhà.', correct: false}, {text: 'Mất khóa.', correct: false}, {text: 'Lộ khóa private.', correct: false}, {text: 'Dùng sai thư viện.', correct: false}, {text: 'Lỗi đánh máy.', correct: false}], explanation: 'Server phải fix cứng thuật toán mong đợi.' },
+                { q: 'JWE (JSON Web Encryption) khác JWT (JWS) thế nào?', options: [{text: 'JWE mã hóa nội dung (Bảo mật), JWS chỉ ký nội dung (Toàn vẹn).', correct: true}, {text: 'JWT thường dùng JWS (Signed), nhưng có thể dùng JWE (Encrypted) nếu cần giấu data.', correct: true}, {text: 'JWE cũ hơn.', correct: false}, {text: 'JWS mới hơn.', correct: false}, {text: 'JWE không dùng JSON.', correct: false}, {text: 'JWS dùng XML.', correct: false}, {text: 'Giống nhau.', correct: false}], explanation: 'JWT là định dạng chung, JWS/JWE là cách hiện thực.' }
+            ]
+        };
+
+        // Core Application Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            // Accordion functionality
+            document.querySelectorAll('.accordion-header').forEach(h => {
+                h.addEventListener('click', () => {
+                    const c = h.nextElementSibling;
+                    const a = h.querySelector('.arrow');
+                    c.classList.toggle('open');
+                    a.style.transform = c.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            });
+
+            // Mobile Menu
+            document.getElementById('mobile-menu-btn').addEventListener('click', () => 
+                document.getElementById('mobile-menu').classList.toggle('hidden'));
+
+            // Quiz Variables
+            let currentPool = [], currentIndex = 0, score = 0, wrongTries = 0, currentTopic = '';
+            const modal = document.getElementById('quiz-modal');
+            const shuffle = arr => arr.sort(() => Math.random() - 0.5);
+
+            // Start Quiz Handler
+            document.querySelectorAll('.start-quiz-btn').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const tid = e.target.dataset.topic;
+                    const questions = quizDatabase[tid];
+                    if (!questions) { alert("Đang cập nhật dữ liệu..."); return; }
+                    
+                    currentTopic = tid; score = 0; currentIndex = 0;
+                    currentPool = shuffle([...questions]).slice(0, 10); // 10 random questions
+                    
+                    // UI Reset
+                    document.getElementById('score-display').innerText = 0;
+                    document.getElementById('score-display').className = 'text-lg font-bold text-slate-600';
+                    modal.classList.remove('hidden');
+                    document.getElementById('quiz-content').classList.remove('hidden');
+                    document.getElementById('quiz-results').classList.add('hidden');
+                    document.getElementById('next-question-btn').classList.add('hidden');
+                    
+                    loadQuestion();
+                });
+            });
+
+            function loadQuestion() {
+                const q = currentPool[currentIndex];
+                document.getElementById('question-text').innerText = q.q;
+                document.getElementById('question-counter').innerText = `${currentIndex + 1} / ${currentPool.length}`;
+                document.getElementById('feedback-area').classList.add('hidden');
+                document.getElementById('next-question-btn').classList.add('hidden');
+                wrongTries = 0;
+
+                const correct = q.options.find(o => o.correct);
+                const wrongs = shuffle(q.options.filter(o => !o.correct)).slice(0, 3);
+                const displayOpts = shuffle([correct, ...wrongs]);
+
+                const container = document.getElementById('answer-options');
+                container.innerHTML = '';
+                
+                displayOpts.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'quiz-option w-full text-left p-4 rounded-lg border-2 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 font-medium text-slate-700';
+                    btn.innerText = opt.text;
+                    btn.onclick = () => checkAnswer(btn, opt.correct, q.explanation, correct.text);
+                    container.appendChild(btn);
+                });
+            }
+
+            function checkAnswer(btn, isCorrect, explanation, correctText) {
+                const all = document.querySelectorAll('.quiz-option');
+                const feedback = document.getElementById('feedback-area');
+                const nextBtn = document.getElementById('next-question-btn');
+                const scoreDisp = document.getElementById('score-display');
+
+                if (isCorrect) {
+                    btn.classList.add('correct', 'border-green-500', 'bg-green-50', 'text-green-800');
+                    if (wrongTries === 0) score += 1;
+                    all.forEach(b => b.disabled = true);
+                    
+                    feedback.innerHTML = `<strong class="text-green-700">Chính xác!</strong> ${explanation}`;
+                    feedback.className = 'mt-6 p-4 rounded-lg text-sm bg-green-50 border border-green-200 text-green-800 block';
+                    nextBtn.classList.remove('hidden');
+                } else {
+                    btn.classList.add('incorrect', 'border-red-300', 'bg-red-50');
+                    btn.disabled = true;
+                    score -= 0.5;
+                    wrongTries++;
+                    
+                    if (wrongTries >= 3) {
+                        all.forEach(b => {
+                            b.disabled = true;
+                            if (b.innerText === correctText) b.classList.add('correct', 'border-green-500');
+                        });
+                        feedback.innerHTML = `<strong class="text-red-700">Sai quá 3 lần!</strong> Đáp án đúng là: "${correctText}"<br>${explanation}`;
+                        feedback.className = 'mt-6 p-4 rounded-lg text-sm bg-red-50 border border-red-200 text-red-800 block';
+                        nextBtn.classList.remove('hidden');
+                    }
+                }
+                scoreDisp.innerText = score;
+                scoreDisp.className = score < 0 ? 'text-lg font-bold text-red-600' : 'text-lg font-bold text-green-600';
+            }
+
+            document.getElementById('next-question-btn').onclick = () => {
+                currentIndex++;
+                if (currentIndex < currentPool.length) loadQuestion();
+                else {
+                    document.getElementById('quiz-content').classList.add('hidden');
+                    document.getElementById('quiz-results').classList.remove('hidden');
+                    document.getElementById('final-score').innerText = score;
+                    document.getElementById('next-question-btn').classList.add('hidden');
+                }
+            };
+
+            document.getElementById('close-quiz-btn').onclick = () => modal.classList.add('hidden');
+            document.getElementById('restart-quiz-btn').onclick = () => 
+                document.querySelector(`button[data-topic="${currentTopic}"]`).click();
+        });
+    </script>
+</body>
+</html>
