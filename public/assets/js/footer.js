@@ -162,7 +162,10 @@ function initializeChatBox() {
     
     // API Configuration
     const proxyUrl = '/api/chat'; 
-    const MODEL_NAME = '/gemini-2.0-flash';
+    let MODEL_NAME = 'gemini-2.0-flash';
+    try {
+        fetch('/api/config').then(r=>r.json()).then(c=>{ if (c && c.modelName) { MODEL_NAME = c.modelName; } });
+    } catch (_) {}
 
     // CV Context cho AI Assistant
     const cvContext = `

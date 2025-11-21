@@ -44,6 +44,9 @@ def load_env_from_file():
     except Exception:
         pass
 
+# Nạp .env ngay khi module được import
+load_env_from_file()
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -540,8 +543,8 @@ def api_chat():
         api_key = os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY') or os.environ.get('GENAI_API_KEY')
         if not api_key:
             return jsonify({'ok': False, 'error': 'missing_api_key', 'text': 'Máy chủ chưa cấu hình API key.'}), 501
-
-        endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
+        model_name = os.environ.get('MODEL_NAME', 'gemini-2.0-flash')
+        endpoint = f'https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent'
         payload = {
             'contents': [
                 {'parts': [{'text': system_instruction}]} if system_instruction else {'parts': [{'text': ''}]},
@@ -587,10 +590,18 @@ def api_chat():
     except Exception as e:
         return jsonify({'ok': False, 'error': 'server_error', 'text': f'Lỗi máy chủ: {str(e)}'}), 500
 
+@app.route('/api/config', methods=['GET'])
+def api_config():
+    model_name = os.environ.get('MODEL_NAME', 'gemini-2.0-flash')
+    return jsonify({'modelName': model_name})
+
 @app.route('/api/debug/env_key', methods=['GET'])
 def debug_env_key():
-    present = bool(os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY') or os.environ.get('GENAI_API_KEY'))
-    return jsonify({'present': present})
+    g = os.environ.get('GOOGLE_API_KEY') or ''
+    gm = os.environ.get('GEMINI_API_KEY') or ''
+    gn = os.environ.get('GENAI_API_KEY') or ''
+    present = bool(g or gm or gn)
+    return jsonify({'present': present, 'GOOGLE_API_KEY_len': len(g), 'GEMINI_API_KEY_len': len(gm), 'GENAI_API_KEY_len': len(gn)})
 
 @app.route('/api/debug/cwd', methods=['GET'])
 def debug_cwd():
