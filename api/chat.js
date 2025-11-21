@@ -18,10 +18,12 @@ export default async function handler(req, res) {
 
     const payload = {
       contents: [
-        { parts: [{ text: systemInstruction }] },
-        { parts: [{ text: userQuery || 'Hi' }] }
+        { role: 'user', parts: [{ text: userQuery || 'Hi' }] }
       ]
     };
+    if (systemInstruction) {
+      payload.systemInstruction = { role: 'system', parts: [{ text: systemInstruction }] };
+    }
 
     const resp = await fetch(endpoint, {
       method: 'POST',

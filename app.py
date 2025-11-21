@@ -547,10 +547,14 @@ def api_chat():
         endpoint = f'https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent'
         payload = {
             'contents': [
-                {'parts': [{'text': system_instruction}]} if system_instruction else {'parts': [{'text': ''}]},
-                {'parts': [{'text': user_query or 'Hi'}]}
+                {'role': 'user', 'parts': [{'text': user_query or 'Hi'}]}
             ]
         }
+        if system_instruction:
+            payload['systemInstruction'] = {
+                'role': 'system',
+                'parts': [{'text': system_instruction}]
+            }
 
         req = urllib.request.Request(
             url=endpoint,
