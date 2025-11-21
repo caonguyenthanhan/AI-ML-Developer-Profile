@@ -13,6 +13,10 @@
       "destination": "/ai_welcome.html"
     },
     {
+      "source": "/aise",
+      "destination": "/AI Software Engineer 2025.html"
+    },
+    {
       "source": "/caonguyenthanhan",
       "destination": "/caonguyenthanhan/personal_info.html"
     },

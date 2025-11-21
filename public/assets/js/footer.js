@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <!-- Initial Message -->
                 <div class="flex justify-start">
                     <div class="bg-indigo-100 text-gray-800 p-3 rounded-xl rounded-tl-none max-w-xs text-sm shadow-md">
-                        Chào bạn! Tôi là trợ lý AI, tôi có thể trả lời các câu hỏi về kinh nghiệm, kỹ năng và dự án trong CV của Cao Nguyễn Thành An.
+                        Chào bạn! Tôi là Minh, trợ lý AI của bạn An, tôi có thể trả lời các câu hỏi về trình độ của Cao Nguyễn Thành An.
                     </div>
                 </div>
             </div>
@@ -162,11 +162,11 @@ function initializeChatBox() {
     
     // API Configuration
     const proxyUrl = '/api/chat'; 
-    const MODEL_NAME = 'gemini-2.5-flash-preview-05-20';
+    const MODEL_NAME = '/gemini-2.0-flash';
 
     // CV Context cho AI Assistant
     const cvContext = `
-        Hồ sơ xin việc của Cao Nguyễn Thành An, Thực Tập Sinh Kỹ Sư AI/ML.
+        Hồ sơ xin việc của Cao Nguyễn Thành An, Kỹ Sư AI/ML.
 
         Mục Tiêu: Áp dụng kiến thức Machine Learning và Python để giải quyết các bài toán phức tạp trong dự án AI/ML.
 

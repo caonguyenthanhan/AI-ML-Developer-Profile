@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lộ Trình AI Software Engineer 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Khôi phục Gradient Text đẹp mắt */
+        .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #a78bfa, #e879f9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Hiệu ứng kính mờ */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        /* Hiệu ứng Hover Card */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            border-color: rgba(168, 85, 247, 0.4); /* Màu tím */
+            box-shadow: 0 10px 40px -10px rgba(168, 85, 247, 0.1);
+        }
+        .external-link-icon {
+            opacity: 0;
+            transform: translate(-2px, 2px);
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover .external-link-icon {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+    </style>
+    <!-- Link Header JS (Giữ nguyên logic hệ thống) -->
+    <script src="assets/js/header.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-200 leading-relaxed selection:bg-purple-500 selection:text-white">
+
+    <!-- HEADER PLACEHOLDER -->
+    <div class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md py-4 text-center text-slate-500 text-sm italic">
+        [Header System Component - Placeholder]
+    </div>
+
+    <!-- Hero Section (Quay lại Style cũ) -->
+    <section class="pt-20 pb-12 px-6 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-[120px] -z-10"></div>
+        
+        <div class="container mx-auto text-center max-w-4xl">
+            <div class="inline-block px-3 py-1 mb-6 text-xs font-medium tracking-wider text-purple-300 uppercase bg-purple-500/10 rounded-full border border-purple-500/20">
+                Báo cáo chiến lược 2025
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-white leading-tight">
+                Kỷ nguyên của <br>
+                <span class="gradient-text">AI Software Engineer</span>
+            </h1>
+            <p class="text-lg text-slate-400 mb-8 max-w-2xl mx-auto">
+                Sự hội tụ hoàn toàn mới giữa tư duy hệ thống, kiến trúc dữ liệu và khả năng điều phối các mô hình ngôn ngữ lớn (LLMs).
+            </p>
+        </div>
+    </section>
+
+    <!-- TABLE OF CONTENTS (MỤC LỤC) -->
+    <section class="px-6 mb-16">
+        <div class="container mx-auto max-w-3xl">
+            <div class="glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden">
+                <!-- Decorative line (Gradient Tím) -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500"></div>
+                
+                <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                    <i data-lucide="list" class="text-purple-400"></i>
+                    Mục Lục Nội Dung
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="#description" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition group">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-400 text-sm font-bold group-hover:bg-purple-500 group-hover:text-white transition">01</span>
+                        <span class="text-slate-300 group-hover:text-white transition">Mô tả & Video Tổng quan</span>
+                    </a>
+                    <a href="#pillars" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition group">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-400 text-sm font-bold group-hover:bg-purple-500 group-hover:text-white transition">02</span>
+                        <span class="text-slate-300 group-hover:text-white transition">5 Trụ Cột Kiến Thức</span>
+                    </a>
+                    <a href="#comparison" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition group">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-400 text-sm font-bold group-hover:bg-purple-500 group-hover:text-white transition">03</span>
+                        <span class="text-slate-300 group-hover:text-white transition">So sánh MLE vs AI SE</span>
+                    </a>
+                    <a href="#deep-dive" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition group">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-400 text-sm font-bold group-hover:bg-purple-500 group-hover:text-white transition">04</span>
+                        <span class="text-slate-300 group-hover:text-white transition">Phân Tích Chuyên Sâu</span>
+                    </a>
+                    <a href="#concepts" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition group">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-400 text-sm font-bold group-hover:bg-purple-500 group-hover:text-white transition">05</span>
+                        <span class="text-slate-300 group-hover:text-white transition">Top 20 Khái Niệm</span>
+                    </a>
+                    <a href="#roadmap-full" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition group">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-400 text-sm font-bold group-hover:bg-purple-500 group-hover:text-white transition">06</span>
+                        <span class="text-slate-300 group-hover:text-white transition">Lộ Trình Fullstack</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Description & Video Section (Updated with Custom Thumbnail) -->
+    <section id="description" class="py-10 px-6">
+        <div class="container mx-auto max-w-4xl bg-slate-900/50 border border-slate-800 rounded-2xl p-8 md:p-12">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <i data-lucide="youtube" class="text-red-500 w-6 h-6"></i>
+                Video Tổng Quan
+            </h2>
+            
+            <div class="prose prose-invert max-w-none text-slate-300 mb-8">
+                <p>
+                    Năm 2025 đánh dấu điểm bùng phát của kỷ nguyên "Kỹ sư Phần mềm AI". Video dưới đây phác thảo bức tranh toàn cảnh về sự chuyển dịch từ Machine Learning Engineer sang AI Software Engineer.
+                </p>
+            </div>
+
+            <!-- CUSTOM VIDEO FACADE (Thumbnail & Click to Play) -->
+            <div class="relative w-full rounded-xl overflow-hidden aspect-video shadow-2xl border border-slate-700 mb-8 hover:shadow-purple-500/30 transition duration-500 group cursor-pointer" onclick="loadVideo(this)">
+                <!-- Hình ảnh Thumbnail (Bạn có thể thay đổi link src bằng ảnh của bạn) -->
+                <img src="/image/lo-trinh-ky-su-ai-thumbnail.png" 
+                     alt="AI Roadmap Thumbnail" 
+                     class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500 transform group-hover:scale-105">
+                
+                <!-- Nút Play -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-20 h-20 bg-red-600/90 rounded-full flex items-center justify-center group-hover:scale-110 transition duration-300 shadow-lg backdrop-blur-sm border-4 border-red-500/30">
+                        <i data-lucide="play" class="w-8 h-8 text-white fill-white ml-1"></i>
+                    </div>
+                </div>
+
+                <!-- Text Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute bottom-6 left-6 pointer-events-none">
+                    <h3 class="text-white text-xl md:text-2xl font-bold drop-shadow-md mb-1">Lộ trình Kỹ sư AI 2025</h3>
+                    <p class="text-purple-300 text-sm font-medium flex items-center gap-2">
+                        <i data-lucide="clock" class="w-4 h-4"></i> Xem ngay
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Pillars Section (Quay lại màu sắc đa dạng) -->
+    <section id="pillars" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">5 Trụ Cột Kiến Thức Cốt Lõi</h2>
+                <p class="text-slate-400">Tổng quan về những kỹ năng định hình một kỹ sư phần mềm AI xuất sắc.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Pillar 1 -->
+                <div class="glass-panel p-8 rounded-2xl hover:border-purple-500/50 transition group">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-500/30 transition">
+                        <i data-lucide="refresh-ccw" class="text-blue-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">1. Sự Chuyển Dịch Vai Trò</h3>
+                    <p class="text-slate-400 text-sm mb-4">Từ xây dựng mô hình (MLE) sang kiến trúc hệ thống (AI SE). Tập trung vào tích hợp, điều phối và ứng dụng Generative AI.</p>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="glass-panel p-8 rounded-2xl hover:border-purple-500/50 transition group">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-500/30 transition">
+                        <i data-lucide="brain-circuit" class="text-purple-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">2. Làm Chủ LLMs</h3>
+                    <p class="text-slate-400 text-sm mb-4">Hiểu sâu về Prompt Engineering thế hệ mới (DSPy), quản lý Context Window, và kỹ thuật Fine-tuning hiệu quả (LoRA/QLoRA).</p>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="glass-panel p-8 rounded-2xl hover:border-purple-500/50 transition group">
+                    <div class="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500/30 transition">
+                        <i data-lucide="database" class="text-emerald-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">3. Advanced RAG 2.0</h3>
+                    <p class="text-slate-400 text-sm mb-4">Vượt qua tìm kiếm vector đơn thuần. Sử dụng GraphRAG (Đồ thị tri thức) và Hybrid Search để neo giữ AI vào sự thật.</p>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div class="glass-panel p-8 rounded-2xl hover:border-purple-500/50 transition group">
+                    <div class="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-orange-500/30 transition">
+                        <i data-lucide="bot" class="text-orange-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">4. Agentic AI</h3>
+                    <p class="text-slate-400 text-sm mb-4">Xây dựng các hệ thống tự chủ với mô hình ReAct. Sử dụng các framework như LangGraph, CrewAI để tạo đội ngũ AI tác nhân.</p>
+                </div>
+
+                <!-- Pillar 5 -->
+                <div class="glass-panel p-8 rounded-2xl hover:border-purple-500/50 transition group">
+                    <div class="w-12 h-12 bg-pink-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-pink-500/30 transition">
+                        <i data-lucide="shield-check" class="text-pink-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">5. Engineering Foundation</h3>
+                    <p class="text-slate-400 text-sm mb-4">Chuyển từ MLOps sang LLMOps. Tập trung vào đánh giá (Evaluation), bảo mật (Guardrails) và khả năng quan sát hệ thống.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table Section (Quay lại màu sắc cũ) -->
+    <section id="comparison" class="py-20 px-6 bg-slate-900/30">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center">MLE vs. AI Software Engineer (2025)</h2>
+            
+            <div class="overflow-x-auto rounded-xl border border-slate-700">
+                <table class="w-full text-left text-slate-300">
+                    <thead class="bg-slate-800 text-slate-100 uppercase text-xs font-bold tracking-wider">
+                        <tr>
+                            <th class="p-4 border-b border-slate-700">Đặc điểm</th>
+                            <th class="p-4 border-b border-slate-700 text-blue-400">Machine Learning Engineer</th>
+                            <th class="p-4 border-b border-slate-700 text-purple-400">AI Software Engineer</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-slate-900/50 divide-y divide-slate-700/50">
+                        <tr>
+                            <td class="p-4 font-medium text-white">Mục tiêu chính</td>
+                            <td class="p-4">Tối ưu hóa độ chính xác dự đoán</td>
+                            <td class="p-4">Xây dựng ứng dụng AI đầu cuối</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-white">Đầu vào</td>
+                            <td class="p-4">Dữ liệu thô, logs, hình ảnh</td>
+                            <td class="p-4">Ngữ cảnh phi cấu trúc, Prompts, APIs</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-white">Công cụ chính</td>
+                            <td class="p-4">PyTorch, TensorFlow, CUDA</td>
+                            <td class="p-4">LangChain, Semantic Kernel, OpenAI API</td>
+                        </tr>
+                         <tr>
+                            <td class="p-4 font-medium text-white">Yêu cầu toán học</td>
+                            <td class="p-4">Cao (Giải tích, Đại số tuyến tính)</td>
+                            <td class="p-4">Trung bình (Logic học, Thiết kế hệ thống)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Dive Section (Quay lại màu sắc cũ) -->
+    <section id="deep-dive" class="py-20 px-6">
+        <div class="container mx-auto max-w-5xl">
+            <div class="text-center mb-12">
+                <span class="text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase mb-4 inline-block border border-purple-500/20">
+                    Advanced Insights
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Phân Tích Chuyên Sâu</h2>
+            </div>
+
+            <div class="space-y-12">
+                <!-- Deep Dive 1 -->
+                <div class="glass-panel p-8 rounded-2xl border-l-4 border-purple-500 card-hover">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/3">
+                            <h3 class="text-2xl font-bold text-white mb-2">LLM & Prompt Systems</h3>
+                            <div class="text-purple-400 text-sm font-semibold mb-4">TRỤ CỘT #2</div>
+                            <ul class="space-y-2 text-slate-400 text-sm">
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i> DSPy Framework</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i> LoRA & QLoRA</li>
+                            </ul>
+                        </div>
+                        <div class="md:w-2/3 text-slate-300 space-y-4 border-t md:border-t-0 md:border-l border-slate-700 md:pl-6 pt-4 md:pt-0">
+                            <p>
+                                <strong class="text-white">Lập trình Prompt (DSPy):</strong> Chuyển dịch từ viết prompt thủ công sang tối ưu hóa bằng lập trình.
+                            </p>
+                            <p>
+                                <strong class="text-white">Fine-tuning kinh tế (PEFT):</strong> Sử dụng LoRA để tinh chỉnh mô hình nhỏ cho tác vụ chuyên biệt.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deep Dive 2 -->
+                <div class="glass-panel p-8 rounded-2xl border-l-4 border-orange-500 card-hover">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/3">
+                            <h3 class="text-2xl font-bold text-white mb-2">Agentic AI Systems</h3>
+                            <div class="text-orange-400 text-sm font-semibold mb-4">TRỤ CỘT #4</div>
+                            <ul class="space-y-2 text-slate-400 text-sm">
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i> ReAct Pattern</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i> Multi-Agent Systems</li>
+                            </ul>
+                        </div>
+                        <div class="md:w-2/3 text-slate-300 space-y-4 border-t md:border-t-0 md:border-l border-slate-700 md:pl-6 pt-4 md:pt-0">
+                            <p>
+                                <strong class="text-white">Từ Chatbot đến Copilot:</strong> Sử dụng mô hình ReAct. Agent không chỉ trả lời, mà còn thực thi nhiệm vụ.
+                            </p>
+                             <p>
+                                <strong class="text-white">Framework:</strong> 
+                                CrewAI (Tạo mẫu nhanh) vs LangGraph (Kiểm soát trạng thái chặt chẽ cho doanh nghiệp).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOP 20 CONCEPTS -->
+    <section id="concepts" class="py-20 bg-slate-900/50 border-t border-slate-800">
+        <div class="container mx-auto px-6">
+             <div class="text-center mb-12">
+                <span class="text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase mb-4 inline-block border border-blue-500/20">
+                    Terminology
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Top 20 Khái Niệm Cốt Lõi</h2>
+            </div>
+            <!-- Container for JS rendered cards -->
+            <div id="concept-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Content will be filled by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FULLSTACK ROADMAP (Quay lại màu sắc đa dạng) -->
+    <section id="roadmap-full" class="py-20 relative">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-purple-900/20 via-slate-950 to-slate-950 -z-10"></div>
+        
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-16">
+                <span class="text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase mb-4 inline-block border border-emerald-500/20">
+                    Career Path
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Lộ Trình Fullstack AI Toàn Diện</h2>
+                <p class="text-slate-400">6 Giai đoạn từ Zero đến khi có việc làm nhanh nhất.</p>
+            </div>
+
+            <div class="relative border-l-2 border-slate-700 ml-4 md:ml-0 space-y-12 md:space-y-0">
+                
+                <!-- Stage 1 -->
+                <div class="mb-8 md:flex md:justify-between md:items-center w-full group">
+                    <div class="order-1 md:w-5/12 md:text-right md:pr-8 pl-8 md:pl-0 relative">
+                        <span class="absolute top-0 left-[-9px] md:right-[-9px] md:left-auto w-4 h-4 rounded-full bg-slate-900 border-2 border-purple-500 group-hover:scale-125 transition"></span>
+                        <h3 class="text-xl font-bold text-purple-400 mb-2">Giai đoạn 1: Python & Data</h3>
+                        <p class="text-slate-400 text-sm">Mục tiêu: Fresher Data Analyst. Python, NumPy, Pandas, Dashboard.</p>
+                    </div>
+                    <div class="order-1 md:w-5/12 hidden md:block"></div> 
+                </div>
+
+                <!-- Stage 2 -->
+                <div class="mb-8 md:flex md:justify-between md:items-center w-full group">
+                    <div class="order-1 md:w-5/12 hidden md:block"></div>
+                    <div class="order-1 md:w-5/12 md:pl-8 pl-8 relative">
+                        <span class="absolute top-0 left-[-9px] w-4 h-4 rounded-full bg-slate-900 border-2 border-blue-500 group-hover:scale-125 transition"></span>
+                        <h3 class="text-xl font-bold text-blue-400 mb-2">Giai đoạn 2: Senior Data Analyst</h3>
+                        <p class="text-slate-400 text-sm">Power BI, SQL, ETL pipelines, Business Intelligence.</p>
+                    </div>
+                </div>
+
+                <!-- Stage 3 -->
+                <div class="mb-8 md:flex md:justify-between md:items-center w-full group">
+                    <div class="order-1 md:w-5/12 md:text-right md:pr-8 pl-8 md:pl-0 relative">
+                        <span class="absolute top-0 left-[-9px] md:right-[-9px] md:left-auto w-4 h-4 rounded-full bg-slate-900 border-2 border-green-500 group-hover:scale-125 transition"></span>
+                        <h3 class="text-xl font-bold text-green-400 mb-2">Giai đoạn 3: AI/ML Engineer</h3>
+                        <p class="text-slate-400 text-sm">ML, DL, CNN, LSTM. Huấn luyện và đánh giá mô hình.</p>
+                    </div>
+                    <div class="order-1 md:w-5/12 hidden md:block"></div>
+                </div>
+
+                 <!-- Stage 4 -->
+                 <div class="mb-8 md:flex md:justify-between md:items-center w-full group">
+                     <div class="order-1 md:w-5/12 hidden md:block"></div>
+                    <div class="order-1 md:w-5/12 md:pl-8 pl-8 relative">
+                        <span class="absolute top-0 left-[-9px] w-4 h-4 rounded-full bg-slate-900 border-2 border-yellow-500 group-hover:scale-125 transition"></span>
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">Giai đoạn 4: NLP & Agentic AI</h3>
+                        <p class="text-slate-400 text-sm">LangChain, LLaMA, RAG, AI Agents, Chatbot nội bộ.</p>
+                    </div>
+                </div>
+
+                 <!-- Stage 5 -->
+                 <div class="mb-8 md:flex md:justify-between md:items-center w-full group">
+                    <div class="order-1 md:w-5/12 md:text-right md:pr-8 pl-8 md:pl-0 relative">
+                        <span class="absolute top-0 left-[-9px] md:right-[-9px] md:left-auto w-4 h-4 rounded-full bg-slate-900 border-2 border-orange-500 group-hover:scale-125 transition"></span>
+                        <h3 class="text-xl font-bold text-orange-400 mb-2">Giai đoạn 5: Computer Vision</h3>
+                        <p class="text-slate-400 text-sm">OpenCV, YOLO, OCR. Nhận diện khuôn mặt, phân tích ảnh y tế.</p>
+                    </div>
+                    <div class="order-1 md:w-5/12 hidden md:block"></div>
+                </div>
+
+                 <!-- Stage 6 -->
+                 <div class="mb-8 md:flex md:justify-between md:items-center w-full group">
+                    <div class="order-1 md:w-5/12 hidden md:block"></div>
+                   <div class="order-1 md:w-5/12 md:pl-8 pl-8 relative">
+                       <span class="absolute top-0 left-[-9px] w-4 h-4 rounded-full bg-slate-900 border-2 border-pink-500 group-hover:scale-125 transition"></span>
+                       <h3 class="text-xl font-bold text-pink-400 mb-2">Giai đoạn 6: MLOps & Vận hành</h3>
+                       <p class="text-slate-400 text-sm">Docker, K8s, CI/CD. Quản lý và giám sát mô hình thực tế.</p>
+                   </div>
+               </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER PLACEHOLDER -->
+    <div class="border-t border-slate-800 bg-slate-950 py-8 text-center text-slate-500 text-sm italic">
+        [Footer Component with Chat Box - Placeholder]
+    </div>
+
+    <!-- Link Footer JS -->
+    <script src="assets/js/footer.js"></script>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // DATA CONFIGURATION (Giữ nguyên data)
+        const concepts = [
+            {
+                id: "01",
+                title: "Machine Learning",
+                desc: "Hệ thống tự 'học' từ dữ liệu thay vì lập trình cứng nhắc.",
+                link: "https://www.youtube.com/watch?v=59XV4o8hOBk"
+            },
+            {
+                id: "02",
+                title: "Deep Learning",
+                desc: "Sử dụng mạng nơ-ron nhiều lớp để mô phỏng não bộ, xử lý dữ liệu phi cấu trúc.",
+                link: "https://www.youtube.com/watch?v=9SXPnnhvn5o"
+            },
+            {
+                id: "03",
+                title: "Neural Networks",
+                desc: "Các nút (neurons) kết nối qua trọng số, mô hình hóa quan hệ phi tuyến.",
+                link: "https://www.youtube.com/watch?v=sWPNm_GhhCA&t=501s"
+            },
+            {
+                id: "04",
+                title: "NLP",
+                desc: "Giúp máy tính hiểu và tạo ra ngôn ngữ con người (Dịch, Chatbot).",
+                link: "https://www.youtube.com/watch?v=QkSbtl8lU_o&list=PL1j4pmqmWpbYG2206k0SL7ByUBpE014vg"
+            },
+            {
+                id: "05",
+                title: "Computer Vision",
+                desc: "Giúp máy tính 'nhìn' từ ảnh/video (FaceID, Xe tự lái).",
+                link: "https://opencv.org/"
+            },
+            {
+                id: "06",
+                title: "Reinforcement Learning",
+                desc: "Học qua thử-sai để tối đa hóa phần thưởng (Game AI).",
+                link: "https://spinningup.openai.com/en/latest/"
+            },
+            {
+                id: "07",
+                title: "Generative Models",
+                desc: "Sinh dữ liệu mới (ảnh, văn bản) giống dữ liệu gốc (Midjourney).",
+                link: "https://cloud.google.com/use-cases/generative-ai"
+            },
+            {
+                id: "08",
+                title: "LLMs",
+                desc: "Mô hình ngôn ngữ khổng lồ hiểu ngữ cảnh và suy luận logic.",
+                link: "https://www.youtube.com/watch?v=zjkBMFhNj_g"
+            },
+            {
+                id: "09",
+                title: "Transformers",
+                desc: "Kiến trúc 'Self-attention' xử lý dữ liệu song song (Nền tảng GPT).",
+                link: "https://jalammar.github.io/illustrated-transformer/"
+            },
+            {
+                id: "10",
+                title: "Feature Engineering",
+                desc: "Biến đổi dữ liệu thô thành đặc trưng có ý nghĩa cho mô hình.",
+                link: "https://www.kaggle.com/learn/feature-engineering"
+            },
+            {
+                id: "11",
+                title: "Supervised Learning",
+                desc: "Học từ dữ liệu có nhãn để dự đoán đầu ra.",
+                link: "https://scikit-learn.org/stable/supervised_learning.html"
+            },
+            {
+                id: "12",
+                title: "Bayesian Learning",
+                desc: "Cập nhật xác suất giả thuyết dựa trên bằng chứng mới.",
+                link: "https://en.wikipedia.org/wiki/Bayesian_inference"
+            },
+            {
+                id: "13",
+                title: "Prompt Engineering",
+                desc: "Tối ưu hóa đầu vào để GenAI tạo kết quả mong muốn.",
+                link: "https://www.promptingguide.ai/"
+            },
+            {
+                id: "14",
+                title: "AI Agents",
+                desc: "Hệ thống tự chủ nhận thức, lập kế hoạch và hành động.",
+                link: "https://python.langchain.com/docs/get_started/introduction"
+            },
+            {
+                id: "15",
+                title: "Fine-Tuning",
+                desc: "Huấn luyện lại mô hình gốc trên dữ liệu chuyên biệt.",
+                link: "https://platform.openai.com/docs/guides/fine-tuning"
+            },
+            {
+                id: "16",
+                title: "Multimodal Models",
+                desc: "Xử lý đồng thời nhiều loại dữ liệu (Ảnh + Văn bản).",
+                link: "https://openai.com/research/gpt-4v-system-card"
+            },
+            {
+                id: "17",
+                title: "Embeddings",
+                desc: "Biểu diễn dữ liệu dưới dạng vector số trong không gian nhiều chiều.",
+                link: "https://platform.openai.com/docs/guides/embeddings"
+            },
+            {
+                id: "18",
+                title: "Vector Search",
+                desc: "Tìm kiếm dựa trên ý nghĩa ngữ nghĩa (khoảng cách vector).",
+                link: "https://www.pinecone.io/learn/vector-database/"
+            },
+            {
+                id: "19",
+                title: "Model Evaluation",
+                desc: "Đánh giá độ tin cậy mô hình bằng các chỉ số đo lường.",
+                link: "https://scikit-learn.org/stable/modules/model_evaluation.html"
+            },
+            {
+                id: "20",
+                title: "AI Infrastructure",
+                desc: "Nền tảng phần cứng/phần mềm để triển khai AI (MLOps).",
+                link: "https://mlops.org/"
+            }
+        ];
+
+        // Render Logic (Same as before)
+        const container = document.getElementById('concept-container');
+        
+        concepts.forEach(item => {
+            const card = document.createElement('a');
+            card.href = item.link;
+            card.target = "_blank";
+            card.rel = "noopener noreferrer";
+            card.className = "group p-6 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-purple-500 transition duration-300 block card-hover relative overflow-hidden";
+            
+            card.innerHTML = `
+                <div class="absolute top-3 right-3 external-link-icon">
+                    <i data-lucide="external-link" class="w-4 h-4 text-purple-500"></i>
+                </div>
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="text-purple-500 font-bold text-xl">${item.id}</span>
+                    <h3 class="text-white font-bold text-lg group-hover:text-purple-400 transition">${item.title}</h3>
+                </div>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    ${item.desc}
+                </p>
+            `;
+            container.appendChild(card);
+        });
+
+        lucide.createIcons();
+
+        function loadVideo(container) {
+            container.innerHTML = '<iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/WmVF7o-OWwM?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+        }
+    </script>
+</body>
+</html>
