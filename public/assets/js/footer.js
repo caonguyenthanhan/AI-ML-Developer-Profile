@@ -159,6 +159,7 @@ function initializeChatBox() {
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
     const chatSend = document.getElementById('chat-send');
+    try { var s1=document.createElement('script'); s1.src='https://cdn.jsdelivr.net/npm/marked/marked.min.js'; document.head.appendChild(s1); var s2=document.createElement('script'); s2.src='https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js'; document.head.appendChild(s2); } catch(_) {}
     
     // API Configuration
     const proxyUrl = '/api/chat'; 
@@ -223,6 +224,17 @@ function initializeChatBox() {
     chatSend.addEventListener('click', sendMessage);
 
     // Chat Functions
+    function renderMarkdown(text){
+        try {
+            if (window.marked) {
+                var raw = window.marked.parse(text || '');
+                if (window.DOMPurify) return window.DOMPurify.sanitize(raw);
+                return raw;
+            }
+        } catch(_) {}
+        return (text || '').replace(/\*\*(.+?)\*\*/g, '<strong>$1<\/strong>');
+    }
+
     function displayMessage(text, isUser = false) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
@@ -233,7 +245,7 @@ function initializeChatBox() {
             ? 'bg-indigo-600 text-white rounded-br-none' 
             : 'bg-indigo-100 text-gray-800 rounded-tl-none'
         }`;
-        contentDiv.innerHTML = text;
+        contentDiv.innerHTML = isUser ? text : renderMarkdown(text);
         messageDiv.appendChild(contentDiv);
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;

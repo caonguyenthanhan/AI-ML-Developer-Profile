@@ -1,0 +1,747 @@
+{
+  "metadata": {
+    "title": "Cẩm nang An toàn Thông tin",
+    "version": "8.0",
+    "total_topics": 21,
+    "total_questions": 420,
+    "categories": ["Tấn công & Lỗ hổng", "Mật mã học", "Hạ tầng & Giao thức"]
+  },
+  "topics": [
+    {
+      "id": "topic-1",
+      "title": "Return-to-libc Attack",
+      "category": "Tấn công & Lỗ hổng",
+      "content": {
+        "summary": "Kỹ thuật khai thác lỗi tràn bộ đệm (buffer overflow) nâng cao, vượt qua cơ chế bảo vệ NX bit.",
+        "details": [
+          {
+            "heading": "Nguyên lý",
+            "text": "Thay vì chèn mã độc (shellcode) vào stack (nơi không có quyền thực thi), kẻ tấn công ghi đè địa chỉ trả về (return address) bằng địa chỉ của một hàm có sẵn trong thư viện libc (thường là hàm system())."
+          },
+          {
+            "heading": "Kịch bản tấn công",
+            "text": "1. Tìm địa chỉ hàm system() và chuỗi '/bin/sh' trong thư viện.\n2. Ghi đè Stack: [Padding] [Addr system] [Addr exit] [Addr '/bin/sh'].\n3. Khi hàm hiện tại trả về, CPU nhảy đến system('/bin/sh') -> Mở shell."
+          },
+          {
+            "heading": "Phòng chống",
+            "text": "- ASLR: Ngẫu nhiên hóa địa chỉ thư viện.\n- Stack Canaries: Phát hiện ghi đè stack.\n- ASCII Armoring: Chặn địa chỉ chứa null byte."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Mục đích chính của tấn công Return-to-libc là gì?",
+          "options": [
+            {"text": "Thực thi mã bằng cách gọi hàm thư viện có sẵn.", "correct": true},
+            {"text": "Tái sử dụng mã (code reuse) để vượt qua NX bit.", "correct": true},
+            {"text": "Chèn shellcode vào Stack để chạy.", "correct": false},
+            {"text": "Làm tràn bộ đệm để ghi đè biến cục bộ.", "correct": false},
+            {"text": "Tấn công từ chối dịch vụ.", "correct": false},
+            {"text": "Ăn cắp cookie trình duyệt.", "correct": false},
+            {"text": "Giải mã dữ liệu SSL.", "correct": false}
+          ],
+          "explanation": "Kỹ thuật này 'tái sử dụng' các hàm đã có trong bộ nhớ (như system) thay vì cố gắng chạy mã mới trên Stack (vốn bị cấm bởi NX bit)."
+        },
+        {
+          "q": "Cơ chế bảo vệ nào ngăn chặn việc thực thi mã trực tiếp trên Stack?",
+          "options": [
+            {"text": "NX Bit (Non-Executable) / DEP.", "correct": true},
+            {"text": "Đánh dấu vùng nhớ Stack là không được thực thi.", "correct": true},
+            {"text": "ASLR.", "correct": false},
+            {"text": "Stack Canary.", "correct": false},
+            {"text": "Firewall.", "correct": false},
+            {"text": "HTTPS.", "correct": false},
+            {"text": "WAF.", "correct": false}
+          ],
+          "explanation": "NX Bit (hoặc DEP trên Windows) ngăn CPU thực thi các chỉ lệnh nằm trong vùng nhớ được đánh dấu là dữ liệu (như Stack, Heap)."
+        }
+      ]
+    },
+    {
+      "id": "topic-2",
+      "title": "Format String Attack",
+      "category": "Tấn công & Lỗ hổng",
+      "content": {
+        "summary": "Lỗ hổng khi ứng dụng sử dụng input người dùng làm tham số định dạng cho hàm in ấn.",
+        "details": [
+          {
+            "heading": "Nguyên nhân",
+            "text": "Lập trình viên viết `printf(user_input)` thay vì `printf(\"%s\", user_input)`."
+          },
+          {
+            "heading": "Khai thác",
+            "text": "- Đọc dữ liệu từ Stack: Sử dụng %x (hex) hoặc %s (string).\n- Ghi dữ liệu vào bộ nhớ: Sử dụng %n (ghi số lượng byte đã in vào địa chỉ biến)."
+          },
+          {
+            "heading": "Hậu quả",
+            "text": "Rò rỉ thông tin nhạy cảm, Crash chương trình, Thực thi mã (bằng cách ghi đè GOT)."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Nguyên nhân chính của lỗ hổng Format String là gì?",
+          "options": [
+            {"text": "Sử dụng user input trực tiếp làm tham số format cho printf.", "correct": true},
+            {"text": "Code dạng printf(buffer) thay vì printf(\"%s\", buffer).", "correct": true},
+            {"text": "Tràn bộ đệm.", "correct": false},
+            {"text": "Không lọc ký tự đặc biệt.", "correct": false},
+            {"text": "Sử dụng hàm gets().", "correct": false},
+            {"text": "Cấu hình sai server.", "correct": false},
+            {"text": "Lỗi phần cứng.", "correct": false}
+          ],
+          "explanation": "Lỗi nằm ở việc thiếu chuỗi định dạng cố định ('%s')."
+        },
+        {
+          "q": "Ký tự định dạng %n nguy hiểm nhất vì?",
+          "options": [
+            {"text": "Nó cho phép GHI vào bộ nhớ.", "correct": true},
+            {"text": "Nó ghi số lượng ký tự đã in vào biến được trỏ tới.", "correct": true},
+            {"text": "Nó đọc bộ nhớ.", "correct": false},
+            {"text": "Nó xóa bộ nhớ.", "correct": false},
+            {"text": "Nó copy bộ nhớ.", "correct": false},
+            {"text": "Nó mã hóa bộ nhớ.", "correct": false},
+            {"text": "Nó cấp phát bộ nhớ.", "correct": false}
+          ],
+          "explanation": "%n là specifier duy nhất thực hiện thao tác GHI dữ liệu thay vì đọc/in dữ liệu."
+        }
+      ]
+    },
+    {
+      "id": "topic-3",
+      "title": "CSRF (Cross-Site Request Forgery)",
+      "category": "Tấn công & Lỗ hổng",
+      "content": {
+        "summary": "Tấn công mượn danh tính người dùng để thực hiện hành động trái phép.",
+        "details": [
+          {
+            "heading": "Cơ chế",
+            "text": "Lợi dụng việc trình duyệt tự động gửi Cookie xác thực kèm theo mọi request đến domain đích. Hacker lừa nạn nhân bấm vào link hoặc load ảnh chứa request độc hại (ví dụ: chuyển tiền)."
+          },
+          {
+            "heading": "Phòng chống",
+            "text": "- Anti-CSRF Token: Mã bí mật gắn vào form.\n- SameSite Cookie: Ngăn trình duyệt gửi cookie cross-site.\n- Yêu cầu xác thực lại (Re-authentication) cho giao dịch quan trọng."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Bản chất của tấn công CSRF là gì?",
+          "options": [
+            {"text": "Lừa trình duyệt của nạn nhân gửi request không mong muốn đến server.", "correct": true},
+            {"text": "Mượn danh tính (cookie) của nạn nhân để thực hiện hành động.", "correct": true},
+            {"text": "Đánh cắp mật khẩu nạn nhân.", "correct": false},
+            {"text": "Cài virus vào máy nạn nhân.", "correct": false},
+            {"text": "Chiếm quyền điều khiển server.", "correct": false},
+            {"text": "Đọc dữ liệu nhạy cảm của nạn nhân.", "correct": false},
+            {"text": "Tấn công vào cơ sở dữ liệu.", "correct": false}
+          ],
+          "explanation": "CSRF không đánh cắp thông tin (như XSS), nó 'ép' nạn nhân thực hiện hành động (chuyển tiền, đổi pass) mà nạn nhân không biết."
+        },
+        {
+          "q": "Tại sao Anti-CSRF Token ngăn chặn được CSRF?",
+          "options": [
+            {"text": "Vì kẻ tấn công không thể biết/đoán được giá trị Token này.", "correct": true},
+            {"text": "Vì Token này không được trình duyệt tự động gửi đi (khác với Cookie).", "correct": true},
+            {"text": "Vì Token được mã hóa.", "correct": false},
+            {"text": "Vì Token thay đổi IP.", "correct": false},
+            {"text": "Vì Token chặn JavaScript.", "correct": false},
+            {"text": "Vì Token làm chậm request.", "correct": false},
+            {"text": "Vì Token chỉ dùng cho admin.", "correct": false}
+          ],
+          "explanation": "Kẻ tấn công có thể giả mạo request, nhưng không thể điền đúng trường 'csrf_token' trong form vì họ không đọc được nội dung trang web của nạn nhân."
+        }
+      ]
+    },
+    {
+      "id": "topic-4",
+      "title": "XSS (Cross-Site Scripting)",
+      "category": "Tấn công & Lỗ hổng",
+      "content": {
+        "summary": "Chèn mã script độc hại (thường là JavaScript) vào trang web để thực thi trên trình duyệt người dùng.",
+        "details": [
+          {
+            "heading": "Phân loại",
+            "text": "- Stored XSS: Mã độc lưu trong CSDL.\n- Reflected XSS: Mã độc phản hồi từ URL.\n- DOM-based XSS: Lỗ hổng trong xử lý JavaScript phía client."
+          },
+          {
+            "heading": "Phòng chống",
+            "text": "- Output Encoding: Mã hóa ký tự đặc biệt thành HTML entities.\n- CSP (Content Security Policy): Giới hạn nguồn chạy script."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "XSS (Cross-Site Scripting) cho phép kẻ tấn công làm gì?",
+          "options": [
+            {"text": "Thực thi mã script độc hại (JavaScript) trên trình duyệt của nạn nhân.", "correct": true},
+            {"text": "Thao túng giao diện hoặc đánh cắp thông tin phiên làm việc của người dùng.", "correct": true},
+            {"text": "Thực thi lệnh trên máy chủ web.", "correct": false},
+            {"text": "Truy cập trực tiếp vào cơ sở dữ liệu.", "correct": false},
+            {"text": "Tấn công từ chối dịch vụ server.", "correct": false},
+            {"text": "Đọc file hệ thống của server.", "correct": false},
+            {"text": "Phá khóa mật khẩu admin.", "correct": false}
+          ],
+          "explanation": "XSS là lỗ hổng Client-side, mã độc chạy trên máy của người dùng, không phải trên server."
+        }
+      ]
+    },
+    {
+      "id": "topic-5",
+      "title": "SQL Injection (SQLi)",
+      "category": "Tấn công & Lỗ hổng",
+      "content": {
+        "summary": "Can thiệp vào câu lệnh SQL của ứng dụng thông qua dữ liệu đầu vào.",
+        "details": [
+          {
+            "heading": "Kỹ thuật",
+            "text": "- Union-based: Gộp kết quả.\n- Error-based: Khai thác thông báo lỗi.\n- Blind SQLi: Dựa trên phản hồi Đúng/Sai hoặc Thời gian."
+          },
+          {
+            "heading": "Phòng chống",
+            "text": "Sử dụng Prepared Statements (Truy vấn tham số hóa) là biện pháp hiệu quả nhất."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Biện pháp phòng chống SQL Injection hiệu quả nhất?",
+          "options": [
+            {"text": "Sử dụng Prepared Statements (Truy vấn tham số hóa).", "correct": true},
+            {"text": "Sử dụng các thư viện ORM (Object-Relational Mapping) hỗ trợ binding.", "correct": true},
+            {"text": "Lọc dấu nháy đơn.", "correct": false},
+            {"text": "Dùng WAF.", "correct": false},
+            {"text": "Mã hóa dữ liệu.", "correct": false},
+            {"text": "Đổi tên bảng.", "correct": false},
+            {"text": "Dùng NoSQL.", "correct": false}
+          ],
+          "explanation": "Prepared Statements gửi câu lệnh và dữ liệu riêng biệt. Input '1 OR 1=1' sẽ được coi là một chuỗi văn bản thuần túy, không phải lệnh."
+        }
+      ]
+    },
+    {
+      "id": "topic-6",
+      "title": "Sqlmap",
+      "category": "Công cụ",
+      "content": {
+        "summary": "Công cụ kiểm thử xâm nhập tự động mã nguồn mở chuyên khai thác SQL Injection.",
+        "details": [
+          {
+            "heading": "Chức năng",
+            "text": "Tự động phát hiện lỗi, xác định loại DB, trích xuất dữ liệu (dump), và chiếm quyền (os-shell)."
+          },
+          {
+            "heading": "Lệnh cơ bản",
+            "text": "-u (URL), --dbs (List DBs), -D (Chọn DB), -T (Chọn Table), --dump (Lấy dữ liệu)."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Lệnh --dbs trong Sqlmap dùng để làm gì?",
+          "options": [
+            {"text": "Liệt kê danh sách các cơ sở dữ liệu (Databases) hiện có trên server.", "correct": true},
+            {"text": "Enumerates available databases.", "correct": true},
+            {"text": "Xóa database.", "correct": false},
+            {"text": "Tạo database mới.", "correct": false},
+            {"text": "Sao lưu database.", "correct": false},
+            {"text": "Đổi tên database.", "correct": false},
+            {"text": "Kết nối database.", "correct": false}
+          ],
+          "explanation": "Bước đầu tiên trong quá trình trích xuất dữ liệu (Enumeration)."
+        }
+      ]
+    },
+    {
+      "id": "topic-7",
+      "title": "File Upload Vulnerability",
+      "category": "Tấn công & Lỗ hổng",
+      "content": {
+        "summary": "Lỗ hổng cho phép tải lên tệp tin độc hại (như web shell) để thực thi mã từ xa.",
+        "details": [
+          {
+            "heading": "Nguy cơ",
+            "text": "RCE (Remote Code Execution) - Chiếm quyền điều khiển máy chủ."
+          },
+          {
+            "heading": "Phòng chống",
+            "text": "- Whitelist Extension (Chỉ cho phép ảnh/pdf).\n- Đổi tên file ngẫu nhiên.\n- Lưu file ngoài thư mục web root.\n- Tắt quyền thực thi trong thư mục upload."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Nguy cơ lớn nhất của lỗ hổng File Upload là gì?",
+          "options": [
+            {"text": "Remote Code Execution (RCE).", "correct": true},
+            {"text": "Kẻ tấn công tải lên Web Shell và chiếm quyền server.", "correct": true},
+            {"text": "XSS.", "correct": false},
+            {"text": "SQL Injection.", "correct": false},
+            {"text": "Làm đầy ổ cứng.", "correct": false},
+            {"text": "Mất giao diện web.", "correct": false},
+            {"text": "Lộ email.", "correct": false}
+          ],
+          "explanation": "Nếu file độc hại (php, asp) được thực thi, hacker có quyền tương đương với web server."
+        }
+      ]
+    },
+    {
+      "id": "topic-8",
+      "title": "Directory Traversal",
+      "category": "Tấn công & Lỗ hổng",
+      "content": {
+        "summary": "Tấn công leo thang thư mục để truy cập trái phép các tệp tin hệ thống.",
+        "details": [
+          {
+            "heading": "Kỹ thuật",
+            "text": "Sử dụng chuỗi `../` (dot-dot-slash) để lùi về thư mục cha. Ví dụ: `../../etc/passwd`."
+          },
+          {
+            "heading": "Phòng chống",
+            "text": "- Sử dụng hàm `basename()` để lọc đường dẫn.\n- Validate Input (Whitelist ký tự).\n- Cấu hình quyền truy cập file chặt chẽ."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Chuỗi ký tự nào là đặc trưng của tấn công Directory Traversal?",
+          "options": [
+            {"text": "../ (Dot dot slash).", "correct": true},
+            {"text": "..\\ (trên Windows).", "correct": true},
+            {"text": "<script>", "correct": false},
+            {"text": "UNION SELECT", "correct": false},
+            {"text": "OR 1=1", "correct": false},
+            {"text": "{{7*7}}", "correct": false},
+            {"text": "alert(1)", "correct": false}
+          ],
+          "explanation": "Lệnh này nghĩa là 'lùi về thư mục cha' trong hầu hết các hệ điều hành."
+        }
+      ]
+    },
+    {
+      "id": "topic-9",
+      "title": "Firewall & IDS",
+      "category": "Hạ tầng",
+      "content": {
+        "summary": "Các hệ thống bảo vệ mạng.",
+        "details": [
+          {
+            "heading": "Firewall",
+            "text": "Kiểm soát lưu lượng ra/vào dựa trên luật (IP, Port). Có Stateless và Stateful."
+          },
+          {
+            "heading": "IDS/IPS",
+            "text": "- IDS (Detection): Phát hiện và cảnh báo tấn công.\n- IPS (Prevention): Phát hiện và tự động chặn tấn công."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Sự khác biệt chính giữa IDS và IPS là gì?",
+          "options": [
+            {"text": "IDS chỉ phát hiện và cảnh báo (Alert), IPS có thể tự động chặn (Block).", "correct": true},
+            {"text": "IDS là bị động (passive), IPS là chủ động (active).", "correct": true},
+            {"text": "IDS đắt hơn.", "correct": false},
+            {"text": "IPS chỉ là phần mềm.", "correct": false},
+            {"text": "IDS chặn, IPS báo.", "correct": false},
+            {"text": "Giống hệt nhau.", "correct": false},
+            {"text": "IDS cho nội bộ, IPS cho internet.", "correct": false}
+          ],
+          "explanation": "IDS giống camera quan sát, IPS giống bảo vệ có vũ trang."
+        }
+      ]
+    },
+    {
+      "id": "topic-10",
+      "title": "Traditional Ciphers",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Các phương pháp mã hóa cổ điển.",
+        "details": [
+          {
+            "heading": "Substitution (Thay thế)",
+            "text": "Thay ký tự này bằng ký tự khác. Ví dụ: Caesar (dịch chuyển k), Vigenère (đa bảng)."
+          },
+          {
+            "heading": "One-Time Pad",
+            "text": "An toàn tuyệt đối nếu khóa ngẫu nhiên, dài bằng tin nhắn và chỉ dùng 1 lần."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Điểm yếu chí mạng của Mã hóa Caesar là gì?",
+          "options": [
+            {"text": "Dễ bị phá vỡ bằng Phân tích tần suất (Frequency Analysis).", "correct": true},
+            {"text": "Các chữ cái phổ biến trong ngôn ngữ sẽ xuất hiện với tần suất tương tự trong bản mã.", "correct": true},
+            {"text": "Khóa quá ngắn.", "correct": false},
+            {"text": "Dễ bị Brute-force.", "correct": false},
+            {"text": "Không dùng máy tính.", "correct": false},
+            {"text": "Khóa quá dài.", "correct": false},
+            {"text": "Không hỗ trợ số.", "correct": false}
+          ],
+          "explanation": "Biểu đồ tần suất của bản mã có hình dạng giống hệt bản rõ, chỉ bị dịch chuyển."
+        }
+      ]
+    },
+    {
+      "id": "topic-11",
+      "title": "Transposition Ciphers",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Mã hóa bằng cách hoán vị (đổi chỗ) các ký tự mà không thay đổi bản thân ký tự.",
+        "details": [
+          {
+            "heading": "Ví dụ",
+            "text": "Rail Fence (Zic-zac), Columnar Transposition (Viết theo dòng, đọc theo cột)."
+          },
+          {
+            "heading": "Đặc điểm",
+            "text": "Giữ nguyên tần suất ký tự của bản rõ -> Dễ bị phát hiện."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Sự khác biệt chính giữa Substitution và Transposition Cipher?",
+          "options": [
+            {"text": "Substitution thay đổi ký tự, Transposition thay đổi vị trí ký tự.", "correct": true},
+            {"text": "Một bên đổi 'A' thành 'X', một bên đổi chỗ 'A' đứng đầu xuống cuối.", "correct": true},
+            {"text": "Giống hệt nhau.", "correct": false},
+            {"text": "Transposition an toàn hơn.", "correct": false},
+            {"text": "Substitution dùng số.", "correct": false},
+            {"text": "Transposition dùng bit.", "correct": false},
+            {"text": "Transposition là hàm băm.", "correct": false}
+          ],
+          "explanation": "Substitution làm mất nhận dạng ký tự. Transposition làm mất trật tự ký tự."
+        }
+      ]
+    },
+    {
+      "id": "topic-12",
+      "title": "Cryptographic Hashes",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Hàm băm một chiều, biến đầu vào bất kỳ thành chuỗi cố định.",
+        "details": [
+          {
+            "heading": "Tính chất",
+            "text": "Kháng tiền ảnh (One-way), Kháng va chạm (Collision resistance), Hiệu ứng thác đổ."
+          },
+          {
+            "heading": "Thuật toán",
+            "text": "- MD5: Đã hỏng (Collision).\n- SHA-256: Chuẩn an toàn hiện nay."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Tại sao MD5 được coi là 'đã hỏng' (broken)?",
+          "options": [
+            {"text": "Vì đã tìm ra cách tạo va chạm (Collision) nhanh chóng.", "correct": true},
+            {"text": "Có thể tạo 2 file khác nhau có cùng hash MD5.", "correct": true},
+            {"text": "Vì nó quá chậm.", "correct": false},
+            {"text": "Vì nó quá dài.", "correct": false},
+            {"text": "Vì nó giải mã được.", "correct": false},
+            {"text": "Vì nó tốn điện.", "correct": false},
+            {"text": "Vì nó cũ.", "correct": false}
+          ],
+          "explanation": "Va chạm hash cho phép giả mạo chữ ký số và nội dung file."
+        }
+      ]
+    },
+    {
+      "id": "topic-13",
+      "title": "MAC & HMAC",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Cơ chế xác thực thông điệp dùng khóa bí mật.",
+        "details": [
+          {
+            "heading": "MAC",
+            "text": "Đảm bảo tính Toàn vẹn và Xác thực."
+          },
+          {
+            "heading": "HMAC",
+            "text": "Sử dụng hàm băm lồng nhau (Hash-based) để chống tấn công mở rộng độ dài (Length Extension Attack)."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Sự khác biệt chính giữa MAC và Hash (băm) là gì?",
+          "options": [
+            {"text": "MAC sử dụng một khóa bí mật (Secret Key), Hash thì không.", "correct": true},
+            {"text": "Ai cũng tính được Hash, nhưng chỉ người có khóa mới tính được MAC.", "correct": true},
+            {"text": "MAC dài hơn Hash.", "correct": false},
+            {"text": "Hash an toàn hơn MAC.", "correct": false},
+            {"text": "MAC dùng để nén.", "correct": false},
+            {"text": "Hash dùng khóa công khai.", "correct": false},
+            {"text": "Không có khác biệt.", "correct": false}
+          ],
+          "explanation": "Hash kiểm tra lỗi ngẫu nhiên hoặc toàn vẹn công khai. MAC kiểm tra sự giả mạo có chủ đích từ người không có khóa."
+        }
+      ]
+    },
+    {
+      "id": "topic-14",
+      "title": "Yescrypt",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Hàm băm mật khẩu hiện đại, kháng GPU/ASIC.",
+        "details": [
+          {
+            "heading": "Đặc điểm",
+            "text": "Memory-hard (tốn RAM), dựa trên Scrypt nhưng cải tiến. Là chuẩn mặc định trên Linux hiện đại."
+          },
+          {
+            "heading": "Mục đích",
+            "text": "Làm chậm quá trình crack mật khẩu bằng phần cứng chuyên dụng."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Đặc tính 'Memory-hard' của Yescrypt có tác dụng gì?",
+          "options": [
+            {"text": "Buộc kẻ tấn công phải dùng nhiều RAM để tính toán hash.", "correct": true},
+            {"text": "Làm giảm hiệu quả của GPU/FPGA (vốn có ít bộ nhớ cho mỗi nhân) khi tấn công Brute-force.", "correct": true},
+            {"text": "Giúp chạy nhanh hơn.", "correct": false},
+            {"text": "Tiết kiệm RAM.", "correct": false},
+            {"text": "Tăng tốc độ mạng.", "correct": false},
+            {"text": "Giảm dung lượng đĩa.", "correct": false},
+            {"text": "Tương thích ngược.", "correct": false}
+          ],
+          "explanation": "Tấn công mật khẩu trên GPU dựa vào khả năng tính toán song song cực lớn nhưng bộ nhớ hạn chế. Yescrypt đánh vào điểm yếu này."
+        }
+      ]
+    },
+    {
+      "id": "topic-15",
+      "title": "bcrypt",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Hàm băm mật khẩu chuẩn công nghiệp dựa trên Blowfish.",
+        "details": [
+          {
+            "heading": "Tính năng",
+            "text": "Adaptive Hashing (Có thể điều chỉnh Cost Factor để làm chậm thuật toán theo thời gian). Tích hợp sẵn Salt."
+          },
+          {
+            "heading": "Ưu điểm",
+            "text": "Chống Brute-force hiệu quả nhờ tốc độ chậm tùy chỉnh."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Cost Factor (ví dụ 10, 12) trong bcrypt biểu thị điều gì?",
+          "options": [
+            {"text": "Số vòng lặp là 2 mũ Cost (2^10, 2^12).", "correct": true},
+            {"text": "Tăng cost lên 1 đơn vị nghĩa là thời gian tính toán tăng gấp đôi.", "correct": true},
+            {"text": "Số giây tính toán.", "correct": false},
+            {"text": "Độ dài mật khẩu.", "correct": false},
+            {"text": "Số ký tự salt.", "correct": false},
+            {"text": "Phiên bản phần mềm.", "correct": false},
+            {"text": "Độ an toàn tuyệt đối.", "correct": false}
+          ],
+          "explanation": "Giúp thuật toán 'thích nghi' (adaptive) với tốc độ phần cứng tăng dần theo thời gian."
+        }
+      ]
+    },
+    {
+      "id": "topic-16",
+      "title": "DES (Data Encryption Standard)",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Chuẩn mã hóa khối cũ (1977), sử dụng mạng Feistel.",
+        "details": [
+          {
+            "heading": "Thông số",
+            "text": "Block: 64-bit. Key: 56-bit. Vòng: 16."
+          },
+          {
+            "heading": "Trạng thái",
+            "text": "Không an toàn do khóa quá ngắn (dễ bị brute-force). Đã bị thay thế bởi AES."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Tại sao DES được coi là không an toàn hiện nay?",
+          "options": [
+            {"text": "Không gian khóa quá nhỏ (2^56), dễ bị tấn công vét cạn (Brute-force).", "correct": true},
+            {"text": "Máy tính hiện đại có thể dò ra khóa trong vài giờ.", "correct": true},
+            {"text": "Thuật toán bị lộ.", "correct": false},
+            {"text": "S-box bị hỏng.", "correct": false},
+            {"text": "Không hỗ trợ Wifi.", "correct": false},
+            {"text": "Quá chậm.", "correct": false},
+            {"text": "Bị cài backdoor.", "correct": false}
+          ],
+          "explanation": "Kích thước khóa 56-bit là quá nhỏ so với sức mạnh tính toán ngày nay."
+        }
+      ]
+    },
+    {
+      "id": "topic-17",
+      "title": "AES (Advanced Encryption Standard)",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Chuẩn mã hóa đối xứng hiện đại, an toàn và hiệu quả.",
+        "details": [
+          {
+            "heading": "Thông số",
+            "text": "Block: 128-bit. Key: 128/192/256-bit. Cấu trúc: SPN."
+          },
+          {
+            "heading": "Hoạt động",
+            "text": "Gồm 4 bước: SubBytes, ShiftRows, MixColumns, AddRoundKey."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Kích thước khối (Block Size) của AES là bao nhiêu?",
+          "options": [
+            {"text": "128 bits.", "correct": true},
+            {"text": "Cố định là 128 bit cho mọi độ dài khóa.", "correct": true},
+            {"text": "64 bits.", "correct": false},
+            {"text": "256 bits.", "correct": false},
+            {"text": "512 bits.", "correct": false},
+            {"text": "Tùy chọn.", "correct": false},
+            {"text": "32 bits.", "correct": false}
+          ],
+          "explanation": "Dù khóa có thể là 128, 192 hay 256 bit, nhưng khối dữ liệu xử lý luôn là 128 bit."
+        }
+      ]
+    },
+    {
+      "id": "topic-18",
+      "title": "Block Cipher Modes",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Các chế độ vận hành để mã hóa dữ liệu dài hơn một khối.",
+        "details": [
+          {
+            "heading": "Các chế độ",
+            "text": "- ECB: Không an toàn (lộ mẫu).\n- CBC: An toàn, tuần tự, cần IV.\n- GCM: An toàn, nhanh (song song), có xác thực (AEAD)."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "ECB (Electronic Codebook) có điểm yếu gì?",
+          "options": [
+            {"text": "Các khối bản rõ giống nhau sẽ sinh ra khối bản mã giống nhau.", "correct": true},
+            {"text": "Làm lộ mẫu hình dữ liệu (ví dụ: logo chim cánh cụt vẫn nhìn thấy được sau khi mã hóa).", "correct": true},
+            {"text": "Tốc độ chậm.", "correct": false},
+            {"text": "Khó cài đặt.", "correct": false},
+            {"text": "Cần IV.", "correct": false},
+            {"text": "Làm hỏng dữ liệu.", "correct": false},
+            {"text": "Không hỗ trợ AES.", "correct": false}
+          ],
+          "explanation": "ECB mã hóa từng khối độc lập mà không có sự ngẫu nhiên hóa (IV), không che giấu được cấu trúc dữ liệu."
+        }
+      ]
+    },
+    {
+      "id": "topic-19",
+      "title": "RSA & PKI",
+      "category": "Mật mã học",
+      "content": {
+        "summary": "Hệ thống mật mã khóa công khai và hạ tầng chứng chỉ số.",
+        "details": [
+          {
+            "heading": "RSA",
+            "text": "Dựa trên bài toán phân tích thừa số nguyên tố. Dùng Public Key để mã hóa/verify, Private Key để giải mã/ký."
+          },
+          {
+            "heading": "PKI",
+            "text": "Hệ thống CA (Certificate Authority) để xác thực danh tính của chủ sở hữu Public Key (tránh Man-in-the-Middle)."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Trong RSA, nếu Alice muốn gửi tin nhắn BÍ MẬT cho Bob, Alice dùng khóa nào để mã hóa?",
+          "options": [
+            {"text": "Public Key của Bob.", "correct": true},
+            {"text": "Để chỉ Bob (người giữ Private Key) mới giải mã được.", "correct": true},
+            {"text": "Private Key của Alice.", "correct": false},
+            {"text": "Public Key của Alice.", "correct": false},
+            {"text": "Private Key của Bob.", "correct": false},
+            {"text": "Khóa phiên.", "correct": false},
+            {"text": "Khóa CA.", "correct": false}
+          ],
+          "explanation": "Mã hóa bằng khóa công khai của người nhận đảm bảo tính bảo mật (Confidentiality)."
+        }
+      ]
+    },
+    {
+      "id": "topic-20",
+      "title": "Diffie-Hellman & HTTPS",
+      "category": "Giao thức",
+      "content": {
+        "summary": "Giao thức trao đổi khóa và bảo mật web.",
+        "details": [
+          {
+            "heading": "Diffie-Hellman",
+            "text": "Cho phép 2 bên tạo khóa chung qua kênh không an toàn (dựa trên Logarit rời rạc)."
+          },
+          {
+            "heading": "HTTPS (TLS)",
+            "text": "Kết hợp: RSA/PKI (Xác thực) + DH (Trao đổi khóa) + AES (Mã hóa dữ liệu) + HMAC (Toàn vẹn)."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Mục đích chính của giao thức Diffie-Hellman là gì?",
+          "options": [
+            {"text": "Trao đổi khóa bí mật chung qua kênh không an toàn.", "correct": true},
+            {"text": "Hai bên thống nhất một Shared Secret mà người nghe lén không biết.", "correct": true},
+            {"text": "Mã hóa tin nhắn.", "correct": false},
+            {"text": "Ký số.", "correct": false},
+            {"text": "Xác thực danh tính.", "correct": false},
+            {"text": "Nén dữ liệu.", "correct": false},
+            {"text": "Băm mật khẩu.", "correct": false}
+          ],
+          "explanation": "DH giải quyết vấn đề phân phối khóa của mật mã đối xứng."
+        }
+      ]
+    },
+    {
+      "id": "topic-21",
+      "title": "JWT (JSON Web Token)",
+      "category": "Giao thức",
+      "content": {
+        "summary": "Chuẩn token dùng cho xác thực phi trạng thái (Stateless).",
+        "details": [
+          {
+            "heading": "Cấu trúc",
+            "text": "Header.Payload.Signature (Base64Url encoded)."
+          },
+          {
+            "heading": "Lưu ý",
+            "text": "Payload không được mã hóa (chỉ encode), không để lộ thông tin mật. Signature giúp chống sửa đổi."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Dữ liệu trong Payload của JWT có được mã hóa an toàn không?",
+          "options": [
+            {"text": "Không, nó chỉ được Encode Base64Url.", "correct": true},
+            {"text": "Bất kỳ ai có token đều có thể giải mã (decode) để đọc nội dung.", "correct": true},
+            {"text": "Có, được mã hóa AES.", "correct": false},
+            {"text": "Có, được mã hóa RSA.", "correct": false},
+            {"text": "Chỉ server đọc được.", "correct": false},
+            {"text": "Được băm MD5.", "correct": false},
+            {"text": "Ẩn đi.", "correct": false}
+          ],
+          "explanation": "Base64 là mã hóa dạng hiển thị (Encoding), không phải mã hóa bảo mật (Encryption). Ai cũng có thể decode."
+        }
+      ]
+    }
+  ]
+}
