@@ -30,30 +30,204 @@
       },
       "quiz": [
         {
-          "q": "Mục đích chính của tấn công Return-to-libc là gì?",
+          "q": "Cơ chế bảo mật nào thúc đẩy sự ra đời của Return-to-libc?",
           "options": [
-            {"text": "Thực thi mã bằng cách gọi hàm thư viện có sẵn.", "correct": true},
-            {"text": "Tái sử dụng mã (code reuse) để vượt qua NX bit.", "correct": true},
-            {"text": "Chèn shellcode vào Stack để chạy.", "correct": false},
-            {"text": "Làm tràn bộ đệm để ghi đè biến cục bộ.", "correct": false},
-            {"text": "Tấn công từ chối dịch vụ.", "correct": false},
-            {"text": "Ăn cắp cookie trình duyệt.", "correct": false},
-            {"text": "Giải mã dữ liệu SSL.", "correct": false}
+            {"text": "ASLR (Address Space Layout Randomization)", "correct": false},
+            {"text": "Stack Canaries", "correct": false},
+            {"text": "NX bit (No-Execute) / DEP", "correct": true},
+            {"text": "RELRO (Relocation Read-Only)", "correct": false}
           ],
-          "explanation": "Kỹ thuật này 'tái sử dụng' các hàm đã có trong bộ nhớ (như system) thay vì cố gắng chạy mã mới trên Stack (vốn bị cấm bởi NX bit)."
+          "explanation": "NX/DEP ngăn thực thi trên Stack, buộc phải tái sử dụng hàm sẵn có."
         },
         {
-          "q": "Cơ chế bảo vệ nào ngăn chặn việc thực thi mã trực tiếp trên Stack?",
+          "q": "Trong Ret2Libc trên x86, giá trị nào nằm ngay sau địa chỉ system() trên stack?",
           "options": [
-            {"text": "NX Bit (Non-Executable) / DEP.", "correct": true},
-            {"text": "Đánh dấu vùng nhớ Stack là không được thực thi.", "correct": true},
-            {"text": "ASLR.", "correct": false},
-            {"text": "Stack Canary.", "correct": false},
-            {"text": "Firewall.", "correct": false},
-            {"text": "HTTPS.", "correct": false},
-            {"text": "WAF.", "correct": false}
+            {"text": "Đối số của system (địa chỉ \"/bin/sh\")", "correct": false},
+            {"text": "Địa chỉ trả về giả (thường exit)", "correct": true},
+            {"text": "Địa chỉ cơ sở libc", "correct": false},
+            {"text": "Saved EBP", "correct": false}
           ],
-          "explanation": "NX Bit (hoặc DEP trên Windows) ngăn CPU thực thi các chỉ lệnh nằm trong vùng nhớ được đánh dấu là dữ liệu (như Stack, Heap)."
+          "explanation": "Chuỗi payload: padding, &system, &exit, &\"/bin/sh\"."
+        },
+        {
+          "q": "Vì sao Ret2Libc trên x64 phức tạp hơn x86?",
+          "options": [
+            {"text": "Không gian địa chỉ lớn hơn", "correct": false},
+            {"text": "Tham số truyền qua thanh ghi (RDI, RSI...)", "correct": true},
+            {"text": "Libc không được nạp", "correct": false},
+            {"text": "Stack mã hóa phần cứng", "correct": false}
+          ],
+          "explanation": "Cần ROP gadgets để thiết lập thanh ghi tham số."
+        },
+        {
+          "q": "Gadget ROP thiết yếu để truyền tham số đầu tiên trên Linux x64 là?",
+          "options": [
+            {"text": "pop rax; ret", "correct": false},
+            {"text": "pop rdi; ret", "correct": true},
+            {"text": "pop rsi; ret", "correct": false},
+            {"text": "pop rbp; ret", "correct": false}
+          ],
+          "explanation": "Tham số đầu tiên nằm ở RDI theo System V ABI."
+        },
+        {
+          "q": "Để vượt ASLR, điều kiện tiên quyết thường là gì?",
+          "options": [
+            {"text": "Quyền root", "correct": false},
+            {"text": "Lỗ hổng rò rỉ thông tin (Information Leak)", "correct": true},
+            {"text": "Mã nguồn đầy đủ", "correct": false},
+            {"text": "Tắt firewall", "correct": false}
+          ],
+          "explanation": "Rò rỉ địa chỉ thực giúp tính base address libc."
+        },
+        {
+          "q": "Hàm system() thực tế gọi chương trình nào?",
+          "options": [
+            {"text": "/bin/zsh", "correct": false},
+            {"text": "/bin/sh", "correct": true},
+            {"text": "Syscall trực tiếp", "correct": false},
+            {"text": "cmd.exe", "correct": false}
+          ],
+          "explanation": "system gọi shell mặc định, thường là /bin/sh."
+        },
+        {
+          "q": "Lệnh Assembly chuyển luồng thực thi theo địa chỉ trên đỉnh stack là?",
+          "options": [
+            {"text": "CALL", "correct": false},
+            {"text": "JMP", "correct": false},
+            {"text": "RET", "correct": true},
+            {"text": "PUSH", "correct": false}
+          ],
+          "explanation": "RET lấy địa chỉ từ stack và nhảy đến đó."
+        },
+        {
+          "q": "Khi ASLR bật, thành phần nào thay đổi qua mỗi lần chạy?",
+          "options": [
+            {"text": "Offset giữa system và \"/bin/sh\" trong libc", "correct": false},
+            {"text": "Địa chỉ cơ sở (base) của libc trong bộ nhớ", "correct": true},
+            {"text": "Opcode của system", "correct": false},
+            {"text": "Cấu trúc stack frame", "correct": false}
+          ],
+          "explanation": "ASLR ngẫu nhiên hóa vị trí nạp thư viện."
+        },
+        {
+          "q": "Chuỗi \"/bin/sh\" thường được tìm thấy ở đâu?",
+          "options": [
+            {"text": "Phải tự chèn vào stack", "correct": false},
+            {"text": "Phân vùng dữ liệu của libc", "correct": true},
+            {"text": "Tải từ server C2", "correct": false},
+            {"text": "Trong biến môi trường", "correct": false}
+          ],
+          "explanation": "Libc chứa sẵn chuỗi \"/bin/sh\"."
+        },
+        {
+          "q": "Yêu cầu căn chỉnh stack 16-byte thường liên quan đến chỉ thị nào?",
+          "options": [
+            {"text": "MOVAPS", "correct": true},
+            {"text": "POP", "correct": false},
+            {"text": "PUSH", "correct": false},
+            {"text": "LEAVE", "correct": false}
+          ],
+          "explanation": "MOVAPS cần địa chỉ 16-byte aligned, sai gây segfault."
+        },
+        {
+          "q": "Ret2Libc chuỗi cho phép thực hiện điều gì?",
+          "options": [
+            {"text": "Gọi liên tiếp nhiều hàm libc", "correct": true},
+            {"text": "Chỉ gọi được một hàm", "correct": false},
+            {"text": "Ghi đè file thực thi trên đĩa", "correct": false},
+            {"text": "Thay đổi quyền file libc", "correct": false}
+          ],
+          "explanation": "Chuỗi gọi như setuid rồi system để leo đặc quyền."
+        },
+        {
+          "q": "ASCII Armoring phòng chống bằng cách nào?",
+          "options": [
+            {"text": "Mã hóa toàn bộ libc", "correct": false},
+            {"text": "Ánh xạ thư viện vào vùng địa chỉ có byte 0x00", "correct": true},
+            {"text": "Xóa các hàm nguy hiểm", "correct": false},
+            {"text": "Kiểm tra integrity stack", "correct": false}
+          ],
+          "explanation": "Byte 0x00 làm đứt các hàm sao chép chuỗi."
+        },
+        {
+          "q": "Vai trò của GOT/PLT trong bối cảnh Ret2Libc?",
+          "options": [
+            {"text": "Lưu biến môi trường", "correct": false},
+            {"text": "Cơ chế liên kết động để giải địa chỉ hàm", "correct": true},
+            {"text": "Bảo vệ stack", "correct": false},
+            {"text": "Mã hóa input", "correct": false}
+          ],
+          "explanation": "Có thể lợi dụng để tìm hoặc chuyển hướng địa chỉ hàm."
+        },
+        {
+          "q": "Biện pháp hiệu quả bên cạnh ASLR để chặn Ret2Libc?",
+          "options": [
+            {"text": "Stack Canaries", "correct": false},
+            {"text": "CFI (Control Flow Integrity)", "correct": true},
+            {"text": "WAF", "correct": false},
+            {"text": "Input Validation", "correct": false}
+          ],
+          "explanation": "CFI kiểm soát luồng gọi hàm, khó chuyển hướng trái phép."
+        },
+        {
+          "q": "Không tìm thấy \"/bin/sh\" trong bộ nhớ thì làm gì?",
+          "options": [
+            {"text": "Bỏ cuộc", "correct": false},
+            {"text": "Đưa chuỗi vào stack/heap qua input và dùng địa chỉ", "correct": true},
+            {"text": "Dùng \"/bin/ls\"", "correct": false},
+            {"text": "Ghi đè libc trên đĩa", "correct": false}
+          ],
+          "explanation": "Tự kiểm soát vùng nhớ chứa tham số của system."
+        },
+        {
+          "q": "Vì sao đôi khi dùng execve() thay vì system()?",
+          "options": [
+            {"text": "execve không thả quyền trong một số kịch bản SUID", "correct": true},
+            {"text": "execve dễ tìm địa chỉ hơn", "correct": false},
+            {"text": "execve không cần đối số", "correct": false},
+            {"text": "system đã bị xóa khỏi libc", "correct": false}
+          ],
+          "explanation": "system(/bin/sh) có thể bị shell thả quyền; execve kiểm soát tốt hơn."
+        },
+        {
+          "q": "Công thức địa chỉ thực khi có ASLR là?",
+          "options": [
+            {"text": "Real = Base + Offset", "correct": true},
+            {"text": "Real = Base - Offset", "correct": false},
+            {"text": "Real = Offset", "correct": false},
+            {"text": "Real = Base * Offset", "correct": false}
+          ],
+          "explanation": "Offset lấy từ file libc, Base từ rò rỉ địa chỉ."
+        },
+        {
+          "q": "readelf/strings hữu ích để làm gì trong tấn công này?",
+          "options": [
+            {"text": "Tìm offset tĩnh của system và chuỗi \"/bin/sh\"", "correct": true},
+            {"text": "Kết nối server", "correct": false},
+            {"text": "Debug runtime", "correct": false},
+            {"text": "Vượt firewall", "correct": false}
+          ],
+          "explanation": "Phục vụ tính toán địa chỉ thực khi chạy."
+        },
+        {
+          "q": "ROP chain được xây từ thành phần nào?",
+          "options": [
+            {"text": "API functions", "correct": false},
+            {"text": "Các gadgets kết thúc bằng RET", "correct": true},
+            {"text": "Shellcode mới", "correct": false},
+            {"text": "Biến môi trường", "correct": false}
+          ],
+          "explanation": "Gadgets lấy từ mã chương trình/thư viện hiện có."
+        },
+        {
+          "q": "Ghi đè EBP/RBP có thể dẫn tới kỹ thuật nào?",
+          "options": [
+            {"text": "Stack Pivoting", "correct": true},
+            {"text": "Heap Spraying", "correct": false},
+            {"text": "Integer Overflow", "correct": false},
+            {"text": "Race Condition", "correct": false}
+          ],
+          "explanation": "Chuyển con trỏ stack tới vùng nhớ do kẻ tấn công kiểm soát."
         }
       ]
     },
@@ -79,32 +253,26 @@
         ]
       },
       "quiz": [
-        {
-          "q": "Nguyên nhân chính của lỗ hổng Format String là gì?",
-          "options": [
-            {"text": "Sử dụng user input trực tiếp làm tham số format cho printf.", "correct": true},
-            {"text": "Code dạng printf(buffer) thay vì printf(\"%s\", buffer).", "correct": true},
-            {"text": "Tràn bộ đệm.", "correct": false},
-            {"text": "Không lọc ký tự đặc biệt.", "correct": false},
-            {"text": "Sử dụng hàm gets().", "correct": false},
-            {"text": "Cấu hình sai server.", "correct": false},
-            {"text": "Lỗi phần cứng.", "correct": false}
-          ],
-          "explanation": "Lỗi nằm ở việc thiếu chuỗi định dạng cố định ('%s')."
-        },
-        {
-          "q": "Ký tự định dạng %n nguy hiểm nhất vì?",
-          "options": [
-            {"text": "Nó cho phép GHI vào bộ nhớ.", "correct": true},
-            {"text": "Nó ghi số lượng ký tự đã in vào biến được trỏ tới.", "correct": true},
-            {"text": "Nó đọc bộ nhớ.", "correct": false},
-            {"text": "Nó xóa bộ nhớ.", "correct": false},
-            {"text": "Nó copy bộ nhớ.", "correct": false},
-            {"text": "Nó mã hóa bộ nhớ.", "correct": false},
-            {"text": "Nó cấp phát bộ nhớ.", "correct": false}
-          ],
-          "explanation": "%n là specifier duy nhất thực hiện thao tác GHI dữ liệu thay vì đọc/in dữ liệu."
-        }
+        {"q": "Hàm nào dễ bị lỗi Format String nhất nếu dùng sai?", "options": [{"text": "puts()", "correct": false}, {"text": "printf()", "correct": true}, {"text": "write()", "correct": false}, {"text": "strcpy()", "correct": false}], "explanation": "printf đọc specifiers từ chuỗi định dạng."},
+        {"q": "Specifier nào cho phép GHI vào bộ nhớ?", "options": [{"text": "%s", "correct": false}, {"text": "%x", "correct": false}, {"text": "%n", "correct": true}, {"text": "%p", "correct": false}], "explanation": "%n ghi số ký tự đã in ra vào địa chỉ trỏ tới."},
+        {"q": "Chuỗi %x.%x.%x.%x thường dùng để làm gì?", "options": [{"text": "Tràn bộ đệm", "correct": false}, {"text": "Đọc dữ liệu từ Stack", "correct": true}, {"text": "Ghi địa chỉ trả về", "correct": false}, {"text": "Thực thi shellcode", "correct": false}], "explanation": "Dò nội dung stack để lộ thông tin."},
+        {"q": "Sai lầm căn bản trong printf(user_input) là gì?", "options": [{"text": "Thiếu buffer trung gian", "correct": false}, {"text": "Thiếu chuỗi định dạng cố định '%s'", "correct": true}, {"text": "Không kiểm tra độ dài", "correct": false}, {"text": "Dùng hàm deprecated", "correct": false}], "explanation": "Chuỗi định dạng phải do lập trình viên kiểm soát."},
+        {"q": "%n ghi giá trị gì vào bộ nhớ?", "options": [{"text": "Số tham số truyền vào", "correct": false}, {"text": "Số ký tự đã in", "correct": true}, {"text": "Địa chỉ format string", "correct": false}, {"text": "Null byte", "correct": false}], "explanation": "%n ghi tổng số ký tự đã output."},
+        {"q": "Cú pháp Direct Parameter Access là?", "options": [{"text": "%x$n", "correct": false}, {"text": "%$nx", "correct": false}, {"text": "%n$x (ví dụ %4$x)", "correct": true}, {"text": "&n$x", "correct": false}], "explanation": "Chọn tham số theo vị trí n trên stack."},
+        {"q": "Cách ghi địa chỉ lớn mà không in hàng tỷ ký tự?", "options": [{"text": "Chia nhỏ ghi bằng %hn/%hhn", "correct": true}, {"text": "%Lx", "correct": false}, {"text": "Kết hợp Buffer Overflow", "correct": false}, {"text": "Không thể", "correct": false}], "explanation": "Ghi từng byte/word vào địa chỉ đích."},
+        {"q": "Dùng %s với địa chỉ không hợp lệ gây gì?", "options": [{"text": "In quá nhiều dữ liệu", "correct": false}, {"text": "Segmentation Fault (DoS)", "correct": true}, {"text": "Tràn Stack", "correct": false}, {"text": "Ghi đè EIP", "correct": false}], "explanation": "%s coi giá trị là con trỏ và đọc bộ nhớ."},
+        {"q": "Mục tiêu thường gặp tại GOT là gì?", "options": [{"text": "Đọc mã nguồn", "correct": false}, {"text": "Ghi đè địa chỉ hàm để chuyển hướng thực thi", "correct": true}, {"text": "Thay đổi biến môi trường", "correct": false}, {"text": "Tắt ASLR", "correct": false}], "explanation": "Ghi đè entry trỏ tới hàm cần thay thế."},
+        {"q": "printf(\"%100x%n\", var) sẽ ghi vào var?", "options": [{"text": "100", "correct": true}, {"text": "10", "correct": false}, {"text": "0", "correct": false}, {"text": "Giá trị hex của 100", "correct": false}], "explanation": "Độ rộng 100 ký tự -> %n ghi 100."},
+        {"q": "Phòng chống tốt nhất ở mức mã nguồn?", "options": [{"text": "printf(\"%s\", input)", "correct": true}, {"text": "printf(input)", "correct": false}, {"text": "Dùng cout", "correct": false}, {"text": "Lọc ký tự %", "correct": false}], "explanation": "Chuỗi định dạng phải cố định."},
+        {"q": "_FORTIFY_SOURCE giúp ngăn điều gì?", "options": [{"text": "%x đọc stack", "correct": false}, {"text": "Sử dụng %n khi format nằm ở vùng nhớ có thể ghi", "correct": true}, {"text": "Mọi printf", "correct": false}, {"text": "Tự động đổi printf thành puts", "correct": false}], "explanation": "Giảm nguy cơ ghi tùy ý bằng %n."},
+        {"q": "Vì sao có thể bypass Canary?", "options": [{"text": "Ghi đè Canary", "correct": false}, {"text": "Đọc giá trị Canary từ stack", "correct": true}, {"text": "Làm Canary ngừng hoạt động", "correct": false}, {"text": "Nhảy qua kiểm tra", "correct": false}], "explanation": "Information leak hỗ trợ bypass."},
+        {"q": "%p thường in gì?", "options": [{"text": "Chuỗi ký tự", "correct": false}, {"text": "Giá trị con trỏ dạng Hex", "correct": true}, {"text": "Số nguyên có dấu", "correct": false}, {"text": "Số thực", "correct": false}], "explanation": "In địa chỉ bộ nhớ."},
+        {"q": "snprintf có an toàn tuyệt đối trước Format String không?", "options": [{"text": "Có, giới hạn độ dài", "correct": false}, {"text": "Không, nếu format do người dùng kiểm soát", "correct": true}, {"text": "Có, không hỗ trợ %n", "correct": false}, {"text": "Không, gây tràn", "correct": false}], "explanation": "Giới hạn độ dài không loại bỏ lỗi logic format."},
+        {"q": "Ý nghĩa kỹ thuật của payload %4$n là?", "options": [{"text": "In 4 ký tự", "correct": false}, {"text": "Ghi số ký tự đã in vào địa chỉ tham số thứ 4", "correct": true}, {"text": "Đọc giá trị thứ 4", "correct": false}, {"text": "Bỏ qua 4 tham số", "correct": false}], "explanation": "Dùng định vị trực tiếp tham số n trên stack."},
+        {"q": "Thời điểm lỗ hổng này được công bố rộng rãi?", "options": [{"text": "1988", "correct": false}, {"text": "1999-2000", "correct": true}, {"text": "2010", "correct": false}, {"text": "1970", "correct": false}], "explanation": "Các nghiên cứu nổi bật giai đoạn 1999-2000."},
+        {"q": "Xem nội dung tại 0x08048000 bằng Format String thế nào?", "options": [{"text": "Đặt địa chỉ lên stack và dùng %s", "correct": true}, {"text": "Dùng %x liên tục", "correct": false}, {"text": "Dùng %n", "correct": false}, {"text": "Dùng %u", "correct": false}], "explanation": "%s coi tham số là con trỏ đến chuỗi."},
+        {"q": "Khác biệt giữa %u và %d khi in từ stack?", "options": [{"text": "%u in số không dấu, hiển thị địa chỉ lớn tốt hơn", "correct": true}, {"text": "%d in số thực", "correct": false}, {"text": "Không khác biệt", "correct": false}, {"text": "%u an toàn hơn", "correct": false}], "explanation": "%u phù hợp cho giá trị không dấu."},
+        {"q": "Nhận định đúng về lỗi Format String hiện nay?", "options": [{"text": "Tuyệt chủng", "correct": false}, {"text": "Rất phổ biến ở Web PHP/Java", "correct": false}, {"text": "Hiếm hơn nhưng nghiêm trọng ở IoT/C hoặc phần mềm cũ", "correct": true}, {"text": "Chỉ xảy ra trên Windows", "correct": false}], "explanation": "Vẫn là mối đe dọa trong hệ thống C/C++ và nhúng."}
       ]
     },
     {
