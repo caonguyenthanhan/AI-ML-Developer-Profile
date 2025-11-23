@@ -21,6 +21,10 @@
       "destination": "/workflow_simulation.html"
     },
     {
+      "source": "/ai_setup",
+      "destination": "/Project Genesis.html"
+    },
+    {
       "source": "/atttem",
       "destination": "/attt/attt.html"
     },

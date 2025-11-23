@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Genesis V2 - AI System Architect</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #09090b;
+            --card-bg: #18181b;
+            --input-bg: #27272a;
+            --text-color: #e4e4e7;
+            --accent: #d946ef; /* Magenta Neon */
+            --accent-hover: #c026d3;
+            --border-color: #3f3f46;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { 
+            font-size: 2.5rem; margin: 0; 
+            background: linear-gradient(to right, #d946ef, #8b5cf6); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+        }
+        .header p { color: #a1a1aa; font-style: italic; }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        /* LEFT: CONFIG FORM */
+        .config-panel {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #d4d4d8; font-weight: 600; font-size: 0.9rem; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); outline: none; }
+        .form-group textarea { height: 100px; resize: vertical; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #d946ef, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.2s;
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(217, 70, 239, 0.3); }
+
+        /* RIGHT: RESULTS */
+        .results-panel { display: flex; flex-direction: column; gap: 20px; }
+
+        .gem-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            opacity: 0.6;
+            filter: grayscale(0.8);
+            transition: all 0.3s ease;
+        }
+        .gem-card.active { opacity: 1; filter: grayscale(0); border-color: var(--accent); box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+
+        .card-header {
+            padding: 15px 20px;
+            background-color: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .role-title { font-weight: bold; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+        
+        .card-body { position: relative; }
+        .prompt-textarea {
+            width: 100%;
+            height: 250px;
+            background-color: #0f0f11; /* Darker for code */
+            color: #a5b4fc;
+            border: none;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background-color: var(--accent); border-color: var(--accent); }
+
+        /* LOADING SPINNER */
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .spinner {
+            width: 60px; height: 60px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .config-panel { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>PROJECT GENESIS V2</h1>
+        <p>Trình khởi tạo hệ thống Multi-Agent (Single-Frame Memory)</p>
+    </div>
+
+    <div class="container">
+        <!-- LEFT: CONFIGURATION -->
+        <div class="config-panel">
+            <h3 style="margin-top:0; color:white; border-bottom:1px solid #3f3f46; padding-bottom:10px;">
+                <i class="fas fa-cogs"></i> Cấu Hình Dự Án
+            </h3>
+
+            <div class="form-group">
+                <label>Tên Dự Án</label>
+                <input type="text" id="p_name" placeholder="VD: Super RAG Chatbot">
+            </div>
+
+            <div class="form-group">
+                <label>Mục Tiêu & Nghiệp Vụ</label>
+                <textarea id="p_goal" placeholder="Mô tả mục tiêu chính, đối tượng sử dụng, tính năng mong muốn..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Công Nghệ (Tech Stack)</label>
+                <input type="text" id="p_stack" placeholder="VD: Python, LangGraph, React, Firebase">
+            </div>
+
+            <div class="form-group">
+                <label>Triết Lý & Quy Tắc</label>
+                <textarea id="p_rules" placeholder="VD: Systemic Agentic Workflow, Clean Code, Comment tiếng Việt..."></textarea>
+            </div>
+
+            <button class="btn-submit" onclick="generateSystem()">
+                <i class="fas fa-magic"></i> SINH HỆ THỐNG GEM
+            </button>
+        </div>
+
+        <!-- RIGHT: GENERATED PROMPTS -->
+        <div class="results-panel">
+            
+            <!-- 1. GUARDIAN -->
+            <div class="gem-card" id="card-guardian">
+                <div class="card-header">
+                    <div class="role-title"><i class="fas fa-shield-alt" style="color:#d946ef"></i> 1. GUARDIAN (Quản lý bộ nhớ)</div>
+                    <span style="font-size:0.8rem; color:#a1a1aa;">*Auto-Update Memory</span>
+                </div>
+                <div class="card-body">
+                    <textarea class="prompt-textarea" id="out-guardian" readonly>Output sẽ xuất hiện ở đây...</textarea>
+                    <button class="copy-btn" onclick="copyToClip('out-guardian')"><i class="fas fa-copy"></i> Copy</button>
+                </div>
+            </div>
+
+            <!-- 2. ARCHITECT -->
+            <div class="gem-card" id="card-architect">
+                <div class="card-header">
+                    <div class="role-title"><i class="fas fa-drafting-compass" style="color:#3b82f6"></i> 2. ARCHITECT (Kỹ sư trưởng)</div>
+                    <span style="font-size:0.8rem; color:#a1a1aa;">*Prompt Generator</span>
+                </div>
+                <div class="card-body">
+                    <textarea class="prompt-textarea" id="out-architect" readonly>Output sẽ xuất hiện ở đây...</textarea>
+                    <button class="copy-btn" onclick="copyToClip('out-architect')"><i class="fas fa-copy"></i> Copy</button>
+                </div>
+            </div>
+
+            <!-- 3. CODER -->
+            <div class="gem-card" id="card-coder">
+                <div class="card-header">
+                    <div class="role-title"><i class="fas fa-laptop-code" style="color:#10b981"></i> 3. CODER (IDE Rules)</div>
+                    <span style="font-size:0.8rem; color:#a1a1aa;">*For Cursor/Windsurf</span>
+                </div>
+                <div class="card-body">
+                    <textarea class="prompt-textarea" id="out-coder" readonly>Output sẽ xuất hiện ở đây...</textarea>
+                    <button class="copy-btn" onclick="copyToClip('out-coder')"><i class="fas fa-copy"></i> Copy</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- LOADING -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <h2 style="color:white;">Gemini đang suy nghĩ...</h2>
+        <p style="color:#d4d4d8;">Đang thiết kế kiến trúc Agent tối ưu cho dự án của bạn.</p>
+    </div>
+
+    <script>
+        const apiKey = ""; // API KEY INJECTED BY RUNTIME
+
+        async function generateSystem() {
+            const p_name = document.getElementById('p_name').value;
+            const p_goal = document.getElementById('p_goal').value;
+            const p_stack = document.getElementById('p_stack').value;
+            const p_rules = document.getElementById('p_rules').value;
+
+            if(!p_name || !p_goal) {
+                alert("Vui lòng nhập Tên dự án và Mục tiêu!");
+                return;
+            }
+
+            document.getElementById('loading-overlay').style.display = 'flex';
+            
+            // META PROMPT: Chỉ thị cho Gemini tạo ra 3 Persona
+            const metaPrompt = `
+Bạn là System Architect AI cao cấp. Nhiệm vụ của bạn là khởi tạo bộ "System Prompts" (Chỉ thị hệ thống) cho 3 nhân vật AI (Agents) để vận hành dự án phần mềm sau.
+
+THÔNG TIN DỰ ÁN:
+- Tên: ${p_name}
+- Mục tiêu: ${p_goal}
+- Stack: ${p_stack}
+- Quy tắc: ${p_rules}
+
+YÊU CẦU ĐẦU RA (JSON Format):
+Hãy viết 3 System Prompt chi tiết bằng tiếng Việt cho 3 vai trò dưới đây.
+
+1. GUARDIAN_PROMPT (Quản lý bộ nhớ):
+- Vai trò: Duy trì Single Source of Truth (Memory Bank).
+- QUAN TRỌNG: Trong phần hướng dẫn Output, hãy BẮT BUỘC Guardian phải xuất toàn bộ nội dung Memory Bank (Project Brief, Active Context, Progress...) vào trong **MỘT KHUNG CODE MARKDOWN DUY NHẤT** (One Single Code Block). Không được chia thành nhiều block nhỏ.
+- Lý do: Để người dùng (User) có thể bấm Copy 1 lần là lấy được toàn bộ ngữ cảnh dự án.
+
+2. ARCHITECT_PROMPT (Kiến trúc sư):
+- Vai trò: Nhận yêu cầu User -> Viết Prompt kỹ thuật chi tiết cho Coder.
+- Phải am hiểu Stack: ${p_stack}.
+
+3. CODER_PROMPT (Thợ code - Dành cho Cursor/Windsurf):
+- Vai trò: Thực thi code.
+- System Instruction cho IDE: Ngắn gọn, súc tích, tập trung vào Clean Code, tuân thủ stack ${p_stack}.
+
+JSON SCHEMA:
+{
+  "guardian": "Nội dung prompt cho Guardian...",
+  "architect": "Nội dung prompt cho Architect...",
+  "coder": "Nội dung prompt cho Coder..."
+}
+`;
+
+            try {
+                const responseText = await callGeminiAPI(metaPrompt);
+                const json = JSON.parse(responseText.replace(/```json|```/g, '').trim());
+
+                // Render output
+                document.getElementById('out-guardian').value = json.guardian;
+                document.getElementById('out-architect').value = json.architect;
+                document.getElementById('out-coder').value = json.coder;
+
+                // Activate cards
+                document.querySelectorAll('.gem-card').forEach(c => c.classList.add('active'));
+
+            } catch (err) {
+                console.error(err);
+                alert("Lỗi khi gọi Gemini API: " + err.message);
+            } finally {
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
+        }
+
+        async function callGeminiAPI(prompt) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: { responseMimeType: "application/json" }
+            };
+
+            let retries = 3;
+            while (retries > 0) {
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(payload)
+                    });
+                    if (!res.ok) throw new Error(res.statusText);
+                    const data = await res.json();
+                    return data.candidates[0].content.parts[0].text;
+                } catch (e) {
+                    retries--;
+                    if (retries === 0) throw e;
+                    await new Promise(r => setTimeout(r, 1000));
+                }
+            }
+        }
+
+        async function copyToClip(id) {
+            const el = document.getElementById(id);
+            await navigator.clipboard.writeText(el.value);
+            const btn = el.nextElementSibling;
+            const orgHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Đã Copy!';
+            setTimeout(() => btn.innerHTML = orgHtml, 2000);
+        }
+    </script>
+</body>
+</html>
