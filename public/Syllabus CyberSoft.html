@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lộ trình Chuyên sâu: AI, NLP, LLM & Agents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Amber (bg-amber-50, text-gray-800, accent-amber-700) -->
+    <!-- Application Structure Plan: Designed a 4-section SPA (Tổng quan, Lộ trình, Công nghệ, Dự án) navigated by a sticky header. This non-linear, thematic structure is better than a long report scroll. The core interaction is the "Lộ trình" section, where users click on advanced modules (e.g., "RAG", "AI Agents") to dynamically display detailed content (topics, math, libraries) in a dedicated pane. This promotes exploration and reduces initial cognitive load. -->
+    <!-- Visualization & Content Choices: 1. Demo Workflow: HTML/CSS flowchart (Goal: Organize, Method: Tailwind flexbox, No SVG) to visualize the RAG process. 2. Learning Path: Interactive Card Grid (Goal: Interact/Organize, Method: JS onClick events) to dynamically show/hide module details, preventing information overload. 3. Tech Ecosystem: Static categorized cards (Goal: Inform, Method: HTML/Tailwind) for clear grouping. 4. Projects: Static detail cards (Goal: Inform). No charts are used as the source report lacks quantitative data, making interactive text/layout the primary method. CONFIRMING NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text { background: linear-gradient(to right, #60a5fa, #a78bfa, #e879f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-panel { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12); }
+        .nav-btn { padding: 0.5rem 0.75rem; font-size: 0.875rem; border-radius: 0.375rem; color: #94a3b8; transition: all 150ms ease; }
+        .nav-btn:hover { color: #ffffff; background: rgba(255,255,255,0.06); }
+        .active-nav-btn { color: #ffffff; background: rgba(168,85,247,0.18); border: 1px solid rgba(168,85,247,0.35); }
+        .module-btn { width: 100%; height: 100%; padding: 1rem; border-radius: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); transition: all 150ms ease; text-align: left; }
+        .module-btn:hover { transform: translateY(-2px); border-color: rgba(168,85,247,0.4); box-shadow: 0 10px 40px -10px rgba(168,85,247,0.1); }
+        .active-module-btn { border-color: rgba(168,85,247,0.5); background: rgba(168,85,247,0.08); }
+        .page-section { opacity: 0; transition: opacity 300ms ease; }
+        .page-section.active { opacity: 1; }
+        .hidden-true { display: none; }
+        .workflow-box { background: rgba(255,255,255,0.06); padding: 0.75rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; font-size: 0.875rem; font-weight: 600; text-align: center; }
+        .workflow-arrow { font-size: 1.25rem; color: #a78bfa; margin: 0 0.5rem; }
+    </style>
+</head>
+<body class="antialiased bg-slate-950 text-slate-200">
+
+    <header class="sticky top-0 z-50 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <span class="text-xl font-bold gradient-text">CyberSoft AI</span>
+                </div>
+                <div class="hidden sm:block">
+                    <div class="flex items-baseline space-x-4">
+                        <button class="nav-btn active-nav-btn" data-target="tong-quan"><i data-lucide="info" class="w-4 h-4 mr-1 text-purple-400"></i>Tổng quan</button>
+                        <button class="nav-btn" data-target="lo-trinh"><i data-lucide="route" class="w-4 h-4 mr-1 text-purple-400"></i>Lộ trình Học</button>
+                        <button class="nav-btn" data-target="cong-nghe"><i data-lucide="cpu" class="w-4 h-4 mr-1 text-purple-400"></i>Công nghệ</button>
+                        <button class="nav-btn" data-target="du-an"><i data-lucide="folder-open" class="w-4 h-4 mr-1 text-purple-400"></i>Dự án</button>
+                        <a href="https://hethongthongminh.id.vn/aise" class="nav-btn"><i data-lucide="sparkles" class="w-4 h-4 mr-1 text-pink-400"></i>AI SE 2025</a>
+                    </div>
+                </div>
+                <div class="sm:hidden">
+                    <button id="mobile-menu-btn" class="p-2 rounded-md text-gray-600 hover:text-amber-700 hover:bg-amber-100">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden-true sm:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <button class="nav-btn active-nav-btn block w-full text-left" data-target="tong-quan"><i data-lucide="info" class="w-4 h-4 mr-1"></i>Tổng quan</button>
+                <button class="nav-btn block w-full text-left" data-target="lo-trinh"><i data-lucide="route" class="w-4 h-4 mr-1"></i>Lộ trình Học</button>
+                <button class="nav-btn block w-full text-left" data-target="cong-nghe"><i data-lucide="cpu" class="w-4 h-4 mr-1"></i>Công nghệ</button>
+                <button class="nav-btn block w-full text-left" data-target="du-an"><i data-lucide="folder-open" class="w-4 h-4 mr-1"></i>Dự án</button>
+                <a href="https://hethongthongminh.id.vn/aise" class="nav-btn block w-full text-left"><i data-lucide="sparkles" class="w-4 h-4 mr-1"></i>AI SE 2025</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <section id="tong-quan" class="page-section active">
+            <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl"><span class="gradient-text">Lộ trình chuyên sâu</span>: NLP, LLM, RAG & Agents</h1>
+            <p class="mt-4 text-lg text-slate-400">
+                Nhu cầu về các hệ thống ChatBot nội bộ thông minh đang bùng nổ. Doanh nghiệp cần các giải pháp AI để tối ưu hóa quy trình, truy xuất tài nguyên nhanh chóng và thống kê dữ liệu—tất cả phải được xử lý bảo mật trên dữ liệu nội bộ. Khóa học này tập trung vào việc sử dụng các mô hình open-source mạnh mẽ, kết hợp với dữ liệu riêng của công ty để "may đo" các giải pháp AI giải quyết đúng nhu cầu thực tế.
+            </p>
+
+            <div class="mt-10 glass-panel p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-white flex items-center"><i data-lucide="diagram-3" class="w-5 h-5 mr-2 text-purple-400"></i>Demo Workflow Thực tế</h2>
+                <p class="mt-2 text-slate-400">
+                    Đây là workflow xử lý dữ liệu nội bộ (PDF, DOCX, website) đang được triển khai trong khóa học. Hệ thống cho phép tìm kiếm ngữ nghĩa, tạo câu trả lời tự động dựa trên dữ liệu, và quản lý lịch sử hội thoại.
+                </p>
+                <div class="mt-6 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-2 overflow-x-auto py-4">
+                    <div class="workflow-box min-w-[120px]"><i data-lucide="help-circle" class="w-4 h-4 mr-1 inline text-purple-400"></i>Câu hỏi Đầu vào</div>
+                    <div class="workflow-arrow transform sm:rotate-0">↓</div>
+                    <div class="workflow-box min-w-[120px]"><i data-lucide="bot" class="w-4 h-4 mr-1 inline text-purple-400"></i>LLM (Xử lý câu hỏi)</div>
+                    <div class="workflow-arrow transform sm:rotate-0">↓</div>
+                    <div class="workflow-box min-w-[120px]"><i data-lucide="search" class="w-4 h-4 mr-1 inline text-purple-400"></i>Retrieval (Vector Search)</div>
+                    <div class="workflow-arrow transform sm:rotate-0">↓</div>
+                    <div class="workflow-box min-w-[120px]"><i data-lucide="message-square" class="w-4 h-4 mr-1 inline text-purple-400"></i>LLM (Sinh câu trả lời)</div>
+                    <div class="workflow-arrow transform sm:rotate-0">↓</div>
+                    <div class="workflow-box min-w-[120px]"><i data-lucide="monitor" class="w-4 h-4 mr-1 inline text-purple-400"></i>Giao diện Web</div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-2xl font-semibold text-white">Công nghệ Cốt lõi</h3>
+                <p class="mt-2 text-slate-400">Dự án và lộ trình học sử dụng các công nghệ hàng đầu trong ngành:</p>
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-panel p-4 rounded-xl">
+                        <h4 class="font-bold text-purple-400">Mô hình LLM</h4>
+                        <ul class="mt-2 list-disc list-inside text-slate-300">
+                            <li>OpenAI GPT-4, Llama</li>
+                            <li>HuggingFace Transformers</li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl">
+                        <h4 class="font-bold text-purple-400">Retrieval & Search</h4>
+                        <ul class="mt-2 list-disc list-inside text-slate-300">
+                            <li>FAISS vector database</li>
+                            <li>Semantic Search</li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl">
+                        <h4 class="font-bold text-purple-400">Framework & App</h4>
+                        <ul class="mt-2 list-disc list-inside text-slate-300">
+                            <li>LangChain</li>
+                            <li>Streamlit</li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl">
+                        <h4 class="font-bold text-purple-400">Vector Database</h4>
+                        <ul class="mt-2 list-disc list-inside text-slate-300">
+                            <li>Pinecone</li>
+                            <li>ChromaDB, Milvus</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lo-trinh" class="page-section hidden-true">
+            <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Lộ trình Học tập</h1>
+            <p class="mt-4 text-lg text-slate-400">
+                Lộ trình được thiết kế gồm hai giai đoạn: xây dựng nền tảng vững chắc về AI & Data Science, sau đó đi sâu vào các kỹ thuật NLP, LLM và AI Agents tiên tiến nhất.
+            </p>
+
+            <div class="mt-10">
+                <h2 class="text-2xl font-semibold text-white">Giai đoạn 1: Xây gốc Kỹ sư AI – Data Science</h2>
+                <p class="mt-2 text-slate-400">Đây là nền tảng bắt buộc để tiến xa, tập trung vào các kỹ năng cốt lõi và toán học.</p>
+                <div class="mt-4 glass-panel p-6 rounded-2xl">
+                    <h3 class="font-semibold text-slate-100 text-lg">Các chủ đề chính</h3>
+                    <ul class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 list-disc list-inside text-slate-300">
+                        <li>Python chuyên sâu cho AI</li>
+                        <li>Thống kê & Xử lý dữ liệu (Pandas, NumPy)</li>
+                        <li>Machine Learning (Regression, KNN, SVM)</li>
+                        <li>Neural Networks (TensorFlow & Keras)</li>
+                        <li>CV và NLP (cơ bản)</li>
+                        <li>Kiến thức về Loss, Toán, huấn luyện mô hình</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-10">
+                <h2 class="text-2xl font-semibold text-white">Giai đoạn 2: AI Engineer Chuyên sâu</h2>
+                <p class="mt-2 text-slate-400">Click vào từng học phần bên dưới để khám phá các chủ đề chi tiết, kiến thức toán học và thư viện liên quan.</p>
+                <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <button class="module-btn" data-module="nlp">
+                        <span class="font-bold text-amber-700">1. NLP Nâng cao</span>
+                        <span class="mt-1 text-sm text-gray-600 block">Vector hóa, Transformer, LLMs, LoRA, QLoRA.</span>
+                    </button>
+                    <button class="module-btn" data-module="transformers">
+                        <span class="font-bold text-amber-700">2. Transformers & Fine-Tuning</span>
+                        <span class="mt-1 text-sm text-gray-600 block">Attention, Encoder/Decoder, PEFT, RLHF.</span>
+                    </button>
+                    <button class="module-btn" data-module="rag">
+                        <span class="font-bold text-amber-700">3. RAG & RAGFlow</span>
+                        <span class="mt-1 text-sm text-gray-600 block">Retrieval + Sinh văn bản, FAISS, FastAPI, Docker.</span>
+                    </button>
+                    <button class="module-btn" data-module="chatbot">
+                        <span class="font-bold text-amber-700">4. Xây dựng Chatbot Nội bộ</span>
+                        <span class="mt-1 text-sm text-gray-600 block">Self-Attention, LangChain, OpenAssistant.</span>
+                    </button>
+                    <button class="module-btn" data-module="agents">
+                        <span class="font-bold text-amber-700">5. AI Agents & LangChain</span>
+                        <span class="mt-1 text-sm text-gray-600 block">Orchestration, Chain-of-Thought, RAGFlow, BLIP-2.</span>
+                    </button>
+                    <button class="module-btn" data-module="search">
+                        <span class="font-bold text-amber-700">6. Hệ thống Tìm kiếm (Search)</span>
+                        <span class="mt-1 text-sm text-gray-600 block">RAGFlow, FAISS/Pinecone, Sentence Transformers.</span>
+                    </button>
+                    <button class="module-btn" data-module="gans">
+                        <span class="font-bold text-amber-700">7. Multimodal & Long-context</span>
+                        <span class="mt-1 text-sm text-gray-600 block">GANs, Diffusion, Mamba, BLIP2, Gemini.</span>
+                    </button>
+                    <button class="module-btn" data-module="prompt">
+                        <span class="font-bold text-amber-700">8. Tối ưu Prompt & AI Agents</span>
+                        <span class="mt-1 text-sm text-gray-600 block">CoT, Graph-of-Thoughts, AutoGPT, CrewAI, DSPy.</span>
+                    </button>
+                    <button class="module-btn" data-module="optimize">
+                        <span class="font-bold text-amber-700">9. Tối ưu Mô hình (Edge AI)</span>
+                        <span class="mt-1 text-sm text-gray-600 block">Distillation, Quantization, Pruning, FlashAttention.</span>
+                    </button>
+                </div>
+
+                <div id="module-details" class="mt-6 p-6 glass-panel rounded-2xl min-h-[200px]">
+                    <p class="text-slate-400 text-center text-lg">Chọn một học phần bên trên để xem chi tiết.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="cong-nghe" class="page-section hidden-true">
+            <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Hệ sinh thái Công nghệ</h1>
+            <p class="mt-4 text-lg text-slate-400">
+                Để xây dựng các hệ thống AI phức tạp, chúng ta cần làm chủ một hệ sinh thái đa dạng các công cụ, thư viện và nền tảng. Dưới đây là các công nghệ chính được đề cập trong lộ trình.
+            </p>
+
+                <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-panel p-5 rounded-xl border-t border-slate-800">
+                    <h3 class="text-xl font-semibold text-white">Mô hình Ngôn ngữ & Nền tảng</h3>
+                    <ul class="mt-3 space-y-2 text-slate-300">
+                        <li>GPT, LLaMA, BERT, T5, Mistral</li>
+                        <li>HuggingFace Transformers</li>
+                        <li>Gemini, Claude</li>
+                        <li>BLIP-2, Whisper (Multimodal)</li>
+                        <li>Stable Diffusion (Image Gen)</li>
+                    </ul>
+                </div>
+                <div class="glass-panel p-5 rounded-xl border-t border-slate-800">
+                    <h3 class="text-xl font-semibold text-white">Framework & Thư viện AI</h3>
+                    <ul class="mt-3 space-y-2 text-slate-300">
+                        <li>LangChain (Agents & Chains)</li>
+                        <li>PyTorch, TensorFlow</li>
+                        <li>SpaCy, Flair (NER)</li>
+                        <li>PEFT, TRL (Fine-tuning)</li>
+                        <li>AutoGPT, CrewAI, LangGraph, DSPy</li>
+                        <li>Sentence Transformers</li>
+                    </ul>
+                </div>
+                <div class="glass-panel p-5 rounded-xl border-t border-slate-800">
+                    <h3 class="text-xl font-semibold text-white">Vector DB & Search</h3>
+                    <ul class="mt-3 space-y-2 text-slate-300">
+                        <li>FAISS</li>
+                        <li>Pinecone</li>
+                        <li>ChromaDB</li>
+                        <li>Milvus</li>
+                        <li>Semantic Search</li>
+                    </ul>
+                </div>
+                <div class="glass-panel p-5 rounded-xl border-t border-slate-800">
+                    <h3 class="text-xl font-semibold text-white">Triển khai & Tối ưu (MLOps)</h3>
+                    <ul class="mt-3 space-y-2 text-slate-300">
+                        <li>FastAPI, Streamlit</li>
+                        <li>Docker</li>
+                        <li>MLflow, HuggingFace Spaces</li>
+                        <li>DeepSpeed, vLLM</li>
+                        <li>FlashAttention</li>
+                        <li>TensorRT (Inference)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="du-an" class="page-section hidden-true">
+            <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Dự án Thực chiến Tiêu biểu</h1>
+            <p class="mt-4 text-lg text-slate-400">
+                Lý thuyết phải đi đôi với thực hành. Dưới đây là hai dự án phức tạp, ứng dụng toàn bộ kiến thức chuyên sâu để giải quyết các bài toán thực tế của doanh nghiệp và xã hội.
+            </p>
+
+            <div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-panel p-6 rounded-2xl flex flex-col">
+                    <h3 class="text-2xl font-semibold text-white">AI Agent tự động Phân tích & Sinh nội dung</h3>
+                    <p class="mt-3 text-slate-400 flex-grow">
+                        Xây dựng một AI Agent tự động tìm kiếm, phân tích, tóm tắt và sinh nội dung chuyên sâu từ hàng triệu tài liệu phi cấu trúc (hợp đồng, báo cáo, tài liệu nội bộ). Mục tiêu là giúp doanh nghiệp khai thác tri thức ẩn giấu trong dữ liệu của họ.
+                    </p>
+                    <div class="mt-6">
+                        <h4 class="font-semibold text-purple-400">Công nghệ & Kỹ thuật</h4>
+                        <ul class="mt-2 text-sm text-slate-300 list-disc list-inside space-y-1">
+                            <li>RAG và Fine-tuning (LoRA/QLoRA) trên GPT-4/LLaMA</li>
+                            <li>Vector DB (FAISS/Pinecone) để truy xuất nhanh</li>
+                            <li>LangChain và AutoGPT để điều phối tác nhân (Agents)</li>
+                            <li>NER (SpaCy/Flair) để trích xuất thông tin</li>
+                            <li>OCR (Tesseract) để số hóa tài liệu giấy</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl flex flex-col">
+                    <h3 class="text-2xl font-semibold text-white">AI/NLP số hóa Di sản Văn hóa Phi vật thể</h3>
+                    <p class="mt-3 text-slate-400 flex-grow">
+                        Phát triển hệ thống AI/NLP chuyên sâu để bảo tồn và số hóa di sản văn hóa Việt Nam. Hệ thống có khả năng phân tích ngôn ngữ, trích xuất nội dung, và sinh mô tả chi tiết từ các nguồn đa phương tiện (âm thanh dân ca, video nghi lễ, văn bản cổ), phục vụ lưu trữ, giảng dạy và truyền thông.
+                    </p>
+                    <div class="mt-6">
+                        <h4 class="font-semibold text-purple-400">Công nghệ & Kỹ thuật</h4>
+                        <ul class="mt-2 text-sm text-slate-300 list-disc list-inside space-y-1">
+                            <li>OCR nâng cao (Tesseract + CRNN)</li>
+                            <li>BERT/PhoBERT phân tích ngữ nghĩa văn bản cổ</li>
+                            <li>NER tùy biến để nhận diện thực thể văn hóa</li>
+                            <li>VAE + TTS (Tacotron2) tái tạo giọng đọc dân gian</li>
+                            <li>Multimodal AI (Stable Diffusion) sinh mô tả & ảnh minh họa</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const moduleData = {
+            nlp: {
+                title: "NLP Nâng cao",
+                topics: [
+                    "Vector hóa văn bản",
+                    "Kiến trúc Transformer, LLMs",
+                    "Kỹ thuật tối ưu: LoRA, QLoRA, Pruning, Quantization",
+                    "So sánh mô hình: GPT, BERT, T5, LLaMA",
+                    "Ứng dụng trong pháp lý, tài chính, y tế",
+                    "Transfer Learning, Summarization, NER nâng cao",
+                    "Triển khai Semantic Search",
+                    "Kết hợp Generative AI và Vector Search (FAISS, Pinecone)"
+                ],
+                math: "Attention Mechanism, Loss Function, Gradient Descent, Matrix Factorization, Optimization",
+                libs: "HuggingFace, Transformers, SpaCy, FAISS, PyTorch"
+            },
+            transformers: {
+                title: "Transformers, LLMs & Fine-Tuning",
+                topics: [
+                    "Kiến trúc Transformer, cơ chế Attention, Encoder vs Decoder",
+                    "Positional Encoding",
+                    "So sánh LLMs: GPT, BERT, T5, LLaMA, Mistral",
+                    "Fine-Tuning toàn phần vs PEFT (LoRA, QLoRA)",
+                    "Reinforcement Learning from Human Feedback (RLHF)",
+                    "Mô hình Reward, Direct Preference Optimization (DPO)",
+                    "Ứng dụng: chatbot, phân tích tài chính, pháp lý"
+                ],
+                math: "Attention, Reward Function, Policy Gradient",
+                libs: "HuggingFace, PEFT, TRL, PyTorch"
+            },
+            rag: {
+                title: "RAG & RAG Flow",
+                topics: [
+                    "Cơ chế RAG và RAGFlow (kết hợp truy xuất + sinh văn bản)",
+                    "So sánh hiệu năng RAG, FAISS, RAGFlow",
+                    "Triển khai mô hình AI bằng FastAPI, Docker, MLflow, HuggingFace Spaces",
+                    "Tối ưu hóa LLM: Quantization, Pruning, Distillation",
+                    "Scaling LLM bằng DeepSpeed",
+                    "Làm chủ MLOps, CI/CD cho mô hình AI"
+                ],
+                math: "Cosine Similarity, Gaussian Init, Gradient Checkpoint",
+                libs: "FAISS, LangChain, MLflow, HuggingFace, DeepSpeed"
+            },
+            chatbot: {
+                title: "Xây dựng Chatbot Nội bộ",
+                topics: [
+                    "Xây dựng chatbot AI cho lĩnh vực thương mại điện tử",
+                    "Kiến trúc Transformer, Self-Attention, Multi-Head Attention",
+                    "Fine-tune LLaMA hoặc GPT bằng LoRA và RLHF",
+                    "Áp dụng LangChain và Hugging Face Transformers",
+                    "Sử dụng tập dữ liệu OpenAssistant",
+                    "Tạo mô hình trả lời sát ngữ cảnh, tự nhiên"
+                ],
+                math: "Attention Mechanism, Reinforcement Learning, Gradient Descent, Loss Function Optimization",
+                libs: "Hugging Face Transformers, TRL (Transformer Reinforcement Learning Library), LangChain"
+            },
+            agents: {
+                title: "AI Agents, RAG, LANGCHAIN",
+                topics: [
+                    "Khái niệm AI Agents và mô hình Orchestration",
+                    "Xây dựng workflow với LangChain (reasoning logic)",
+                    "Tương tác hệ thống qua API Integration",
+                    "Chain-of-Thought Prompting",
+                    "Tối ưu tìm kiếm bằng mô hình RAG",
+                    "Kết hợp mô hình thị giác BLIP-2 cho Visual QA",
+                    "Fine-tuning AI Agents với RAGFlow",
+                    "So sánh mô hình mới: RWKV, Mamba"
+                ],
+                math: "Cosine Similarity, Sequence Embedding, Prompt Engineering",
+                libs: "LangChain, OpenAI, HuggingFace, FAISS, BLIP-2"
+            },
+            search: {
+                title: "Xây dựng Hệ thống Tìm kiếm cho Doanh nghiệp",
+                topics: [
+                    "Xây dựng hệ thống tìm kiếm tài liệu nội bộ (PDF, Word, CSV)",
+                    "Ứng dụng RAGFlow để vừa truy xuất vừa sinh nội dung",
+                    "Sử dụng FAISS hoặc Pinecone để lưu trữ vector",
+                    "Áp dụng Sentence Transformers để mã hóa văn bản",
+                    "Sử dụng LangChain Agents để điều phối truy vấn",
+                    "Tích hợp API (Google Drive, Dropbox)",
+                    "Dữ liệu huấn luyện từ KILT Tasks Dataset"
+                ],
+                math: "Cosine Similarity, Embedding Space, Information Retrieval, Semantic Search",
+                libs: "LangChain, FAISS / Pinecone, Sentence Transformers, Hugging Face Datasets"
+            },
+            gans: {
+                title: "GANs, Diffusion & Multimodal AI",
+                topics: [
+                    "Tối ưu Transformer: Sparse Attention, FlashAttention v2, MoE",
+                    "Long-context modeling: Longformer, RWKV, Mamba, S4",
+                    "Hệ thống Large-scale RAG (FAISS, Pinecone, ChromaDB)",
+                    "Multimodal AI: kết hợp NLP với hình ảnh, âm thanh (BLIP2, Flamingo, Whisper, Gemini AI)",
+                    "Đánh giá mô hình Multimodal trong Visual QA"
+                ],
+                math: "Attention Variants, ANN, Cross-modal Embedding",
+                libs: "HuggingFace, FlashAttention, LangChain, Gemini, Zapier"
+            },
+            prompt: {
+                title: "Tối ưu Prompt & Xây dựng AI Agents",
+                topics: [
+                    "Tối ưu Prompt: Chain-of-Thought, Graph-of-Thoughts, Program-of-Thoughts",
+                    "Reinforcement Learning for Prompt Optimization: DPO, RLAIF",
+                    "Tư duy nâng cao: Self-Reflection, Meta-Reasoning",
+                    "Xây dựng AI Agents: AutoGPT, CrewAI, Reflexion, LangGraph, DSPy",
+                    "Triển khai LLMs: Knowledge Distillation, Quantization, Pruning, DeepSpeed"
+                ],
+                math: "Graph Theory, MDP, Information Theory",
+                libs: "LangChain, HuggingFace, Zapier, vLLM, DSPy"
+            },
+            optimize: {
+                title: "Tối ưu Mô hình cho Edge AI",
+                topics: [
+                    "Triển khai trên thiết bị tài nguyên thấp",
+                    "So sánh tốc độ suy luận bằng FlashAttention v2",
+                "Phân tích trade-off giữa hiệu suất và kích thước",
+                "Knowledge Distillation (Teacher, Student, DistilBERT)",
+                "Quantization (GPTQ, AWQ, 4-bit/8-bit)",
+                "Pruning (Structured vs. Magnitude)",
+                "Inference Optimization (vLLM, DeepSpeed, TensorRT)"
+                ],
+                math: "Information Theory, Matrix Operations",
+                libs: "FlashAttention v2, vLLM, DeepSpeed, TensorRT, GPTQ"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const pageSections = document.querySelectorAll('.page-section');
+            const moduleButtons = document.querySelectorAll('.module-btn');
+            const detailsPane = document.getElementById('module-details');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            function switchPage(targetId) {
+                pageSections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.classList.remove('hidden-true');
+                        setTimeout(() => section.classList.add('active'), 50);
+                    } else {
+                        section.classList.remove('active');
+                        setTimeout(() => section.classList.add('hidden-true'), 300);
+                    }
+                });
+
+                navButtons.forEach(btn => {
+                    if (btn.dataset.target === targetId) {
+                        btn.classList.add('active-nav-btn');
+                    } else {
+                        btn.classList.remove('active-nav-btn');
+                    }
+                });
+            }
+
+            function showModuleDetails(moduleId) {
+                const data = moduleData[moduleId];
+                if (!data) return;
+
+                let topicsHtml = data.topics.map(topic => `<li class="text-gray-700">${topic}</li>`).join('');
+
+                detailsPane.innerHTML = `
+                    <h3 class="text-2xl font-semibold text-gray-900">${data.title}</h3>
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="md:col-span-2">
+                            <h4 class="font-semibold text-amber-700">Chủ đề chính</h4>
+                            <ul class="mt-2 list-disc list-inside space-y-1">
+                                ${topicsHtml}
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-amber-700">Kiến thức Toán học</h4>
+                                <p class="mt-1 text-sm text-gray-700">${data.math}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700">Thư viện & Công cụ</h4>
+                                <p class="mt-1 text-sm text-gray-700">${data.libs}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                moduleButtons.forEach(btn => {
+                    btn.classList.remove('active-module-btn');
+                    if (btn.dataset.module === moduleId) {
+                        btn.classList.add('active-module-btn');
+                    }
+                });
+            }
+
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.dataset.target;
+                    switchPage(targetId);
+                    if (!mobileMenu.classList.contains('hidden-true')) {
+                        mobileMenu.classList.add('hidden-true');
+                    }
+                });
+            });
+
+            moduleButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const moduleId = btn.dataset.module;
+                    showModuleDetails(moduleId);
+                });
+            });
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden-true');
+            });
+
+            switchPage('tong-quan');
+            if (typeof lucide !== 'undefined') { lucide.createIcons(); }
+            detailsPane.innerHTML = '<p class="text-gray-500 text-center text-lg">Chọn một học phần bên trên để xem chi tiết.</p>';
+        });
+    </script>
+</body>
+</html>

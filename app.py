@@ -599,6 +599,18 @@ def api_config():
     model_name = os.environ.get('MODEL_NAME', 'gemini-2.0-flash')
     return jsonify({'modelName': model_name})
 
+@app.route('/aise', methods=['GET'])
+def go_aise():
+    return redirect('/AI%20Software%20Engineer%202025.html', code=302)
+
+@app.route('/hethongthongminh.id.vn', methods=['GET'])
+def alias_root():
+    return redirect('https://hethongthongminh.id.vn/', code=302)
+
+@app.route('/hethongthongminh.id.vn/<path:sub>', methods=['GET'])
+def alias_path(sub):
+    return redirect(f'https://hethongthongminh.id.vn/{sub}', code=302)
+
 @app.route('/api/debug/env_key', methods=['GET'])
 def debug_env_key():
     g = os.environ.get('GOOGLE_API_KEY') or ''
