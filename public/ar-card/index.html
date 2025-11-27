@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AR Graduation Card - Ngo Tan Tai</title>
+
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    
+    /* Giao diện nút bấm nổi bên trên màn hình Camera */
+    #links {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      z-index: 1000;
+    }
+    .btn {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 700;
+      color: #001f3f;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+    .btn:hover { 
+      transform: translateY(-3px); 
+      background: #fff;
+      box-shadow: 0 6px 20px rgba(0,255,255,0.4); 
+    }
+    .btn img { height: 20px; margin-right: 8px; }
+  </style>
+</head>
+
+<body>
+
+  <div id="links">
+    <a href="https://www.facebook.com/tantai.ngo.397" target="_blank" class="btn">
+      Facebook
+    </a>
+
+    <a href="https://zalo.me/0812493802" target="_blank" class="btn">
+      Zalo
+    </a>
+
+    <a href="https://hethongthongminh.id.vn" target="_blank" class="btn">
+      My AI Dev
+    </a>
+  </div>
+
+  <a-scene 
+    mindar-image="imageTargetSrc: ./target.mind; filterMinCF:0.0001; filterBeta: 0.001;" 
+    color-space="sRGB" 
+    renderer="colorManagement: true, physicallyCorrectLights" 
+    vr-mode-ui="enabled: false" 
+    device-orientation-permission-ui="enabled: false">
+
+    <a-assets>
+      <a-asset-item id="avatarModel" src="./avatar.glb"></a-asset-item>
+      <img id="cardBg" src="./tag.png" /> 
+    </a-assets>
+
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <a-entity mindar-image-target="targetIndex: 0">
+
+      <a-plane src="#cardBg" position="0 0 0" height="1" width="1" rotation="0 0 0" opacity="0.8"></a-plane>
+      
+      <a-plane color="#000" position="0 0 0.01" height="1" width="1" opacity="0.6"></a-plane>
+
+      <a-gltf-model 
+        src="#avatarModel" 
+        position="0 -0.4 0.1" 
+        scale="0.4 0.4 0.4" 
+        rotation="0 0 0"
+        animation="property: position; to: 0 -0.35 0.1; dir: alternate; dur: 2000; loop: true; easing: easeInOutQuad">
+      </a-gltf-model>
+
+      <a-text value="NGO TAN TAI" align="center" position="0 0.35 0.1" width="2.5" 
+              color="#FFD700" font="exo2bold" 
+              shader="msdf" letter-spacing="2"></a-text>
+
+      <a-text value="ELECTRICAL ENGINEER" align="center" position="0 0.25 0.1" width="1.8" 
+              color="#FFFFFF" font="roboto"></a-text>
+
+      <a-text value="BKU - K21" align="center" position="0 0.18 0.1" width="1.5" 
+              color="#CCCCCC" font="roboto"></a-text>
+
+      <a-text value="Tot nghiep khong cham mach\nChi cham cam xuc!" 
+              align="center" position="0 -0.6 0.1" width="1.6" 
+              color="#00FFFF" font="roboto" lineHeight="60"></a-text>
+
+      <a-text value="Designed by: An (AI Dev)" align="center" position="0 -0.75 0.1" width="0.8" 
+              color="#888888" opacity="0.8"></a-text>
+
+    </a-entity>
+  </a-scene>
+
+</body>
+</html>
