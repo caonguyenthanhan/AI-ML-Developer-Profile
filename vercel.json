@@ -105,6 +105,10 @@
       "destination": "/graduation/standing card.html"
     },
     {
+      "source": "/gift",
+      "destination": "/ar-card/index.html"
+    },
+    {
       "source": "/graduation_preview",
       "destination": "/graduation/preview.html"
     },
