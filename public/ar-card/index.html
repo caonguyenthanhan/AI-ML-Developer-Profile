@@ -10,6 +10,10 @@
 
   <style>
     body { margin: 0; background: #000; overflow: hidden; }
+    #start-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+    #start-overlay .inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    #start-btn { padding: 12px 20px; font-size: 16px; font-weight: 700; color: #000; background: #00FFFF; border: none; border-radius: 8px; cursor: pointer; }
+    #start-btn:active { transform: scale(0.98); }
   </style>
 
   <script>
@@ -130,11 +134,29 @@
         this.el.setAttribute('material', 'shader: flat; transparent: true');
       }
     });
+
+    document.addEventListener('DOMContentLoaded', function(){
+      var btn = document.getElementById('start-btn');
+      var ov = document.getElementById('start-overlay');
+      var audio = document.getElementById('bg-music');
+      if (btn && ov && audio) {
+        btn.addEventListener('click', function(){
+          ov.style.display = 'none';
+          var p = audio.play();
+          if (p && typeof p.then === 'function') { p.catch(function(e){ console.warn('Audio play blocked'); }); }
+        });
+      }
+    });
   </script>
 </head>
 
 <body>
-  
+  <div id="start-overlay">
+    <div class="inner">
+      <button id="start-btn">BẮT ĐẦU / START</button>
+    </div>
+  </div>
+  <audio id="bg-music" src="/ar-card/music.mp3" loop preload="auto" playsinline></audio>
 
   <a-scene 
     mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;" 
@@ -166,7 +188,7 @@
       <a-circle color="#00FFFF" radius="0.04" position="-0.6 0.38 0.01" shader="flat"></a-circle>
       <a-circle color="#00FFFF" radius="0.04" position="0.6 0.38 0.01" shader="flat"></a-circle>
       <a-circle color="#00FFFF" radius="0.04" position="-0.6 -0.55 0.01" shader="flat"></a-circle>
-      <a-circle color="#00FFFF" radius="0.6" position="0.6 -0.55 0.01" shader="flat"></a-circle>
+      <a-circle color="#00FFFF" radius="0.04" position="0.6 -0.55 0.01" shader="flat"></a-circle>
 
 
       <a-image src="#ring"
@@ -178,12 +200,12 @@
 
 
       <a-entity position="0 0.42 0.05">
-        <a-text value="CHUC MUNG TOT NGHIEP" color="#000" align="center" width="3" position="0.02 -0.02 -0.01" font="exo2bold"></a-text>
-        <a-text value="CHUC MUNG TOT NGHIEP" color="#FFD700" align="center" width="3" position="0 0 0" font="exo2bold"></a-text>
+        <a-text value="CHUC MUNG TOT NGHIEP" color="#000" align="center" width="3" position="0.02 -0.02 -0.01" font="exo2bold" shader="flat"></a-text>
+        <a-text value="CHUC MUNG TOT NGHIEP" color="#00FFFF" align="center" width="3" position="0 0 0" font="exo2bold" shader="flat"></a-text>
         
         <a-text value="TAN KY SU DIEN - NGO TAN TAI" color="#FFF" align="center" width="2" position="0 -0.15 0" font="roboto"></a-text>
       </a-entity>
-      <a-image position="0 0.22 0.03" slideshow-main="width: 0.7; maxHeight: 0.28; interval: 2500"></a-image>
+      <a-image position="0 0.22 0.03" slideshow-main="width: 0.75; maxHeight: 0.3; interval: 2500"></a-image>
 
       <a-entity auto-filmstrip></a-entity>
 
