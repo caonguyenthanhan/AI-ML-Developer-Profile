@@ -3,79 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AR Card - Debug Mode</title>
+  <title>AR VIP PRO Card - Ngo Tan Tai</title>
 
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 
   <style>
-    body { margin: 0; overflow: hidden; font-family: sans-serif; }
-    #error-log {
-        position: fixed; top: 0; left: 0; width: 100%; background: rgba(255,0,0,0.8); 
-        color: white; padding: 10px; z-index: 9999; display: none; font-size: 12px;
+    body { margin: 0; overflow: hidden; }
+    #scanning-overlay {
+      display: flex; align-items: center; justify-content: center;
+      position: fixed; left: 0; right: 0; top: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      color: white; font-size: 22px; letter-spacing: 2px;
+      z-index: 10; pointer-events: none;
     }
   </style>
 
   <script>
-    // Hàm kiểm tra xem file có tồn tại không trước khi chạy AR
-    // Giúp phát hiện lỗi sai đường dẫn ngay lập tức
-    async function checkFileExists(url, name) {
-        try {
-            const response = await fetch(url, { method: 'HEAD' });
-            if (!response.ok) throw new Error("404 Not Found");
-            console.log(`✅ Đã tìm thấy file ${name}: ${url}`);
-        } catch (error) {
-            const msg = `❌ LỖI NGHIÊM TRỌNG: Không tìm thấy file ${name}!\nĐường dẫn sai: ${url}`;
-            alert(msg); // Hiện thông báo lỗi lên màn hình điện thoại
-            document.getElementById('error-log').innerText = msg;
-            document.getElementById('error-log').style.display = 'block';
-        }
-    }
+    AFRAME.registerComponent('click-opener',{
+      schema:{ url:{type:'string'} },
+      init:function(){
+        this.el.addEventListener('click',()=>{ window.open(this.data.url,"_blank"); });
+      }
+    });
 
-    // Kiểm tra ngay khi load trang
-    window.onload = function() {
-        // Kiểm tra file target.mind
-        checkFileExists('/ar-card/target.mind', 'TARGET (target.mind)');
-        // Kiểm tra file avatar.glb
-        checkFileExists('/ar-card/avatar.glb', 'MODEL (avatar.glb)');
-    };
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const overlay = document.querySelector('#scanning-overlay');
+      const sceneEl = document.querySelector('a-scene');
+      sceneEl.addEventListener("targetFound", ()=> overlay.style.display = "none");
+      sceneEl.addEventListener("targetLost", ()=> overlay.style.display = "flex");
+    });
   </script>
 </head>
 
 <body>
-  <div id="error-log"></div>
+  <div id="scanning-overlay">SOI VÀO TẤM THẺ...</div>
 
   <a-scene 
-    mindar-image="imageTargetSrc: /public/ar-card/target.mind; filterMinCF:0.0001; filterBeta: 0.001;" 
-    color-space="sRGB" 
+    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;"
+    color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights"
-    vr-mode-ui="enabled: false" 
+    vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-      <a-asset-item id="avatarModel" src="/public/ar-card/avatar.glb"></a-asset-item>
-      <img id="cardBg" src="/ar-card/tag.png" />
-      <img id="icon-fb" src="/ar-card/tag.png" /> 
-      <img id="icon-web" src="/ar-card/tag.png" />
-      <img id="icon-zalo" src="/ar-card/tag.png" />
+      <a-asset-item id="avatarModel" src="/ar-card/avatar.glb"></a-asset-item>
+      <img id="cardBg" src="/ar-card/tag.png">
+      <img id="icon-fb" src="/ar-card/icon-fb.png">
+      <img id="icon-zalo" src="/ar-card/icon-zalo.png">
+      <img id="icon-web" src="/ar-card/icon-web.png">
     </a-assets>
 
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <!-- Camera + Lights -->
+    <a-camera look-controls="enabled:false" cursor="rayOrigin: mouse" 
+              raycaster="objects: .clickable">
+        <a-entity light="type: ambient; intensity: 1; color: #88CCFF"></a-entity>
+        <a-entity light="type: directional; intensity: 1.4; color:#FFD27F" position="1 3 2"></a-entity>
+    </a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
-      
-      <a-plane color="#000" position="0 0 0" height="1" width="1" opacity="0.7"></a-plane>
 
-      <a-gltf-model 
-        src="#avatarModel" 
-        position="0 -0.4 0.1" 
-        scale="0.4 0.4 0.4"
-        animation-mixer>
+      <!-- NỀN HOLOGRAM XOAY -->
+      <a-circle radius="0.75" rotation="-90 0 0" position="0 -0.55 0"
+        material="color:#00CCFF; opacity:0.25; shader:flat"
+        animation="property: rotation; to: -90 360 0; dur:9000; loop:true; easing:linear">
+      </a-circle>
+
+      <!-- VÒNG NĂNG LƯỢNG -->
+      <a-ring radius-inner="0.55" radius-outer="0.75" rotation="-90 0 0" 
+        position="0 -0.53 0.05"
+        material="color:#00FFFF; opacity:0.85"
+        animation="property: rotation; to: -90 -360 0; dur:6000; loop:true">
+      </a-ring>
+
+      <!-- THẺ NỀN -->
+      <a-plane src="#cardBg" width="1.05" height="1.05" position="0 0 -0.05" opacity="0.9"></a-plane>
+
+      <!-- AVATAR VIP PRO -->
+      <a-gltf-model src="#avatarModel"
+        position="0 -0.35 0.1" scale="0.38 0.38 0.38"
+        animation-mixer
+        animation__in="property: scale; from: 0 0 0; to: 0.38 0.38 0.38; dur:1500; easing:easeOutElastic"
+        animation__fade="property: position; from: 0 -1 0.1; to: 0 -0.35 0.1; dur:1500; easing:easeOutQuad">
       </a-gltf-model>
 
-      <a-text value="NGO TAN TAI" align="center" position="0 0.4 0.1" width="3" color="#FFD700"></a-text>
-      <a-text value="Loading..." align="center" position="0 -0.6 0.1" width="2" color="#FFF"></a-text>
+      <!-- ICON ORB 3D PHÁT SÁNG -->
+      <a-image src="#icon-fb" class="clickable"
+         position="-0.34 -0.72 0.25" scale="0.17 0.17 0.17"
+         material="opacity:0.95"
+         animation="property: rotation; to: 0 360 0; dur:7000; loop:true">
+      </a-image>
+
+      <a-image src="#icon-web" class="clickable"
+         position="0 -0.80 0.28" scale="0.20 0.20 0.20"
+         material="opacity:1"
+         animation="property: rotation; to: 0 -360 0; dur:7000; loop:true">
+      </a-image>
+
+      <a-image src="#icon-zalo" class="clickable"
+         position="0.34 -0.72 0.25" scale="0.17 0.17 0.17"
+         animation="property: rotation; to: 0 360 0; dur:7000; loop:true">
+      </a-image>
+
+      <!-- TEXT -->
+      <a-text value="NGO TAN TAI" position="0 0.31 0.1" align="center" width="3" color="#FFD700"></a-text>
+      <a-text value="ELECTRICAL ENGINEER" position="0 0.23 0.1" align="center" width="2" color="#FFFFFF"></a-text>
+      <a-text value="BKU - K21" position="0 0.16 0.1" align="center" width="1.6" color="#CCCCCC"></a-text>
 
     </a-entity>
   </a-scene>
