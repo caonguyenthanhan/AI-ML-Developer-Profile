@@ -36,7 +36,7 @@
           .then(files => {
             console.log("Đã load được danh sách ảnh:", files);
             
-            let x = -0.6; // Vị trí bắt đầu
+            let x = -0.45;
             
             // Nếu ít ảnh quá thì nhân đôi lên để loop cho đẹp
             let loopFiles = files.length < 5 ? [...files, ...files, ...files] : files;
@@ -44,11 +44,11 @@
             loopFiles.forEach(filename => {
               const img = document.createElement('a-image');
               img.setAttribute('src', data.folder + filename);
-              img.setAttribute('width', '0.4');
-              img.setAttribute('height', '0.25');
+              img.setAttribute('width', '0.35');
+              img.setAttribute('height', '0.22');
               // Shader flat để ảnh sáng rõ
               img.setAttribute('material', 'shader: flat; transparent: true');
-              img.setAttribute('position', `${x} -0.55 0.02`);
+              img.setAttribute('position', `${x} -0.52 0.02`);
               
               // Animation chạy ngang vô tận
               img.setAttribute('animation', {
@@ -60,7 +60,7 @@
               });
 
               el.appendChild(img);
-              x += 0.38; // Khoảng cách giữa các ảnh
+              x += 0.35;
             });
           })
           .catch(err => {
@@ -99,7 +99,7 @@
       tick: function(t, dt) {
         var pos = this.el.getAttribute('position');
         pos.x -= 0.001 * dt;
-        if (pos.x < -3) pos.x = 3;
+        if (pos.x < -0.7) pos.x = 0.7;
         this.el.setAttribute('position', pos);
       }
     });
@@ -109,19 +109,21 @@
         var btn = document.querySelector('.btn-start');
         var ov = document.getElementById('overlay');
         var audio = document.getElementById('bg-music');
-        var video = document.getElementById('youtube-video-file');
         if (btn && ov) {
           btn.addEventListener('click', function(){
             ov.style.opacity = '0';
             setTimeout(function(){ ov.style.display = 'none'; }, 300);
             if (audio) { var p = audio.play(); if (p && typeof p.then === 'function') { p.then(function(){ audio.pause(); audio.currentTime=0; }).catch(function(){}); } }
-            if (video) { var v = video.play(); if (v && typeof v.then === 'function') { v.then(function(){ video.pause(); video.currentTime=0; }).catch(function(){}); } }
           });
+        }
+        var yt = document.getElementById('yt-open');
+        if (yt) {
+          yt.addEventListener('click', function(){ window.open('https://www.youtube.com/watch?v=yVWYXaY51P0', '_blank'); });
         }
         var targetEl = document.querySelector('[mindar-image-target]');
         if (targetEl) {
-          targetEl.addEventListener('targetFound', function(){ if (audio) audio.play(); if (video) { video.muted=false; video.play(); } });
-          targetEl.addEventListener('targetLost', function(){ if (audio) audio.pause(); if (video) video.pause(); });
+          targetEl.addEventListener('targetFound', function(){ if (audio) audio.play(); });
+          targetEl.addEventListener('targetLost', function(){ if (audio) audio.pause(); });
         }
       }
     });
@@ -145,8 +147,8 @@
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-      <video id="youtube-video-file" src="/ar-card/video.mp4" preload="auto" loop webkit-playsinline playsinline muted></video>
       <img id="fallback" src="/ar-card/tag.png">
+      <img id="playbtn" src="/ar-card/play-icon.png">
       <img id="main1" src="/image/graduation/main.jpg" />
       <img id="main2" src="/image/graduation/main2.jpg" />
       <img id="main3" src="/image/graduation/main3.jpg" />
@@ -155,15 +157,15 @@
       <img id="main6" src="/image/graduation/main6.jpg" />
     </a-assets>
 
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse"></a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
 
-      <a-entity position="-1.2 0 0">
-        <a-plane width="1.6" height="0.9" color="#000" material="shader: flat; opacity: 0.8"></a-plane>
-        <a-plane width="1.65" height="0.95" color="#00FFFF" material="shader: flat; opacity: 0.3" position="0 0 -0.01"></a-plane>
-        <a-video src="#youtube-video-file" width="1.5" height="0.85" position="0 0 0.01"></a-video>
-        <a-text value="KY YEU 2025" position="0 0.55 0" align="center" color="#FFF" font="roboto"></a-text>
+      <a-entity id="yt-open" position="0.5 0 0.02">
+        <a-plane width="0.5" height="0.28" color="#000" material="shader: flat; opacity: 0.65"></a-plane>
+        <a-plane width="0.52" height="0.3" color="#00FFFF" material="shader: flat; opacity: 0.25" position="0 0 -0.01"></a-plane>
+        <a-image src="#playbtn" width="0.1" height="0.1" position="0 0 0.03"></a-image>
+        <a-text value="Mở video" position="0 -0.2 0.03" align="center" color="#FFF" font="roboto"></a-text>
       </a-entity>
 
       <a-plane color="#00FFFF" width="1.1" height="0.01" position="0 0.36 0" shader="flat" circuit-anim></a-plane>
@@ -180,15 +182,16 @@
       
 
 
+      <a-plane position="0 0.62 0.04" width="1.1" height="0.18" color="#000" opacity="0.55" shader="flat"></a-plane>
       <a-entity position="0 0.6 0.05">
         <a-text value="CHUC MUNG TOT NGHIEP" align="center" width="4" color="#00FFFF" font="exo2bold" position="0 0.1 0" shader="flat"></a-text>
         <a-text value="TAN KY SU DIEN: NGO TAN TAI" align="center" width="2.5" color="#FFFF00" font="exo2bold" position="0 0 0" shader="flat"></a-text>
       </a-entity>
-      <a-image src="/image/graduation/main1.jpg" width="0.4" height="0.5" position="0.3 -0.05 0.01" avatar-slideshow material="shader: flat"></a-image>
+      <a-image src="/image/graduation/main1.jpg" width="0.5" height="0.62" position="0 -0.05 0.01" avatar-slideshow material="shader: flat"></a-image>
 
       <a-plane position="0 -0.4 0.02" width="1.2" height="0.12" color="#000" opacity="0.7"></a-plane>
       <a-entity position="0 -0.4 0.03">
-        <a-text marquee value="Chuc mung Ngo Tan Tai da xuat sac hoan thanh chuong trinh dao tao Ky su Dien - Tuong lai ruc ro dang cho don! --- Happy Graduation! --- " color="#00FF00" width="3" position="1.5 0 0" font="roboto" anchor="left"></a-text>
+        <a-text marquee value="Chuc mung Ngo Tan Tai da xuat sac hoan thanh chuong trinh dao tao Ky su Dien - Tuong lai ruc ro dang cho don! --- Happy Graduation! --- " color="#00FF00" width="3" position="0.6 0 0" font="roboto" anchor="left"></a-text>
       </a-entity>
 
       <a-entity auto-filmstrip></a-entity>
