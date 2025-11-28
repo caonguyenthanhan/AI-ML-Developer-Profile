@@ -36,7 +36,8 @@
           .then(files => {
             console.log("Đã load được danh sách ảnh:", files);
             
-            let x = -0.5;
+            const CARD_WIDTH = 1.1;
+            let x = -CARD_WIDTH * 5;
             
             // Nếu ít ảnh quá thì nhân đôi lên để loop cho đẹp
             let loopFiles = files.length < 5 ? [...files, ...files, ...files] : files;
@@ -44,8 +45,8 @@
             loopFiles.forEach(filename => {
               const img = document.createElement('a-image');
               img.setAttribute('src', data.folder + filename);
-              img.setAttribute('width', '0.36');
-              img.setAttribute('height', '0.23');
+              img.setAttribute('width', '0.5');
+              img.setAttribute('height', '0.32');
               // Shader flat để ảnh sáng rõ
               img.setAttribute('material', 'shader: flat; transparent: true');
               img.setAttribute('position', `${x} -0.53 0.02`);
@@ -53,14 +54,16 @@
               // Animation chạy ngang vô tận
               img.setAttribute('animation', {
                 property: 'position',
-                to: `${x + 1.6} -0.53 0.02`,
-                dur: 16000 + (Math.random() * 2000),
+                from: `${x} -0.53 0.02`,
+                to: `${CARD_WIDTH * 5} -0.53 0.02`,
+                dur: 20000 + (Math.random() * 3000),
                 loop: true,
+                dir: 'alternate',
                 easing: 'linear'
               });
 
               el.appendChild(img);
-              x += 0.42;
+              x += 0.6;
             });
           })
           .catch(err => {
@@ -132,7 +135,7 @@
       <button class="btn-start">KHỞI ĐỘNG HỆ THỐNG</button>
     </div>
   </div>
-  <audio id="bg-music" src="/ar-card/music.mp3" loop preload="auto" playsinline></audio>
+  <audio id="bg-music" src="/music/music.mp3" loop preload="auto" playsinline></audio>
 
   <a-scene 
     app-manager
@@ -174,14 +177,14 @@
 
       <a-plane position="0 0.62 0.04" width="1.1" height="0.18" color="#000" opacity="0.55" shader="flat"></a-plane>
       <a-entity position="0 0.6 0.05">
-        <a-text value="CHÚC MỪNG TỐT NGHIỆP" align="center" width="4" color="#00FFFF" font="exo2bold" position="0 0.14 0" shader="flat"></a-text>
-        <a-text value="TÂN KỸ SƯ ĐIỆN: NGÔ TẤN TÀI" align="center" width="2.8" color="#FFFF00" font="exo2bold" position="0 -0.02 0" shader="flat"></a-text>
+        <a-text value="CHÚC MỪNG TỐT NGHIỆP" align="center" width="4" color="#00FFFF" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" position="0 0.14 0" shader="msdf"></a-text>
+        <a-text value="TÂN KỸ SƯ ĐIỆN: NGÔ TẤN TÀI" align="center" width="3" color="#FFFF00" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" position="0 -0.02 0" shader="msdf"></a-text>
       </a-entity>
       <a-image src="/image/graduation/main1.jpg" width="0.5" height="0.62" position="0 -0.05 0.01" avatar-slideshow material="shader: flat"></a-image>
 
       <a-plane position="0 -0.4 0.02" width="1.2" height="0.12" color="#000" opacity="0.7"></a-plane>
       <a-entity position="0 -0.4 0.03">
-        <a-text marquee value="Chúc mừng Ngô Tấn Tài đã xuất sắc hoàn thành chương trình đào tạo Kỹ sư Điện — Tương lai rực rỡ đang chờ đón! — Happy Graduation! — " color="#00FF00" width="3" position="0.6 0 0" font="roboto" anchor="left"></a-text>
+        <a-text marquee value="Chúc mừng Ngô Tấn Tài đã xuất sắc hoàn thành chương trình đào tạo Kỹ sư Điện — Tương lai rực rỡ đang chờ đón! — Happy Graduation! — " color="#00FF00" width="4" position="0.6 0 0" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" shader="msdf" wrap-count="1000" anchor="left"></a-text>
       </a-entity>
 
       <a-entity auto-filmstrip></a-entity>
