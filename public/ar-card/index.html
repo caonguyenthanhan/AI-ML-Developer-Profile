@@ -1,327 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AR Graduation Card — Fixed</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Electrical Engineer Graduation</title>
 
-<!-- A-Frame + MindAR -->
-<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
-<style>
-  body { margin:0; overflow:hidden; font-family: Arial, "Segoe UI", sans-serif; }
-  #scanning-overlay{
-    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-    background:rgba(0,0,0,0.32); color:#00FFFF; z-index:10; pointer-events:none;
-    text-shadow:0 0 8px #00FFFF; font-size:20px;
-  }
-</style>
-
-<script>
-/* ---------------------------
- Utilities
-----------------------------*/
-function loadImageOnce(url){
-  return new Promise(resolve=>{
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = ()=> resolve({ url, img });
-    img.onerror = ()=> resolve(null);
-    // cache-bust for dev convenience
-    img.src = url + '?v=' + Math.floor(Math.random()*99999);
-  });
-}
-
-/* Render Vietnamese text to dataURL */
-function createTextDataURL(text, maxW = 1400){
-  const canvas = document.createElement('canvas');
-  canvas.width = maxW;
-  canvas.height = 320;
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  // background transparent
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  const fontSize = 48;
-  ctx.font = `bold ${fontSize}px "Segoe UI", Arial, sans-serif`;
-  ctx.fillStyle = "#00FFFF";
-  ctx.shadowColor = 'rgba(0,255,255,0.9)';
-  ctx.shadowBlur = 18;
-
-  // simple wrap: split into chunks by words
-  const words = text.split(' ');
-  let lines = [], cur = '';
-  for (let w of words){
-    const test = cur ? cur + ' ' + w : w;
-    if (ctx.measureText(test).width > canvas.width - 80 && cur){
-      lines.push(cur); cur = w;
-    } else cur = test;
-  }
-  if (cur) lines.push(cur);
-  const lineHeight = fontSize + 8;
-  let startY = canvas.height/2 - (lines.length-1)*lineHeight/2;
-  for (let i=0;i<lines.length;i++){
-    ctx.fillText(lines[i], canvas.width/2, startY + i*lineHeight);
-  }
-  return canvas.toDataURL('image/png');
-}
-
-/* ---------------------------
- main-slideshow component
- - preloads images, computes aspect, sets width/height to avoid distortion
-----------------------------*/
-AFRAME.registerComponent('main-slideshow', {
-  schema: {
-    files: { type: 'array', default: [
-      'public/image/graduation/main.jpg',
-      'public/image/graduation/main2.jpg',
-      'public/image/graduation/main3.jpg',
-      'public/image/graduation/main4.jpg',
-      'public/image/graduation/main5.jpg',
-      'public/image/graduation/main6.jpg'
-    ] },
-    maxWidth: { type: 'number', default: 1.1 },
-    maxHeight: { type: 'number', default: 0.65 }
-  },
-
-  init: async function(){
-    this.idx = 0;
-    // preload sequentially and keep only valid
-    const promises = this.data.files.map(f => loadImageOnce(f));
-    const results = await Promise.all(promises);
-    this.valid = results.filter(r => r && r.img);
-    if (!this.valid.length){
-      console.warn('No valid main images found');
-      this.el.setAttribute('material','color:#111');
-      return;
+  <style>
+    body { margin: 0; background: #000; overflow: hidden; }
+    #overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      color: #00FFFF; font-family: sans-serif; font-weight: bold;
+      pointer-events: none;
     }
-    // show first
-    this.showIndex(0);
-    this.timer = setInterval(()=> this.next(), 3000);
-  },
+    .mindar-ui-scanning #overlay { display: flex; }
+    .mindar-ui-loading #overlay { display: none; }
+  </style>
 
-  showIndex: function(i){
-    const obj = this.valid[i];
-    const aspect = obj.img.width / obj.img.height;
-    let w = this.data.maxWidth;
-    let h = w / aspect;
-    if (h > this.data.maxHeight){
-      h = this.data.maxHeight;
-      w = h * aspect;
-    }
-    this.el.setAttribute('width', w);
-    this.el.setAttribute('height', h);
-    // position slightly above centre to leave space for text
-    this.el.setAttribute('position', `0 ${0.05} 0.015`);
-    this.el.setAttribute('src', obj.url);
-    this.el.setAttribute('opacity', 1);
-  },
+  <script>
+    // --- 1. COMPONENT DẢI PHIM TỰ ĐỘNG (Đọc từ JSON) ---
+    AFRAME.registerComponent('auto-filmstrip', {
+      schema: {
+        jsonUrl: {type: 'string', default: '/image/graduation/kyniem/list.json'},
+        folder: {type: 'string', default: '/image/graduation/kyniem/'}
+      },
+      init: function() {
+        const el = this.el;
+        const data = this.data;
 
-  next: function(){
-    if (!this.valid || !this.valid.length) return;
-    const nextIdx = (this.idx + 1) % this.valid.length;
-    this.el.setAttribute('animation__out', 'property: opacity; to:0; dur:380; easing: easeOutQuad');
-    setTimeout(()=> {
-      this.showIndex(nextIdx);
-      this.el.setAttribute('animation__in', 'property: opacity; to:1; dur:380; easing: easeInQuad');
-      this.idx = nextIdx;
-    }, 380);
-  },
+        // Fetch file JSON danh sách
+        fetch(data.jsonUrl)
+          .then(response => {
+            if (!response.ok) throw new Error("Chưa chạy script scan_images.py!");
+            return response.json();
+          })
+          .then(files => {
+            console.log("Đã load được danh sách ảnh:", files);
+            
+            let x = -0.6; // Vị trí bắt đầu
+            
+            // Nếu ít ảnh quá thì nhân đôi lên để loop cho đẹp
+            let loopFiles = files.length < 5 ? [...files, ...files, ...files] : files;
 
-  remove: function(){ clearInterval(this.timer); }
-});
+            loopFiles.forEach(filename => {
+              const img = document.createElement('a-image');
+              img.setAttribute('src', data.folder + filename);
+              img.setAttribute('width', '0.35');
+              img.setAttribute('height', '0.25');
+              // Shader flat để ảnh sáng rõ
+              img.setAttribute('material', 'shader: flat; transparent: true');
+              img.setAttribute('position', `${x} -0.4 0.02`);
+              
+              // Animation chạy ngang vô tận
+              img.setAttribute('animation', {
+                property: 'position',
+                to: `${x + 1.5} -0.4 0.02`,
+                dur: 8000 + (Math.random() * 2000), // Random tốc độ chút cho tự nhiên
+                loop: true,
+                easing: 'linear'
+              });
 
-/* ---------------------------
- filmstrip auto-detect filenames
- - tries many likely patterns (no server-side listing)
-----------------------------*/
-AFRAME.registerComponent('filmstrip', {
-  schema: {
-    folder: { type: 'string', default: 'public/image/graduation/kyniem/' },
-    itemW: { type: 'number', default: 0.32 },
-    itemH: { type: 'number', default: 0.20 }
-  },
-  init: async function(){
-    const folder = this.data.folder;
-    const exts = ['jpg','jpeg','png','webp'];
-    const nameCandidates = [];
-
-    // try common patterns and existing filenames heuristics
-    for (let i=1;i<=80;i++){
-      nameCandidates.push('img'+i);
-      nameCandidates.push('IMG_'+i);
-      nameCandidates.push('photo'+i);
-      nameCandidates.push('IMG-'+i);
-      nameCandidates.push('PXL_'+i);
-      nameCandidates.push('pic'+i);
-    }
-    // small attempt for timestamp-like names
-    for (let y=2018;y<=2025;y++) nameCandidates.push(String(y));
-
-    const tries = [];
-    nameCandidates.forEach(n => exts.forEach(e => tries.push(folder + n + '.' + e)));
-
-    // also attempt to probe a few likely explicit names if any
-    const extra = ['1','2','3','0','a','b','c'].map(x=>folder+x+'.jpg');
-    extra.forEach(u => tries.push(u));
-
-    // dedupe tries
-    const uniqueTries = Array.from(new Set(tries)).slice(0, 400); // limit for speed
-
-    // test in batches to avoid too many parallel
-    const results = [];
-    const batchSize = 30;
-    for (let i=0;i<uniqueTries.length;i+=batchSize){
-      const batch = uniqueTries.slice(i, i+batchSize).map(url => loadImageOnce(url));
-      const r = await Promise.all(batch);
-      results.push(...r.filter(x=>x));
-      // if we already have enough images (say 12) we can stop
-      if (results.length >= 12) break;
-    }
-
-    if (!results.length){
-      console.warn('No filmstrip images found in', folder);
-      return;
-    }
-
-    // create scrolling images (duplicate sequence to loop)
-    const imgs = results.map(r=>r.url);
-    const loopImgs = imgs.concat(imgs);
-
-    let x = -0.6;
-    loopImgs.forEach((url, idx) => {
-      const el = document.createElement('a-image');
-      el.setAttribute('src', url);
-      el.setAttribute('width', this.data.itemW);
-      el.setAttribute('height', this.data.itemH);
-      el.setAttribute('position', `${x} -0.30 0.015`);
-      el.setAttribute('animation',
-        `property: position; from: ${x} -0.30 0.015; to: ${x+1.6} -0.30 0.015; dur:12000; loop:true; easing:linear`);
-      this.el.appendChild(el);
-      x += 0.36;
+              el.appendChild(img);
+              x += 0.38; // Khoảng cách giữa các ảnh
+            });
+          })
+          .catch(err => {
+            console.error("Lỗi load ảnh kỷ niệm:", err);
+            // Tạo text báo lỗi nếu quên chạy script
+            const txt = document.createElement('a-text');
+            txt.setAttribute('value', 'Run python script first!');
+            txt.setAttribute('color', 'red');
+            txt.setAttribute('position', '0 -0.4 0');
+            el.appendChild(txt);
+          });
+      }
     });
-  }
-});
 
-/* ---------------------------
- fireworks
-----------------------------*/
-AFRAME.registerComponent('fireworks', {
-  init: function(){
-    this.timer = setInterval(()=> this.burst(), 1700);
-  },
-  burst: function(){
-    for (let i=0;i<8;i++){
-      const s = document.createElement('a-sphere');
-      const angle = Math.random()*Math.PI*2;
-      const r = 0.04 + Math.random()*0.18;
-      const x = Math.cos(angle)*r;
-      const z = Math.sin(angle)*r;
-      const yTo = 0.5 + Math.random()*0.7;
-      s.setAttribute('radius', 0.012 + Math.random()*0.02);
-      const colors = ['#00FFFF','#FFD700','#FFFFFF','#FF88FF'];
-      s.setAttribute('color', colors[Math.floor(Math.random()*colors.length)]);
-      s.setAttribute('position', `${x} -0.2 ${z}`);
-      s.setAttribute('animation', `property: position; to: ${x} ${yTo} ${z}; dur: ${700+Math.random()*700}; easing: easeOutCubic`);
-      s.setAttribute('animation__fade', `property: opacity; to:0; dur: ${800+Math.random()*800}; delay: 300`);
-      this.el.appendChild(s);
-      setTimeout(()=> { if (s.parentNode) s.parentNode.removeChild(s); }, 2200);
-    }
-  },
-  remove: function(){ clearInterval(this.timer); }
-});
-
-/* ---------------------------
- AR overlay show/hide & audio control
-----------------------------*/
-AFRAME.registerComponent('ar-control', {
-  init: function(){
-    const overlay = document.getElementById('scanning-overlay');
-    const music = document.getElementById('bgm');
-    this.el.addEventListener('targetFound', () => {
-      overlay.style.display = 'none';
-      try { music.play().catch(()=>{}); } catch(e){}
+    // --- 2. HIỆU ỨNG VIỀN MẠCH ĐIỆN (Circuit Border) ---
+    AFRAME.registerComponent('circuit-anim', {
+      tick: function(t) {
+        // Tạo hiệu ứng nhấp nháy như dòng điện
+        const intensity = 0.5 + Math.abs(Math.sin(t / 200)) * 0.5;
+        this.el.setAttribute('opacity', intensity);
+      }
     });
-    this.el.addEventListener('targetLost', () => {
-      overlay.style.display = 'flex';
-      try { music.pause(); } catch(e){}
-    });
-  }
-});
-</script>
+  </script>
 </head>
 
 <body>
-<div id="scanning-overlay">Đang quét thẻ...</div>
+  <div id="overlay">ĐANG TẢI DỮ LIỆU KỸ SƯ...</div>
 
-<a-scene mindar-image="imageTargetSrc: public/ar-card/target.mind; uiScanning: no;"
-         renderer="colorManagement:true; physicallyCorrectLights"
-         vr-mode-ui="enabled:false"
-         device-orientation-permission-ui="enabled:false">
+  <a-scene 
+    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;" 
+    color-space="sRGB" 
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false" 
+    device-orientation-permission-ui="enabled: false">
 
-  <!-- assets: the ring image and music (crossorigin to avoid black textures) -->
-  <a-assets>
-    <img id="ringImg" src="public/image/hologram-ring.png" crossorigin="anonymous">
-    <audio id="bgm" src="public/music/Chang The Cam Hoa.mp3" preload="auto" crossorigin="anonymous"></audio>
-  </a-assets>
+    <a-assets>
+      <img id="nguyetque" src="/image/graduation/nguyet-que.png" />
+      
+      <img id="fallback" src="/ar-card/tag.png">
+    </a-assets>
 
-  <!-- camera + light -->
-  <a-camera cursor="rayOrigin:mouse" position="0 0 0">
-    <a-entity light="type:ambient; intensity:1.1; color:#66CCFF"></a-entity>
-    <a-entity light="type:directional; intensity:1.1; color:#FFE9A0" position="2 3 2"></a-entity>
-  </a-camera>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-  <!-- main AR target entity -->
-  <a-entity mindar-image-target="targetIndex:0" ar-control>
+    <a-entity mindar-image-target="targetIndex: 0">
 
-    <!-- outer glow -->
-    <a-plane width="1.22" height="0.70" position="0 0 0" color="#00FFFF" opacity="0.22"
-             material="shader:flat; transparent:true"
-             animation="property:opacity; from:0.12; to:0.36; dur:1500; dir:alternate; loop:true">
-    </a-plane>
+      <a-plane color="#00FFFF" width="1.2" height="0.02" position="0 0.38 0" shader="flat" circuit-anim></a-plane>
+      <a-plane color="#00FFFF" width="1.2" height="0.02" position="0 -0.55 0" shader="flat" circuit-anim></a-plane>
+      <a-plane color="#00FFFF" width="0.02" height="0.95" position="-0.6 0 -0.08" shader="flat" circuit-anim></a-plane>
+      <a-plane color="#00FFFF" width="0.02" height="0.95" position="0.6 0 -0.08" shader="flat" circuit-anim></a-plane>
 
-    <!-- ring image (your asked /image/nguyet-que.png earlier, but here using hologram-ring.png in public/image) -->
-    <a-image src="#ringImg" rotation="-90 0 0" position="0 -0.42 0.005"
-             scale="0.9 0.9 0.9" opacity="0.95"
-             animation="property:rotation; to:-90 360 0; dur:6000; loop:true; easing:linear">
-    </a-image>
+      <a-circle color="#00FFFF" radius="0.04" position="-0.6 0.38 0.01" shader="flat"></a-circle>
+      <a-circle color="#00FFFF" radius="0.04" position="0.6 0.38 0.01" shader="flat"></a-circle>
+      <a-circle color="#00FFFF" radius="0.04" position="-0.6 -0.55 0.01" shader="flat"></a-circle>
+      <a-circle color="#00FFFF" radius="0.6" position="0.6 -0.55 0.01" shader="flat"></a-circle>
 
-    <!-- thin running ring -->
-    <a-ring radius-inner="0.56" radius-outer="0.585" position="0 0 0.01"
-            material="color:#00FFFF; opacity:0.95"
-            animation="property:rotation; to:0 0 360; dur:4200; loop:true">
-    </a-ring>
 
-    <!-- greeting text as canvas texture -->
-    <a-image id="greeting" position="0 0.50 0.015" width="1.15" height="0.26"></a-image>
+      <a-image src="#nguyetque" onerror="this.src='#fallback'"
+               position="0 0 0.01" 
+               width="0.8" height="0.8" 
+               opacity="0.9"
+               animation="property: rotation; to: 0 0 360; dur: 10000; easing: linear; loop: true">
+      </a-image>
 
-    <!-- set text src after scene init -->
-    <script>
-      (function(){
-        const msg = "Chúc mừng bạn đã hoàn thành hành trình tri thức — tương lai đang chờ đón một kỹ sư đầy khát vọng!";
-        const dataUrl = createTextDataURL(msg, 1400);
-        const trySet = () => {
-          const el = document.getElementById('greeting');
-          if (el) { el.setAttribute('src', dataUrl); return; }
-          setTimeout(trySet, 50);
-        };
-        trySet();
-      })();
-    </script>
 
-    <!-- main slideshow (positioned on same plane) -->
-    <a-image main-slideshow position="0 0.05 0.02"></a-image>
+      <a-entity position="0 0.2 0.05">
+        <a-text value="CHUC MUNG TOT NGHIEP" color="#000" align="center" width="3" position="0.02 -0.02 -0.01" font="exo2bold"></a-text>
+        <a-text value="CHUC MUNG TOT NGHIEP" color="#FFD700" align="center" width="3" position="0 0 0" font="exo2bold"></a-text>
+        
+        <a-text value="TAN KY SU DIEN - NGO TAN TAI" color="#FFF" align="center" width="2" position="0 -0.15 0" font="roboto"></a-text>
+      </a-entity>
 
-    <!-- filmstrip: auto scan folder public/image/graduation/kyniem/ -->
-    <a-entity position="0 0 0.02" filmstrip></a-entity>
 
-    <!-- fireworks -->
-    <a-entity position="0 -0.15 0" fireworks></a-entity>
+      <a-entity auto-filmstrip></a-entity>
 
-  </a-entity>
-</a-scene>
-
+    </a-entity>
+  </a-scene>
 </body>
 </html>
