@@ -2,78 +2,81 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AR RealSpace VIP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AR Real World Hologram</title>
 
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 
   <style>
-    body { margin:0; overflow:hidden; }
-
-    #scanning-overlay {
-      display:flex; align-items:center; justify-content:center;
-      position:fixed; inset:0;
-      background:rgba(0,0,0,0.3);
-      color:#00FFFF; font-size:22px;
-      text-shadow:0 0 10px #00FFFF;
-      z-index:3; pointer-events:none;
+    /* Reset CSS để Camera hiển thị full màn hình */
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+    
+    /* MÀN HÌNH CHỜ (Overlay) - Sẽ biến mất khi bấm Start */
+    #overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); z-index: 999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.5s;
+    }
+    #start-btn {
+      padding: 15px 30px; font-size: 18px; font-weight: bold;
+      color: #fff; background: #007bff; border: none; border-radius: 50px;
+      box-shadow: 0 0 15px #007bff; cursor: pointer;
     }
   </style>
 
   <script>
-    /* BEAT ENGINE */
-    let audioCtx, analyser, dataArray;
-    function initBeat() {
-      const music = document.querySelector('#bg-music');
-      audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-      const src = audioCtx.createMediaElementSource(music);
-      analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 64;
-      src.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      dataArray = new Uint8Array(analyser.frequencyBinCount);
-    }
-    function beat() {
-      if (!analyser) return 0;
-      analyser.getByteFrequencyData(dataArray);
-      return (dataArray[1]+dataArray[2])/400;
-    }
-
-    AFRAME.registerComponent('beat-react',{
-      tick:function(){
-        const b = beat();
-        this.el.setAttribute('scale',`${1+b*0.4} ${1+b*0.4} ${1+b*0.4}`);
+    // --- 1. HIỆU ỨNG PHÁO HOA ---
+    AFRAME.registerComponent('fireworks', {
+      init: function() {
+        this.el.addEventListener('targetFound', () => {
+          // Tạo 50 hạt nổ
+          for(let i=0; i<50; i++) {
+            let p = document.createElement('a-sphere');
+            let dirX = (Math.random()-0.5)*3; 
+            let dirY = Math.random()*2 + 0.5;
+            let dirZ = (Math.random()-0.5)*3;
+            
+            p.setAttribute('position', '0 -0.4 0');
+            p.setAttribute('radius', '0.015');
+            p.setAttribute('color', ['#ff0', '#f00', '#0ff', '#0f0'][Math.floor(Math.random()*4)]);
+            p.setAttribute('animation', `property: position; to: ${dirX} ${dirY} ${dirZ}; dur: 2000; easing: easeOutQuad`);
+            p.setAttribute('animation__fade', `property: material.opacity; to: 0; dur: 2000`);
+            
+            this.el.appendChild(p);
+            setTimeout(() => { if(p.parentNode) p.parentNode.removeChild(p); }, 2000);
+          }
+        });
       }
     });
 
-    AFRAME.registerComponent('click-opener',{
-      schema:{url:{type:'string'}},
-      init:function(){
-        this.el.addEventListener('click',()=>window.open(this.data.url,"_blank"));
+    // --- 2. QUẢN LÝ APP ---
+    AFRAME.registerComponent('app-manager', {
+      init: function() {
+        const btn = document.querySelector('#start-btn');
+        const overlay = document.querySelector('#overlay');
+        const music = document.querySelector('#bg-music');
+        
+        btn.addEventListener('click', () => {
+          overlay.style.opacity = '0';
+          setTimeout(() => overlay.style.display = 'none', 500);
+          if(music) {
+             music.play().then(() => { music.pause(); music.currentTime=0; }).catch(e=>{});
+          }
+        });
+
+        this.el.addEventListener("targetFound", () => { if(music) music.play(); });
+        this.el.addEventListener("targetLost", () => { if(music) music.pause(); });
       }
     });
-
-    AFRAME.registerComponent('ar-events',{
-      init:function(){
-        const overlay=document.querySelector('#scanning-overlay');
-        const music=document.querySelector('#bg-music');
-        const avatar=document.querySelector('#avatar');
-
-        this.el.addEventListener("targetFound",()=>{
-          overlay.style.display="none";
-          music.play();
-          if(!audioCtx) initBeat();
-
-          avatar.setAttribute("animation__appear",
-            "property: scale; from:0 0 0; to:0.38 0.38 0.38; dur:1200; easing:easeOutElastic");
-        });
-
-        this.el.addEventListener("targetLost",()=>{
-          overlay.style.display="flex";
-          music.pause();
-        });
+    
+    // --- 3. CLICK LINK ---
+    AFRAME.registerComponent('click-opener', {
+      schema: { url: {type: 'string'} },
+      init: function () {
+        this.el.addEventListener('click', () => window.open(this.data.url, '_blank'));
       }
     });
   </script>
@@ -81,92 +84,61 @@
 
 <body>
 
-<div id="scanning-overlay">SCANNING...</div>
+  <div id="overlay">
+    <h1 style="color:white; margin-bottom:20px;">AR HOLOGRAM CARD</h1>
+    <button id="start-btn">BẮT ĐẦU / START</button>
+  </div>
 
-<a-scene mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;"
-         renderer="colorManagement:true; physicallyCorrectLights"
-         vr-mode-ui="enabled:false">
+  <a-scene 
+    app-manager
+    mindar-image="imageTargetSrc: /ar-card/target.mind; uiLoading: no; uiScanning: no; uiError: no;" 
+    color-space="sRGB" 
+    renderer="colorManagement: true, physicallyCorrectLights, alpha: true"
+    vr-mode-ui="enabled: false" 
+    device-orientation-permission-ui="enabled: false">
 
-  <a-assets>
-    <a-asset-item id="avatarModel" src="/ar-card/avatar.glb"></a-asset-item>
+    <a-assets>
+      <a-asset-item id="avatarModel" src="/ar-card/avatar.glb"></a-asset-item>
+      
+      <img id="iconFB" src="/ar-card/icon-fb.png" onerror="this.src='/ar-card/tag.png'">
+      <img id="iconWeb" src="/ar-card/icon-web.png" onerror="this.src='/ar-card/tag.png'">
+      <img id="iconZalo" src="/ar-card/icon-zalo.png" onerror="this.src='/ar-card/tag.png'">
+      
+      <audio id="bg-music" src="/ar-card/music.mp3" preload="auto" loop></audio>
+    </a-assets>
 
-    <!-- ICON ORBS -->
-    <a-asset-item id="iconFB"  src="/ar-card/icon-fb.glb"></a-asset-item>
-    <a-asset-item id="iconWEB" src="/ar-card/icon-web.glb"></a-asset-item>
-    <a-asset-item id="iconZALO"src="/ar-card/icon-zalo.glb"></a-asset-item>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- RING (nhẹ) -->
-    <img id="ringImg" src="/image/hologram-ring.png">
+    <a-entity mindar-image-target="targetIndex: 0" fireworks>
 
-    <!-- Nhạc -->
-    <audio id="bg-music" src="/music/Chang The Cam Hoa.mp3" preload="auto" loop></audio>
-  </a-assets>
+      <a-plane position="0 -0.4 0" rotation="-90 0 0" width="1" height="1" 
+               material="opacity: 0.5; color: #000; transparent: true">
+      </a-plane>
 
-  <!-- LIGHT -->
-  <a-camera cursor="rayOrigin:mouse" raycaster="objects:.clickable">
-    <a-entity light="type:ambient; intensity:1.4; color:#66CCFF"></a-entity>
-    <a-entity light="type:directional; intensity:1.2; color:#FFE9A0" position="2 3 2"></a-entity>
-  </a-camera>
+      <a-gltf-model src="#avatarModel" 
+        position="0 -0.4 0.05" scale="0.38 0.38 0.38" 
+        animation-mixer
+        animation="property: position; from: 0 -0.4 0.05; to: 0 -0.35 0.05; dir: alternate; dur: 2000; loop: true">
+      </a-gltf-model>
 
-  <a-entity mindar-image-target="targetIndex:0" ar-events>
+      <a-image src="#iconFB" class="clickable" position="-0.3 -0.6 0.2" scale="0.15 0.15 0.15"
+               animation="property: rotation; to: 0 360 0; dur: 8000; loop: true; easing: linear"
+               click-opener="url: https://www.facebook.com/tantai.ngo.397"></a-image>
 
-    <!-- HOLOGRAM RING (không che AR) -->
-    <a-image src="#ringImg" rotation="-90 0 0"
-      position="0 -0.45 0" scale="0.9 0.9 0.9" opacity="0.8"
-      animation="property: rotation; to:-90 360 0; dur:6000; easing:linear; loop:true">
-    </a-image>
+      <a-image src="#iconWeb" class="clickable" position="0 -0.7 0.3" scale="0.18 0.18 0.18"
+               animation="property: rotation; to: 0 -360 0; dur: 8000; loop: true; easing: linear"
+               click-opener="url: https://hethongthongminh.id.vn"></a-image>
 
-    <!-- AVATAR -->
-    <a-gltf-model id="avatar" src="#avatarModel"
-      position="0 -0.35 0.05" scale="0 0 0"
-      animation-mixer beat-react>
-    </a-gltf-model>
+      <a-image src="#iconZalo" class="clickable" position="0.3 -0.6 0.2" scale="0.15 0.15 0.15"
+               animation="property: rotation; to: 0 360 0; dur: 8000; loop: true; easing: linear"
+               click-opener="url: https://zalo.me/0812493802"></a-image>
 
-    <!-- Pháo hoa -->
-    <a-entity position="0 -0.25 0">
-      <a-sphere radius="0.015" color="#00FFFF"
-        position="0.25 0 0"
-        animation="property: position; to:0.25 1 0; dur:2200; loop:true">
-      </a-sphere>
+      <a-entity position="0 0.2 0">
+         <a-text value="NGO TAN TAI" align="center" width="3" color="#00FFFF" position="0 0.1 0" font="exo2bold"></a-text>
+         <a-text value="ELECTRICAL ENGINEER" align="center" width="2" color="#FFF" position="0 0 0" font="roboto"></a-text>
+      </a-entity>
 
-      <a-sphere radius="0.012" color="#FFD700"
-        position="-0.2 0.1 0.1"
-        animation="property: position; to:-0.2 0.9 0.1; dur:2400; loop:true">
-      </a-sphere>
     </a-entity>
-
-    <!-- ICON ORB 3D -->
-    <a-gltf-model src="#iconFB" class="clickable"
-      position="-0.35 -0.65 0.25" scale="0.25 0.25 0.25"
-      animation="property: rotation; to:0 360 0; dur:7000; loop:true"
-      click-opener="url:https://www.facebook.com/tantai.ngo.397">
-    </a-gltf-model>
-
-    <a-gltf-model src="#iconWEB" class="clickable"
-      position="0 -0.75 0.28" scale="0.28 0.28 0.28"
-      animation="property: rotation; to:0 -360 0; dur:7000; loop:true"
-      click-opener="url:https://hethongthongminh.id.vn">
-    </a-gltf-model>
-
-    <a-gltf-model src="#iconZALO" class="clickable"
-      position="0.35 -0.65 0.25" scale="0.25 0.25 0.25"
-      animation="property: rotation; to:0 360 0; dur:7000; loop:true"
-      click-opener="url:https://zalo.me/0812493802">
-    </a-gltf-model>
-
-    <!-- TEXT (không có nền → nhìn thấy AR thật) -->
-    <a-text value="NGO TAN TAI" align="center" width="3" color="#00FFFF"
-      position="0 0.30 0.1"></a-text>
-
-    <a-text value="ELECTRICAL ENGINEER" align="center" width="2" color="#FFF"
-      position="0 0.22 0.1"></a-text>
-
-    <a-text value="BKU - K21" align="center" width="1.6" color="#CCE"
-      position="0 0.15 0.1"></a-text>
-
-  </a-entity>
-
-</a-scene>
-
+  </a-scene>
 </body>
 </html>
