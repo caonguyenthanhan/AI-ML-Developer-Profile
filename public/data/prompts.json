@@ -3106,5 +3106,40 @@
         "prompt": "from my photo create a pictures: A hyper-realistic portrait of the subject (from the reference photo) but modified to show an exaggerated expression of shock or terror. The subject's eyes must be wide open, eyebrows raised high, and mouth agape, similar to a 'scream' or 'home alone' reaction. Optional: The subject's hands are pressed firmly against their cheeks. The lighting should be dramatic, high-contrast, possibly with harsh shadows, to emphasize the shocked expression. Maintain the subject's core facial identity and features, but completely alter the expression and pose. Don't change the facial identity, only the expression.",
         "imagePath": "/image/genai/b9a558ea-9e4c-4889-bbb2-a6b7c14dee66.png",
         "category": "Portrait Photography"
+    },
+    {
+        "id": 445,
+        "title": "Chân Dung Bác Sĩ Lạnh Lùng & Chuyên Nghiệp",
+        "prompt": "from my photo create a pictures: A hyper-realistic, high-quality close-up portrait photography. The scene is indoors with a dominant cool tone atmosphere. The background is a simple, smooth blue-gray wall. Soft, even lighting illuminates the subject clearly, creating gentle, natural shadows. The color palette features shades of blue-gray, crisp white, and warm skin tones, accented by the black of the chair and stethoscope. The camera angle is slightly low, at eye level or looking up, focusing on the upper body. Medium composition with the subject sitting comfortably on a dark black office chair, positioned slightly off-center. One hand rests on the armrest, while the other is naturally raised near the head or face. The subject wears an unbuttoned white lab coat, revealing a loosely tied dark gray tie and light gray trousers underneath. A doctor's stethoscope is draped around the neck, and an ID badge is clipped to the coat pocket. 8k resolution, cinematic lighting. Don't change the facial det.",
+        "imagePath": "/image/genai/298016bc-c529-4bf0-bf0f-cfb068a337ab.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 446,
+        "title": "Nàng Thơ Bên Lá Sen Khổng Lồ",
+        "prompt": "from my photo create a pictures: A Medium Close-Up (MCU) aesthetic portrait of the woman from the uploaded photo. She is posed facing the viewer's right with her head slightly turned toward the camera, maintaining the exact facial features. She delicately holds the slender stem of an oversized, lush, cool green lotus leaf that provides an overhead canopy. Her hands are posed gracefully. A large, full-bloom white lotus flower appears in the bottom left foreground as a soft bokeh element. Her hair is styled in a low, sleek bun with a single, expertly sculpted wave-like tendril along the hairline. She wears a modern, lime green chiffon Halter Neck (stylized áo yếm) that drapes naturally. The setting is distinctively botanical, dominated by the textured, deep green surface of the lotus leaf in the background (softly blurred). The lighting is soft and diffused, creating gentle highlights on the skin and fabric. The mood is dreamy and ethereal with a low-contrast, sage and jade green color palette. Don't change the facial det.",
+        "imagePath": "/image/genai/0f502e80-e8f7-427c-86b4-06b7033cbb29.png",
+        "category": "Lifestyle & Nature"
+    },
+    {
+        "id": 447,
+        "title": "Chân Dung Lãng Mạn & Thanh Lịch",
+        "prompt": "from my photo create a pictures: A hyper-realistic, high-resolution medium close-up portrait with a romantic and elegant aesthetic. The composition places the subject slightly to the left, looking towards the open space on the right with a radiant, joyful expression and a gentle head tilt. She wears a stunning white or silver glittering off-shoulder evening gown (or wedding dress) featuring delicate pleats and sequin embellishments that create dazzling light reflections. Accessories include sparkling teardrop earrings and a refined hair clip tucked behind the ear. The background is a dreamy, luxurious bokeh of warm, glittering golden lights, flowers, and greenery. The lighting is soft and diffused, highlighting warm skin tones, with a magical backlight creating a shimmering halo effect. Color palette: Creamy white, gold, silver, muted green, and soft pink/orange. Professional cinematic photography style. Don't change the facial det.",
+        "imagePath": "/image/genai/063d6845-b4bd-4c11-94fa-5866e55a3417.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 448,
+        "title": "Chân Dung Quý Cô Áo Dài Đỏ & Ngọc Trai",
+        "prompt": "from my photo create a pictures: A high-quality, photorealistic close-up studio portrait of the woman from the uploaded photo (framed from the shoulders up). She is facing the camera directly with a gentle smile. She is wearing a vibrant bright red Ao Dai (or high-collar dress) featuring traditional button details on the neck and bodice, adorned with a cluster of pearl decorations on one side of the chest. She accessorizes with a delicate pearl necklace and pearl stud earrings. Her hair is styled in an elegant high bun with a few soft strands gently framing her face. The background is a plain, warm earthy brown. The lighting is soft, warm studio light from the front, creating subtle highlights and minimal shadows. The overall aesthetic is elegant and refined with a warm color palette. Don't change the facial det.",
+        "imagePath": "/image/genai/3e30a8a5-0209-499b-a41c-f935a1dc8376.png",
+        "category": "Portrait Photography"
+    },
+    {
+        "id": 449,
+        "title": "Chân Dung Bác Sĩ Trẻ: Tư Thế Tự Tin",
+        "prompt": "from my photo create a pictures: A hyper-realistic full-body portrait of the young Asian man from the uploaded photo. He is dressed as a doctor in a white medical lab coat, worn open over a white collared shirt and a black tie. He wears dark trousers and sporty sneakers. Pose description: He is sitting on a light-colored outdoor stone bench, leaning his upper body slightly forward. His elbows rest firmly on his thighs, and his hands are clasped together in front of him. His legs are spread wide apart in a confident, grounded stance. He looks directly into the lens with a serious, intense gaze. Background implies a hospital or university courtyard with tiled flooring. Natural daylight, 8k resolution. Don't change the facial det.",
+        "imagePath": "/image/genai/d57cf86a-bd90-4f01-b5e6-9d11b87e976f.png",
+        "category": "Portrait Photography"
     }
 ]
