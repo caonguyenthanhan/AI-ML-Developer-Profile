@@ -2,144 +2,158 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AR Ultra Premium Card</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AR Graduation Card</title>
 
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 
   <style>
-    body { margin: 0; overflow: hidden; font-family: sans-serif; }
+    /* 1. RESET CSS QUAN TRỌNG ĐỂ FULL MÀN HÌNH */
+    html, body {
+      margin: 0; padding: 0; width: 100%; height: 100%;
+      overflow: hidden; /* Chặn cuộn trang */
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000; /* Nền đen tránh bị vệt trắng */
+    }
 
-    /* Màn hình chờ + Nút Start (Bắt buộc để chạy nhạc) */
-    #start-screen {
+    /* 2. MÀN HÌNH START + LOADING (Giao diện chính) */
+    #overlay-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85); z-index: 9999;
+      background: rgba(0,0,0,0.9); /* Màu nền tối */
+      z-index: 9999;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.5s;
     }
-    #start-btn {
-      padding: 15px 40px; font-size: 20px; font-weight: bold;
-      color: #00FFFF; background: transparent; border: 2px solid #00FFFF;
-      border-radius: 30px; cursor: pointer; text-shadow: 0 0 10px #00FFFF;
-      box-shadow: 0 0 15px #00FFFF; transition: 0.3s;
-    }
-    #start-btn:active { transform: scale(0.95); background: rgba(0,255,255,0.2); }
 
-    /* Overlay khi đang scan */
-    #scanning-overlay {
-      display:none; /* Mặc định ẩn, chỉ hiện khi đã start */
-      align-items:center; justify-content:center;
-      position:fixed; left:0; right:0; top:0; bottom:0;
-      background:transparent; z-index:4; pointer-events:none;
+    /* Chữ tiêu đề */
+    .title-text {
+      color: #00FFFF; font-size: 24px; font-weight: bold;
+      margin-bottom: 30px; text-align: center;
+      text-shadow: 0 0 10px #00FFFF; letter-spacing: 2px;
     }
-    .scan-text {
-      color: #00FFFF; font-size: 18px; font-weight: bold;
-      background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 20px;
-      border: 1px solid #00FFFF;
+
+    /* Nút Bắt đầu */
+    #start-btn {
+      padding: 15px 40px; font-size: 18px; font-weight: bold;
+      color: #000; background: #00FFFF; border: none;
+      border-radius: 30px; cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      animation: pulse 1.5s infinite;
     }
-    
-    .mindar-ui-scanning #scanning-overlay { display: flex; }
-    .mindar-ui-loading #scanning-overlay { display: none; }
+
+    /* Trạng thái Loading */
+    #loading-text {
+      color: #FFF; font-size: 16px; margin-top: 20px; display: none;
+    }
+
+    /* 3. DÒNG CHỮ HƯỚNG DẪN KHI QUÉT (Overlay phụ) */
+    #scanning-guide {
+      position: fixed; bottom: 50px; left: 0; width: 100%;
+      text-align: center; pointer-events: none; z-index: 1000;
+      display: none; /* Mặc định ẩn, chỉ hiện sau khi start */
+    }
+    .guide-box {
+      display: inline-block; background: rgba(0, 0, 0, 0.6);
+      color: #00FFFF; padding: 10px 20px; border-radius: 20px;
+      border: 1px solid #00FFFF; font-weight: bold;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 255, 255, 0.8); }
+      100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+    }
   </style>
 
   <script>
-    /* 1. AUDIO ENGINE (Chỉ khởi tạo sau khi user click) */
-    let audioCtx, analyser, dataArray, audioSource;
     let isAudioStarted = false;
 
-    function initAudio() {
-      if(isAudioStarted) return;
-      const bgMusic = document.querySelector('#bg-music');
-      
-      // Tạo Context
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 256; // Tăng độ chi tiết
+    // Hàm khởi động (Gắn vào nút Bắt đầu)
+    function startExperience() {
+      const btn = document.getElementById('start-btn');
+      const loadingText = document.getElementById('loading-text');
+      const music = document.querySelector('#bg-music');
 
-      // Kết nối
-      audioSource = audioCtx.createMediaElementSource(bgMusic);
-      audioSource.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      
-      dataArray = new Uint8Array(analyser.frequencyBinCount);
-      isAudioStarted = true;
-      
-      // Ẩn màn hình Start
-      document.querySelector('#start-screen').style.display = 'none';
-      document.querySelector('#scanning-overlay').style.display = 'flex';
-      
-      // Hack: Phát thử 1 cái rồi pause để trình duyệt cấp quyền
-      bgMusic.play().then(() => {
-        bgMusic.pause();
-        bgMusic.currentTime = 0;
-      }).catch(e => console.log("Audio Error:", e));
+      // 1. Đổi giao diện nút thành Loading
+      btn.style.display = 'none';
+      loadingText.style.display = 'block';
+      loadingText.innerText = "ĐANG TẢI DỮ LIỆU... (VUI LÒNG ĐỢI)";
+
+      // 2. Kích hoạt Âm thanh (Hack để trình duyệt cho phép phát nhạc sau này)
+      if(music) {
+        music.play().then(() => {
+          music.pause();
+          music.currentTime = 0;
+          isAudioStarted = true;
+        }).catch(e => console.log("Audio permission error:", e));
+      }
+
+      // 3. Ẩn màn hình Start sau khi AR load xong
+      // Chúng ta sẽ lắng nghe sự kiện arReady của scene bên dưới
     }
 
-    function getBass() {
-      if (!analyser) return 0;
-      analyser.getByteFrequencyData(dataArray);
-      // Lấy trung bình dải tần thấp (Bass)
-      let sum = 0;
-      for(let i=0; i<5; i++) sum += dataArray[i];
-      return sum / (5 * 255); // Trả về 0.0 -> 1.0
-    }
-
-    /* 2. COMPONENT LOGIC */
-    
-    // Beat React: Chỉ dùng cho Vòng tròn & Loa (Không méo Avatar)
-    AFRAME.registerComponent('beat-scale', {
-      tick: function() {
-        if(!isAudioStarted) return;
-        const bass = getBass();
-        if (bass > 0.1) {
-          const scale = 1 + (bass * 0.3); // Scale nhẹ theo nhạc
-          this.el.setAttribute('scale', `${scale} ${scale} ${scale}`);
-        } else {
-          this.el.setAttribute('scale', '1 1 1');
-        }
-      }
-    });
-
-    // Hologram Color: Đổi màu theo thời gian
-    AFRAME.registerComponent('hologram-color', {
-      tick: function() {
-        const t = performance.now() / 20;
-        const hue = (t % 360);
-        this.el.setAttribute('color', `hsl(${hue}, 100%, 70%)`);
-      }
-    });
-
-    // Main Control
-    AFRAME.registerComponent('main-controller', {
-      init: function(){
+    AFRAME.registerComponent('app-manager', {
+      init: function() {
+        const overlay = document.getElementById('overlay-screen');
+        const guide = document.getElementById('scanning-guide');
         const music = document.querySelector('#bg-music');
-        const overlay = document.querySelector('#scanning-overlay');
-        
-        this.el.addEventListener('targetFound', () => {
-            console.log("Found!");
-            if(isAudioStarted) {
-                if(audioCtx.state === 'suspended') audioCtx.resume();
-                music.play();
-            }
-            overlay.style.display = "none";
+
+        // Khi AR đã tải xong (Camera bật lên)
+        this.el.addEventListener("arReady", () => {
+          // Chỉ ẩn overlay nếu người dùng đã bấm Start (tránh trường hợp load xong trước khi bấm)
+          const loadingText = document.getElementById('loading-text');
+          if(loadingText.style.display === 'block') {
+             overlay.style.opacity = '0';
+             setTimeout(() => { overlay.style.display = 'none'; }, 500);
+             guide.style.display = 'block'; // Hiện hướng dẫn soi thẻ
+          } else {
+             // Nếu AR load xong mà chưa bấm nút -> Đổi chữ Loading thành "Sẵn sàng"
+             // (Logic này xử lý tự động bởi nút bấm ở trên rồi)
+          }
         });
 
-        this.el.addEventListener('targetLost', () => {
-            console.log("Lost!");
-            if(isAudioStarted) music.pause();
-            overlay.style.display = "flex";
+        // Khi tìm thấy hình ảnh
+        this.el.addEventListener("targetFound", () => {
+          guide.style.display = 'none'; // Ẩn hướng dẫn
+          if(isAudioStarted && music) music.play();
+        });
+
+        // Khi mất hình ảnh
+        this.el.addEventListener("targetLost", () => {
+          guide.style.display = 'block'; // Hiện lại hướng dẫn
+          if(isAudioStarted && music) music.pause();
+        });
+        
+        // Fix lỗi loading mãi mãi: Tự động ẩn loading nếu AR ready
+        this.el.addEventListener("arReady", () => {
+             // Logic ghép vào nút bấm: 
+             // Nút bấm kích hoạt -> Chờ AR Ready -> Ẩn Overlay
+             const btn = document.getElementById('start-btn');
+             btn.innerText = "BẮT ĐẦU TRẢI NGHIỆM"; // Cập nhật text báo sẵn sàng
+             btn.onclick = function() {
+                overlay.style.opacity = '0';
+                setTimeout(() => { overlay.style.display = 'none'; }, 500);
+                guide.style.display = 'block';
+                // Kích hoạt nhạc
+                if(music) {
+                  music.play().then(() => { music.pause(); music.currentTime = 0; isAudioStarted = true; });
+                }
+             }
         });
       }
     });
-
-    // Click Opener
+    
+    // Component mở link
     AFRAME.registerComponent('click-opener', {
-      schema:{url:{type:'string'}},
-      init:function(){
-        this.el.addEventListener('click',()=>window.open(this.data.url,'_blank'));
-        this.el.addEventListener('mouseenter', () => this.el.setAttribute('scale', '1.2 1.2 1.2'));
-        this.el.addEventListener('mouseleave', () => this.el.setAttribute('scale', '1 1 1'));
+      schema: { url: {type: 'string', default: ''} },
+      init: function () {
+        this.el.addEventListener('click', () => {
+          if(this.data.url) window.open(this.data.url, '_blank');
+        });
+        this.el.addEventListener('mouseenter', () => { this.el.setAttribute('scale', '1.2 1.2 1.2'); });
+        this.el.addEventListener('mouseleave', () => { this.el.setAttribute('scale', '1 1 1'); });
       }
     });
   </script>
@@ -147,30 +161,33 @@
 
 <body>
 
-  <div id="start-screen">
-    <h2 style="color:white; margin-bottom:20px; font-family:sans-serif;">AR GRADUATION CARD</h2>
-    <button id="start-btn" onclick="initAudio()">BẮT ĐẦU TRẢI NGHIỆM</button>
+  <div id="overlay-screen">
+    <div class="title-text">AR GRADUATION CARD</div>
+    <button id="start-btn">ĐANG KHỞI TẠO CAMERA...</button>
+    <div id="loading-text"></div>
   </div>
 
-  <div id="scanning-overlay">
-    <div class="scan-text">HÃY SOI VÀO TẤM THẺ...</div>
+  <div id="scanning-guide">
+    <div class="guide-box">HÃY SOI VÀO TẤM THẺ</div>
   </div>
 
-  <a-scene
-    mindar-image="imageTargetSrc: /ar-card/target.mind; filterMinCF:0.0001; filterBeta: 0.001; uiScanning: no;"
+  <a-scene 
+    app-manager
+    mindar-image="imageTargetSrc: /ar-card/target.mind; filterMinCF:0.0001; filterBeta: 0.001; uiLoading: no; uiScanning: no; uiError: no;" 
+    color-space="sRGB" 
     renderer="colorManagement: true, physicallyCorrectLights"
-    vr-mode-ui="enabled:false"
-    device-orientation-permission-ui="enabled:false">
+    shadow="type: pcfsoft"
+    vr-mode-ui="enabled: false" 
+    device-orientation-permission-ui="enabled: false">
 
     <a-assets>
       <a-asset-item id="avatarModel" src="/ar-card/avatar.glb"></a-asset-item>
       
-      <img id="iconFB" src="/ar-card/icon-fb.png"> 
-      <img id="iconWEB" src="/ar-card/icon-web.png">
-      <img id="iconZALO" src="/ar-card/icon-zalo.png">
-
-      <img id="cardBg" src="/ar-card/tag.png">
-      <img id="ringImg" src="/ar-card/tag.png"> 
+      <img id="cardBg" src="/ar-card/tag.png" />
+      <img id="ringImg" src="/ar-card/tag.png" /> 
+      <img id="iconFB" src="/ar-card/tag.png" /> 
+      <img id="iconWEB" src="/ar-card/tag.png" />
+      <img id="iconZALO" src="/ar-card/tag.png" />
       
       <audio id="bg-music" src="/ar-card/music.mp3" preload="auto" loop></audio>
     </a-assets>
@@ -180,15 +197,11 @@
       <a-entity light="type: ambient; intensity: 0.6;"></a-entity>
     </a-camera>
 
-    <a-entity mindar-image-target="targetIndex: 0" main-controller>
-
-      <a-ring radius-inner="0.4" radius-outer="0.5" position="0 -0.4 0" rotation="-90 0 0" 
-              hologram-color beat-scale opacity="0.8">
-      </a-ring>
-
+    <a-entity mindar-image-target="targetIndex: 0">
+      
       <a-image src="#ringImg" rotation="-90 0 0" position="0 -0.4 0.01"
-        scale="0.9 0.9 0.9" opacity="0.6"
-        animation="property: rotation; to:-90 360 0; dur:10000; loop:true; easing:linear">
+        scale="0.9 0.9 0.9" opacity="0.5"
+        animation="property: rotation; to:-90 360 0; dur:5000; loop:true; easing:linear">
       </a-image>
 
       <a-gltf-model src="#avatarModel"
@@ -196,11 +209,6 @@
         animation-mixer 
         animation="property: position; from: 0 -0.4 0.05; to: 0 -0.35 0.05; dir: alternate; dur: 2000; loop: true">
       </a-gltf-model>
-
-      <a-entity position="0 -0.4 0">
-         <a-box color="#00FFFF" scale="0.02 0.02 0.02" position="0.2 0 0" animation="property: position; to: 0.2 1 0; dur: 2000; loop: true"></a-box>
-         <a-box color="#FFD700" scale="0.01 0.01 0.01" position="-0.2 0.1 0" animation="property: position; to: -0.2 0.8 0; dur: 2500; loop: true"></a-box>
-      </a-entity>
 
       <a-image src="#iconFB" class="clickable"
         position="-0.3 -0.65 0.2" scale="0.15 0.15 0.15"
@@ -220,7 +228,7 @@
         click-opener="url:https://zalo.me/0812493802">
       </a-image>
 
-      <a-entity position="0 0 0.1">
+      <a-entity position="0 0.1 0.1">
          <a-text value="NGO TAN TAI" align="center" width="2.8" color="#00FFFF" position="0 0.25 0" font="exo2bold"></a-text>
          <a-text value="ELECTRICAL ENGINEER" align="center" width="1.8" color="#FFF" position="0 0.15 0"></a-text>
       </a-entity>
