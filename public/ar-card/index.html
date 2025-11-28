@@ -3,117 +3,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>AR Graduation Album</title>
+  <title>AR Album</title>
 
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
-    html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-    #scanning-overlay { display: flex; align-items: center; justify-content: center; position: fixed; left: 0; right: 0; top: 0; bottom: 0; background: transparent; z-index: 2; pointer-events: none; }
-    .scan-text { color: white; font-weight: bold; background: rgba(0,0,0,0.5); padding: 10px 20px; border-radius: 20px; }
-    .mindar-ui-scanning #scanning-overlay { display: flex; }
-    .mindar-ui-loading #scanning-overlay { display: none; }
+    /* FIX LỖI MÀN HÌNH ĐEN: Background phải là transparent */
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: transparent; }
+    
+    /* MÀN HÌNH CHỜ LOAD ẢNH */
+    #loader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9); z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: #00FFFF; font-family: sans-serif; transition: opacity 0.5s;
+    }
+    .spinner {
+      width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #00FFFF;
+      border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 
   <script>
-    // --- COMPONENT SLIDESHOW NÂNG CAO (Tự động load ảnh trước) ---
-    AFRAME.registerComponent('image-slideshow', {
+    // --- COMPONENT SLIDESHOW (Chuyển ảnh mượt) ---
+    AFRAME.registerComponent('slideshow', {
       schema: {
-        sources: {type: 'array', default: []}, // Danh sách đường dẫn ảnh
-        interval: {type: 'number', default: 2500}, // Thời gian chuyển ảnh (ms)
+        folder: {type: 'string'}, // Thư mục ảnh
+        prefix: {type: 'string'}, // Tên đầu file (vd: main)
+        count: {type: 'number'},  // Số lượng ảnh
+        ext: {type: 'string', default: '.jpg'}, // Đuôi file
+        interval: {type: 'number', default: 2000} // Tốc độ
       },
-      init: function () {
-        this.currentIndex = 0;
+      init: function() {
+        this.index = 1;
+        this.timer = null;
         this.images = [];
-        // Preload (tải trước) tất cả ảnh để tránh bị nháy đen khi chuyển
-        this.data.sources.forEach((src, index) => {
-          const img = new Image();
-          img.src = src;
-          this.images.push(img);
-          // Set ảnh đầu tiên ngay khi load xong
-          if (index === 0) {
-            img.onload = () => { this.el.setAttribute('src', src); };
-          }
-        });
-
-        if (this.images.length > 1) {
-          this.startSlideshow();
+        
+        // Preload ảnh để không bị giật
+        for(let i=1; i<=this.data.count; i++) {
+            const img = new Image();
+            img.src = `${this.data.folder}/${this.data.prefix}${i}${this.data.ext}`;
+            this.images.push(img);
         }
-      },
-      startSlideshow: function () {
-        this.intervalId = setInterval(() => {
-          this.currentIndex = (this.currentIndex + 1) % this.images.length;
-          // Cập nhật thuộc tính src của a-image bằng đường dẫn của ảnh tiếp theo
-          this.el.setAttribute('src', this.images[this.currentIndex].src);
+
+        // Bắt đầu chạy
+        this.timer = setInterval(() => {
+          this.index++;
+          if(this.index > this.data.count) this.index = 1;
+          // Cập nhật src cho a-image
+          const nextSrc = `${this.data.folder}/${this.data.prefix}${this.index}${this.data.ext}`;
+          this.el.setAttribute('src', nextSrc);
         }, this.data.interval);
       },
-      remove: function () {
-        // Dọn dẹp bộ nhớ khi component bị hủy
-        if (this.intervalId) clearInterval(this.intervalId);
+      remove: function() { clearInterval(this.timer); }
+    });
+
+    // --- TẮT MÀN HÌNH CHỜ KHI AR SẴN SÀNG ---
+    AFRAME.registerComponent('scene-ready', {
+      init: function() {
+        const loader = document.querySelector('#loader');
+        this.el.addEventListener('arReady', () => {
+          loader.style.opacity = '0';
+          setTimeout(() => loader.style.display = 'none', 500);
+        });
       }
     });
   </script>
 </head>
 
 <body>
-  <div id="scanning-overlay" style="display:none">
-      <div class="scan-text">HÃY SOI VÀO TẤM THẺ...</div>
+
+  <div id="loader">
+    <div class="spinner"></div>
+    <div>ĐANG TẢI KỶ NIỆM...</div>
   </div>
 
   <a-scene 
-    mindar-image="imageTargetSrc: /ar-card/target.mind; filterMinCF:0.0001; filterBeta: 0.001; uiScanning: no;" 
+    scene-ready
+    mindar-image="imageTargetSrc: /ar-card/target.mind; uiLoading: no; uiScanning: no; uiError: no;" 
     color-space="sRGB" 
-    renderer="colorManagement: true, physicallyCorrectLights"
+    renderer="colorManagement: true, physicallyCorrectLights, alpha: true"
     vr-mode-ui="enabled: false" 
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-      <img id="cardBg" src="/ar-card/tag.png" />
       <img id="placeholder" src="/ar-card/tag.png"> 
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
-
-      <a-image src="#cardBg" position="0 0 0" height="1.05" width="1.05" opacity="0.8"></a-image>
-
-
-      <a-entity position="0 0.4 0.01">
-        <a-text value="CHUC MUNG TAN KY SU!" align="center" width="3" color="#FFD700" font="exo2bold" position="0 0.08 0"></a-text>
-        <a-text value="Tung canh bay xa, vung vang tuong lai!" align="center" width="2" color="#FFFFFF" font="roboto" position="0 0 0"></a-text>
-      </a-entity>
-
+      
+      <a-plane color="#000" opacity="0.5" position="0 0 0" width="1.1" height="1.1"></a-plane>
 
       <a-image 
-        src="#placeholder"
-        position="0 0.05 0.02" 
-        width="0.9" height="0.6"
-        image-slideshow="interval: 3000; sources: [
-          '/image/graduation/main1.jpg',
-          '/image/graduation/main2.jpg',
-          '/image/graduation/main3.jpg',
-          '/image/graduation/main4.jpg',
-          '/image/graduation/main5.jpg',
-          '/image/graduation/main6.jpg'
-        ]">
+        src="/image/graduation/main1.jpg" 
+        position="0 0.1 0.02" width="1" height="0.65"
+        slideshow="folder: /image/graduation; prefix: main; count: 6; interval: 3000">
       </a-image>
 
-
-      <a-text value="Thuoc phim ky niem" align="center" width="1.5" color="#CCC" position="0 -0.3 0.01"></a-text>
+      <a-text value="KY NIEM CUA CHUNG TA" align="center" width="2" position="0 -0.3 0.02"></a-text>
       
       <a-image 
-        src="#placeholder"
-        position="0 -0.45 0.02" 
-        width="1" height="0.25"
-        image-slideshow="interval: 2000; sources: [
-          '/image/graduation/kyniem/kn1.jpg',
-          '/image/graduation/kyniem/kn2.jpg',
-          '/image/graduation/kyniem/kn3.jpg',
-          '/image/graduation/kyniem/kn4.jpg'
-        ]">
+        src="/image/graduation/kyniem/kn1.jpg" 
+        position="0 -0.5 0.02" width="1" height="0.3"
+        slideshow="folder: /image/graduation/kyniem; prefix: kn; count: 4; interval: 2000">
       </a-image>
+
+      <a-text value="CHUC MUNG TOT NGHIEP!" color="#00FFFF" align="center" width="3" position="0 0.5 0.02" font="exo2bold"></a-text>
 
     </a-entity>
   </a-scene>
