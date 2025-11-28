@@ -3,258 +3,322 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AR Graduation Card - Final</title>
+<title>AR Graduation Card — Fixed</title>
 
+<!-- A-Frame + MindAR -->
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
 <style>
-  body { margin: 0; overflow: hidden; font-family: Arial; }
-  #scanning-overlay {
-    display:flex; align-items:center; justify-content:center;
-    position:fixed; inset:0; z-index:3;
-    background:rgba(0,0,0,0.32);
-    color:#00FFFF; font-size:20px;
-    text-shadow:0 0 10px #00FFFF;
-    pointer-events:none;
+  body { margin:0; overflow:hidden; font-family: Arial, "Segoe UI", sans-serif; }
+  #scanning-overlay{
+    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+    background:rgba(0,0,0,0.32); color:#00FFFF; z-index:10; pointer-events:none;
+    text-shadow:0 0 8px #00FFFF; font-size:20px;
   }
 </style>
 
 <script>
-/* ------------------------------------------
-  Utility: preload image with Promise
--------------------------------------------*/
-function loadImage(url){
+/* ---------------------------
+ Utilities
+----------------------------*/
+function loadImageOnce(url){
   return new Promise(resolve=>{
-    const img=new Image();
-    img.onload=()=>resolve({url, img});
-    img.onerror=()=>resolve(null);
-    img.src=url+"?v="+Math.random();
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = ()=> resolve({ url, img });
+    img.onerror = ()=> resolve(null);
+    // cache-bust for dev convenience
+    img.src = url + '?v=' + Math.floor(Math.random()*99999);
   });
 }
 
-/* ------------------------------------------
- Vietnamese text -> Canvas -> Texture
--------------------------------------------*/
-function makeTextTexture(txt){
-  const canvas=document.createElement("canvas");
-  canvas.width=1500;
-  canvas.height=280;
-
-  const ctx=canvas.getContext("2d");
+/* Render Vietnamese text to dataURL */
+function createTextDataURL(text, maxW = 1400){
+  const canvas = document.createElement('canvas');
+  canvas.width = maxW;
+  canvas.height = 320;
+  const ctx = canvas.getContext('2d');
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  ctx.font="bold 60px 'Segoe UI', Arial";
-  ctx.fillStyle="#00FFFF";
-  ctx.textAlign="center";
-  ctx.shadowColor="rgba(0,255,255,0.8)";
-  ctx.shadowBlur=18;
+  // background transparent
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const fontSize = 48;
+  ctx.font = `bold ${fontSize}px "Segoe UI", Arial, sans-serif`;
+  ctx.fillStyle = "#00FFFF";
+  ctx.shadowColor = 'rgba(0,255,255,0.9)';
+  ctx.shadowBlur = 18;
 
-  ctx.fillText(txt, canvas.width/2, canvas.height/2);
-
-  return canvas.toDataURL("image/png");
+  // simple wrap: split into chunks by words
+  const words = text.split(' ');
+  let lines = [], cur = '';
+  for (let w of words){
+    const test = cur ? cur + ' ' + w : w;
+    if (ctx.measureText(test).width > canvas.width - 80 && cur){
+      lines.push(cur); cur = w;
+    } else cur = test;
+  }
+  if (cur) lines.push(cur);
+  const lineHeight = fontSize + 8;
+  let startY = canvas.height/2 - (lines.length-1)*lineHeight/2;
+  for (let i=0;i<lines.length;i++){
+    ctx.fillText(lines[i], canvas.width/2, startY + i*lineHeight);
+  }
+  return canvas.toDataURL('image/png');
 }
 
-/* ------------------------------------------
- MAIN SLIDESHOW (NO DISTORTION)
--------------------------------------------*/
-AFRAME.registerComponent("main-slideshow",{
-  init:function(){
-    this.list=[
-      "/image/graduation/main.jpg",
-      "/image/graduation/main2.jpg",
-      "/image/graduation/main3.jpg",
-      "/image/graduation/main4.jpg",
-      "/image/graduation/main5.jpg",
-      "/image/graduation/main6.jpg"
-    ];
-    this.index=0;
-
-    Promise.all(this.list.map(loadImage)).then(res=>{
-      this.images=res.filter(r=>r!==null);
-      if(!this.images.length) return;
-
-      this.showImage(this.images[0]);
-      setInterval(()=>this.nextImage(),3000);
-    });
+/* ---------------------------
+ main-slideshow component
+ - preloads images, computes aspect, sets width/height to avoid distortion
+----------------------------*/
+AFRAME.registerComponent('main-slideshow', {
+  schema: {
+    files: { type: 'array', default: [
+      'public/image/graduation/main.jpg',
+      'public/image/graduation/main2.jpg',
+      'public/image/graduation/main3.jpg',
+      'public/image/graduation/main4.jpg',
+      'public/image/graduation/main5.jpg',
+      'public/image/graduation/main6.jpg'
+    ] },
+    maxWidth: { type: 'number', default: 1.1 },
+    maxHeight: { type: 'number', default: 0.65 }
   },
 
-  showImage:function(imgObj){
-    const aspect=imgObj.img.width/imgObj.img.height;
-    let w=1.1, h=w/aspect;
-    if(h>0.65){ h=0.65; w=h*aspect; }
-
-    this.el.setAttribute("width", w);
-    this.el.setAttribute("height", h);
-    this.el.setAttribute("src", imgObj.url);
+  init: async function(){
+    this.idx = 0;
+    // preload sequentially and keep only valid
+    const promises = this.data.files.map(f => loadImageOnce(f));
+    const results = await Promise.all(promises);
+    this.valid = results.filter(r => r && r.img);
+    if (!this.valid.length){
+      console.warn('No valid main images found');
+      this.el.setAttribute('material','color:#111');
+      return;
+    }
+    // show first
+    this.showIndex(0);
+    this.timer = setInterval(()=> this.next(), 3000);
   },
 
-  nextImage:function(){
-    this.index=(this.index+1)%this.images.length;
-    const next=this.images[this.index];
+  showIndex: function(i){
+    const obj = this.valid[i];
+    const aspect = obj.img.width / obj.img.height;
+    let w = this.data.maxWidth;
+    let h = w / aspect;
+    if (h > this.data.maxHeight){
+      h = this.data.maxHeight;
+      w = h * aspect;
+    }
+    this.el.setAttribute('width', w);
+    this.el.setAttribute('height', h);
+    // position slightly above centre to leave space for text
+    this.el.setAttribute('position', `0 ${0.05} 0.015`);
+    this.el.setAttribute('src', obj.url);
+    this.el.setAttribute('opacity', 1);
+  },
 
-    this.el.setAttribute("animation__fadeout",
-      "property:opacity;to:0;dur:350");
+  next: function(){
+    if (!this.valid || !this.valid.length) return;
+    const nextIdx = (this.idx + 1) % this.valid.length;
+    this.el.setAttribute('animation__out', 'property: opacity; to:0; dur:380; easing: easeOutQuad');
+    setTimeout(()=> {
+      this.showIndex(nextIdx);
+      this.el.setAttribute('animation__in', 'property: opacity; to:1; dur:380; easing: easeInQuad');
+      this.idx = nextIdx;
+    }, 380);
+  },
 
-    setTimeout(()=>{
-      this.showImage(next);
-      this.el.setAttribute("animation__fadein",
-        "property:opacity;to:1;dur:350");
-    },350);
-  }
+  remove: function(){ clearInterval(this.timer); }
 });
 
-/* ------------------------------------------
- FILMSTRIP AUTO-SCANNER FOR RANDOM FILE NAMES
--------------------------------------------*/
-AFRAME.registerComponent("filmstrip",{
-  init:function(){
-    const folder="/image/graduation/kyniem/";
-    const names=[], ext=["jpg","jpeg","png","webp"];
+/* ---------------------------
+ filmstrip auto-detect filenames
+ - tries many likely patterns (no server-side listing)
+----------------------------*/
+AFRAME.registerComponent('filmstrip', {
+  schema: {
+    folder: { type: 'string', default: 'public/image/graduation/kyniem/' },
+    itemW: { type: 'number', default: 0.32 },
+    itemH: { type: 'number', default: 0.20 }
+  },
+  init: async function(){
+    const folder = this.data.folder;
+    const exts = ['jpg','jpeg','png','webp'];
+    const nameCandidates = [];
 
-    for(let i=1;i<=200;i++){
-      names.push("img"+i);
-      names.push("IMG_"+i);
-      names.push(""+i);
-      names.push("PXL_"+i);
+    // try common patterns and existing filenames heuristics
+    for (let i=1;i<=80;i++){
+      nameCandidates.push('img'+i);
+      nameCandidates.push('IMG_'+i);
+      nameCandidates.push('photo'+i);
+      nameCandidates.push('IMG-'+i);
+      nameCandidates.push('PXL_'+i);
+      nameCandidates.push('pic'+i);
+    }
+    // small attempt for timestamp-like names
+    for (let y=2018;y<=2025;y++) nameCandidates.push(String(y));
+
+    const tries = [];
+    nameCandidates.forEach(n => exts.forEach(e => tries.push(folder + n + '.' + e)));
+
+    // also attempt to probe a few likely explicit names if any
+    const extra = ['1','2','3','0','a','b','c'].map(x=>folder+x+'.jpg');
+    extra.forEach(u => tries.push(u));
+
+    // dedupe tries
+    const uniqueTries = Array.from(new Set(tries)).slice(0, 400); // limit for speed
+
+    // test in batches to avoid too many parallel
+    const results = [];
+    const batchSize = 30;
+    for (let i=0;i<uniqueTries.length;i+=batchSize){
+      const batch = uniqueTries.slice(i, i+batchSize).map(url => loadImageOnce(url));
+      const r = await Promise.all(batch);
+      results.push(...r.filter(x=>x));
+      // if we already have enough images (say 12) we can stop
+      if (results.length >= 12) break;
     }
 
-    const tries=[];
-    names.forEach(n=>ext.forEach(e=>tries.push(folder+n+"."+e)));
+    if (!results.length){
+      console.warn('No filmstrip images found in', folder);
+      return;
+    }
 
-    Promise.all(tries.map(loadImage)).then(list=>{
-      const valid=list.filter(a=>a!==null);
-      if(!valid.length) return;
+    // create scrolling images (duplicate sequence to loop)
+    const imgs = results.map(r=>r.url);
+    const loopImgs = imgs.concat(imgs);
 
-      let x=-0.6;
-      valid.forEach(v=>{
-        const pic=document.createElement("a-image");
-        pic.setAttribute("src", v.url);
-        pic.setAttribute("width", 0.32);
-        pic.setAttribute("height", 0.20);
-        pic.setAttribute("position", `${x} -0.30 0.01`);
-        pic.setAttribute("animation",
-          `property:position;from:${x} -0.30 0.01;to:${x+1.6} -0.30 0.01;dur:13000;loop:true;easing:linear`);
-
-        this.el.appendChild(pic);
-        x+=0.36;
-      });
+    let x = -0.6;
+    loopImgs.forEach((url, idx) => {
+      const el = document.createElement('a-image');
+      el.setAttribute('src', url);
+      el.setAttribute('width', this.data.itemW);
+      el.setAttribute('height', this.data.itemH);
+      el.setAttribute('position', `${x} -0.30 0.015`);
+      el.setAttribute('animation',
+        `property: position; from: ${x} -0.30 0.015; to: ${x+1.6} -0.30 0.015; dur:12000; loop:true; easing:linear`);
+      this.el.appendChild(el);
+      x += 0.36;
     });
   }
 });
 
-/* ------------------------------------------
- Fireworks particle
--------------------------------------------*/
-AFRAME.registerComponent("fireworks",{
-  init:function(){
-    setInterval(()=>this.burst(),1800);
+/* ---------------------------
+ fireworks
+----------------------------*/
+AFRAME.registerComponent('fireworks', {
+  init: function(){
+    this.timer = setInterval(()=> this.burst(), 1700);
   },
-  burst:function(){
-    for(let i=0;i<8;i++){
-      const s=document.createElement("a-sphere");
-      const angle=Math.random()*Math.PI*2;
-      const r=0.05+Math.random()*0.18;
-      const x=Math.cos(angle)*r, z=Math.sin(angle)*r;
-      const yTo=.7+Math.random()*.6;
-
-      s.setAttribute("radius",0.015);
-      s.setAttribute("color",["#00FFFF","#FFD700","#FFFFFF","#FF66FF"][Math.floor(Math.random()*4)]);
-      s.setAttribute("position",`${x} -0.2 ${z}`);
-      s.setAttribute("animation",
-        `property:position;to:${x} ${yTo} ${z};dur:${700+Math.random()*600};easing:easeOutQuad`);
-      s.setAttribute("animation__fade",
-        "property:opacity;to:0;dur:900;delay:400");
-
+  burst: function(){
+    for (let i=0;i<8;i++){
+      const s = document.createElement('a-sphere');
+      const angle = Math.random()*Math.PI*2;
+      const r = 0.04 + Math.random()*0.18;
+      const x = Math.cos(angle)*r;
+      const z = Math.sin(angle)*r;
+      const yTo = 0.5 + Math.random()*0.7;
+      s.setAttribute('radius', 0.012 + Math.random()*0.02);
+      const colors = ['#00FFFF','#FFD700','#FFFFFF','#FF88FF'];
+      s.setAttribute('color', colors[Math.floor(Math.random()*colors.length)]);
+      s.setAttribute('position', `${x} -0.2 ${z}`);
+      s.setAttribute('animation', `property: position; to: ${x} ${yTo} ${z}; dur: ${700+Math.random()*700}; easing: easeOutCubic`);
+      s.setAttribute('animation__fade', `property: opacity; to:0; dur: ${800+Math.random()*800}; delay: 300`);
       this.el.appendChild(s);
-      setTimeout(()=>s.remove(),2000);
+      setTimeout(()=> { if (s.parentNode) s.parentNode.removeChild(s); }, 2200);
     }
-  }
+  },
+  remove: function(){ clearInterval(this.timer); }
 });
 
-/* ------------------------------------------
- Overlay hide/show
--------------------------------------------*/
-AFRAME.registerComponent("ar-events",{
-  init:function(){
-    const overlay=document.querySelector("#scanning-overlay");
-    this.el.addEventListener("targetFound",()=>overlay.style.display="none");
-    this.el.addEventListener("targetLost",()=>overlay.style.display="flex");
+/* ---------------------------
+ AR overlay show/hide & audio control
+----------------------------*/
+AFRAME.registerComponent('ar-control', {
+  init: function(){
+    const overlay = document.getElementById('scanning-overlay');
+    const music = document.getElementById('bgm');
+    this.el.addEventListener('targetFound', () => {
+      overlay.style.display = 'none';
+      try { music.play().catch(()=>{}); } catch(e){}
+    });
+    this.el.addEventListener('targetLost', () => {
+      overlay.style.display = 'flex';
+      try { music.pause(); } catch(e){}
+    });
   }
 });
 </script>
-
 </head>
 
 <body>
-
 <div id="scanning-overlay">Đang quét thẻ...</div>
 
-<a-scene mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;"
-         renderer="colorManagement:true"
+<a-scene mindar-image="imageTargetSrc: public/ar-card/target.mind; uiScanning: no;"
+         renderer="colorManagement:true; physicallyCorrectLights"
          vr-mode-ui="enabled:false"
          device-orientation-permission-ui="enabled:false">
 
+  <!-- assets: the ring image and music (crossorigin to avoid black textures) -->
   <a-assets>
-    <img id="ringImg" src="/image/nguyet-que.png">
-    <audio id="bgm" src="/music/Chang The Cam Hoa.mp3" preload="auto"></audio>
+    <img id="ringImg" src="public/image/hologram-ring.png" crossorigin="anonymous">
+    <audio id="bgm" src="public/music/Chang The Cam Hoa.mp3" preload="auto" crossorigin="anonymous"></audio>
   </a-assets>
 
-  <a-camera>
+  <!-- camera + light -->
+  <a-camera cursor="rayOrigin:mouse" position="0 0 0">
     <a-entity light="type:ambient; intensity:1.1; color:#66CCFF"></a-entity>
+    <a-entity light="type:directional; intensity:1.1; color:#FFE9A0" position="2 3 2"></a-entity>
   </a-camera>
 
-  <a-entity mindar-image-target="targetIndex:0" ar-events>
+  <!-- main AR target entity -->
+  <a-entity mindar-image-target="targetIndex:0" ar-control>
 
-    <!-- HOLOGRAM GLOW -->
-    <a-plane width="1.22" height="0.70" opacity="0.22"
-             color="#00FFFF"
-             position="0 0 0"
-             animation="property:opacity;from:0.12;to:0.35;dur:1500;loop:true;dir:alternate">
+    <!-- outer glow -->
+    <a-plane width="1.22" height="0.70" position="0 0 0" color="#00FFFF" opacity="0.22"
+             material="shader:flat; transparent:true"
+             animation="property:opacity; from:0.12; to:0.36; dur:1500; dir:alternate; loop:true">
     </a-plane>
 
-    <!-- RING IMAGE -->
-    <a-image src="#ringImg"
-             rotation="-90 0 0"
-             position="0 -0.42 0.005"
-             scale="0.9 0.9 0.9"
-             animation="property:rotation;to:-90 360 0;dur:6000;loop:true;easing:linear">
+    <!-- ring image (your asked /image/nguyet-que.png earlier, but here using hologram-ring.png in public/image) -->
+    <a-image src="#ringImg" rotation="-90 0 0" position="0 -0.42 0.005"
+             scale="0.9 0.9 0.9" opacity="0.95"
+             animation="property:rotation; to:-90 360 0; dur:6000; loop:true; easing:linear">
     </a-image>
 
-    <!-- HOLOGRAM RING -->
-    <a-ring radius-inner="0.56" radius-outer="0.585"
+    <!-- thin running ring -->
+    <a-ring radius-inner="0.56" radius-outer="0.585" position="0 0 0.01"
             material="color:#00FFFF; opacity:0.95"
-            position="0 0 0.01"
-            animation="property:rotation;to:0 0 360;dur:4200;loop:true">
+            animation="property:rotation; to:0 0 360; dur:4200; loop:true">
     </a-ring>
 
-    <!-- TEXT (canvas texture) -->
-    <a-image id="viet-text" width="1.15" height="0.22" position="0 0.50 0.015"></a-image>
+    <!-- greeting text as canvas texture -->
+    <a-image id="greeting" position="0 0.50 0.015" width="1.15" height="0.26"></a-image>
+
+    <!-- set text src after scene init -->
     <script>
-      const msg="Chúc mừng bạn đã hoàn thành hành trình tri thức — tương lai đang chờ đón một kỹ sư đầy khát vọng!";
-      const durl=makeTextTexture(msg);
-      const t=()=> {
-        const el=document.querySelector("#viet-text");
-        if(el){ el.setAttribute("src", durl); return; }
-        setTimeout(t,60);
-      }; t();
+      (function(){
+        const msg = "Chúc mừng bạn đã hoàn thành hành trình tri thức — tương lai đang chờ đón một kỹ sư đầy khát vọng!";
+        const dataUrl = createTextDataURL(msg, 1400);
+        const trySet = () => {
+          const el = document.getElementById('greeting');
+          if (el) { el.setAttribute('src', dataUrl); return; }
+          setTimeout(trySet, 50);
+        };
+        trySet();
+      })();
     </script>
 
-    <!-- SLIDESHOW -->
+    <!-- main slideshow (positioned on same plane) -->
     <a-image main-slideshow position="0 0.05 0.02"></a-image>
 
-    <!-- FILMSTRIP -->
-    <a-entity filmstrip position="0 0 0.02"></a-entity>
+    <!-- filmstrip: auto scan folder public/image/graduation/kyniem/ -->
+    <a-entity position="0 0 0.02" filmstrip></a-entity>
 
-    <!-- FIREWORKS -->
-    <a-entity fireworks position="0 0 0"></a-entity>
-
-    <script>
-      const music=document.getElementById("bgm");
-      const tEntity=document.querySelector("[mindar-image-target]");
-      tEntity.addEventListener("targetFound",()=>music.play().catch(()=>{}));
-      tEntity.addEventListener("targetLost",()=>music.pause());
-    </script>
+    <!-- fireworks -->
+    <a-entity position="0 -0.15 0" fireworks></a-entity>
 
   </a-entity>
 </a-scene>
