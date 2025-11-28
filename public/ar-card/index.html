@@ -3,155 +3,117 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>AR Real World Hologram</title>
+  <title>AR Graduation Album</title>
 
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 
   <style>
-    /* Reset CSS */
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-    
-    /* UI Màn hình chờ */
-    #overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85); z-index: 999;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      font-family: sans-serif;
-    }
-    .title {
-      color: #00FFFF; font-size: 20px; font-weight: bold; margin-bottom: 20px;
-      text-shadow: 0 0 10px #00FFFF; text-align: center; letter-spacing: 2px;
-    }
-    #start-btn {
-      padding: 12px 30px; font-size: 16px; font-weight: bold;
-      color: #000; background: #00FFFF; border: none; border-radius: 50px;
-      box-shadow: 0 0 15px #00FFFF; cursor: pointer; text-transform: uppercase;
-    }
+    #scanning-overlay { display: flex; align-items: center; justify-content: center; position: fixed; left: 0; right: 0; top: 0; bottom: 0; background: transparent; z-index: 2; pointer-events: none; }
+    .scan-text { color: white; font-weight: bold; background: rgba(0,0,0,0.5); padding: 10px 20px; border-radius: 20px; }
+    .mindar-ui-scanning #scanning-overlay { display: flex; }
+    .mindar-ui-loading #scanning-overlay { display: none; }
   </style>
 
   <script>
-    // --- APP MANAGER ---
-    AFRAME.registerComponent('app-manager', {
-      init: function() {
-        const btn = document.querySelector('#start-btn');
-        const overlay = document.querySelector('#overlay');
-        const music = document.querySelector('#bg-music');
-        
-        // Khi bấm nút Start
-        btn.addEventListener('click', () => {
-          overlay.style.opacity = '0';
-          setTimeout(() => overlay.style.display = 'none', 500);
-          
-          // Kích hoạt nhạc (yêu cầu tương tác người dùng)
-          if(music) {
-             music.play().then(() => { 
-               music.pause(); music.currentTime=0; // Reset, chờ target found mới phát
-             }).catch(e=>{ console.log("Audio Error", e) });
-          }
-        });
-
-        // Tìm thấy thẻ -> Phát nhạc
-        this.el.addEventListener("targetFound", () => { if(music) music.play(); });
-        // Mất thẻ -> Dừng nhạc
-        this.el.addEventListener("targetLost", () => { if(music) music.pause(); });
-      }
-    });
-
-    // --- CLICK LINK ---
-    AFRAME.registerComponent('click-opener', {
-      schema: { url: {type: 'string'} },
+    // --- COMPONENT SLIDESHOW NÂNG CAO (Tự động load ảnh trước) ---
+    AFRAME.registerComponent('image-slideshow', {
+      schema: {
+        sources: {type: 'array', default: []}, // Danh sách đường dẫn ảnh
+        interval: {type: 'number', default: 2500}, // Thời gian chuyển ảnh (ms)
+      },
       init: function () {
-        this.el.addEventListener('click', () => window.open(this.data.url, '_blank'));
-      }
-    });
-
-    // --- PHÁO HOA ---
-    AFRAME.registerComponent('fireworks', {
-      init: function() {
-        this.el.addEventListener('targetFound', () => {
-          for(let i=0; i<30; i++) {
-            let p = document.createElement('a-sphere');
-            let x = (Math.random()-0.5)*2; let y = Math.random()*2+0.5; let z = (Math.random()-0.5)*2;
-            p.setAttribute('position', '0 -0.4 0');
-            p.setAttribute('radius', '0.01');
-            p.setAttribute('color', ['#0ff','#ff0','#0f0'][Math.floor(Math.random()*3)]);
-            p.setAttribute('animation', `property:position; to:${x} ${y} ${z}; dur:2000; easing:easeOutQuad`);
-            p.setAttribute('animation__fade', `property:material.opacity; to:0; dur:2000`);
-            this.el.appendChild(p);
-            setTimeout(() => { if(p.parentNode) p.parentNode.removeChild(p); }, 2000);
+        this.currentIndex = 0;
+        this.images = [];
+        // Preload (tải trước) tất cả ảnh để tránh bị nháy đen khi chuyển
+        this.data.sources.forEach((src, index) => {
+          const img = new Image();
+          img.src = src;
+          this.images.push(img);
+          // Set ảnh đầu tiên ngay khi load xong
+          if (index === 0) {
+            img.onload = () => { this.el.setAttribute('src', src); };
           }
         });
+
+        if (this.images.length > 1) {
+          this.startSlideshow();
+        }
+      },
+      startSlideshow: function () {
+        this.intervalId = setInterval(() => {
+          this.currentIndex = (this.currentIndex + 1) % this.images.length;
+          // Cập nhật thuộc tính src của a-image bằng đường dẫn của ảnh tiếp theo
+          this.el.setAttribute('src', this.images[this.currentIndex].src);
+        }, this.data.interval);
+      },
+      remove: function () {
+        // Dọn dẹp bộ nhớ khi component bị hủy
+        if (this.intervalId) clearInterval(this.intervalId);
       }
     });
   </script>
 </head>
 
 <body>
-
-  <div id="overlay">
-    <div class="title">HỆ THỐNG AR KÍCH HOẠT</div>
-    <button id="start-btn">BẮT ĐẦU</button>
+  <div id="scanning-overlay" style="display:none">
+      <div class="scan-text">HÃY SOI VÀO TẤM THẺ...</div>
   </div>
 
   <a-scene 
-    app-manager
-    mindar-image="imageTargetSrc: /ar-card/target.mind; uiLoading: no; uiScanning: no; uiError: no;" 
+    mindar-image="imageTargetSrc: /ar-card/target.mind; filterMinCF:0.0001; filterBeta: 0.001; uiScanning: no;" 
     color-space="sRGB" 
-    renderer="colorManagement: true, physicallyCorrectLights, alpha: true"
+    renderer="colorManagement: true, physicallyCorrectLights"
     vr-mode-ui="enabled: false" 
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-      <a-asset-item id="avatarModel" src="/ar-card/avatar.glb"></a-asset-item>
-      
-      <img id="iconFB" src="/ar-card/icon-fb.png">
-      <img id="iconWeb" src="/ar-card/icon-web.png">
-      <img id="iconZalo" src="/ar-card/icon-zalo.png">
-      
-      <audio id="bg-music" src="/ar-card/music.mp3" preload="auto" loop></audio>
+      <img id="cardBg" src="/ar-card/tag.png" />
+      <img id="placeholder" src="/ar-card/tag.png"> 
     </a-assets>
 
-    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable">
-       <a-entity light="type: directional; intensity: 1.5; color: #ffffff" position="2 4 2"></a-entity>
-       <a-entity light="type: ambient; intensity: 0.8;"></a-entity>
-    </a-camera>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <a-entity mindar-image-target="targetIndex: 0" fireworks>
+    <a-entity mindar-image-target="targetIndex: 0">
 
-      <a-plane position="0 -0.4 0" rotation="-90 0 0" width="1.5" height="1.5" 
-               material="opacity: 0.6; color: #000; transparent: true">
-      </a-plane>
+      <a-image src="#cardBg" position="0 0 0" height="1.05" width="1.05" opacity="0.8"></a-image>
 
-      <a-gltf-model src="#avatarModel" 
-        position="0 -0.4 0.05" scale="0.38 0.38 0.38" 
-        animation-mixer
-        animation="property: position; from: 0 -0.4 0.05; to: 0 -0.35 0.05; dir: alternate; dur: 2000; loop: true">
-      </a-gltf-model>
 
-      <a-image src="#iconFB" class="clickable" position="-0.3 -0.5 0.2" scale="0.15 0.15 0.15"
-               animation="property: rotation; to: 0 360 0; dur: 8000; loop: true; easing: linear"
-               click-opener="url: https://www.facebook.com/tantai.ngo.397"></a-image>
-
-      <a-image src="#iconWeb" class="clickable" position="0 -0.6 0.3" scale="0.18 0.18 0.18"
-               animation="property: rotation; to: 0 -360 0; dur: 8000; loop: true; easing: linear"
-               click-opener="url: https://hethongthongminh.id.vn"></a-image>
-
-      <a-image src="#iconZALO" class="clickable" position="0.3 -0.5 0.2" scale="0.15 0.15 0.15"
-               animation="property: rotation; to: 0 360 0; dur: 8000; loop: true; easing: linear"
-               click-opener="url: https://zalo.me/0812493802"></a-image>
-
-      <a-entity position="0 0.3 0.1">
-         <a-text value="NGO TAN TAI" align="center" width="4" color="#00FFFF" position="0 0.15 0" 
-                 font="exo2bold" shader="msdf" negate="false"></a-text>
-         
-         <a-text value="ELECTRICAL ENGINEER" align="center" width="2.5" color="#FFFFFF" position="0 0.05 0" 
-                 font="roboto"></a-text>
-         
-         <a-text value="Tot nghiep khong cham mach\nChi cham cam xuc!" align="center" width="2" color="#FFFF00" position="0 -0.9 0" 
-                 font="roboto" wrap-count="30"></a-text>
+      <a-entity position="0 0.4 0.01">
+        <a-text value="CHUC MUNG TAN KY SU!" align="center" width="3" color="#FFD700" font="exo2bold" position="0 0.08 0"></a-text>
+        <a-text value="Tung canh bay xa, vung vang tuong lai!" align="center" width="2" color="#FFFFFF" font="roboto" position="0 0 0"></a-text>
       </a-entity>
+
+
+      <a-image 
+        src="#placeholder"
+        position="0 0.05 0.02" 
+        width="0.9" height="0.6"
+        image-slideshow="interval: 3000; sources: [
+          '/image/graduation/main1.jpg',
+          '/image/graduation/main2.jpg',
+          '/image/graduation/main3.jpg',
+          '/image/graduation/main4.jpg',
+          '/image/graduation/main5.jpg',
+          '/image/graduation/main6.jpg'
+        ]">
+      </a-image>
+
+
+      <a-text value="Thuoc phim ky niem" align="center" width="1.5" color="#CCC" position="0 -0.3 0.01"></a-text>
+      
+      <a-image 
+        src="#placeholder"
+        position="0 -0.45 0.02" 
+        width="1" height="0.25"
+        image-slideshow="interval: 2000; sources: [
+          '/image/graduation/kyniem/kn1.jpg',
+          '/image/graduation/kyniem/kn2.jpg',
+          '/image/graduation/kyniem/kn3.jpg',
+          '/image/graduation/kyniem/kn4.jpg'
+        ]">
+      </a-image>
 
     </a-entity>
   </a-scene>
