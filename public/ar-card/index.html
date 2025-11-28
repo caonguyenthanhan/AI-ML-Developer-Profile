@@ -36,9 +36,9 @@
     // Kiểm tra ngay khi load trang
     window.onload = function() {
         // Kiểm tra file target.mind
-        checkFileExists('/public/ar-card/target.mind', 'TARGET (target.mind)');
+        checkFileExists('/ar-card/target.mind', 'TARGET (target.mind)');
         // Kiểm tra file avatar.glb
-        checkFileExists('/public/ar-card/avatar.glb', 'MODEL (avatar.glb)');
+        checkFileExists('/ar-card/avatar.glb', 'MODEL (avatar.glb)');
     };
   </script>
 </head>
@@ -55,10 +55,10 @@
 
     <a-assets>
       <a-asset-item id="avatarModel" src="/public/ar-card/avatar.glb"></a-asset-item>
-      <img id="cardBg" src="/public/ar-card/tag.png" />
-      <img id="icon-fb" src="/public/ar-card/tag.png" /> 
-      <img id="icon-web" src="/public/ar-card/tag.png" />
-      <img id="icon-zalo" src="/public/ar-card/tag.png" />
+      <img id="cardBg" src="/ar-card/tag.png" />
+      <img id="icon-fb" src="/ar-card/tag.png" /> 
+      <img id="icon-web" src="/ar-card/tag.png" />
+      <img id="icon-zalo" src="/ar-card/tag.png" />
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
