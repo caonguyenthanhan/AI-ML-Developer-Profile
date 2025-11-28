@@ -87,6 +87,57 @@
         this.el.setAttribute('opacity', intensity);
       }
     });
+
+    AFRAME.registerComponent('slideshow-main', {
+      schema: {
+        ids: {type: 'array', default: ['main1','main2','main3','main4','main5','main6']},
+        interval: {type: 'int', default: 2500},
+        width: {type: 'number', default: 0.5},
+        maxHeight: {type: 'number', default: 0.24}
+      },
+      init: function() {
+        this.index = 0;
+        this.timer = null;
+        this.assets = this.data.ids.map(function(id){return document.getElementById(id);}).filter(function(el){return !!el;});
+        this.updateImage = this.updateImage.bind(this);
+        this.start();
+      },
+      remove: function(){
+        if (this.timer) clearInterval(this.timer);
+      },
+      start: function(){
+        this.updateImage();
+        var self = this;
+        this.timer = setInterval(function(){
+          if (!self.assets.length) return;
+          self.index = (self.index + 1) % self.assets.length;
+          self.updateImage();
+        }, this.data.interval);
+      },
+      updateImage: function(){
+        if (!this.assets.length) return;
+        var asset = this.assets[this.index];
+        var w = asset.naturalWidth;
+        var h = asset.naturalHeight;
+        if (!w || !h) {
+          var self = this;
+          asset.addEventListener('load', function(){ self.updateImage(); }, {once:true});
+          return;
+        }
+        var targetWidth = this.data.width;
+        var ratio = h / w;
+        var targetHeight = targetWidth * ratio;
+        var maxH = this.data.maxHeight;
+        if (targetHeight > maxH) {
+          targetHeight = maxH;
+          targetWidth = targetHeight / ratio;
+        }
+        this.el.setAttribute('src', '#' + asset.id);
+        this.el.setAttribute('width', targetWidth);
+        this.el.setAttribute('height', targetHeight);
+        this.el.setAttribute('material', 'shader: flat; transparent: true');
+      }
+    });
   </script>
 </head>
 
@@ -104,6 +155,13 @@
       <img id="nguyetque" src="/image/graduation/nguyet-que.png" />
       
       <img id="fallback" src="/ar-card/tag.png">
+      <img id="ring" src="/image/hologram-ring.png" />
+      <img id="main1" src="/image/graduation/main.jpg" />
+      <img id="main2" src="/image/graduation/main2.jpg" />
+      <img id="main3" src="/image/graduation/main3.jpg" />
+      <img id="main4" src="/image/graduation/main4.jpg" />
+      <img id="main5" src="/image/graduation/main5.jpg" />
+      <img id="main6" src="/image/graduation/main6.jpg" />
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -121,21 +179,28 @@
       <a-circle color="#00FFFF" radius="0.6" position="0.6 -0.55 0.01" shader="flat"></a-circle>
 
 
-      <a-image src="#nguyetque" onerror="this.src='#fallback'"
-               position="0 0 0.01" 
-               width="0.8" height="0.8" 
+      <a-image src="#ring"
+               position="0 -0.2 0.01" 
+               width="0.8" height="0.6" 
                opacity="0.9"
                animation="property: rotation; to: 0 0 360; dur: 10000; easing: linear; loop: true">
       </a-image>
 
 
-      <a-entity position="0 0.2 0.05">
+      <a-entity position="0 0.375 0.05">
         <a-text value="CHUC MUNG TOT NGHIEP" color="#000" align="center" width="3" position="0.02 -0.02 -0.01" font="exo2bold"></a-text>
         <a-text value="CHUC MUNG TOT NGHIEP" color="#FFD700" align="center" width="3" position="0 0 0" font="exo2bold"></a-text>
         
         <a-text value="TAN KY SU DIEN - NGO TAN TAI" color="#FFF" align="center" width="2" position="0 -0.15 0" font="roboto"></a-text>
       </a-entity>
+      <a-image src="#nguyetque"
+               position="0 0.335 0.02"
+               width="0.6" height="0.12"
+               opacity="0.95"
+               shader="flat">
+      </a-image>
 
+      <a-image position="0 0.26 0.03" slideshow-main="width: 0.5; maxHeight: 0.24; interval: 2500"></a-image>
 
       <a-entity auto-filmstrip></a-entity>
 
