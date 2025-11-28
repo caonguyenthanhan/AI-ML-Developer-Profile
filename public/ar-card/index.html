@@ -10,14 +10,6 @@
 
   <style>
     body { margin: 0; background: #000; overflow: hidden; }
-    #overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10;
-      display: flex; align-items: center; justify-content: center;
-      color: #00FFFF; font-family: sans-serif; font-weight: bold;
-      pointer-events: none;
-    }
-    .mindar-ui-scanning #overlay { display: flex; }
-    .mindar-ui-loading #overlay { display: none; }
   </style>
 
   <script>
@@ -142,7 +134,7 @@
 </head>
 
 <body>
-  <div id="overlay">ĐANG TẢI DỮ LIỆU KỸ SƯ...</div>
+  
 
   <a-scene 
     mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;" 
@@ -152,8 +144,6 @@
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-      <img id="nguyetque" src="/image/graduation/nguyet-que.png" />
-      
       <img id="fallback" src="/ar-card/tag.png">
       <img id="ring" src="/image/hologram-ring.png" />
       <img id="main1" src="/image/graduation/main.jpg" />
@@ -187,20 +177,13 @@
       </a-image>
 
 
-      <a-entity position="0 0.375 0.05">
+      <a-entity position="0 0.42 0.05">
         <a-text value="CHUC MUNG TOT NGHIEP" color="#000" align="center" width="3" position="0.02 -0.02 -0.01" font="exo2bold"></a-text>
         <a-text value="CHUC MUNG TOT NGHIEP" color="#FFD700" align="center" width="3" position="0 0 0" font="exo2bold"></a-text>
         
         <a-text value="TAN KY SU DIEN - NGO TAN TAI" color="#FFF" align="center" width="2" position="0 -0.15 0" font="roboto"></a-text>
       </a-entity>
-      <a-image src="#nguyetque"
-               position="0 0.335 0.02"
-               width="0.6" height="0.12"
-               opacity="0.95"
-               shader="flat">
-      </a-image>
-
-      <a-image position="0 0.26 0.03" slideshow-main="width: 0.5; maxHeight: 0.24; interval: 2500"></a-image>
+      <a-image position="0 0.22 0.03" slideshow-main="width: 0.7; maxHeight: 0.28; interval: 2500"></a-image>
 
       <a-entity auto-filmstrip></a-entity>
 
