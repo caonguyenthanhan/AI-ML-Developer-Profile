@@ -10,212 +10,222 @@
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 
   <style>
-    body { margin: 0; overflow: hidden; }
+    body { margin: 0; overflow: hidden; font-family: sans-serif; }
 
+    /* Màn hình chờ + Nút Start (Bắt buộc để chạy nhạc) */
+    #start-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85); z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    #start-btn {
+      padding: 15px 40px; font-size: 20px; font-weight: bold;
+      color: #00FFFF; background: transparent; border: 2px solid #00FFFF;
+      border-radius: 30px; cursor: pointer; text-shadow: 0 0 10px #00FFFF;
+      box-shadow: 0 0 15px #00FFFF; transition: 0.3s;
+    }
+    #start-btn:active { transform: scale(0.95); background: rgba(0,255,255,0.2); }
+
+    /* Overlay khi đang scan */
     #scanning-overlay {
-      display:flex; align-items:center; justify-content:center;
+      display:none; /* Mặc định ẩn, chỉ hiện khi đã start */
+      align-items:center; justify-content:center;
       position:fixed; left:0; right:0; top:0; bottom:0;
-      background:rgba(0,0,0,0.45); z-index:4; pointer-events:none;
-      color:#00FFFF; font-size:22px; text-shadow:0 0 15px #00FFFF;
-      backdrop-filter: blur(3px);
-      animation: fadePulse 2s infinite alternate;
+      background:transparent; z-index:4; pointer-events:none;
     }
-
-    @keyframes fadePulse {
-      from { opacity: 0.6; }
-      to   { opacity: 1; }
+    .scan-text {
+      color: #00FFFF; font-size: 18px; font-weight: bold;
+      background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 20px;
+      border: 1px solid #00FFFF;
     }
+    
+    .mindar-ui-scanning #scanning-overlay { display: flex; }
+    .mindar-ui-loading #scanning-overlay { display: none; }
   </style>
 
   <script>
-    /* =============================
-       ULTRA PREMIUM ENGINE
-    ================================*/
+    /* 1. AUDIO ENGINE (Chỉ khởi tạo sau khi user click) */
+    let audioCtx, analyser, dataArray, audioSource;
+    let isAudioStarted = false;
 
-    /* MUSIC BEAT REACTIVE ENGINE */
-    let audioCtx, analyser, dataArray;
-
-    function initAudioBeat() {
+    function initAudio() {
+      if(isAudioStarted) return;
       const bgMusic = document.querySelector('#bg-music');
+      
+      // Tạo Context
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const track = audioCtx.createMediaElementSource(bgMusic);
       analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 128;
+      analyser.fftSize = 256; // Tăng độ chi tiết
 
-      track.connect(analyser);
+      // Kết nối
+      audioSource = audioCtx.createMediaElementSource(bgMusic);
+      audioSource.connect(analyser);
       analyser.connect(audioCtx.destination);
-
+      
       dataArray = new Uint8Array(analyser.frequencyBinCount);
+      isAudioStarted = true;
+      
+      // Ẩn màn hình Start
+      document.querySelector('#start-screen').style.display = 'none';
+      document.querySelector('#scanning-overlay').style.display = 'flex';
+      
+      // Hack: Phát thử 1 cái rồi pause để trình duyệt cấp quyền
+      bgMusic.play().then(() => {
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+      }).catch(e => console.log("Audio Error:", e));
     }
 
-    function getBeat() {
+    function getBass() {
       if (!analyser) return 0;
       analyser.getByteFrequencyData(dataArray);
-      let bass = dataArray[1] + dataArray[2] + dataArray[3];
-      return bass / 255;
+      // Lấy trung bình dải tần thấp (Bass)
+      let sum = 0;
+      for(let i=0; i<5; i++) sum += dataArray[i];
+      return sum / (5 * 255); // Trả về 0.0 -> 1.0
     }
 
-    /* CLICK LINK */
-    AFRAME.registerComponent('click-opener', {
-      schema:{url:{type:'string'}},
-      init:function(){
-        this.el.addEventListener('click',()=>window.open(this.data.url,'_blank'));
-      }
-    });
-
-    /* HOLOGRAM GLITCH SHADER */
-    AFRAME.registerComponent('hologram-glitch', {
+    /* 2. COMPONENT LOGIC */
+    
+    // Beat React: Chỉ dùng cho Vòng tròn & Loa (Không méo Avatar)
+    AFRAME.registerComponent('beat-scale', {
       tick: function() {
-        const t = performance.now()/200;
-        this.el.setAttribute('material', 'color', `hsl(${(t*40)%360},100%,65%)`);
-      }
-    });
-
-    /* TARGET EVENTS */
-    AFRAME.registerComponent('ultra-effects', {
-      init: function(){
-        const overlay = document.querySelector('#scanning-overlay');
-        const music = document.querySelector('#bg-music');
-        const avatar = document.querySelector('#avatar');
-
-        this.el.addEventListener('targetFound',()=>{
-
-          overlay.style.display="none";
-
-          /* Start music */
-          music.play();
-          if (!audioCtx) initAudioBeat();
-
-          /* Avatar hologram spawn */
-          avatar.setAttribute('animation__spawn',
-            'property: scale; from:0 0 0; to:0.38 0.38 0.38; dur:1600; easing:easeOutElastic');
-          avatar.setAttribute('animation__rise',
-            'property: position; from:0 -1 0.05; to:0 -0.35 0.05; dur:1500; easing:easeOutQuad');
-
-        });
-
-        this.el.addEventListener('targetLost',()=>{
-          overlay.style.display="flex";
-          if (music) music.pause();
-        });
-      }
-    });
-
-    /* BEAT REACTION LOOP */
-    AFRAME.registerComponent('beat-react', {
-      tick: function(){
-        const beat = getBeat();
-        if (beat > 0) {
-          this.el.setAttribute('scale', `${1+beat*0.4} ${1+beat*0.4} ${1+beat*0.4}`);
+        if(!isAudioStarted) return;
+        const bass = getBass();
+        if (bass > 0.1) {
+          const scale = 1 + (bass * 0.3); // Scale nhẹ theo nhạc
+          this.el.setAttribute('scale', `${scale} ${scale} ${scale}`);
+        } else {
+          this.el.setAttribute('scale', '1 1 1');
         }
       }
     });
 
+    // Hologram Color: Đổi màu theo thời gian
+    AFRAME.registerComponent('hologram-color', {
+      tick: function() {
+        const t = performance.now() / 20;
+        const hue = (t % 360);
+        this.el.setAttribute('color', `hsl(${hue}, 100%, 70%)`);
+      }
+    });
+
+    // Main Control
+    AFRAME.registerComponent('main-controller', {
+      init: function(){
+        const music = document.querySelector('#bg-music');
+        const overlay = document.querySelector('#scanning-overlay');
+        
+        this.el.addEventListener('targetFound', () => {
+            console.log("Found!");
+            if(isAudioStarted) {
+                if(audioCtx.state === 'suspended') audioCtx.resume();
+                music.play();
+            }
+            overlay.style.display = "none";
+        });
+
+        this.el.addEventListener('targetLost', () => {
+            console.log("Lost!");
+            if(isAudioStarted) music.pause();
+            overlay.style.display = "flex";
+        });
+      }
+    });
+
+    // Click Opener
+    AFRAME.registerComponent('click-opener', {
+      schema:{url:{type:'string'}},
+      init:function(){
+        this.el.addEventListener('click',()=>window.open(this.data.url,'_blank'));
+        this.el.addEventListener('mouseenter', () => this.el.setAttribute('scale', '1.2 1.2 1.2'));
+        this.el.addEventListener('mouseleave', () => this.el.setAttribute('scale', '1 1 1'));
+      }
+    });
   </script>
 </head>
 
 <body>
 
-  <div id="scanning-overlay">SCANNING TARGET...</div>
+  <div id="start-screen">
+    <h2 style="color:white; margin-bottom:20px; font-family:sans-serif;">AR GRADUATION CARD</h2>
+    <button id="start-btn" onclick="initAudio()">BẮT ĐẦU TRẢI NGHIỆM</button>
+  </div>
+
+  <div id="scanning-overlay">
+    <div class="scan-text">HÃY SOI VÀO TẤM THẺ...</div>
+  </div>
 
   <a-scene
-    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;"
+    mindar-image="imageTargetSrc: /ar-card/target.mind; filterMinCF:0.0001; filterBeta: 0.001; uiScanning: no;"
     renderer="colorManagement: true, physicallyCorrectLights"
     vr-mode-ui="enabled:false"
     device-orientation-permission-ui="enabled:false">
 
     <a-assets>
       <a-asset-item id="avatarModel" src="/ar-card/avatar.glb"></a-asset-item>
-
-      <!-- ORB ICONS (GLB) -->
-      <a-asset-item id="iconFB" src="/ar-card/icon-fb.glb"></a-asset-item>
-      <a-asset-item id="iconWEB" src="/ar-card/icon-web.glb"></a-asset-item>
-      <a-asset-item id="iconZALO" src="/ar-card/icon-zalo.glb"></a-asset-item>
+      
+      <img id="iconFB" src="/ar-card/icon-fb.png"> 
+      <img id="iconWEB" src="/ar-card/icon-web.png">
+      <img id="iconZALO" src="/ar-card/icon-zalo.png">
 
       <img id="cardBg" src="/ar-card/tag.png">
-      <img id="ringImg" src="/image/hologram-ring.png">
-      <img id="portalImg" src="/image/portal.png">
-
-      <audio id="bg-music" src="/music/Chang The Cam Hoa.mp3" preload="auto" loop></audio>
+      <img id="ringImg" src="/ar-card/tag.png"> 
+      
+      <audio id="bg-music" src="/ar-card/music.mp3" preload="auto" loop></audio>
     </a-assets>
 
-    <!-- LIGHT SYSTEM -->
-    <a-camera cursor="rayOrigin:mouse" raycaster="objects:.clickable">
-      <a-entity light="type: ambient; intensity:1.4; color:#55CCFF"></a-entity>
-      <a-entity light="type: directional; intensity:1.3; color:#FFE6A0" position="2 3 2"></a-entity>
-      <a-entity light="type: point; intensity:1.2; distance:4; color:#00FFFF" position="0 1 -0.4"></a-entity>
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable">
+      <a-entity light="type: directional; intensity: 1.5; color: #00FFFF" position="2 4 2"></a-entity>
+      <a-entity light="type: ambient; intensity: 0.6;"></a-entity>
     </a-camera>
 
-    <a-entity mindar-image-target="targetIndex: 0" ultra-effects>
+    <a-entity mindar-image-target="targetIndex: 0" main-controller>
 
-      <!-- PORTAL -->
-      <a-image src="#portalImg" rotation="-90 0 0" position="0 -0.45 0.03"
-        scale="1 1 1" opacity="0.9"
-        animation="property: rotation; to:-90 360 0; dur:8000; loop:true; easing:linear">
+      <a-ring radius-inner="0.4" radius-outer="0.5" position="0 -0.4 0" rotation="-90 0 0" 
+              hologram-color beat-scale opacity="0.8">
+      </a-ring>
+
+      <a-image src="#ringImg" rotation="-90 0 0" position="0 -0.4 0.01"
+        scale="0.9 0.9 0.9" opacity="0.6"
+        animation="property: rotation; to:-90 360 0; dur:10000; loop:true; easing:linear">
       </a-image>
 
-      <!-- RING -->
-      <a-image src="#ringImg" rotation="-90 0 0" position="0 -0.38 0"
-        scale="0.9 0.9 0.9" opacity="0.8"
-        animation="property: rotation; to:-90 -360 0; dur:6000; loop:true">
-      </a-image>
-
-
-      <!-- SCAN LINES -->
-      <a-plane width="1.05" height="0.08" color="#00FFFF" opacity="0.25"
-        position="0 0 -0.05"
-        animation="property: position; from:0 0.5 -0.05; to:0 -0.5 -0.05; dur:2000;loop:true">
-      </a-plane>
-
-      <!-- CARD BASE -->
-      <a-plane src="#cardBg" height="1.05" width="1.05" position="0 0 -0.06"></a-plane>
-
-
-      <!-- AVATAR -->
-      <a-gltf-model id="avatar" src="#avatarModel"
-        position="0 -0.35 0.05" scale="0 0 0"
-        animation-mixer hologram-glitch beat-react>
+      <a-gltf-model src="#avatarModel"
+        position="0 -0.4 0.05" scale="0.38 0.38 0.38"
+        animation-mixer 
+        animation="property: position; from: 0 -0.4 0.05; to: 0 -0.35 0.05; dir: alternate; dur: 2000; loop: true">
       </a-gltf-model>
 
-
-      <!-- PARTICLES -->
-      <a-entity position="0 -0.2 0">
-        <a-sphere radius="0.015" color="#00FFFF" position="0.2 0 0"
-          animation="property: position; to:0.2 1 0; dur:2400; loop:true">
-        </a-sphere>
-        <a-sphere radius="0.012" color="#FFD700" position="-0.15 0.1 0.1"
-          animation="property: position; to:-0.15 0.9 0.1; dur:2700; loop:true">
-        </a-sphere>
+      <a-entity position="0 -0.4 0">
+         <a-box color="#00FFFF" scale="0.02 0.02 0.02" position="0.2 0 0" animation="property: position; to: 0.2 1 0; dur: 2000; loop: true"></a-box>
+         <a-box color="#FFD700" scale="0.01 0.01 0.01" position="-0.2 0.1 0" animation="property: position; to: -0.2 0.8 0; dur: 2500; loop: true"></a-box>
       </a-entity>
 
-
-      <!-- ORB ICONS -->
-      <a-gltf-model src="#iconFB" class="clickable"
-        position="-0.32 -0.65 0.22" scale="0.25 0.25 0.25"
-        animation="property: rotation; to:0 360 0; dur:7000; loop:true"
+      <a-image src="#iconFB" class="clickable"
+        position="-0.3 -0.65 0.2" scale="0.15 0.15 0.15"
+        animation="property: position; to:-0.3 -0.62 0.2; dir:alternate; dur:1500; loop:true"
         click-opener="url:https://www.facebook.com/tantai.ngo.397">
-      </a-gltf-model>
+      </a-image>
 
-      <a-gltf-model src="#iconWEB" class="clickable"
-        position="0 -0.75 0.25" scale="0.28 0.28 0.28"
-        animation="property: rotation; to:0 -360 0; dur:7000; loop:true"
+      <a-image src="#iconWEB" class="clickable"
+        position="0 -0.7 0.25" scale="0.18 0.18 0.18"
+        animation="property: position; to:0 -0.67 0.25; dir:alternate; dur:1500; loop:true"
         click-opener="url:https://hethongthongminh.id.vn">
-      </a-gltf-model>
+      </a-image>
 
-      <a-gltf-model src="#iconZALO" class="clickable"
-        position="0.32 -0.65 0.22" scale="0.25 0.25 0.25"
-        animation="property: rotation; to:0 360 0; dur:7000; loop:true"
+      <a-image src="#iconZALO" class="clickable"
+        position="0.3 -0.65 0.2" scale="0.15 0.15 0.15"
+        animation="property: position; to:0.3 -0.62 0.2; dir:alternate; dur:1500; loop:true"
         click-opener="url:https://zalo.me/0812493802">
-      </a-gltf-model>
+      </a-image>
 
-      <!-- TEXT -->
-      <a-text value="NGO TAN TAI" align="center" width="3" color="#00FFFF" position="0 0.30 0.1"></a-text>
-      <a-text value="ELECTRICAL ENGINEER" align="center" width="2" color="#FFF" position="0 0.22 0.1"></a-text>
-      <a-text value="BKU - K21" align="center" width="1.5" color="#CCD" position="0 0.15 0.1"></a-text>
+      <a-entity position="0 0 0.1">
+         <a-text value="NGO TAN TAI" align="center" width="2.8" color="#00FFFF" position="0 0.25 0" font="exo2bold"></a-text>
+         <a-text value="ELECTRICAL ENGINEER" align="center" width="1.8" color="#FFF" position="0 0.15 0"></a-text>
+      </a-entity>
 
     </a-entity>
-
   </a-scene>
-
 </body>
 </html>
