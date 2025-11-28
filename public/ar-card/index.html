@@ -10,10 +10,10 @@
 
   <style>
     body { margin: 0; background: #000; overflow: hidden; }
-    #start-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-    #start-overlay .inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-    #start-btn { padding: 12px 20px; font-size: 16px; font-weight: 700; color: #000; background: #00FFFF; border: none; border-radius: 8px; cursor: pointer; }
-    #start-btn:active { transform: scale(0.98); }
+    #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+    #overlay .inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .btn-start { padding: 12px 20px; font-size: 16px; font-weight: 700; color: #000; background: #00FFFF; border: none; border-radius: 8px; cursor: pointer; }
+    .btn-start:active { transform: scale(0.98); }
   </style>
 
   <script>
@@ -44,17 +44,17 @@
             loopFiles.forEach(filename => {
               const img = document.createElement('a-image');
               img.setAttribute('src', data.folder + filename);
-              img.setAttribute('width', '0.35');
+              img.setAttribute('width', '0.4');
               img.setAttribute('height', '0.25');
               // Shader flat để ảnh sáng rõ
               img.setAttribute('material', 'shader: flat; transparent: true');
-              img.setAttribute('position', `${x} -0.4 0.02`);
+              img.setAttribute('position', `${x} -0.55 0.02`);
               
               // Animation chạy ngang vô tận
               img.setAttribute('animation', {
                 property: 'position',
-                to: `${x + 1.5} -0.4 0.02`,
-                dur: 8000 + (Math.random() * 2000), // Random tốc độ chút cho tự nhiên
+                to: `${x + 1.5} -0.55 0.02`,
+                dur: 10000 + (Math.random() * 2000),
                 loop: true,
                 easing: 'linear'
               });
@@ -84,90 +84,69 @@
       }
     });
 
-    AFRAME.registerComponent('slideshow-main', {
-      schema: {
-        ids: {type: 'array', default: ['main1','main2','main3','main4','main5','main6']},
-        interval: {type: 'int', default: 2500},
-        width: {type: 'number', default: 0.5},
-        maxHeight: {type: 'number', default: 0.24}
-      },
+    AFRAME.registerComponent('avatar-slideshow', {
+      schema: { folder: {type: 'string', default: '/image/graduation/'}, count: {type: 'number', default: 6}, interval: {type: 'int', default: 2500} },
       init: function() {
-        this.index = 0;
-        this.timer = null;
-        this.assets = this.data.ids.map(function(id){return document.getElementById(id);}).filter(function(el){return !!el;});
-        this.updateImage = this.updateImage.bind(this);
-        this.start();
+        var el = this.el;
+        var data = this.data;
+        var idx = 1;
+        this.timer = setInterval(function(){ idx = (idx % data.count) + 1; el.setAttribute('src', data.folder + 'main' + idx + '.jpg'); }, data.interval);
       },
-      remove: function(){
-        if (this.timer) clearInterval(this.timer);
-      },
-      start: function(){
-        this.updateImage();
-        var self = this;
-        this.timer = setInterval(function(){
-          if (!self.assets.length) return;
-          self.index = (self.index + 1) % self.assets.length;
-          self.updateImage();
-        }, this.data.interval);
-      },
-      updateImage: function(){
-        if (!this.assets.length) return;
-        var asset = this.assets[this.index];
-        var w = asset.naturalWidth;
-        var h = asset.naturalHeight;
-        if (!w || !h) {
-          var self = this;
-          asset.addEventListener('load', function(){ self.updateImage(); }, {once:true});
-          return;
-        }
-        var targetWidth = this.data.width;
-        var ratio = h / w;
-        var targetHeight = targetWidth * ratio;
-        var maxH = this.data.maxHeight;
-        if (targetHeight > maxH) {
-          targetHeight = maxH;
-          targetWidth = targetHeight / ratio;
-        }
-        this.el.setAttribute('src', '#' + asset.id);
-        this.el.setAttribute('width', targetWidth);
-        this.el.setAttribute('height', targetHeight);
-        this.el.setAttribute('material', 'shader: flat; transparent: true');
+      remove: function(){ if (this.timer) clearInterval(this.timer); }
+    });
+
+    AFRAME.registerComponent('marquee', {
+      tick: function(t, dt) {
+        var pos = this.el.getAttribute('position');
+        pos.x -= 0.001 * dt;
+        if (pos.x < -3) pos.x = 3;
+        this.el.setAttribute('position', pos);
       }
     });
 
-    document.addEventListener('DOMContentLoaded', function(){
-      var btn = document.getElementById('start-btn');
-      var ov = document.getElementById('start-overlay');
-      var audio = document.getElementById('bg-music');
-      if (btn && ov && audio) {
-        btn.addEventListener('click', function(){
-          ov.style.display = 'none';
-          var p = audio.play();
-          if (p && typeof p.then === 'function') { p.catch(function(e){ console.warn('Audio play blocked'); }); }
-        });
+    AFRAME.registerComponent('app-manager', {
+      init: function() {
+        var btn = document.querySelector('.btn-start');
+        var ov = document.getElementById('overlay');
+        var audio = document.getElementById('bg-music');
+        var video = document.getElementById('youtube-video-file');
+        if (btn && ov) {
+          btn.addEventListener('click', function(){
+            ov.style.opacity = '0';
+            setTimeout(function(){ ov.style.display = 'none'; }, 300);
+            if (audio) { var p = audio.play(); if (p && typeof p.then === 'function') { p.then(function(){ audio.pause(); audio.currentTime=0; }).catch(function(){}); } }
+            if (video) { var v = video.play(); if (v && typeof v.then === 'function') { v.then(function(){ video.pause(); video.currentTime=0; }).catch(function(){}); } }
+          });
+        }
+        var targetEl = document.querySelector('[mindar-image-target]');
+        if (targetEl) {
+          targetEl.addEventListener('targetFound', function(){ if (audio) audio.play(); if (video) { video.muted=false; video.play(); } });
+          targetEl.addEventListener('targetLost', function(){ if (audio) audio.pause(); if (video) video.pause(); });
+        }
       }
     });
   </script>
 </head>
 
 <body>
-  <div id="start-overlay">
+  <div id="overlay">
     <div class="inner">
-      <button id="start-btn">BẮT ĐẦU / START</button>
+      <button class="btn-start">KHỞI ĐỘNG HỆ THỐNG</button>
     </div>
   </div>
   <audio id="bg-music" src="/ar-card/music.mp3" loop preload="auto" playsinline></audio>
 
   <a-scene 
-    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;" 
+    app-manager
+    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no; uiLoading: no;" 
     color-space="sRGB" 
     renderer="colorManagement: true, physicallyCorrectLights"
     vr-mode-ui="enabled: false" 
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
+      <video id="youtube-video-file" src="/ar-card/video.mp4" preload="auto" loop webkit-playsinline playsinline muted></video>
       <img id="fallback" src="/ar-card/tag.png">
-      <img id="ring" src="/image/hologram-ring.png" />
       <img id="main1" src="/image/graduation/main.jpg" />
       <img id="main2" src="/image/graduation/main2.jpg" />
       <img id="main3" src="/image/graduation/main3.jpg" />
@@ -180,10 +159,17 @@
 
     <a-entity mindar-image-target="targetIndex: 0">
 
-      <a-plane color="#00FFFF" width="1.2" height="0.02" position="0 0.38 0" shader="flat" circuit-anim></a-plane>
-      <a-plane color="#00FFFF" width="1.2" height="0.02" position="0 -0.55 0" shader="flat" circuit-anim></a-plane>
-      <a-plane color="#00FFFF" width="0.02" height="0.95" position="-0.6 0 -0.08" shader="flat" circuit-anim></a-plane>
-      <a-plane color="#00FFFF" width="0.02" height="0.95" position="0.6 0 -0.08" shader="flat" circuit-anim></a-plane>
+      <a-entity position="-1.2 0 0">
+        <a-plane width="1.6" height="0.9" color="#000" material="shader: flat; opacity: 0.8"></a-plane>
+        <a-plane width="1.65" height="0.95" color="#00FFFF" material="shader: flat; opacity: 0.3" position="0 0 -0.01"></a-plane>
+        <a-video src="#youtube-video-file" width="1.5" height="0.85" position="0 0 0.01"></a-video>
+        <a-text value="KY YEU 2025" position="0 0.55 0" align="center" color="#FFF" font="roboto"></a-text>
+      </a-entity>
+
+      <a-plane color="#00FFFF" width="1.1" height="0.01" position="0 0.36 0" shader="flat" circuit-anim></a-plane>
+      <a-plane color="#00FFFF" width="1.1" height="0.01" position="0 -0.55 0" shader="flat" circuit-anim></a-plane>
+      <a-plane color="#00FFFF" width="0.01" height="0.9" position="-0.55 -0.1 0" shader="flat" circuit-anim></a-plane>
+      <a-plane color="#00FFFF" width="0.01" height="0.9" position="0.55 -0.1 0" shader="flat" circuit-anim></a-plane>
 
       <a-circle color="#00FFFF" radius="0.04" position="-0.6 0.38 0.01" shader="flat"></a-circle>
       <a-circle color="#00FFFF" radius="0.04" position="0.6 0.38 0.01" shader="flat"></a-circle>
@@ -191,21 +177,19 @@
       <a-circle color="#00FFFF" radius="0.04" position="0.6 -0.55 0.01" shader="flat"></a-circle>
 
 
-      <a-image src="#ring"
-               position="0 -0.2 0.01" 
-               width="0.8" height="0.6" 
-               opacity="0.9"
-               animation="property: rotation; to: 0 0 360; dur: 10000; easing: linear; loop: true">
-      </a-image>
+      
 
 
-      <a-entity position="0 0.42 0.05">
-        <a-text value="CHUC MUNG TOT NGHIEP" color="#000" align="center" width="3" position="0.02 -0.02 -0.01" font="exo2bold" shader="flat"></a-text>
-        <a-text value="CHUC MUNG TOT NGHIEP" color="#00FFFF" align="center" width="3" position="0 0 0" font="exo2bold" shader="flat"></a-text>
-        
-        <a-text value="TAN KY SU DIEN - NGO TAN TAI" color="#FFF" align="center" width="2" position="0 -0.15 0" font="roboto"></a-text>
+      <a-entity position="0 0.6 0.05">
+        <a-text value="CHUC MUNG TOT NGHIEP" align="center" width="4" color="#00FFFF" font="exo2bold" position="0 0.1 0" shader="flat"></a-text>
+        <a-text value="TAN KY SU DIEN: NGO TAN TAI" align="center" width="2.5" color="#FFFF00" font="exo2bold" position="0 0 0" shader="flat"></a-text>
       </a-entity>
-      <a-image position="0 0.22 0.03" slideshow-main="width: 0.75; maxHeight: 0.3; interval: 2500"></a-image>
+      <a-image src="/image/graduation/main1.jpg" width="0.4" height="0.5" position="0.3 -0.05 0.01" avatar-slideshow material="shader: flat"></a-image>
+
+      <a-plane position="0 -0.4 0.02" width="1.2" height="0.12" color="#000" opacity="0.7"></a-plane>
+      <a-entity position="0 -0.4 0.03">
+        <a-text marquee value="Chuc mung Ngo Tan Tai da xuat sac hoan thanh chuong trinh dao tao Ky su Dien - Tuong lai ruc ro dang cho don! --- Happy Graduation! --- " color="#00FF00" width="3" position="1.5 0 0" font="roboto" anchor="left"></a-text>
+      </a-entity>
 
       <a-entity auto-filmstrip></a-entity>
 
