@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AR Graduation Slideshow + Hologram Border</title>
+
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+
+<style>
+  body { margin:0; overflow:hidden; }
+
+  #scanning-overlay {
+    display:flex; align-items:center; justify-content:center;
+    position:fixed; inset:0; z-index:3;
+    background:rgba(0,0,0,0.35);
+    color:#00FFFF; font-size:22px;
+    text-shadow:0 0 10px #00FFFF;
+    pointer-events:none;
+  }
+</style>
+
+<script>
+/* =====================================
+   MAIN SLIDESHOW (6 ảnh)
+===================================== */
+AFRAME.registerComponent('main-slideshow', {
+  init: function () {
+    this.images = [
+      '/image/graduation/main.jpg',
+      '/image/graduation/main2.jpg',
+      '/image/graduation/main3.jpg',
+      '/image/graduation/main4.jpg',
+      '/image/graduation/main5.jpg',
+      '/image/graduation/main6.jpg'
+    ];
+    this.index = 0;
+    this.el.setAttribute('src', this.images[0]);
+
+    this.interval = setInterval(() => {
+      this.index = (this.index + 1) % this.images.length;
+
+      this.el.setAttribute('animation__fadeout', 
+        'property: opacity; to: 0; dur: 400; easing: easeOutQuad');
+
+      setTimeout(() => {
+        this.el.setAttribute('src', this.images[this.index]);
+        this.el.setAttribute('animation__fadein',
+          'property: opacity; to: 1; dur: 400; easing: easeInQuad');
+      }, 400);
+
+    }, 3000);
+  }
+});
+
+/* =====================================
+   FILMSTRIP ẢNH KỶ NIỆM
+===================================== */
+AFRAME.registerComponent('filmstrip', {
+  init: function () {
+    const container = this.el;
+    const folder = '/image/graduation/kyniem/';
+
+    const imgs = [
+      'img1.jpg','img2.jpg','img3.jpg','img4.jpg',
+      'img5.jpg','img6.jpg','img7.jpg','img8.jpg'
+    ];
+
+    let x = -0.6;
+    imgs.forEach(name => {
+      const pic = document.createElement('a-image');
+      pic.setAttribute('src', folder + name);
+      pic.setAttribute('width', '0.35');
+      pic.setAttribute('height', '0.22');
+      pic.setAttribute('opacity', '0.95');
+      pic.setAttribute('position', `${x} -0.25 0.02`);
+      pic.setAttribute('animation',
+        `property: position; from: ${x} -0.25 0.02; to: ${x+1.2} -0.25 0.02; dur:9000; loop:true; easing:linear`);
+      container.appendChild(pic);
+
+      x += 0.4;
+    });
+  }
+});
+
+/* =====================================
+   AR EVENTS
+===================================== */
+AFRAME.registerComponent('ar-events', {
+  init:function(){
+    const overlay=document.querySelector('#scanning-overlay');
+    this.el.addEventListener("targetFound",()=>{ overlay.style.display="none"; });
+    this.el.addEventListener("targetLost",()=>{ overlay.style.display="flex"; });
+  }
+});
+</script>
+
+</head>
+
+<body>
+
+<div id="scanning-overlay">Đang quét thẻ...</div>
+
+<a-scene
+  mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;"
+  renderer="colorManagement:true"
+  vr-mode-ui="enabled:false"
+  device-orientation-permission-ui="enabled:false">
+
+  <!-- CAMERA + LIGHT -->
+  <a-camera look-controls="enabled:false">
+    <a-entity light="type:ambient; intensity:1.2;"></a-entity>
+  </a-camera>
+
+  <a-entity mindar-image-target="targetIndex:0" ar-events>
+
+    <!-- ============================
+         CHỮ CHÚC MỪNG
+    ============================= -->
+    <a-text 
+      value="Chúc mừng bạn đã hoàn thành hành trình tri thức – tương lai đang chờ đón một kỹ sư đầy khát vọng!"
+      align="center" width="1.8" color="#00FFFF"
+      position="0 0.45 0.02">
+    </a-text>
+
+    <!-- ============================
+         HOLOGRAM BORDER (outer glow)
+    ============================= -->
+    <a-plane
+      position="0 0 0"
+      width="1.20" height="0.67"
+      color="#00FFFF"
+      opacity="0.25"
+      material="shader: flat; transparent: true;"
+      animation="property: opacity; from:0.15; to:0.35; dur:1500; dir:alternate; loop:true">
+    </a-plane>
+
+    <!-- ============================
+         HOLOGRAM BORDER (light running)
+    ============================= -->
+    <a-ring
+      position="0 0 0.01"
+      radius-inner="0.57"
+      radius-outer="0.585"
+      material="color:#00FFFF; shader: flat; opacity: 0.95;"
+      animation="property: rotation; to:0 0 360; dur:4500; easing: linear; loop:true">
+    </a-ring>
+
+    <!-- ============================
+         MAIN SLIDESHOW
+    ============================= -->
+    <a-image id="main-slide"
+      main-slideshow
+      width="1.1" height="0.6"
+      position="0 0 0.015"
+      opacity="1">
+    </a-image>
+
+    <!-- ============================
+         FILMSTRIP KỶ NIỆM
+    ============================= -->
+    <a-entity filmstrip></a-entity>
+
+  </a-entity>
+
+</a-scene>
+
+</body>
+</html>

@@ -109,6 +109,10 @@
       "destination": "/ar-card/index.html"
     },
     {
+      "source": "/gift2",
+      "destination": "/ar-card/index2.html"
+    },
+    {
       "source": "/graduation_preview",
       "destination": "/graduation/preview.html"
     },
