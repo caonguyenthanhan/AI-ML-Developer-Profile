@@ -9,46 +9,16 @@
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
-    body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    
-    /* UI Nút bấm */
+    body { margin: 0; overflow: hidden; font-family: sans-serif; }
     #links {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 15px;
-      z-index: 1000;
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 15px; z-index: 1000;
     }
     .btn {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 10px 20px;
-      border-radius: 25px;
-      font-weight: 700;
-      color: #001f3f;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      display: flex;
-      align-items: center;
-      font-size: 14px;
+      background: rgba(255, 255, 255, 0.9); padding: 10px 20px; border-radius: 25px;
+      font-weight: 700; color: #001f3f; text-decoration: none; display: flex; align-items: center;
     }
   </style>
-
-  <script>
-    AFRAME.registerComponent('check-loading', {
-      init: function () {
-        const el = this.el;
-        el.addEventListener('arError', (ev) => {
-          alert("Lỗi Camera hoặc không tìm thấy file! Hãy kiểm tra lại cấp quyền Camera.");
-        });
-        el.addEventListener('arReady', (ev) => {
-          console.log("AR Sẵn sàng!");
-        });
-      }
-    });
-  </script>
 </head>
 
 <body>
@@ -60,16 +30,16 @@
   </div>
 
   <a-scene 
-    check-loading
-    mindar-image="imageTargetSrc: /ar-card/target.mind; filterMinCF:0.0001; filterBeta: 0.001;" 
+    mindar-image="imageTargetSrc: /public/ar-card/target.mind; filterMinCF:0.0001; filterBeta: 0.001;" 
     color-space="sRGB" 
     renderer="colorManagement: true, physicallyCorrectLights" 
     vr-mode-ui="enabled: false" 
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-      <a-asset-item id="avatarModel" src="/ar-card/avatar.glb"></a-asset-item>
-      <img id="cardBg" src="/ar-card/tag.png" /> 
+      <a-asset-item id="avatarModel" src="/public/ar-card/avatar.glb"></a-asset-item>
+      
+      <img id="cardBg" src="/public/ar-card/tag.png" /> 
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
