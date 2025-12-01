@@ -10,6 +10,11 @@
 
   <style>
     body { margin: 0; background: #000; overflow: hidden; font-family:'Playfair Display','Times New Roman',serif; }
+
+    /* FIX SAFARI / iPHONE */
+    img { image-rendering: auto; }
+    a-image, a-plane, a-entity { backface-visibility: hidden; }
+
     #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center; }
     #overlay .inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .btn-start { padding: 12px 20px; font-size: 16px; font-weight: 700; color: #000; background: #00FFFF; border: none; border-radius: 8px; cursor: pointer; }
@@ -17,107 +22,117 @@
   </style>
 
   <script>
-    // --- 1. COMPONENT DẢI PHIM TỰ ĐỘNG (Đọc từ JSON) ---
+    //---------------------------------------------------------------------
+    // AUTO FILMSTRIP — dùng toàn bộ ảnh trong list.json + chạy lặp vô hạn
+    //---------------------------------------------------------------------
     AFRAME.registerComponent('auto-filmstrip', {
       schema: {
         jsonUrl: {type: 'string', default: '/image/graduation/kyniem/list.json'},
-        folder: {type: 'string', default: '/image/graduation/kyniem/'}
+        folder:  {type: 'string', default: '/image/graduation/kyniem/'}
       },
-      init: function() {
-        const el = this.el;
+
+      init: function () {
+        const root = this.el;
         const data = this.data;
 
-        // Fetch file JSON danh sách
         fetch(data.jsonUrl)
-          .then(response => {
-            if (!response.ok) throw new Error("Chưa chạy script scan_images.py!");
-            return response.json();
-          })
+          .then(r => r.json())
           .then(files => {
-            console.log("Đã load được danh sách ảnh:", files);
-            
-            const CARD_WIDTH = 1.1;
-            let x = -CARD_WIDTH * 5;
+
+            const loopFiles = [...files, ...files, ...files];
+
+            const CARD_W = 1.25;
+            let x = -CARD_W * loopFiles.length;
             let i = 0;
-            
-            // Nếu ít ảnh quá thì nhân đôi lên để loop cho đẹp
-            let loopFiles = files.length < 5 ? [...files, ...files, ...files] : files;
 
             loopFiles.forEach(filename => {
               const img = document.createElement('a-image');
               img.setAttribute('src', data.folder + filename);
-              img.setAttribute('width', '0.5');
-              img.setAttribute('height', '0.32');
-              // Shader flat để ảnh sáng rõ
+              img.setAttribute('width', '0.7');
+              img.setAttribute('height', '0.45');
               img.setAttribute('material', 'shader: flat; transparent: true');
-              img.setAttribute('position', `${x} -0.53 0.02`);
-              
-              // Animation chạy ngang vô tận
-            const delay = i * 1600;
-            img.setAttribute('animation', `property: position; from: ${x} -0.53 0.02; to: ${CARD_WIDTH * 5} -0.53 0.02; dur: 24000; loop: true; easing: linear; delay: ${delay}`);
 
-              el.appendChild(img);
-            x += 1.0;
+              img.setAttribute('position', `${x} -0.85 0.02`);
+
+              const delay = i * 350;
+
+              img.setAttribute('animation', `
+                property: position;
+                from: ${x} -0.85 0.02;
+                to: ${CARD_W * loopFiles.length} -0.85 0.02;
+                dur: 65000;
+                loop: true;
+                easing: linear;
+                delay: ${delay}
+              `);
+
+              root.appendChild(img);
+
+              x += CARD_W;
               i++;
             });
-          })
-          .catch(err => {
-            console.error("Lỗi load ảnh kỷ niệm:", err);
-            // Tạo text báo lỗi nếu quên chạy script
-            const txt = document.createElement('a-text');
-            txt.setAttribute('value', 'Run python script first!');
-            txt.setAttribute('color', 'red');
-            txt.setAttribute('position', '0 -0.4 0');
-            el.appendChild(txt);
           });
       }
     });
 
-    // --- 2. HIỆU ỨNG VIỀN MẠCH ĐIỆN (Circuit Border) ---
+    //---------------------------------------------------------------------
+    // HIỆU ỨNG VIỀN ĐIỆN
+    //---------------------------------------------------------------------
     AFRAME.registerComponent('circuit-anim', {
-      tick: function(t) {
-        // Tạo hiệu ứng nhấp nháy như dòng điện
-        const intensity = 0.5 + Math.abs(Math.sin(t / 200)) * 0.5;
-        this.el.setAttribute('opacity', intensity);
+      tick: function (t) {
+        const k = 0.45 + Math.abs(Math.sin(t / 320)) * 0.55;
+        this.el.setAttribute('opacity', k);
       }
     });
 
+    //---------------------------------------------------------------------
+    // AVATAR SLIDESHOW
+    //---------------------------------------------------------------------
     AFRAME.registerComponent('avatar-slideshow', {
-      schema: { folder: {type: 'string', default: '/image/graduation/'}, count: {type: 'number', default: 6}, interval: {type: 'int', default: 2500} },
-      init: function() {
-        var el = this.el;
-        var data = this.data;
-        var idx = 1;
-        this.timer = setInterval(function(){ idx = (idx % data.count) + 1; el.setAttribute('src', data.folder + 'main' + idx + '.jpg'); }, data.interval);
+      schema: { folder: {type:'string', default:'/image/graduation/'}, count:{type:'number', default:6}, interval:{type:'int', default:2500} },
+      init: function () {
+        let el = this.el, d = this.data, idx = 1;
+        this.timer = setInterval(() => {
+          idx = (idx % d.count) + 1;
+          el.setAttribute('src', d.folder + 'main' + idx + '.jpg');
+        }, d.interval);
       },
-      remove: function(){ if (this.timer) clearInterval(this.timer); }
+      remove: function(){ clearInterval(this.timer); }
     });
 
+    //---------------------------------------------------------------------
+    // MARQUEE
+    //---------------------------------------------------------------------
     AFRAME.registerComponent('marquee', {
-      tick: function(t, dt) {
-        var pos = this.el.getAttribute('position');
+      tick: function (t,dt) {
+        let pos = this.el.getAttribute('position');
         pos.x -= 0.00035 * dt;
         if (pos.x < -0.8) pos.x = 0.8;
         this.el.setAttribute('position', pos);
       }
     });
 
+    //---------------------------------------------------------------------
+    // APP MANAGER
+    //---------------------------------------------------------------------
     AFRAME.registerComponent('app-manager', {
-      init: function() {
-        var btn = document.querySelector('.btn-start');
-        var ov = document.getElementById('overlay');
-        var audio = document.getElementById('bg-music');
-        if (btn && ov) {
-          btn.addEventListener('click', function(){
+      init: function () {
+        const btn   = document.querySelector('.btn-start');
+        const ov    = document.getElementById('overlay');
+        const audio = document.getElementById('bg-music');
+        
+        if (btn) {
+          btn.addEventListener('click', () => {
             ov.style.opacity = '0';
-            setTimeout(function(){ ov.style.display = 'none'; }, 300);
-            if (audio) { var p = audio.play(); if (p && typeof p.then === 'function') { p.then(function(){ audio.pause(); audio.currentTime=0; }).catch(function(){}); } }
+            setTimeout(()=> ov.style.display='none', 350);
+            audio.play().catch(()=>{});
           });
         }
-        var targetEl = document.querySelector('[mindar-image-target]');
-        if (targetEl) {
-          targetEl.addEventListener('targetFound', function(){ if (audio) audio.play(); });
-          targetEl.addEventListener('targetLost', function(){ if (audio) audio.pause(); });
+
+        const target = document.querySelector('[mindar-image-target]');
+        if (target) {
+          target.addEventListener('targetFound', ()=> audio.play());
+          target.addEventListener('targetLost',  ()=> audio.pause());
         }
       }
     });
@@ -125,63 +140,84 @@
 </head>
 
 <body>
+
   <div id="overlay">
     <div class="inner">
       <button class="btn-start">KHỞI ĐỘNG HỆ THỐNG</button>
     </div>
   </div>
-  <audio id="bg-music" src="/music/music.mp3" loop preload="auto" playsinline></audio>
 
-  <a-scene 
+  <audio id="bg-music" src="/music/music.mp3" loop preload="auto"></audio>
+
+  <a-scene
     app-manager
-    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no; uiLoading: no;" 
-    color-space="sRGB" 
-    renderer="colorManagement: true, physicallyCorrectLights"
-    vr-mode-ui="enabled: false" 
+    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no; uiLoading: no;"
+    color-space="sRGB"
+    renderer="colorManagement: true; physicallyCorrectLights: true"
+    vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
       <img id="fallback" src="/ar-card/tag.png">
-      <img id="main1" src="/image/graduation/main.jpg" />
-      <img id="main2" src="/image/graduation/main2.jpg" />
-      <img id="main3" src="/image/graduation/main3.jpg" />
-      <img id="main4" src="/image/graduation/main4.jpg" />
-      <img id="main5" src="/image/graduation/main5.jpg" />
-      <img id="main6" src="/image/graduation/main6.jpg" />
+      <img id="main1" src="/image/graduation/main.jpg">
+      <img id="main2" src="/image/graduation/main2.jpg">
+      <img id="main3" src="/image/graduation/main3.jpg">
+      <img id="main4" src="/image/graduation/main4.jpg">
+      <img id="main5" src="/image/graduation/main5.jpg">
+      <img id="main6" src="/image/graduation/main6.jpg">
     </a-assets>
 
-    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse"></a-camera>
+    <a-camera look-controls="enabled:false" cursor="fuse:false; rayOrigin:mouse"></a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
 
-      
-
+      <!-- VIỀN ĐIỆN -->
       <a-plane color="#00FFFF" width="1.1" height="0.01" position="0 0.36 0" shader="flat" circuit-anim></a-plane>
       <a-plane color="#00FFFF" width="1.1" height="0.01" position="0 -0.55 0" shader="flat" circuit-anim></a-plane>
-      <a-plane color="#00FFFF" width="0.01" height="0.9" position="-0.55 -0.1 0" shader="flat" circuit-anim></a-plane>
-      <a-plane color="#00FFFF" width="0.01" height="0.9" position="0.55 -0.1 0" shader="flat" circuit-anim></a-plane>
+      <a-plane color="#00FFFF" width="0.01" height="0.9"  position="-0.55 -0.1 0" shader="flat" circuit-anim></a-plane>
+      <a-plane color="#00FFFF" width="0.01" height="0.9"  position="0.55 -0.1 0" shader="flat" circuit-anim></a-plane>
 
-      <a-circle color="#00FFFF" radius="0.04" position="-0.6 0.38 0.01" shader="flat"></a-circle>
-      <a-circle color="#00FFFF" radius="0.04" position="0.6 0.38 0.01" shader="flat"></a-circle>
-      <a-circle color="#00FFFF" radius="0.04" position="-0.6 -0.55 0.01" shader="flat"></a-circle>
-      <a-circle color="#00FFFF" radius="0.04" position="0.6 -0.55 0.01" shader="flat"></a-circle>
+      <!-- BANNER CHỮ -->
+      <a-plane position="0 0.67 0.04" width="1.15" height="0.19" color="#000" opacity="0.55"></a-plane>
 
+      <a-entity position="0 0.66 0.05" scale="2.15 2.15 1">
+        <a-text value="Chúc Mừng Tốt Nghiệp"
+                align="center" width="7"
+                color="#00FFFF"
+                font="/fonts/FS-Southamton.fnt"
+                position="0 0.13 0" shader="sdf"></a-text>
 
-      
-
-
-      <a-plane position="0 0.62 0.04" width="1.1" height="0.18" color="#000" opacity="0.55" shader="flat"></a-plane>
-      <a-entity position="0 0.6 0.05" scale="1.6 1.6 1">
-        <a-text value="Chúc Mừng Tốt Nghiệp" align="center" width="5.2" color="#00FFFF" font="/fonts/FS-Southamton.fnt" position="0 0.14 0" shader="sdf"></a-text>
-        <a-text value="Tân Kỹ Sư Điện: Ngô Tấn Tài" align="center" width="3.6" color="#FFFF00" font="/fonts/SVN-Anastasia.fnt" position="0 -0.02 0" shader="sdf"></a-text>
-      </a-entity>
-      <a-image src="/image/graduation/main1.jpg" width="0.5" height="0.62" position="0 -0.05 0.01" avatar-slideshow material="shader: flat"></a-image>
-
-      <a-plane position="0 -0.4 0.02" width="1.2" height="0.12" color="#000" opacity="0.7"></a-plane>
-      <a-entity position="0 -0.4 0.03">
-        <a-text marquee value="Chúc mừng Ngô Tấn Tài đã xuất sắc hoàn thành chương trình đào tạo Kỹ sư Điện — Tương lai rực rỡ đang chờ đón! — Happy Graduation! — " color="#00FF00" width="5.5" position="0.6 0 0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt" shader="sdf" wrap-count="1000" anchor="left" scale="1.4 1.4 1"></a-text>
+        <a-text value="Tân Kỹ Sư Điện: Ngô Tấn Tài"
+                align="center" width="5"
+                color="#FFFF00"
+                font="/fonts/SVN-Anastasia.fnt"
+                position="0 -0.05 0" shader="sdf"></a-text>
       </a-entity>
 
+      <!-- ẢNH MAIN — SÁT PHẢI -->
+      <a-image 
+        src="/image/graduation/main1.jpg"
+        width="0.55"
+        height="0.71"
+        position="0.31 -0.20 0.01"
+        avatar-slideshow
+        material="shader: flat"
+        crossorigin="anonymous">
+      </a-image>
+
+      <!-- MARQUEE -->
+      <a-plane position="0 -0.42 0.02" width="1.25" height="0.12" color="#000" opacity="0.7"></a-plane>
+      <a-entity position="0 -0.42 0.03">
+        <a-text marquee
+                value="Chúc mừng Ngô Tấn Tài đã xuất sắc hoàn thành chương trình đào tạo Kỹ sư Điện — Tương lai rực rỡ đang chờ đón! — Happy Graduation! — "
+                color="#00FF00"
+                width="6"
+                position="0.7 0 0"
+                font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt" shader="sdf"
+                wrap-count="1000" anchor="left" scale="1.4 1.4 1"></a-text>
+      </a-entity>
+
+      <!-- FILMSTRIP -->
       <a-entity auto-filmstrip></a-entity>
 
     </a-entity>
