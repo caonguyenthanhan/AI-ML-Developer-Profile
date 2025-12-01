@@ -53,11 +53,11 @@
               img.setAttribute('position', `${x} -0.53 0.02`);
               
               // Animation chạy ngang vô tận
-              const delay = i * 1200;
-              img.setAttribute('animation', `property: position; from: ${x} -0.53 0.02; to: ${CARD_WIDTH * 5} -0.53 0.02; dur: 22000; loop: true; easing: linear; delay: ${delay}`);
+            const delay = i * 1600;
+            img.setAttribute('animation', `property: position; from: ${x} -0.53 0.02; to: ${CARD_WIDTH * 5} -0.53 0.02; dur: 24000; loop: true; easing: linear; delay: ${delay}`);
 
               el.appendChild(img);
-              x += 0.7;
+            x += 1.0;
               i++;
             });
           })
@@ -172,14 +172,14 @@
 
       <a-plane position="0 0.62 0.04" width="1.1" height="0.18" color="#000" opacity="0.55" shader="flat"></a-plane>
       <a-entity position="0 0.6 0.05" scale="1.6 1.6 1">
-        <a-text value="CHÚC MỪNG TỐT NGHIỆP" align="center" width="4.5" color="#00FFFF" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt" position="0 0.14 0" shader="sdf"></a-text>
-        <a-text value="TÂN KỸ SƯ ĐIỆN: NGÔ TẤN TÀI" align="center" width="3.2" color="#FFFF00" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt" position="0 -0.02 0" shader="sdf"></a-text>
+        <a-text value="Chúc Mừng Tốt Nghiệp" align="center" width="5.2" color="#00FFFF" font="/fonts/FS-Southamton.fnt" position="0 0.14 0" shader="sdf"></a-text>
+        <a-text value="Tân Kỹ Sư Điện: Ngô Tấn Tài" align="center" width="3.6" color="#FFFF00" font="/fonts/SVN-Anastasia.fnt" position="0 -0.02 0" shader="sdf"></a-text>
       </a-entity>
       <a-image src="/image/graduation/main1.jpg" width="0.5" height="0.62" position="0 -0.05 0.01" avatar-slideshow material="shader: flat"></a-image>
 
       <a-plane position="0 -0.4 0.02" width="1.2" height="0.12" color="#000" opacity="0.7"></a-plane>
       <a-entity position="0 -0.4 0.03">
-        <a-text marquee value="Chúc mừng Ngô Tấn Tài đã xuất sắc hoàn thành chương trình đào tạo Kỹ sư Điện — Tương lai rực rỡ đang chờ đón! — Happy Graduation! — " color="#00FF00" width="4.5" position="0.6 0 0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt" shader="sdf" wrap-count="1000" anchor="left"></a-text>
+        <a-text marquee value="Chúc mừng Ngô Tấn Tài đã xuất sắc hoàn thành chương trình đào tạo Kỹ sư Điện — Tương lai rực rỡ đang chờ đón! — Happy Graduation! — " color="#00FF00" width="5.5" position="0.6 0 0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt" shader="sdf" wrap-count="1000" anchor="left" scale="1.4 1.4 1"></a-text>
       </a-entity>
 
       <a-entity auto-filmstrip></a-entity>
