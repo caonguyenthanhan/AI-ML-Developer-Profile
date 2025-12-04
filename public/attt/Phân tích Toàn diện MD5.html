@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân tích Toàn diện Thuật toán MD5</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. SETUP & THEME */
+        :root {
+            --primary: #2563eb;      /* Blue 600 */
+            --secondary: #3b82f6;    /* Blue 500 */
+            --accent: #0ea5e9;       /* Sky 500 */
+            --bg-light: #f0f9ff;     /* Sky 50 */
+            --surface: #ffffff;
+            --text-dark: #1e293b;    /* Slate 800 */
+            --text-gray: #475569;    /* Slate 600 */
+            --text-light: #ffffff;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #cbd5e1;
+            margin: 0;
+            padding: 20px 0;
+            display: grid;
+            gap: 20px;
+            place-items: center;
+            min-height: 100vh;
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+
+        /* 2. SLIDE CONTAINER */
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: var(--surface);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 50px 60px;
+            color: var(--text-dark);
+        }
+
+        /* Background Graphics */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(14, 165, 233, 0.1) 100%);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 0;
+        }
+        
+        .slide-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 3. TYPOGRAPHY */
+        h1, h2, h3 {
+            margin: 0;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        h1 { font-size: 64px; line-height: 1.1; letter-spacing: -1px; }
+        .slide-title { font-size: 42px; margin-bottom: 30px; border-left: 6px solid var(--accent); padding-left: 20px; }
+        h3 { font-size: 28px; color: var(--secondary); margin-bottom: 15px; }
+        p, li { font-size: 20px; line-height: 1.6; color: var(--text-gray); margin-bottom: 12px; }
+        
+        .code-font { font-family: 'JetBrains Mono', monospace; background: #eff6ff; padding: 2px 6px; border-radius: 4px; color: var(--primary); font-size: 0.9em; }
+
+        /* 4. LAYOUTS */
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Title Slide */
+        .title-layout {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 65%;
+        }
+        .title-layout h1 { margin-bottom: 20px; color: var(--primary); }
+        .title-layout .subtitle { font-size: 24px; color: var(--text-gray); font-weight: 500; margin-bottom: 40px; }
+        .title-layout hr { width: 100px; height: 6px; background: var(--accent); border: none; margin: 0; }
+
+        /* Two Column */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .image-wrapper {
+            width: 100%;
+            height: 450px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .image-wrapper.contain img { object-fit: contain; padding: 20px; }
+
+        /* Tiled Layouts */
+        .tiled-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .tile {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #bfdbfe;
+            text-align: center;
+        }
+        
+        .tile .icon { font-size: 48px; color: var(--accent); margin-bottom: 20px; }
+        .tile h3 { font-size: 24px; }
+        .tile p { font-size: 16px; }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background: var(--primary); color: white; padding: 15px; text-align: left; font-size: 18px; }
+        td { padding: 15px; border-bottom: 1px solid #e2e8f0; font-size: 18px; }
+        tr:nth-child(even) { background: var(--bg-light); }
+
+        /* Math Formulas */
+        .formula-box {
+            background: #1e293b;
+            color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* 5. SPECIFIC UTILS */
+        .highlight { color: var(--accent); font-weight: 700; }
+        .text-center { text-align: center; }
+        
+        /* Bleed Image Layout Adjustment */
+        .slide-container.bleed-image-layout {
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-items: start;
+        }
+        .bleed-content { padding: 60px; display: flex; flex-direction: column; justify-content: center; height: 100%; }
+        .bleed-img-container { height: 100%; width: 100%; }
+        .bleed-img-container img { width: 100%; height: 100%; max-height: 720px; object-fit: cover; }
+        
+        /* Full BG */
+        .full-bg-image {
+            background-size: cover;
+            background-position: center;
+        }
+        .full-bg-image .overlay {
+            background: rgba(30, 41, 59, 0.85); /* Dark overlay for readability */
+            padding: 50px;
+            border-radius: 16px;
+            color: white;
+            text-align: center;
+            max-width: 800px;
+            margin: auto;
+        }
+        .full-bg-image h1, .full-bg-image p { color: white; }
+
+        /* Bullet Points */
+        .styled-list ul { list-style: none; padding: 0; }
+        .styled-list li { margin-bottom: 18px; display: flex; align-items: flex-start; }
+        .styled-list li::before {
+            content: "\f058"; /* Check icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--accent);
+            margin-right: 15px;
+            font-size: 22px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title Slide -->
+<div class="slide-container full-bg-image" style="background-image: url('http://googleusercontent.com/image_collection/image_retrieval/13019953426850117061');">
+    <div class="overlay">
+        <h1>Phân tích Toàn diện MD5</h1>
+        <hr style="border: 2px solid var(--accent); width: 150px; margin: 20px auto;">
+        <p class="subtitle">Kiến trúc, Hiệu ứng Tuyết lở và Khủng hoảng Va chạm</p>
+        <p style="margin-top: 40px; font-size: 18px; opacity: 0.8;">Báo cáo Nghiên cứu Chuyên sâu</p>
+    </div>
+</div>
+
+<!-- Slide 2: Introduction & History -->
+<div class="slide-container">
+    <h2 class="slide-title">1. Giới thiệu & Lịch sử</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Sự trỗi dậy của một huyền thoại</h3>
+                <p><strong>MD5 (Message-Digest Algorithm 5)</strong> được phát triển bởi Giáo sư Ronald Rivest (MIT) vào năm 1991.</p>
+                <div class="styled-list">
+                    <ul>
+                        <li>Ra đời để thay thế MD4, tối ưu cho máy tính 32-bit.</li>
+                        <li>Được chuẩn hóa trong <strong>RFC 1321</strong> (1992).</li>
+                        <li>Từng là "tiêu chuẩn vàng" cho xác thực file và lưu trữ mật khẩu trong suốt thập niên 90.</li>
+                        <li>Hiện nay đã bị coi là <strong>không an toàn</strong> cho mục đích bảo mật.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tile text-center" style="border: 2px dashed var(--primary);">
+                <i class="fa-solid fa-clock-rotate-left" style="font-size: 80px; color: var(--primary); margin-bottom: 20px;"></i>
+                <h3>1991 - 2004</h3>
+                <p>Kỷ nguyên vàng của MD5 trước khi các cuộc tấn công va chạm thực tế đầu tiên được công bố.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Core Properties -->
+<div class="slide-container">
+    <h2 class="slide-title">Các Tính chất Cốt lõi</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-fingerprint"></i></div>
+                <h3>Độ dài cố định</h3>
+                <p>Luôn tạo ra đầu ra <strong>128-bit</strong> (16 byte), thường được biểu diễn dưới dạng chuỗi Hex 32 ký tự.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-calculator"></i></div>
+                <h3>Tính xác định</h3>
+                <p>Cùng một đầu vào sẽ luôn luôn tạo ra cùng một đầu ra duy nhất, không phụ thuộc vào thời gian hay nền tảng.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-hill-rockslide"></i></div>
+                <h3>Hiệu ứng Tuyết lở</h3>
+                <p>Thay đổi 1 bit đầu vào dẫn đến sự thay đổi khoảng 50% số bit đầu ra. (MD5 làm rất tốt điều này).</p>
+            </div>
+        </div>
+        <p class="text-center" style="margin-top: 30px; font-style: italic; color: var(--danger);">
+            <i class="fa-solid fa-triangle-exclamation"></i> MD5 đã thất bại hoàn toàn ở tính chất "Kháng Va Chạm" (Collision Resistance).
+        </p>
+    </div>
+</div>
+
+<!-- Slide 4: Merkle-Damgård Structure -->
+<div class="slide-container bleed-image-layout">
+    <div class="bleed-content">
+        <h2 class="slide-title">Kiến trúc Merkle-Damgård</h2>
+        <p>MD5 được xây dựng dựa trên nguyên lý Merkle-Damgård, chia nhỏ thông điệp để xử lý tuần tự.</p>
+        <div class="styled-list">
+            <ul>
+                <li><strong>Khối đầu vào:</strong> Thông điệp được chia thành các khối 512-bit.</li>
+                <li><strong>Trạng thái chuỗi:</strong> Duy trì một bộ đệm 128-bit (A, B, C, D).</li>
+                <li><strong>Hàm nén (f):</strong> Cập nhật trạng thái dựa trên khối thông điệp hiện tại.</li>
+                <li><span class="code-font">Hi = f(Hi-1, Mi)</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="bleed-img-container">
+        <img src="" alt="Sơ đồ cấu trúc Merkle-Damgård của MD5">
+    </div>
+</div>
+
+<!-- Slide 5: Preprocessing -->
+<div class="slide-container">
+    <h2 class="slide-title">Tiền xử lý dữ liệu</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <p>Trước khi băm, dữ liệu phải được chuẩn hóa để đảm bảo độ dài là bội số của 512 bit.</p>
+                <div class="tile" style="text-align: left;">
+                    <h3>1. Padding (Đệm bit)</h3>
+                    <p>Thêm một bit '1', sau đó là các bit '0' cho đến khi độ dài đồng dư với 448 (mod 512).</p>
+                    <p class="code-font">Message || 1 || 00...00</p>
+                </div>
+            </div>
+            <div>
+                <div class="tile" style="text-align: left;">
+                    <h3>2. Append Length (Thêm độ dài)</h3>
+                    <p>64 bit cuối cùng được dùng để lưu độ dài của thông điệp gốc.</p>
+                    <p><i class="fa-solid fa-circle-info" style="color: var(--accent);"></i> Lưu ý: MD5 sử dụng <strong>Little-Endian</strong> (byte thấp đứng trước) để lưu giá trị này.</p>
+                </div>
+                <p style="margin-top: 20px; text-align: center;">Tổng cộng: <span class="highlight">N x 512 bit</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: Internal State Registers -->
+<div class="slide-container">
+    <h2 class="slide-title">Trạng thái Nội bộ (128-bit)</h2>
+    <div class="content-area">
+        <p>Bộ đệm MD5 gồm 4 thanh ghi 32-bit, được khởi tạo bằng các hằng số hex cố định (Initial Vectors - IV):</p>
+        <div class="tiled-content" style="grid-template-columns: repeat(4, 1fr); margin-top: 40px;">
+            <div class="tile" style="background: #1e293b; color: white; border: none;">
+                <h3 style="color: var(--accent);">A</h3>
+                <p class="code-font" style="background: rgba(255,255,255,0.1); color: #fff;">01 23 45 67</p>
+                <p style="font-size: 14px; opacity: 0.7;">(Word: 0x67452301)</p>
+            </div>
+            <div class="tile" style="background: #1e293b; color: white; border: none;">
+                <h3 style="color: var(--accent);">B</h3>
+                <p class="code-font" style="background: rgba(255,255,255,0.1); color: #fff;">89 ab cd ef</p>
+                <p style="font-size: 14px; opacity: 0.7;">(Word: 0xEFCDAB89)</p>
+            </div>
+            <div class="tile" style="background: #1e293b; color: white; border: none;">
+                <h3 style="color: var(--accent);">C</h3>
+                <p class="code-font" style="background: rgba(255,255,255,0.1); color: #fff;">fe dc ba 98</p>
+                <p style="font-size: 14px; opacity: 0.7;">(Word: 0x98BADCFE)</p>
+            </div>
+            <div class="tile" style="background: #1e293b; color: white; border: none;">
+                <h3 style="color: var(--accent);">D</h3>
+                <p class="code-font" style="background: rgba(255,255,255,0.1); color: #fff;">76 54 32 10</p>
+                <p style="font-size: 14px; opacity: 0.7;">(Word: 0x10325476)</p>
+            </div>
+        </div>
+        <p style="margin-top: 30px; text-align: center;">Các giá trị này thay đổi liên tục qua từng bước nén.</p>
+    </div>
+</div>
+
+<!-- Slide 7: The Compression Function -->
+<div class="slide-container">
+    <h2 class="slide-title">Hàm Nén & Các Vòng Lặp</h2>
+    <div class="content-area">
+        <p>Mỗi khối 512-bit được xử lý qua <strong>64 bước</strong>, chia làm 4 vòng (16 bước/vòng). Mỗi vòng sử dụng một hàm phi tuyến tính khác nhau:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Vòng</th>
+                    <th>Hàm</th>
+                    <th>Công thức Logic (Bitwise)</th>
+                    <th>Tính chất</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><span class="code-font">F(X,Y,Z)</span></td>
+                    <td>(X & Y) | (~X & Z)</td>
+                    <td>Hàm Chọn (Selection)</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><span class="code-font">G(X,Y,Z)</span></td>
+                    <td>(X & Z) | (Y & ~Z)</td>
+                    <td>Hàm Chọn có điều khiển</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><span class="code-font">H(X,Y,Z)</span></td>
+                    <td>X ^ Y ^ Z</td>
+                    <td>Parity (XOR thuần túy)</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><span class="code-font">I(X,Y,Z)</span></td>
+                    <td>Y ^ (X | ~Z)</td>
+                    <td>Phá vỡ đối xứng</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 8: Step Operation Detail -->
+<div class="slide-container">
+    <h2 class="slide-title">Chi tiết một Bước (Step Operation)</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <p>Mỗi bước trong 64 bước cập nhật thanh ghi <strong>A</strong> dựa trên hàm phi tuyến, dữ liệu đầu vào và hằng số.</p>
+                <div class="formula-box">
+                    <math display="block">
+                        <mi>A</mi>
+                        <mo>&#8592;</mo>
+                        <mi>B</mi>
+                        <mo>+</mo>
+                        <mfenced>
+                            <mrow>
+                                <mi>A</mi>
+                                <mo>+</mo>
+                                <mi>Func</mi>
+                                <mo>(</mo>
+                                <mi>B</mi>
+                                <mo>,</mo>
+                                <mi>C</mi>
+                                <mo>,</mo>
+                                <mi>D</mi>
+                                <mo>)</mo>
+                                <mo>+</mo>
+                                <msub>
+                                    <mi>M</mi>
+                                    <mi>k</mi>
+                                </msub>
+                                <mo>+</mo>
+                                <msub>
+                                    <mi>T</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                        </mfenced>
+                        <mo>&#8810;</mo>
+                        <mi>s</mi>
+                    </math>
+                </div>
+                <p>Sau đó các thanh ghi hoán vị: D&#8594;A, C&#8594;D, B&#8594;C.</p>
+            </div>
+            <div class="image-wrapper contain">
+                <img src="" alt="Sơ đồ hoạt động một bước của MD5">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: Avalanche Effect -->
+<div class="slide-container bleed-image-layout">
+    <div class="image-container bleed-img-container">
+        <img src="" alt="Trực quan hóa hiệu ứng tuyết lở, các bit thay đổi lan truyền">
+    </div>
+    <div class="content-container bleed-content">
+        <h2 class="slide-title">Hiệu ứng Tuyết lở (Avalanche Effect)</h2>
+        <p>Đây là tính chất quan trọng nhất thể hiện khả năng "khuếch tán" của hàm băm.</p>
+        <div class="tile" style="margin-top: 20px;">
+            <h3>Nguyên lý</h3>
+            <p>"Một thay đổi nhỏ ở đầu vào (dù chỉ 1 bit) phải dẫn đến sự thay đổi đáng kể và không thể dự đoán ở đầu ra (khoảng 50% số bit)."</p>
+        </div>
+        <p style="margin-top: 20px;">Các phép xoay bit (<span class="code-font">&lt;&lt;&lt; s</span>) và cộng dồn trong MD5 đóng vai trò chính tạo ra hiệu ứng này.</p>
+    </div>
+</div>
+
+<!-- Slide 10: Avalanche Effect Demo -->
+<div class="slide-container">
+    <h2 class="slide-title">Demo: Thay đổi 1 bit</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="tile" style="background: #fff; border-color: var(--secondary);">
+                <h3 style="color: var(--text-dark);">Input 1: "Hello World"</h3>
+                <hr>
+                <p style="text-align: left; font-size: 16px;">Binary: ...0100<strong>1</strong>000...</p>
+                <p class="code-font" style="font-size: 14px;">Hash: b10a8db164e0754105b7a99be72e3fe5</p>
+            </div>
+            <div class="tile" style="background: #fff; border-color: var(--danger);">
+                <h3 style="color: var(--text-dark);">Input 2: "hello World"</h3>
+                <hr>
+                <p style="text-align: left; font-size: 16px;">Binary: ...0110<strong>1</strong>000... (Khác 1 bit)</p>
+                <p class="code-font" style="font-size: 14px; color: var(--danger);">Hash: 5d41402abc4b2a76b9719d911017c592</p>
+            </div>
+        </div>
+        <div class="tile" style="margin-top: 30px; background: var(--bg-light);">
+            <h3>Kết quả</h3>
+            <p>Mặc dù đầu vào chỉ khác nhau 1 bit, hai mã băm hoàn toàn khác biệt. Khoảng cách Hamming xấp xỉ 64 bit (~50%).</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: Collision Crisis -->
+<div class="slide-container">
+    <h2 class="slide-title">Khủng hoảng Va chạm (Collision)</h2>
+    <div class="content-area">
+        <p>MD5 đã thất bại trong việc đảm bảo tính kháng va chạm. Có hai loại tấn công chính:</p>
+        <div class="two-column">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-car-crash"></i></div>
+                <h3>Va chạm Tiêu chuẩn</h3>
+                <p>Tìm hai khối dữ liệu ngẫu nhiên (thường là rác) có cùng mã băm.</p>
+                <p class="code-font">MD5(Rác A) = MD5(Rác B)</p>
+            </div>
+            <div class="tile" style="border: 2px solid var(--danger);">
+                <div class="icon"><i class="fa-solid fa-file-signature" style="color: var(--danger);"></i></div>
+                <h3>Chosen-Prefix Collision</h3>
+                <p>Nguy hiểm hơn! Kẻ tấn công chọn hai nội dung có ý nghĩa (ví dụ: File Tốt và File Xấu) và tính toán phần đuôi để chúng có cùng Hash.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 12: Timeline of Attacks -->
+<div class="slide-container">
+    <h2 class="slide-title">Lịch sử các cuộc tấn công</h2>
+    <div class="content-area">
+        <div class="styled-list">
+            <ul>
+                <li>
+                    <strong>2004 - Xiaoyun Wang:</strong> Công bố cách tìm va chạm MD5 đầu tiên, phá vỡ hoàn toàn thuật toán. Giảm độ phức tạp từ 2<sup>64</sup> xuống 2<sup>39</sup>.
+                </li>
+                <li>
+                    <strong>2005 - Peter Selinger:</strong> Tạo ra cặp chương trình "Good" và "Evil". Hai file thực thi hành vi khác nhau nhưng có cùng MD5.
+                </li>
+                <li>
+                    <strong>2008 - Rogue CA:</strong> Nhóm nghiên cứu tạo ra một chứng chỉ số giả mạo (CA) được tin cậy bởi các trình duyệt bằng cách sử dụng va chạm MD5.
+                </li>
+                <li>
+                    <strong>2012 - Flame Malware:</strong> Mã độc cấp quốc gia đầu tiên vũ khí hóa va chạm MD5 để giả mạo chữ ký số của Microsoft Windows Update.
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 13: Practical Tools -->
+<div class="slide-container">
+    <h2 class="slide-title">Công cụ Thực hành (Educational)</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>fastcoll (Marc Stevens)</h3>
+                <p>Công cụ dòng lệnh cho phép tạo va chạm nhanh chóng.</p>
+                <p class="code-font" style="display:block; margin: 10px 0;">$ md5collgen -p prefix.txt -o out1.bin out2.bin</p>
+                <p>Tạo ra hai file có cùng prefix và cùng mã băm MD5.</p>
+            </div>
+            <div>
+                <h3>evilize</h3>
+                <p>Thư viện chuyên dụng để tạo các tệp thực thi xung đột.</p>
+                <p>Lợi dụng cấu trúc điều kiện trong C:</p>
+                <div class="code-font" style="white-space: pre; text-align: left; padding: 15px;">if (data1 == data2) {
+    run_good_code();
+} else {
+    run_evil_code();
+}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 14: Modern Comparisons -->
+<div class="slide-container">
+    <h2 class="slide-title">So sánh với Thuật toán Hiện đại</h2>
+    <div class="content-area">
+        <table>
+            <thead>
+                <tr>
+                    <th>Đặc điểm</th>
+                    <th>MD5</th>
+                    <th>SHA-256</th>
+                    <th>BLAKE3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Kích thước băm</td>
+                    <td>128 bit</td>
+                    <td>256 bit</td>
+                    <td>256 bit</td>
+                </tr>
+                <tr>
+                    <td>Trạng thái</td>
+                    <td><span style="color: var(--danger); font-weight: bold;">ĐÃ BỊ PHÁ VỠ</span></td>
+                    <td><span style="color: var(--success); font-weight: bold;">An toàn</span></td>
+                    <td><span style="color: var(--success); font-weight: bold;">An toàn</span></td>
+                </tr>
+                <tr>
+                    <td>Hiệu suất</td>
+                    <td>Rất nhanh</td>
+                    <td>Trung bình</td>
+                    <td>Siêu nhanh (Song song)</td>
+                </tr>
+                <tr>
+                    <td>Kháng Length Extension</td>
+                    <td><i class="fa-solid fa-xmark" style="color: var(--danger);"></i> Không</td>
+                    <td><i class="fa-solid fa-xmark" style="color: var(--danger);"></i> Không</td>
+                    <td><i class="fa-solid fa-check" style="color: var(--success);"></i> Có</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 15: Conclusion -->
+<div class="slide-container full-bg-image" style="background-image: url('http://googleusercontent.com/image_collection/image_retrieval/5794266236541790098');">
+    <div class="overlay">
+        <h1>Kết luận & Khuyến nghị</h1>
+        <hr style="border: 2px solid var(--accent); width: 100px; margin: 20px auto;">
+        <div style="text-align: left; margin-top: 30px;">
+            <p><i class="fa-solid fa-check" style="color: var(--accent);"></i> <strong>Giáo dục:</strong> MD5 là bài học tuyệt vời về mật mã học.</p>
+            <p><i class="fa-solid fa-check" style="color: var(--accent);"></i> <strong>Phi bảo mật:</strong> Vẫn hữu ích cho checksum, định danh dữ liệu (UUID).</p>
+            <p><i class="fa-solid fa-ban" style="color: var(--danger);"></i> <strong>Bảo mật:</strong> TUYỆT ĐỐI KHÔNG dùng cho mật khẩu hay chữ ký số. Hãy chuyển sang SHA-256, SHA-3 hoặc Argon2.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+```

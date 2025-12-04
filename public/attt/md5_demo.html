@@ -38,11 +38,8 @@
         .prose li { margin-bottom: 0.5em; }
         .prose strong { color: #0f172a; font-weight: 600; }
         .prose code { background-color: #f1f5f9; color: #0f172a; padding: 0.2em 0.4em; border-radius: 0.25em; font-size: 0.9em; font-family: 'JetBrains Mono', monospace; }
-        
-        /* New Collision Demo Styles */
-        .code-window { background: #1e293b; color: #cbd5e1; font-family: 'JetBrains Mono', monospace; padding: 1rem; border-radius: 0.5rem; font-size: 0.85rem; line-height: 1.5; overflow: hidden; position: relative; }
-        .code-window::before { content: '● ● ●'; color: #475569; font-size: 0.6rem; position: absolute; top: 0.5rem; left: 0.5rem; letter-spacing: 2px; }
-        .arrow-down { font-size: 1.5rem; color: #94a3b8; margin: 1rem 0; text-align: center; display: block; }
+        .jump-link { color: #2563eb; text-decoration: underline; cursor: pointer; font-weight: 500; }
+        .jump-link:hover { color: #1d4ed8; }
     </style>
 </head>
 <body class="h-screen flex flex-col overflow-hidden text-slate-800">
@@ -67,7 +64,7 @@
             <div class="w-px bg-slate-300 mx-1 my-2"></div>
             <button onclick="switchTab('algo')" id="btn-algo" class="tab-btn px-4 py-2 rounded-md text-sm transition-all whitespace-nowrap">1. Cấu trúc Lõi</button>
             <button onclick="switchTab('avalanche')" id="btn-avalanche" class="tab-btn px-4 py-2 rounded-md text-sm transition-all whitespace-nowrap">2. Tuyết lở</button>
-            <button onclick="switchTab('collision')" id="btn-collision" class="tab-btn px-4 py-2 rounded-md text-sm transition-all whitespace-nowrap">3. Demo Va chạm</button>
+            <button onclick="switchTab('collision')" id="btn-collision" class="tab-btn px-4 py-2 rounded-md text-sm transition-all whitespace-nowrap">3. Va chạm</button>
             <button onclick="switchTab('length_ext')" id="btn-length_ext" class="tab-btn px-4 py-2 rounded-md text-sm transition-all whitespace-nowrap">4. Tấn công Mở rộng</button>
         </nav>
     </header>
@@ -75,10 +72,10 @@
     <!-- Main Content -->
     <main class="flex-1 overflow-y-auto bg-slate-50 relative scroll-smooth">
 
-        <!-- TAB 0: THEORY -->
+        <!-- TAB 0: THEORY & LECTURE (NEW) -->
         <section id="tab-theory" class="max-w-5xl mx-auto p-8 pb-20">
-            <!-- (Giữ nguyên nội dung Tab Lý thuyết như cũ) -->
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <!-- Cover -->
                 <div class="bg-slate-900 text-white p-10 relative overflow-hidden">
                     <div class="absolute top-0 right-0 opacity-10 text-9xl transform translate-x-10 -translate-y-10">
                         <i class="fa-solid fa-shield-halved"></i>
@@ -86,118 +83,121 @@
                     <h2 class="text-3xl font-bold mb-4">Tổng quan về MD5 và An toàn thông tin</h2>
                     <p class="text-slate-300 text-lg max-w-2xl">Tài liệu tự học tích hợp demo tương tác. Khám phá kiến trúc, lỗ hổng và ứng dụng thực tế của thuật toán băm MD5.</p>
                 </div>
+
                 <div class="grid grid-cols-12 gap-0">
+                    <!-- Sidebar TOC -->
                     <div class="col-span-3 bg-slate-50 border-r border-slate-200 p-6 hidden md:block">
                         <h4 class="font-bold text-slate-400 text-xs uppercase tracking-wider mb-4">MỤC LỤC</h4>
                         <ul class="space-y-3 text-sm font-medium text-slate-600">
-                            <li><a href="#phan1" class="hover:text-blue-600 block">1. Giới thiệu & Lịch sử</a></li>
-                            <li><a href="#phan2" class="hover:text-blue-600 block">2. Kiến trúc Kỹ thuật</a></li>
-                            <li><a href="#phan3" class="hover:text-blue-600 block">3. Hiệu ứng Tuyết lở</a></li>
-                            <li><a href="#phan4" class="hover:text-blue-600 block">4. Khủng hoảng Va chạm</a></li>
-                            <li><a href="#phan5" class="hover:text-blue-600 block">5. Kết luận</a></li>
+                            <li><a href="#phan1" class="hover:text-blue-600 block py-1 border-l-2 border-transparent hover:border-blue-500 pl-3 transition-colors">1. Giới thiệu & Lịch sử</a></li>
+                            <li><a href="#phan2" class="hover:text-blue-600 block py-1 border-l-2 border-transparent hover:border-blue-500 pl-3 transition-colors">2. Kiến trúc Kỹ thuật</a></li>
+                            <li><a href="#phan3" class="hover:text-blue-600 block py-1 border-l-2 border-transparent hover:border-blue-500 pl-3 transition-colors">3. Hiệu ứng Tuyết lở</a></li>
+                            <li><a href="#phan4" class="hover:text-blue-600 block py-1 border-l-2 border-transparent hover:border-blue-500 pl-3 transition-colors">4. Khủng hoảng Va chạm</a></li>
+                            <li><a href="#phan5" class="hover:text-blue-600 block py-1 border-l-2 border-transparent hover:border-blue-500 pl-3 transition-colors">5. Ứng dụng & Kết luận</a></li>
                         </ul>
                     </div>
+
+                    <!-- Content -->
                     <div class="col-span-12 md:col-span-9 p-10 prose max-w-none">
-                        <div id="phan1" class="mb-12">
-                            <h3 class="text-blue-700 border-b border-blue-100 pb-2">1. Giới thiệu & Lịch sử</h3>
-                            <p><strong>MD5</strong> được phát triển năm 1991 (Ronald Rivest, MIT), từng là chuẩn phổ biến cho kiểm tra toàn vẹn và lưu trữ mật khẩu, nhưng hiện nay đã bị coi là không an toàn cho mục đích bảo mật.</p>
-                            <ul>
-                                <li>Chuẩn hóa trong RFC 1321 (1992), tối ưu cho kiến trúc 32-bit.</li>
-                                <li>2004: Công bố va chạm thực tế, mở đầu giai đoạn suy tàn.</li>
-                                <li>2008: Tạo CA giả mạo bằng va chạm MD5; 2012: Malware Flame giả chữ ký Microsoft.</li>
-                            </ul>
-                        </div>
-
-                        <div id="phan2" class="mb-12">
-                            <h3 class="text-blue-700 border-b border-blue-100 pb-2">2. Kiến trúc & Tiền xử lý</h3>
-                            <p>MD5 tuân theo cấu trúc <strong>Merkle-Damgård</strong>: thông điệp được chia khối 512-bit và cập nhật trạng thái nội bộ 128-bit qua mỗi khối.</p>
-                            <ul>
-                                <li><strong>Khối đầu vào:</strong> Chia thông điệp thành các khối 512-bit.</li>
-                                <li><strong>Trạng thái nội bộ:</strong> Bộ đệm 4 thanh ghi 32-bit <code>A,B,C,D</code> với IV cố định: <code>A=0x67452301</code>, <code>B=0xEFCDAB89</code>, <code>C=0x98BADCFE</code>, <code>D=0x10325476</code>.</li>
-                                <li><strong>Tiền xử lý:</strong> Padding 1 bit '1' rồi '0' đến khi đồng dư 448 (mod 512); thêm 64-bit độ dài gốc (Little-Endian).</li>
-                                <li><strong>Hàm nén:</strong> Mỗi khối chạy 64 bước chia 4 vòng, sử dụng các hàm F/G/H/I.</li>
-                            </ul>
-                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                                <div class="text-xs text-slate-500 font-bold mb-2 uppercase">Công thức bước</div>
-                                <div class="font-serif text-lg text-slate-800 italic">A = B + ((A + Func(B,C,D) + M<sub>k</sub> + T<sub>i</sub>) &lt;&lt;&lt; s)</div>
-                                <div class="text-xs text-slate-500 mt-2">Sau đó hoán vị: D→A, C→D, B→C.</div>
+                        
+                        <!-- Phan 1 -->
+                        <div id="phan1" class="mb-12 scroll-mt-20">
+                            <h3 class="flex items-center gap-3 text-blue-700 border-b border-blue-100 pb-2">
+                                <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
+                                Giới thiệu & Lịch sử
+                            </h3>
+                            <p><strong>MD5 (Message-Digest Algorithm 5)</strong> được phát triển bởi Giáo sư Ronald Rivest (MIT) vào năm 1991 để thay thế MD4. Trong suốt thập niên 90, nó được xem là "tiêu chuẩn vàng" cho việc kiểm tra tính toàn vẹn file và lưu trữ mật khẩu.</p>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 text-sm">
+                                <p class="mb-0"><strong>Lưu ý quan trọng:</strong> Hiện nay, MD5 đã bị coi là <span class="text-red-600 font-bold">KHÔNG AN TOÀN</span> cho các mục đích bảo mật nghiêm ngặt như chữ ký số hay lưu trữ mật khẩu.</p>
                             </div>
                         </div>
 
-                        <div id="phan3" class="mb-12">
-                            <h3 class="text-blue-700 border-b border-blue-100 pb-2">3. Hiệu ứng Tuyết lở</h3>
-                            <p>Một thay đổi nhỏ ở đầu vào (chỉ 1 bit) dẫn đến thay đổi lớn (~50%) ở đầu ra. MD5 khuếch tán mạnh nhờ xoay bit và cộng dồn.</p>
-                            <div class="my-4">
-                                <button onclick="switchTab('avalanche')" class="bg-white border border-slate-300 hover:border-indigo-500 hover:text-indigo-600 text-slate-700 px-5 py-3 rounded-lg shadow-sm text-sm">Xem demo Tuyết lở</button>
+                        <!-- Phan 2 -->
+                        <div id="phan2" class="mb-12 scroll-mt-20">
+                            <h3 class="flex items-center gap-3 text-blue-700 border-b border-blue-100 pb-2">
+                                <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
+                                Giải phẫu Kiến trúc (Cấu trúc Lõi)
+                            </h3>
+                            <p>MD5 hoạt động dựa trên nguyên lý <strong>Merkle-Damgård</strong>. Thông điệp đầu vào được chia nhỏ và xử lý qua các bước:</p>
+                            <ul>
+                                <li><strong>Padding (Đệm bit):</strong> Thêm bit sao cho độ dài chuỗi chia hết cho 512.</li>
+                                <li><strong>Trạng thái nội bộ (Internal State):</strong> Gồm 4 thanh ghi 32-bit (A, B, C, D) hoạt động như một bộ nhớ đệm.</li>
+                                <li><strong>Hàm nén:</strong> Mỗi khối 512-bit đi qua 64 vòng lặp biến đổi để xáo trộn dữ liệu.</li>
+                            </ul>
+                            <div class="my-6">
+                                <button onclick="switchTab('algo')" class="bg-white border border-slate-300 hover:border-blue-500 hover:text-blue-600 text-slate-700 px-5 py-3 rounded-lg shadow-sm w-full text-left flex items-center justify-between group transition-all">
+                                    <span><i class="fa-solid fa-microchip mr-2 text-slate-400 group-hover:text-blue-500"></i> Xem mô phỏng: Các thanh ghi A, B, C, D biến đổi thế nào?</span>
+                                    <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-blue-500"></i>
+                                </button>
                             </div>
                         </div>
 
-                        <div id="phan4" class="mb-12">
-                            <h3 class="text-blue-700 border-b border-blue-100 pb-2">4. Khủng hoảng Va chạm</h3>
-                            <p>MD5 thất bại ở tính chất <strong>Kháng Va chạm</strong>: có thể tạo hai nội dung khác nhau có cùng mã băm.</p>
-                            <ul>
-                                <li><strong>Collision:</strong> Hai khối dữ liệu rác có cùng MD5.</li>
-                                <li><strong>Chosen-Prefix Collision:</strong> Hai tài liệu có ý nghĩa được tinh chỉnh đuôi để trùng MD5.</li>
-                            </ul>
-                            <button onclick="switchTab('collision')" class="bg-blue-100 text-blue-700 px-4 py-2 rounded font-bold hover:bg-blue-200 transition">Đi đến Demo Va chạm >></button>
+                        <!-- Phan 3 -->
+                        <div id="phan3" class="mb-12 scroll-mt-20">
+                            <h3 class="flex items-center gap-3 text-blue-700 border-b border-blue-100 pb-2">
+                                <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
+                                Hiệu ứng Tuyết lở (Avalanche Effect)
+                            </h3>
+                            <p>Đây là tính chất quan trọng nhất thể hiện sự "khuếch tán" của hàm băm. Nguyên lý: <strong>"Một thay đổi nhỏ ở đầu vào (dù chỉ 1 bit) phải dẫn đến sự thay đổi lớn (~50%) ở đầu ra."</strong></p>
+                            <p>Nếu bạn thay đổi 'a' thành 'b', mã băm phải thay đổi hoàn toàn. Nếu mã băm chỉ thay đổi một chút, kẻ tấn công có thể đoán ra nội dung gốc.</p>
+                            <div class="my-6">
+                                <button onclick="switchTab('avalanche')" class="bg-white border border-slate-300 hover:border-indigo-500 hover:text-indigo-600 text-slate-700 px-5 py-3 rounded-lg shadow-sm w-full text-left flex items-center justify-between group transition-all">
+                                    <span><i class="fa-solid fa-hill-rockslide mr-2 text-slate-400 group-hover:text-indigo-500"></i> Thực hành: Nhập thử text để xem Tuyết lở</span>
+                                    <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-500"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div id="phan5" class="mb-12">
-                            <h3 class="text-blue-700 border-b border-blue-100 pb-2">5. So sánh & Khuyến nghị</h3>
-                            <table class="w-full border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th class="bg-blue-600 text-white p-3 text-left">Đặc điểm</th>
-                                        <th class="bg-blue-600 text-white p-3 text-left">MD5</th>
-                                        <th class="bg-blue-600 text-white p-3 text-left">SHA-256</th>
-                                        <th class="bg-blue-600 text-white p-3 text-left">BLAKE3</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="p-3 border-b">Kích thước băm</td>
-                                        <td class="p-3 border-b">128 bit</td>
-                                        <td class="p-3 border-b">256 bit</td>
-                                        <td class="p-3 border-b">256 bit</td>
-                                    </tr>
-                                    <tr class="bg-slate-50">
-                                        <td class="p-3 border-b">Trạng thái</td>
-                                        <td class="p-3 border-b text-red-600 font-bold">Đã bị phá vỡ</td>
-                                        <td class="p-3 border-b text-green-600 font-bold">An toàn</td>
-                                        <td class="p-3 border-b text-green-600 font-bold">An toàn</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3 border-b">Hiệu suất</td>
-                                        <td class="p-3 border-b">Rất nhanh</td>
-                                        <td class="p-3 border-b">Trung bình</td>
-                                        <td class="p-3 border-b">Siêu nhanh (song song)</td>
-                                    </tr>
-                                    <tr class="bg-slate-50">
-                                        <td class="p-3 border-b">Kháng Length Extension</td>
-                                        <td class="p-3 border-b">Không</td>
-                                        <td class="p-3 border-b">Không</td>
-                                        <td class="p-3 border-b">Có</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <!-- Phan 4 -->
+                        <div id="phan4" class="mb-12 scroll-mt-20">
+                            <h3 class="flex items-center gap-3 text-blue-700 border-b border-blue-100 pb-2">
+                                <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">4</span>
+                                Khủng hoảng Va chạm (Collision) & Tấn công
+                            </h3>
+                            <p>MD5 đã "chết" vì nó không đảm bảo tính <strong>Kháng Va Chạm</strong>. Các nhà nghiên cứu (đặc biệt là Xiaoyun Wang năm 2004) đã tìm ra cách tạo ra 2 file khác nhau có cùng mã băm.</p>
+                            <ul>
+                                <li><strong>Va chạm (Collision):</strong> Tìm 2 file rác có cùng Hash.</li>
+                                <li><strong>Chosen-Prefix Collision:</strong> Kẻ tấn công chọn 2 file có ý nghĩa (VD: Hợp đồng tốt và Hợp đồng giả mạo), sau đó tính toán phần đuôi để chúng có cùng chữ ký.</li>
+                                <li><strong>Length Extension Attack:</strong> Nếu dùng <code>MD5(Secret + Message)</code> để ký, hacker có thể nối thêm dữ liệu vào Message và tạo chữ ký mới hợp lệ mà không cần biết Secret.</li>
+                            </ul>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                                <button onclick="switchTab('collision')" class="bg-white border border-slate-300 hover:border-red-500 hover:text-red-600 text-slate-700 px-5 py-3 rounded-lg shadow-sm w-full text-left flex items-center justify-between group transition-all">
+                                    <span><i class="fa-solid fa-car-burst mr-2 text-slate-400 group-hover:text-red-500"></i> Demo: Tạo Va chạm thật</span>
+                                    <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-red-500"></i>
+                                </button>
+                                <button onclick="switchTab('length_ext')" class="bg-white border border-slate-300 hover:border-red-500 hover:text-red-600 text-slate-700 px-5 py-3 rounded-lg shadow-sm w-full text-left flex items-center justify-between group transition-all">
+                                    <span><i class="fa-solid fa-shield-virus mr-2 text-slate-400 group-hover:text-red-500"></i> Demo: Hack chữ ký API</span>
+                                    <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-red-500"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Phan 5 -->
+                        <div id="phan5" class="mb-12 scroll-mt-20">
+                            <h3 class="flex items-center gap-3 text-blue-700 border-b border-blue-100 pb-2">
+                                <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">5</span>
+                                Kết luận & Ứng dụng hiện tại
+                            </h3>
+                            <p>Vậy có nên dùng MD5 nữa không? Câu trả lời phụ thuộc vào mục đích:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                                 <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                                    <h5 class="font-bold text-green-700 mb-2">Nên dùng (phi bảo mật)</h5>
+                                    <h5 class="font-bold text-green-700 mb-2"><i class="fa-solid fa-check-circle mr-1"></i> NÊN DÙNG (Phi bảo mật)</h5>
                                     <ul class="text-sm text-green-800">
-                                        <li>Checksum file, phát hiện lỗi truyền tải.</li>
-                                        <li>Deduplication dữ liệu.</li>
-                                        <li>Định danh phi mật mã.</li>
+                                        <li><strong>Checksum File:</strong> Kiểm tra file tải về có bị lỗi đường truyền không.</li>
+                                        <li><strong>Deduplication:</strong> Tìm file trùng lặp trong ổ cứng.</li>
+                                        <li><strong>Non-Crypto ID:</strong> Dùng làm khóa phân vùng (Partition Key) trong Database.</li>
                                     </ul>
                                 </div>
                                 <div class="bg-red-50 p-4 rounded-lg border border-red-200">
-                                    <h5 class="font-bold text-red-700 mb-2">Tuyệt đối không</h5>
+                                    <h5 class="font-bold text-red-700 mb-2"><i class="fa-solid fa-ban mr-1"></i> TUYỆT ĐỐI KHÔNG</h5>
                                     <ul class="text-sm text-red-800">
-                                        <li>Lưu trữ mật khẩu (dùng Argon2/Bcrypt).</li>
-                                        <li>Chữ ký số, chứng chỉ (dùng SHA-256/SHA-3).</li>
+                                        <li><strong>Lưu mật khẩu:</strong> Quá nhanh, dễ bị Brute-force. (Hãy dùng Argon2, Bcrypt).</li>
+                                        <li><strong>Chữ ký số (SSL/TLS):</strong> Dễ bị giả mạo chứng chỉ. (Hãy dùng SHA-256).</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -218,7 +218,10 @@
                         <button onclick="initAlgoDemo()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">Nạp dữ liệu</button>
                     </div>
                 </div>
+
+                <!-- Visualization Area -->
                 <div class="flex-1 grid grid-cols-12 gap-6">
+                    <!-- Left: Formula & Controls -->
                     <div class="col-span-4 flex flex-col gap-4">
                         <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                             <div class="flex justify-between items-center mb-4">
@@ -241,6 +244,7 @@
                             <div class="text-xs text-slate-500 mt-2">*Sau đó hoán vị: D→A, C→D, B→C</div>
                         </div>
                     </div>
+                    <!-- Right: Registers & State -->
                     <div class="col-span-8 bg-slate-50 rounded-xl border border-slate-200 p-6 relative flex flex-col justify-center items-center">
                         <div class="grid grid-cols-4 gap-4 w-full mb-10">
                             <div id="reg-a" class="reg-box bg-white p-4 rounded-xl border-2 border-slate-200 shadow-sm text-center relative"><div class="text-xs font-bold text-slate-400 absolute top-2 left-3">REG A</div><div class="font-mono text-lg font-bold text-slate-700 mt-2 val">00000000</div></div>
@@ -284,162 +288,44 @@
             </div>
         </section>
 
-        <!-- TAB 3: COLLISION DEMO (UPDATED) -->
+        <!-- TAB 3: COLLISION (STEP-BY-STEP) -->
         <section id="tab-collision" class="max-w-6xl mx-auto hidden p-6">
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-[700px]">
-                <!-- Control Header -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-[600px]">
                 <div class="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                    <div>
-                        <h2 class="text-lg font-bold flex items-center gap-2 text-slate-800">
-                            <i class="fa-solid fa-car-burst text-red-500"></i> Demo: Tạo Va chạm Phần mềm (Evil Twin)
-                        </h2>
-                        <p class="text-xs text-slate-500">Quy trình giả mạo phần mềm: Từ Source Code đến Thực thi.</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="resetCollisionStep()" class="px-4 py-2 text-slate-600 hover:bg-slate-200 rounded-lg text-sm font-medium transition-colors">Làm lại</button>
-                        <button onclick="nextCollisionStep()" id="btn-col-next" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold shadow-md transition-all flex items-center gap-2">
-                            Bước tiếp theo <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
+                    <div><h2 class="text-lg font-bold flex items-center gap-2 text-slate-800"><i class="fa-solid fa-car-burst text-red-500"></i> Demo: Va chạm MD5 (Step-by-Step)</h2><p class="text-xs text-slate-500">Quy trình chứng minh và tác hại của va chạm.</p></div>
+                    <div class="flex gap-2"><button onclick="resetCollisionStep()" class="px-4 py-2 text-slate-600 hover:bg-slate-200 rounded-lg text-sm font-medium transition-colors">Reset</button><button onclick="nextCollisionStep()" id="btn-col-next" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold shadow-md transition-all flex items-center gap-2">Bước tiếp theo <i class="fa-solid fa-arrow-right"></i></button></div>
                 </div>
-
-                <!-- Main Content (Scrollable) -->
                 <div class="flex-1 p-6 overflow-y-auto bg-slate-100">
-                    <div class="max-w-5xl mx-auto space-y-8">
-                        
-                        <!-- Step 1: Source Code -->
-                        <div id="col-step-1" class="step-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm transition-all duration-500">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">1</div>
-                                <h3 class="font-bold text-slate-800">Bước 1: Viết 2 chương trình (Source Code)</h3>
-                            </div>
-                            <div class="grid grid-cols-2 gap-6">
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-xs font-bold text-green-600 uppercase"><i class="fa-solid fa-shield-halved mr-1"></i> Chương trình A (Lành tính)</span>
-                                        <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-500">good.c</span>
-                                    </div>
-                                    <div class="code-window">
-                                        <span class="text-pink-400">void</span> main() {<br>
-                                        &nbsp;&nbsp;<span class="text-purple-400">printf</span>(<span class="text-yellow-300">"Hello! I am safe."</span>);<br>
-                                        }
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-xs font-bold text-red-600 uppercase"><i class="fa-solid fa-skull mr-1"></i> Chương trình B (Độc hại)</span>
-                                        <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-500">evil.c</span>
-                                    </div>
-                                    <div class="code-window border-red-500 border-opacity-50">
-                                        <span class="text-pink-400">void</span> main() {<br>
-                                        &nbsp;&nbsp;<span class="text-purple-400">system</span>(<span class="text-yellow-300">"DELETE ALL DATA!"</span>);<br>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="max-w-4xl mx-auto space-y-6">
+                        <div id="col-step-1" class="step-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm transition-all duration-500 opacity-50 blur-sm pointer-events-none">
+                            <div class="flex items-center gap-3 mb-4"><div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">1</div><h3 class="font-bold text-slate-800">Chuẩn bị dữ liệu (Data Blocks)</h3></div>
+                            <p class="text-sm text-slate-600 mb-4">Chúng ta có 2 khối dữ liệu nhị phân (128 byte) được tạo ra bởi công cụ <code>fastcoll</code>. Chúng trông rất giống nhau.</p>
+                            <div class="grid grid-cols-2 gap-4 text-xs mono"><div><div class="text-xs font-bold text-slate-500 mb-1">Block 1</div><div class="bg-slate-50 p-3 rounded border border-slate-200 h-24 overflow-y-auto break-all" id="col-block1-view">...</div></div><div><div class="text-xs font-bold text-slate-500 mb-1">Block 2</div><div class="bg-slate-50 p-3 rounded border border-slate-200 h-24 overflow-y-auto break-all" id="col-block2-view">...</div></div></div>
+                            <div class="mt-2 text-center text-xs text-red-500 italic hidden" id="col-diff-msg"><i class="fa-solid fa-circle-exclamation"></i> Các byte được tô đỏ là điểm khác biệt giữa 2 khối.</div>
                         </div>
-
-                        <!-- Step 2: Binary Generation -->
                         <div id="col-step-2" class="step-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm hidden">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">2</div>
-                                <h3 class="font-bold text-slate-800">Bước 2: Biên dịch & Tạo va chạm (Collision Generation)</h3>
-                            </div>
-                            <p class="text-sm text-slate-600 mb-4">Sử dụng công cụ tạo va chạm (ví dụ: <code>fastcoll</code>) để tạo ra 2 khối dữ liệu nhị phân đặc biệt (Block 1 & Block 2). Chúng trông rất giống nhau nhưng có vài byte khác biệt (màu đỏ).</p>
-                            
-                            <i class="fa-solid fa-arrow-down arrow-down"></i>
-
-                            <div class="grid grid-cols-2 gap-6">
-                                <div>
-                                    <div class="text-xs font-bold text-slate-500 mb-1">Binary Block 1 (Generated)</div>
-                                    <div class="bg-slate-50 p-3 rounded border border-slate-200 h-24 overflow-y-auto break-all mono text-xs text-slate-600" id="col-block1-view"></div>
-                                </div>
-                                <div>
-                                    <div class="text-xs font-bold text-slate-500 mb-1">Binary Block 2 (Generated)</div>
-                                    <div class="bg-slate-50 p-3 rounded border border-slate-200 h-24 overflow-y-auto break-all mono text-xs text-slate-600" id="col-block2-view"></div>
-                                </div>
-                            </div>
+                            <div class="flex items-center gap-3 mb-4"><div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">2</div><h3 class="font-bold text-slate-800">Tính toán MD5 Hash</h3></div>
+                            <div class="grid grid-cols-2 gap-6 items-center"><div class="bg-red-50 p-4 rounded-lg border border-red-200 text-center"><div class="text-xs text-red-500 font-bold mb-1">MD5 (Block 1)</div><div class="mono font-bold text-slate-800 break-all text-sm" id="col-md5-1">Computing...</div></div><div class="text-center text-2xl font-bold text-red-500">=</div><div class="bg-red-50 p-4 rounded-lg border border-red-200 text-center"><div class="text-xs text-red-500 font-bold mb-1">MD5 (Block 2)</div><div class="mono font-bold text-slate-800 break-all text-sm" id="col-md5-2">Computing...</div></div></div>
+                            <div class="mt-4 p-3 bg-red-100 text-red-800 rounded-lg text-center text-sm font-bold border border-red-200"><i class="fa-solid fa-triangle-exclamation mr-1"></i> KẾT LUẬN: VA CHẠM! Hai nội dung khác nhau có cùng mã băm.</div>
                         </div>
-
-                        <!-- Step 3: Hashing -->
                         <div id="col-step-3" class="step-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm hidden">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">3</div>
-                                <h3 class="font-bold text-slate-800">Bước 3: Kiểm tra Chữ ký số (Hashing)</h3>
-                            </div>
-                            <div class="grid grid-cols-2 gap-6 items-center">
-                                <div class="bg-green-50 p-4 rounded-lg border border-green-200 text-center relative">
-                                    <div class="text-xs text-green-700 font-bold mb-1">MD5 (Block 1)</div>
-                                    <div class="mono font-bold text-slate-800 break-all text-sm" id="col-md5-1">Calculated...</div>
-                                    <div class="absolute -top-3 -right-3 bg-green-600 text-white text-xs px-2 py-1 rounded shadow">Hợp lệ</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-3xl font-bold text-red-500 mb-1">=</div>
-                                    <div class="text-xs text-red-500 font-bold uppercase tracking-wider">COLLISION!</div>
-                                </div>
-                                <div class="bg-green-50 p-4 rounded-lg border border-green-200 text-center relative">
-                                    <div class="text-xs text-green-700 font-bold mb-1">MD5 (Block 2)</div>
-                                    <div class="mono font-bold text-slate-800 break-all text-sm" id="col-md5-2">Calculated...</div>
-                                    <div class="absolute -top-3 -right-3 bg-green-600 text-white text-xs px-2 py-1 rounded shadow">Hợp lệ</div>
-                                </div>
-                            </div>
-                            <p class="text-center text-sm text-slate-500 mt-4 italic">Hệ thống bảo mật (Antivirus) thấy 2 file này có cùng chữ ký -> Coi là an toàn như nhau!</p>
+                            <div class="flex items-center gap-3 mb-4"><div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">3</div><h3 class="font-bold text-slate-800">Thử lại với SHA-256 (An toàn)</h3></div>
+                            <div class="space-y-3"><div class="bg-green-50 p-3 rounded border border-green-200 flex justify-between items-center px-4"><span class="text-xs font-bold text-green-700 w-20">SHA256 #1</span><span class="mono text-xs text-slate-600 break-all flex-1 text-right" id="col-sha-1">...</span></div><div class="bg-green-50 p-3 rounded border border-green-200 flex justify-between items-center px-4"><span class="text-xs font-bold text-green-700 w-20">SHA256 #2</span><span class="mono text-xs text-slate-600 break-all flex-1 text-right" id="col-sha-2">...</span></div></div>
+                            <div class="mt-3 text-center text-xs text-green-600 font-bold"><i class="fa-solid fa-check mr-1"></i> Khác nhau hoàn toàn. Thuật toán an toàn phân biệt được chúng.</div>
                         </div>
-
-                        <!-- Step 4: Execution -->
                         <div id="col-step-4" class="step-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm hidden">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">4</div>
-                                <h3 class="font-bold text-slate-800">Bước 4: Thực thi & Hậu quả</h3>
-                            </div>
-                            <p class="text-sm text-slate-600 mb-4">Khi chạy, máy tính sẽ đọc nội dung file. Do nội dung khác nhau (tại các byte màu đỏ), chương trình sẽ rẽ nhánh thực thi khác nhau.</p>
-                            
-                            <div class="grid grid-cols-2 gap-6">
-                                <!-- Scenario A -->
-                                <div class="border border-green-200 rounded-lg overflow-hidden">
-                                    <div class="bg-green-50 px-3 py-2 border-b border-green-200 text-xs font-bold text-green-800 flex justify-between">
-                                        <span>TERMINAL 1 (Running File A)</span>
-                                        <i class="fa-solid fa-play"></i>
-                                    </div>
-                                    <div class="p-4 bg-slate-900 text-green-400 font-mono text-sm h-32">
-                                        $ ./program_a<br>
-                                        [System] Checking MD5... OK.<br>
-                                        > Hello! I am safe.<br>
-                                        <span class="animate-pulse">_</span>
-                                    </div>
-                                </div>
-                                <!-- Scenario B -->
-                                <div class="border border-red-200 rounded-lg overflow-hidden relative">
-                                    <div class="absolute inset-0 bg-red-500 opacity-10 pointer-events-none animate-pulse"></div>
-                                    <div class="bg-red-50 px-3 py-2 border-b border-red-200 text-xs font-bold text-red-800 flex justify-between">
-                                        <span>TERMINAL 2 (Running File B)</span>
-                                        <i class="fa-solid fa-play"></i>
-                                    </div>
-                                    <div class="p-4 bg-slate-900 text-red-400 font-mono text-sm h-32">
-                                        $ ./program_b<br>
-                                        [System] Checking MD5... OK.<br>
-                                        > DELETING ALL DATA...<br>
-                                        > [ERROR] CRITICAL DATA LOST!<br>
-                                        <span class="animate-pulse">_</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg text-center">
-                                <p class="text-yellow-800 font-bold text-sm">
-                                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> KẾT LUẬN:
-                                </p>
-                                <p class="text-slate-700 text-sm mt-1">MD5 không thể phân biệt "Tốt" và "Xấu". Kẻ tấn công có thể tráo đổi file độc hại vào hệ thống mà không làm thay đổi chữ ký MD5.</p>
-                            </div>
+                            <div class="flex items-center gap-3 mb-4"><div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">4</div><h3 class="font-bold text-slate-800">Hậu quả: Tấn công "Evil Twin"</h3></div>
+                            <p class="text-sm text-slate-600 mb-4">Giả sử một phần mềm được lập trình để kiểm tra byte thứ 20 (nơi có va chạm) để quyết định hành vi:</p>
+                            <div class="grid grid-cols-2 gap-4"><div class="bg-slate-50 p-4 rounded-lg border border-slate-200"><div class="text-xs font-bold text-slate-500 mb-2">CHẠY BLOCK 1</div><div class="font-mono text-xs text-slate-600 bg-white p-2 rounded border mb-2">if (byte[19] == 0x87) {<br>&nbsp;&nbsp;print("Hello User!");<br>}</div><div class="bg-green-100 text-green-800 p-2 rounded text-center text-xs font-bold"><i class="fa-solid fa-face-smile"></i> LÀNH TÍNH</div></div><div class="bg-slate-50 p-4 rounded-lg border border-slate-200"><div class="text-xs font-bold text-slate-500 mb-2">CHẠY BLOCK 2</div><div class="font-mono text-xs text-slate-600 bg-white p-2 rounded border mb-2">else {<br>&nbsp;&nbsp;system("rm -rf /");<br>}</div><div class="bg-red-100 text-red-800 p-2 rounded text-center text-xs font-bold"><i class="fa-solid fa-virus"></i> ĐỘC HẠI</div></div></div>
+                            <div class="mt-4 text-center text-sm font-bold text-slate-700">Cả 2 chương trình trên đều có cùng chữ ký số MD5! Antivirus dùng MD5 sẽ bị qua mặt.</div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 4: LENGTH EXTENSION (Keep same) -->
+        <!-- TAB 4: LENGTH EXTENSION (STEP BY STEP) -->
         <section id="tab-length_ext" class="max-w-6xl mx-auto hidden p-6">
-            <!-- (Giữ nguyên nội dung Tab 4 cũ) -->
             <div class="bg-slate-900 rounded-xl shadow-2xl overflow-hidden border border-slate-700 flex flex-col h-[500px]">
                 <div class="bg-slate-800 px-4 py-2 flex items-center gap-2 border-b border-slate-700">
                     <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-500"></div><div class="w-3 h-3 rounded-full bg-yellow-500"></div><div class="w-3 h-3 rounded-full bg-green-500"></div></div>
@@ -468,6 +354,8 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             const btn = document.getElementById('btn-' + id);
             if(btn) btn.classList.add('active');
+            
+            // Scroll to top if switching to Theory
             if(id === 'theory') document.querySelector('main').scrollTop = 0;
         }
 
@@ -547,73 +435,18 @@
             document.getElementById('diff-bar').style.width = p+"%";
         }
 
-        // --- COLLISION (NEW SCENARIO LOGIC) ---
+        // --- COLLISION ---
         const b1hex = "d131dd02c5e6eec4693d9a0698aff95c2fcab58712467eab4004583eb8fb7f8955ad340609f4b30283e488832571415a085125e8f7cdc99fd91dbdf280373c5bd8823e3156348f5bae6dacd436c919c6dd53e2b487da03fd02396306d248cda0e99f33420f577ee8ce54b67080a80d1ec69821bcb6a8839396f9652b6ff72a70";
         const b2hex = "d131dd02c5e6eec4693d9a0698aff95c2fcab50712467eab4004583eb8fb7f8955ad340609f4b30283e488832571415a085125e8f7cdc99fd91dbdf280373c5bd8823e3156348f5bae6dacd436c919c6dd53e2b487da03fd02396306d248cda0e99f33420f577ee8ce54b67080a80d1ec69821bcb6a8839396f9652b6ff72a70";
         let colStep = 0;
-
         async function nextCollisionStep() {
             colStep++;
-            // Step 1: Just show UI (Init state is handled by reset)
-            
-            // Step 2: Binary Generation
-            if(colStep === 1) { 
-                document.getElementById('col-step-2').classList.remove('hidden');
-                
-                // Render Hex with highlights
-                let h1 = "", h2 = "";
-                for(let i=0; i<b1hex.length; i+=2) { 
-                    let byte1 = b1hex.substr(i,2); 
-                    let byte2 = b2hex.substr(i,2); 
-                    if(byte1 !== byte2) { 
-                        h1 += `<span class="diff-byte">${byte1}</span>`; 
-                        h2 += `<span class="diff-byte">${byte2}</span>`; 
-                    } else { 
-                        h1 += byte1; h2 += byte2; 
-                    } 
-                } 
-                document.getElementById('col-block1-view').innerHTML = h1; 
-                document.getElementById('col-block2-view').innerHTML = h2;
-                
-                document.querySelector('.max-w-5xl').parentElement.scrollTop = 500; // Auto scroll
-            }
-
-            // Step 3: Hashing
-            if(colStep === 2) { 
-                document.getElementById('col-step-3').classList.remove('hidden');
-                
-                // Calculate MD5
-                const hexToStr = hex => { let s = ''; for(let i=0; i<hex.length; i+=2) s += String.fromCharCode(parseInt(hex.substr(i,2),16)); return s; }; 
-                const md5_1 = SparkMD5.hashBinary(hexToStr(b1hex)); 
-                const md5_2 = SparkMD5.hashBinary(hexToStr(b2hex)); 
-                
-                document.getElementById('col-md5-1').innerText = md5_1; 
-                document.getElementById('col-md5-2').innerText = md5_2; 
-                document.querySelector('.max-w-5xl').parentElement.scrollTop = 900;
-            }
-
-            // Step 4: Execution
-            if(colStep === 3) {
-                document.getElementById('col-step-4').classList.remove('hidden');
-                document.getElementById('btn-col-next').innerText = "Hoàn thành";
-                document.getElementById('btn-col-next').classList.add('opacity-50', 'cursor-not-allowed');
-                document.querySelector('.max-w-5xl').parentElement.scrollTop = 1200;
-            }
+            if(colStep === 1) { document.getElementById('col-step-1').classList.remove('opacity-50', 'blur-sm', 'pointer-events-none'); let h1 = "", h2 = ""; for(let i=0; i<b1hex.length; i+=2) { let byte1 = b1hex.substr(i,2); let byte2 = b2hex.substr(i,2); if(byte1 !== byte2) { h1 += `<span class="diff-byte">${byte1}</span>`; h2 += `<span class="diff-byte">${byte2}</span>`; } else { h1 += byte1; h2 += byte2; } } document.getElementById('col-block1-view').innerHTML = h1; document.getElementById('col-block2-view').innerHTML = h2; document.getElementById('col-diff-msg').classList.remove('hidden'); }
+            if(colStep === 2) { const hexToStr = hex => { let s = ''; for(let i=0; i<hex.length; i+=2) s += String.fromCharCode(parseInt(hex.substr(i,2),16)); return s; }; const md5_1 = SparkMD5.hashBinary(hexToStr(b1hex)); const md5_2 = SparkMD5.hashBinary(hexToStr(b2hex)); document.getElementById('col-md5-1').innerText = md5_1; document.getElementById('col-md5-2').innerText = md5_2; document.getElementById('col-step-2').classList.remove('hidden'); }
+            if(colStep === 3) { const hexToBuf = hex => { const b = new Uint8Array(hex.length/2); for(let i=0; i<hex.length; i+=2) b[i/2] = parseInt(hex.substr(i,2),16); return b; }; const buf1 = await crypto.subtle.digest('SHA-256', hexToBuf(b1hex)); const buf2 = await crypto.subtle.digest('SHA-256', hexToBuf(b2hex)); document.getElementById('col-sha-1').innerText = Array.from(new Uint8Array(buf1)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,20)+"..."; document.getElementById('col-sha-2').innerText = Array.from(new Uint8Array(buf2)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,20)+"..."; document.getElementById('col-step-3').classList.remove('hidden'); }
+            if(colStep === 4) { document.getElementById('col-step-4').classList.remove('hidden'); document.getElementById('btn-col-next').innerText = "Hoàn thành"; document.getElementById('btn-col-next').classList.add('opacity-50', 'cursor-not-allowed'); }
         }
-
-        function resetCollisionStep() { 
-            colStep = 0; 
-            document.getElementById('col-step-2').classList.add('hidden');
-            document.getElementById('col-step-3').classList.add('hidden');
-            document.getElementById('col-step-4').classList.add('hidden');
-            document.getElementById('col-block1-view').innerHTML = '...'; 
-            document.getElementById('col-block2-view').innerHTML = '...'; 
-            document.getElementById('col-md5-1').innerText = '...'; 
-            document.getElementById('col-md5-2').innerText = '...';
-            document.getElementById('btn-col-next').innerHTML = 'Bước tiếp theo <i class="fa-solid fa-arrow-right"></i>'; 
-            document.getElementById('btn-col-next').classList.remove('opacity-50', 'cursor-not-allowed');
-            document.querySelector('.max-w-5xl').parentElement.scrollTop = 0;
-        }
+        function resetCollisionStep() { colStep = 0; document.getElementById('col-step-1').classList.add('opacity-50', 'blur-sm', 'pointer-events-none'); document.getElementById('col-block1-view').innerHTML = '...'; document.getElementById('col-block2-view').innerHTML = '...'; document.getElementById('col-diff-msg').classList.add('hidden'); document.getElementById('col-step-2').classList.add('hidden'); document.getElementById('col-step-3').classList.add('hidden'); document.getElementById('col-step-4').classList.add('hidden'); document.getElementById('btn-col-next').innerHTML = 'Bước tiếp theo <i class="fa-solid fa-arrow-right"></i>'; document.getElementById('btn-col-next').classList.remove('opacity-50', 'cursor-not-allowed'); nextCollisionStep(); }
 
         // --- TERMINAL ---
         const exploitSteps = [ { text: "$ ./attack_script.py --target api.example.com", type: "cmd" }, { text: "[*] Analyzing original signature...", type: "info" }, { text: "    Original Hash: 85030b39bfd237bf61bc217c1cf0f2ff", type: "data" }, { text: "[*] Extracting internal state (A, B, C, D)...", type: "info" }, { text: "    A=0x61bc217c, B=0x1cf0f2ff...", type: "data" }, { text: "[!] Initializing new MD5 state from extracted values...", type: "warn" }, { text: "[*] Appending malicious payload: '&role=admin'", type: "info" }, { text: "[+] Calculating new signature...", type: "success" }, { text: "    New Hash: 3e700f993eb99acdf5a193462c37de84", type: "result" }, { text: "[*] Sending forged cookie to server...", type: "info" }, { text: "HTTP/1.1 200 OK", type: "server" }, { text: "Welcome, ADMIN! You have full access.", type: "server-success" } ];
@@ -624,7 +457,7 @@
         // INIT
         initAlgoDemo();
         updateAvalanche();
-        // Start collision demo at step 0 (user clicks Next to start)
+        resetCollisionStep();
     </script>
 </body>
 </html>
