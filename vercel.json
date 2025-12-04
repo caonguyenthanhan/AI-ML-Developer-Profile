@@ -37,6 +37,10 @@
       "destination": "/attt/attt_em.html"
     },
     {
+      "source": "/attt/md5",
+      "destination": "/attt/MD5 Interactive Demos.html"
+    },
+    {
       "source": "/caonguyenthanhan",
       "destination": "/caonguyenthanhan/personal_info.html"
     },
