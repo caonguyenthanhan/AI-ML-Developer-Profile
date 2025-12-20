@@ -1,270 +1,326 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - CAO NGUYỄN THÀNH AN</title>
+    <title>CV - CAO NGUYỄN THÀNH AN - AI Software Engineer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        @media print {
+            @page { margin: 1cm; size: A4; }
+            body { background: white !important; color: black !important; -webkit-print-color-adjust: exact; }
+            .no-print { display: none !important; }
+            .container { max-width: 100% !important; padding: 0 !important; }
+            section { padding: 0.5rem 0 !important; page-break-inside: avoid; }
+            .bg-slate-50, .bg-slate-900, .bg-white, .bg-blue-600, .bg-blue-100, .bg-slate-800 { 
+                background: none !important; 
+                color: black !important; 
+                border: none !important;
+                box-shadow: none !important;
+            }
+            .text-white, .text-slate-300, .text-slate-400, .text-slate-500, .text-slate-600, .text-blue-600, .text-blue-300 { 
+                color: black !important; 
+            }
+            
+            /* CV Specific Formatting for Print */
+            header, nav, .header-placeholder { display: none !important; }
+            
+            /* Header */
+            #cv-header h1 { font-size: 24pt !important; margin-bottom: 0.2rem; text-transform: uppercase; }
+            #cv-header .job-title { font-size: 14pt !important; font-weight: bold; margin-bottom: 0.5rem; }
+            #cv-header .contact-info { font-size: 10pt !important; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+            
+            /* Sections */
+            h2 { font-size: 16pt !important; border-bottom: 2px solid #333; padding-bottom: 2px; margin-top: 15px; margin-bottom: 10px; text-transform: uppercase; }
+            h3 { font-size: 12pt !important; font-weight: bold; margin-bottom: 2px; }
+            .period { float: right; font-size: 10pt; }
+            
+            /* Content */
+            p, li { font-size: 10pt !important; line-height: 1.3; }
+            ul { margin-left: 1.5rem; }
+            
+            /* Skills Grid to List */
+            .skills-grid { display: flex !important; flex-wrap: wrap; gap: 1rem; }
+            .skills-category { margin-bottom: 0.5rem; }
+            .skills-category strong { display: block; margin-bottom: 0.2rem; }
+            
+            /* Links */
+            a { text-decoration: none; color: black !important; }
+            a[href^="http"]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            
+            /* Hide decorative elements */
+            img, .icon-box, .decorative-line { display: none !important; }
+        }
     </style>
     <script src="../../assets/js/header.js"></script>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
+    <!-- Language Toggle -->
+    <div class="fixed top-24 right-6 z-50 flex gap-2 no-print bg-white p-2 rounded-lg shadow-md border border-slate-200">
+        <button onclick="toggleLang('vi')" class="px-3 py-1 rounded hover:bg-slate-100 font-bold text-blue-600">VI</button>
+        <span class="text-slate-300">|</span>
+        <button onclick="toggleLang('en')" class="px-3 py-1 rounded hover:bg-slate-100 font-bold text-blue-600">EN</button>
+        <button onclick="window.print()" class="ml-2 px-3 py-1 rounded bg-slate-800 text-white hover:bg-slate-700 flex items-center gap-1">
+            <i data-lucide="printer" class="w-4 h-4"></i> Print CV
+        </button>
+    </div>
+
     <!-- Header Placeholder handled by header.js -->
+    <div class="header-placeholder no-print"></div>
     
-    <div class="min-h-screen">
-        <!-- Hero Section -->
-        <section id="about" class="pt-24 pb-12 px-6">
-            <div class="container mx-auto max-w-5xl">
-                <div class="flex flex-col md:flex-row items-center gap-12">
-                    <div class="flex-1 space-y-6">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium">
-                            <i data-lucide="code" class="w-5 h-5"></i>
-                            AI Software Engineer • 1 Năm Kinh Nghiệm
-                        </div>
-                        <h1 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
-                            Phát triển các hệ thống <br/>
-                            <span class="text-blue-600">AI & Phần mềm</span> <br/>
-                            mang lại giá trị thực tiễn.
-                        </h1>
-                        <p class="text-lg text-slate-600 max-w-2xl">
-                            Tôi là Thành An, một AI Software Engineer với 1 năm kinh nghiệm thực chiến. Khác với việc chỉ xây dựng mô hình, tôi tập trung vào việc tích hợp AI vào kiến trúc phần mềm (Software Architecture) để tạo ra các sản phẩm hoạt động ổn định, tự động hóa quy trình và giải quyết bài toán nghiệp vụ phức tạp.
-                        </p>
-                        <div class="flex flex-wrap gap-4 pt-2">
-                            <a href="#featured" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition flex items-center gap-2">
-                                <i data-lucide="layers" class="w-5 h-5"></i>
-                                Xem Case Study Hệ thống
-                            </a>
-                            <a href="#contact" class="px-6 py-3 bg-white text-slate-700 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition flex items-center gap-2">
-                                <i data-lucide="mail" class="w-5 h-5"></i>
-                                Liên hệ làm việc
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Avatar/Image Placeholder -->
-                    <div class="w-full md:w-1/3 flex justify-center">
-                         <div class="relative w-64 h-64 md:w-80 md:h-80 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full p-1 shadow-2xl">
-                            <img src="../../image/avata3.png" alt="Avatar" class="w-full h-full object-cover rounded-full border-4 border-white">
-                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="py-20 bg-white">
-            <div class="container mx-auto max-w-5xl px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Kỹ Năng & Công Nghệ</h2>
-                    <p class="text-slate-600 max-w-2xl mx-auto">Sự kết hợp giữa tư duy Kỹ thuật phần mềm (Software Engineering) và Trí tuệ nhân tạo (AI).</p>
-                </div>
-                <div class="grid md:grid-cols-3 gap-8">
-    
-                    <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:shadow-lg transition">
-                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
-                            <i data-lucide="cpu" class="w-5 h-5"></i> 
-                        </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-4">Software Engineering & Data</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>Data Engineering: ETL Pipelines, SQL, Data Warehousing</li><li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>Python Ecosystem: Pandas, NumPy, FastAPI/Flask</li><li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>Business Automation: Advanced Excel VBA, Office Scripts</li><li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>Software Design Patterns & Clean Code</li>
-                        </ul>
-                    </div>
+    <div class="min-h-screen max-w-[21cm] mx-auto bg-white shadow-xl my-8 p-8 md:p-12">
         
-                    <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:shadow-lg transition">
-                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
-                            <i data-lucide="cpu" class="w-5 h-5"></i> 
-                        </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-4">AI Engineering & LLMs</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>LLM Orchestration: LangGraph, Multi-Agent Systems</li><li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>RAG Systems: Vector DB, Semantic Search, Hybrid Search</li><li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>Model Integration: OpenAI API, Llama, Hugging Face</li><li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>AI Optimization: Prompt Engineering, Fine-tuning</li>
-                        </ul>
-                    </div>
-        
-                    <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:shadow-lg transition">
-                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
-                            <i data-lucide="cpu" class="w-5 h-5"></i> 
-                        </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-4">Infrastructure & Tools</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>Version Control: Git, GitHub Flow</li><li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>Cloud Services: AWS (EC2, S3, Lambda basics)</li><li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>Containerization: Docker basics</li><li class="flex items-start gap-2 text-sm text-slate-600"><span class="mt-1 text-blue-500">•</span>System Monitoring & Logging</li>
-                        </ul>
-                    </div>
-        
-                </div>
-            </div>
-        </section>
-
-        <!-- Featured Project -->
-        <section id="featured" class="py-20 bg-slate-900 text-white">
-            <div class="container mx-auto max-w-5xl px-6">
-                <div class="flex flex-col md:flex-row gap-12 items-start">
-                    <div class="flex-1 space-y-8">
-                        <div class="inline-block px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-sm font-medium border border-blue-500/30">
-                            Dự án Tiêu biểu (System Architect)
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold">Hệ thống Báo cáo Tự động Multi-Agent</h2>
-                        <p class="text-slate-400 text-lg leading-relaxed">
-                            Hệ thống phần mềm tự động hóa quy trình báo cáo phức tạp, chuyển đổi dữ liệu thô thành báo cáo chuẩn doanh nghiệp.
-                        </p>
-                        <div class="grid grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="text-slate-500 text-sm uppercase tracking-wider font-semibold mb-2">Vai trò:</h4>
-                                <p class="font-medium">Core Developer & System Architect</p>
-                            </div>
-                            <div>
-                                <h4 class="text-slate-500 text-sm uppercase tracking-wider font-semibold mb-2">Công nghệ:</h4>
-                                <div class="flex flex-wrap gap-2">
-    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Python</span><span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">LangGraph</span><span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">NetworkX</span><span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Excel Automation</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex-1 bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
-                        <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                            <i data-lucide="zap" class="w-5 h-5"></i> Điểm nhấn Kỹ thuật
-                        </h3>
-                        <p class="text-slate-400 mb-6 text-sm">
-                            Dự án minh chứng năng lực thiết kế hệ thống (System Design) hoàn chỉnh: Từ xử lý dữ liệu hỗn loạn, điều phối Multi-Agent, đến tự động hóa đầu ra. Đây là tư duy của một Engineer thực thụ, không chỉ là Researcher.
-                        </p>
-                        <ul class="space-y-4">
-    
-                            <li class="flex gap-3">
-                                <div class="mt-1 text-green-400 flex-shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
-                                <span class="text-slate-300 text-sm">Kiến trúc: Thiết kế luồng xử lý Router → Analyst → Writer (Multi-Agent Pattern).</span>
-                            </li>
-        
-                            <li class="flex gap-3">
-                                <div class="mt-1 text-green-400 flex-shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
-                                <span class="text-slate-300 text-sm">Tối ưu hóa: Xử lý dữ liệu song song, cơ chế Caching giúp giảm 40% thời gian xử lý.</span>
-                            </li>
-        
-                            <li class="flex gap-3">
-                                <div class="mt-1 text-green-400 flex-shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
-                                <span class="text-slate-300 text-sm">Thực tiễn: Tự động căn chỉnh format Word/Excel theo chuẩn khắt khe của khách hàng.</span>
-                            </li>
-        
-                            <li class="flex gap-3">
-                                <div class="mt-1 text-green-400 flex-shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
-                                <span class="text-slate-300 text-sm">Kết quả: Loại bỏ hoàn toàn thao tác thủ công trong quy trình lập báo cáo.</span>
-                            </li>
-        
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects List -->
-        <section id="projects" class="py-20 bg-slate-50">
-            <div class="container mx-auto max-w-5xl px-6">
-                <h2 class="text-3xl font-bold text-slate-900 mb-12">Các Dự Án Đã Triển Khai</h2>
-                <div class="grid md:grid-cols-2 gap-8">
-    
-                    <div class="group bg-white p-6 rounded-xl border border-slate-200 hover:border-blue-500 transition shadow-sm hover:shadow-md">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition">Medical Consulting System</h3>
-                            <a href="https://github.com/caonguyenthanhan/Medical-Consulting-System" target="_blank" class="text-slate-400 hover:text-blue-600">
-                                <i data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
-                        </div>
-                        <p class="text-slate-600 mb-6 text-sm h-12">Hệ thống phần mềm tư vấn y tế tích hợp Llama & RAG. Xây dựng API và giao diện tương tác.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">System Design</span><span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">RAG</span><span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">Fullstack</span>
-                        </div>
-                    </div>
-        
-                    <div class="group bg-white p-6 rounded-xl border border-slate-200 hover:border-blue-500 transition shadow-sm hover:shadow-md">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition">OCR Mobile Application</h3>
-                            <a href="https://github.com/caonguyenthanhan/OCR-Mobile-Application" target="_blank" class="text-slate-400 hover:text-blue-600">
-                                <i data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
-                        </div>
-                        <p class="text-slate-600 mb-6 text-sm h-12">Ứng dụng di động trích xuất và số hóa dữ liệu từ văn bản giấy, tích hợp xử lý ảnh.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">Mobile Dev</span><span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">Computer Vision</span>
-                        </div>
-                    </div>
-        
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience -->
-        <section id="experience" class="py-20 bg-white">
-             <div class="container mx-auto max-w-5xl px-6">
-                <h2 class="text-3xl font-bold text-slate-900 mb-12">Hành Trình Sự Nghiệp</h2>
-                <div class="space-y-12">
-    
-                    <div class="relative pl-8 border-l-2 border-slate-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow-sm"></div>
-                        <div class="mb-2">
-                            <h3 class="text-xl font-bold text-slate-900">AI Engineer & Solutions Consultant</h3>
-                            <div class="text-blue-600 font-medium">CTY TNHH TƯ VẤN GIÁO DỤC NHÂN MỸ</div>
-                            <div class="text-sm text-slate-500 mt-1">01/2025 – 04/2025</div>
-                        </div>
-                        <ul class="list-disc list-outside ml-4 space-y-2 text-sm">
-                            <li class="text-slate-600">Chủ trì thiết kế và triển khai các giải pháp phần mềm tích hợp AI vào quy trình đào tạo.</li><li class="text-slate-600">Tối ưu hóa hiệu suất làm việc của hệ thống và nhân sự thông qua tự động hóa.</li><li class="text-slate-600">Xây dựng tài liệu kỹ thuật và đào tạo chuyển giao công nghệ cho đội ngũ nội bộ.</li>
-                        </ul>
-                    </div>
-        
-                    <div class="relative pl-8 border-l-2 border-slate-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow-sm"></div>
-                        <div class="mb-2">
-                            <h3 class="text-xl font-bold text-slate-900">Software Deployment & Data Engineer</h3>
-                            <div class="text-blue-600 font-medium">CÔNG TY PHẦN MỀM VÀNG</div>
-                            <div class="text-sm text-slate-500 mt-1">06/2024 – 07/2024</div>
-                        </div>
-                        <ul class="list-disc list-outside ml-4 space-y-2 text-sm">
-                            <li class="text-slate-600">Phụ trách quản trị và chuẩn hóa cơ sở dữ liệu SQL quy mô lớn cho khách hàng doanh nghiệp.</li><li class="text-slate-600">Triển khai phần mềm, xử lý sự cố kỹ thuật (Troubleshooting) và đảm bảo tính toàn vẹn dữ liệu.</li>
-                        </ul>
-                    </div>
-        
-                </div>
-             </div>
-        </section>
-        
-        <!-- Education -->
-        <section class="py-20 bg-slate-50">
-            <div class="container mx-auto max-w-5xl px-6">
-                 <h2 class="text-3xl font-bold text-slate-900 mb-8">Học Vấn</h2>
-                 <div class="bg-white p-8 rounded-xl border border-slate-200 flex flex-col md:flex-row gap-8 items-center">
-                    <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">Đại học Sư phạm Kỹ thuật TP. HCM</h3>
-                        <p class="text-lg text-blue-600 font-medium mb-2">Cử nhân Trí Tuệ Nhân Tạo</p>
-                        <div class="flex items-center gap-4 text-sm text-slate-600">
-                            <span class="px-3 py-1 bg-slate-100 rounded-full">GPA: Khá</span>
-                            <span>Nền tảng vững chắc về Toán học, Cấu trúc dữ liệu & Giải thuật và Hệ thống thông minh.</span>
-                        </div>
-                    </div>
-                 </div>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section id="contact" class="py-24 bg-slate-900 text-white text-center">
-            <div class="container mx-auto max-w-3xl px-6">
-                <h2 class="text-3xl font-bold mb-6">Tìm kiếm mảnh ghép AI Software Engineer?</h2>
-                <p class="text-slate-400 text-lg mb-10">
-                    Với 1 năm kinh nghiệm và tư duy sản phẩm, tôi sẵn sàng tham gia và đóng góp ngay lập tức vào quy trình phát triển của công ty.
-                </p>
-                <a href="mailto:caonguyenthanhan.aaa@gmail.com" class="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-blue-600/25">
-                    <i data-lucide="mail" class="w-5 h-5"></i>
-                    Gửi Email Liên hệ
+        <!-- 1. HEADER -->
+        <header id="cv-header" class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-slate-900 mb-2 uppercase tracking-wide">CAO NGUYỄN THÀNH AN</h1>
+            <div class="job-title text-xl text-blue-600 font-bold mb-4 uppercase tracking-widest">AI Software Engineer</div>
+            
+            <div class="contact-info flex flex-wrap justify-center gap-4 text-sm text-slate-600">
+                <a href="tel:0929620697" class="flex items-center gap-1 hover:text-blue-600">
+                    <i data-lucide="phone" class="w-4 h-4"></i> 0929 620 697
                 </a>
-                <div class="mt-12 pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-slate-500">
-                    <div>© 2024 CAO NGUYỄN THÀNH AN</div>
-                    <div class="flex gap-6">
-                        <a href="https://github.com/caonguyenthanhan" class="hover:text-white transition">GitHub</a>
-                        <a href="linkedin.com/in/thanh-an-cao" class="hover:text-white transition">LinkedIn</a>
+                <span class="text-slate-300">|</span>
+                <a href="mailto:caonguyenthanhan.aaa@gmail.com" class="flex items-center gap-1 hover:text-blue-600">
+                    <i data-lucide="mail" class="w-4 h-4"></i> caonguyenthanhan.aaa@gmail.com
+                </a>
+                <span class="text-slate-300">|</span>
+                <span class="flex items-center gap-1">
+                    <i data-lucide="map-pin" class="w-4 h-4"></i> 
+                    <span class="lang-vi">Thủ Đức, TP. Hồ Chí Minh</span>
+                    <span class="lang-en hidden">Thu Duc, HCMC, Vietnam</span>
+                </span>
+                <span class="text-slate-300">|</span>
+                <a href="https://linkedin.com/in/thanh-an-cao" target="_blank" class="flex items-center gap-1 hover:text-blue-600">
+                    <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+                </a>
+                <span class="text-slate-300">|</span>
+                <a href="https://github.com/caonguyenthanhan" target="_blank" class="flex items-center gap-1 hover:text-blue-600">
+                    <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                </a>
+            </div>
+        </header>
+
+        <!-- 2. PROFESSIONAL SUMMARY -->
+        <section id="summary" class="mb-8">
+            <h2 class="text-lg font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-3 uppercase">
+                <span class="lang-vi">Tóm Tắt Chuyên Môn</span>
+                <span class="lang-en hidden">Professional Summary</span>
+            </h2>
+            <p class="text-slate-700 leading-relaxed text-justify">
+                <span class="lang-vi">AI Software Engineer với 1 năm kinh nghiệm thực chiến trong việc phát triển và triển khai các hệ thống RAG và Multi-Agent. Có tư duy sản phẩm mạnh mẽ, thành thạo Python, LangChain và tối ưu hóa quy trình nghiệp vụ, giúp giảm 40% thời gian xử lý dữ liệu thủ công.</span>
+                <span class="lang-en hidden">AI Software Engineer with 1 year of practical experience in developing and deploying RAG and Multi-Agent systems. Strong product mindset, proficient in Python, LangChain, and business process optimization, helping reduce manual data processing time by 40%.</span>
+            </p>
+        </section>
+
+        <!-- 3. TECHNICAL SKILLS -->
+        <section id="skills" class="mb-8">
+            <h2 class="text-lg font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-3 uppercase">
+                <span class="lang-vi">Kỹ Năng Chuyên Môn</span>
+                <span class="lang-en hidden">Technical Skills</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm skills-grid">
+                <div class="skills-category">
+                    <span class="font-bold text-slate-900 block mb-1">Languages:</span>
+                    <span class="text-slate-700">Python, SQL, JavaScript (Basic)</span>
+                </div>
+                <div class="skills-category">
+                    <span class="font-bold text-slate-900 block mb-1">AI/ML Core:</span>
+                    <span class="text-slate-700">PyTorch, TensorFlow, Scikit-learn, Pandas, NumPy</span>
+                </div>
+                <div class="skills-category">
+                    <span class="font-bold text-slate-900 block mb-1">LLM & GenAI:</span>
+                    <span class="text-slate-700">LangChain, LangGraph, OpenAI API, Hugging Face, RAG, Prompt Engineering</span>
+                </div>
+                <div class="skills-category">
+                    <span class="font-bold text-slate-900 block mb-1">Tools & DevOps:</span>
+                    <span class="text-slate-700">Git, Docker, AWS (EC2/S3), VS Code</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. WORK EXPERIENCE -->
+        <section id="experience" class="mb-8">
+            <h2 class="text-lg font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-4 uppercase">
+                <span class="lang-vi">Kinh Nghiệm Làm Việc</span>
+                <span class="lang-en hidden">Work Experience</span>
+            </h2>
+            
+            <!-- Job 1 -->
+            <div class="mb-6">
+                <div class="flex justify-between items-baseline mb-1">
+                    <h3 class="font-bold text-slate-900 text-base">CTY TNHH TƯ VẤN GIÁO DỤC NHÂN MỸ</h3>
+                    <span class="text-sm text-slate-500 font-medium">01/2025 – 04/2025</span>
+                </div>
+                <div class="text-blue-700 font-semibold text-sm mb-2 italic">AI Engineer & Solutions Consultant</div>
+                <ul class="list-disc list-outside ml-5 text-sm text-slate-700 space-y-1">
+                    <li>
+                        <span class="lang-vi"><strong>Designed</strong> và triển khai các giải pháp phần mềm tích hợp AI vào quy trình đào tạo, giúp tự động hóa 30% khối lượng công việc thủ công.</span>
+                        <span class="lang-en hidden"><strong>Designed</strong> and implemented AI-integrated software solutions for training processes, automating 30% of manual workload.</span>
+                    </li>
+                    <li>
+                        <span class="lang-vi"><strong>Optimized</strong> hiệu suất hệ thống và nhân sự thông qua các công cụ tự động hóa tùy chỉnh.</span>
+                        <span class="lang-en hidden"><strong>Optimized</strong> system and personnel performance through custom automation tools.</span>
+                    </li>
+                    <li>
+                        <span class="lang-vi"><strong>Built</strong> tài liệu kỹ thuật chi tiết và thực hiện đào tạo chuyển giao công nghệ cho đội ngũ nội bộ 10+ người.</span>
+                        <span class="lang-en hidden"><strong>Built</strong> detailed technical documentation and conducted technology transfer training for an internal team of 10+ members.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="mb-6">
+                <div class="flex justify-between items-baseline mb-1">
+                    <h3 class="font-bold text-slate-900 text-base">CÔNG TY PHẦN MỀM VÀNG</h3>
+                    <span class="text-sm text-slate-500 font-medium">06/2024 – 07/2024</span>
+                </div>
+                <div class="text-blue-700 font-semibold text-sm mb-2 italic">Software Deployment & Data Engineer</div>
+                <ul class="list-disc list-outside ml-5 text-sm text-slate-700 space-y-1">
+                    <li>
+                        <span class="lang-vi"><strong>Managed</strong> và chuẩn hóa cơ sở dữ liệu SQL quy mô lớn cho khách hàng doanh nghiệp, đảm bảo tính toàn vẹn dữ liệu 99.9%.</span>
+                        <span class="lang-en hidden"><strong>Managed</strong> and standardized large-scale SQL databases for enterprise clients, ensuring 99.9% data integrity.</span>
+                    </li>
+                    <li>
+                        <span class="lang-vi"><strong>Deployed</strong> phần mềm, thực hiện troubleshooting và hỗ trợ kỹ thuật trực tiếp tại site khách hàng.</span>
+                        <span class="lang-en hidden"><strong>Deployed</strong> software, performed troubleshooting, and provided on-site technical support.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. FEATURED PROJECTS -->
+        <section id="projects" class="mb-8">
+            <h2 class="text-lg font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-4 uppercase">
+                <span class="lang-vi">Dự Án Tiêu Biểu</span>
+                <span class="lang-en hidden">Featured Projects</span>
+            </h2>
+
+            <!-- Project 1 -->
+            <div class="mb-5">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold text-slate-900 text-base">Hệ thống Báo cáo Tự động Multi-Agent</h3>
+                    <a href="#" class="text-xs text-blue-600 hover:underline no-print flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i> Demo</a>
+                </div>
+                <p class="text-sm text-slate-600 mb-1">
+                    <span class="lang-vi">Hệ thống tự động hóa quy trình báo cáo phức tạp, chuyển đổi dữ liệu thô thành báo cáo chuẩn doanh nghiệp.</span>
+                    <span class="lang-en hidden">Automated system for complex reporting workflows, transforming raw data into enterprise-standard reports.</span>
+                </p>
+                <p class="text-sm text-slate-800 mb-1">
+                    <strong>Tech Stack:</strong> Python, LangGraph, NetworkX, Excel Automation
+                </p>
+                <ul class="list-disc list-outside ml-5 text-sm text-slate-700 space-y-1">
+                    <li>
+                        <span class="lang-vi"><strong>System Design:</strong> Thiết kế kiến trúc Router → Analyst → Writer (Multi-Agent Pattern).</span>
+                        <span class="lang-en hidden"><strong>System Design:</strong> Designed Router → Analyst → Writer architecture (Multi-Agent Pattern).</span>
+                    </li>
+                    <li>
+                        <span class="lang-vi"><strong>Performance:</strong> Xử lý dữ liệu song song và caching giúp giảm 40% thời gian xử lý.</span>
+                        <span class="lang-en hidden"><strong>Performance:</strong> Parallel processing and caching reduced processing time by 40%.</span>
+                    </li>
+                    <li>
+                        <span class="lang-vi"><strong>Impact:</strong> Loại bỏ hoàn toàn thao tác thủ công trong quy trình lập báo cáo.</span>
+                        <span class="lang-en hidden"><strong>Impact:</strong> Completely eliminated manual operations in the reporting process.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="mb-5">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold text-slate-900 text-base">Medical Consulting System</h3>
+                    <a href="https://github.com/caonguyenthanhan/Medical-Consulting-System" target="_blank" class="text-xs text-blue-600 hover:underline no-print flex items-center gap-1"><i data-lucide="github" class="w-3 h-3"></i> GitHub</a>
+                </div>
+                <p class="text-sm text-slate-600 mb-1">
+                    <span class="lang-vi">Hệ thống tư vấn y tế tích hợp Llama & RAG.</span>
+                    <span class="lang-en hidden">Medical consulting system integrating Llama & RAG.</span>
+                </p>
+                <p class="text-sm text-slate-800 mb-1">
+                    <strong>Tech Stack:</strong> Python, RAG, Llama, API Development
+                </p>
+                <ul class="list-disc list-outside ml-5 text-sm text-slate-700 space-y-1">
+                    <li>
+                        <span class="lang-vi"><strong>Coding:</strong> Xây dựng API và tích hợp mô hình ngôn ngữ lớn (LLM) để xử lý truy vấn y tế.</span>
+                        <span class="lang-en hidden"><strong>Coding:</strong> Built API and integrated Large Language Models (LLM) to handle medical queries.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="mb-5">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold text-slate-900 text-base">OCR Mobile Application</h3>
+                    <a href="https://github.com/caonguyenthanhan/OCR-Mobile-Application" target="_blank" class="text-xs text-blue-600 hover:underline no-print flex items-center gap-1"><i data-lucide="github" class="w-3 h-3"></i> GitHub</a>
+                </div>
+                <p class="text-sm text-slate-600 mb-1">
+                    <span class="lang-vi">Ứng dụng di động trích xuất và số hóa dữ liệu từ văn bản giấy.</span>
+                    <span class="lang-en hidden">Mobile app extracting and digitizing data from paper documents.</span>
+                </p>
+                <p class="text-sm text-slate-800 mb-1">
+                    <strong>Tech Stack:</strong> Mobile Dev, Computer Vision, OCR
+                </p>
+                <ul class="list-disc list-outside ml-5 text-sm text-slate-700 space-y-1">
+                    <li>
+                        <span class="lang-vi"><strong>Implementation:</strong> Tích hợp công nghệ OCR và xử lý ảnh để đạt độ chính xác cao.</span>
+                        <span class="lang-en hidden"><strong>Implementation:</strong> Integrated OCR and image processing to achieve high accuracy.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 6. EDUCATION -->
+        <section id="education" class="mb-8">
+            <h2 class="text-lg font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-4 uppercase">
+                <span class="lang-vi">Học Vấn</span>
+                <span class="lang-en hidden">Education</span>
+            </h2>
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-bold text-slate-900 text-base">
+                        <span class="lang-vi">Đại học Sư phạm Kỹ thuật TP. HCM</span>
+                        <span class="lang-en hidden">HCM City University of Technology and Education</span>
+                    </h3>
+                    <div class="text-sm text-slate-700">
+                        <span class="lang-vi">Cử nhân Trí Tuệ Nhân Tạo</span>
+                        <span class="lang-en hidden">Bachelor of Artificial Intelligence</span>
                     </div>
+                </div>
+                <div class="text-right">
+                    <span class="block text-sm font-medium text-slate-600">GPA: Khá</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. CERTIFICATIONS & LANGUAGES -->
+        <section id="certifications" class="mb-8">
+            <h2 class="text-lg font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-4 uppercase">
+                <span class="lang-vi">Chứng Chỉ & Ngoại Ngữ</span>
+                <span class="lang-en hidden">Certifications & Languages</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <h3 class="font-bold text-slate-900 mb-1">
+                        <span class="lang-vi">Chứng Chỉ</span>
+                        <span class="lang-en hidden">Certifications</span>
+                    </h3>
+                    <ul class="list-disc list-outside ml-5 text-slate-700 space-y-1">
+                        <li>AWS Certified Cloud Practitioner (In Progress)</li>
+                        <li>DeepLearning.AI: Prompt Engineering for Developers</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-900 mb-1">
+                        <span class="lang-vi">Ngoại Ngữ</span>
+                        <span class="lang-en hidden">Languages</span>
+                    </h3>
+                    <ul class="list-disc list-outside ml-5 text-slate-700 space-y-1">
+                        <li>
+                            <span class="lang-vi">Tiếng Anh: Đọc hiểu tài liệu chuyên ngành tốt</span>
+                            <span class="lang-en hidden">English: Professional Working Proficiency</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -273,8 +329,19 @@
     
     <script>
         lucide.createIcons();
+        function toggleLang(lang) {
+            document.documentElement.lang = lang;
+            const vi = document.querySelectorAll('.lang-vi');
+            const en = document.querySelectorAll('.lang-en');
+            if (lang === 'vi') {
+                vi.forEach(el => el.classList.remove('hidden'));
+                en.forEach(el => el.classList.add('hidden'));
+            } else {
+                en.forEach(el => el.classList.remove('hidden'));
+                vi.forEach(el => el.classList.add('hidden'));
+            }
+        }
     </script>
     <script src="../../assets/js/footer.js"></script>
 </body>
 </html>
-    

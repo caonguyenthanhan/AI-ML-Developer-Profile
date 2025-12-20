@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -10,11 +9,61 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        @media print {
+            @page { margin: 1.5cm; size: A4; }
+            body { background: white !important; color: black !important; -webkit-print-color-adjust: exact; }
+            .no-print { display: none !important; }
+            .container { max-width: 100% !important; padding: 0 !important; }
+            section { padding: 1rem 0 !important; page-break-inside: avoid; }
+            .bg-slate-50, .bg-slate-900, .bg-white, .bg-blue-600, .bg-blue-100, .bg-slate-800 { 
+                background: none !important; 
+                color: black !important; 
+                border: none !important;
+                box-shadow: none !important;
+            }
+            .text-white, .text-slate-300, .text-slate-400, .text-slate-500, .text-slate-600, .text-blue-600, .text-blue-300 { 
+                color: black !important; 
+            }
+            /* Explicitly hide specific elements */
+            header, nav, .header-placeholder { display: none !important; }
+            
+            /* CV Specific Formatting */
+            h1 { font-size: 24pt !important; margin-bottom: 0.5rem; }
+            h2 { font-size: 18pt !important; border-bottom: 2px solid black; padding-bottom: 5px; margin-top: 20px; }
+            h3 { font-size: 14pt !important; font-weight: bold; }
+            p, li { font-size: 11pt !important; line-height: 1.4; }
+            
+            /* Links */
+            a { text-decoration: none; color: black !important; pointer-events: none; }
+            
+            /* Hide decorative elements */
+            img.rounded-full { border: 1px solid black !important; }
+            
+            /* Grid adjustments */
+            .grid { display: block !important; }
+            .grid > div { margin-bottom: 1rem; page-break-inside: avoid; }
+            .md\:flex-row { flex-direction: row !important; }
+            
+            /* Hide buttons but keep text */
+            a[href^="#"] { display: none !important; } /* Hide internal nav buttons */
+            a[href^="mailto"] { display: inline-block !important; border: 1px solid black; padding: 5px 10px; border-radius: 5px; }
+        }
     </style>
     <script src="../../assets/js/header.js"></script>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
+    <!-- Language Toggle -->
+    <div class="fixed top-24 right-6 z-50 flex gap-2 no-print bg-white p-2 rounded-lg shadow-md border border-slate-200">
+        <button onclick="toggleLang('vi')" class="px-3 py-1 rounded hover:bg-slate-100 font-bold text-blue-600">VI</button>
+        <span class="text-slate-300">|</span>
+        <button onclick="toggleLang('en')" class="px-3 py-1 rounded hover:bg-slate-100 font-bold text-blue-600">EN</button>
+        <button onclick="window.print()" class="ml-2 px-3 py-1 rounded bg-slate-800 text-white hover:bg-slate-700 flex items-center gap-1">
+            <i data-lucide="printer" class="w-4 h-4"></i> Print CV
+        </button>
+    </div>
+
     <!-- Header Placeholder handled by header.js -->
+    <div class="header-placeholder no-print"></div>
     
     <div class="min-h-screen">
         <!-- Hero Section -->
@@ -24,24 +73,27 @@
                     <div class="flex-1 space-y-6">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium">
                             <i data-lucide="code" class="w-5 h-5"></i>
-                            Automation Specialist • Tối ưu hóa Quy trình
+                            <span class="lang-vi">Automation Specialist • Tối ưu hóa Quy trình</span>
+                            <span class="lang-en hidden">Automation Specialist • Process Optimization</span>
                         </div>
                         <h1 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
-                            Chuyên gia Tự động hóa <br/>
-                            <span class="text-blue-600">Business & Workflow</span> <br/>
-                            nâng cao hiệu suất doanh nghiệp.
+                            <span class="lang-vi">Chuyên gia Tự động hóa <br/><span class="text-blue-600">Business & Workflow</span> <br/>nâng cao hiệu suất doanh nghiệp.</span>
+                            <span class="lang-en hidden"><span class="text-blue-600">Business & Workflow</span> <br/>Automation Specialist <br/>enhancing enterprise efficiency.</span>
                         </h1>
                         <p class="text-lg text-slate-600 max-w-2xl">
-                            Tôi chuyên thiết kế và triển khai các giải pháp tự động hóa (RPA, No-code/Low-code, Python Scripts) giúp doanh nghiệp tiết kiệm hàng nghìn giờ làm việc thủ công, giảm thiểu sai sót và tập trung vào các giá trị cốt lõi.
+                            <span class="lang-vi">Tôi chuyên thiết kế và triển khai các giải pháp tự động hóa (RPA, No-code/Low-code, Python Scripts) giúp doanh nghiệp tiết kiệm hàng nghìn giờ làm việc thủ công, giảm thiểu sai sót và tập trung vào các giá trị cốt lõi.</span>
+                            <span class="lang-en hidden">I specialize in designing and implementing automation solutions (RPA, No-code/Low-code, Python Scripts) helping businesses save thousands of manual hours, minimize errors, and focus on core values.</span>
                         </p>
-                        <div class="flex flex-wrap gap-4 pt-2">
+                        <div class="flex flex-wrap gap-4 pt-2 no-print">
                             <a href="#featured" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition flex items-center gap-2">
                                 <i data-lucide="layers" class="w-5 h-5"></i>
-                                Xem Giải pháp Tự động
+                                <span class="lang-vi">Xem Giải pháp Tự động</span>
+                                <span class="lang-en hidden">View Automation Solutions</span>
                             </a>
                             <a href="#contact" class="px-6 py-3 bg-white text-slate-700 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition flex items-center gap-2">
                                 <i data-lucide="mail" class="w-5 h-5"></i>
-                                Liên hệ Tư vấn
+                                <span class="lang-vi">Liên hệ Tư vấn</span>
+                                <span class="lang-en hidden">Contact for Consulting</span>
                             </a>
                         </div>
                     </div>
@@ -59,8 +111,14 @@
         <section id="skills" class="py-20 bg-white">
             <div class="container mx-auto max-w-5xl px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Kỹ Năng Tự Động Hóa</h2>
-                    <p class="text-slate-600 max-w-2xl mx-auto">Thành thạo các công cụ và ngôn ngữ lập trình để xây dựng quy trình làm việc không điểm chạm.</p>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">
+                        <span class="lang-vi">Kỹ Năng Tự Động Hóa</span>
+                        <span class="lang-en hidden">Automation Skills</span>
+                    </h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto">
+                        <span class="lang-vi">Thành thạo các công cụ và ngôn ngữ lập trình để xây dựng quy trình làm việc không điểm chạm.</span>
+                        <span class="lang-en hidden">Proficient in tools and programming languages to build zero-touch workflows.</span>
+                    </p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
     
@@ -104,19 +162,30 @@
                 <div class="flex flex-col md:flex-row gap-12 items-start">
                     <div class="flex-1 space-y-8">
                         <div class="inline-block px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-sm font-medium border border-blue-500/30">
-                            Dự án Tự động hóa Tiêu biểu
+                            <span class="lang-vi">Dự án Tự động hóa Tiêu biểu</span>
+                            <span class="lang-en hidden">Featured Automation Project</span>
                         </div>
-                        <h2 class="text-3xl md:text-4xl font-bold">Hệ thống Quản lý Kho Tự động</h2>
+                        <h2 class="text-3xl md:text-4xl font-bold">
+                            <span class="lang-vi">Hệ thống Quản lý Kho Tự động</span>
+                            <span class="lang-en hidden">Automated Warehouse Management System</span>
+                        </h2>
                         <p class="text-slate-400 text-lg leading-relaxed">
-                            Hệ thống tự động cập nhật tồn kho đa kênh, cảnh báo nhập hàng và tối ưu hóa vị trí kho.
+                            <span class="lang-vi">Hệ thống tự động cập nhật tồn kho đa kênh, cảnh báo nhập hàng và tối ưu hóa vị trí kho.</span>
+                            <span class="lang-en hidden">Automated multi-channel inventory update system, stock alerts, and warehouse location optimization.</span>
                         </p>
                         <div class="grid grid-cols-2 gap-6">
                             <div>
-                                <h4 class="text-slate-500 text-sm uppercase tracking-wider font-semibold mb-2">Vai trò:</h4>
+                                <h4 class="text-slate-500 text-sm uppercase tracking-wider font-semibold mb-2">
+                                    <span class="lang-vi">Vai trò:</span>
+                                    <span class="lang-en hidden">Role:</span>
+                                </h4>
                                 <p class="font-medium">Lead Automation Engineer</p>
                             </div>
                             <div>
-                                <h4 class="text-slate-500 text-sm uppercase tracking-wider font-semibold mb-2">Công nghệ:</h4>
+                                <h4 class="text-slate-500 text-sm uppercase tracking-wider font-semibold mb-2">
+                                    <span class="lang-vi">Công nghệ:</span>
+                                    <span class="lang-en hidden">Technologies:</span>
+                                </h4>
                                 <div class="flex flex-wrap gap-2">
     <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Python</span><span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">SQL</span><span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Barcode Scanning</span>
                                 </div>
@@ -125,26 +194,38 @@
                     </div>
                     <div class="flex-1 bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
                         <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                            <i data-lucide="zap" class="w-5 h-5"></i> Hiệu quả Thực tế
+                            <i data-lucide="zap" class="w-5 h-5"></i>
+                            <span class="lang-vi">Hiệu quả Thực tế</span>
+                            <span class="lang-en hidden">Real-world Impact</span>
                         </h3>
                         <p class="text-slate-400 mb-6 text-sm">
-                            Hệ thống đã thay thế hoàn toàn bộ phận nhập liệu thủ công, xử lý 5000+ đơn hàng mỗi tháng với độ chính xác 99.9%.
+                            <span class="lang-vi">Hệ thống đã thay thế hoàn toàn bộ phận nhập liệu thủ công, xử lý 5000+ đơn hàng mỗi tháng với độ chính xác 99.9%.</span>
+                            <span class="lang-en hidden">The system completely replaced manual data entry, processing 5000+ orders monthly with 99.9% accuracy.</span>
                         </p>
                         <ul class="space-y-4">
     
                             <li class="flex gap-3">
                                 <div class="mt-1 text-green-400 flex-shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
-                                <span class="text-slate-300 text-sm">Tự động hóa 100% quy trình nhập/xuất kho.</span>
+                                <span class="text-slate-300 text-sm">
+                                    <span class="lang-vi">Tự động hóa 100% quy trình nhập/xuất kho.</span>
+                                    <span class="lang-en hidden">100% automated import/export process.</span>
+                                </span>
                             </li>
         
                             <li class="flex gap-3">
                                 <div class="mt-1 text-green-400 flex-shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
-                                <span class="text-slate-300 text-sm">Giảm 90% sai sót kiểm kê so với thủ công.</span>
+                                <span class="text-slate-300 text-sm">
+                                    <span class="lang-vi">Giảm 90% sai sót kiểm kê so với thủ công.</span>
+                                    <span class="lang-en hidden">Reduced inventory errors by 90% compared to manual methods.</span>
+                                </span>
                             </li>
         
                             <li class="flex gap-3">
                                 <div class="mt-1 text-green-400 flex-shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
-                                <span class="text-slate-300 text-sm">Tích hợp real-time với hệ thống kế toán.</span>
+                                <span class="text-slate-300 text-sm">
+                                    <span class="lang-vi">Tích hợp real-time với hệ thống kế toán.</span>
+                                    <span class="lang-en hidden">Real-time integration with accounting systems.</span>
+                                </span>
                             </li>
         
                         </ul>
@@ -156,17 +237,23 @@
         <!-- Projects List -->
         <section id="projects" class="py-20 bg-slate-50">
             <div class="container mx-auto max-w-5xl px-6">
-                <h2 class="text-3xl font-bold text-slate-900 mb-12">Dự Án Tự Động Hóa</h2>
+                <h2 class="text-3xl font-bold text-slate-900 mb-12">
+                    <span class="lang-vi">Dự Án Tự Động Hóa</span>
+                    <span class="lang-en hidden">Automation Projects</span>
+                </h2>
                 <div class="grid md:grid-cols-2 gap-8">
     
                     <div class="group bg-white p-6 rounded-xl border border-slate-200 hover:border-blue-500 transition shadow-sm hover:shadow-md">
                         <div class="flex justify-between items-start mb-4">
                             <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition">E-commerce Order Processing Bot</h3>
-                            <a href="#" target="_blank" class="text-slate-400 hover:text-blue-600">
+                            <a href="#" target="_blank" class="text-slate-400 hover:text-blue-600 no-print">
                                 <i data-lucide="external-link" class="w-5 h-5"></i>
                             </a>
                         </div>
-                        <p class="text-slate-600 mb-6 text-sm h-12">Bot tự động đồng bộ đơn hàng từ Shopee/Lazada về ERP, xuất hóa đơn và gửi email xác nhận.</p>
+                        <p class="text-slate-600 mb-6 text-sm h-12">
+                            <span class="lang-vi">Bot tự động đồng bộ đơn hàng từ Shopee/Lazada về ERP, xuất hóa đơn và gửi email xác nhận.</span>
+                            <span class="lang-en hidden">Bot automatically syncs orders from Shopee/Lazada to ERP, issues invoices, and sends confirmation emails.</span>
+                        </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">Python</span><span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">API</span><span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">RPA</span>
                         </div>
@@ -175,11 +262,14 @@
                     <div class="group bg-white p-6 rounded-xl border border-slate-200 hover:border-blue-500 transition shadow-sm hover:shadow-md">
                         <div class="flex justify-between items-start mb-4">
                             <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition">HR Onboarding Workflow</h3>
-                            <a href="#" target="_blank" class="text-slate-400 hover:text-blue-600">
+                            <a href="#" target="_blank" class="text-slate-400 hover:text-blue-600 no-print">
                                 <i data-lucide="external-link" class="w-5 h-5"></i>
                             </a>
                         </div>
-                        <p class="text-slate-600 mb-6 text-sm h-12">Quy trình tự động tạo tài khoản, gửi tài liệu và lên lịch training cho nhân viên mới.</p>
+                        <p class="text-slate-600 mb-6 text-sm h-12">
+                            <span class="lang-vi">Quy trình tự động tạo tài khoản, gửi tài liệu và lên lịch training cho nhân viên mới.</span>
+                            <span class="lang-en hidden">Automated workflow for account creation, document sending, and training scheduling for new hires.</span>
+                        </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">Power Automate</span><span class="px-2 py-1 bg-white rounded border border-slate-200 text-xs text-slate-600">Microsoft 365</span>
                         </div>
@@ -192,7 +282,10 @@
         <!-- Experience -->
         <section id="experience" class="py-20 bg-white">
              <div class="container mx-auto max-w-5xl px-6">
-                <h2 class="text-3xl font-bold text-slate-900 mb-12">Kinh Nghiệm Triển Khai</h2>
+                <h2 class="text-3xl font-bold text-slate-900 mb-12">
+                    <span class="lang-vi">Kinh Nghiệm Triển Khai</span>
+                    <span class="lang-en hidden">Implementation Experience</span>
+                </h2>
                 <div class="space-y-12">
     
                     <div class="relative pl-8 border-l-2 border-slate-200">
@@ -200,10 +293,21 @@
                         <div class="mb-2">
                             <h3 class="text-xl font-bold text-slate-900">Automation Specialist</h3>
                             <div class="text-blue-600 font-medium">FREELANCE / CONSULTANT</div>
-                            <div class="text-sm text-slate-500 mt-1">2023 – Nay</div>
+                            <div class="text-sm text-slate-500 mt-1">2023 – <span class="lang-vi">Nay</span><span class="lang-en hidden">Present</span></div>
                         </div>
                         <ul class="list-disc list-outside ml-4 space-y-2 text-sm">
-                            <li class="text-slate-600">Tư vấn và triển khai giải pháp tự động hóa cho các doanh nghiệp SME.</li><li class="text-slate-600">Xây dựng hệ thống CRM tự động và Marketing Automation.</li><li class="text-slate-600">Phát triển các tool cào dữ liệu (Data Scraping) theo yêu cầu.</li>
+                            <li class="text-slate-600">
+                                <span class="lang-vi">Tư vấn và triển khai giải pháp tự động hóa cho các doanh nghiệp SME.</span>
+                                <span class="lang-en hidden">Consulting and implementing automation solutions for SMEs.</span>
+                            </li>
+                            <li class="text-slate-600">
+                                <span class="lang-vi">Xây dựng hệ thống CRM tự động và Marketing Automation.</span>
+                                <span class="lang-en hidden">Building automated CRM and Marketing Automation systems.</span>
+                            </li>
+                            <li class="text-slate-600">
+                                <span class="lang-vi">Phát triển các tool cào dữ liệu (Data Scraping) theo yêu cầu.</span>
+                                <span class="lang-en hidden">Developing custom Data Scraping tools.</span>
+                            </li>
                         </ul>
                     </div>
         
@@ -214,17 +318,29 @@
         <!-- Education -->
         <section class="py-20 bg-slate-50">
             <div class="container mx-auto max-w-5xl px-6">
-                 <h2 class="text-3xl font-bold text-slate-900 mb-8">Học Vấn & Chứng chỉ</h2>
+                 <h2 class="text-3xl font-bold text-slate-900 mb-8">
+                     <span class="lang-vi">Học Vấn & Chứng chỉ</span>
+                     <span class="lang-en hidden">Education & Certificates</span>
+                 </h2>
                  <div class="bg-white p-8 rounded-xl border border-slate-200 flex flex-col md:flex-row gap-8 items-center">
                     <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                         <i data-lucide="graduation-cap" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-slate-900">Đại học Sư phạm Kỹ thuật TP. HCM</h3>
-                        <p class="text-lg text-blue-600 font-medium mb-2">Kỹ sư Hệ thống Công nghiệp (Focus on Automation)</p>
+                        <h3 class="text-xl font-bold text-slate-900">
+                            <span class="lang-vi">Đại học Sư phạm Kỹ thuật TP. HCM</span>
+                            <span class="lang-en hidden">HCM City University of Technology and Education</span>
+                        </h3>
+                        <p class="text-lg text-blue-600 font-medium mb-2">
+                            <span class="lang-vi">Kỹ sư Hệ thống Công nghiệp (Focus on Automation)</span>
+                            <span class="lang-en hidden">Industrial Systems Engineer (Focus on Automation)</span>
+                        </p>
                         <div class="flex items-center gap-4 text-sm text-slate-600">
                             <span class="px-3 py-1 bg-slate-100 rounded-full">GPA: Khá</span>
-                            <span>Chuyên sâu về tối ưu hóa quy trình, quản lý sản xuất và hệ thống thông tin.</span>
+                            <span>
+                                <span class="lang-vi">Chuyên sâu về tối ưu hóa quy trình, quản lý sản xuất và hệ thống thông tin.</span>
+                                <span class="lang-en hidden">Specialized in process optimization, production management, and information systems.</span>
+                            </span>
                         </div>
                     </div>
                  </div>
@@ -234,13 +350,18 @@
         <!-- Contact -->
         <section id="contact" class="py-24 bg-slate-900 text-white text-center">
             <div class="container mx-auto max-w-3xl px-6">
-                <h2 class="text-3xl font-bold mb-6">Bạn cần tối ưu hóa quy trình doanh nghiệp?</h2>
+                <h2 class="text-3xl font-bold mb-6">
+                    <span class="lang-vi">Bạn cần tối ưu hóa quy trình doanh nghiệp?</span>
+                    <span class="lang-en hidden">Need to optimize your business processes?</span>
+                </h2>
                 <p class="text-slate-400 text-lg mb-10">
-                    Hãy để tôi giúp bạn chuyển đổi các tác vụ thủ công thành luồng công việc tự động thông minh.
+                    <span class="lang-vi">Hãy để tôi giúp bạn chuyển đổi các tác vụ thủ công thành luồng công việc tự động thông minh.</span>
+                    <span class="lang-en hidden">Let me help you transform manual tasks into smart automated workflows.</span>
                 </p>
                 <a href="mailto:caonguyenthanhan.aaa@gmail.com" class="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-blue-600/25">
                     <i data-lucide="mail" class="w-5 h-5"></i>
-                    Liên hệ Tư vấn Ngay
+                    <span class="lang-vi">Liên hệ Tư vấn Ngay</span>
+                    <span class="lang-en hidden">Contact for Consulting Now</span>
                 </a>
                 <div class="mt-12 pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-slate-500">
                     <div>© 2024 CAO NGUYỄN THÀNH AN</div>
@@ -256,8 +377,19 @@
     
     <script>
         lucide.createIcons();
+        function toggleLang(lang) {
+            document.documentElement.lang = lang;
+            const vi = document.querySelectorAll('.lang-vi');
+            const en = document.querySelectorAll('.lang-en');
+            if (lang === 'vi') {
+                vi.forEach(el => el.classList.remove('hidden'));
+                en.forEach(el => el.classList.add('hidden'));
+            } else {
+                en.forEach(el => el.classList.remove('hidden'));
+                vi.forEach(el => el.classList.add('hidden'));
+            }
+        }
     </script>
     <script src="../../assets/js/footer.js"></script>
 </body>
 </html>
-    
