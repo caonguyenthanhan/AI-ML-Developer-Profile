@@ -45,12 +45,32 @@
       "destination": "/caonguyenthanhan/personal_info.html"
     },
     {
-      "source": "/caonguyenthanhan/profile",
+      "source": "/caonguyenthanhan/profile/aise",
       "destination": "/caonguyenthanhan/profile_portfolio.html"
     },
     {
-      "source": "/profile",
+      "source": "/profile/aise",
       "destination": "/caonguyenthanhan/profile_portfolio.html"
+    },
+    {
+      "source": "/caonguyenthanhan/profile/aise/as",
+      "destination": "/caonguyenthanhan/Automation_Specialist.html"
+    },
+    {
+      "source": "/profile/aise/as",
+      "destination": "/caonguyenthanhan/Automation_Specialist.html"
+    },
+    {
+      "source": "/profile/aise",
+      "destination": "/caonguyenthanhan/profile/aise_portfolio.html"
+    },
+        {
+      "source": "/caonguyenthanhan/profile/aise/as",
+      "destination": "/caonguyenthanhan/Automation_Specialist.html"
+    },
+    {
+      "source": "/profile/aise/as",
+      "destination": "/caonguyenthanhan/Automation_Specialist.html"
     },
     {
       "source": "/genai/prompts",
