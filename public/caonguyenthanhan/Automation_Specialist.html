@@ -56,17 +56,9 @@
             
             /* Hide decorative elements */
             img, .icon-box, .decorative-line { display: none !important; }
-            #cv-header.hidden-header { display: none !important; }
         }
-        .hidden-header { display: none !important; }
     </style>
     <script src="../../assets/js/header.js"></script>
-    <script>
-        function toggleHeader() {
-            const header = document.getElementById('cv-header');
-            header.classList.toggle('hidden-header');
-        }
-    </script>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
     <!-- Language Toggle -->
@@ -74,13 +66,11 @@
         <button onclick="toggleLang('vi')" class="px-3 py-1 rounded hover:bg-slate-100 font-bold text-blue-600">VI</button>
         <span class="text-slate-300">|</span>
         <button onclick="toggleLang('en')" class="px-3 py-1 rounded hover:bg-slate-100 font-bold text-blue-600">EN</button>
-        <span class="text-slate-300">|</span>
-        <button onclick="toggleHeader()" class="px-3 py-1 rounded hover:bg-slate-100 font-bold text-blue-600 flex items-center gap-1" title="Ẩn/Hiện Header">
-            <i data-lucide="layout-template" class="w-4 h-4"></i>
-        </button>
         <button onclick="window.print()" class="ml-2 px-3 py-1 rounded bg-slate-800 text-white hover:bg-slate-700 flex items-center gap-1">
             <i data-lucide="printer" class="w-4 h-4"></i> Print CV
         </button>
+        <button id="toggle-header" onclick="toggleHeaderVisibility()" class="px-3 py-1 rounded hover:bg-slate-100 font-bold text-blue-600">Ẩn Header</button>
+        <button id="toggle-footer" onclick="toggleFooterVisibility()" class="px-3 py-1 rounded hover:bg-slate-100 font-bold text-blue-600">Ẩn Footer</button>
     </div>
 
     <!-- Header Placeholder handled by header.js -->
@@ -373,6 +363,32 @@
             } else {
                 en.forEach(el => el.classList.remove('hidden'));
                 vi.forEach(el => el.classList.add('hidden'));
+            }
+        }
+        let headerHidden = false;
+        let footerHidden = false;
+        function toggleHeaderVisibility() {
+            const headerEl = document.querySelector('.header-container');
+            if (!headerEl) return;
+            headerHidden = !headerHidden;
+            if (headerHidden) {
+                headerEl.classList.add('hidden');
+                document.getElementById('toggle-header').textContent = 'Hiện Header';
+            } else {
+                headerEl.classList.remove('hidden');
+                document.getElementById('toggle-header').textContent = 'Ẩn Header';
+            }
+        }
+        function toggleFooterVisibility() {
+            const footerEl = document.querySelector('footer');
+            if (!footerEl) return;
+            footerHidden = !footerHidden;
+            if (footerHidden) {
+                footerEl.classList.add('hidden');
+                document.getElementById('toggle-footer').textContent = 'Hiện Footer';
+            } else {
+                footerEl.classList.remove('hidden');
+                document.getElementById('toggle-footer').textContent = 'Ẩn Footer';
             }
         }
     </script>
