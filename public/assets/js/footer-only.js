@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <i data-lucide="user" class="w-5 h-5 mr-2"></i>
                             Cao Nguyễn Thành An
                         </h3>
-                        <p class="text-sm text-indigo-100">Thực Tập Sinh Kỹ Sư AI/ML</p>
+                        <p class="text-sm text-indigo-100">AI Software Engineer - Automation Specialist</p>
                         <div class="space-y-2 text-sm">
                             <div class="flex items-center">
                                 <i data-lucide="mail" class="w-4 h-4 mr-2 text-indigo-300"></i>
