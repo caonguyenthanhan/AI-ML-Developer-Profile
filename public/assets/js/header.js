@@ -1,23 +1,14 @@
 // Header component với avatar xoay vòng và navigation
 class HeaderComponent {
     constructor() {
-        this.avatars = ['avata1.png', 'avata2.png', 'avata3.png', 'avata4.png', 'avata5.png'];
+        this.avatars = ['avata1', 'avata2', 'avata3', 'avata4', 'avata5'];
         this.currentAvatarIndex = 0;
         this.imagePath = this.getImagePath();
         this.init();
     }
 
     getImagePath() {
-        const currentPath = window.location.pathname;
-        const depth = (currentPath.match(/\//g) || []).length - 1;
-        
-        if (currentPath === '/' || currentPath === '/index.html') {
-            return '../image/';
-        } else if (depth === 1) {
-            return '../image/';
-        } else {
-            return '../image/';
-        }
+        return '/image/';
     }
 
     init() {

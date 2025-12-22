@@ -181,12 +181,8 @@
       "destination": "/education/tin_hoc_hsg/admin_exam.html"
     },
     {
-      "source": "/GOV-ARX",
-      "destination": "/GOV-ARX.html"
-    },
-    {
-      "source": "/GOV-ARX/PNG",
-      "destination": "/PIPELINE AGENTIC RAG HOÀN CHỈNH.png"
+      "source": "/image/:guest",
+      "destination": "/image/:guest.png"
     }
   ]
 }
