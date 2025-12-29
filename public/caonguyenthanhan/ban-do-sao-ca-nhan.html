@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cao Nguyên Thành An - AI Software Engineer</title>
+    <title>Cao Nguyên Thành An - Astro & AI Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -59,52 +59,57 @@
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
+        .astro-badge {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-rose-500 selection:text-white">
 
-    <!-- Hero Section -->
     <header class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden bg-slate-950">
-        <!-- Abstract Background Elements -->
         <div class="absolute top-0 left-0 w-96 h-96 bg-rose-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-pulse"></div>
         <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-pulse animation-delay-2000"></div>
 
         <div class="z-10 fade-in max-w-4xl mt-12 md:mt-0">
             <div class="inline-block mb-4 px-4 py-1 rounded-full border border-slate-700 bg-slate-900/50 text-slate-400 text-xs tracking-widest uppercase font-semibold">
-                AI Software Engineer
+                AI Software Engineer | Scorpio Rising
             </div>
             <h1 class="text-5xl md:text-7xl font-bold mb-6 text-slate-100">
                 Cao Nguyên Thành An<span class="text-rose-500">.</span>
             </h1>
             <p class="text-xl md:text-2xl text-slate-400 font-light italic serif-font mb-8 leading-relaxed">
-                "Kết hợp tư duy logic của một kỹ sư AI với chiều sâu cảm xúc của một tâm hồn nội tâm. 
-                Tôi xây dựng hệ thống thông minh, và kết nối con người chân thành."
+                "Một tâm trí logic của Thủy Tinh Xử Nữ vận hành trên nền tảng trực giác sâu sắc của Bọ Cạp. 
+                Tôi mã hóa tương lai bằng công nghệ và thấu hiểu con người bằng trực giác."
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a href="#professional" class="group inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full transition-all duration-300 shadow-lg shadow-indigo-500/25">
-                    <span class="font-medium">Xem Hồ Sơ Chuyên Môn</span>
+                    <span class="font-medium">Hồ Sơ Kỹ Sư AI</span>
                     <i class="fas fa-code group-hover:rotate-12 transition-transform"></i>
                 </a>
                 <a href="#personality" class="group inline-flex items-center gap-2 px-8 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white rounded-full transition-all duration-300">
-                    <span>Hiểu Về Con Người Tôi</span>
-                    <i class="fas fa-user-astronaut text-rose-400 group-hover:translate-y-1 transition-transform"></i>
+                    <span>Bản Đồ Sao Chi Tiết</span>
+                    <i class="fas fa-star text-yellow-400 group-hover:spin transition-transform"></i>
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- PROFESSIONAL SECTION (NEW - From CV) -->
     <section id="professional" class="py-24 px-6 md:px-12 bg-slate-900 border-t border-slate-800">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Năng Lực Chuyên Môn</h2>
                 <div class="h-1 w-20 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
-                <p class="mt-4 text-slate-400">Tư duy sản phẩm sắc bén & Tối ưu hóa quy trình (Giảm 40% thời gian xử lý thủ công)</p>
+                <p class="mt-4 text-slate-400">Được dẫn dắt bởi Stellium Nhà 11 (Công nghệ & Cộng đồng)</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Tech Stack & Skills -->
                 <div>
                     <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                         <i class="fas fa-laptop-code text-indigo-400"></i> Kỹ Năng Kỹ Thuật
@@ -131,50 +136,28 @@
                             <span class="tech-pill">Scikit-learn</span>
                         </div>
                     </div>
-                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
-                        <h4 class="text-green-300 font-semibold mb-3">Tools & DevOps</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="tech-pill">Docker</span>
-                            <span class="tech-pill">AWS (EC2/S3)</span>
-                            <span class="tech-pill">Git</span>
-                            <span class="tech-pill">NetworkX</span>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Experience Timeline -->
                 <div>
                     <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                         <i class="fas fa-briefcase text-rose-400"></i> Kinh Nghiệm Thực Chiến
                     </h3>
                     <div class="space-y-8 border-l-2 border-slate-700 pl-8 relative">
-                        <!-- Job 1 -->
                         <div class="relative">
                             <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-rose-500 border-4 border-slate-900"></span>
                             <h4 class="text-xl font-bold text-white">AI Software Engineer</h4>
                             <p class="text-rose-400 text-sm mb-2">VNA Group | 09/2025 - 12/2025</p>
                             <ul class="text-slate-400 text-sm list-disc list-inside space-y-1">
-                                <li>Phát triển hệ thống <strong>Multi-Agent (LangGraph)</strong> tự động hóa báo cáo.</li>
-                                <li>Thiết kế kiến trúc Router-Analyst-Writer, tích hợp Graph Knowledge.</li>
-                                <li>Giảm <strong>90%</strong> thao tác thủ công khi tạo báo cáo Word chuẩn doanh nghiệp.</li>
+                                <li>Phát triển hệ thống <strong>Multi-Agent (LangGraph)</strong>.</li>
+                                <li>Thiết kế kiến trúc Router-Analyst-Writer.</li>
+                                <li>Giảm <strong>90%</strong> thao tác thủ công khi tạo báo cáo.</li>
                             </ul>
                         </div>
-                        <!-- Job 2 -->
                         <div class="relative">
                             <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-purple-500 border-4 border-slate-900"></span>
                             <h4 class="text-xl font-bold text-white">AI Engineer & Consultant</h4>
                             <p class="text-purple-400 text-sm mb-2">Nhân Mỹ | 01/2025 - 04/2025</p>
-                            <ul class="text-slate-400 text-sm list-disc list-inside space-y-1">
-                                <li>Triển khai giải pháp AI vào quy trình đào tạo, tự động hóa 30% công việc.</li>
-                                <li>Đào tạo chuyển giao công nghệ cho đội ngũ nội bộ 10+ người.</li>
-                            </ul>
-                        </div>
-                        <!-- Job 3 -->
-                        <div class="relative">
-                            <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-slate-600 border-4 border-slate-900"></span>
-                            <h4 class="text-xl font-bold text-white">Data Engineer</h4>
-                            <p class="text-slate-500 text-sm mb-2">Phần Mềm Vàng | 06/2024 - 07/2024</p>
-                            <p class="text-slate-400 text-sm">Chuẩn hóa CSDL SQL quy mô lớn, đảm bảo tính toàn vẹn dữ liệu 99.9%.</p>
+                            <p class="text-slate-400 text-sm">Triển khai giải pháp AI đào tạo, tự động hóa 30% công việc.</p>
                         </div>
                     </div>
                 </div>
@@ -182,74 +165,161 @@
         </div>
     </section>
 
-    <!-- PERSONALITY SECTION (From Astrology) -->
     <section id="personality" class="py-24 px-6 md:px-12 bg-slate-950">
-        <div class="max-w-6xl mx-auto">
+        <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Cấu Trúc Tính Cách</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Bản Đồ Sao & Cấu Trúc Tâm Lý</h2>
                 <div class="h-1 w-20 bg-gradient-to-r from-rose-500 to-purple-500 mx-auto rounded-full"></div>
-                <p class="mt-4 text-slate-400">Giải mã con người tôi qua lăng kính chiêm tinh học.</p>
+                <p class="mt-4 text-slate-400">Giải mã chi tiết dựa trên ngày sinh: 29/09/2003, 01:30, Mỹ Tho</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                
+                <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 hover:border-yellow-500/50 transition-colors">
+                    <span class="astro-badge bg-yellow-500/20 text-yellow-300">Cốt Lõi (Sun)</span>
+                    <h3 class="text-2xl font-bold text-white mt-2">Thiên Bình ♎</h3>
+                    <p class="text-xs text-slate-500 mb-3 uppercase tracking-wider">Nhà 11 (Cộng đồng)</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Thiên hướng ngoại giao, yêu sự cân bằng và công bằng. Vị trí <strong>Nhà 11</strong> hướng năng lượng này vào các hoạt động đội nhóm, công nghệ và các dự án mang tính xã hội.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 hover:border-purple-500/50 transition-colors">
+                    <span class="astro-badge bg-purple-500/20 text-purple-300">Cảm Xúc (Moon)</span>
+                    <h3 class="text-2xl font-bold text-white mt-2">Bọ Cạp ♏</h3>
+                    <p class="text-xs text-slate-500 mb-3 uppercase tracking-wider">Nhà 1 (Bản thân) - Trùng Tụ AC</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Cảm xúc cực kỳ mãnh liệt, trực giác sắc bén như "máy quét". Vị trí <strong>Nhà 1</strong> khiến cảm xúc gắn liền với bản sắc cá nhân. Nhạy cảm nhưng che giấu kỹ.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 hover:border-red-500/50 transition-colors">
+                    <span class="astro-badge bg-red-500/20 text-red-300">Vẻ Ngoài (Rising)</span>
+                    <h3 class="text-2xl font-bold text-white mt-2">Bọ Cạp ♏</h3>
+                    <p class="text-xs text-slate-500 mb-3 uppercase tracking-wider">Chủ tinh: Hỏa Tinh & Diêm Vương</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Ấn tượng đầu tiên: Bí ẩn, lạnh lùng, và có chiều sâu. Người khác thường cảm thấy nội lực ngầm mạnh mẽ và sự kiên định từ bạn ngay lần gặp đầu.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/80 p-6 rounded-2xl border border-indigo-500/30 ring-1 ring-indigo-500/20 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-indigo-500 blur-3xl opacity-20"></div>
+                    <span class="astro-badge bg-indigo-500/20 text-indigo-300">Mạnh Nhất (13 Điểm)</span>
+                    <h3 class="text-2xl font-bold text-white mt-2">Thủy Tinh ♍</h3>
+                    <p class="text-xs text-slate-500 mb-3 uppercase tracking-wider">Xử Nữ - Nhà 11</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        "Siêu năng lực" của bạn. Tư duy phân tích, logic, tỉ mỉ đến từng chi tiết. Đây là dấu hiệu điển hình của một <strong>Kỹ sư (Engineer)</strong> xuất sắc.
+                    </p>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Layer 1: The Mask -->
-                <div class="bg-slate-900 p-8 rounded-2xl card-hover border border-slate-800">
-                    <div class="text-rose-400 text-4xl mb-4"><i class="fas fa-mask"></i></div>
-                    <h3 class="text-xl font-bold text-white mb-2">Giao Tiếp (Thiên Bình)</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Bề ngoài, tôi là người <strong class="text-rose-300">hòa nhã, ngoại giao và lịch thiệp</strong>. Tôi trân trọng sự hài hòa trong các mối quan hệ và luôn cố gắng giải quyết xung đột bằng lý trí và sự êm đẹp.
-                    </p>
+                
+                <div class="col-span-1 md:col-span-2 bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-2xl border border-slate-700">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i class="fas fa-rocket text-rose-500"></i> Định Hướng Sự Nghiệp (Astro-Career)
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4 items-start">
+                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-700">
+                                <span class="block text-center font-bold text-lg text-rose-400">MC</span>
+                                <span class="text-[10px] text-slate-500">Sư Tử</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Thiên Đỉnh tại Sư Tử (House 10)</h4>
+                                <p class="text-slate-400 text-sm mt-1">
+                                    Bạn có khát vọng lãnh đạo và được công nhận. Sự nghiệp của bạn cần có yếu tố sáng tạo, quản lý và sự "tỏa sáng". Bạn không thích hợp làm người đứng sau cánh gà mãi mãi.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 items-start">
+                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-700">
+                                <span class="block text-center font-bold text-lg text-blue-400">11H</span>
+                                <span class="text-[10px] text-slate-500">Stellium</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Stellium Nhà 11 (Mặt Trời - Thủy Tinh - Kim Tinh)</h4>
+                                <p class="text-slate-400 text-sm mt-1">
+                                    Năng lượng tập trung cực mạnh vào lĩnh vực <strong>Công nghệ, Tương lai và Cộng đồng</strong>. Đây là chỉ báo rõ ràng nhất cho sự nghiệp Kỹ sư AI/Phần mềm - xây dựng hệ thống phục vụ đám đông.
+                                </p>
+                            </div>
+                        </div>
+
+                         <div class="flex gap-4 items-start">
+                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-700">
+                                <span class="block text-center font-bold text-lg text-green-400">Sat</span>
+                                <span class="text-[10px] text-slate-500">Cự Giải</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Thổ Tinh Nhà 8 (Cự Giải)</h4>
+                                <p class="text-slate-400 text-sm mt-1">
+                                    Thử thách về quản lý tài sản chung và cảm xúc sâu kín. Bạn có khả năng nhìn thấu rủi ro và quản lý khủng hoảng tốt (thích hợp với Data Integrity/Security).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Layer 2: The Mind (Connected to Professional) -->
-                <div class="bg-slate-900 p-8 rounded-2xl card-hover border border-indigo-900/30 ring-1 ring-indigo-500/20">
-                    <div class="text-indigo-400 text-4xl mb-4"><i class="fas fa-brain"></i></div>
-                    <h3 class="text-xl font-bold text-white mb-2">Tư Duy (Xử Nữ)</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Đây là nơi kỹ năng <strong class="text-indigo-300">kỹ sư AI</strong> của tôi tỏa sáng. Tôi tỉ mỉ, phân tích logic, hướng tới sự hoàn hảo và thực tế. Mọi dòng code, mọi kiến trúc hệ thống đều được tôi tính toán kỹ lưỡng.
-                    </p>
-                </div>
+                <div class="space-y-6">
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                        <h3 class="text-lg font-bold text-white mb-4">Cân Bằng Nguyên Tố</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-400 mb-1">
+                                    <span>Nước (Cảm xúc/Trực giác)</span>
+                                    <span>Mạnh (Moon/Asc/Mars)</span>
+                                </div>
+                                <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500 w-[45%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-400 mb-1">
+                                    <span>Khí (Tư duy/Giao tiếp)</span>
+                                    <span>Khá (Sun/Venus/Uranus)</span>
+                                </div>
+                                <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-yellow-400 w-[35%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-400 mb-1">
+                                    <span>Đất (Thực tế/Logic)</span>
+                                    <span>Ổn định (Mercury/Jupiter)</span>
+                                </div>
+                                <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 w-[20%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-4 italic">
+                            *Sự kết hợp giữa <strong>Nước</strong> (Trực giác Bọ Cạp) và <strong>Đất</strong> (Logic Xử Nữ) tạo nên một kỹ sư có chiều sâu, không máy móc.
+                        </p>
+                    </div>
 
-                <!-- Layer 3: The Soul -->
-                <div class="bg-slate-900 p-8 rounded-2xl card-hover border border-slate-800">
-                    <div class="text-purple-400 text-4xl mb-4"><i class="fas fa-heart"></i></div>
-                    <h3 class="text-xl font-bold text-white mb-2">Cảm Xúc (Bọ Cạp)</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Phần sâu kín nhất. Tôi sống <strong class="text-purple-300">mãnh liệt và trung thành</strong>. Tôi trân trọng những kết nối sâu sắc, ghét sự hời hợt và giả dối. Một khi đã cam kết (dù là dự án hay con người), tôi sẽ dốc toàn lực.
-                    </p>
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                        <h3 class="text-lg font-bold text-white mb-2">Điểm Mạnh Cốt Lõi</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>Tư duy phân tích sắc bén (Thủy Tinh Xử Nữ).</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>Khả năng tập trung cao độ & soi mói lỗi sai (Mọc Bọ Cạp).</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>Ngoại giao khéo léo trong tập thể (Mặt Trời Thiên Bình).</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- User Manual / Dos and Don'ts -->
-    <section class="py-20 px-6 bg-gradient-to-b from-slate-900 to-slate-950">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center serif-font text-white">Hướng Dẫn Làm Việc Với <span class="text-rose-500">An</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- DOs -->
-                <div class="bg-slate-800/30 p-6 rounded-xl border-l-4 border-green-500">
-                    <h3 class="text-green-400 font-bold mb-4 text-lg"><i class="fas fa-check mr-2"></i> Nên (DOs)</h3>
-                    <ul class="space-y-3 text-slate-300 text-sm">
-                        <li>• <strong>Giao tiếp thẳng thắn & Logic:</strong> Tôi thích dữ liệu và lập luận rõ ràng.</li>
-                        <li>• <strong>Tôn trọng sự cam kết:</strong> Tôi rất nghiêm túc với deadline và chất lượng.</li>
-                        <li>• <strong>Tin tưởng:</strong> Trao quyền cho tôi, tôi sẽ trả lại kết quả vượt mong đợi.</li>
-                    </ul>
-                </div>
-                <!-- DON'Ts -->
-                <div class="bg-slate-800/30 p-6 rounded-xl border-l-4 border-rose-500">
-                    <h3 class="text-rose-400 font-bold mb-4 text-lg"><i class="fas fa-times mr-2"></i> Tránh (DON'Ts)</h3>
-                    <ul class="space-y-3 text-slate-300 text-sm">
-                        <li>• <strong>Sự hời hợt:</strong> Đừng làm việc qua loa, tôi sẽ nhìn thấy ngay các lỗ hổng.</li>
-                        <li>• <strong>Thiếu trung thực:</strong> Trực giác Bọ Cạp của tôi rất nhạy cảm với sự giả dối.</li>
-                        <li>• <strong>Drama công sở:</strong> Tôi tập trung vào hiệu quả và giải pháp, không phải thị phi.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer / Connect -->
     <footer class="py-12 bg-slate-950 text-center border-t border-slate-800">
         <div class="max-w-xl mx-auto px-6">
             <h3 class="text-xl font-bold mb-4 text-white">Kết nối với Thành An</h3>
@@ -271,7 +341,7 @@
                 </a>
             </div>
             <p class="mt-10 text-xs text-slate-600">
-                © 2025 Cao Nguyên Thành An. Kỹ Sư AI/ML & Portfolio.
+                © 2025 Cao Nguyễn Thành An. Kỹ Sư AI/ML & Portfolio.
             </p>
         </div>
     </footer>
