@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cao Nguyên Thành An - AI Software Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Deep Blue/Black */
+            color: #e2e8f0;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #fb7185, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(167, 139, 250, 0.2);
+        }
+        .tech-pill {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+        .tech-pill:hover {
+            background: rgba(167, 139, 250, 0.2);
+            border-color: rgba(167, 139, 250, 0.4);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-rose-500 selection:text-white">
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden bg-slate-950">
+        <!-- Abstract Background Elements -->
+        <div class="absolute top-0 left-0 w-96 h-96 bg-rose-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-pulse"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-pulse animation-delay-2000"></div>
+
+        <div class="z-10 fade-in max-w-4xl mt-12 md:mt-0">
+            <div class="inline-block mb-4 px-4 py-1 rounded-full border border-slate-700 bg-slate-900/50 text-slate-400 text-xs tracking-widest uppercase font-semibold">
+                AI Software Engineer
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-slate-100">
+                Cao Nguyên Thành An<span class="text-rose-500">.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 font-light italic serif-font mb-8 leading-relaxed">
+                "Kết hợp tư duy logic của một kỹ sư AI với chiều sâu cảm xúc của một tâm hồn nội tâm. 
+                Tôi xây dựng hệ thống thông minh, và kết nối con người chân thành."
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#professional" class="group inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full transition-all duration-300 shadow-lg shadow-indigo-500/25">
+                    <span class="font-medium">Xem Hồ Sơ Chuyên Môn</span>
+                    <i class="fas fa-code group-hover:rotate-12 transition-transform"></i>
+                </a>
+                <a href="#personality" class="group inline-flex items-center gap-2 px-8 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white rounded-full transition-all duration-300">
+                    <span>Hiểu Về Con Người Tôi</span>
+                    <i class="fas fa-user-astronaut text-rose-400 group-hover:translate-y-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- PROFESSIONAL SECTION (NEW - From CV) -->
+    <section id="professional" class="py-24 px-6 md:px-12 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Năng Lực Chuyên Môn</h2>
+                <div class="h-1 w-20 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
+                <p class="mt-4 text-slate-400">Tư duy sản phẩm sắc bén & Tối ưu hóa quy trình (Giảm 40% thời gian xử lý thủ công)</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Tech Stack & Skills -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i class="fas fa-laptop-code text-indigo-400"></i> Kỹ Năng Kỹ Thuật
+                    </h3>
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 mb-6">
+                        <h4 class="text-indigo-300 font-semibold mb-3">AI & Generative AI</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-pill">LangChain</span>
+                            <span class="tech-pill">LangGraph</span>
+                            <span class="tech-pill">RAG System</span>
+                            <span class="tech-pill">Multi-Agent</span>
+                            <span class="tech-pill">OpenAI API</span>
+                            <span class="tech-pill">Hugging Face</span>
+                            <span class="tech-pill">Llama</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 mb-6">
+                        <h4 class="text-blue-300 font-semibold mb-3">Core & Data</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-pill">Python</span>
+                            <span class="tech-pill">SQL</span>
+                            <span class="tech-pill">PyTorch/TensorFlow</span>
+                            <span class="tech-pill">Pandas/NumPy</span>
+                            <span class="tech-pill">Scikit-learn</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                        <h4 class="text-green-300 font-semibold mb-3">Tools & DevOps</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-pill">Docker</span>
+                            <span class="tech-pill">AWS (EC2/S3)</span>
+                            <span class="tech-pill">Git</span>
+                            <span class="tech-pill">NetworkX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Timeline -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i class="fas fa-briefcase text-rose-400"></i> Kinh Nghiệm Thực Chiến
+                    </h3>
+                    <div class="space-y-8 border-l-2 border-slate-700 pl-8 relative">
+                        <!-- Job 1 -->
+                        <div class="relative">
+                            <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-rose-500 border-4 border-slate-900"></span>
+                            <h4 class="text-xl font-bold text-white">AI Software Engineer</h4>
+                            <p class="text-rose-400 text-sm mb-2">VNA Group | 09/2025 - 12/2025</p>
+                            <ul class="text-slate-400 text-sm list-disc list-inside space-y-1">
+                                <li>Phát triển hệ thống <strong>Multi-Agent (LangGraph)</strong> tự động hóa báo cáo.</li>
+                                <li>Thiết kế kiến trúc Router-Analyst-Writer, tích hợp Graph Knowledge.</li>
+                                <li>Giảm <strong>90%</strong> thao tác thủ công khi tạo báo cáo Word chuẩn doanh nghiệp.</li>
+                            </ul>
+                        </div>
+                        <!-- Job 2 -->
+                        <div class="relative">
+                            <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-purple-500 border-4 border-slate-900"></span>
+                            <h4 class="text-xl font-bold text-white">AI Engineer & Consultant</h4>
+                            <p class="text-purple-400 text-sm mb-2">Nhân Mỹ | 01/2025 - 04/2025</p>
+                            <ul class="text-slate-400 text-sm list-disc list-inside space-y-1">
+                                <li>Triển khai giải pháp AI vào quy trình đào tạo, tự động hóa 30% công việc.</li>
+                                <li>Đào tạo chuyển giao công nghệ cho đội ngũ nội bộ 10+ người.</li>
+                            </ul>
+                        </div>
+                        <!-- Job 3 -->
+                        <div class="relative">
+                            <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-slate-600 border-4 border-slate-900"></span>
+                            <h4 class="text-xl font-bold text-white">Data Engineer</h4>
+                            <p class="text-slate-500 text-sm mb-2">Phần Mềm Vàng | 06/2024 - 07/2024</p>
+                            <p class="text-slate-400 text-sm">Chuẩn hóa CSDL SQL quy mô lớn, đảm bảo tính toàn vẹn dữ liệu 99.9%.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PERSONALITY SECTION (From Astrology) -->
+    <section id="personality" class="py-24 px-6 md:px-12 bg-slate-950">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Cấu Trúc Tính Cách</h2>
+                <div class="h-1 w-20 bg-gradient-to-r from-rose-500 to-purple-500 mx-auto rounded-full"></div>
+                <p class="mt-4 text-slate-400">Giải mã con người tôi qua lăng kính chiêm tinh học.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Layer 1: The Mask -->
+                <div class="bg-slate-900 p-8 rounded-2xl card-hover border border-slate-800">
+                    <div class="text-rose-400 text-4xl mb-4"><i class="fas fa-mask"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-2">Giao Tiếp (Thiên Bình)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Bề ngoài, tôi là người <strong class="text-rose-300">hòa nhã, ngoại giao và lịch thiệp</strong>. Tôi trân trọng sự hài hòa trong các mối quan hệ và luôn cố gắng giải quyết xung đột bằng lý trí và sự êm đẹp.
+                    </p>
+                </div>
+
+                <!-- Layer 2: The Mind (Connected to Professional) -->
+                <div class="bg-slate-900 p-8 rounded-2xl card-hover border border-indigo-900/30 ring-1 ring-indigo-500/20">
+                    <div class="text-indigo-400 text-4xl mb-4"><i class="fas fa-brain"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-2">Tư Duy (Xử Nữ)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Đây là nơi kỹ năng <strong class="text-indigo-300">kỹ sư AI</strong> của tôi tỏa sáng. Tôi tỉ mỉ, phân tích logic, hướng tới sự hoàn hảo và thực tế. Mọi dòng code, mọi kiến trúc hệ thống đều được tôi tính toán kỹ lưỡng.
+                    </p>
+                </div>
+
+                <!-- Layer 3: The Soul -->
+                <div class="bg-slate-900 p-8 rounded-2xl card-hover border border-slate-800">
+                    <div class="text-purple-400 text-4xl mb-4"><i class="fas fa-heart"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-2">Cảm Xúc (Bọ Cạp)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Phần sâu kín nhất. Tôi sống <strong class="text-purple-300">mãnh liệt và trung thành</strong>. Tôi trân trọng những kết nối sâu sắc, ghét sự hời hợt và giả dối. Một khi đã cam kết (dù là dự án hay con người), tôi sẽ dốc toàn lực.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Manual / Dos and Don'ts -->
+    <section class="py-20 px-6 bg-gradient-to-b from-slate-900 to-slate-950">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center serif-font text-white">Hướng Dẫn Làm Việc Với <span class="text-rose-500">An</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- DOs -->
+                <div class="bg-slate-800/30 p-6 rounded-xl border-l-4 border-green-500">
+                    <h3 class="text-green-400 font-bold mb-4 text-lg"><i class="fas fa-check mr-2"></i> Nên (DOs)</h3>
+                    <ul class="space-y-3 text-slate-300 text-sm">
+                        <li>• <strong>Giao tiếp thẳng thắn & Logic:</strong> Tôi thích dữ liệu và lập luận rõ ràng.</li>
+                        <li>• <strong>Tôn trọng sự cam kết:</strong> Tôi rất nghiêm túc với deadline và chất lượng.</li>
+                        <li>• <strong>Tin tưởng:</strong> Trao quyền cho tôi, tôi sẽ trả lại kết quả vượt mong đợi.</li>
+                    </ul>
+                </div>
+                <!-- DON'Ts -->
+                <div class="bg-slate-800/30 p-6 rounded-xl border-l-4 border-rose-500">
+                    <h3 class="text-rose-400 font-bold mb-4 text-lg"><i class="fas fa-times mr-2"></i> Tránh (DON'Ts)</h3>
+                    <ul class="space-y-3 text-slate-300 text-sm">
+                        <li>• <strong>Sự hời hợt:</strong> Đừng làm việc qua loa, tôi sẽ nhìn thấy ngay các lỗ hổng.</li>
+                        <li>• <strong>Thiếu trung thực:</strong> Trực giác Bọ Cạp của tôi rất nhạy cảm với sự giả dối.</li>
+                        <li>• <strong>Drama công sở:</strong> Tôi tập trung vào hiệu quả và giải pháp, không phải thị phi.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Connect -->
+    <footer class="py-12 bg-slate-950 text-center border-t border-slate-800">
+        <div class="max-w-xl mx-auto px-6">
+            <h3 class="text-xl font-bold mb-4 text-white">Kết nối với Thành An</h3>
+            <p class="text-slate-400 mb-8 text-sm">
+                Sẵn sàng cho các cơ hội hợp tác về AI, RAG System và Automation.
+            </p>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="https://www.linkedin.com/in/th%C3%A0nh-an-cao-nguy%E1%BB%85n-b97b23322/" target="_blank" class="px-6 py-2 rounded-full bg-slate-800 text-slate-300 hover:bg-[#0077b5] hover:text-white transition-all text-sm font-medium flex items-center gap-2">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://github.com/caonguyenthanhan" target="_blank" class="px-6 py-2 rounded-full bg-slate-800 text-slate-300 hover:bg-[#333] hover:text-white transition-all text-sm font-medium flex items-center gap-2">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="mailto:caonguyenthanhan.aaa@gmail.com" class="px-6 py-2 rounded-full bg-slate-800 text-slate-300 hover:bg-rose-600 hover:text-white transition-all text-sm font-medium flex items-center gap-2">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+                <a href="https://hethongthongminh.id.vn/caonguyenthanhan/profile/as" target="_blank" class="px-6 py-2 rounded-full bg-slate-800 text-slate-300 hover:bg-green-600 hover:text-white transition-all text-sm font-medium flex items-center gap-2">
+                    <i class="fas fa-id-badge"></i> Profile ID
+                </a>
+            </div>
+            <p class="mt-10 text-xs text-slate-600">
+                © 2025 Cao Nguyên Thành An. Kỹ Sư AI/ML & Portfolio.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const animateElements = document.querySelectorAll('section > div, .card-hover');
+            animateElements.forEach(el => {
+                el.style.opacity = '0'; 
+                el.classList.add('transition-opacity', 'duration-1000');
+                observer.observe(el);
+            });
+
+            const styleSheet = document.createElement("style");
+            styleSheet.innerText = `
+                .fade-in { opacity: 1 !important; transform: translateY(0) !important; transition: opacity 1s ease-out, transform 1s ease-out; }
+            `;
+            document.head.appendChild(styleSheet);
+        });
+    </script>
+</body>
+</html>

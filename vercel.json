@@ -72,6 +72,11 @@
       "source": "/profile/aise/as",
       "destination": "/caonguyenthanhan/Automation_Specialist.html"
     },
+        {
+      "source": "/caonguyenthanhan/ban-do-sao-ca-nhan",
+      "destination": "/caonguyenthanhan/ban-do-sao-ca-nhan.html"
+    },
+
     {
       "source": "/genai/prompts",
       "destination": "/genai/image_prompt_library.html"
