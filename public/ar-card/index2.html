@@ -18,7 +18,6 @@
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
     }
     
-    /* Ngăn người dùng chọn văn bản/ảnh khi đang thao tác AR */
     * { user-select: none; -webkit-user-select: none; }
 
     /* Màn hình chờ */
@@ -32,41 +31,60 @@
     }
 
     /* --- AR HTML CARD (DYNAMIC) --- */
-    /* Quan trọng: position absolute để di chuyển, top/left = 0 để làm gốc */
     #ar-card-content {
       position: absolute;
       top: 0; left: 0;
-      width: 260px; /* Kích thước chuẩn */
+      width: 280px; /* Chiều rộng thẻ */
       
-      /* Gốc biến hình nằm ở giữa để scale đẹp hơn */
       transform-origin: center center;
       
-      background: rgba(16, 20, 30, 0.85); /* Nền tối sang trọng */
-      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(0, 255, 255, 0.3);
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      background: rgba(20, 20, 35, 0.95); /* Nền tối đậm hơn để nổi bật ảnh */
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       
-      padding: 15px;
+      /* Viền Gradient giả lập màu kim loại */
+      border: 2px solid transparent;
+      background-image: linear-gradient(rgba(20, 20, 35, 0.95), rgba(20, 20, 35, 0.95)), linear-gradient(to right, #00C6FF, #FFD700);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      
+      border-radius: 12px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
+      
+      padding: 12px;
       text-align: center;
       color: white;
       
-      /* Mặc định ẩn, JS sẽ hiện khi tracking */
       opacity: 0;
-      pointer-events: none; /* Không chặn thao tác zoom/xoay của AR */
+      pointer-events: none;
       z-index: 1000;
-      
-      /* Will-change giúp trình duyệt tối ưu render */
       will-change: transform, opacity;
+      
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    /* Nội dung bên trong thẻ */
-    .card-header h1 { margin: 0; font-size: 16px; color: #00FFFF; text-transform: uppercase; letter-spacing: 1px; }
-    .card-header h2 { margin: 5px 0 10px; font-size: 12px; color: #ccc; font-weight: 400; }
+    /* Header: Tên & Danh hiệu */
+    .card-header {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 8px;
+    }
+    .card-header h1 { 
+      margin: 0; font-size: 14px; 
+      color: #00C6FF; /* Màu xanh Cyan chủ đạo */
+      text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;
+    }
+    .card-header h2 { 
+      margin: 4px 0 0; font-size: 16px; 
+      color: #FFD700; /* Màu vàng Gold cho tên */
+      font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
     
+    /* Slideshow */
     .slideshow-container {
-      position: relative; width: 100%; aspect-ratio: 4/5;
-      overflow: hidden; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+      position: relative; width: 100%; aspect-ratio: 3/4; /* Tỉ lệ ảnh chân dung */
+      overflow: hidden; border-radius: 6px; 
+      border: 1px solid rgba(255,255,255,0.2);
       background: #000;
     }
     .slide-img {
@@ -76,30 +94,55 @@
     }
     .slide-img.active { opacity: 1; }
 
-    /* Filmstrip (Dải ảnh bên dưới - Giữ nguyên fixed cho đẹp) */
+    /* Hiệu ứng chạy chữ (Marquee) */
+    .marquee-wrapper {
+      width: 100%;
+      overflow: hidden;
+      background: rgba(0, 198, 255, 0.1); /* Nền xanh nhạt */
+      border-radius: 4px;
+      padding: 6px 0;
+      border: 1px solid rgba(0, 198, 255, 0.3);
+    }
+    .marquee-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 12s linear infinite;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .marquee-content span {
+      margin-right: 40px; /* Khoảng cách giữa các câu lặp lại */
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    
+    /* Filmstrip ở dưới */
     #filmstrip-container {
-      position: fixed; bottom: 0; left: 0; width: 100%; height: 100px;
-      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 80px;
+      background: linear-gradient(to top, rgba(0,0,0,1), transparent);
       z-index: 900; opacity: 0; transition: opacity 0.5s; pointer-events: none;
+      display: flex; align-items: center; justify-content: center;
     }
     #filmstrip-container.visible { opacity: 1; }
     
-    /* Animation */
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
   </style>
 
   <script>
-    /* --- COMPONENT: HTML FOLLOWER (TRÁI TIM CỦA LOGIC NÀY) --- */
+    /* --- COMPONENT: HTML FOLLOWER (Giữ nguyên logic di chuyển) --- */
     AFRAME.registerComponent('html-follower', {
       schema: {
-        target: {type: 'selector'}, // Thẻ HTML cần di chuyển
-        offset: {type: 'vec3', default: {x: 0, y: 0, z: 0}}, // Độ lệch vị trí
-        minScale: {default: 0.5},
-        maxScale: {default: 1.5}
+        target: {type: 'selector'},
+        minScale: {default: 0.6},
+        maxScale: {default: 1.4}
       },
       init: function() {
         this.htmlEl = this.data.target;
-        this.vector = new THREE.Vector3(); // Biến tạm để tính toán
+        this.vector = new THREE.Vector3();
         this.camera = document.querySelector('a-camera').object3D;
         this.isVisible = false;
       },
@@ -112,37 +155,25 @@
           return;
         }
 
-        // 1. Lấy vị trí thế giới thực của Entity 3D
         this.el.object3D.getWorldPosition(this.vector);
-        
-        // 2. Chiếu vị trí đó lên màn hình Camera (Normalized Device Coordinates)
-        // Kết quả trả về x, y trong khoảng [-1, 1]
         this.vector.project(this.el.sceneEl.camera);
 
         const x = this.vector.x;
         const y = this.vector.y;
-        const z = this.vector.z; // z < 1 nghĩa là nằm trước camera
+        const z = this.vector.z;
 
-        // 3. Chuyển đổi sang pixel màn hình
         const width = window.innerWidth;
         const height = window.innerHeight;
         
         const screenX = (x * 0.5 + 0.5) * width;
         const screenY = -(y * 0.5 - 0.5) * height;
 
-        // 4. Tính toán Scale dựa trên khoảng cách (Distance Scaling)
-        // Lấy khoảng cách từ camera đến vật thể
         const distance = this.el.object3D.position.distanceTo(this.camera.position);
         
-        // Công thức nội suy scale: Càng xa càng nhỏ
-        // Giả sử khoảng cách chuẩn là 2 mét (scale 1)
         let scaleFactor = 1.8 / distance; 
         scaleFactor = Math.min(Math.max(scaleFactor, this.data.minScale), this.data.maxScale);
 
-        // 5. Cập nhật CSS (Chỉ render khi vật thể nằm trong khung hình và phía trước camera)
         if (z < 1 && x > -1.2 && x < 1.2 && y > -1.2 && y < 1.2) {
-            // Dùng translate3d(-50%, -50%, 0) để tâm thẻ nằm đúng điểm neo
-            // Cộng thêm vị trí màn hình screenX, screenY
             this.htmlEl.style.transform = `translate3d(${screenX}px, ${screenY}px, 0) translate(-50%, -50%) scale(${scaleFactor})`;
             
             if (!this.isVisible) {
@@ -158,7 +189,7 @@
       }
     });
 
-    // --- CÁC LOGIC KHÁC (SLIDESHOW, START...) ---
+    // --- APP MANAGER ---
     AFRAME.registerComponent('app-manager', {
       init: function() {
         const btn = document.querySelector('.btn-start');
@@ -175,7 +206,7 @@
           slideIndex = (slideIndex + 1) % slides.length;
           slides[slideIndex].classList.add('active');
         };
-        setInterval(showSlides, 2500);
+        setInterval(showSlides, 3000); // 3 giây đổi ảnh
 
         btn.onclick = () => {
           overlay.style.opacity = 0;
@@ -200,30 +231,43 @@
 <body>
 
   <div id="overlay">
-    <button class="btn-start">Start Experience</button>
+    <button class="btn-start">Bắt Đầu Trải Nghiệm</button>
   </div>
 
-  <!-- THẺ HTML CHÍNH (Sẽ bay theo tấm thiệp) -->
+  <!-- THẺ HTML CHÍNH -->
   <div id="ar-card-content">
+    
+    <!-- HEADER -->
     <div class="card-header">
-      <h1>Chúc Mừng Tốt Nghiệp</h1>
-      <h2>Tân Kỹ Sư Điện: Ngô Tấn Tài</h2>
+      <h1>CHÚC MỪNG TỐT NGHIỆP</h1>
+      <h2>Tân Kỹ Sư: Ngô Tấn Tài</h2>
     </div>
+    
+    <!-- SLIDESHOW ẢNH -->
     <div class="slideshow-container">
       <img src="/image/graduation/main1.jpg" class="slide-img active">
       <img src="/image/graduation/main2.jpg" class="slide-img">
       <img src="/image/graduation/main3.jpg" class="slide-img">
       <img src="/image/graduation/main4.jpg" class="slide-img">
     </div>
-    <p style="font-size: 11px; margin-top: 10px; opacity: 0.8;">
-      "Không có áp lực, không có kim cương."
-    </p>
+
+    <!-- MARQUEE (CHỮ CHẠY) -->
+    <div class="marquee-wrapper">
+      <div class="marquee-content">
+        <span>🎉 Chúc mừng Tân Kỹ Sư Điện Ngô Tấn Tài!</span>
+        <span>🎓 Chúc bạn luôn vững bước và thành công trên con đường sự nghiệp!</span>
+        <span>🚀 The Future is Yours to Create!</span>
+      </div>
+    </div>
+  
   </div>
 
   <audio id="bg-music" src="/music/music.mp3" loop></audio>
 
-  <!-- Dải film bên dưới (Trang trí) -->
-  <div id="filmstrip-container"></div>
+  <!-- Dải film bên dưới -->
+  <div id="filmstrip-container">
+     <p style="color: white; font-size: 10px; opacity: 0.7;">Đang phát nhạc...</p>
+  </div>
 
   <!-- A-FRAME SCENE -->
   <a-scene 
@@ -239,21 +283,18 @@
     <!-- TARGET -->
     <a-entity mindar-image-target="targetIndex: 0">
       
-      <!-- 1. ĐIỂM NEO CHO THẺ HTML (HTML ANCHOR) -->
-      <!-- Vị trí x=0.8 nghĩa là thẻ HTML sẽ bay lơ lửng bên PHẢI tấm thiệp 0.8 mét (trong hệ toạ độ AR) -->
-      <!-- Bạn thay đổi position ở đây để chỉnh vị trí thẻ HTML so với tấm ảnh thật -->
+      <!-- 1. ĐIỂM NEO CHO THẺ HTML -->
+      <!-- Đặt position="0.75 0 0" để thẻ nằm lệch bên phải một chút so với ảnh thật -->
       <a-entity 
         id="html-anchor" 
-        position="0.8 0 0" 
+        position="0.75 0 0" 
         html-follower="target: #ar-card-content">
       </a-entity>
 
-      <!-- 2. HIỆU ỨNG 3D TRÊN THIỆP -->
-      <a-plane position="0 0 0" width="1" height="1.4" color="white" opacity="0.1"></a-plane>
-      
-      <!-- Một vòng tròn xoay xoay ảo diệu -->
-      <a-ring color="#00FFFF" radius-inner="0.6" radius-outer="0.62" position="0 0 0"
-        animation="property: rotation; to: 0 0 360; dur: 8000; loop: true; easing: linear">
+      <!-- 2. HIỆU ỨNG 3D -->
+      <a-plane position="0 0 0" width="1" height="1.4" color="white" opacity="0.05"></a-plane>
+      <a-ring color="#00C6FF" radius-inner="0.55" radius-outer="0.56" position="0 0 0"
+        animation="property: rotation; to: 0 0 360; dur: 10000; loop: true; easing: linear">
       </a-ring>
 
     </a-entity>
