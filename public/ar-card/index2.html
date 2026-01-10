@@ -1,170 +1,278 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AR Graduation Slideshow + Hologram Border</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Chúc Mừng Tốt Nghiệp - AR Card</title>
 
-<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+  <!-- Google Fonts cho tiếng Việt đẹp -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
-  body { margin:0; overflow:hidden; }
+  <!-- A-Frame & MindAR -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
-  #scanning-overlay {
-    display:flex; align-items:center; justify-content:center;
-    position:fixed; inset:0; z-index:3;
-    background:rgba(0,0,0,0.35);
-    color:#00FFFF; font-size:22px;
-    text-shadow:0 0 10px #00FFFF;
-    pointer-events:none;
-  }
-</style>
+  <style>
+    /* --- CSS CƠ BẢN --- */
+    body { 
+      margin: 0; 
+      overflow: hidden; 
+      font-family: 'Montserrat', sans-serif;
+    }
 
-<script>
-/* =====================================
-   MAIN SLIDESHOW (6 ảnh)
-===================================== */
-AFRAME.registerComponent('main-slideshow', {
-  init: function () {
-    this.images = [
-      '/image/graduation/main.jpg',
-      '/image/graduation/main2.jpg',
-      '/image/graduation/main3.jpg',
-      '/image/graduation/main4.jpg',
-      '/image/graduation/main5.jpg',
-      '/image/graduation/main6.jpg'
-    ];
-    this.index = 0;
-    this.el.setAttribute('src', this.images[0]);
+    /* Màn hình chờ (Start Screen) */
+    #start-overlay { 
+      position: fixed; inset: 0; 
+      background: rgba(0,0,0,0.9); 
+      z-index: 9999; 
+      display: flex; flex-direction: column; align-items: center; justify-content: center; 
+      transition: opacity 0.5s;
+    }
+    .btn-start {
+      padding: 15px 30px; 
+      font-size: 18px; font-weight: 700; color: #004d40;
+      background: linear-gradient(45deg, #00FFFF, #00FF99); 
+      border: none; border-radius: 50px; cursor: pointer; 
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+      animation: pulse 2s infinite;
+    }
 
-    this.interval = setInterval(() => {
-      this.index = (this.index + 1) % this.images.length;
+    /* --- GIAO DIỆN THẺ CHÚC MỪNG (HTML OVERLAY) --- */
+    /* Mặc định ẩn, chỉ hiện khi tìm thấy Target */
+    #ar-card-content {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      width: 90%; max-width: 380px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px); /* Hiệu ứng kính mờ */
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 2px solid rgba(255,255,255,0.5);
+      z-index: 1000;
+      
+      /* Trạng thái ẩn/hiện */
+      opacity: 0; 
+      visibility: hidden;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-      this.el.setAttribute('animation__fadeout', 
-        'property: opacity; to: 0; dur: 400; easing: easeOutQuad');
+    /* Khi class .visible được thêm vào (JS xử lý) */
+    #ar-card-content.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
 
-      setTimeout(() => {
-        this.el.setAttribute('src', this.images[this.index]);
-        this.el.setAttribute('animation__fadein',
-          'property: opacity; to: 1; dur: 400; easing: easeInQuad');
-      }, 400);
+    /* Typography */
+    h1.title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: #d32f2f;
+      margin: 0 0 5px 0;
+      text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+    }
+    h2.subtitle {
+      font-size: 1rem;
+      color: #0277bd;
+      font-weight: 600;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    p.message {
+      font-size: 0.9rem;
+      color: #444;
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
 
-    }, 3000);
-  }
-});
+    /* Slideshow Ảnh */
+    .gallery-container {
+      position: relative;
+      width: 100%; height: 220px;
+      border-radius: 12px; overflow: hidden;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      background: #eee;
+    }
+    .gallery-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: none; /* Mặc định ẩn */
+      animation: fadeEffect 0.8s;
+    }
+    .gallery-img.active { display: block; }
 
-/* =====================================
-   FILMSTRIP ẢNH KỶ NIỆM
-===================================== */
-AFRAME.registerComponent('filmstrip', {
-  init: function () {
-    const container = this.el;
-    const folder = '/image/graduation/kyniem/';
+    /* Controls cho Slide */
+    .prev, .next {
+      cursor: pointer;
+      position: absolute; top: 50%; width: auto;
+      padding: 10px; margin-top: -22px;
+      color: white; font-weight: bold; font-size: 18px;
+      transition: 0.6s ease;
+      background-color: rgba(0,0,0,0.3);
+      border-radius: 0 3px 3px 0;
+      user-select: none; border: none;
+    }
+    .next { right: 0; border-radius: 3px 0 0 3px; }
+    .prev { left: 0; border-radius: 3px 0 0 3px; }
 
-    const imgs = [
-      'img1.jpg','img2.jpg','img3.jpg','img4.jpg',
-      'img5.jpg','img6.jpg','img7.jpg','img8.jpg'
-    ];
+    /* Footer Marquee giả lập */
+    .marquee-container {
+      overflow: hidden; white-space: nowrap;
+      background: #e1f5fe; padding: 8px; border-radius: 8px;
+      color: #01579b; font-size: 0.85rem; font-weight: 600;
+    }
+    .marquee-text {
+      display: inline-block;
+      animation: marquee 10s linear infinite;
+    }
 
-    let x = -0.6;
-    imgs.forEach(name => {
-      const pic = document.createElement('a-image');
-      pic.setAttribute('src', folder + name);
-      pic.setAttribute('width', '0.35');
-      pic.setAttribute('height', '0.22');
-      pic.setAttribute('opacity', '0.95');
-      pic.setAttribute('position', `${x} -0.25 0.02`);
-      pic.setAttribute('animation',
-        `property: position; from: ${x} -0.25 0.02; to: ${x+1.2} -0.25 0.02; dur:9000; loop:true; easing:linear`);
-      container.appendChild(pic);
+    /* Keyframes */
+    @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    @keyframes fadeEffect { from {opacity: .4} to {opacity: 1} }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-      x += 0.4;
+    /* Sửa lỗi hiển thị trên iOS */
+    a-scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+  </style>
+
+  <script>
+    // --- COMPONENT QUẢN LÝ LOGIC ---
+    AFRAME.registerComponent('app-manager', {
+      init: function() {
+        const overlay = document.querySelector('#start-overlay');
+        const btn = document.querySelector('.btn-start');
+        const audio = document.querySelector('#bg-music');
+        const card = document.querySelector('#ar-card-content');
+        
+        // 1. Xử lý nút Start
+        btn.addEventListener('click', () => {
+          overlay.style.opacity = '0';
+          setTimeout(() => overlay.style.display = 'none', 500);
+          
+          // Phát nhạc (cần user interaction để browser cho phép)
+          audio.play().catch(e => console.log("Audio play failed:", e));
+        });
+
+        // 2. Xử lý sự kiện MindAR (Tìm thấy/Mất dấu ảnh)
+        const target = document.querySelector('[mindar-image-target]');
+        
+        target.addEventListener('targetFound', () => {
+          console.log("Target Found");
+          // Hiện thẻ chúc mừng
+          card.classList.add('visible');
+          // Tiếp tục phát nhạc nếu đang pause
+          if (audio.paused) audio.play();
+        });
+
+        target.addEventListener('targetLost', () => {
+          console.log("Target Lost");
+          // Ẩn thẻ chúc mừng (hoặc để nó mờ đi)
+          card.classList.remove('visible');
+          // Tạm dừng nhạc (tùy chọn, ở đây mình để nhạc chạy luôn cho hay)
+          // audio.pause(); 
+        });
+      }
     });
-  }
-});
-
-/* =====================================
-   AR EVENTS
-===================================== */
-AFRAME.registerComponent('ar-events', {
-  init:function(){
-    const overlay=document.querySelector('#scanning-overlay');
-    this.el.addEventListener("targetFound",()=>{ overlay.style.display="none"; });
-    this.el.addEventListener("targetLost",()=>{ overlay.style.display="flex"; });
-  }
-});
-</script>
-
+  </script>
 </head>
 
 <body>
 
-<div id="scanning-overlay">Đang quét thẻ...</div>
+  <!-- 1. MÀN HÌNH CHỜ -->
+  <div id="start-overlay">
+    <h2 style="color:white; margin-bottom:20px;">AR GRADUATION CARD</h2>
+    <button class="btn-start">MỞ THIỆP CHÚC MỪNG</button>
+    <p style="color:#ccc; font-size:12px; margin-top:15px;">Hướng camera vào ảnh tốt nghiệp</p>
+  </div>
 
-<a-scene
-  mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no;"
-  renderer="colorManagement:true"
-  vr-mode-ui="enabled:false"
-  device-orientation-permission-ui="enabled:false">
+  <!-- 2. THẺ CHÚC MỪNG HTML (SẼ HIỆN KHI QUÉT ĐƯỢC ẢNH) -->
+  <div id="ar-card-content">
+    <h1 class="title">Happy Graduation!</h1>
+    <h2 class="subtitle">Kỹ Sư Điện - Ngô Tấn Tài</h2>
+    
+    <!-- Gallery Ảnh HTML -->
+    <div class="gallery-container">
+      <!-- Thay đổi src thành ảnh thật của bạn -->
+      <img class="gallery-img active" src="/image/graduation/main1.jpg" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+1'">
+      <img class="gallery-img" src="/image/graduation/main2.jpg" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+2'">
+      <img class="gallery-img" src="/image/graduation/main3.jpg" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+3'">
+      <img class="gallery-img" src="/image/graduation/main4.jpg" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+4'">
+      
+      <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
+      <button class="next" onclick="plusSlides(1)">&#10095;</button>
+    </div>
 
-  <!-- CAMERA + LIGHT -->
-  <a-camera look-controls="enabled:false">
-    <a-entity light="type:ambient; intensity:1.2;"></a-entity>
-  </a-camera>
+    <p class="message">
+      "Chúc mừng bạn đã hoàn thành chặng đường đầy thử thách. Chúc Tân Kỹ Sư luôn vững bước và thành công rực rỡ trong tương lai!"
+    </p>
 
-  <a-entity mindar-image-target="targetIndex:0" ar-events>
+    <!-- Chữ chạy -->
+    <div class="marquee-container">
+      <span class="marquee-text">Congratulations Ngo Tan Tai - Electrical Engineering - Ho Chi Minh City University of Technology and Education</span>
+    </div>
+  </div>
 
-    <!-- ============================
-         CHỮ CHÚC MỪNG
-    ============================= -->
-    <a-text 
-      value="Chúc mừng bạn đã hoàn thành hành trình tri thức – tương lai đang chờ đón một kỹ sư đầy khát vọng!"
-      align="center" width="1.8" color="#00FFFF"
-      position="0 0.45 0.02">
-    </a-text>
+  <!-- 3. NHẠC NỀN -->
+  <audio id="bg-music" src="/music/music.mp3" loop preload="auto"></audio>
 
-    <!-- ============================
-         HOLOGRAM BORDER (outer glow)
-    ============================= -->
-    <a-plane
-      position="0 0 0"
-      width="1.20" height="0.67"
-      color="#00FFFF"
-      opacity="0.25"
-      material="shader: flat; transparent: true;"
-      animation="property: opacity; from:0.15; to:0.35; dur:1500; dir:alternate; loop:true">
-    </a-plane>
+  <!-- 4. KHÔNG GIAN AR (A-FRAME) -->
+  <a-scene 
+    app-manager
+    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no; uiLoading: no; filterMinCF:0.0001; filterBeta: 0.001;" 
+    color-space="sRGB" 
+    renderer="colorManagement: true, physicallyCorrectLights: true" 
+    vr-mode-ui="enabled: false" 
+    device-orientation-permission-ui="enabled: false">
 
-    <!-- ============================
-         HOLOGRAM BORDER (light running)
-    ============================= -->
-    <a-ring
-      position="0 0 0.01"
-      radius-inner="0.57"
-      radius-outer="0.585"
-      material="color:#00FFFF; shader: flat; opacity: 0.95;"
-      animation="property: rotation; to:0 0 360; dur:4500; easing: linear; loop:true">
-    </a-ring>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- ============================
-         MAIN SLIDESHOW
-    ============================= -->
-    <a-image id="main-slide"
-      main-slideshow
-      width="1.1" height="0.6"
-      position="0 0 0.015"
-      opacity="1">
-    </a-image>
+    <!-- TARGET 0 -->
+    <a-entity mindar-image-target="targetIndex: 0">
+      
+      <!-- HIỆU ỨNG 3D TRANG TRÍ (Giữ lại viền sáng cho đẹp) -->
+      <!-- Viền khung -->
+      <a-plane color="#00FFFF" width="1.1" height="0.02" position="0 0.76 0" shader="flat"></a-plane>
+      <a-plane color="#00FFFF" width="1.1" height="0.02" position="0 -0.76 0" shader="flat"></a-plane>
+      <a-plane color="#00FFFF" width="0.02" height="1.52" position="-0.55 0 0" shader="flat"></a-plane>
+      <a-plane color="#00FFFF" width="0.02" height="1.52" position="0.55 0 0" shader="flat"></a-plane>
 
-    <!-- ============================
-         FILMSTRIP KỶ NIỆM
-    ============================= -->
-    <a-entity filmstrip></a-entity>
+      <!-- Một lớp nền mờ ảo 3D đằng sau thẻ HTML (tùy chọn) -->
+      <a-plane color="#000" opacity="0.3" width="1.1" height="1.5"></a-plane>
 
-  </a-entity>
+    </a-entity>
+  </a-scene>
 
-</a-scene>
+  <!-- Script xử lý Slide Ảnh -->
+  <script>
+    let slideIndex = 1;
+    // Tự động chạy slide
+    let slideInterval = setInterval(() => plusSlides(1), 3000);
 
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+      // Reset timer khi người dùng bấm thủ công để tránh bị nhảy loạn
+      clearInterval(slideInterval);
+      slideInterval = setInterval(() => plusSlides(1), 3000);
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("gallery-img");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+        slides[i].classList.remove('active');
+      }
+      slides[slideIndex-1].style.display = "block";  
+      slides[slideIndex-1].classList.add('active');
+    }
+  </script>
 </body>
 </html>
