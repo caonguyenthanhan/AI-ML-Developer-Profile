@@ -175,6 +175,89 @@
   </style>
 
   <script>
+    /* ---------------- ADVANCED EFFECTS ---------------- */
+    /* 1. SHADOW CATCHER (Bóng đổ ảo) */
+    AFRAME.registerComponent('shadow-catcher', {
+      init: function() {
+        const mesh = this.el.getObject3D('mesh');
+        if(!mesh) return;
+        mesh.material = new THREE.ShadowMaterial();
+        mesh.material.opacity = 0.4; // Độ đậm của bóng
+      }
+    });
+
+    /* 2. FLOATING & BOBBING (Lơ lửng) */
+    AFRAME.registerComponent('floating', {
+      schema: { speed: {default: 1.5}, amp: {default: 0.05} }, // Biên độ 5cm
+      init: function() {
+        this.orgPos = this.el.object3D.position.clone();
+      },
+      tick: function(t, dt) {
+        const y = this.orgPos.y + Math.sin(t/1000 * this.data.speed) * this.data.amp;
+        this.el.object3D.position.y = y;
+        this.el.object3D.rotation.z = Math.sin(t/1500) * 0.03; // Xoay nhẹ ~2 độ
+      }
+    });
+
+    /* 3. PARTICLE SYSTEM (Hạt năng lượng) */
+    AFRAME.registerComponent('particles', {
+      init: function() {
+        this.particleCount = 60;
+        this.particles = [];
+        
+        for(let i=0; i<this.particleCount; i++) {
+          const p = document.createElement('a-plane'); // Dùng plane cho nhẹ
+          p.setAttribute('width', 0.01 + Math.random()*0.02);
+          p.setAttribute('height', 0.01 + Math.random()*0.02);
+          p.setAttribute('color', '#00FFFF');
+          p.setAttribute('material', 'shader: flat; transparent: true; opacity: 0; side: double');
+          p.setAttribute('position', this.randomPos());
+          p.setAttribute('rotation', `${Math.random()*360} ${Math.random()*360} ${Math.random()*360}`);
+          this.el.appendChild(p);
+          
+          this.particles.push({
+            el: p,
+            life: Math.random() * 4000 + 4000,
+            age: Math.random() * 4000,
+            velocity: {
+              x: (Math.random()-0.5)*0.0005,
+              y: Math.random()*0.001 + 0.0002, // Bay lên nhẹ
+              z: (Math.random()-0.5)*0.0005
+            }
+          });
+        }
+      },
+      randomPos: function() {
+        return `${(Math.random()-0.5)*1.2} ${(Math.random()-0.5)*0.5} ${(Math.random()-0.5)*0.5}`;
+      },
+      tick: function(t, dt) {
+        if(!dt) return;
+        this.particles.forEach(p => {
+          p.age += dt;
+          if(p.age > p.life) {
+            p.age = 0;
+            p.el.setAttribute('position', this.randomPos());
+          }
+          
+          // Move
+          const pos = p.el.object3D.position;
+          pos.x += p.velocity.x * (dt/16);
+          pos.y += p.velocity.y * (dt/16);
+          pos.z += p.velocity.z * (dt/16);
+          p.el.object3D.rotation.x += 0.01;
+          
+          // Fade logic
+          const progress = p.age / p.life;
+          let opacity = 0;
+          if(progress < 0.2) opacity = progress * 5; 
+          else if(progress > 0.8) opacity = (1 - progress) * 5; 
+          else opacity = 1;
+          
+          p.el.getObject3D('mesh').material.opacity = opacity * 0.6;
+        });
+      }
+    });
+
     /* ---------------- HTML SLIDESHOW ---------------- */
     let slideIndex = 0;
     function showSlides() {
@@ -314,7 +397,7 @@
     app-manager
     mindar-image="imageTargetSrc:/ar-card/target.mind; uiScanning:no; uiLoading:no;"
     color-space="sRGB"
-    renderer="colorManagement:true; physicallyCorrectLights:true; antialias:true; sortObjects:true;"
+    renderer="colorManagement:true; physicallyCorrectLights:true; antialias:true; sortObjects:true; shadowMap:true; shadowMapType:pcfsoft"
     device-orientation-permission-ui="enabled:false">
 
     <a-assets>
@@ -323,10 +406,31 @@
 
     <a-camera look-controls="enabled:false"></a-camera>
 
+    <!-- ÁNH SÁNG TỰ NHIÊN (3-POINT LIGHTING) -->
+    <a-light type="ambient" intensity="0.6" color="#ffffff"></a-light>
+    <a-light type="directional" intensity="1.2" position="1 2 1" color="#ffdcb4" cast-shadow="true" shadow-bias="-0.001" shadow-camera-far="10" shadow-camera-top="2" shadow-camera-bottom="-2" shadow-camera-left="-2" shadow-camera-right="2" shadow-mapSize-width="2048" shadow-mapSize-height="2048"></a-light>
+    <a-light type="point" intensity="0.5" position="-2 1 -2" color="#b4d2ff" distance="10"></a-light>
+
     <a-entity mindar-image-target="targetIndex:0">
 
-      <!-- VIDEO OVERLAY (AVATAR ONLY) -->
-      <a-video src="#card-video" width="0.55" height="0.71" position="0.31 -0.20 0.15" opacity="0.9" rotation="0 0 0"></a-video>
+      <!-- SHADOW CATCHER (MẶT PHẲNG HỨNG BÓNG) -->
+      <a-plane position="0 0 0" width="2" height="2" rotation="0 0 0" shadow-catcher shadow="receive: true"></a-plane>
+
+      <!-- CONTAINER CHO AVATAR (CÓ HIỆU ỨNG LƠ LỬNG) -->
+      <a-entity position="0.31 -0.20 0.15" floating>
+        
+        <!-- KHUNG ẢNH 3D (A-BOX) -->
+        <a-box position="0 0 -0.01" width="0.6" height="0.8" depth="0.02" 
+               color="#333" material="roughness: 0.3; metalness: 0.7" 
+               shadow="cast: true; receive: true"></a-box>
+
+        <!-- VIDEO OVERLAY (AVATAR ONLY) -->
+        <a-video src="#card-video" width="0.55" height="0.71" position="0 0 0.015" opacity="0.9"></a-video>
+
+      </a-entity>
+
+      <!-- HỆ THỐNG HẠT (PARTICLES) -->
+      <a-entity particles position="0 0 0.1"></a-entity>
 
       <!-- BORDER 3D (GIỮ LẠI HIỆU ỨNG KHÔNG GIAN) -->
       <a-plane color="#00FFFF" width="1.1" height="0.01" position="0 0.55 0.01" shader="flat" circuit-anim></a-plane>
