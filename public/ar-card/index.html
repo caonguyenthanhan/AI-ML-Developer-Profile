@@ -34,7 +34,7 @@
       transform-origin: center center;
       will-change: transform, opacity;
       
-      width: 280px; /* Kích thước chuẩn theo thiết kế mới */
+      width: 200px; /* Kích thước chuẩn theo thiết kế mới */
       
       /* Glassmorphism Dark Theme */
       background: rgba(20, 20, 35, 0.95);
@@ -466,9 +466,13 @@
       <!-- SHADOW CATCHER (MẶT PHẲNG HỨNG BÓNG) -->
       <a-plane position="0 0 0" width="2" height="2" rotation="0 0 0" shadow-catcher shadow="receive: true"></a-plane>
 
-      <!-- ANCHOR CHO HTML FOLLOWER (ĐIỂM NEO VÔ HÌNH) -->
-      <!-- Position: X=0.75 (Bên phải 75cm) -->
-      <a-entity id="html-anchor" position="0.75 0 0" html-follower></a-entity>
+      <!-- 
+        VỊ TRÍ THẺ HTML (Projection Anchor):
+        - position="x y z"
+        - x: Tăng giá trị này để dịch thẻ sang phải (ví dụ: 1.2 = 1.2 mét sang phải)
+        - Hiện tại đang để 1.2 để thẻ nằm hẳn sang bên phải card thật
+      -->
+      <a-entity id="html-anchor" position="1.2 0 0" html-follower></a-entity>
 
       <!-- CONTAINER CHO AVATAR (CÓ HIỆU ỨNG LƠ LỬNG) -->
       <a-entity position="0.31 -0.20 0.15" floating>
