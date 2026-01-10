@@ -33,7 +33,7 @@
       position: fixed;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 85%; max-width: 400px;
+      width: 90%; max-width: 320px; /* Thu nhỏ chiều ngang */
       
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
@@ -42,17 +42,52 @@
       border-radius: 20px;
       box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
       
-      padding: 20px;
+      padding: 15px; /* Giảm padding */
       text-align: center;
       color: white;
       
-      opacity: 0; /* Mặc định ẩn */
-      pointer-events: none; /* Không chặn click khi ẩn */
+      opacity: 0; 
+      pointer-events: none; 
       transition: opacity 0.5s ease, transform 0.5s ease;
       z-index: 1000;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 10px; /* Giảm khoảng cách */
+    }
+
+    /* FILMSTRIP (Dải ảnh chạy bên dưới) */
+    #filmstrip-container {
+      position: fixed;
+      bottom: 20px; left: 0; width: 100%;
+      height: 120px;
+      overflow: hidden;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+    }
+    #filmstrip-container.visible { opacity: 1; pointer-events: auto; }
+    
+    .filmstrip-track {
+      display: flex;
+      gap: 10px;
+      position: absolute;
+      left: 0; top: 10px;
+      animation: scrollFilmstrip 30s linear infinite;
+    }
+    .filmstrip-img {
+      height: 100px;
+      width: auto;
+      border-radius: 8px;
+      border: 2px solid rgba(0, 255, 255, 0.5);
+      object-fit: cover;
+    }
+
+    @keyframes scrollFilmstrip {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); } /* Di chuyển 50% vì track được nhân đôi */
     }
 
     #ar-card-content.visible {
@@ -134,6 +169,27 @@
       setTimeout(showSlides, 2500); // Change image every 2.5 seconds
     }
 
+    /* ---------------- FILMSTRIP LOADER ---------------- */
+    function loadFilmstrip() {
+      const track = document.getElementById('filmstrip-track');
+      const folder = '/image/graduation/kyniem/';
+      const jsonUrl = '/image/graduation/kyniem/list.json';
+
+      fetch(jsonUrl)
+        .then(r => r.json())
+        .then(files => {
+          // Lấy 15 ảnh đầu tiên
+          const images = files.slice(0, 15);
+          
+          // Tạo HTML chuỗi ảnh
+          const createImg = (name) => `<img src="${folder}${name}" class="filmstrip-img">`;
+          const html = images.map(createImg).join('');
+          
+          // Nhân đôi chuỗi ảnh để tạo hiệu ứng lặp vô tận (scroll loop)
+          track.innerHTML = html + html; 
+        });
+    }
+
     /* ---------------- APP MANAGER & AR EVENTS ---------------- */
     AFRAME.registerComponent('app-manager',{
       init:function(){
@@ -141,7 +197,11 @@
         const ov = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
         const arContent = document.getElementById('ar-card-content');
+        const filmstrip = document.getElementById('filmstrip-container');
         
+        // Load filmstrip images
+        loadFilmstrip();
+
         // Start Button
         btn.onclick=()=>{
           ov.style.opacity="0";
@@ -158,6 +218,7 @@
           console.log("Target Found");
           audio.play().catch(()=>{});
           arContent.classList.add('visible');
+          filmstrip.classList.add('visible');
         });
 
         // Target Lost
@@ -165,6 +226,7 @@
           console.log("Target Lost");
           audio.pause();
           arContent.classList.remove('visible');
+          filmstrip.classList.remove('visible');
         });
       }
     });
@@ -214,6 +276,13 @@
   </div>
 
   <audio id="bg-music" src="/music/music.mp3" loop preload="auto"></audio>
+
+  <!-- FILMSTRIP BOTTOM -->
+  <div id="filmstrip-container">
+    <div class="filmstrip-track" id="filmstrip-track">
+      <!-- JS sẽ load ảnh vào đây -->
+    </div>
+  </div>
 
   <a-scene
     app-manager
