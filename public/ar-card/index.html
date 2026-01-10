@@ -31,18 +31,21 @@
     /* AR CARD HTML CONTENT (HUD) */
     #ar-card-content {
       position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%; max-width: 320px; /* Thu nhỏ chiều ngang */
+      /* Căn sang bên phải màn hình */
+      top: 50%; right: 5%; left: auto; 
+      transform: translateY(-50%);
+      
+      /* Thu nhỏ kích thước hơn nữa */
+      width: 45%; max-width: 250px; 
       
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
+      border-radius: 16px; /* Bo góc nhỏ hơn xíu */
       box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
       
-      padding: 15px; /* Giảm padding */
+      padding: 12px;
       text-align: center;
       color: white;
       
@@ -52,7 +55,7 @@
       z-index: 1000;
       display: flex;
       flex-direction: column;
-      gap: 10px; /* Giảm khoảng cách */
+      gap: 8px;
     }
 
     /* FILMSTRIP (Dải ảnh chạy bên dưới) */
@@ -93,20 +96,20 @@
     #ar-card-content.visible {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translateY(-50%) scale(1);
     }
 
     /* HEADER */
     .card-header h1 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.1rem; /* Giảm font */
       color: #00FFFF;
       text-transform: uppercase;
       text-shadow: 0 0 10px rgba(0,255,255,0.5);
     }
     .card-header h2 {
-      margin: 5px 0 0;
-      font-size: 1.1rem;
+      margin: 3px 0 0;
+      font-size: 0.85rem; /* Giảm font */
       color: #FFFF00;
       font-weight: normal;
     }
@@ -117,7 +120,7 @@
       width: 100%;
       aspect-ratio: 3/4;
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: 10px;
       border: 2px solid rgba(0, 255, 255, 0.3);
     }
     .slide-img {
@@ -150,6 +153,24 @@
     @keyframes marquee {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
+    }
+
+    /* ACTION BUTTONS */
+    .card-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-action {
+      background: rgba(0, 255, 255, 0.2);
+      border: 1px solid #00FFFF;
+      color: #00FFFF;
+      padding: 6px 12px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      font-size: 0.8rem;
     }
   </style>
 
