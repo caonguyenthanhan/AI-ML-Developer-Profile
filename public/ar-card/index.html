@@ -27,48 +27,72 @@
   </style>
 
   <script>
-    /* ---------------- FILMSTRIP TỐI ƯU CHO IPHONE ---------------- */
+    /* ---------------- FILMSTRIP TỐI ƯU CHO IPHONE (SMOOTH LOOP) ---------------- */
     AFRAME.registerComponent('auto-filmstrip', {
       schema: {
         jsonUrl:  {type:'string', default:'/image/graduation/kyniem/list.json'},
         folder:   {type:'string', default:'/image/graduation/kyniem/'},
-        maxDisplay:{type:'number', default:20}   /* iPhone stable */
+        maxDisplay:{type:'number', default:20},
+        speed:    {type:'number', default:0.15} // Tốc độ di chuyển
       },
 
       init: function() {
-        const root = this.el, data = this.data;
+        this.images = [];
+        const root = this.el;
+        const data = this.data;
 
         fetch(data.jsonUrl)
           .then(r=>r.json())
           .then(files=>{
             const slice = files.slice(0, data.maxDisplay);
-            const loopFiles = [...slice, ...slice]; /* nhân đôi để nhìn dài */
+            // Đảm bảo đủ ảnh để lấp đầy màn hình + buffer
+            const loopFiles = [...slice, ...slice]; 
+            
+            const W = 0.9; // Khoảng cách giữa các ảnh
+            this.totalWidth = loopFiles.length * W;
+            
+            // Bắt đầu từ vị trí cân đối
+            let startX = -W * 2; 
 
-            const W = 0.9;
-            let x = -W * 12, i = 0;
-
-            loopFiles.forEach(name=>{
+            loopFiles.forEach((name, i)=>{
               const img = document.createElement('a-image');
               img.setAttribute('src', data.folder + name);
               img.setAttribute('width', '0.42');
               img.setAttribute('height', '0.30');
               img.setAttribute('material', 'shader: flat; transparent:true');
-              img.setAttribute('position', `${x} -0.95 0.00`);
-
-              img.setAttribute('animation', `
-                property: position;
-                from: ${x} -0.95 0.00;
-                to: ${W*12} -0.95 0.00;
-                dur: 23000;
-                loop: true;
-                easing: linear;
-                delay: ${i*90}
-              `);
-
+              
+              // Đặt vị trí ban đầu
+              // Y nâng lên -0.85 để không bị "dưới chân"
+              // Z = 0.02 để nổi lên trên nền
+              img.setAttribute('position', `${startX + (i * W)} -0.85 0.02`);
+              
               root.appendChild(img);
-              x += W; i++;
+              this.images.push(img);
             });
           });
+      },
+
+      tick: function(t, dt) {
+        if (!this.images || this.images.length === 0) return;
+        
+        // Di chuyển dựa trên delta time (ms) để mượt mà trên mọi FPS
+        const move = (dt / 1000) * this.data.speed; 
+        const W = 0.9;
+        const leftBound = -6.0; // Điểm biến mất bên trái
+        const rightBound = (this.images.length * W) + leftBound;
+
+        this.images.forEach(img => {
+          let pos = img.object3D.position;
+          pos.x -= move; // Di chuyển sang trái
+          
+          // Nếu ảnh đi quá xa bên trái, đưa nó về cuối hàng bên phải
+          if (pos.x < leftBound) {
+            // Tìm vị trí x lớn nhất hiện tại để nối đuôi vào
+            // Cách đơn giản: cộng thêm tổng chiều dài chuỗi ảnh
+            // Tuy nhiên, để chính xác ta chỉ cần cộng thêm (Số lượng ảnh * W)
+            pos.x += (this.images.length * W);
+          }
+        });
       }
     });
 
@@ -96,10 +120,10 @@
     /* ---------------- MARQUEE ---------------- */
     AFRAME.registerComponent('marquee',{
       tick:function(t,dt){
-        let p=this.el.getAttribute('position');
-        p.x-=0.00032*dt;
-        if(p.x<-0.9)p.x=0.9;
-        this.el.setAttribute('position',p);
+        // Optimize: Use object3D directly instead of getAttribute/setAttribute
+        let pos = this.el.object3D.position;
+        pos.x -= 0.00032 * dt;
+        if(pos.x < -0.9) pos.x = 0.9;
       }
     });
 
