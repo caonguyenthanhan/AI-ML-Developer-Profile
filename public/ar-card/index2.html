@@ -3,179 +3,194 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Chúc Mừng Tốt Nghiệp - AR Card</title>
-
-  <!-- Google Fonts cho tiếng Việt đẹp -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <title>Electrical Engineer Graduation - AR Sync</title>
 
   <!-- A-Frame & MindAR -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
-    /* --- CSS CƠ BẢN --- */
+    /* --- CẤU HÌNH CƠ BẢN --- */
     body { 
       margin: 0; 
+      background: #000; 
       overflow: hidden; 
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
     }
+    
+    /* Ngăn người dùng chọn văn bản/ảnh khi đang thao tác AR */
+    * { user-select: none; -webkit-user-select: none; }
 
-    /* Màn hình chờ (Start Screen) */
-    #start-overlay { 
-      position: fixed; inset: 0; 
-      background: rgba(0,0,0,0.9); 
-      z-index: 9999; 
-      display: flex; flex-direction: column; align-items: center; justify-content: center; 
-      transition: opacity 0.5s;
-    }
+    /* Màn hình chờ */
+    #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s; }
     .btn-start {
-      padding: 15px 30px; 
-      font-size: 18px; font-weight: 700; color: #004d40;
-      background: linear-gradient(45deg, #00FFFF, #00FF99); 
-      border: none; border-radius: 50px; cursor: pointer; 
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+      padding: 15px 30px; font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      background: linear-gradient(135deg, #00C6FF, #0072FF);
+      color: white; border: none; border-radius: 50px; cursor: pointer; 
+      box-shadow: 0 0 20px rgba(0, 114, 255, 0.6);
       animation: pulse 2s infinite;
     }
 
-    /* --- GIAO DIỆN THẺ CHÚC MỪNG (HTML OVERLAY) --- */
-    /* Mặc định ẩn, chỉ hiện khi tìm thấy Target */
+    /* --- AR HTML CARD (DYNAMIC) --- */
+    /* Quan trọng: position absolute để di chuyển, top/left = 0 để làm gốc */
     #ar-card-content {
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      width: 90%; max-width: 380px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px); /* Hiệu ứng kính mờ */
-      border-radius: 20px;
-      padding: 20px;
+      position: absolute;
+      top: 0; left: 0;
+      width: 260px; /* Kích thước chuẩn */
+      
+      /* Gốc biến hình nằm ở giữa để scale đẹp hơn */
+      transform-origin: center center;
+      
+      background: rgba(16, 20, 30, 0.85); /* Nền tối sang trọng */
+      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      
+      padding: 15px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      border: 2px solid rgba(255,255,255,0.5);
+      color: white;
+      
+      /* Mặc định ẩn, JS sẽ hiện khi tracking */
+      opacity: 0;
+      pointer-events: none; /* Không chặn thao tác zoom/xoay của AR */
       z-index: 1000;
       
-      /* Trạng thái ẩn/hiện */
-      opacity: 0; 
-      visibility: hidden;
-      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      /* Will-change giúp trình duyệt tối ưu render */
+      will-change: transform, opacity;
     }
 
-    /* Khi class .visible được thêm vào (JS xử lý) */
-    #ar-card-content.visible {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, -50%) scale(1);
+    /* Nội dung bên trong thẻ */
+    .card-header h1 { margin: 0; font-size: 16px; color: #00FFFF; text-transform: uppercase; letter-spacing: 1px; }
+    .card-header h2 { margin: 5px 0 10px; font-size: 12px; color: #ccc; font-weight: 400; }
+    
+    .slideshow-container {
+      position: relative; width: 100%; aspect-ratio: 4/5;
+      overflow: hidden; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+      background: #000;
     }
+    .slide-img {
+      width: 100%; height: 100%; object-fit: cover;
+      position: absolute; top: 0; left: 0;
+      opacity: 0; transition: opacity 0.8s ease;
+    }
+    .slide-img.active { opacity: 1; }
 
-    /* Typography */
-    h1.title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.2rem;
-      color: #d32f2f;
-      margin: 0 0 5px 0;
-      text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+    /* Filmstrip (Dải ảnh bên dưới - Giữ nguyên fixed cho đẹp) */
+    #filmstrip-container {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 100px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      z-index: 900; opacity: 0; transition: opacity 0.5s; pointer-events: none;
     }
-    h2.subtitle {
-      font-size: 1rem;
-      color: #0277bd;
-      font-weight: 600;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    p.message {
-      font-size: 0.9rem;
-      color: #444;
-      font-style: italic;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-
-    /* Slideshow Ảnh */
-    .gallery-container {
-      position: relative;
-      width: 100%; height: 220px;
-      border-radius: 12px; overflow: hidden;
-      margin-bottom: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      background: #eee;
-    }
-    .gallery-img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: none; /* Mặc định ẩn */
-      animation: fadeEffect 0.8s;
-    }
-    .gallery-img.active { display: block; }
-
-    /* Controls cho Slide */
-    .prev, .next {
-      cursor: pointer;
-      position: absolute; top: 50%; width: auto;
-      padding: 10px; margin-top: -22px;
-      color: white; font-weight: bold; font-size: 18px;
-      transition: 0.6s ease;
-      background-color: rgba(0,0,0,0.3);
-      border-radius: 0 3px 3px 0;
-      user-select: none; border: none;
-    }
-    .next { right: 0; border-radius: 3px 0 0 3px; }
-    .prev { left: 0; border-radius: 3px 0 0 3px; }
-
-    /* Footer Marquee giả lập */
-    .marquee-container {
-      overflow: hidden; white-space: nowrap;
-      background: #e1f5fe; padding: 8px; border-radius: 8px;
-      color: #01579b; font-size: 0.85rem; font-weight: 600;
-    }
-    .marquee-text {
-      display: inline-block;
-      animation: marquee 10s linear infinite;
-    }
-
-    /* Keyframes */
-    @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-    @keyframes fadeEffect { from {opacity: .4} to {opacity: 1} }
+    #filmstrip-container.visible { opacity: 1; }
+    
+    /* Animation */
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-
-    /* Sửa lỗi hiển thị trên iOS */
-    a-scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
   </style>
 
   <script>
-    // --- COMPONENT QUẢN LÝ LOGIC ---
+    /* --- COMPONENT: HTML FOLLOWER (TRÁI TIM CỦA LOGIC NÀY) --- */
+    AFRAME.registerComponent('html-follower', {
+      schema: {
+        target: {type: 'selector'}, // Thẻ HTML cần di chuyển
+        offset: {type: 'vec3', default: {x: 0, y: 0, z: 0}}, // Độ lệch vị trí
+        minScale: {default: 0.5},
+        maxScale: {default: 1.5}
+      },
+      init: function() {
+        this.htmlEl = this.data.target;
+        this.vector = new THREE.Vector3(); // Biến tạm để tính toán
+        this.camera = document.querySelector('a-camera').object3D;
+        this.isVisible = false;
+      },
+      tick: function() {
+        if (!this.el.object3D.visible) {
+          if (this.isVisible) {
+            this.htmlEl.style.opacity = 0;
+            this.isVisible = false;
+          }
+          return;
+        }
+
+        // 1. Lấy vị trí thế giới thực của Entity 3D
+        this.el.object3D.getWorldPosition(this.vector);
+        
+        // 2. Chiếu vị trí đó lên màn hình Camera (Normalized Device Coordinates)
+        // Kết quả trả về x, y trong khoảng [-1, 1]
+        this.vector.project(this.el.sceneEl.camera);
+
+        const x = this.vector.x;
+        const y = this.vector.y;
+        const z = this.vector.z; // z < 1 nghĩa là nằm trước camera
+
+        // 3. Chuyển đổi sang pixel màn hình
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        const screenX = (x * 0.5 + 0.5) * width;
+        const screenY = -(y * 0.5 - 0.5) * height;
+
+        // 4. Tính toán Scale dựa trên khoảng cách (Distance Scaling)
+        // Lấy khoảng cách từ camera đến vật thể
+        const distance = this.el.object3D.position.distanceTo(this.camera.position);
+        
+        // Công thức nội suy scale: Càng xa càng nhỏ
+        // Giả sử khoảng cách chuẩn là 2 mét (scale 1)
+        let scaleFactor = 1.8 / distance; 
+        scaleFactor = Math.min(Math.max(scaleFactor, this.data.minScale), this.data.maxScale);
+
+        // 5. Cập nhật CSS (Chỉ render khi vật thể nằm trong khung hình và phía trước camera)
+        if (z < 1 && x > -1.2 && x < 1.2 && y > -1.2 && y < 1.2) {
+            // Dùng translate3d(-50%, -50%, 0) để tâm thẻ nằm đúng điểm neo
+            // Cộng thêm vị trí màn hình screenX, screenY
+            this.htmlEl.style.transform = `translate3d(${screenX}px, ${screenY}px, 0) translate(-50%, -50%) scale(${scaleFactor})`;
+            
+            if (!this.isVisible) {
+                this.htmlEl.style.opacity = 1;
+                this.isVisible = true;
+            }
+        } else {
+            if (this.isVisible) {
+                this.htmlEl.style.opacity = 0;
+                this.isVisible = false;
+            }
+        }
+      }
+    });
+
+    // --- CÁC LOGIC KHÁC (SLIDESHOW, START...) ---
     AFRAME.registerComponent('app-manager', {
       init: function() {
-        const overlay = document.querySelector('#start-overlay');
         const btn = document.querySelector('.btn-start');
-        const audio = document.querySelector('#bg-music');
-        const card = document.querySelector('#ar-card-content');
+        const overlay = document.getElementById('overlay');
+        const audio = document.getElementById('bg-music');
+        const filmstrip = document.getElementById('filmstrip-container');
         
-        // 1. Xử lý nút Start
-        btn.addEventListener('click', () => {
-          overlay.style.opacity = '0';
-          setTimeout(() => overlay.style.display = 'none', 500);
-          
-          // Phát nhạc (cần user interaction để browser cho phép)
-          audio.play().catch(e => console.log("Audio play failed:", e));
-        });
+        // Slideshow logic
+        let slideIndex = 0;
+        const showSlides = () => {
+          const slides = document.querySelectorAll('.slide-img');
+          if(!slides.length) return;
+          slides.forEach(s => s.classList.remove('active'));
+          slideIndex = (slideIndex + 1) % slides.length;
+          slides[slideIndex].classList.add('active');
+        };
+        setInterval(showSlides, 2500);
 
-        // 2. Xử lý sự kiện MindAR (Tìm thấy/Mất dấu ảnh)
+        btn.onclick = () => {
+          overlay.style.opacity = 0;
+          setTimeout(() => overlay.remove(), 500);
+          audio.play().catch(()=>{});
+        };
+
         const target = document.querySelector('[mindar-image-target]');
-        
         target.addEventListener('targetFound', () => {
-          console.log("Target Found");
-          // Hiện thẻ chúc mừng
-          card.classList.add('visible');
-          // Tiếp tục phát nhạc nếu đang pause
-          if (audio.paused) audio.play();
+          filmstrip.classList.add('visible');
+          audio.play().catch(()=>{});
         });
-
         target.addEventListener('targetLost', () => {
-          console.log("Target Lost");
-          // Ẩn thẻ chúc mừng (hoặc để nó mờ đi)
-          card.classList.remove('visible');
-          // Tạm dừng nhạc (tùy chọn, ở đây mình để nhạc chạy luôn cho hay)
-          // audio.pause(); 
+          filmstrip.classList.remove('visible');
+          audio.pause();
         });
       }
     });
@@ -184,47 +199,36 @@
 
 <body>
 
-  <!-- 1. MÀN HÌNH CHỜ -->
-  <div id="start-overlay">
-    <h2 style="color:white; margin-bottom:20px;">AR GRADUATION CARD</h2>
-    <button class="btn-start">MỞ THIỆP CHÚC MỪNG</button>
-    <p style="color:#ccc; font-size:12px; margin-top:15px;">Hướng camera vào ảnh tốt nghiệp</p>
+  <div id="overlay">
+    <button class="btn-start">Start Experience</button>
   </div>
 
-  <!-- 2. THẺ CHÚC MỪNG HTML (SẼ HIỆN KHI QUÉT ĐƯỢC ẢNH) -->
+  <!-- THẺ HTML CHÍNH (Sẽ bay theo tấm thiệp) -->
   <div id="ar-card-content">
-    <h1 class="title">Happy Graduation!</h1>
-    <h2 class="subtitle">Kỹ Sư Điện - Ngô Tấn Tài</h2>
-    
-    <!-- Gallery Ảnh HTML -->
-    <div class="gallery-container">
-      <!-- Thay đổi src thành ảnh thật của bạn -->
-      <img class="gallery-img active" src="/image/graduation/main1.jpg" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+1'">
-      <img class="gallery-img" src="/image/graduation/main2.jpg" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+2'">
-      <img class="gallery-img" src="/image/graduation/main3.jpg" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+3'">
-      <img class="gallery-img" src="/image/graduation/main4.jpg" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+4'">
-      
-      <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
-      <button class="next" onclick="plusSlides(1)">&#10095;</button>
+    <div class="card-header">
+      <h1>Chúc Mừng Tốt Nghiệp</h1>
+      <h2>Tân Kỹ Sư Điện: Ngô Tấn Tài</h2>
     </div>
-
-    <p class="message">
-      "Chúc mừng bạn đã hoàn thành chặng đường đầy thử thách. Chúc Tân Kỹ Sư luôn vững bước và thành công rực rỡ trong tương lai!"
+    <div class="slideshow-container">
+      <img src="/image/graduation/main1.jpg" class="slide-img active">
+      <img src="/image/graduation/main2.jpg" class="slide-img">
+      <img src="/image/graduation/main3.jpg" class="slide-img">
+      <img src="/image/graduation/main4.jpg" class="slide-img">
+    </div>
+    <p style="font-size: 11px; margin-top: 10px; opacity: 0.8;">
+      "Không có áp lực, không có kim cương."
     </p>
-
-    <!-- Chữ chạy -->
-    <div class="marquee-container">
-      <span class="marquee-text">Congratulations Ngo Tan Tai - Electrical Engineering - Ho Chi Minh City University of Technology and Education</span>
-    </div>
   </div>
 
-  <!-- 3. NHẠC NỀN -->
-  <audio id="bg-music" src="/music/music.mp3" loop preload="auto"></audio>
+  <audio id="bg-music" src="/music/music.mp3" loop></audio>
 
-  <!-- 4. KHÔNG GIAN AR (A-FRAME) -->
+  <!-- Dải film bên dưới (Trang trí) -->
+  <div id="filmstrip-container"></div>
+
+  <!-- A-FRAME SCENE -->
   <a-scene 
     app-manager
-    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no; uiLoading: no; filterMinCF:0.0001; filterBeta: 0.001;" 
+    mindar-image="imageTargetSrc: /ar-card/target.mind; uiScanning: no; uiLoading: no;" 
     color-space="sRGB" 
     renderer="colorManagement: true, physicallyCorrectLights: true" 
     vr-mode-ui="enabled: false" 
@@ -232,47 +236,27 @@
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- TARGET 0 -->
+    <!-- TARGET -->
     <a-entity mindar-image-target="targetIndex: 0">
       
-      <!-- HIỆU ỨNG 3D TRANG TRÍ (Giữ lại viền sáng cho đẹp) -->
-      <!-- Viền khung -->
-      <a-plane color="#00FFFF" width="1.1" height="0.02" position="0 0.76 0" shader="flat"></a-plane>
-      <a-plane color="#00FFFF" width="1.1" height="0.02" position="0 -0.76 0" shader="flat"></a-plane>
-      <a-plane color="#00FFFF" width="0.02" height="1.52" position="-0.55 0 0" shader="flat"></a-plane>
-      <a-plane color="#00FFFF" width="0.02" height="1.52" position="0.55 0 0" shader="flat"></a-plane>
+      <!-- 1. ĐIỂM NEO CHO THẺ HTML (HTML ANCHOR) -->
+      <!-- Vị trí x=0.8 nghĩa là thẻ HTML sẽ bay lơ lửng bên PHẢI tấm thiệp 0.8 mét (trong hệ toạ độ AR) -->
+      <!-- Bạn thay đổi position ở đây để chỉnh vị trí thẻ HTML so với tấm ảnh thật -->
+      <a-entity 
+        id="html-anchor" 
+        position="0.8 0 0" 
+        html-follower="target: #ar-card-content">
+      </a-entity>
 
-      <!-- Một lớp nền mờ ảo 3D đằng sau thẻ HTML (tùy chọn) -->
-      <a-plane color="#000" opacity="0.3" width="1.1" height="1.5"></a-plane>
+      <!-- 2. HIỆU ỨNG 3D TRÊN THIỆP -->
+      <a-plane position="0 0 0" width="1" height="1.4" color="white" opacity="0.1"></a-plane>
+      
+      <!-- Một vòng tròn xoay xoay ảo diệu -->
+      <a-ring color="#00FFFF" radius-inner="0.6" radius-outer="0.62" position="0 0 0"
+        animation="property: rotation; to: 0 0 360; dur: 8000; loop: true; easing: linear">
+      </a-ring>
 
     </a-entity>
   </a-scene>
-
-  <!-- Script xử lý Slide Ảnh -->
-  <script>
-    let slideIndex = 1;
-    // Tự động chạy slide
-    let slideInterval = setInterval(() => plusSlides(1), 3000);
-
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-      // Reset timer khi người dùng bấm thủ công để tránh bị nhảy loạn
-      clearInterval(slideInterval);
-      slideInterval = setInterval(() => plusSlides(1), 3000);
-    }
-
-    function showSlides(n) {
-      let i;
-      let slides = document.getElementsByClassName("gallery-img");
-      if (n > slides.length) {slideIndex = 1}    
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-        slides[i].classList.remove('active');
-      }
-      slides[slideIndex-1].style.display = "block";  
-      slides[slideIndex-1].classList.add('active');
-    }
-  </script>
 </body>
 </html>

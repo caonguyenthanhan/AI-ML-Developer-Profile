@@ -32,8 +32,8 @@
     #ar-card-content {
       position: fixed;
       /* Căn sang bên phải màn hình */
-      top: 50%; right: 5%; left: auto; 
-      transform: translateY(-50%);
+      transform-origin: center center;
+      will-change: transform, opacity;
       
       /* Thu nhỏ kích thước hơn nữa */
       width: 45%; max-width: 250px; 
@@ -51,11 +51,13 @@
       
       opacity: 0; 
       pointer-events: none; 
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      /* CHÚ Ý: Loại bỏ 'transform' khỏi transition để tránh bị trễ (lag) khi di chuyển theo AR */
+      transition: opacity 0.5s ease;
       z-index: 1000;
       display: flex;
       flex-direction: column;
       gap: 8px;
+
     }
 
     /* FILMSTRIP (Dải ảnh chạy bên dưới) */
@@ -258,6 +260,37 @@
       }
     });
 
+    /* 4. HTML FOLLOWER (Projection Mapping) */
+    AFRAME.registerComponent('html-follower', {
+      init: function() {
+        this.htmlElement = document.getElementById('ar-card-content');
+        this.camera = document.querySelector('a-camera').object3D;
+        this.vector = new THREE.Vector3();
+      },
+      tick: function() {
+        if (!this.htmlElement || !this.htmlElement.classList.contains('visible')) return;
+
+        // 1. Lấy vị trí 3D của Anchor
+        this.el.object3D.getWorldPosition(this.vector);
+        
+        // 2. Project 3D -> 2D (Normalized Device Coordinates)
+        this.vector.project(this.el.sceneEl.camera);
+
+        // 3. Convert NDC (-1 to +1) to Screen Coordinates (Pixels)
+        const x = (this.vector.x * .5 + .5) * window.innerWidth;
+        const y = -(this.vector.y * .5 - .5) * window.innerHeight;
+
+        // 4. Tính khoảng cách để Scale
+        const distance = this.el.object3D.position.distanceTo(this.camera.position);
+        let scaleFactor = 1.8 / distance; // Điều chỉnh số 1.8 để thay đổi độ lớn
+        scaleFactor = Math.min(Math.max(scaleFactor, 0.5), 2.0); // Limit scale
+
+        // 5. Apply CSS Transform
+        // Dùng translate3d để kích hoạt GPU
+        this.htmlElement.style.transform = `translate3d(${x - this.htmlElement.offsetWidth/2}px, ${y - this.htmlElement.offsetHeight/2}px, 0) scale(${scaleFactor})`;
+      }
+    });
+
     /* ---------------- HTML SLIDESHOW ---------------- */
     let slideIndex = 0;
     function showSlides() {
@@ -277,21 +310,19 @@
     function loadFilmstrip() {
       const track = document.getElementById('filmstrip-track');
       const folder = '/image/graduation/kyniem/';
-      const jsonUrl = '/image/graduation/kyniem/list.json';
+      
+      // Hard-code danh sách ảnh để tránh lỗi 404 và tăng tốc độ load
+      const hardcodedFiles = [
+        "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", 
+        "6.jpg", "7.jpg", "8.jpg", "9.jpg", "10.jpg"
+      ];
 
-      fetch(jsonUrl)
-        .then(r => r.json())
-        .then(files => {
-          // Lấy 15 ảnh đầu tiên
-          const images = files.slice(0, 15);
-          
-          // Tạo HTML chuỗi ảnh
-          const createImg = (name) => `<img src="${folder}${name}" class="filmstrip-img">`;
-          const html = images.map(createImg).join('');
-          
-          // Nhân đôi chuỗi ảnh để tạo hiệu ứng lặp vô tận (scroll loop)
-          track.innerHTML = html + html; 
-        });
+      // Tạo HTML chuỗi ảnh
+      const createImg = (name) => `<img src="${folder}${name}" class="filmstrip-img" onerror="this.style.display='none'">`;
+      const html = hardcodedFiles.map(createImg).join('');
+      
+      // Nhân đôi chuỗi ảnh để tạo hiệu ứng lặp vô tận (scroll loop)
+      track.innerHTML = html + html; 
     }
 
     /* ---------------- APP MANAGER & AR EVENTS ---------------- */
@@ -301,6 +332,7 @@
         const ov = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
         const video = document.getElementById('card-video'); // Video Overlay
+        const videoEntity = document.querySelector('a-video'); // Entity chứa video
         const arContent = document.getElementById('ar-card-content');
         const filmstrip = document.getElementById('filmstrip-container');
         
@@ -312,8 +344,7 @@
           ov.style.opacity="0";
           setTimeout(()=>ov.style.display="none",350);
           audio.play().catch(()=>{});
-          video.play().catch(()=>{}); // Unlock video
-          video.pause(); // Pause immediately, wait for target
+          video.play().catch(()=>{}); // Unlock video & Keep playing
           // Start slideshow after user interaction
           showSlides();
         };
@@ -324,7 +355,7 @@
         t.addEventListener('targetFound', () => {
           console.log("Target Found");
           audio.play().catch(()=>{});
-          video.play().catch(()=>{}); // Play Video Overlay
+          videoEntity.setAttribute('visible', true); // Show video entity
           arContent.classList.add('visible');
           filmstrip.classList.add('visible');
         });
@@ -333,7 +364,7 @@
         t.addEventListener('targetLost', () => {
           console.log("Target Lost");
           audio.pause();
-          video.pause(); // Pause Video Overlay
+          videoEntity.setAttribute('visible', false); // Hide video entity but keep playing
           arContent.classList.remove('visible');
           filmstrip.classList.remove('visible');
         });
@@ -408,13 +439,17 @@
 
     <!-- ÁNH SÁNG TỰ NHIÊN (3-POINT LIGHTING) -->
     <a-light type="ambient" intensity="0.6" color="#ffffff"></a-light>
-    <a-light type="directional" intensity="1.2" position="1 2 1" color="#ffdcb4" cast-shadow="true" shadow-bias="-0.001" shadow-camera-far="10" shadow-camera-top="2" shadow-camera-bottom="-2" shadow-camera-left="-2" shadow-camera-right="2" shadow-mapSize-width="2048" shadow-mapSize-height="2048"></a-light>
+    <a-light type="directional" intensity="1.2" position="1 2 1" color="#ffdcb4" cast-shadow="true" shadow-bias="-0.001" shadow-camera-far="10" shadow-camera-top="2" shadow-camera-bottom="-2" shadow-camera-left="-2" shadow-camera-right="2" shadow-mapSize-width="1024" shadow-mapSize-height="1024"></a-light>
     <a-light type="point" intensity="0.5" position="-2 1 -2" color="#b4d2ff" distance="10"></a-light>
 
     <a-entity mindar-image-target="targetIndex:0">
 
       <!-- SHADOW CATCHER (MẶT PHẲNG HỨNG BÓNG) -->
       <a-plane position="0 0 0" width="2" height="2" rotation="0 0 0" shadow-catcher shadow="receive: true"></a-plane>
+
+      <!-- ANCHOR CHO HTML FOLLOWER (ĐIỂM NEO VÔ HÌNH) -->
+      <!-- Position: X=0.8 (Bên phải), có thể chỉnh thành -0.8 (Trái) hoặc 0 (Giữa) -->
+      <a-entity id="html-anchor" position="0.8 0 0" html-follower></a-entity>
 
       <!-- CONTAINER CHO AVATAR (CÓ HIỆU ỨNG LƠ LỬNG) -->
       <a-entity position="0.31 -0.20 0.15" floating>
@@ -425,7 +460,7 @@
                shadow="cast: true; receive: true"></a-box>
 
         <!-- VIDEO OVERLAY (AVATAR ONLY) -->
-        <a-video src="#card-video" width="0.55" height="0.71" position="0 0 0.015" opacity="0.9"></a-video>
+        <a-video src="#card-video" width="0.55" height="0.71" position="0 0 0.015" opacity="0.9" visible="false"></a-video>
 
       </a-entity>
 
