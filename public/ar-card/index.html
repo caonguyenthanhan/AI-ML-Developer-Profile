@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Electrical Engineer Graduation</title>
+  <title>Electrical Engineer Graduation - AR Card</title>
 
+  <!-- A-Frame & MindAR -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+  <!-- Confetti Effect -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     body { margin: 0; background: #000; overflow: hidden; font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
@@ -19,7 +22,7 @@
     }
     img { image-rendering: auto; }
 
-    /* OVERLAY KHỞI ĐỘNG */
+    /* START OVERLAY */
     #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s; }
     .btn-start {
       padding: 14px 26px; font-size: 18px; font-weight: 700; 
@@ -28,208 +31,97 @@
       box-shadow: 0 0 15px rgba(0,255,255,0.5);
     }
 
-    /* AR CARD HTML CONTENT (HUD) */
-    #ar-card-content {
+    /* SUBTITLE BOX (Text at Bottom) */
+    .subtitle-box {
       position: fixed;
-      /* Căn sang bên phải màn hình */
-      top: 50%; right: 5%; left: auto; 
-      transform: translateY(-50%);
+      bottom: 30px; left: 50%;
+      transform: translateX(-50%);
+      width: 90%; max-width: 400px;
       
-      /* Thu nhỏ kích thước hơn nữa */
-      width: 45%; max-width: 250px; 
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
       
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px; /* Bo góc nhỏ hơn xíu */
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      
-      padding: 12px;
+      padding: 15px;
       text-align: center;
       color: white;
       
       opacity: 0; 
       pointer-events: none; 
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.5s ease;
       z-index: 1000;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 5px;
     }
 
-    /* FILMSTRIP (Dải ảnh chạy bên dưới) */
-    #filmstrip-container {
-      position: fixed;
-      bottom: 20px; left: 0; width: 100%;
-      height: 120px;
-      overflow: hidden;
-      z-index: 999;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(5px);
-    }
-    #filmstrip-container.visible { opacity: 1; pointer-events: auto; }
-    
-    .filmstrip-track {
-      display: flex;
-      gap: 10px;
-      position: absolute;
-      left: 0; top: 10px;
-      animation: scrollFilmstrip 30s linear infinite;
-    }
-    .filmstrip-img {
-      height: 100px;
-      width: auto;
-      border-radius: 8px;
-      border: 2px solid rgba(0, 255, 255, 0.5);
-      object-fit: cover;
-    }
-
-    @keyframes scrollFilmstrip {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); } /* Di chuyển 50% vì track được nhân đôi */
-    }
-
-    #ar-card-content.visible {
+    .subtitle-box.visible {
       opacity: 1;
       pointer-events: auto;
-      transform: translateY(-50%) scale(1);
     }
 
-    /* HEADER */
-    .card-header h1 {
+    /* TYPOGRAPHY */
+    .subtitle-box h1 {
       margin: 0;
-      font-size: 1.1rem; /* Giảm font */
+      font-size: 1.2rem;
       color: #00FFFF;
       text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(0,255,255,0.5);
+      letter-spacing: 1px;
+      text-shadow: 0 0 5px rgba(0,255,255,0.8);
     }
-    .card-header h2 {
-      margin: 3px 0 0;
-      font-size: 0.85rem; /* Giảm font */
-      color: #FFFF00;
-      font-weight: normal;
+    .subtitle-box h2 {
+      margin: 0;
+      font-size: 1rem;
+      color: #FFFFFF;
+      font-weight: 400;
     }
-
-    /* SLIDESHOW */
-    .slideshow-container {
-      position: relative;
+    
+    /* Tutorial Hint */
+    .hint-text {
+      position: fixed;
+      top: 20px;
       width: 100%;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-      border-radius: 10px;
-      border: 2px solid rgba(0, 255, 255, 0.3);
-    }
-    .slide-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: absolute;
-      top: 0; left: 0;
-      opacity: 0;
-      transition: opacity 0.8s ease-in-out;
-    }
-    .slide-img.active { opacity: 1; }
-
-    /* MARQUEE */
-    .marquee-container {
-      overflow: hidden;
-      white-space: nowrap;
-      background: rgba(0,0,0,0.3);
-      padding: 8px 0;
-      border-radius: 8px;
-    }
-    .marquee-text {
-      display: inline-block;
-      padding-left: 100%;
-      animation: marquee 15s linear infinite;
-      color: #00FF00;
+      text-align: center;
+      color: rgba(255,255,255,0.7);
       font-size: 0.9rem;
+      pointer-events: none;
+      z-index: 998;
+      opacity: 0;
+      transition: opacity 0.5s;
     }
+    .hint-text.visible { opacity: 1; }
 
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-
-    /* ACTION BUTTONS */
-    .card-actions {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    .btn-action {
-      background: rgba(0, 255, 255, 0.2);
-      border: 1px solid #00FFFF;
-      color: #00FFFF;
-      padding: 6px 12px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.3s;
-      font-size: 0.8rem;
-    }
   </style>
 
   <script>
-    /* ---------------- HTML SLIDESHOW ---------------- */
-    let slideIndex = 0;
-    function showSlides() {
-      const slides = document.querySelectorAll('.slide-img');
-      if (slides.length === 0) return;
-      
-      slides.forEach(img => img.classList.remove('active'));
-      
-      slideIndex++;
-      if (slideIndex > slides.length) { slideIndex = 1; }
-      
-      slides[slideIndex - 1].classList.add('active');
-      setTimeout(showSlides, 2500); // Change image every 2.5 seconds
-    }
+    /* ---------------- ASSETS LIST ---------------- */
+    const IMAGES = [
+      '/image/graduation/main1.jpg',
+      '/image/graduation/main2.jpg',
+      '/image/graduation/main3.jpg',
+      '/image/graduation/main4.jpg',
+      '/image/graduation/main5.jpg',
+      '/image/graduation/main6.jpg'
+    ];
 
-    /* ---------------- FILMSTRIP LOADER ---------------- */
-    function loadFilmstrip() {
-      const track = document.getElementById('filmstrip-track');
-      const folder = '/image/graduation/kyniem/';
-      const jsonUrl = '/image/graduation/kyniem/list.json';
-
-      fetch(jsonUrl)
-        .then(r => r.json())
-        .then(files => {
-          // Lấy 15 ảnh đầu tiên
-          const images = files.slice(0, 15);
-          
-          // Tạo HTML chuỗi ảnh
-          const createImg = (name) => `<img src="${folder}${name}" class="filmstrip-img">`;
-          const html = images.map(createImg).join('');
-          
-          // Nhân đôi chuỗi ảnh để tạo hiệu ứng lặp vô tận (scroll loop)
-          track.innerHTML = html + html; 
-        });
-    }
-
-    /* ---------------- APP MANAGER & AR EVENTS ---------------- */
-    AFRAME.registerComponent('app-manager',{
-      init:function(){
+    /* ---------------- APP LOGIC ---------------- */
+    AFRAME.registerComponent('app-manager', {
+      init: function() {
         const btn = document.querySelector('.btn-start');
         const ov = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
-        const arContent = document.getElementById('ar-card-content');
-        const filmstrip = document.getElementById('filmstrip-container');
+        const subtitle = document.querySelector('.subtitle-box');
+        const hint = document.querySelector('.hint-text');
         
-        // Load filmstrip images
-        loadFilmstrip();
-
         // Start Button
-        btn.onclick=()=>{
-          ov.style.opacity="0";
-          setTimeout(()=>ov.style.display="none",350);
-          audio.play().catch(()=>{});
-          // Start slideshow after user interaction
-          showSlides();
+        btn.onclick = () => {
+          ov.style.opacity = "0";
+          setTimeout(() => ov.style.display = "none", 350);
+          // Don't auto-play audio here to allow user interaction first if needed, 
+          // or auto-play if browser allows. Best to wait for user gesture on AR scene.
+          audio.play().catch(() => {});
         };
 
         const t = document.querySelector('[mindar-image-target]');
@@ -237,26 +129,69 @@
         // Target Found
         t.addEventListener('targetFound', () => {
           console.log("Target Found");
-          audio.play().catch(()=>{});
-          arContent.classList.add('visible');
-          filmstrip.classList.add('visible');
+          audio.play().catch(() => {});
+          subtitle.classList.add('visible');
+          hint.classList.add('visible');
+          
+          // Fire Confetti
+          confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#00FFFF', '#FFD700', '#FFFFFF']
+          });
         });
 
         // Target Lost
         t.addEventListener('targetLost', () => {
           console.log("Target Lost");
           audio.pause();
-          arContent.classList.remove('visible');
-          filmstrip.classList.remove('visible');
+          subtitle.classList.remove('visible');
+          hint.classList.remove('visible');
         });
       }
     });
 
-    /* ---------------- BORDER SHIMMER (A-FRAME) ---------------- */
-    AFRAME.registerComponent('circuit-anim',{
-      tick:function(t){
-        const k = 0.4 + Math.abs(Math.sin(t/310))*0.6;
-        this.el.setAttribute('opacity', k);
+    /* ---------------- IMAGE CHANGER COMPONENT ---------------- */
+    AFRAME.registerComponent('change-image', {
+      init: function() {
+        this.index = 0;
+        this.el.addEventListener('click', () => {
+          this.index = (this.index + 1) % IMAGES.length;
+          const newSrc = IMAGES[this.index];
+          this.el.setAttribute('src', newSrc);
+          
+          // Small scale animation on click
+          this.el.object3D.scale.set(0.95, 0.95, 0.95);
+          setTimeout(() => {
+            this.el.object3D.scale.set(1, 1, 1);
+          }, 150);
+        });
+      }
+    });
+
+    /* ---------------- MUSIC TOGGLE COMPONENT ---------------- */
+    AFRAME.registerComponent('music-control', {
+      init: function() {
+        this.isPlaying = true;
+        const audio = document.getElementById('bg-music');
+        const text = this.el.querySelector('a-text');
+        
+        this.el.addEventListener('click', () => {
+          if (this.isPlaying) {
+            audio.pause();
+            this.el.setAttribute('color', '#555'); // Dim color
+            text.setAttribute('value', 'OFF');
+          } else {
+            audio.play().catch(()=>{});
+            this.el.setAttribute('color', '#FFD700'); // Active color
+            text.setAttribute('value', '♪');
+          }
+          this.isPlaying = !this.isPlaying;
+          
+          // Spin animation
+          this.el.emit('spin');
+        });
       }
     });
   </script>
@@ -265,45 +200,18 @@
 <body>
 
   <div id="overlay">
-    <button class="btn-start">KHỞI ĐỘNG HỆ THỐNG</button>
+    <button class="btn-start">START SYSTEM</button>
   </div>
+  
+  <div class="hint-text">Tap image to change • Tap note for music</div>
 
-  <!-- AR CARD HTML OVERLAY (HUD) -->
-  <div id="ar-card-content">
-    
-    <!-- Header -->
-    <div class="card-header">
-      <h1>CHÚC MỪNG TỐT NGHIỆP</h1>
-      <h2>Tân Kỹ Sư Điện: Ngô Tấn Tài</h2>
-    </div>
-
-    <!-- Slideshow -->
-    <div class="slideshow-container">
-      <img src="/image/graduation/main1.jpg" class="slide-img active">
-      <img src="/image/graduation/main2.jpg" class="slide-img">
-      <img src="/image/graduation/main3.jpg" class="slide-img">
-      <img src="/image/graduation/main4.jpg" class="slide-img">
-      <img src="/image/graduation/main5.jpg" class="slide-img">
-      <img src="/image/graduation/main6.jpg" class="slide-img">
-    </div>
-
-    <!-- Marquee -->
-    <div class="marquee-container">
-      <div class="marquee-text">
-        Chúc mừng Ngô Tấn Tài đã xuất sắc hoàn thành chương trình đào tạo Kỹ sư Điện — Tương lai rực rỡ đang chờ đón! — Happy Graduation! —
-      </div>
-    </div>
-
+  <!-- SUBTITLE BOX (HTML) -->
+  <div class="subtitle-box">
+    <h1>HAPPY GRADUATION</h1>
+    <h2>Electrical Engineer: Ngo Tan Tai</h2>
   </div>
 
   <audio id="bg-music" src="/music/music.mp3" loop preload="auto"></audio>
-
-  <!-- FILMSTRIP BOTTOM -->
-  <div id="filmstrip-container">
-    <div class="filmstrip-track" id="filmstrip-track">
-      <!-- JS sẽ load ảnh vào đây -->
-    </div>
-  </div>
 
   <a-scene
     app-manager
@@ -313,17 +221,39 @@
     device-orientation-permission-ui="enabled:false">
 
     <a-assets>
+      <img id="img-start" src="/image/graduation/main1.jpg">
     </a-assets>
 
-    <a-camera look-controls="enabled:false"></a-camera>
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;">
+      <!-- Visual Cursor (Yellow Ring) -->
+      <a-cursor color="#FFD700" scale="0.5 0.5 0.5" raycaster="objects: .clickable"></a-cursor>
+    </a-camera>
 
     <a-entity mindar-image-target="targetIndex:0">
 
-      <!-- BORDER 3D (GIỮ LẠI HIỆU ỨNG KHÔNG GIAN) -->
-      <a-plane color="#00FFFF" width="1.1" height="0.01" position="0 0.55 0.01" shader="flat" circuit-anim></a-plane>
-      <a-plane color="#00FFFF" width="1.1" height="0.01" position="0 -0.55 0.01" shader="flat" circuit-anim></a-plane>
-      <a-plane color="#00FFFF" width="0.01" height="1.1"  position="-0.55 0 0.01" shader="flat" circuit-anim></a-plane>
-      <a-plane color="#00FFFF" width="0.01" height="1.1"  position="0.55 0 0.01" shader="flat" circuit-anim></a-plane>
+      <!-- FLOATING GROUP -->
+      <a-entity animation="property: position; to: 0 0.1 0; dir: alternate; loop: true; dur: 2000; easing: easeInOutSine">
+        
+        <!-- White Border Frame -->
+        <a-plane width="1.1" height="1.1" color="white" position="0 0 0"></a-plane>
+        
+        <!-- Main Image Display -->
+        <a-plane id="ar-display-img" 
+                 src="#img-start" 
+                 width="1" height="1" 
+                 position="0 0 0.01" 
+                 class="clickable" 
+                 change-image>
+        </a-plane>
+
+      </a-entity>
+
+      <!-- MUSIC BUTTON (Floating Right) -->
+      <a-circle position="0.8 0 0" radius="0.15" color="#FFD700" 
+                class="clickable" music-control
+                animation__spin="property: rotation; to: 0 360 0; dur: 500; startEvents: spin">
+        <a-text value="♪" color="black" align="center" width="4" position="0 -0.05 0.02"></a-text>
+      </a-circle>
 
     </a-entity>
   </a-scene>
