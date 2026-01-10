@@ -44,26 +44,31 @@
         fetch(data.jsonUrl)
           .then(r=>r.json())
           .then(files=>{
-            const slice = files.slice(0, data.maxDisplay);
-            // Đảm bảo đủ ảnh để lấp đầy màn hình + buffer
-            const loopFiles = [...slice, ...slice]; 
+            // Lấy tối đa số lượng ảnh, không nhân đôi list để tránh lặp quá nhiều
+            const loopFiles = files.slice(0, data.maxDisplay);
             
-            const W = 0.9; // Khoảng cách giữa các ảnh
+            // Nếu ít ảnh quá thì mới nhân đôi để đủ lấp màn hình
+            if (loopFiles.length < 5) {
+                loopFiles.push(...loopFiles);
+            }
+
+            const W = 0.6; // Giảm khoảng cách giữa các ảnh (ảnh nhỏ hơn hoặc gần nhau hơn)
             this.totalWidth = loopFiles.length * W;
             
             // Bắt đầu từ vị trí cân đối
-            let startX = -W * 2; 
+            let startX = -2.0; 
 
             loopFiles.forEach((name, i)=>{
               const img = document.createElement('a-image');
               img.setAttribute('src', data.folder + name);
-              img.setAttribute('width', '0.42');
-              img.setAttribute('height', '0.30');
+              
+              // Tỷ lệ 4:3 chuẩn hơn cho ảnh chụp
+              img.setAttribute('width', '0.48'); 
+              img.setAttribute('height', '0.36'); 
+              
               img.setAttribute('material', 'shader: flat; transparent:true');
               
               // Đặt vị trí ban đầu
-              // Y nâng lên -0.85 để không bị "dưới chân"
-              // Z = 0.02 để nổi lên trên nền
               img.setAttribute('position', `${startX + (i * W)} -0.85 0.02`);
               
               root.appendChild(img);
@@ -75,21 +80,21 @@
       tick: function(t, dt) {
         if (!this.images || this.images.length === 0) return;
         
-        // Di chuyển dựa trên delta time (ms) để mượt mà trên mọi FPS
-        const move = (dt / 1000) * this.data.speed; 
-        const W = 0.9;
-        const leftBound = -6.0; // Điểm biến mất bên trái
-        const rightBound = (this.images.length * W) + leftBound;
+        // Di chuyển chậm hơn để dễ nhìn
+        const move = (dt / 1000) * 0.1; 
+        const W = 0.6;
+        
+        // Tính toán biên trái dựa trên số lượng ảnh
+        // Khi ảnh trôi qua biên trái, đưa về cuối hàng
+        const leftBound = -3.0; 
 
         this.images.forEach(img => {
           let pos = img.object3D.position;
-          pos.x -= move; // Di chuyển sang trái
+          pos.x -= move; 
           
-          // Nếu ảnh đi quá xa bên trái, đưa nó về cuối hàng bên phải
           if (pos.x < leftBound) {
-            // Tìm vị trí x lớn nhất hiện tại để nối đuôi vào
-            // Cách đơn giản: cộng thêm tổng chiều dài chuỗi ảnh
-            // Tuy nhiên, để chính xác ta chỉ cần cộng thêm (Số lượng ảnh * W)
+            // Đưa về vị trí cuối cùng của hàng chờ
+            // Vị trí mới = Vị trí hiện tại + (Tổng số ảnh * Khoảng cách)
             pos.x += (this.images.length * W);
           }
         });
@@ -160,7 +165,7 @@
     app-manager
     mindar-image="imageTargetSrc:/ar-card/target.mind; uiScanning:no; uiLoading:no;"
     color-space="sRGB"
-    renderer="colorManagement:true; physicallyCorrectLights:true"
+    renderer="colorManagement:true; physicallyCorrectLights:true; antialias:true; sortObjects:true;"
     device-orientation-permission-ui="enabled:false">
 
     <a-assets>
@@ -189,16 +194,18 @@
 
       <!-- BANNER TEXT -->
       <a-entity position="0 0.66 0.21" scale="3.1 3.1 1">
-        <a-text value="Chúc Mừng Tốt Nghiệp"
-                align="center" width="8"
+        <a-text value="CHÚC MỪNG TỐT NGHIỆP"
+                align="center" width="6.5"
                 color="#00FFFF"
-                font="/fonts/FS-Southamton.fnt"
+                font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+                negate="false"
                 position="0 0.13 0"></a-text>
 
         <a-text value="Tân Kỹ Sư Điện: Ngô Tấn Tài"
-                align="center" width="6"
+                align="center" width="5.5"
                 color="#FFFF00"
-                font="/fonts/SVN-Anastasia.fnt"
+                font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+                negate="false"
                 position="0 -0.05 0"></a-text>
       </a-entity>
 
@@ -221,13 +228,12 @@
           marquee
           value="Chúc mừng Ngô Tấn Tài đã xuất sắc hoàn thành chương trình đào tạo Kỹ sư Điện — Tương lai rực rỡ đang chờ đón! — Happy Graduation! — "
           color="#00FF00"
-          width="8"
+          width="7.5"
           position="0.7 0 0"
-          font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt"
-          shader="sdf"
-          wrap-count="2000"
+          font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+          negate="false"
           anchor="left"
-          scale="2 2 1">
+          scale="1.8 1.8 1">
         </a-text>
       </a-entity>
 
