@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MorphoLearn - Hệ thống học tiếng Anh Hình thái học</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect } from 'https://esm.sh/react@18?dev';
+        import { createRoot } from 'https://esm.sh/react-dom@18/client?dev';
+        import { 
+            BookOpen, 
+            Headphones, 
+            Mic, 
+            PenTool, 
+            CheckCircle, 
+            Lock, 
+            Calendar, 
+            Trophy, 
+            BarChart, 
+            RotateCcw,
+            Play,
+            Award,
+            ChevronRight
+        } from 'https://esm.sh/lucide-react?dev';
+
+        // --- MOCK DATA ---
+        const ROADMAPS = [
+            { id: '3m', title: 'Lộ trình 3 Tháng', target: 'Nền tảng (0-450)', roots: 120, dailyLoad: '2 roots' },
+            { id: '6m', title: 'Lộ trình 6 Tháng', target: 'Trung cấp (450-650)', roots: 250, dailyLoad: '3 roots' },
+            { id: '9m', title: 'Lộ trình 9 Tháng', target: 'Nâng cao (650-800)', roots: 400, dailyLoad: '4 roots' },
+            { id: '1y', title: 'Lộ trình 1 Năm', target: 'Thành thạo (900+)', roots: 500, dailyLoad: 'Review' },
+        ];
+
+        const MOCK_LESSON = {
+            day: 1,
+            roots: [
+                {
+                    root: "SPECT",
+                    meaning: "Nhìn (to look)",
+                    origin: "Latin",
+                    family: ["Inspect (kiểm tra)", "Respect (tôn trọng)", "Spectator (khán giả)", "Aspect (khía cạnh)"],
+                    example: " The inspector came to inspect the building."
+                },
+                {
+                    root: "STRUCT",
+                    meaning: "Xây dựng (to build)",
+                    origin: "Latin",
+                    family: ["Structure (cấu trúc)", "Construct (xây dựng)", "Instruct (hướng dẫn)", "Destruction (phá hủy)"],
+                    example: "They plan to construct a new bridge."
+                }
+            ],
+            skills: {
+                reading: "Đọc đoạn văn ngắn về kiến trúc sư (Architect) và tìm các từ gốc STRUCT.",
+                listening: "Nghe 5 câu và điền từ còn thiếu (các từ thuộc họ SPECT).",
+                speaking: "Luyện phát âm trọng âm: 'PHO-to-graph' vs 'pho-TO-gra-pher'.",
+                writing: "Viết 1 câu phức sử dụng từ 'Retrospective'."
+            }
+        };
+
+        // --- COMPONENTS ---
+
+        // 1. Component Lộ trình
+        const RoadmapSelector = ({ activeRoadmap, onSelect }) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                {ROADMAPS.map((roadmap) => (
+                    <div 
+                        key={roadmap.id}
+                        onClick={() => onSelect(roadmap.id)}
+                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                            activeRoadmap === roadmap.id 
+                                ? 'border-indigo-600 bg-indigo-50 shadow-md' 
+                                : 'border-gray-200 hover:border-indigo-300'
+                        }`}
+                    >
+                        <div className="flex justify-between items-center mb-2">
+                            <h3 className="font-bold text-lg text-gray-800">{roadmap.title}</h3>
+                            {activeRoadmap === roadmap.id && <CheckCircle size={20} className="text-indigo-600" />}
+                        </div>
+                        <div className="text-sm text-gray-600 space-y-1">
+                            <p>🎯 Mục tiêu: {roadmap.target}</p>
+                            <p>📚 Số lượng: {roadmap.roots} từ gốc</p>
+                            <p>⚡ Cường độ: {roadmap.dailyLoad}/ngày</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
+
+        // 2. Component Lịch 15 ngày
+        const CycleSchedule = ({ currentDay, onSelectDay }) => {
+            const renderDay = (dayNum) => {
+                let type = 'study';
+                let label = 'Học';
+                let color = 'bg-white border-gray-200 text-gray-700';
+                
+                if (dayNum === 6 || dayNum === 13) { type = 'test'; label = 'Test Ngắn'; color = 'bg-amber-50 border-amber-200 text-amber-700'; }
+                if (dayNum === 7 || dayNum === 14) { type = 'rest'; label = 'Nghỉ'; color = 'bg-green-50 border-green-200 text-green-700 opacity-70'; }
+                if (dayNum === 15) { type = 'bigtest'; label = 'BIG TEST'; color = 'bg-red-50 border-red-300 text-red-700 font-bold'; }
+                
+                const isLocked = dayNum > currentDay;
+                const isCompleted = dayNum < currentDay;
+                const isActive = dayNum === currentDay;
+
+                if (isActive) color = 'bg-indigo-600 text-white border-indigo-600 shadow-lg scale-105';
+                if (isLocked) color = 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed';
+                if (isCompleted) color = 'bg-indigo-100 text-indigo-800 border-indigo-200';
+
+                return (
+                    <button 
+                        key={dayNum}
+                        disabled={isLocked}
+                        onClick={() => !isLocked && type !== 'rest' && onSelectDay(dayNum)}
+                        className={`relative flex flex-col items-center justify-center p-2 rounded-lg border h-20 transition-all text-xs sm:text-sm font-medium ${color}`}
+                    >
+                        <span className="text-lg mb-1">{dayNum}</span>
+                        <span>{label}</span>
+                        {isCompleted && <CheckCircle size={14} className="absolute top-1 right-1" />}
+                        {isLocked && <Lock size={14} className="absolute top-1 right-1" />}
+                    </button>
+                );
+            };
+
+            return (
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                            <RotateCcw size={20} className="text-indigo-600"/> Chu kỳ 15 ngày (Sprint 1)
+                        </h2>
+                        <span className="text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">
+                            Ngày hiện tại: {currentDay}
+                        </span>
+                    </div>
+                    
+                    {/* Grid 15 ngày */}
+                    <div className="grid grid-cols-5 sm:grid-cols-7 gap-3">
+                        {Array.from({ length: 15 }, (_, i) => i + 1).map(day => renderDay(day))}
+                    </div>
+                    
+                    <div className="mt-4 flex gap-4 text-xs text-gray-500 justify-end">
+                        <div className="flex items-center gap-1"><div className="w-3 h-3 bg-white border border-gray-300 rounded"></div> Học</div>
+                        <div className="flex items-center gap-1"><div className="w-3 h-3 bg-amber-50 border border-amber-300 rounded"></div> Test Ngắn</div>
+                        <div className="flex items-center gap-1"><div className="w-3 h-3 bg-green-50 border border-green-300 rounded"></div> Nghỉ</div>
+                        <div className="flex items-center gap-1"><div className="w-3 h-3 bg-red-50 border border-red-300 rounded"></div> Big Test</div>
+                    </div>
+                </div>
+            );
+        };
+
+        // 3. Component Bài học (Learning Mode)
+        const LearningSession = ({ day, onComplete }) => {
+            const [step, setStep] = useState('intro'); // intro, roots, skills, complete
+            const [activeSkill, setActiveSkill] = useState('reading');
+
+            const SkillTab = ({ id, icon: Icon, label }) => (
+                <button 
+                    onClick={() => setActiveSkill(id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                        activeSkill === id 
+                            ? 'bg-indigo-600 text-white shadow-md' 
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                >
+                    <Icon size={16} /> {label}
+                </button>
+            );
+
+            if (step === 'complete') {
+                return (
+                    <div className="text-center py-12 bg-white rounded-2xl border border-green-100 shadow-sm">
+                        <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Trophy size={40} />
+                        </div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Hoàn thành Ngày {day}!</h2>
+                        <p className="text-gray-600 mb-6">Bạn đã học xong 2 gốc từ và luyện tập 4 kỹ năng.</p>
+                        <button 
+                            onClick={onComplete}
+                            className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition"
+                        >
+                            Trở về Dashboard
+                        </button>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                    {/* Header */}
+                    <div className="bg-indigo-900 text-white p-6 flex justify-between items-center">
+                        <div>
+                            <h2 className="text-2xl font-bold">Ngày {day}: Morphology Study</h2>
+                            <p className="opacity-80">Chủ đề: Sự hình thành cấu trúc (Structure & Sight)</p>
+                        </div>
+                        <div className="flex gap-2">
+                            <div className={`w-3 h-3 rounded-full ${step === 'intro' ? 'bg-white' : 'bg-white/30'}`}></div>
+                            <div className={`w-3 h-3 rounded-full ${step === 'roots' ? 'bg-white' : 'bg-white/30'}`}></div>
+                            <div className={`w-3 h-3 rounded-full ${step === 'skills' ? 'bg-white' : 'bg-white/30'}`}></div>
+                        </div>
+                    </div>
+
+                    <div className="p-6">
+                        {/* Step 1: Intro/Overview */}
+                        {step === 'intro' && (
+                            <div className="space-y-6">
+                                <h3 className="text-xl font-semibold text-gray-800">Mục tiêu hôm nay</h3>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                        <span className="block text-blue-600 font-bold text-sm mb-1">ROOT 1</span>
+                                        <span className="text-2xl font-bold text-gray-800">SPECT</span>
+                                        <span className="block text-gray-500 text-sm">To Look (Nhìn)</span>
+                                    </div>
+                                    <div className="bg-orange-50 p-4 rounded-xl border border-orange-100">
+                                        <span className="block text-orange-600 font-bold text-sm mb-1">ROOT 2</span>
+                                        <span className="text-2xl font-bold text-gray-800">STRUCT</span>
+                                        <span className="block text-gray-500 text-sm">To Build (Xây)</span>
+                                    </div>
+                                </div>
+                                <div className="flex justify-end mt-8">
+                                    <button onClick={() => setStep('roots')} className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700">
+                                        Bắt đầu học <ChevronRight size={20} />
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Step 2: Deep Dive Roots */}
+                        {step === 'roots' && (
+                            <div className="space-y-8">
+                                {MOCK_LESSON.roots.map((item, idx) => (
+                                    <div key={idx} className="border-b border-gray-100 pb-6 last:border-0 last:pb-0">
+                                        <div className="flex items-baseline gap-3 mb-2">
+                                            <h3 className="text-3xl font-bold text-indigo-700">{item.root}</h3>
+                                            <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-mono">{item.origin}</span>
+                                        </div>
+                                        <p className="text-lg text-gray-800 font-medium mb-4">Nghĩa: {item.meaning}</p>
+                                        
+                                        <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                                            <h4 className="text-sm font-bold text-gray-500 uppercase mb-2">Gia đình từ (Word Family)</h4>
+                                            <div className="flex flex-wrap gap-2">
+                                                {item.family.map((word, i) => (
+                                                    <span key={i} className="bg-white border border-gray-200 px-3 py-1 rounded-full text-sm text-gray-700 shadow-sm">
+                                                        {word}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <p className="text-gray-600 italic">Example: "{item.example}"</p>
+                                    </div>
+                                ))}
+                                <div className="flex justify-between mt-8">
+                                    <button onClick={() => setStep('intro')} className="text-gray-500 hover:text-gray-700">Quay lại</button>
+                                    <button onClick={() => setStep('skills')} className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700">
+                                        Luyện tập 4 Kỹ năng <ChevronRight size={20} />
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Step 3: 4 Skills Practice */}
+                        {step === 'skills' && (
+                            <div>
+                                <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-100 pb-4">
+                                    <SkillTab id="reading" icon={BookOpen} label="Reading" />
+                                    <SkillTab id="listening" icon={Headphones} label="Listening" />
+                                    <SkillTab id="speaking" icon={Mic} label="Speaking" />
+                                    <SkillTab id="writing" icon={PenTool} label="Writing" />
+                                </div>
+
+                                <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 min-h-[200px]">
+                                    {activeSkill === 'reading' && (
+                                        <div>
+                                            <h4 className="font-bold text-gray-800 mb-2">Đọc hiểu hình thái từ</h4>
+                                            <p className="text-gray-600">{MOCK_LESSON.skills.reading}</p>
+                                            <div className="mt-4 p-4 bg-white rounded border border-gray-200 text-sm font-serif leading-relaxed">
+                                                "The <span className="text-indigo-600 font-bold">in-spect-or</span> examined the <span className="text-indigo-600 font-bold">con-struct-ion</span> site..."
+                                            </div>
+                                        </div>
+                                    )}
+                                    {activeSkill === 'listening' && (
+                                        <div>
+                                            <h4 className="font-bold text-gray-800 mb-2">Nghe và điền từ (Dictation)</h4>
+                                            <p className="text-gray-600 mb-4">{MOCK_LESSON.skills.listening}</p>
+                                            <div className="flex items-center gap-3 bg-white p-3 rounded-lg border w-fit mb-4 cursor-pointer hover:bg-gray-50">
+                                                <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white"><Play size={14}/></div>
+                                                <span className="text-sm font-medium">Audio_Lesson_1.mp3</span>
+                                            </div>
+                                            <input type="text" placeholder="Type what you hear..." className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                                        </div>
+                                    )}
+                                    {activeSkill === 'speaking' && (
+                                        <div>
+                                            <h4 className="font-bold text-gray-800 mb-2">Luyện nói & Trọng âm</h4>
+                                            <p className="text-gray-600 mb-4">{MOCK_LESSON.skills.speaking}</p>
+                                            <div className="flex justify-center py-8">
+                                                <button className="flex flex-col items-center gap-2 text-red-500 hover:text-red-600 transition">
+                                                    <div className="w-16 h-16 border-4 border-red-500 rounded-full flex items-center justify-center">
+                                                        <Mic size={32} />
+                                                    </div>
+                                                    <span className="font-semibold">Nhấn để ghi âm</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {activeSkill === 'writing' && (
+                                        <div>
+                                            <h4 className="font-bold text-gray-800 mb-2">Viết câu ứng dụng</h4>
+                                            <p className="text-gray-600 mb-4">{MOCK_LESSON.skills.writing}</p>
+                                            <textarea className="w-full h-32 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Viết câu của bạn tại đây..."></textarea>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="flex justify-between mt-8">
+                                    <button onClick={() => setStep('roots')} className="text-gray-500 hover:text-gray-700">Quay lại lý thuyết</button>
+                                    <button onClick={() => setStep('complete')} className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 shadow-lg shadow-green-200">
+                                        Hoàn thành bài học <CheckCircle size={20} />
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        // 4. Component Test (Demo)
+        const TestInterface = ({ type, onComplete }) => (
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 text-center">
+                <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${type === 'bigtest' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-600'}`}>
+                    <Award size={40} />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">{type === 'bigtest' ? 'BÀI KIỂM TRA LỚN (DAY 15)' : 'BÀI KIỂM TRA NGẮN (WEEKLY)'}</h2>
+                <p className="text-gray-600 mb-6">
+                    {type === 'bigtest' 
+                        ? 'Bài kiểm tra tổng hợp kiến thức 14 ngày qua. Gồm 50 câu hỏi trắc nghiệm, nghe và đọc hiểu.' 
+                        : 'Kiểm tra nhanh 15 phút về các gốc từ đã học trong 5 ngày qua.'}
+                </p>
+                <div className="bg-gray-50 p-4 rounded-lg mb-8 text-left max-w-md mx-auto">
+                    <p className="font-semibold text-gray-700 mb-2">Cấu trúc bài thi:</p>
+                    <ul className="text-sm text-gray-600 space-y-2">
+                        <li className="flex gap-2"><CheckCircle size={16} className="text-green-500"/> 10 Câu nhận diện Gốc từ</li>
+                        <li className="flex gap-2"><CheckCircle size={16} className="text-green-500"/> 5 Câu nghe chép chính tả</li>
+                        <li className="flex gap-2"><CheckCircle size={16} className="text-green-500"/> 1 Bài đọc hiểu ngắn</li>
+                    </ul>
+                </div>
+                <button 
+                    onClick={onComplete}
+                    className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition w-full sm:w-auto"
+                >
+                    Bắt đầu làm bài
+                </button>
+            </div>
+        );
+
+        // --- MAIN APP ---
+        const MorphoLearnApp = () => {
+            const [activeRoadmap, setActiveRoadmap] = useState('3m');
+            const [currentDay, setCurrentDay] = useState(1);
+            const [mode, setMode] = useState('dashboard'); // dashboard, lesson, test
+            const [testType, setTestType] = useState(null);
+
+            const handleSelectDay = (day) => {
+                if (day === 6 || day === 13) {
+                    setTestType('mini');
+                    setMode('test');
+                } else if (day === 15) {
+                    setTestType('bigtest');
+                    setMode('test');
+                } else {
+                    setMode('lesson');
+                }
+            };
+
+            const handleCompleteActivity = () => {
+                setMode('dashboard');
+                if (currentDay < 15) {
+                    setCurrentDay(currentDay + 1);
+                } else {
+                    alert("Chúc mừng! Bạn đã hoàn thành chu kỳ 15 ngày đầu tiên!");
+                    setCurrentDay(1); // Reset demo
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-50 font-sans text-gray-900 pb-20">
+                    {/* Navbar */}
+                    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+                        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <div className="bg-indigo-600 p-2 rounded-lg text-white">
+                                    <BookOpen size={20} />
+                                </div>
+                                <span className="font-bold text-xl tracking-tight text-indigo-900">MorphoLearn</span>
+                            </div>
+                            <div className="flex items-center gap-4 text-sm font-medium text-gray-600">
+                                <span className="hidden sm:inline">XP: 1,250</span>
+                                <span className="flex items-center gap-1 text-orange-500"><span className="text-lg">🔥</span> 5 Ngày</span>
+                                <div className="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" />
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Main Content */}
+                    <main className="max-w-4xl mx-auto px-4 py-8">
+                        
+                        {/* Navigation Breadcrumb inside App */}
+                        {mode !== 'dashboard' && (
+                            <button 
+                                onClick={() => setMode('dashboard')}
+                                className="mb-6 flex items-center gap-2 text-gray-500 hover:text-indigo-600 transition"
+                            >
+                                ← Quay lại Lộ trình
+                            </button>
+                        )}
+
+                        {mode === 'dashboard' && (
+                            <>
+                                <div className="mb-8">
+                                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Chào buổi sáng, Nam! 👋</h1>
+                                    <p className="text-gray-600">Bạn đang ở <span className="font-bold text-indigo-600">Ngày {currentDay}</span> của chu kỳ này. Tiếp tục giữ vững phong độ nhé!</p>
+                                </div>
+
+                                {/* Stats Overview */}
+                                <div className="grid grid-cols-3 gap-4 mb-8">
+                                    <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                        <div className="text-gray-500 text-xs uppercase font-bold mb-1">Gốc từ đã học</div>
+                                        <div className="text-2xl font-bold text-indigo-600">42</div>
+                                    </div>
+                                    <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                        <div className="text-gray-500 text-xs uppercase font-bold mb-1">Từ vựng mở rộng</div>
+                                        <div className="text-2xl font-bold text-green-600">158</div>
+                                    </div>
+                                    <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                        <div className="text-gray-500 text-xs uppercase font-bold mb-1">Độ chính xác Test</div>
+                                        <div className="text-2xl font-bold text-amber-500">85%</div>
+                                    </div>
+                                </div>
+
+                                <RoadmapSelector activeRoadmap={activeRoadmap} onSelect={setActiveRoadmap} />
+                                <CycleSchedule currentDay={currentDay} onSelectDay={handleSelectDay} />
+                            </>
+                        )}
+
+                        {mode === 'lesson' && (
+                            <LearningSession day={currentDay} onComplete={handleCompleteActivity} />
+                        )}
+
+                        {mode === 'test' && (
+                            <TestInterface type={testType} onComplete={handleCompleteActivity} />
+                        )}
+
+                    </main>
+                </div>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<MorphoLearnApp />);
+    </script>
+</body>
+</html>

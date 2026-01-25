@@ -186,6 +186,10 @@
       "destination": "/education/tin_hoc_hsg/admin_exam.html"
     },
     {
+      "source": "/MorphoLearn",
+      "destination": "/English/MorphoLearn.html"
+    },
+    {
       "source": "/image/:guest",
       "destination": "/image/:guest.png"
     }

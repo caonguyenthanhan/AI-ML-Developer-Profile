@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEIC Morphology Master - 650+ Level</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .flip-card { perspective: 1000px; }
+        .flip-card-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.6s; transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            border-radius: 0.5rem;
+        }
+        .flip-card-back { transform: rotateY(180deg); }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Animation for quiz feedback */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-blue-900 text-white shadow-lg z-50 sticky top-0">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-layer-group text-2xl text-blue-300"></i>
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight">TOEIC <span class="text-blue-300">Morphology</span></h1>
+                    <p class="text-xs text-blue-200">Học từ gốc để đạt 650+</p>
+                </div>
+            </div>
+            <nav class="flex gap-2 bg-blue-800 p-1 rounded-lg">
+                <button onclick="switchTab('learn')" id="btn-learn" class="px-4 py-1.5 rounded-md text-sm font-semibold bg-white text-blue-900 shadow transition-all">
+                    <i class="fa-solid fa-book-open mr-2"></i>Học Từ
+                </button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-1.5 rounded-md text-sm font-semibold text-blue-200 hover:text-white transition-all">
+                    <i class="fa-solid fa-brain mr-2"></i>Luyện Tập
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 relative">
+        
+        <!-- LEARNING TAB -->
+        <section id="tab-learn" class="flex flex-col p-4 md:p-6 container mx-auto max-w-5xl">
+            <!-- Search & Filter -->
+            <div class="mb-6 flex flex-col md:flex-row gap-4">
+                <div class="relative flex-1">
+                    <i class="fa-solid fa-search absolute left-3 top-3.5 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm gốc từ (vd: struct) hoặc nghĩa..." 
+                           class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none shadow-sm transition-all">
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+                    <button onclick="filterCategory('all')" class="filter-btn active px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-700 whitespace-nowrap border border-blue-200">Tất cả</button>
+                    <button onclick="filterCategory('business')" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 whitespace-nowrap">Kinh doanh</button>
+                    <button onclick="filterCategory('production')" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 whitespace-nowrap">Sản xuất</button>
+                    <button onclick="filterCategory('people')" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 whitespace-nowrap">Con người</button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="mb-4 text-sm text-slate-500 flex justify-between items-center">
+                <span>Hiển thị <b id="count-display">0</b> gốc từ thông dụng</span>
+                <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded border border-yellow-200">
+                    <i class="fa-solid fa-lightbulb mr-1"></i>Mẹo: Bấm vào thẻ để xem chi tiết
+                </span>
+            </div>
+
+            <!-- Cards Grid -->
+            <div id="roots-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-10">
+                <!-- Cards will be injected here via JS -->
+            </div>
+        </section>
+
+        <!-- QUIZ TAB -->
+        <section id="tab-quiz" class="min-h-[80vh] hidden flex-col items-center justify-center p-4">
+            <div class="bg-white w-full max-w-3xl rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+                <!-- Quiz Header -->
+                <div class="bg-indigo-600 p-6 text-white text-center relative shrink-0">
+                    <h2 class="text-2xl font-bold">Thử thách Gốc từ</h2>
+                    <p class="text-indigo-200 text-sm mt-1">Chọn đáp án đúng nhất dựa trên logic hình thái học</p>
+                    <div class="absolute top-4 right-4 bg-indigo-800 px-3 py-1 rounded-full text-xs font-mono">
+                        Score: <span id="score">0</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Content (Scrollable) -->
+                <div class="p-8 flex-1 overflow-y-auto" id="quiz-container">
+                    <!-- Question injected here -->
+                </div>
+
+                <!-- Quiz Footer -->
+                <div class="bg-slate-50 p-4 border-t border-slate-200 text-center shrink-0">
+                    <button onclick="initQuiz()" class="text-indigo-600 font-semibold hover:underline text-sm">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Câu hỏi khác
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal for Detailed Word List -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl">
+            <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-2xl">
+                <div>
+                    <h3 id="modal-title" class="text-2xl font-bold text-blue-900 uppercase tracking-wider">ROOT</h3>
+                    <p id="modal-meaning" class="text-slate-500 italic">Meaning</p>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-times text-slate-600"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto" id="modal-content">
+                <!-- Word list injected here -->
+            </div>
+            <div class="p-4 border-t border-slate-100 bg-slate-50 rounded-b-2xl text-center text-xs text-slate-400">
+                TOEIC Morphology Master
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATASET: CORE ROOTS FOR TOEIC 650+ ---
+        // This is a curated list focusing on Business, Office, and General English
+        const toeicRoots = [
+            {
+                root: "STRUCT",
+                meaning: "Xây dựng (Build)",
+                category: "production",
+                words: [
+                    { w: "Construction", type: "n", m: "Sự thi công/xây dựng", ex: "The **construction** of the new office will end in May." },
+                    { w: "Infrastructure", type: "n", m: "Cơ sở hạ tầng (đường, điện, trạm...)", ex: "Investment in **infrastructure** is vital for growth." },
+                    { w: "Instruct", type: "v", m: "Hướng dẫn (xây dựng kiến thức)", ex: "Please **instruct** the staff on safety rules." },
+                    { w: "Restructure", type: "v", m: "Cơ cấu lại/Tổ chức lại", ex: "The company plans to **restructure** its debt." }
+                ]
+            },
+            {
+                root: "SPECT",
+                meaning: "Nhìn (Look)",
+                category: "people",
+                words: [
+                    { w: "Inspect", type: "v", m: "Thanh tra/Kiểm tra (nhìn kỹ vào trong)", ex: "We need to **inspect** the goods before shipping." },
+                    { w: "Perspective", type: "n", m: "Góc nhìn/Quan điểm", ex: "From a financial **perspective**, this is risky." },
+                    { w: "Expectation", type: "n", m: "Sự mong đợi (nhìn về phía trước)", ex: "The product exceeded our **expectations**." },
+                    { w: "Retrospect", type: "n", m: "Sự hồi tưởng (nhìn lại)", ex: "In **retrospect**, we should have signed the contract." }
+                ]
+            },
+            {
+                root: "TRACT",
+                meaning: "Kéo (Pull/Draw)",
+                category: "business",
+                words: [
+                    { w: "Contract", type: "n", m: "Hợp đồng (kéo 2 bên lại với nhau)", ex: "Please sign the **contract** by Friday." },
+                    { w: "Attract", type: "v", m: "Thu hút (kéo về phía mình)", ex: "The campaign aims to **attract** new investors." },
+                    { w: "Extract", type: "v", m: "Trích xuất/Rút ra", ex: "To **extract** data from the monthly report." },
+                    { w: "Distract", type: "v", m: "Làm xao nhãng (kéo sự chú ý đi)", ex: "Noise can **distract** employees." }
+                ]
+            },
+            {
+                root: "PORT",
+                meaning: "Mang, vác (Carry)",
+                category: "business",
+                words: [
+                    { w: "Import", type: "v/n", m: "Nhập khẩu (mang vào)", ex: "We **import** raw materials from Asia." },
+                    { w: "Transportation", type: "n", m: "Giao thông vận tải", ex: "Public **transportation** is reliable here." },
+                    { w: "Portfolio", type: "n", m: "Danh mục đầu tư (cặp mang giấy tờ)", ex: "Diversify your investment **portfolio**." },
+                    { w: "Opportunity", type: "n", m: "Cơ hội (gió đưa thuyền vào cảng)", ex: "This is a great **opportunity** for promotion." }
+                ]
+            },
+            {
+                root: "FORM",
+                meaning: "Hình dạng (Shape)",
+                category: "production",
+                words: [
+                    { w: "Information", type: "n", m: "Thông tin (định hình kiến thức)", ex: "For more **information**, contact HR." },
+                    { w: "Reform", type: "v", m: "Cải cách (tạo hình dáng mới)", ex: "The CEO wants to **reform** the policy." },
+                    { w: "Formal", type: "adj", m: "Trang trọng/Chính thức", ex: "Please wear **formal** attire to the meeting." },
+                    { w: "Transform", type: "v", m: "Biến đổi", ex: "Technology will **transform** our workflow." }
+                ]
+            },
+            {
+                root: "MIT/MIS",
+                meaning: "Gửi (Send)",
+                category: "business",
+                words: [
+                    { w: "Submit", type: "v", m: "Nộp (gửi lên dưới quyền)", ex: "**Submit** your application before the deadline." },
+                    { w: "Commission", type: "n", m: "Tiền hoa hồng/Ủy ban", ex: "Sales agents earn a 5% **commission**." },
+                    { w: "Promise", type: "v", m: "Hứa (gửi lời trước)", ex: "We **promise** to deliver on time." },
+                    { w: "Mission", type: "n", m: "Sứ mệnh/Nhiệm vụ", ex: "Our **mission** is to serve customers." }
+                ]
+            },
+            {
+                root: "DUCT/DUC",
+                meaning: "Dẫn dắt (Lead)",
+                category: "production",
+                words: [
+                    { w: "Product", type: "n", m: "Sản phẩm (cái được dẫn ra)", ex: "Our new **product** launches next week." },
+                    { w: "Conduct", type: "v", m: "Tiến hành/Cư xử", ex: "We will **conduct** a survey soon." },
+                    { w: "Reduce", type: "v", m: "Giảm bớt (dẫn xuống)", ex: "We must **reduce** operational costs." },
+                    { w: "Induction", type: "n", m: "Lễ nhậm chức/Sự giới thiệu", ex: "Attend the safety **induction**." }
+                ]
+            },
+            {
+                root: "FER",
+                meaning: "Mang (Carry/Bear)",
+                category: "business",
+                words: [
+                    { w: "Transfer", type: "v", m: "Chuyển (mang qua chỗ khác)", ex: "**Transfer** the funds to this account." },
+                    { w: "Conference", type: "n", m: "Hội nghị (mang mọi người lại)", ex: "The annual **conference** is in Tokyo." },
+                    { w: "Prefer", type: "v", m: "Thích hơn (mang lên trước)", ex: "I **prefer** email over phone calls." },
+                    { w: "Offer", type: "v/n", m: "Đề nghị/Cung cấp", ex: "They made a job **offer** yesterday." }
+                ]
+            },
+            {
+                root: "JECT",
+                meaning: "Ném (Throw)",
+                category: "production",
+                words: [
+                    { w: "Project", type: "n", m: "Dự án (ném ý tưởng ra trước)", ex: "Manage the **project** timeline carefully." },
+                    { w: "Reject", type: "v", m: "Từ chối (ném trả lại)", ex: "Do not **reject** a valid claim." },
+                    { w: "Object", type: "v", m: "Phản đối (ném ngược lại)", ex: "No one **objected** to the proposal." },
+                    { w: "Injection", type: "n", m: "Sự tiêm/bơm vốn", ex: "The company needs a cash **injection**." }
+                ]
+            },
+            {
+                root: "GRAPH",
+                meaning: "Viết/Vẽ (Write)",
+                category: "people",
+                words: [
+                    { w: "Paragraph", type: "n", m: "Đoạn văn", ex: "Read the first **paragraph** of the contract." },
+                    { w: "Graphic", type: "adj", m: "Đồ họa/Sinh động", ex: "We need a **graphic** designer." },
+                    { w: "Autograph", type: "n", m: "Chữ ký (tự viết)", ex: "The author signed an **autograph**." },
+                    { w: "Demographic", type: "n", m: "Nhân khẩu học", ex: "Target a younger **demographic**." }
+                ]
+            },
+            {
+                root: "CRED",
+                meaning: "Tin tưởng (Believe)",
+                category: "business",
+                words: [
+                    { w: "Credit", type: "n", m: "Tín dụng/Sự tin cậy", ex: "Check the client's **credit** history." },
+                    { w: "Credential", type: "n", m: "Chứng chỉ/Bằng cấp", ex: "Review the candidate's **credentials**." },
+                    { w: "Incredible", type: "adj", m: "Không thể tin được/Tuyệt vời", ex: "An **incredible** growth rate." },
+                    { w: "Accreditation", type: "n", m: "Sự kiểm định chất lượng", ex: "The school received **accreditation**." }
+                ]
+            },
+            {
+                root: "MAN",
+                meaning: "Tay (Hand)",
+                category: "production",
+                words: [
+                    { w: "Manual", type: "adj/n", m: "Thủ công/Sách hướng dẫn", ex: "Read the instruction **manual**." },
+                    { w: "Manufacture", type: "v", m: "Sản xuất (làm bằng tay - nghĩa gốc)", ex: "We **manufacture** car parts." },
+                    { w: "Manage", type: "v", m: "Quản lý (xử lý bằng tay)", ex: "Can you **manage** this team?" },
+                    { w: "Manipulate", type: "v", m: "Thao túng/Vận hành khéo léo", ex: "Don't **manipulate** the data." }
+                ]
+            },
+             {
+                root: "VIS",
+                meaning: "Nhìn (See)",
+                category: "people",
+                words: [
+                    { w: "Supervisor", type: "n", m: "Người giám sát (nhìn từ trên xuống)", ex: "Report to your **supervisor**." },
+                    { w: "Vision", type: "n", m: "Tầm nhìn", ex: "The CEO has a clear **vision**." },
+                    { w: "Revise", type: "v", m: "Ôn lại/Sửa đổi (nhìn lại)", ex: "Please **revise** the report." },
+                    { w: "Visible", type: "adj", m: "Có thể nhìn thấy/Rõ ràng", ex: "Make the signs highly **visible**." }
+                ]
+            },
+            {
+                root: "POS",
+                meaning: "Đặt, để (Place)",
+                category: "business",
+                words: [
+                    { w: "Deposit", type: "n/v", m: "Tiền đặt cọc/Gửi tiền", ex: "Pay a 10% **deposit**." },
+                    { w: "Position", type: "n", m: "Vị trí", ex: "Apply for the manager **position**." },
+                    { w: "Oppose", type: "v", m: "Phản đối (đặt đối diện)", ex: "They **oppose** the merger." },
+                    { w: "Proposal", type: "n", m: "Bản đề xuất (đặt ra trước)", ex: "Submit the **proposal** by noon." }
+                ]
+            },
+            {
+                root: "CAP",
+                meaning: "Nắm, Lấy, Đầu (Take/Head)",
+                category: "business",
+                words: [
+                    { w: "Capital", type: "n", m: "Vốn/Thủ đô", ex: "We need more working **capital**." },
+                    { w: "Capable", type: "adj", m: "Có khả năng (nắm bắt được)", ex: "She is a **capable** leader." },
+                    { w: "Capacity", type: "n", m: "Sức chứa/Công suất", ex: "The factory is at full **capacity**." },
+                    { w: "Capture", type: "v", m: "Nắm bắt/Thu giữ", ex: "**Capture** the market share." }
+                ]
+            },
+            {
+                root: "FAC/FIC",
+                meaning: "Làm, Tạo ra (Make/Do)",
+                category: "production",
+                words: [
+                    { w: "Factory", type: "n", m: "Nhà máy (nơi làm ra đồ)", ex: "The **factory** output increased by 20%." },
+                    { w: "Efficient", type: "adj", m: "Hiệu quả (làm ra kết quả)", ex: "We need a more **efficient** workflow." },
+                    { w: "Deficit", type: "n", m: "Thâm hụt (làm ra không đủ)", ex: "The budget **deficit** is worrying." },
+                    { w: "Beneficial", type: "adj", m: "Có lợi (làm điều tốt)", ex: "The merger will be **beneficial** for us." }
+                ]
+            },
+            {
+                root: "TAIN/TEN",
+                meaning: "Giữ (Hold)",
+                category: "business",
+                words: [
+                    { w: "Contain", type: "v", m: "Chứa đựng/Kìm hãm", ex: "The report **contains** sensitive data." },
+                    { w: "Retain", type: "v", m: "Giữ lại (khách hàng/nhân viên)", ex: "Our goal is to **retain** loyal customers." },
+                    { w: "Maintain", type: "v", m: "Duy trì/Bảo trì", ex: "**Maintain** a professional attitude." },
+                    { w: "Tenant", type: "n", m: "Người thuê nhà (người giữ chỗ)", ex: "The **tenant** signed the lease." }
+                ]
+            },
+            {
+                root: "VEN/VENT",
+                meaning: "Đến (Come)",
+                category: "people",
+                words: [
+                    { w: "Revenue", type: "n", m: "Doanh thu (tiền quay về)", ex: "Annual **revenue** exceeded targets." },
+                    { w: "Convention", type: "n", m: "Hội nghị (mọi người đến cùng nhau)", ex: "Attend the sales **convention**." },
+                    { w: "Prevent", type: "v", m: "Ngăn chặn (đến trước để chặn)", ex: "**Prevent** accidents by following rules." },
+                    { w: "Inventory", type: "n", m: "Hàng tồn kho (hàng đến kho)", ex: "Check the **inventory** list." }
+                ]
+            },
+            {
+                root: "CUR/CURR",
+                meaning: "Chạy (Run)",
+                category: "business",
+                words: [
+                    { w: "Current", type: "adj", m: "Hiện tại/Dòng chảy", ex: "Review the **current** policy." },
+                    { w: "Currency", type: "n", m: "Tiền tệ (lưu hành/chạy trong thị trường)", ex: "Exchange rate for foreign **currency**." },
+                    { w: "Occur", type: "v", m: "Xảy ra (chạy đến)", ex: "Errors may **occur** during processing." },
+                    { w: "Courier", type: "n", m: "Người đưa thư/Chuyển phát", ex: "Send the package via **courier**." }
+                ]
+            },
+            {
+                root: "STA/IST",
+                meaning: "Đứng (Stand)",
+                category: "business",
+                words: [
+                    { w: "Establish", type: "v", m: "Thành lập (làm cho đứng vững)", ex: "**Establish** a new branch in Asia." },
+                    { w: "Stable", type: "adj", m: "Ổn định", ex: "The market is relatively **stable**." },
+                    { w: "Status", type: "n", m: "Trạng thái/Địa vị", ex: "Check the shipment **status**." },
+                    { w: "Estate", type: "n", m: "Bất động sản/Tài sản", ex: "Real **estate** prices are rising." }
+                ]
+            },
+            {
+                root: "LOG",
+                meaning: "Lời nói/Lý lẽ (Word/Reason)",
+                category: "production",
+                words: [
+                    { w: "Logistics", type: "n", m: "Hậu cần (tính toán lý lẽ vận chuyển)", ex: "Manage the supply chain **logistics**." },
+                    { w: "Logic", type: "n", m: "Logic/Hợp lý", ex: "There is no **logic** in this decision." },
+                    { w: "Catalog", type: "n", m: "Danh mục (liệt kê lời/tên)", ex: "Browse our product **catalog**." },
+                    { w: "Apology", type: "n", m: "Lời xin lỗi", ex: "Accept our sincere **apology**." }
+                ]
+            },
+            {
+                root: "FIN",
+                meaning: "Kết thúc/Giới hạn (End/Limit)",
+                category: "business",
+                words: [
+                    { w: "Finance", type: "n", m: "Tài chính (thanh toán xong nợ)", ex: "Work in the **finance** department." },
+                    { w: "Final", type: "adj", m: "Cuối cùng", ex: "The **final** decision is yours." },
+                    { w: "Define", type: "v", m: "Định nghĩa/Vạch rõ giới hạn", ex: "**Define** the project scope clearly." },
+                    { w: "Fine", type: "n", m: "Tiền phạt (kết thúc vụ việc)", ex: "Pay a parking **fine**." }
+                ]
+            },
+            {
+                root: "GEN",
+                meaning: "Sinh ra/Loại (Birth/Kind)",
+                category: "people",
+                words: [
+                    { w: "Generate", type: "v", m: "Tạo ra/Phát ra", ex: "**Generate** a monthly report." },
+                    { w: "General", type: "adj", m: "Chung/Tổng quát", ex: "The **general** manager is here." },
+                    { w: "Generous", type: "adj", m: "Hào phóng (sinh ra ở dòng dõi tốt)", ex: "A **generous** bonus offer." },
+                    { w: "Genre", type: "n", m: "Thể loại", ex: "What **genre** of music fits the ad?" }
+                ]
+            },
+            {
+                root: "MOT/MOV",
+                meaning: "Di chuyển (Move)",
+                category: "people",
+                words: [
+                    { w: "Promote", type: "v", m: "Thăng chức/Quảng bá (đẩy về trước)", ex: "**Promote** the new product line." },
+                    { w: "Remove", type: "v", m: "Dời đi/Loại bỏ", ex: "**Remove** duplicates from the list." },
+                    { w: "Motivation", type: "n", m: "Động lực (thứ đẩy bạn đi)", ex: "Employee **motivation** is key." },
+                    { w: "Remote", type: "adj", m: "Xa xôi/Từ xa", ex: "We offer **remote** work options." }
+                ]
+            },
+            {
+                root: "SIGN",
+                meaning: "Dấu hiệu (Mark)",
+                category: "business",
+                words: [
+                    { w: "Signature", type: "n", m: "Chữ ký", ex: "We need your **signature** here." },
+                    { w: "Design", type: "v/n", m: "Thiết kế (vẽ ra dấu hiệu)", ex: "**Design** a user-friendly app." },
+                    { w: "Significant", type: "adj", m: "Đáng kể/Quan trọng (được đánh dấu)", ex: "A **significant** increase in sales." },
+                    { w: "Assign", type: "v", m: "Phân công (đánh dấu cho ai)", ex: "**Assign** tasks to the team." }
+                ]
+            },
+            {
+                root: "SERV",
+                meaning: "Phục vụ/Giữ (Serve/Keep)",
+                category: "people",
+                words: [
+                    { w: "Service", type: "n", m: "Dịch vụ", ex: "Customer **service** is priority." },
+                    { w: "Reserve", type: "v", m: "Đặt trước/Giữ lại", ex: "**Reserve** a table for two." },
+                    { w: "Conserve", type: "v", m: "Bảo tồn/Tiết kiệm", ex: "**Conserve** energy in the office." },
+                    { w: "Deserve", type: "v", m: "Xứng đáng (được phục vụ)", ex: "You **deserve** a raise." }
+                ]
+            },
+            {
+                root: "AUD",
+                meaning: "Nghe (Hear)",
+                category: "people",
+                words: [
+                    { w: "Audience", type: "n", m: "Khán giả", ex: "Target the right **audience**." },
+                    { w: "Audit", type: "n/v", m: "Kiểm toán (nghe báo cáo)", ex: "The annual tax **audit**." },
+                    { w: "Auditorium", type: "n", m: "Thính phòng", ex: "Meet in the main **auditorium**." },
+                    { w: "Audio", type: "adj", m: "Âm thanh", ex: "Check the **audio** equipment." }
+                ]
+            },
+            {
+                root: "SCRIB/SCRIPT",
+                meaning: "Viết (Write)",
+                category: "business",
+                words: [
+                    { w: "Describe", type: "v", m: "Mô tả", ex: "**Describe** the problem in detail." },
+                    { w: "Subscribe", type: "v", m: "Đăng ký (viết tên vào dưới)", ex: "**Subscribe** to our newsletter." },
+                    { w: "Transcript", type: "n", m: "Bản sao/Bảng điểm", ex: "Submit your university **transcript**." },
+                    { w: "Prescription", type: "n", m: "Đơn thuốc/Quy định", ex: "Follow the doctor's **prescription**." }
+                ]
+            },
+            {
+                root: "PLIC/PLEX",
+                meaning: "Gấp (Fold)",
+                category: "production",
+                words: [
+                    { w: "Application", type: "n", m: "Đơn xin/Ứng dụng (gấp vào)", ex: "Submit your job **application**." },
+                    { w: "Complicated", type: "adj", m: "Phức tạp (bị gấp nhiều lần)", ex: "The procedure is too **complicated**." },
+                    { w: "Duplicate", type: "v", m: "Sao chép (gấp đôi)", ex: "**Duplicate** this file." },
+                    { w: "Explicit", type: "adj", m: "Rõ ràng (mở nếp gấp ra)", ex: "Give **explicit** instructions." }
+                ]
+            },
+            {
+                root: "VERS/VERT",
+                meaning: "Xoay/Chuyển (Turn)",
+                category: "production",
+                words: [
+                    { w: "Convert", type: "v", m: "Chuyển đổi", ex: "**Convert** PDF to Word." },
+                    { w: "Reverse", type: "v", m: "Đảo ngược", ex: "**Reverse** the decision." },
+                    { w: "Advertise", type: "v", m: "Quảng cáo (xoay sự chú ý về)", ex: "**Advertise** on social media." },
+                    { w: "Diverse", type: "adj", m: "Đa dạng (xoay nhiều hướng)", ex: "A **diverse** workforce." }
+                ]
+            },
+            {
+                root: "PRESS",
+                meaning: "Ép/Ấn (Press)",
+                category: "people",
+                words: [
+                    { w: "Pressure", type: "n", m: "Áp lực", ex: "Work well under **pressure**." },
+                    { w: "Express", type: "v", m: "Bày tỏ/Nhanh (ép ra ngoài)", ex: "**Express** your opinion clearly." },
+                    { w: "Impress", type: "v", m: "Gây ấn tượng (ấn vào trong)", ex: "**Impress** the interviewers." },
+                    { w: "Compress", type: "v", m: "Nén lại", ex: "**Compress** the file size." }
+                ]
+            },
+             {
+                root: "REG",
+                meaning: "Quy tắc/Thẳng (Rule/Straight)",
+                category: "business",
+                words: [
+                    { w: "Regular", type: "adj", m: "Thường xuyên/Đều đặn", ex: "Attend **regular** meetings." },
+                    { w: "Regulate", type: "v", m: "Điều chỉnh/Quy định", ex: "**Regulate** the temperature." },
+                    { w: "Region", type: "n", m: "Vùng/Khu vực (được cai trị)", ex: "Sales in the northern **region**." },
+                    { w: "Regulation", type: "n", m: "Quy định", ex: "Safety **regulations** are strict." }
+                ]
+            },
+            {
+                root: "PEND/PENS",
+                meaning: "Treo/Cân (Hang/Weigh)",
+                category: "business",
+                words: [
+                    { w: "Pending", type: "adj", m: "Đang chờ xử lý (vẫn đang treo)", ex: "The approval is **pending**." },
+                    { w: "Expense", type: "n", m: "Chi phí (cân đo tiền bạc)", ex: "Travel **expenses** are reimbursed." },
+                    { w: "Compensate", type: "v", m: "Đền bù (cân bằng lại)", ex: "We will **compensate** you for the loss." },
+                    { w: "Suspend", type: "v", m: "Đình chỉ/Treo lên", ex: "**Suspend** the account temporarily." }
+                ]
+            },
+            {
+                root: "CLU/CLUS",
+                meaning: "Đóng (Shut/Close)",
+                category: "business",
+                words: [
+                    { w: "Include", type: "v", m: "Bao gồm (đóng vào trong)", ex: "The price **includes** tax." },
+                    { w: "Exclusive", type: "adj", m: "Độc quyền (đóng người ngoài ra)", ex: "An **exclusive** offer for members." },
+                    { w: "Conclusion", type: "n", m: "Kết luận (đóng lại vấn đề)", ex: "In **conclusion**, we should proceed." },
+                    { w: "Disclose", type: "v", m: "Tiết lộ (không đóng/mở ra)", ex: "Do not **disclose** private info." }
+                ]
+            },
+            {
+                root: "PLE/PLETE",
+                meaning: "Lấp đầy (Fill)",
+                category: "production",
+                words: [
+                    { w: "Complete", type: "v/adj", m: "Hoàn thành (lấp đầy)", ex: "**Complete** the form below." },
+                    { w: "Implement", type: "v", m: "Thi hành/Thực hiện", ex: "**Implement** the new strategy." },
+                    { w: "Supplement", type: "n/v", m: "Phần bổ sung", ex: "Take a vitamin **supplement**." },
+                    { w: "Deplete", type: "v", m: "Làm cạn kiệt (bỏ phần lấp đầy đi)", ex: "Resources are **depleted**." }
+                ]
+            },
+            {
+                root: "RECT",
+                meaning: "Thẳng/Đúng (Straight/Right)",
+                category: "people",
+                words: [
+                    { w: "Director", type: "n", m: "Giám đốc (người dẫn đường thẳng)", ex: "The **director** approved the plan." },
+                    { w: "Correct", type: "v/adj", m: "Sửa đúng/Chính xác", ex: "**Correct** the errors immediately." },
+                    { w: "Direct", type: "v/adj", m: "Trực tiếp/Chỉ đường", ex: "Contact me **direct**." },
+                    { w: "Rectify", type: "v", m: "Chỉnh sửa cho đúng", ex: "**Rectify** the situation." }
+                ]
+            },
+            {
+                root: "FID",
+                meaning: "Tin tưởng (Trust/Faith)",
+                category: "business",
+                words: [
+                    { w: "Confidence", type: "n", m: "Sự tự tin/Tin cậy", ex: "We have **confidence** in our team." },
+                    { w: "Confidential", type: "adj", m: "Bảo mật (tin tưởng mới cho biết)", ex: "Keep this file **confidential**." },
+                    { w: "Affidavit", type: "n", m: "Bản khai có tuyên thệ (pháp lý)", ex: "Sign the **affidavit**." },
+                    { w: "Fidelity", type: "n", m: "Sự trung thành", ex: "Brand **fidelity** is important." }
+                ]
+            },
+            {
+                root: "SOLV/SOLU",
+                meaning: "Nới lỏng/Giải quyết (Loosen)",
+                category: "production",
+                words: [
+                    { w: "Solution", type: "n", m: "Giải pháp", ex: "Find a **solution** quickly." },
+                    { w: "Solve", type: "v", m: "Giải quyết", ex: "**Solve** the customer's problem." },
+                    { w: "Absolute", type: "adj", m: "Tuyệt đối (không bị ràng buộc)", ex: "We need **absolute** certainty." },
+                    { w: "Resolve", type: "v", m: "Kiên quyết/Giải quyết", ex: "**Resolve** the conflict." }
+                ]
+            },
+            {
+                root: "QUIR/QUIS",
+                meaning: "Tìm kiếm/Hỏi (Seek/Ask)",
+                category: "business",
+                words: [
+                    { w: "Inquire", type: "v", m: "Hỏi thăm/Điều tra", ex: "**Inquire** about the vacancy." },
+                    { w: "Acquire", type: "v", m: "Đạt được/Thâu tóm", ex: "**Acquire** new skills." },
+                    { w: "Requirement", type: "n", m: "Yêu cầu", ex: "Meet the job **requirements**." },
+                    { w: "Request", type: "n/v", m: "Yêu cầu", ex: "Submit a vacation **request**." }
+                ]
+            },
+            {
+                root: "RUPT",
+                meaning: "Gãy/Vỡ (Break)",
+                category: "business",
+                words: [
+                    { w: "Bankrupt", type: "adj", m: "Phá sản (vỡ ngân hàng)", ex: "The firm went **bankrupt**." },
+                    { w: "Interrupt", type: "v", m: "Gián đoạn (chen ngang làm vỡ)", ex: "Do not **interrupt** the speaker." },
+                    { w: "Disrupt", type: "v", m: "Làm gián đoạn/Phá vỡ", ex: "Supply chains were **disrupted**." },
+                    { w: "Corruption", type: "n", m: "Tham nhũng (sự thối nát/vỡ nát)", ex: "Fight against **corruption**." }
+                ]
+            },
+            {
+                root: "MEM",
+                meaning: "Nhớ (Remember)",
+                category: "people",
+                words: [
+                    { w: "Memo", type: "n", m: "Thông báo nội bộ (để nhớ)", ex: "Read the internal **memo**." },
+                    { w: "Commemorate", type: "v", m: "Tưởng niệm", ex: "**Commemorate** the anniversary." },
+                    { w: "Memory", type: "n", m: "Bộ nhớ/Kỷ niệm", ex: "Expand the computer **memory**." },
+                    { w: "Remind", type: "v", m: "Nhắc nhở", ex: "**Remind** me to call him." }
+                ]
+            },
+            {
+                root: "NOT",
+                meaning: "Ghi chú/Biết (Mark/Know)",
+                category: "business",
+                words: [
+                    { w: "Notice", type: "n/v", m: "Thông báo/Chú ý", ex: "Give two weeks' **notice**." },
+                    { w: "Notify", type: "v", m: "Thông báo", ex: "**Notify** staff of the change." },
+                    { w: "Notion", type: "n", m: "Ý niệm/Quan điểm", ex: "Reject the **notion**." },
+                    { w: "Notable", type: "adj", m: "Đáng chú ý", ex: "A **notable** improvement." }
+                ]
+            },
+            {
+                root: "LAB",
+                meaning: "Làm việc (Work)",
+                category: "production",
+                words: [
+                    { w: "Labor", type: "n", m: "Lao động", ex: "The cost of **labor** is high." },
+                    { w: "Collaborate", type: "v", m: "Hợp tác (làm việc cùng)", ex: "**Collaborate** with other teams." },
+                    { w: "Laboratory", type: "n", m: "Phòng thí nghiệm", ex: "Test in the **laboratory**." },
+                    { w: "Elaborate", type: "v/adj", m: "Kỹ lưỡng/Giải thích chi tiết", ex: "Please **elaborate** on your plan." }
+                ]
+            },
+             {
+                root: "CLAIM/CLAM",
+                meaning: "Hô hào/Gọi (Cry out)",
+                category: "people",
+                words: [
+                    { w: "Claim", type: "v/n", m: "Đòi hỏi/Tuyên bố", ex: "File an insurance **claim**." },
+                    { w: "Proclaim", type: "v", m: "Công bố/Tuyên bố", ex: "**Proclaim** the results." },
+                    { w: "Exclaim", type: "v", m: "Thốt lên", ex: "She **exclaimed** in surprise." },
+                    { w: "Disclaimer", type: "n", m: "Tuyên bố miễn trừ trách nhiệm", ex: "Read the **disclaimer** first." }
+                ]
+            },
+            {
+                root: "TERM",
+                meaning: "Kết thúc/Giới hạn (End)",
+                category: "business",
+                words: [
+                    { w: "Terminate", type: "v", m: "Chấm dứt (hợp đồng/việc làm)", ex: "**Terminate** the contract." },
+                    { w: "Determine", type: "v", m: "Quyết định/Xác định", ex: "**Determine** the cause of error." },
+                    { w: "Term", type: "n", m: "Thuật ngữ/Kỳ hạn", ex: "Short-**term** goals." },
+                    { w: "Terminal", type: "n/adj", m: "Nhà ga/Cuối cùng", ex: "Airport **terminal** 2." }
+                ]
+            },
+            {
+                root: "SENT/SENS",
+                meaning: "Cảm thấy (Feel)",
+                category: "people",
+                words: [
+                    { w: "Consensus", type: "n", m: "Sự đồng thuận (cùng cảm nhận)", ex: "Reach a **consensus**." },
+                    { w: "Sensitive", type: "adj", m: "Nhạy cảm", ex: "**Sensitive** information." },
+                    { w: "Sentiment", type: "n", m: "Tình cảm/Tâm lý thị trường", ex: "Market **sentiment** is positive." },
+                    { w: "Consent", type: "n/v", m: "Sự đồng ý", ex: "Written **consent** is required." }
+                ]
+            },
+            {
+                root: "GRAT",
+                meaning: "Vui/Biết ơn (Pleasing)",
+                category: "people",
+                words: [
+                    { w: "Grateful", type: "adj", m: "Biết ơn", ex: "We are **grateful** for your help." },
+                    { w: "Congratulate", type: "v", m: "Chúc mừng (chung vui)", ex: "**Congratulate** him on the promotion." },
+                    { w: "Gratitude", type: "n", m: "Lòng biết ơn", ex: "Express our **gratitude**." },
+                    { w: "Gratuity", type: "n", m: "Tiền boa/Tiền thưởng", ex: "Leave a **gratuity** for the waiter." }
+                ]
+            },
+            // --- NEW ROOTS ADDED ---
+            {
+                root: "CESS/CEED",
+                meaning: "Đi/Nhượng bộ (Go/Yield)",
+                category: "business",
+                words: [
+                    { w: "Process", type: "n/v", m: "Quy trình/Xử lý (đi về phía trước)", ex: "**Process** the order immediately." },
+                    { w: "Access", type: "n/v", m: "Truy cập/Lối vào (đi vào)", ex: "Gain **access** to the database." },
+                    { w: "Exceed", type: "v", m: "Vượt quá (đi ra ngoài giới hạn)", ex: "Sales **exceeded** our targets." },
+                    { w: "Proceed", type: "v", m: "Tiếp tục/Tiến hành", ex: "Please **proceed** to the gate." }
+                ]
+            },
+            {
+                root: "VAL",
+                meaning: "Giá trị/Mạnh (Worth/Strong)",
+                category: "business",
+                words: [
+                    { w: "Value", type: "n", m: "Giá trị", ex: "Increase the market **value**." },
+                    { w: "Evaluate", type: "v", m: "Đánh giá/Định giá", ex: "**Evaluate** the employee's performance." },
+                    { w: "Valid", type: "adj", m: "Có hiệu lực/Hợp lệ", ex: "A **valid** passport is required." },
+                    { w: "Equivalent", type: "adj", m: "Tương đương (cùng giá trị)", ex: "The price is **equivalent** to $50." }
+                ]
+            },
+            {
+                root: "SIST",
+                meaning: "Đứng (Stand)",
+                category: "people",
+                words: [
+                    { w: "Assist", type: "v", m: "Hỗ trợ (đứng bên cạnh giúp)", ex: "**Assist** customers with inquiries." },
+                    { w: "Consistent", type: "adj", m: "Nhất quán/Kiên định", ex: "Maintain **consistent** quality." },
+                    { w: "Resist", type: "v", m: "Kháng cự/Chống lại", ex: "**Resist** the urge to spend." },
+                    { w: "Persist", type: "v", m: "Kiên trì (đứng vững mãi)", ex: "Issues may **persist** if not fixed." }
+                ]
+            },
+            {
+                root: "TRIB",
+                meaning: "Đóng góp/Trả (Pay/Give)",
+                category: "business",
+                words: [
+                    { w: "Distribute", type: "v", m: "Phân phối (chia ra cho nhiều người)", ex: "**Distribute** the flyers." },
+                    { w: "Contribute", type: "v", m: "Đóng góp (góp chung vào)", ex: "**Contribute** to the pension fund." },
+                    { w: "Attribute", type: "v/n", m: "Quy cho là/Thuộc tính", ex: "**Attribute** success to hard work." },
+                    { w: "Distributor", type: "n", m: "Nhà phân phối", ex: "Contact our local **distributor**." }
+                ]
+            },
+            {
+                root: "NOV",
+                meaning: "Mới (New)",
+                category: "production",
+                words: [
+                    { w: "Renovate", type: "v", m: "Cải tạo/Nâng cấp (làm mới lại)", ex: "**Renovate** the old office." },
+                    { w: "Innovate", type: "v", m: "Đổi mới/Sáng tạo", ex: "We must **innovate** to survive." },
+                    { w: "Novice", type: "n", m: "Người mới/Học việc", ex: "Training for **novice** users." },
+                    { w: "Novelty", type: "n", m: "Sự mới lạ", ex: "The **novelty** of the product faded." }
+                ]
+            },
+            {
+                root: "VAC",
+                meaning: "Trống (Empty)",
+                category: "people",
+                words: [
+                    { w: "Vacancy", type: "n", m: "Vị trí trống/Chỗ trống", ex: "There is a job **vacancy** in HR." },
+                    { w: "Vacation", type: "n", m: "Kỳ nghỉ (thời gian trống)", ex: "Go on a summer **vacation**." },
+                    { w: "Evacuate", type: "v", m: "Sơ tán (làm trống toà nhà)", ex: "**Evacuate** the building immediately." },
+                    { w: "Vacant", type: "adj", m: "Bỏ trống", ex: "The position remains **vacant**." }
+                ]
+            },
+            {
+                root: "PEL/PULS",
+                meaning: "Đẩy/Thúc ép (Push/Drive)",
+                category: "business",
+                words: [
+                    { w: "Compulsory", type: "adj", m: "Bắt buộc (bị ép làm)", ex: "Attendance is **compulsory**." },
+                    { w: "Compel", type: "v", m: "Bắt buộc/Thúc ép", ex: "Data **compels** us to act." },
+                    { w: "Expel", type: "v", m: "Trục xuất (đẩy ra ngoài)", ex: "**Expel** members who violate rules." },
+                    { w: "Impulsive", type: "adj", m: "Bốc đồng (bị đẩy bởi cảm xúc)", ex: "Avoid **impulsive** buying." }
+                ]
+            },
+            {
+                root: "DUR",
+                meaning: "Bền/Kéo dài (Last/Hard)",
+                category: "production",
+                words: [
+                    { w: "Duration", type: "n", m: "Khoảng thời gian (độ kéo dài)", ex: "For the **duration** of the contract." },
+                    { w: "Durable", type: "adj", m: "Bền (chịu được khó khăn)", ex: "**Durable** materials decrease costs." },
+                    { w: "Endure", type: "v", m: "Chịu đựng/Tồn tại", ex: "The company **endured** the crisis." },
+                    { w: "During", type: "prep", m: "Trong suốt (khoảng thời gian)", ex: "Closed **during** the holidays." }
+                ]
+            },
+            {
+                root: "SECT",
+                meaning: "Cắt (Cut)",
+                category: "business",
+                words: [
+                    { w: "Section", type: "n", m: "Phần/Khu vực (được cắt ra)", ex: "Review the finance **section**." },
+                    { w: "Sector", type: "n", m: "Lĩnh vực/Khu vực kinh tế", ex: "Growth in the tech **sector**." },
+                    { w: "Intersection", type: "n", m: "Giao lộ (nơi đường cắt nhau)", ex: "Turn left at the **intersection**." },
+                    { w: "Dissect", type: "v", m: "Mổ xẻ/Phân tích chi tiết", ex: "**Dissect** the problem carefully." }
+                ]
+            },
+            {
+                root: "SEQ/SEC",
+                meaning: "Theo sau (Follow)",
+                category: "business",
+                words: [
+                    { w: "Sequence", type: "n", m: "Trình tự/Chuỗi", ex: "Follow the correct **sequence**." },
+                    { w: "Consequence", type: "n", m: "Hậu quả (cái theo sau hành động)", ex: "Face the legal **consequences**." },
+                    { w: "Consecutive", type: "adj", m: "Liên tiếp (cái này theo sau cái kia)", ex: "Three **consecutive** wins." },
+                    { w: "Subsequent", type: "adj", m: "Xảy ra sau đó", ex: "**Subsequent** events proved him right." }
+                ]
+            },
+            {
+                root: "FUND",
+                meaning: "Đáy/Nền tảng (Bottom)",
+                category: "business",
+                words: [
+                    { w: "Refund", type: "n/v", m: "Hoàn tiền (đổ lại vào quỹ)", ex: "Request a full **refund**." },
+                    { w: "Fund", type: "n/v", m: "Quỹ/Cấp vốn", ex: "**Fund** the new project." },
+                    { w: "Fundamental", type: "adj", m: "Cơ bản/Nền tảng", ex: "A **fundamental** change in policy." },
+                    { w: "Founder", type: "n", m: "Người sáng lập (người xây nền)", ex: "The **founder** retired last year." }
+                ]
+            },
+            {
+                root: "GRES/GRAD",
+                meaning: "Bước đi (Step)",
+                category: "production",
+                words: [
+                    { w: "Progress", type: "n/v", m: "Tiến bộ (bước về phía trước)", ex: "Check the work in **progress**." },
+                    { w: "Upgrade", type: "v/n", m: "Nâng cấp (bước lên cao)", ex: "**Upgrade** your software." },
+                    { w: "Graduate", type: "n/v", m: "Tốt nghiệp (hoàn thành các bước)", ex: "Hire recent **graduates**." },
+                    { w: "Aggressive", type: "adj", m: "Quyết liệt/Hăng hái", ex: "An **aggressive** marketing strategy." }
+                ]
+            },
+            {
+                root: "USE/UTI",
+                meaning: "Dùng (Use)",
+                category: "production",
+                words: [
+                    { w: "Utility", type: "n", m: "Tiện ích/Điện nước", ex: "Pay the **utility** bills." },
+                    { w: "Utilize", type: "v", m: "Tận dụng/Sử dụng", ex: "**Utilize** all available resources." },
+                    { w: "Usage", type: "n", m: "Việc sử dụng/Lượng dùng", ex: "Track internet **usage**." },
+                    { w: "Abuse", type: "n/v", m: "Lạm dụng (dùng sai)", ex: "Report power **abuse**." }
+                ]
+            },
+            {
+                root: "PAR",
+                meaning: "Bằng nhau/Sẵn sàng (Equal/Ready)",
+                category: "business",
+                words: [
+                    { w: "Compare", type: "v", m: "So sánh (đặt ngang bằng nhau)", ex: "**Compare** the two options." },
+                    { w: "Prepare", type: "v", m: "Chuẩn bị (làm cho sẵn sàng)", ex: "**Prepare** for the meeting." },
+                    { w: "Comparison", type: "n", m: "Sự so sánh", ex: "A cost **comparison** chart." },
+                    { w: "Repair", type: "v", m: "Sửa chữa (làm sẵn sàng lại)", ex: "**Repair** the broken machine." }
+                ]
+            },
+            {
+                root: "MOD",
+                meaning: "Đo lường/Cách thức (Measure/Manner)",
+                category: "production",
+                words: [
+                    { w: "Accommodate", type: "v", m: "Đáp ứng/Cung cấp chỗ (đo cho vừa)", ex: "**Accommodate** special requests." },
+                    { w: "Modify", type: "v", m: "Sửa đổi/Điều chỉnh", ex: "**Modify** the design slightly." },
+                    { w: "Moderate", type: "adj", m: "Vừa phải (đúng chừng mực)", ex: "A **moderate** increase in sales." },
+                    { w: "Model", type: "n", m: "Mô hình/Mẫu", ex: "The latest business **model**." }
+                ]
+            },
+            // --- BATCH 4: REACHING 100 ROOTS (Science, Thought & Society) ---
+            {
+                root: "CHRON",
+                meaning: "Thời gian (Time)",
+                category: "production",
+                words: [
+                    { w: "Synchronize", type: "v", m: "Đồng bộ hóa (cùng thời gian)", ex: "**Synchronize** the data." },
+                    { w: "Chronological", type: "adj", m: "Theo trình tự thời gian", ex: "In **chronological** order." },
+                    { w: "Chronic", type: "adj", m: "Mãn tính/Kéo dài", ex: "A **chronic** budget deficit." },
+                    { w: "Chronicle", type: "n", m: "Biên niên sử/Ghi chép", ex: "A **chronicle** of events." }
+                ]
+            },
+            {
+                root: "AUTO",
+                meaning: "Tự động/Bản thân (Self)",
+                category: "production",
+                words: [
+                    { w: "Automate", type: "v", m: "Tự động hóa", ex: "**Automate** the workflow." },
+                    { w: "Autonomous", type: "adj", m: "Tự chủ/Tự hành", ex: "**Autonomous** vehicles." },
+                    { w: "Automatic", type: "adj", m: "Tự động", ex: "An **automatic** reply." },
+                    { w: "Autonomy", type: "n", m: "Quyền tự trị/Sự tự chủ", ex: "Workers want more **autonomy**." }
+                ]
+            },
+            {
+                root: "BIO",
+                meaning: "Sự sống (Life)",
+                category: "people",
+                words: [
+                    { w: "Biography", type: "n", m: "Tiểu sử (viết về cuộc đời)", ex: "Read the CEO's **biography**." },
+                    { w: "Biology", type: "n", m: "Sinh học", ex: "Degree in **biology**." },
+                    { w: "Biofuel", type: "n", m: "Nhiên liệu sinh học", ex: "Invest in **biofuel**." },
+                    { w: "Antibiotic", type: "n", m: "Kháng sinh (chống lại vi khuẩn sống)", ex: "Prescribe an **antibiotic**." }
+                ]
+            },
+            {
+                root: "TELE",
+                meaning: "Xa (Far)",
+                category: "production",
+                words: [
+                    { w: "Telecommute", type: "v", m: "Làm việc từ xa", ex: "Staff can **telecommute**." },
+                    { w: "Televise", type: "v", m: "Phát sóng truyền hình", ex: "**Televise** the event." },
+                    { w: "Telephone", type: "n/v", m: "Điện thoại (âm thanh từ xa)", ex: "Answer the **telephone**." },
+                    { w: "Telescope", type: "n", m: "Kính thiên văn", ex: "View stars through a **telescope**." }
+                ]
+            },
+            {
+                root: "PATH",
+                meaning: "Cảm xúc/Bệnh (Feeling/Disease)",
+                category: "people",
+                words: [
+                    { w: "Empathy", type: "n", m: "Sự thấu cảm (đặt cảm xúc vào trong)", ex: "Show **empathy** to clients." },
+                    { w: "Sympathy", type: "n", m: "Sự thông cảm (cùng cảm xúc)", ex: "Deepest **sympathy** for your loss." },
+                    { w: "Pathetic", type: "adj", m: "Đáng thương/Thảm hại", ex: "A **pathetic** excuse." },
+                    { w: "Pathology", type: "n", m: "Bệnh lý học", ex: "Study the **pathology** report." }
+                ]
+            },
+            {
+                root: "COGN/GNO",
+                meaning: "Biết (Know)",
+                category: "people",
+                words: [
+                    { w: "Recognize", type: "v", m: "Nhận ra/Công nhận", ex: "**Recognize** his achievement." },
+                    { w: "Diagnose", type: "v", m: "Chẩn đoán (biết qua triệu chứng)", ex: "**Diagnose** the problem." },
+                    { w: "Cognitive", type: "adj", m: "Thuộc về nhận thức", ex: "**Cognitive** skills." },
+                    { w: "Ignore", type: "v", m: "Phớt lờ (không muốn biết)", ex: "Don't **ignore** the warning." }
+                ]
+            },
+            {
+                root: "CLAR",
+                meaning: "Rõ ràng (Clear)",
+                category: "business",
+                words: [
+                    { w: "Clarify", type: "v", m: "Làm rõ", ex: "Please **clarify** this point." },
+                    { w: "Declare", type: "v", m: "Tuyên bố (làm rõ ra)", ex: "**Declare** bankruptcy." },
+                    { w: "Clarification", type: "n", m: "Sự làm rõ", ex: "Ask for **clarification**." },
+                    { w: "Clarity", type: "n", m: "Sự rõ ràng", ex: "Edit for **clarity**." }
+                ]
+            },
+            {
+                root: "BREV",
+                meaning: "Ngắn (Short)",
+                category: "business",
+                words: [
+                    { w: "Abbreviate", type: "v", m: "Viết tắt", ex: "**Abbreviate** the title." },
+                    { w: "Brief", type: "adj/n", m: "Ngắn gọn/Bản tóm tắt", ex: "A **brief** meeting." },
+                    { w: "Brevity", type: "n", m: "Sự ngắn gọn/Súc tích", ex: "I appreciate the **brevity**." },
+                    { w: "Briefing", type: "n", m: "Cuộc họp chỉ dẫn nhanh", ex: "Morning **briefing**." }
+                ]
+            },
+            {
+                root: "DOM",
+                meaning: "Nhà/Cai trị (House/Rule)",
+                category: "business",
+                words: [
+                    { w: "Domestic", type: "adj", m: "Nội địa (trong nhà)", ex: "**Domestic** market." },
+                    { w: "Dominate", type: "v", m: "Thống trị/Chiếm ưu thế", ex: "**Dominate** the industry." },
+                    { w: "Domain", type: "n", m: "Lĩnh vực/Miền", ex: "Public **domain**." },
+                    { w: "Predominant", type: "adj", m: "Chiếm ưu thế/Chủ đạo", ex: "The **predominant** factor." }
+                ]
+            },
+            {
+                root: "FRACT/FRAG",
+                meaning: "Vỡ/Gãy (Break)",
+                category: "production",
+                words: [
+                    { w: "Fragile", type: "adj", m: "Dễ vỡ", ex: "Handle **fragile** items with care." },
+                    { w: "Fraction", type: "n", m: "Phân số/Phần nhỏ", ex: "A **fraction** of the cost." },
+                    { w: "Fracture", type: "n/v", m: "Vết nứt/Gãy", ex: "A structural **fracture**." },
+                    { w: "Fragment", type: "n", m: "Mảnh vỡ", ex: "**Fragments** of data." }
+                ]
+            },
+            {
+                root: "JUNCT",
+                meaning: "Nối (Join)",
+                category: "production",
+                words: [
+                    { w: "Junction", type: "n", m: "Giao lộ/Điểm nối", ex: "Meet at the **junction**." },
+                    { w: "Conjunction", type: "n", m: "Sự kết hợp/Liên từ", ex: "In **conjunction** with HR." },
+                    { w: "Adjunct", type: "n/adj", m: "Phần phụ/Giảng viên thỉnh giảng", ex: "**Adjunct** professor." },
+                    { w: "Disjunctive", type: "adj", m: "Rời rạc", ex: "**Disjunctive** narrative." }
+                ]
+            },
+            {
+                root: "LIB",
+                meaning: "Tự do (Free)",
+                category: "people",
+                words: [
+                    { w: "Liberal", type: "adj", m: "Tự do/Phóng khoáng", ex: "**Liberal** arts education." },
+                    { w: "Liberty", type: "n", m: "Sự tự do", ex: "Freedom and **liberty**." },
+                    { w: "Liberate", type: "v", m: "Giải phóng", ex: "**Liberate** the market." },
+                    { w: "Deliberate", type: "adj/v", m: "Cố ý/Cân nhắc (tự do lựa chọn)", ex: "A **deliberate** mistake." }
+                ]
+            },
+            {
+                root: "LUM/LUC",
+                meaning: "Ánh sáng (Light)",
+                category: "production",
+                words: [
+                    { w: "Illuminate", type: "v", m: "Chiếu sáng/Làm sáng tỏ", ex: "**Illuminate** the issue." },
+                    { w: "Lucid", type: "adj", m: "Dễ hiểu/Sáng suốt", ex: "A **lucid** explanation." },
+                    { w: "Translucent", type: "adj", m: "Mờ (ánh sáng đi qua được)", ex: "**Translucent** glass." },
+                    { w: "Illustrate", type: "v", m: "Minh họa (làm sáng tỏ bằng hình)", ex: "**Illustrate** the process." }
+                ]
+            },
+            {
+                root: "MAL",
+                meaning: "Xấu/Ác (Bad)",
+                category: "people",
+                words: [
+                    { w: "Malfunction", type: "n/v", m: "Trục trặc (chức năng xấu)", ex: "Equipment **malfunction**." },
+                    { w: "Malicious", type: "adj", m: "Hiểm độc/Có hại", ex: "**Malicious** software (malware)." },
+                    { w: "Malnutrition", type: "n", m: "Suy dinh dưỡng", ex: "Fight **malnutrition**." },
+                    { w: "Dismal", type: "adj", m: "Ảm đạm/Buồn thảm", ex: "**Dismal** sales figures." }
+                ]
+            },
+            {
+                root: "MEDI",
+                meaning: "Giữa (Middle)",
+                category: "business",
+                words: [
+                    { w: "Medium", type: "n/adj", m: "Trung bình/Phương tiện", ex: "Small and **medium** enterprises." },
+                    { w: "Media", type: "n", m: "Truyền thông (kênh trung gian)", ex: "Social **media** marketing." },
+                    { w: "Immediate", type: "adj", m: "Ngay lập tức (không có gì ở giữa)", ex: "Take **immediate** action." },
+                    { w: "Mediator", type: "n", m: "Người hòa giải (đứng giữa)", ex: "Appoint a **mediator**." }
+                ]
+            },
+            {
+                root: "MIGR",
+                meaning: "Di cư (Wander)",
+                category: "people",
+                words: [
+                    { w: "Migrate", type: "v", m: "Di cư/Chuyển hệ thống", ex: "**Migrate** data to the cloud." },
+                    { w: "Immigrant", type: "n", m: "Người nhập cư (đi vào)", ex: "Illegal **immigrant**." },
+                    { w: "Emigrate", type: "v", m: "Di cư (đi ra khỏi nước)", ex: "**Emigrate** from Europe." },
+                    { w: "Migrant", type: "n", m: "Người di cư", ex: "**Migrant** workers." }
+                ]
+            },
+            {
+                root: "MIN",
+                meaning: "Nhỏ (Small)",
+                category: "business",
+                words: [
+                    { w: "Minimum", type: "n/adj", m: "Tối thiểu", ex: "**Minimum** wage." },
+                    { w: "Minor", type: "adj", m: "Nhỏ/Thứ yếu", ex: "**Minor** errors." },
+                    { w: "Diminish", type: "v", m: "Giảm bớt/Thu nhỏ", ex: "Profits **diminished**." },
+                    { w: "Minute", type: "n/adj", m: "Phút/Rất nhỏ (đọc là my-noot)", ex: "**Minute** details." }
+                ]
+            },
+            {
+                root: "MISS/MIT",
+                meaning: "Gửi/Bỏ (Send)",
+                category: "business",
+                words: [
+                    { w: "Dismiss", type: "v", m: "Sa thải/Giải tán (gửi đi chỗ khác)", ex: "**Dismiss** the employee." },
+                    { w: "Omit", type: "v", m: "Bỏ sót", ex: "**Omit** unnecessary details." },
+                    { w: "Emit", type: "v", m: "Phát ra/Thải ra", ex: "**Emit** carbon dioxide." },
+                    { w: "Intermittent", type: "adj", m: "Gián đoạn (gửi đi ngắt quãng)", ex: "**Intermittent** rain." }
+                ]
+            },
+            {
+                root: "MORT",
+                meaning: "Chết (Death)",
+                category: "business",
+                words: [
+                    { w: "Mortgage", type: "n", m: "Thế chấp (cam kết đến khi chết/trả hết)", ex: "Pay off the **mortgage**." },
+                    { w: "Immortal", type: "adj", m: "Bất tử", ex: "**Immortal** fame." },
+                    { w: "Mortality", type: "n", m: "Tỷ lệ tử vong", ex: "Infant **mortality** rate." },
+                    { w: "Amortize", type: "v", m: "Khấu hao (làm chết dần khoản nợ)", ex: "**Amortize** the loan." }
+                ]
+            },
+            {
+                root: "MULTI",
+                meaning: "Nhiều (Many)",
+                category: "production",
+                words: [
+                    { w: "Multiple", type: "adj", m: "Nhiều/Phức tạp", ex: "**Multiple** choice questions." },
+                    { w: "Multiply", type: "v", m: "Nhân lên", ex: "**Multiply** 5 by 2." },
+                    { w: "Multitask", type: "v", m: "Làm nhiều việc", ex: "Ability to **multitask**." },
+                    { w: "Multinational", type: "adj", m: "Đa quốc gia", ex: "**Multinational** corporation." }
+                ]
+            }
+        ];
+
+        // --- APP STATE ---
+        let currentFilter = 'all';
+        let score = 0;
+        let currentQuizData = null; // Store current quiz details for explanation
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRoots();
+            document.getElementById('searchInput').addEventListener('input', (e) => filterRoots(e.target.value));
+        });
+
+        // --- FUNCTIONS ---
+
+        function switchTab(tab) {
+            document.getElementById('tab-learn').classList.add('hidden');
+            document.getElementById('tab-quiz').classList.add('hidden');
+            document.getElementById('tab-learn').classList.remove('flex');
+            document.getElementById('tab-quiz').classList.remove('flex');
+            
+            document.getElementById('btn-learn').classList.remove('bg-white', 'text-blue-900', 'shadow');
+            document.getElementById('btn-learn').classList.add('text-blue-200');
+            document.getElementById('btn-quiz').classList.remove('bg-white', 'text-blue-900', 'shadow');
+            document.getElementById('btn-quiz').classList.add('text-blue-200');
+
+            if(tab === 'learn') {
+                document.getElementById('tab-learn').classList.remove('hidden');
+                document.getElementById('tab-learn').classList.add('flex');
+                document.getElementById('btn-learn').classList.add('bg-white', 'text-blue-900', 'shadow');
+                document.getElementById('btn-learn').classList.remove('text-blue-200');
+            } else {
+                document.getElementById('tab-quiz').classList.remove('hidden');
+                document.getElementById('tab-quiz').classList.add('flex');
+                document.getElementById('btn-quiz').classList.add('bg-white', 'text-blue-900', 'shadow');
+                document.getElementById('btn-quiz').classList.remove('text-blue-200');
+                initQuiz();
+            }
+        }
+
+        function filterCategory(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-700', 'border-blue-200');
+                btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+            });
+            event.target.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+            event.target.classList.add('bg-blue-100', 'text-blue-700', 'border-blue-200');
+            
+            filterRoots(document.getElementById('searchInput').value);
+        }
+
+        function filterRoots(keyword) {
+            keyword = keyword.toLowerCase();
+            const grid = document.getElementById('roots-grid');
+            grid.innerHTML = '';
+            
+            let count = 0;
+
+            toeicRoots.forEach(item => {
+                const matchKeyword = item.root.toLowerCase().includes(keyword) || item.meaning.toLowerCase().includes(keyword);
+                const matchCategory = currentFilter === 'all' || item.category === currentFilter;
+
+                if (matchKeyword && matchCategory) {
+                    count++;
+                    const card = document.createElement('div');
+                    card.className = 'group relative bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-all cursor-pointer overflow-hidden';
+                    card.onclick = () => openModal(item);
+                    
+                    // Simple logic to guess common words for preview
+                    const previewWords = item.words.slice(0, 3).map(w => w.w).join(', ');
+
+                    card.innerHTML = `
+                        <div class="h-2 w-full bg-blue-500"></div>
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold text-slate-800">${item.root}</h3>
+                                <span class="text-xs font-semibold px-2 py-1 bg-slate-100 text-slate-500 rounded uppercase">${item.category}</span>
+                            </div>
+                            <p class="text-blue-600 font-medium mb-4">${item.meaning}</p>
+                            
+                            <div class="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                                <p class="text-xs text-slate-400 mb-1">Words in TOEIC:</p>
+                                <p class="text-sm text-slate-600 truncate">${previewWords}...</p>
+                            </div>
+                            
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-xs text-slate-400">${item.words.length} derived words</span>
+                                <i class="fa-solid fa-arrow-right text-blue-400 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+            
+            document.getElementById('count-display').innerText = count;
+        }
+
+        function renderRoots() {
+            filterRoots('');
+        }
+
+        // --- MODAL LOGIC ---
+        function openModal(item) {
+            document.body.classList.add('overflow-hidden'); // Lock body scroll
+            const modal = document.getElementById('detail-modal');
+            document.getElementById('modal-title').innerText = item.root;
+            document.getElementById('modal-meaning').innerText = item.meaning;
+            
+            const content = document.getElementById('modal-content');
+            content.innerHTML = '';
+
+            item.words.forEach(word => {
+                const wordItem = document.createElement('div');
+                wordItem.className = 'mb-4 pb-4 border-b border-slate-100 last:border-0 last:mb-0 last:pb-0';
+                
+                // Highlight the root in the word if possible
+                const rootLower = item.root.toLowerCase();
+                let displayWord = word.w;
+                
+                wordItem.innerHTML = `
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="text-lg font-bold text-slate-800">${displayWord}</span>
+                        <span class="text-xs font-mono bg-slate-200 text-slate-600 px-1.5 rounded">${word.type}</span>
+                    </div>
+                    <p class="text-sm text-blue-800 font-medium mb-1">${word.m}</p>
+                    <p class="text-sm text-slate-500 italic">"${word.ex}"</p>
+                `;
+                content.appendChild(wordItem);
+            });
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.body.classList.remove('overflow-hidden'); // Unlock body scroll
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        // --- QUIZ LOGIC ---
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            
+            // Randomly choose a question type
+            const type = Math.floor(Math.random() * 2); 
+            const rootItem = toeicRoots[Math.floor(Math.random() * toeicRoots.length)];
+            
+            let html = '';
+            let optionsData = [];
+
+            if (type === 0) {
+                // Type: Root Identification (What does this root mean?)
+                // Correct Option
+                optionsData.push({
+                    text: rootItem.meaning,
+                    isCorrect: true,
+                    root: rootItem.root,
+                    explanation: `Chính xác! <b>${rootItem.root}</b> có nghĩa là "${rootItem.meaning}". (Ví dụ: ${rootItem.words[0].w})`
+                });
+
+                // Distractors
+                const distractors = getRandomRoots(rootItem.root, 3);
+                distractors.forEach(d => {
+                    optionsData.push({
+                        text: d.meaning,
+                        isCorrect: false,
+                        root: d.root,
+                        explanation: `Sai. Đây là nghĩa của gốc từ <b>${d.root}</b> (Ví dụ: ${d.words[0].w}).`
+                    });
+                });
+
+                optionsData = shuffle(optionsData);
+                
+                html = `
+                    <div class="text-center mb-6">
+                        <p class="text-slate-500 mb-2 uppercase tracking-wide text-xs font-bold">Root Identification</p>
+                        <h3 class="text-4xl font-bold text-blue-900 mb-4">${rootItem.root}</h3>
+                        <p class="text-lg text-slate-700">Gốc từ này có nghĩa là gì?</p>
+                    </div>
+                    <div class="grid grid-cols-1 gap-3 mb-6">
+                        ${optionsData.map((opt, index) => `
+                            <button onclick="checkAnswer(${index})" 
+                                id="btn-opt-${index}"
+                                class="w-full p-4 rounded-xl border border-slate-200 bg-white hover:bg-blue-50 hover:border-blue-300 transition-all text-left font-medium text-slate-700">
+                                ${opt.text}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="explanation-area" class="hidden fade-in bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-slate-700">
+                        <h4 class="font-bold text-blue-900 mb-2 border-b border-blue-200 pb-2">Giải thích chi tiết:</h4>
+                        <div id="explanation-content" class="space-y-2"></div>
+                    </div>
+                `;
+            } else {
+                // Type: Sentence Completion
+                const wordObj = rootItem.words[Math.floor(Math.random() * rootItem.words.length)];
+                // Mask the word
+                const sentence = wordObj.ex.replace(wordObj.w, '_______').replace('**' + wordObj.w + '**', '_______').replace('**'+wordObj.w.toLowerCase()+'**', '_______');
+                
+                // Correct Option
+                optionsData.push({
+                    text: wordObj.w,
+                    isCorrect: true,
+                    root: rootItem.root,
+                    explanation: `Đúng. <b>${wordObj.w}</b> (gốc ${rootItem.root}: ${rootItem.meaning}) có nghĩa là "${wordObj.m}", phù hợp ngữ cảnh.`
+                });
+
+                // Distractors
+                const distractors = getRandomRoots(rootItem.root, 3);
+                distractors.forEach(d => {
+                    // Pick a random word from that distractor root
+                    const w = d.words[Math.floor(Math.random() * d.words.length)];
+                    optionsData.push({
+                        text: w.w,
+                        isCorrect: false,
+                        root: d.root,
+                        explanation: `Sai. <b>${w.w}</b> (gốc ${d.root}: ${d.meaning}) có nghĩa là "${w.m}", không hợp nghĩa.`
+                    });
+                });
+
+                optionsData = shuffle(optionsData);
+
+                html = `
+                    <div class="text-center mb-6">
+                        <p class="text-slate-500 mb-2 uppercase tracking-wide text-xs font-bold">Sentence Completion</p>
+                        <div class="bg-slate-100 p-4 rounded-lg mb-4">
+                            <p class="text-lg text-slate-800 italic">"${sentence}"</p>
+                        </div>
+                        <p class="text-sm text-slate-500">Chọn từ phù hợp nhất:</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                        ${optionsData.map((opt, index) => `
+                            <button onclick="checkAnswer(${index})" 
+                                id="btn-opt-${index}"
+                                class="w-full p-4 rounded-xl border border-slate-200 bg-white hover:bg-blue-50 hover:border-blue-300 transition-all font-medium text-slate-700">
+                                ${opt.text}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="explanation-area" class="hidden fade-in bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-slate-700">
+                        <h4 class="font-bold text-blue-900 mb-2 border-b border-blue-200 pb-2">Giải thích chi tiết:</h4>
+                        <div id="explanation-content" class="space-y-2"></div>
+                    </div>
+                `;
+            }
+
+            // Save data for checking later
+            currentQuizData = optionsData;
+            container.innerHTML = html;
+        }
+
+        function checkAnswer(selectedIndex) {
+            if(!currentQuizData) return;
+
+            const explanationArea = document.getElementById('explanation-area');
+            const explanationContent = document.getElementById('explanation-content');
+            
+            // 1. Disable all buttons & Highlight selected/correct
+            currentQuizData.forEach((opt, idx) => {
+                const btn = document.getElementById(`btn-opt-${idx}`);
+                btn.disabled = true;
+                
+                if (opt.isCorrect) {
+                    btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+                    btn.innerHTML += ' <i class="fa-solid fa-check ml-2"></i>';
+                } else if (idx === selectedIndex) {
+                    btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                    btn.innerHTML += ' <i class="fa-solid fa-times ml-2"></i>';
+                } else {
+                    btn.classList.add('opacity-50');
+                }
+            });
+
+            // 2. Update Score
+            if (currentQuizData[selectedIndex].isCorrect) {
+                score += 10;
+                document.getElementById('score').innerText = score;
+            }
+
+            // 3. Generate detailed explanation list
+            let explHtml = '';
+            currentQuizData.forEach((opt) => {
+                const icon = opt.isCorrect ? '✅' : '❌';
+                const color = opt.isCorrect ? 'text-green-700 font-semibold' : 'text-slate-600';
+                // Show text: [Icon] [Option]: [Explanation]
+                explHtml += `
+                    <div class="flex gap-2 items-start">
+                        <span class="shrink-0">${icon}</span>
+                        <div>
+                            <span class="${color}">${opt.text}:</span> 
+                            <span>${opt.explanation}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            explanationContent.innerHTML = explHtml;
+            explanationArea.classList.remove('hidden');
+
+            // 4. Add "Next Question" button
+            setTimeout(() => {
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'mt-6 w-full md:w-auto px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-lg hover:bg-indigo-700 hover:shadow-xl transition-all block mx-auto animate-bounce';
+                nextBtn.innerHTML = 'Câu tiếp theo <i class="fa-solid fa-arrow-right ml-2"></i>';
+                nextBtn.onclick = initQuiz;
+                document.getElementById('quiz-container').appendChild(nextBtn);
+                
+                // Auto scroll to bottom
+                document.getElementById('quiz-container').scrollTo({
+                    top: document.getElementById('quiz-container').scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 600);
+        }
+
+        function getRandomRoots(excludeRoot, count) {
+            let result = [];
+            while(result.length < count) {
+                const r = toeicRoots[Math.floor(Math.random() * toeicRoots.length)];
+                if(r.root !== excludeRoot && !result.includes(r)) {
+                    result.push(r);
+                }
+            }
+            return result;
+        }
+
+        function shuffle(array) {
+            let currentIndex = array.length,  randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+    </script>
+</body>
+</html>
