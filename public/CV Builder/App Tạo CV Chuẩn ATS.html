@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng Dụng Tạo CV Chuẩn ATS</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    
+    <!-- Babel (Để chạy React trực tiếp trên trình duyệt) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #334155;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent body scroll, handle scroll in panes */
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* --- CSS CHO BẢN IN (ATS PREVIEW) --- */
+        .cv-document {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 2rem auto;
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 15mm 20mm;
+            box-sizing: border-box;
+            color: #334155;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+
+        .cv-document h1, .cv-document h2, .cv-document h3, .cv-document h4 { color: #0f172a; }
+
+        .section-header {
+            font-size: 1.125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+            color: #1e3a8a; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-top: 1.5rem; margin-bottom: 1rem;
+        }
+
+        .ats-list { list-style-type: disc; padding-left: 1.5rem; margin-top: 0.5rem; color: #334155; }
+        .ats-list li { margin-bottom: 0.375rem; line-height: 1.6; }
+
+        /* Khung chứa preview để căn giữa trang giấy */
+        .preview-wrapper {
+            height: calc(100vh - 64px); /* Trừ đi chiều cao Navbar */
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Tối ưu hóa In ấn - CẬP NHẬT FIX LỖI CẮT TRANG 2 */
+        @media print {
+            @page {
+                size: A4;
+                margin: 15mm 20mm;
+            }
+            html, body { 
+                background: white; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact; 
+                overflow: visible !important; 
+                height: auto !important; 
+            }
+            .no-print { display: none !important; }
+            
+            /* Gỡ bỏ hoàn toàn giới hạn chiều cao và scroll của các thẻ bọc ngoài */
+            .print-wrapper { 
+                height: auto !important; 
+                overflow: visible !important; 
+                display: block !important; 
+                min-height: 0 !important; 
+            }
+            
+            .preview-wrapper { 
+                height: auto !important; 
+                overflow: visible !important; 
+                display: block !important; 
+                padding: 0 !important; 
+                background: white !important; 
+            }
+            
+            .cv-document {
+                width: 100%; height: auto; min-height: 100%; margin: 0; padding: 0; box-shadow: none;
+            }
+            
+            h1, h2, h3, h4, .section-header { page-break-after: avoid; break-after: avoid; }
+            article, .avoid-break { page-break-inside: avoid; break-inside: avoid; }
+            ul { page-break-inside: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // --- Dữ Liệu Mẫu (Khánh Duy CV) ---
+        const initialData = {
+            fullName: "NGUYỄN KHÁNH DUY",
+            title: "MECHANICAL ENGINEER",
+            phone: "0366413709",
+            email: "duynguyenkhanh0603@gmail.com",
+            location: "Gò Vấp, TP. HCM",
+            linkedin: "LinkedIn",
+            summary: "Kỹ sư Cơ khí với nền tảng vững chắc về tính toán động học, truyền động cơ khí và thiết kế chế tạo máy. Đam mê ứng dụng các phần mềm thiết kế để tối ưu hóa chi tiết và mô phỏng lắp ráp. Định hướng phát triển trở thành kỹ sư thiết kế chính, tham gia vào các dự án cải tiến thiết bị tự động hóa, gia công chính xác hoặc các dự án cơ sở hạ tầng quy mô lớn.",
+            experience: [
+                {
+                    company: "SAI GON EQUIPMENT AND SOLUTIONS COMPANY LIMITED",
+                    period: "07/2025 – 01/2026",
+                    role: "Technical Staff",
+                    description: "Nghiên cứu & Thiết kế: Nghiên cứu nguyên lý hoạt động, tính toán động học và thiết kế hệ thống truyền động cơ khí cho dự án chế tạo máy mới.\nLựa chọn vật tư: So sánh đặc tính vật liệu, tính toán độ bền và trực tiếp lựa chọn các linh kiện tiêu chuẩn (động cơ, vitme bi, ray trượt, vòng bi) đảm bảo sự cân bằng giữa tối ưu chi phí và độ chính xác kỹ thuật.\nThiết kế CAD: Sử dụng thành thạo Autodesk Inventor để dựng mô hình 3D toàn hệ thống. Xử lý tốt các môi trường lắp ráp phức tạp (Assembly). Xuất bản vẽ 2D dung sai khắt khe phục vụ gia công.\nChế tạo & Prototyping: Trực tiếp tham gia gia công, lắp ráp cơ khí và căn chỉnh. Chạy thử nghiệm nguyên mẫu, đo lường sai số, đánh giá mức độ rung động và chất lượng sản phẩm đầu ra để tối ưu hóa."
+                },
+                {
+                    company: "PHUOC THANH INDUSTRY TECHNICAL SERVICES TRADING CO., LTD",
+                    period: "06/2024 – 08/2024",
+                    role: "Technical Staff",
+                    description: "Chuẩn bị gia công: Tiếp nhận bản vẽ kỹ thuật 2D/3D, phân tích yêu cầu về dung sai lắp ghép và bề mặt.\nVận hành máy CNC: Thực hiện gá đặt phôi, cài đặt gốc tọa độ (set up) và bù dao (tool offset) trên hệ điều hành máy CNC (Fanuc, Siemens, Mitsubishi).\nTối ưu hóa: Theo dõi, điều chỉnh các thông số cắt gọt (tốc độ trục chính, bước tiến dao) nhằm tối ưu thời gian gia công và kéo dài tuổi thọ dao cụ.\nBảo dưỡng: Thực hiện vệ sinh phoi, thay dầu làm mát và bảo dưỡng máy móc định kỳ theo chuẩn 5S."
+                }
+            ],
+            projects: [
+                {
+                    name: "Băng chuyền tự động",
+                    description: "Hệ thống cơ điện tử tích hợp cơ cấu truyền động và cảm biến quang học, vận hành liên tục qua biến tần. Cho phép tự động hóa quy trình nội bộ, xử lý tải trọng lớn với tốc độ ổn định.",
+                    impact: "Đáp ứng chu kỳ vận hành 24/7 với hiệu suất tổng thể thiết bị (OEE) đạt > 95%, triệt tiêu thời gian chết (downtime) do nghỉ ca hoặc suy giảm thể lực ở người lao động."
+                },
+                {
+                    name: "Máy mài công cụ CNC",
+                    description: "Mài bán tự động các loại dao phay ngón 2 me, 3 me, 4 me với các đường kính khác nhau, khôi phục khả năng gia công của công cụ như ban đầu.",
+                    impact: "Ứng dụng công nghệ mài CNC để phục hồi dao cụ hợp kim (Carbide/HSS), giúp xưởng gia công cắt giảm 50% - 70% chi phí mua mới vật tư tiêu hao và kéo dài tuổi thọ dụng cụ cắt."
+                }
+            ],
+            skills: [
+                { category: "Design & Simulation", items: "Autodesk Inventor, AutoCAD, SolidWorks, Mastercam, Creo Parametric, ArtCAM, CIMCO Edit." },
+                { category: "Professional Knowledge", items: "Analyze forces, material strength, assembly tolerances, CNC machining principles." },
+                { category: "Soft Skills", items: "Problem-solving, technical documentation, independent & teamwork." },
+                { category: "Tools & References", items: "Misumi, GrabCAD, Web2CAD, GitHub." }
+            ],
+            education: [
+                { school: "Đại học Công nghệ Kỹ thuật TP. HCM", degree: "Kỹ sư Kỹ thuật Cơ khí", gpa: "Khá" }
+            ],
+            certificates: [
+                "Test of English for International Communication (TOEIC)"
+            ]
+        };
+
+        // --- Icons Helper ---
+        const Icon = ({ name, size = 16, className = "" }) => {
+            const icons = {
+                phone: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>,
+                mail: <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></>,
+                mapPin: <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></>,
+                linkedin: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></>,
+                printer: <><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></>,
+                plus: <><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>,
+                trash: <><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></>,
+                edit: <><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></>,
+                eye: <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>
+            };
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    {icons[name]}
+                </svg>
+            );
+        };
+
+        // --- Các Form Component ---
+        const InputField = ({ label, value, onChange, type="text", as="input" }) => (
+            <div className="mb-3">
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">{label}</label>
+                {as === "textarea" ? (
+                    <textarea 
+                        value={value} onChange={onChange} 
+                        className="w-full p-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm transition-all h-28"
+                    />
+                ) : (
+                    <input 
+                        type={type} value={value} onChange={onChange} 
+                        className="w-full p-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm transition-all"
+                    />
+                )}
+            </div>
+        );
+
+        // --- Main App ---
+        const App = () => {
+            const [data, setData] = useState(initialData);
+            const [activeTab, setActiveTab] = useState('editor'); // for mobile
+
+            // Handlers cập nhật dữ liệu
+            const handleChange = (field, value) => setData(prev => ({ ...prev, [field]: value }));
+            const handleArrayChange = (section, index, field, value) => {
+                const newData = { ...data };
+                if (field === null) newData[section][index] = value; // For arrays of strings
+                else newData[section][index][field] = value; // For arrays of objects
+                setData(newData);
+            };
+            const addItem = (section, template) => setData(prev => ({ ...prev, [section]: [...prev[section], template] }));
+            const removeItem = (section, index) => {
+                const newSection = [...data[section]];
+                newSection.splice(index, 1);
+                setData(prev => ({ ...prev, [section]: newSection }));
+            };
+
+            // Tiện ích in đậm tự động trước dấu hai chấm (VD: "Nghiên cứu: Nội dung...")
+            const formatBulletPoint = (text) => {
+                const splitIndex = text.indexOf(':');
+                if (splitIndex !== -1 && splitIndex < 50) { // Giới hạn số ký tự để tránh in đậm quá dài
+                    return (
+                        <>
+                            <strong>{text.substring(0, splitIndex + 1)}</strong>
+                            {text.substring(splitIndex + 1)}
+                        </>
+                    );
+                }
+                return text;
+            };
+
+            return (
+                <div className="flex flex-col h-screen print-wrapper">
+                    
+                    {/* Navbar (Không hiển thị khi in) */}
+                    <nav className="no-print bg-slate-900 text-white h-16 flex justify-between items-center px-4 md:px-6 shadow-md z-50 flex-shrink-0">
+                        <div className="flex items-center gap-2">
+                            <h1 className="text-lg font-bold tracking-wide">AI-Optimized CV Builder</h1>
+                        </div>
+                        <div className="flex gap-2">
+                            {/* Nút Tab cho Mobile */}
+                            <button onClick={() => setActiveTab('editor')} className={`md:hidden p-2 rounded ${activeTab === 'editor' ? 'bg-blue-600' : 'hover:bg-slate-800'}`}>
+                                <Icon name="edit" />
+                            </button>
+                            <button onClick={() => setActiveTab('preview')} className={`md:hidden p-2 rounded ${activeTab === 'preview' ? 'bg-blue-600' : 'hover:bg-slate-800'}`}>
+                                <Icon name="eye" />
+                            </button>
+                            {/* Nút In ấn */}
+                            <button onClick={() => window.print()} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold transition-colors shadow-sm text-sm">
+                                <Icon name="printer" />
+                                <span className="hidden sm:inline">In / Xuất PDF</span>
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div className="flex flex-1 overflow-hidden relative print-wrapper">
+                        
+                        {/* === PANEL NHẬP LIỆU (Bên trái) === */}
+                        <div className={`w-full md:w-5/12 lg:w-4/12 h-full overflow-y-auto bg-white border-r border-slate-200 p-5 pb-24 no-print ${activeTab === 'preview' ? 'hidden md:block' : 'block'}`}>
+                            
+                            <h2 className="text-xl font-extrabold text-slate-800 mb-6 pb-2 border-b border-slate-200">Thông tin CV</h2>
+                            
+                            {/* Cá nhân */}
+                            <InputField label="Họ và Tên" value={data.fullName} onChange={e => handleChange('fullName', e.target.value)} />
+                            <InputField label="Chức danh" value={data.title} onChange={e => handleChange('title', e.target.value)} />
+                            <div className="grid grid-cols-2 gap-3">
+                                <InputField label="Số điện thoại" value={data.phone} onChange={e => handleChange('phone', e.target.value)} />
+                                <InputField label="Email" value={data.email} onChange={e => handleChange('email', e.target.value)} />
+                            </div>
+                            <InputField label="Địa chỉ" value={data.location} onChange={e => handleChange('location', e.target.value)} />
+                            <InputField label="Tên Link LinkedIn (Hoặc URL)" value={data.linkedin} onChange={e => handleChange('linkedin', e.target.value)} />
+                            <InputField label="Tóm tắt chuyên môn" value={data.summary} onChange={e => handleChange('summary', e.target.value)} as="textarea" />
+                            
+                            <hr className="my-6 border-slate-200" />
+
+                            {/* Kinh nghiệm */}
+                            <div className="mb-6">
+                                <div className="flex justify-between items-center mb-3">
+                                    <h3 className="font-bold text-slate-700 uppercase">Kinh nghiệm làm việc</h3>
+                                    <button onClick={() => addItem('experience', { company: "", period: "", role: "", description: "" })} className="text-blue-600 hover:bg-blue-50 p-1.5 rounded-full"><Icon name="plus" /></button>
+                                </div>
+                                {data.experience.map((exp, i) => (
+                                    <div key={i} className="bg-slate-50 p-3 rounded border border-slate-200 mb-3 relative group">
+                                        <button onClick={() => removeItem('experience', i)} className="absolute top-2 right-2 text-red-400 opacity-0 group-hover:opacity-100"><Icon name="trash" /></button>
+                                        <input placeholder="Tên Công ty" value={exp.company} onChange={e => handleArrayChange('experience', i, 'company', e.target.value)} className="w-full p-2 mb-2 border rounded text-sm font-bold" />
+                                        <div className="flex gap-2 mb-2">
+                                            <input placeholder="Chức vụ" value={exp.role} onChange={e => handleArrayChange('experience', i, 'role', e.target.value)} className="w-1/2 p-2 border rounded text-sm" />
+                                            <input placeholder="Thời gian" value={exp.period} onChange={e => handleArrayChange('experience', i, 'period', e.target.value)} className="w-1/2 p-2 border rounded text-sm" />
+                                        </div>
+                                        <textarea placeholder="Mô tả công việc (Mỗi dòng 1 ý)" value={exp.description} onChange={e => handleArrayChange('experience', i, 'description', e.target.value)} className="w-full p-2 border rounded text-sm h-24" />
+                                        <p className="text-[10px] text-slate-500 mt-1">Mẹo: Thêm dấu ":" để in đậm đoạn đầu (VD: Thiết kế: ...)</p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <hr className="my-6 border-slate-200" />
+
+                            {/* Dự án */}
+                            <div className="mb-6">
+                                <div className="flex justify-between items-center mb-3">
+                                    <h3 className="font-bold text-slate-700 uppercase">Dự án tiêu biểu</h3>
+                                    <button onClick={() => addItem('projects', { name: "", description: "", impact: "" })} className="text-blue-600 hover:bg-blue-50 p-1.5 rounded-full"><Icon name="plus" /></button>
+                                </div>
+                                {data.projects.map((proj, i) => (
+                                    <div key={i} className="bg-slate-50 p-3 rounded border border-slate-200 mb-3 relative group">
+                                        <button onClick={() => removeItem('projects', i)} className="absolute top-2 right-2 text-red-400 opacity-0 group-hover:opacity-100"><Icon name="trash" /></button>
+                                        <input placeholder="Tên dự án" value={proj.name} onChange={e => handleArrayChange('projects', i, 'name', e.target.value)} className="w-full p-2 mb-2 border rounded text-sm font-bold" />
+                                        <textarea placeholder="Mô tả dự án" value={proj.description} onChange={e => handleArrayChange('projects', i, 'description', e.target.value)} className="w-full p-2 mb-2 border rounded text-sm h-16" />
+                                        <textarea placeholder="Tác động (Impact)" value={proj.impact} onChange={e => handleArrayChange('projects', i, 'impact', e.target.value)} className="w-full p-2 border rounded text-sm h-16 bg-blue-50" />
+                                    </div>
+                                ))}
+                            </div>
+
+                            <hr className="my-6 border-slate-200" />
+
+                            {/* Kỹ năng */}
+                            <div className="mb-6">
+                                <div className="flex justify-between items-center mb-3">
+                                    <h3 className="font-bold text-slate-700 uppercase">Kỹ năng</h3>
+                                    <button onClick={() => addItem('skills', { category: "", items: "" })} className="text-blue-600 hover:bg-blue-50 p-1.5 rounded-full"><Icon name="plus" /></button>
+                                </div>
+                                {data.skills.map((skill, i) => (
+                                    <div key={i} className="flex gap-2 mb-2 items-center group">
+                                        <div className="flex-1">
+                                            <input placeholder="Nhóm kỹ năng" value={skill.category} onChange={e => handleArrayChange('skills', i, 'category', e.target.value)} className="w-full p-1 border-b text-sm font-bold mb-1" />
+                                            <input placeholder="Chi tiết kỹ năng" value={skill.items} onChange={e => handleArrayChange('skills', i, 'items', e.target.value)} className="w-full p-1 border-b text-sm" />
+                                        </div>
+                                        <button onClick={() => removeItem('skills', i)} className="text-red-400 opacity-0 group-hover:opacity-100"><Icon name="trash" size={18} /></button>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <hr className="my-6 border-slate-200" />
+
+                            {/* Học vấn */}
+                            <div className="mb-6">
+                                <div className="flex justify-between items-center mb-3">
+                                    <h3 className="font-bold text-slate-700 uppercase">Học vấn</h3>
+                                    <button onClick={() => addItem('education', { school: "", degree: "", gpa: "" })} className="text-blue-600 hover:bg-blue-50 p-1.5 rounded-full"><Icon name="plus" /></button>
+                                </div>
+                                {data.education.map((edu, i) => (
+                                    <div key={i} className="bg-slate-50 p-3 rounded border border-slate-200 mb-2 relative group">
+                                        <button onClick={() => removeItem('education', i)} className="absolute top-2 right-2 text-red-400 opacity-0 group-hover:opacity-100"><Icon name="trash" size={16} /></button>
+                                        <input placeholder="Tên trường" value={edu.school} onChange={e => handleArrayChange('education', i, 'school', e.target.value)} className="w-full p-2 mb-2 border rounded text-sm font-bold" />
+                                        <div className="flex gap-2">
+                                            <input placeholder="Bằng cấp" value={edu.degree} onChange={e => handleArrayChange('education', i, 'degree', e.target.value)} className="w-2/3 p-2 border rounded text-sm" />
+                                            <input placeholder="GPA" value={edu.gpa} onChange={e => handleArrayChange('education', i, 'gpa', e.target.value)} className="w-1/3 p-2 border rounded text-sm" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Chứng chỉ */}
+                            <div className="mb-6">
+                                <div className="flex justify-between items-center mb-3">
+                                    <h3 className="font-bold text-slate-700 uppercase">Chứng chỉ</h3>
+                                    <button onClick={() => addItem('certificates', "")} className="text-blue-600 hover:bg-blue-50 p-1.5 rounded-full"><Icon name="plus" /></button>
+                                </div>
+                                {data.certificates.map((cert, i) => (
+                                    <div key={i} className="flex gap-2 mb-2 items-center group">
+                                        <input value={cert} onChange={e => handleArrayChange('certificates', i, null, e.target.value)} className="flex-1 p-2 border rounded text-sm" />
+                                        <button onClick={() => removeItem('certificates', i)} className="text-red-400 opacity-0 group-hover:opacity-100"><Icon name="trash" size={18} /></button>
+                                    </div>
+                                ))}
+                            </div>
+
+                        </div>
+
+                        {/* === PANEL XEM TRƯỚC (Bên phải - ATS Optimized) === */}
+                        <div className={`w-full md:w-7/12 lg:w-8/12 preview-wrapper bg-slate-200 ${activeTab === 'editor' ? 'hidden md:flex' : 'flex'}`}>
+                            
+                            <main className="cv-document">
+                                
+                                {/* 1. HEADER */}
+                                <header className="text-center mb-6">
+                                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight uppercase mb-1">{data.fullName || 'HỌ VÀ TÊN'}</h1>
+                                    <p className="text-xl font-semibold text-blue-700 tracking-wide mb-4">{data.title || 'CHỨC DANH'}</p>
+                                    
+                                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-600 font-medium">
+                                        {data.phone && <span className="flex items-center gap-1.5"><Icon name="phone" className="text-slate-800" /> {data.phone}</span>}
+                                        {data.email && <span className="flex items-center gap-1.5"><Icon name="mail" className="text-slate-800" /> {data.email}</span>}
+                                        {data.location && <span className="flex items-center gap-1.5"><Icon name="mapPin" className="text-slate-800" /> {data.location}</span>}
+                                        {data.linkedin && <span className="flex items-center gap-1.5"><Icon name="linkedin" className="text-slate-800" /> {data.linkedin}</span>}
+                                    </div>
+                                </header>
+
+                                {/* 2. SUMMARY */}
+                                {data.summary && (
+                                    <section>
+                                        <h2 className="section-header">Tóm tắt chuyên môn</h2>
+                                        <p className="text-justify">{data.summary}</p>
+                                    </section>
+                                )}
+
+                                {/* 3. EXPERIENCE */}
+                                {data.experience.length > 0 && (
+                                    <section>
+                                        <h2 className="section-header">Kinh nghiệm làm việc</h2>
+                                        <div className="space-y-6">
+                                            {data.experience.map((exp, idx) => (
+                                                <article key={idx} className="mb-6">
+                                                    <header className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+                                                        <h3 className="text-[15px] font-bold text-slate-900">{exp.company}</h3>
+                                                        <span className="text-sm font-semibold text-slate-500 mt-1 sm:mt-0">{exp.period}</span>
+                                                    </header>
+                                                    <p className="text-[14.5px] font-semibold text-blue-700 italic">{exp.role}</p>
+                                                    <ul className="ats-list">
+                                                        {exp.description.split('\n').map((line, i) => {
+                                                            if (!line.trim()) return null;
+                                                            return <li key={i}>{formatBulletPoint(line)}</li>;
+                                                        })}
+                                                    </ul>
+                                                </article>
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+
+                                {/* 4. PROJECTS */}
+                                {data.projects.length > 0 && (
+                                    <section>
+                                        <h2 className="section-header">Dự án tiêu biểu</h2>
+                                        <div className="space-y-5">
+                                            {data.projects.map((proj, idx) => (
+                                                <article key={idx} className="mb-5">
+                                                    <h3 className="text-[15px] font-bold text-slate-900 mb-1">{proj.name}</h3>
+                                                    {proj.description && <p className="mb-2">{proj.description}</p>}
+                                                    {proj.impact && (
+                                                        <div className="bg-blue-50 border border-blue-100 rounded p-2.5 text-[13px]">
+                                                            <span className="font-bold text-blue-800">Tác động (Impact):</span> {proj.impact}
+                                                        </div>
+                                                    )}
+                                                </article>
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+
+                                {/* 5. SKILLS */}
+                                {data.skills.length > 0 && (
+                                    <section className="avoid-break">
+                                        <h2 className="section-header">Kỹ năng chuyên môn</h2>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-8">
+                                            {data.skills.map((skill, idx) => (
+                                                <article key={idx}>
+                                                    <h3 className="font-bold text-slate-900 mb-1">{skill.category}</h3>
+                                                    <p className="text-slate-700">{skill.items}</p>
+                                                </article>
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+
+                                {/* 6. EDUCATION & CERTIFICATES */}
+                                <section className="avoid-break mt-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        {data.education.length > 0 && (
+                                            <article>
+                                                <h2 className="section-header !mt-0">Học vấn</h2>
+                                                {data.education.map((edu, idx) => (
+                                                    <div key={idx} className="mb-3">
+                                                        <h3 className="text-[15px] font-bold text-slate-900">{edu.school}</h3>
+                                                        <p className="font-medium text-slate-700 mt-1">{edu.degree}</p>
+                                                        {edu.gpa && <p className="text-slate-500 text-sm mt-0.5">Xếp loại/GPA: {edu.gpa}</p>}
+                                                    </div>
+                                                ))}
+                                            </article>
+                                        )}
+                                        {data.certificates.length > 0 && (
+                                            <article>
+                                                <h2 className="section-header !mt-0">Chứng chỉ</h2>
+                                                <ul className="ats-list mt-0 pt-0">
+                                                    {data.certificates.map((cert, idx) => (
+                                                        <li key={idx} className="font-medium">{cert}</li>
+                                                    ))}
+                                                </ul>
+                                            </article>
+                                        )}
+                                    </div>
+                                </section>
+
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

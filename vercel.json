@@ -192,6 +192,10 @@
     {
       "source": "/image/:guest",
       "destination": "/image/:guest.png"
+    },
+    {
+      "source": "/gen-cv",
+      "destination": "/CV Builder/App Tạo CV Chuẩn ATS.html"
     }
   ]
 }
