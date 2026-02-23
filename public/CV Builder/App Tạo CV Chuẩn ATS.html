@@ -113,52 +113,51 @@
     <script type="text/babel">
         const { useState } = React;
 
-        // --- Dữ Liệu Mẫu (Khánh Duy CV) ---
         const initialData = {
-            fullName: "NGUYỄN KHÁNH DUY",
-            title: "MECHANICAL ENGINEER",
-            phone: "0366413709",
-            email: "duynguyenkhanh0603@gmail.com",
-            location: "Gò Vấp, TP. HCM",
-            linkedin: "LinkedIn",
-            summary: "Kỹ sư Cơ khí với nền tảng vững chắc về tính toán động học, truyền động cơ khí và thiết kế chế tạo máy. Đam mê ứng dụng các phần mềm thiết kế để tối ưu hóa chi tiết và mô phỏng lắp ráp. Định hướng phát triển trở thành kỹ sư thiết kế chính, tham gia vào các dự án cải tiến thiết bị tự động hóa, gia công chính xác hoặc các dự án cơ sở hạ tầng quy mô lớn.",
+            fullName: "HỌ VÀ TÊN ỨNG VIÊN",
+            title: "VỊ TRÍ ỨNG TUYỂN (VD: MECHANICAL ENGINEER)",
+            phone: "0123 456 789",
+            email: "your.email@example.com",
+            location: "Quận / Thành phố, Quốc gia",
+            linkedin: "linkedin.com/in/ten-ung-vien",
+            summary: "Tóm tắt 3–4 câu về kinh nghiệm, thế mạnh và định hướng nghề nghiệp của bạn. Tập trung vào số năm kinh nghiệm, lĩnh vực chính và giá trị bạn mang lại cho doanh nghiệp.",
             experience: [
                 {
-                    company: "SAI GON EQUIPMENT AND SOLUTIONS COMPANY LIMITED",
-                    period: "07/2025 – 01/2026",
-                    role: "Technical Staff",
+                    company: "Tên công ty gần đây nhất",
+                    period: "MM/YYYY – Hiện tại",
+                    role: "Chức danh công việc",
                     description: "Nghiên cứu & Thiết kế: Nghiên cứu nguyên lý hoạt động, tính toán động học và thiết kế hệ thống truyền động cơ khí cho dự án chế tạo máy mới.\nLựa chọn vật tư: So sánh đặc tính vật liệu, tính toán độ bền và trực tiếp lựa chọn các linh kiện tiêu chuẩn (động cơ, vitme bi, ray trượt, vòng bi) đảm bảo sự cân bằng giữa tối ưu chi phí và độ chính xác kỹ thuật.\nThiết kế CAD: Sử dụng thành thạo Autodesk Inventor để dựng mô hình 3D toàn hệ thống. Xử lý tốt các môi trường lắp ráp phức tạp (Assembly). Xuất bản vẽ 2D dung sai khắt khe phục vụ gia công.\nChế tạo & Prototyping: Trực tiếp tham gia gia công, lắp ráp cơ khí và căn chỉnh. Chạy thử nghiệm nguyên mẫu, đo lường sai số, đánh giá mức độ rung động và chất lượng sản phẩm đầu ra để tối ưu hóa."
                 },
                 {
-                    company: "PHUOC THANH INDUSTRY TECHNICAL SERVICES TRADING CO., LTD",
-                    period: "06/2024 – 08/2024",
-                    role: "Technical Staff",
+                    company: "Tên công ty trước đó",
+                    period: "MM/YYYY – MM/YYYY",
+                    role: "Chức danh công việc",
                     description: "Chuẩn bị gia công: Tiếp nhận bản vẽ kỹ thuật 2D/3D, phân tích yêu cầu về dung sai lắp ghép và bề mặt.\nVận hành máy CNC: Thực hiện gá đặt phôi, cài đặt gốc tọa độ (set up) và bù dao (tool offset) trên hệ điều hành máy CNC (Fanuc, Siemens, Mitsubishi).\nTối ưu hóa: Theo dõi, điều chỉnh các thông số cắt gọt (tốc độ trục chính, bước tiến dao) nhằm tối ưu thời gian gia công và kéo dài tuổi thọ dao cụ.\nBảo dưỡng: Thực hiện vệ sinh phoi, thay dầu làm mát và bảo dưỡng máy móc định kỳ theo chuẩn 5S."
                 }
             ],
             projects: [
                 {
-                    name: "Băng chuyền tự động",
+                    name: "Dự án tiêu biểu 1",
                     description: "Hệ thống cơ điện tử tích hợp cơ cấu truyền động và cảm biến quang học, vận hành liên tục qua biến tần. Cho phép tự động hóa quy trình nội bộ, xử lý tải trọng lớn với tốc độ ổn định.",
-                    impact: "Đáp ứng chu kỳ vận hành 24/7 với hiệu suất tổng thể thiết bị (OEE) đạt > 95%, triệt tiêu thời gian chết (downtime) do nghỉ ca hoặc suy giảm thể lực ở người lao động."
+                    impact: "Nêu kết quả đo được: tăng hiệu suất, giảm chi phí, rút ngắn thời gian xử lý, v.v."
                 },
                 {
-                    name: "Máy mài công cụ CNC",
-                    description: "Mài bán tự động các loại dao phay ngón 2 me, 3 me, 4 me với các đường kính khác nhau, khôi phục khả năng gia công của công cụ như ban đầu.",
-                    impact: "Ứng dụng công nghệ mài CNC để phục hồi dao cụ hợp kim (Carbide/HSS), giúp xưởng gia công cắt giảm 50% - 70% chi phí mua mới vật tư tiêu hao và kéo dài tuổi thọ dụng cụ cắt."
+                    name: "Dự án tiêu biểu 2",
+                    description: "Mô tả ngắn 2–3 câu về bối cảnh, nhiệm vụ chính và cách bạn giải quyết vấn đề trong dự án.",
+                    impact: "Sử dụng số liệu để chứng minh tác động: % cải thiện, thời gian, doanh thu, chất lượng, v.v."
                 }
             ],
             skills: [
-                { category: "Design & Simulation", items: "Autodesk Inventor, AutoCAD, SolidWorks, Mastercam, Creo Parametric, ArtCAM, CIMCO Edit." },
-                { category: "Professional Knowledge", items: "Analyze forces, material strength, assembly tolerances, CNC machining principles." },
-                { category: "Soft Skills", items: "Problem-solving, technical documentation, independent & teamwork." },
-                { category: "Tools & References", items: "Misumi, GrabCAD, Web2CAD, GitHub." }
+                { category: "Kỹ năng chuyên môn", items: "Liệt kê 4–7 kỹ năng chính liên quan trực tiếp tới vị trí ứng tuyển." },
+                { category: "Công cụ & Công nghệ", items: "Tên các phần mềm, ngôn ngữ lập trình, framework, công cụ bạn dùng tốt." },
+                { category: "Kỹ năng mềm", items: "Giao tiếp, làm việc nhóm, giải quyết vấn đề, quản lý thời gian, v.v." },
+                { category: "Thành tựu / Điểm nổi bật", items: "Các giải thưởng, danh hiệu, top performer, học bổng, v.v. (nếu có)." }
             ],
             education: [
-                { school: "Đại học Công nghệ Kỹ thuật TP. HCM", degree: "Kỹ sư Kỹ thuật Cơ khí", gpa: "Khá" }
+                { school: "Tên trường đại học / cao đẳng", degree: "Ngành học / Chương trình đào tạo", gpa: "GPA hoặc Xếp loại (nếu muốn hiển thị)" }
             ],
             certificates: [
-                "Test of English for International Communication (TOEIC)"
+                "Ví dụ: IELTS 7.0 / TOEIC 800+ hoặc các chứng chỉ chuyên môn liên quan"
             ]
         };
 
@@ -204,6 +203,27 @@
         const App = () => {
             const [data, setData] = useState(initialData);
             const [activeTab, setActiveTab] = useState('editor'); // for mobile
+            const [accentColor, setAccentColor] = useState('blue');
+            const [fontFamily, setFontFamily] = useState('inter');
+            const [density, setDensity] = useState('normal');
+
+            const accentTextClass = accentColor === 'blue'
+                ? 'text-blue-700'
+                : accentColor === 'emerald'
+                ? 'text-emerald-700'
+                : 'text-slate-800';
+
+            const accentImpactBoxClasses = accentColor === 'blue'
+                ? 'bg-blue-50 border-blue-100 text-blue-800'
+                : accentColor === 'emerald'
+                ? 'bg-emerald-50 border-emerald-100 text-emerald-800'
+                : 'bg-slate-50 border-slate-300 text-slate-800';
+
+            const sectionSpacing = density === 'compact'
+                ? 'space-y-4'
+                : density === 'relaxed'
+                ? 'space-y-8'
+                : 'space-y-6';
 
             // Handlers cập nhật dữ liệu
             const handleChange = (field, value) => setData(prev => ({ ...prev, [field]: value }));
@@ -237,10 +257,23 @@
             return (
                 <div className="flex flex-col h-screen print-wrapper">
                     
-                    {/* Navbar (Không hiển thị khi in) */}
                     <nav className="no-print bg-slate-900 text-white h-16 flex justify-between items-center px-4 md:px-6 shadow-md z-50 flex-shrink-0">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-3">
                             <h1 className="text-lg font-bold tracking-wide">AI-Optimized CV Builder</h1>
+                            <a
+                                href="https://cv-builder-nine-xi.vercel.app/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hidden md:inline-flex items-center gap-2 rounded-full border border-amber-400/80 bg-amber-500/10 px-3 py-1 text-[11px] font-medium text-amber-200 hover:bg-amber-400/20 hover:text-white transition-colors"
+                            >
+                                <span className="inline-flex items-center justify-center rounded-full bg-amber-400 text-[9px] font-black uppercase tracking-wide px-2 py-0.5 text-slate-900">
+                                    PRO
+                                </span>
+                                <span className="text-left leading-tight">
+                                    Mở bản CV Builder nâng cao<br />
+                                    (nhiều trường hơn, tối ưu ATS)
+                                </span>
+                            </a>
                         </div>
                         <div className="flex gap-2">
                             {/* Nút Tab cho Mobile */}
@@ -277,6 +310,97 @@
                             <InputField label="Tóm tắt chuyên môn" value={data.summary} onChange={e => handleChange('summary', e.target.value)} as="textarea" />
                             
                             <hr className="my-6 border-slate-200" />
+
+                            <div className="mb-6 bg-slate-50 border border-slate-200 rounded-lg p-4">
+                                <h3 className="font-bold text-slate-800 text-sm uppercase mb-3">Tuỳ chỉnh giao diện CV</h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                    <div>
+                                        <p className="font-semibold text-slate-700 mb-1">Tông màu chính</p>
+                                        <div className="flex flex-wrap gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => setAccentColor('blue')}
+                                                className={`${accentColor === 'blue' ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-800'} px-2.5 py-1 rounded-full font-medium`}
+                                            >
+                                                Xanh chuyên nghiệp
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setAccentColor('emerald')}
+                                                className={`${accentColor === 'emerald' ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-800'} px-2.5 py-1 rounded-full font-medium`}
+                                            >
+                                                Xanh lá hiện đại
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setAccentColor('neutral')}
+                                                className={`${accentColor === 'neutral' ? 'bg-slate-800 text-white' : 'bg-slate-200 text-slate-800'} px-2.5 py-1 rounded-full font-medium`}
+                                            >
+                                                Trung tính tối giản
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold text-slate-700 mb-1">Kiểu chữ</p>
+                                        <div className="flex flex-wrap gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => setFontFamily('inter')}
+                                                className={`${fontFamily === 'inter' ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-800'} px-2.5 py-1 rounded-full font-medium`}
+                                            >
+                                                Sans-serif hiện đại
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setFontFamily('serif')}
+                                                className={`${fontFamily === 'serif' ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-800'} px-2.5 py-1 rounded-full font-medium`}
+                                            >
+                                                Serif trang trọng
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setFontFamily('mono')}
+                                                className={`${fontFamily === 'mono' ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-800'} px-2.5 py-1 rounded-full font-medium`}
+                                            >
+                                                Monospace kỹ thuật
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold text-slate-700 mb-1">Mật độ nội dung</p>
+                                        <div className="flex flex-wrap gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => setDensity('compact')}
+                                                className={`${density === 'compact' ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-800'} px-2.5 py-1 rounded-full font-medium`}
+                                            >
+                                                Gọn cho CV 1 trang
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setDensity('normal')}
+                                                className={`${density === 'normal' ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-800'} px-2.5 py-1 rounded-full font-medium`}
+                                            >
+                                                Cân bằng
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setDensity('relaxed')}
+                                                className={`${density === 'relaxed' ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-800'} px-2.5 py-1 rounded-full font-medium`}
+                                            >
+                                                Thoáng, dễ đọc
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="text-[11px] text-slate-600">
+                                        <p className="font-semibold mb-1">Gợi ý sử dụng</p>
+                                        <ul className="list-disc list-inside space-y-0.5">
+                                            <li>Chọn tông màu phù hợp ngành (tech, creative, finance,...).</li>
+                                            <li>Dùng mật độ gọn cho ứng tuyển online, thoáng cho bản in.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
 
                             {/* Kinh nghiệm */}
                             <div className="mb-6">
@@ -374,7 +498,17 @@
                         {/* === PANEL XEM TRƯỚC (Bên phải - ATS Optimized) === */}
                         <div className={`w-full md:w-7/12 lg:w-8/12 preview-wrapper bg-slate-200 ${activeTab === 'editor' ? 'hidden md:flex' : 'flex'}`}>
                             
-                            <main className="cv-document">
+                            <main
+                                className="cv-document"
+                                style={{
+                                    fontFamily:
+                                        fontFamily === 'serif'
+                                            ? 'Georgia, "Times New Roman", serif'
+                                            : fontFamily === 'mono'
+                                            ? 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
+                                            : '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+                                }}
+                            >
                                 
                                 {/* 1. HEADER */}
                                 <header className="text-center mb-6">
@@ -401,14 +535,14 @@
                                 {data.experience.length > 0 && (
                                     <section>
                                         <h2 className="section-header">Kinh nghiệm làm việc</h2>
-                                        <div className="space-y-6">
+                                        <div className={sectionSpacing}>
                                             {data.experience.map((exp, idx) => (
                                                 <article key={idx} className="mb-6">
                                                     <header className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
                                                         <h3 className="text-[15px] font-bold text-slate-900">{exp.company}</h3>
                                                         <span className="text-sm font-semibold text-slate-500 mt-1 sm:mt-0">{exp.period}</span>
                                                     </header>
-                                                    <p className="text-[14.5px] font-semibold text-blue-700 italic">{exp.role}</p>
+                                                    <p className={`text-[14.5px] font-semibold italic ${accentTextClass}`}>{exp.role}</p>
                                                     <ul className="ats-list">
                                                         {exp.description.split('\n').map((line, i) => {
                                                             if (!line.trim()) return null;
@@ -425,14 +559,14 @@
                                 {data.projects.length > 0 && (
                                     <section>
                                         <h2 className="section-header">Dự án tiêu biểu</h2>
-                                        <div className="space-y-5">
+                                        <div className={sectionSpacing}>
                                             {data.projects.map((proj, idx) => (
                                                 <article key={idx} className="mb-5">
                                                     <h3 className="text-[15px] font-bold text-slate-900 mb-1">{proj.name}</h3>
                                                     {proj.description && <p className="mb-2">{proj.description}</p>}
                                                     {proj.impact && (
-                                                        <div className="bg-blue-50 border border-blue-100 rounded p-2.5 text-[13px]">
-                                                            <span className="font-bold text-blue-800">Tác động (Impact):</span> {proj.impact}
+                                                        <div className={`rounded p-2.5 text-[13px] border ${accentImpactBoxClasses}`}>
+                                                            <span className="font-bold">Tác động (Impact):</span> {proj.impact}
                                                         </div>
                                                     )}
                                                 </article>
