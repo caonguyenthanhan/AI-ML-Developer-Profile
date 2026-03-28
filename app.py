@@ -539,11 +539,12 @@ def api_chat():
         data = request.get_json(silent=True) or {}
         user_query = (data.get('userQuery') or '').strip()
         system_instruction = (data.get('systemInstruction') or '').strip()
+        client_api_key = (data.get('apiKey') or '').strip()
 
-        api_key = os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY') or os.environ.get('GENAI_API_KEY')
+        api_key = client_api_key or os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY') or os.environ.get('GENAI_API_KEY')
         if not api_key:
             return jsonify({'ok': False, 'error': 'missing_api_key', 'text': 'Máy chủ chưa cấu hình API key.'}), 501
-        model_name = os.environ.get('MODEL_NAME', 'gemini-2.0-flash')
+        model_name = (data.get('modelName') or os.environ.get('MODEL_NAME') or 'gemini-2.0-flash')
         endpoint = f'https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent'
         payload = {
             'contents': [
@@ -593,6 +594,12 @@ def api_chat():
         return jsonify({'ok': True, 'text': text})
     except Exception as e:
         return jsonify({'ok': False, 'error': 'server_error', 'text': f'Lỗi máy chủ: {str(e)}'}), 500
+
+@app.route('/nhan_tuong_hoc/not_ruoi', methods=['GET'])
+def nhan_tuong_hoc_not_ruoi():
+    qs = request.query_string.decode('utf-8', errors='ignore')
+    suffix = f'?{qs}' if qs else ''
+    return redirect(f'/Physiognomy/not_ruoi.html{suffix}', code=302)
 
 @app.route('/api/config', methods=['GET'])
 def api_config():

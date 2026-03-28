@@ -5,6 +5,10 @@
       "destination": "/api/:match*"
     },
     {
+      "source": "/nhan_tuong_hoc/not_ruoi",
+      "destination": "/Physiognomy/not_ruoi.html"
+    },
+    {
       "source": "/",
       "destination": "/ai_welcome.html"
     },
