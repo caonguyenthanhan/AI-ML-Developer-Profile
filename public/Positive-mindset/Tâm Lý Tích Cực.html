@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Công Cụ: Tâm Lý Tích Cực</title>
+  <link href="/assets/css/tw.css" rel="stylesheet">
+  <script>
+    if (window.tailwind) {
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Inter', 'sans-serif'] },
+            colors: {
+              'primary-blue': '#1e40af',
+              'accent-green': '#10b981',
+              'accent-yellow': '#fcd34d'
+            }
+          }
+        }
+      };
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="icon" type="image/png" href="/image/tag.png">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b1220;
+      background-image:
+        radial-gradient(900px circle at 10% 10%, rgba(16, 185, 129, 0.12), transparent 55%),
+        radial-gradient(700px circle at 90% 20%, rgba(30, 64, 175, 0.14), transparent 50%),
+        radial-gradient(800px circle at 50% 100%, rgba(252, 211, 77, 0.08), transparent 55%);
+      scroll-behavior: smooth;
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    .input { width: 100%; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 0.625rem 0.75rem; background: white; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1rem; border-radius: 9999px; font-weight: 700; }
+    .btn-primary { background: #1e40af; color: white; }
+    .btn-primary:hover { background: #1c3a99; }
+    .btn-secondary { background: #10b981; color: white; }
+    .btn-secondary:hover { background: #0ea374; }
+    .chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.75rem; border-radius: 9999px; font-weight: 600; font-size: 0.875rem; }
+    .card { border: 1px solid #e2e8f0; border-radius: 1rem; background: white; padding: 1rem; }
+  </style>
+  <script src="/assets/js/header.js"></script>
+</head>
+<body>
+  <div class="min-h-screen flex flex-col items-center p-4 sm:p-8">
+    <main class="w-full max-w-6xl bg-white/95 backdrop-blur shadow-2xl rounded-2xl p-6 md:p-10">
+      <header class="text-center mb-8">
+        <div class="chip" style="background:#ecfeff;color:#0369a1;border:1px solid #e0f2fe">
+          <i data-lucide="tool" class="w-5 h-5"></i>
+          Bộ Công Cụ Positive Mindset
+        </div>
+        <h1 class="mt-4 text-3xl sm:text-4xl font-extrabold text-slate-900">Thực hành: nhanh, đủ sâu, lưu tại chỗ</h1>
+        <p class="mt-2 text-slate-600">Dùng mỗi ngày để tái cấu trúc nhận thức, tăng nội lực và giữ nhịp hành động.</p>
+        <div class="h-1 w-24 bg-primary-blue mx-auto mt-5 rounded-full"></div>
+      </header>
+
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="card">
+          <div class="flex items-center gap-2">
+            <div class="chip" style="background:#eef2ff;color:#3730a3;border:1px solid #e0e7ff">
+              <i data-lucide="brain" class="w-5 h-5"></i>
+              Nhật ký tái cấu trúc nhận thức
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-1 gap-3">
+            <input id="cbt_event" class="input" placeholder="Sự kiện">
+            <input id="cbt_auto" class="input" placeholder="Suy nghĩ tự động">
+            <div class="grid grid-cols-5 gap-3 items-center">
+              <label class="text-slate-700 font-semibold col-span-2">Cường độ cảm xúc</label>
+              <input id="cbt_emotion" type="range" min="0" max="10" value="5" class="col-span-3">
+            </div>
+            <input id="cbt_reframe" class="input" placeholder="Diễn giải thay thế hợp lý">
+            <button id="cbt_save" class="btn btn-primary mt-2">
+              <i data-lucide="save" class="w-5 h-5"></i>
+              Lưu
+            </button>
+          </div>
+          <div class="mt-4">
+            <div class="font-bold text-slate-900 mb-2">Bản ghi</div>
+            <div id="cbt_list" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-center gap-2">
+            <div class="chip" style="background:#ecfdf5;color:#065f46;border:1px solid #d1fae5">
+              <i data-lucide="heart" class="w-5 h-5"></i>
+              Nhật ký biết ơn 3 dòng
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-1 gap-3">
+            <input id="gr1" class="input" placeholder="Điều biết ơn #1">
+            <input id="gr2" class="input" placeholder="Điều biết ơn #2">
+            <input id="gr3" class="input" placeholder="Điều biết ơn #3">
+            <button id="gr_save" class="btn btn-secondary mt-2">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+              Lưu
+            </button>
+          </div>
+          <div class="mt-4">
+            <div class="font-bold text-slate-900 mb-2">Bản ghi</div>
+            <div id="gr_list" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-center gap-2">
+            <div class="chip" style="background:#fffbeb;color:#78350f;border:1px solid #fef3c7">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+              Khởi động 10 phút
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-1 gap-3">
+            <div class="text-4xl font-extrabold text-slate-900 text-center" id="timer_text">10:00</div>
+            <div class="flex items-center justify-center gap-3">
+              <button id="timer_start" class="btn btn-primary">
+                <i data-lucide="play" class="w-5 h-5"></i>
+                Bắt đầu
+              </button>
+              <button id="timer_pause" class="btn btn-secondary">
+                <i data-lucide="pause" class="w-5 h-5"></i>
+                Tạm dừng
+              </button>
+              <button id="timer_reset" class="btn">
+                <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                Đặt lại
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-center gap-2">
+            <div class="chip" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0">
+              <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+              Việc nhỏ quan trọng
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-1 gap-3">
+            <input id="task_input" class="input" placeholder="Thêm việc nhỏ">
+            <div class="flex gap-2">
+              <button id="task_add" class="btn btn-primary">
+                <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                Thêm
+              </button>
+              <button id="task_clear_done" class="btn">
+                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                Xóa đã hoàn tất
+              </button>
+            </div>
+            <div id="task_list" class="space-y-2"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-8 text-center">
+        <a href="/positive-mindset" class="btn btn-primary">
+          <i data-lucide="home" class="w-5 h-5"></i>
+          Về trang chủ chủ đề
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    var storeKeys = { cbt: 'pm_cbt', gratitude: 'pm_gratitude', tasks: 'pm_tasks' };
+    function getList(key){ try{ return JSON.parse(localStorage.getItem(key)||'[]'); }catch(e){ return []; } }
+    function setList(key, list){ localStorage.setItem(key, JSON.stringify(list)); }
+    function renderCBT(){
+      var list = getList(storeKeys.cbt);
+      var el = document.getElementById('cbt_list');
+      el.innerHTML = '';
+      list.slice().reverse().forEach(function(item, idx){
+        var d = document.createElement('div');
+        d.className = 'rounded-lg border border-slate-200 p-3';
+        d.innerHTML = '<div class="font-semibold text-slate-900">'+item.event+'</div>'
+          + '<div class="text-slate-700">Suy nghĩ: '+item.auto+'</div>'
+          + '<div class="text-slate-700">Cảm xúc: '+item.emotion+'/10</div>'
+          + '<div class="text-slate-700">Diễn giải: '+item.reframe+'</div>';
+        el.appendChild(d);
+      });
+    }
+    function renderGR(){
+      var list = getList(storeKeys.gratitude);
+      var el = document.getElementById('gr_list');
+      el.innerHTML = '';
+      list.slice().reverse().forEach(function(item){
+        var d = document.createElement('div');
+        d.className = 'rounded-lg border border-emerald-200 p-3 bg-emerald-50';
+        d.innerHTML = '<div class="text-emerald-900 font-semibold">'+item.join(' • ')+'</div>';
+        el.appendChild(d);
+      });
+    }
+    function renderTasks(){
+      var list = getList(storeKeys.tasks);
+      var el = document.getElementById('task_list');
+      el.innerHTML = '';
+      list.forEach(function(t, i){
+        var row = document.createElement('div');
+        row.className = 'rounded-lg border border-slate-200 p-3 flex items-center justify-between';
+        var left = document.createElement('div');
+        left.className = 'flex items-center gap-2';
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = !!t.done;
+        cb.onchange = function(){ list[i].done = cb.checked; setList(storeKeys.tasks, list); renderTasks(); };
+        var span = document.createElement('span');
+        span.className = 'text-slate-800';
+        span.textContent = t.text;
+        left.appendChild(cb); left.appendChild(span);
+        var del = document.createElement('button');
+        del.className = 'btn';
+        del.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i>';
+        del.onclick = function(){ list.splice(i,1); setList(storeKeys.tasks, list); renderTasks(); };
+        row.appendChild(left); row.appendChild(del);
+        el.appendChild(row);
+      });
+      if (window.lucide) lucide.createIcons();
+    }
+    function saveCBT(){
+      var event = document.getElementById('cbt_event').value.trim();
+      var auto = document.getElementById('cbt_auto').value.trim();
+      var emotion = parseInt(document.getElementById('cbt_emotion').value,10);
+      var reframe = document.getElementById('cbt_reframe').value.trim();
+      if(!event || !auto || !reframe) return;
+      var list = getList(storeKeys.cbt);
+      list.push({event:auto?event:event, auto:auto, emotion:emotion, reframe:reframe, ts:Date.now()});
+      setList(storeKeys.cbt, list);
+      document.getElementById('cbt_event').value = '';
+      document.getElementById('cbt_auto').value = '';
+      document.getElementById('cbt_emotion').value = '5';
+      document.getElementById('cbt_reframe').value = '';
+      renderCBT();
+    }
+    function saveGR(){
+      var g1 = document.getElementById('gr1').value.trim();
+      var g2 = document.getElementById('gr2').value.trim();
+      var g3 = document.getElementById('gr3').value.trim();
+      if(!g1 && !g2 && !g3) return;
+      var list = getList(storeKeys.gratitude);
+      list.push([g1,g2,g3].filter(function(x){return x&&x.length>0;}));
+      setList(storeKeys.gratitude, list);
+      document.getElementById('gr1').value = '';
+      document.getElementById('gr2').value = '';
+      document.getElementById('gr3').value = '';
+      renderGR();
+    }
+    var timer = { remain: 600, handle: null };
+    function fmt(n){ var m = Math.floor(n/60), s = n%60; return (m<10?'0'+m:m)+':'+(s<10?'0'+s:s); }
+    function renderTimer(){ document.getElementById('timer_text').textContent = fmt(timer.remain); }
+    function startTimer(){
+      if(timer.handle) return;
+      timer.handle = setInterval(function(){
+        timer.remain = Math.max(0, timer.remain-1);
+        renderTimer();
+        if(timer.remain===0){ clearInterval(timer.handle); timer.handle=null; }
+      },1000);
+    }
+    function pauseTimer(){ if(timer.handle){ clearInterval(timer.handle); timer.handle=null; } }
+    function resetTimer(){ pauseTimer(); timer.remain = 600; renderTimer(); }
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.lucide) lucide.createIcons();
+      renderCBT(); renderGR(); renderTasks(); renderTimer();
+      document.getElementById('cbt_save').onclick = saveCBT;
+      document.getElementById('gr_save').onclick = saveGR;
+      document.getElementById('task_add').onclick = function(){
+        var v = document.getElementById('task_input').value.trim(); if(!v) return;
+        var list = getList(storeKeys.tasks); list.push({text:v, done:false}); setList(storeKeys.tasks, list);
+        document.getElementById('task_input').value = ''; renderTasks();
+      };
+      document.getElementById('task_clear_done').onclick = function(){
+        var list = getList(storeKeys.tasks).filter(function(t){ return !t.done; }); setList(storeKeys.tasks, list); renderTasks();
+      };
+      document.getElementById('timer_start').onclick = startTimer;
+      document.getElementById('timer_pause').onclick = pauseTimer;
+      document.getElementById('timer_reset').onclick = resetTimer;
+    });
+  </script>
+  <script src="/assets/js/footer.js"></script>
+</body>
+</html>

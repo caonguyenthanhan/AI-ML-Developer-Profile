@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiến Lược Thiết Kế AI Agent - Production Ready</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a; /* Slate 900 */
+            color: #cbd5e1; /* Slate 300 */
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7); /* Slate 800 with opacity */
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5); /* Slate 700 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Tree Node Styles */
+        .tree-node {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .tree-node:hover {
+            transform: translateY(-2px);
+            border-color: #14b8a6;
+            box-shadow: 0 4px 20px -5px rgba(20, 184, 166, 0.3);
+        }
+
+        .tree-node.active {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2), 0 4px 20px -5px rgba(20, 184, 166, 0.4);
+        }
+
+        .tree-node.active .icon-bg {
+            background: rgba(20, 184, 166, 0.1);
+            color: #14b8a6;
+        }
+
+        .tree-node.active .node-title {
+            color: #f8fafc;
+            font-weight: 600;
+        }
+
+        .content-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: auto;
+            height: 350px;
+        }
+
+        input[type=range] {
+            accent-color: #14b8a6;
+            background: #334155;
+            height: 6px;
+            border-radius: 9999px;
+            outline: none;
+        }
+        
+        /* Markdown Styles cho AI Output */
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 { font-size: 1.125rem; font-weight: 600; color: #f8fafc; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .markdown-body p { margin-bottom: 1rem; color: #cbd5e1; line-height: 1.6; }
+        .markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; }
+        .markdown-body ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; }
+        .markdown-body li { margin-bottom: 0.5rem; }
+        .markdown-body strong { color: #f8fafc; font-weight: 600; }
+        .markdown-body code { background: rgba(30, 41, 59, 0.8); padding: 0.125rem 0.375rem; border-radius: 0.25rem; color: #14b8a6; font-family: monospace; font-size: 0.875em; border: 1px solid rgba(20, 184, 166, 0.3); }
+        .markdown-body pre { background: rgba(15, 23, 42, 0.8); padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; border: 1px solid rgba(51, 65, 85, 0.5); }
+        .markdown-body pre code { background: transparent; padding: 0; border: none; color: #e2e8f0; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Header -->
+    <header class="pt-16 pb-12 px-6 text-center max-w-5xl mx-auto relative">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-3xl opacity-20 pointer-events-none">
+            <div class="absolute top-10 left-1/4 w-64 h-64 bg-brand-500 rounded-full mix-blend-screen filter blur-[80px]"></div>
+            <div class="absolute top-10 right-1/4 w-64 h-64 bg-blue-600 rounded-full mix-blend-screen filter blur-[80px]"></div>
+        </div>
+        
+        <div class="relative z-10">
+            <span class="inline-block py-1 px-3 rounded text-brand-500 bg-brand-900/50 border border-brand-500/30 text-xs font-mono tracking-widest uppercase mb-4">
+                <i class="fas fa-microchip mr-2"></i>AI Engineering Framework
+            </span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">Thiết Kế Chiến Lược Multi-AI Agent</h1>
+            <p class="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+                Để chuyển từ một demo cục bộ sang hệ thống <strong>production-ready</strong>, kỹ thuật Prompt Engineering là không đủ. Hệ thống cần sự điều phối linh hoạt (LangGraph), tối ưu ngữ cảnh (RAG sâu) và loại bỏ hoàn toàn các logic hardcode tĩnh (if/else).
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 md:px-8 space-y-16 pb-20">
+
+        <!-- Tree Blueprint Section -->
+        <section id="explorer-section" class="scroll-mt-8 relative z-10">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold text-white mb-2"><i class="fas fa-project-diagram text-brand-500 mr-3"></i>Sơ Đồ Kiến Trúc Hệ Thống (DAGs Blueprint)</h2>
+                <p class="text-slate-400 text-sm">Nhấp vào từng Node trên sơ đồ cây để xem chi tiết tiêu chuẩn kỹ thuật.</p>
+            </div>
+
+            <!-- Tree Diagram Canvas & Grid Container -->
+            <div id="tree-container" class="relative w-full max-w-5xl mx-auto py-8 mb-12">
+                <!-- Canvas for drawing connecting lines -->
+                <canvas id="tree-canvas" class="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
+                
+                <!-- CSS Grid for Node Placement (Diamond/Tree shape) -->
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-y-12 gap-x-6" id="tree-nodes-grid">
+                    <!-- Nodes will be injected here via JS to align with the grid layout -->
+                </div>
+            </div>
+
+            <!-- Detail Pane (Appears below the tree) -->
+            <div class="w-full max-w-4xl mx-auto glass-panel rounded-xl p-8 lg:p-10 relative overflow-hidden shadow-2xl">
+                <div class="absolute -right-20 -bottom-20 opacity-5 pointer-events-none">
+                    <i id="detail-bg-icon" class="fas fa-bullseye text-9xl"></i>
+                </div>
+                
+                <div id="step-detail-container" class="content-fade-in relative z-10">
+                    <div class="flex flex-col md:flex-row items-start md:items-center mb-6">
+                        <div class="w-16 h-16 shrink-0 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-3xl text-brand-500 md:mr-6 mb-4 md:mb-0 shadow-lg" id="detail-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-1">
+                                <span class="bg-brand-900/50 text-brand-400 text-xs font-mono px-2 py-0.5 rounded border border-brand-500/30" id="detail-badge">Node 1</span>
+                                <h3 class="text-2xl md:text-3xl font-bold text-white tracking-tight" id="detail-title">Mục tiêu (The "Why")</h3>
+                            </div>
+                            <p class="text-slate-400 font-medium text-sm mt-1" id="detail-brief">Xác định bài toán & scope</p>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full h-px bg-gradient-to-r from-slate-700 via-slate-600 to-transparent mb-6"></div>
+                    
+                    <div class="text-base text-slate-300 leading-relaxed space-y-4" id="detail-content">
+                        <!-- JS injected content -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Assessment Section -->
+        <section id="assessment-section" class="scroll-mt-8 relative z-10 pt-10 border-t border-slate-800">
+            <div class="mb-8 border-b border-slate-700 pb-4 text-center md:text-left">
+                <h2 class="text-2xl font-bold text-white mb-1"><i class="fas fa-chart-radar text-brand-500 mr-2"></i>Đánh Giá Mức Độ Production-Ready</h2>
+                <p class="text-slate-400 text-sm">Điều chỉnh thanh trượt để chấm điểm hệ thống hiện tại của bạn dựa trên các tiêu chuẩn AI-First.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center glass-panel rounded-xl p-6 md:p-10">
+                <!-- Sliders -->
+                <div class="space-y-5" id="sliders-container">
+                    <!-- JS injected sliders -->
+                </div>
+
+                <!-- Radar Chart -->
+                <div class="flex flex-col justify-center items-center w-full">
+                    <div class="chart-container bg-slate-800/50 p-4 rounded-full border border-slate-700/50 shadow-2xl mb-8">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                    
+                    <button id="btn-analyze-scores" class="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-semibold py-3 px-8 rounded-lg shadow-[0_0_15px_rgba(20,184,166,0.4)] hover:shadow-[0_0_25px_rgba(20,184,166,0.6)] transition-all duration-300 flex items-center gap-2 border border-brand-400/50">
+                        <i class="fas fa-brain"></i> ✨ Phân Tích Điểm Bằng AI
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI Assessment Output -->
+            <div id="ai-score-output-container" class="mt-8 glass-panel rounded-xl p-6 md:p-8 hidden border-brand-500/30 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-brand-500 rounded-full mix-blend-screen filter blur-[60px] opacity-20"></div>
+                <div class="flex items-center gap-3 mb-4 border-b border-slate-700 pb-4 relative z-10">
+                    <div class="w-10 h-10 rounded-full bg-slate-800 border border-brand-500 flex items-center justify-center text-brand-400 shadow-[0_0_10px_rgba(20,184,166,0.3)]">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Đề xuất cải thiện từ AI Architect</h3>
+                </div>
+                <div id="ai-score-content" class="markdown-body relative z-10"></div>
+            </div>
+        </section>
+
+        <!-- Use Case Analyzer Section -->
+        <section id="ai-architect-section" class="scroll-mt-8 relative z-10 mt-16 pt-10 border-t border-slate-800">
+            <div class="mb-8 border-b border-slate-700 pb-4 text-center md:text-left">
+                <h2 class="text-2xl font-bold text-white mb-1"><i class="fas fa-magic text-brand-500 mr-2"></i>✨ Thiết Kế Kiến Trúc Theo Use-Case</h2>
+                <p class="text-slate-400 text-sm">Nhập bài toán kinh doanh của bạn, Gemini AI sẽ tự động phác thảo bản thiết kế kỹ thuật (Blueprint) tương ứng.</p>
+            </div>
+
+            <div class="glass-panel rounded-xl p-6 md:p-8">
+                <div class="flex flex-col md:flex-row gap-4 mb-2">
+                    <input type="text" id="use-case-input" placeholder="VD: Hệ thống AI review code PR tự động trên GitHub, hoặc Agent phân tích báo cáo y tế..." class="flex-grow bg-slate-900 border border-slate-600 rounded-lg px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors shadow-inner font-medium">
+                    <button id="btn-generate-arch" class="bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-brand-500/25 transition-all duration-200 whitespace-nowrap flex items-center justify-center gap-2">
+                        <i class="fas fa-pen-ruler"></i> ✨ Phác Thảo AI
+                    </button>
+                </div>
+                
+                <div id="ai-arch-output-container" class="hidden mt-8 bg-slate-900/70 rounded-xl p-6 md:p-8 border border-slate-700 shadow-inner relative">
+                    <div id="ai-arch-content" class="markdown-body relative z-10"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="glass-panel rounded-2xl p-8 md:p-12 relative overflow-hidden mt-12 border border-brand-500/20 bg-gradient-to-br from-slate-800/80 to-slate-900/80">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-brand-600 rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
+            
+            <div class="relative z-10 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+                <div class="w-20 h-20 shrink-0 rounded-2xl bg-brand-900 border border-brand-500 flex items-center justify-center text-4xl text-brand-400 shadow-[0_0_30px_rgba(20,184,166,0.3)]">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-3">Tư Duy Kỹ Sư Hệ Thống (Systems Engineering)</h2>
+                    <p class="text-slate-300 leading-relaxed mb-4">
+                        LLM Model chỉ là "động cơ". Sự khác biệt của một kỹ sư AI xuất sắc nằm ở khả năng xây dựng <strong>Khung gầm (Orchestration)</strong> và <strong>Hệ thống nhiên liệu (Context/RAG)</strong>.
+                    </p>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm font-mono text-slate-400">
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> LangGraph thay cho quy trình tĩnh</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Semantic Routing thay cho If/Else</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Pydantic strict-typing output</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Evaluation liên tục với RAGAS</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 text-slate-500 text-sm font-mono border-t border-slate-800 mt-10">
+        <p>Configured for Advanced AI Software Engineering Standards</p>
+    </footer>
+
+    <script>
+        // CONFIG_DATA: Dynamic content to avoid hardcoding in the UI
+        const AGENT_BLUEPRINT = [
+            { 
+                id: 'why', 
+                label: 'Mục tiêu', 
+                title: 'Mục tiêu (The "Why")', 
+                icon: 'fa-bullseye', 
+                brief: 'Định nghĩa bài toán cốt lõi', 
+                gridClass: 'col-span-1 md:col-span-4 justify-self-center', // Top center
+                details: `
+                    <p>Đừng xây dựng một agent chỉ vì công nghệ mới, để rồi đi tìm vấn đề cho nó giải quyết.</p>
+                    <div class="bg-slate-800/50 p-4 rounded border border-slate-700 mt-4">
+                        <strong class="text-white block mb-2">Technical Standard:</strong>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
+                            <li>Xác định chính xác input/output schemas sử dụng <code class="text-brand-400 bg-slate-900 px-1 rounded">Pydantic v2</code>.</li>
+                            <li>Định nghĩa rõ success metrics (VD: giảm tỷ lệ hallucination < 5%, latency < 2s).</li>
+                        </ul>
+                    </div>` 
+            },
+            { 
+                id: 'who', 
+                label: 'System Prompt', 
+                title: 'System Prompt (The "Who")', 
+                icon: 'fa-user-astronaut', 
+                brief: 'Persona & Guardrails an toàn', 
+                gridClass: 'col-span-1 md:col-span-2 justify-self-center md:justify-self-end md:mr-8 w-full md:w-64', // Row 2 Left
+                details: `
+                    <p>Định nghĩa vai trò, không gian hoạt động và các rào cản an toàn cho Agent.</p>
+                    <div class="bg-slate-800/50 p-4 rounded border border-slate-700 mt-4">
+                        <strong class="text-white block mb-2">Technical Standard:</strong>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
+                            <li>Tuyệt đối <strong class="text-red-400">không hardcode prompt</strong>. Sử dụng <strong>DSPy</strong> để tự động tối ưu hoá prompt/compiled signatures.</li>
+                            <li>Thiết lập guardrails chống Prompt Injection ở layer Validation trước khi đưa vào LLM.</li>
+                        </ul>
+                    </div>` 
+            },
+            { 
+                id: 'brain', 
+                label: 'Lựa chọn LLM', 
+                title: 'Lựa chọn LLM (The "Brain")', 
+                icon: 'fa-brain', 
+                brief: 'Tối ưu Reasoning & Latency', 
+                gridClass: 'col-span-1 md:col-span-2 justify-self-center md:justify-self-start md:ml-8 w-full md:w-64', // Row 2 Right
+                details: `
+                    <p>Bài toán cân bằng giữa: Năng lực suy luận (Reasoning) - Chi phí (Cost) - Độ trễ (Latency).</p>
+                    <div class="bg-slate-800/50 p-4 rounded border border-slate-700 mt-4">
+                        <strong class="text-white block mb-2">Technical Standard:</strong>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
+                            <li>Thiết kế theo chuẩn <strong>LangChain LCEL</strong> để linh hoạt switch models (GPT-4o, Claude 3.5, Local Llama 3) qua file <code>.env</code> hoặc <code>yaml config</code>.</li>
+                            <li>Ưu tiên sức mạnh Reasoning phân luồng thay cho các quy tắc if/else logic cứng.</li>
+                        </ul>
+                    </div>` 
+            },
+            { 
+                id: 'hands', 
+                label: 'Tools & APIs', 
+                title: 'Công cụ (The "Hands")', 
+                icon: 'fa-toolbox', 
+                brief: 'Giao tiếp với thế giới thực', 
+                gridClass: 'col-span-1 md:col-span-2 justify-self-center md:justify-self-end md:mr-8 w-full md:w-64', // Row 3 Left
+                details: `
+                    <p>Cung cấp khả năng hành động cho agent thông qua Function Calling / Tools.</p>
+                    <div class="bg-slate-800/50 p-4 rounded border border-slate-700 mt-4">
+                        <strong class="text-white block mb-2">Technical Standard:</strong>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
+                            <li>Gắn schema strict-typing cho mọi external APIs.</li>
+                            <li>Phân quyền (Permissions) rõ ràng (Read-only vs Write).</li>
+                            <li>Sử dụng dependency injection cho cấu hình môi trường, không hardcode endpoints.</li>
+                        </ul>
+                    </div>` 
+            },
+            { 
+                id: 'recall', 
+                label: 'Hệ thống Bộ nhớ', 
+                title: 'Hệ thống Bộ nhớ (The "Recall")', 
+                icon: 'fa-database', 
+                brief: 'RAG sâu & Context', 
+                gridClass: 'col-span-1 md:col-span-2 justify-self-center md:justify-self-start md:ml-8 w-full md:w-64', // Row 3 Right
+                details: `
+                    <p>Xử lý ngữ cảnh ngắn hạn (session) và tri thức dài hạn (Semantic memory).</p>
+                    <div class="bg-slate-800/50 p-4 rounded border border-slate-700 mt-4">
+                        <strong class="text-white block mb-2">Technical Standard:</strong>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
+                            <li>Thiết kế <strong>RAG sâu</strong> (sử dụng LlamaIndex, Re-ranking, Graph RAG).</li>
+                            <li>Fallback strategy: Trả về tìm kiếm web/database khi context rỗng, <strong>nghiêm cấm hallucinate</strong>.</li>
+                        </ul>
+                    </div>` 
+            },
+            { 
+                id: 'glue', 
+                label: 'Điều phối (Orchestration)', 
+                title: 'Điều phối (The "Glue")', 
+                icon: 'fa-network-wired', 
+                brief: 'State Management & Router', 
+                gridClass: 'col-span-1 md:col-span-4 justify-self-center', // Row 4 Center - Wraps everything
+                details: `
+                    <p>Lớp "keo dán" kết nối nhiều agents chuyên biệt và xử lý các luồng phức tạp.</p>
+                    <div class="bg-slate-800/50 p-4 rounded border border-slate-700 mt-4">
+                        <strong class="text-white block mb-2">Technical Standard:</strong>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
+                            <li>Bắt buộc sử dụng <strong>LangGraph</strong> để truyền state và quản lý cycles/loops.</li>
+                            <li>Định tuyến linh hoạt (Routing) sử dụng <strong>Semantic Router</strong> (nhúng vector) thay vì string matching hay if/else if.</li>
+                        </ul>
+                    </div>` 
+            },
+            { 
+                id: 'interaction', 
+                label: 'Giao diện (UI)', 
+                title: 'Giao diện (The "Interaction")', 
+                icon: 'fa-laptop-code', 
+                brief: 'Điểm chạm & Human-in-loop', 
+                gridClass: 'col-span-1 md:col-span-2 justify-self-center md:justify-self-end md:mr-8 w-full md:w-64', // Row 5 Left
+                details: `
+                    <p>Xác định cách con người tương tác: Chat UI, Web App, hoặc Headless API.</p>
+                    <div class="bg-slate-800/50 p-4 rounded border border-slate-700 mt-4">
+                        <strong class="text-white block mb-2">Technical Standard:</strong>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
+                            <li>Xây dựng cơ chế <strong>Human-in-the-loop</strong> qua LangGraph interrupts cho các tác vụ thay đổi dữ liệu (Write operations).</li>
+                            <li>FastAPI backend trả về stream response (Server-Sent Events) mượt mà.</li>
+                        </ul>
+                    </div>` 
+            },
+            { 
+                id: 'refinement', 
+                label: 'Kiểm thử (Eval)', 
+                title: 'Kiểm thử (The "Refinement")', 
+                icon: 'fa-vial', 
+                brief: 'LLMOps & Metric Tracking', 
+                gridClass: 'col-span-1 md:col-span-2 justify-self-center md:justify-self-start md:ml-8 w-full md:w-64', // Row 5 Right
+                details: `
+                    <p>Hệ thống AI không đo lường được thì không thể cải thiện và an toàn đưa lên production.</p>
+                    <div class="bg-slate-800/50 p-4 rounded border border-slate-700 mt-4">
+                        <strong class="text-white block mb-2">Technical Standard:</strong>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
+                            <li>Bắt buộc tracking Chain-of-Thought (CoT) trace bằng <strong>LangSmith</strong> hoặc <strong>Phoenix</strong>.</li>
+                            <li>Tự động hoá Eval pipeline sử dụng <strong>RAGAS</strong> (đo lường Faithfulness, Answer Relevance) qua <code>pytest</code>.</li>
+                        </ul>
+                    </div>` 
+            }
+        ];
+
+        let radarChartInstance = null;
+        let assessmentScores = [8, 6, 7, 5, 8, 9, 6, 4]; 
+
+        // 1. Initialize Tree View & Detail UI
+        function initExplorer() {
+            const gridContainer = document.getElementById('tree-nodes-grid');
+            
+            AGENT_BLUEPRINT.forEach((step, index) => {
+                const nodeEl = document.createElement('div');
+                // Base classes for the card + the specific grid positioning classes
+                nodeEl.className = `tree-node rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-md relative ${step.gridClass} ${index === 0 ? 'active' : ''}`;
+                nodeEl.id = `node-${index}`;
+                nodeEl.onclick = () => selectStep(index, nodeEl);
+                
+                nodeEl.innerHTML = `
+                    <div class="icon-bg w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-slate-400 mb-3 transition-colors duration-200 shadow-inner border border-slate-600/50">
+                        <i class="fas ${step.icon} text-lg"></i>
+                    </div>
+                    <div class="node-title text-sm font-medium text-slate-300 transition-colors">${index + 1}. ${step.label}</div>
+                    <div class="text-[11px] text-slate-500 mt-1">${step.brief}</div>
+                `;
+                gridContainer.appendChild(nodeEl);
+            });
+            
+            // Draw lines initially
+            setTimeout(drawTreeConnections, 100); // Wait for DOM layout
+            window.addEventListener('resize', drawTreeConnections);
+
+            // Render first item
+            renderDetailView(0);
+        }
+
+        // Draw the curved connecting lines using Canvas
+        function drawTreeConnections() {
+            const canvas = document.getElementById('tree-canvas');
+            const container = document.getElementById('tree-container');
+            
+            // Match canvas size to container
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = 'rgba(71, 85, 105, 0.6)'; // slate-600 with opacity
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 4]); // Dash effect to look like data flow
+            
+            // Function to get absolute center of a node relative to the container
+            const getCenter = (idx) => {
+                const el = document.getElementById(`node-${idx}`);
+                if (!el) return {x:0, y:0};
+                const rect = el.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                return {
+                    x: rect.left - containerRect.left + rect.width / 2,
+                    y: rect.top - containerRect.top + rect.height / 2,
+                    rect: rect
+                };
+            };
+
+            const pos = [];
+            for(let i=0; i<8; i++) pos.push(getCenter(i));
+
+            // Logic to draw Bezier curve between two points
+            const drawCurve = (p1, p2) => {
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                // Control points for a smooth vertical S-curve
+                const cpY = p1.y + (p2.y - p1.y) / 2;
+                ctx.bezierCurveTo(p1.x, cpY, p2.x, cpY, p2.x, p2.y);
+                ctx.stroke();
+            };
+
+            // Define the Directed Acyclic Graph connections
+            // Mục tiêu (0) -> Prompt (1) & LLM (2)
+            drawCurve(pos[0], pos[1]);
+            drawCurve(pos[0], pos[2]);
+            
+            // Prompt (1) & LLM (2) -> Tools (3) & Memory (4)
+            drawCurve(pos[1], pos[3]);
+            drawCurve(pos[2], pos[4]);
+            
+            // All core components (3, 4) -> Orchestration (5)
+            drawCurve(pos[3], pos[5]);
+            drawCurve(pos[4], pos[5]);
+            
+            // Orchestration (5) -> UI (6) & Eval (7)
+            drawCurve(pos[5], pos[6]);
+            drawCurve(pos[5], pos[7]);
+        }
+
+        // Handle step selection from the Tree
+        function selectStep(index, element) {
+            // Reset all active styles
+            document.querySelectorAll('.tree-node').forEach(el => el.classList.remove('active'));
+            
+            // Apply active styles to clicked node
+            element.classList.add('active');
+
+            renderDetailView(index);
+            
+            // Optionally, scroll smoothly to the detail pane on mobile
+            if (window.innerWidth < 768) {
+                document.getElementById('step-detail-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Render the detail pane
+        function renderDetailView(index) {
+            const data = AGENT_BLUEPRINT[index];
+            const container = document.getElementById('step-detail-container');
+            
+            // Re-trigger CSS animation
+            container.classList.remove('content-fade-in');
+            void container.offsetWidth; // Force reflow
+            container.classList.add('content-fade-in');
+
+            document.getElementById('detail-icon').innerHTML = `<i class="fas ${data.icon}"></i>`;
+            document.getElementById('detail-badge').textContent = `Node ${index + 1}`;
+            document.getElementById('detail-bg-icon').className = `fas ${data.icon}`;
+            document.getElementById('detail-title').textContent = data.title;
+            document.getElementById('detail-brief').textContent = data.brief;
+            document.getElementById('detail-content').innerHTML = data.details;
+        }
+
+        // 2. Initialize Assessment Sliders & Radar Chart
+        function initAssessment() {
+            const slidersContainer = document.getElementById('sliders-container');
+            
+            AGENT_BLUEPRINT.forEach((step, index) => {
+                const row = document.createElement('div');
+                row.className = "flex items-center space-x-4 bg-slate-800/40 p-3 rounded-lg border border-slate-700/50 hover:border-slate-600 transition-colors";
+                row.innerHTML = `
+                    <div class="w-6 text-center text-slate-400"><i class="fas ${step.icon}"></i></div>
+                    <div class="w-32 text-sm font-medium text-slate-300 truncate" title="${step.label}">${step.label}</div>
+                    <input type="range" min="0" max="10" value="${assessmentScores[index]}" class="flex-grow cursor-pointer" id="slider-${index}">
+                    <div class="w-8 text-right font-mono font-bold text-brand-400 bg-slate-900 px-2 py-1 rounded text-xs" id="val-${index}">${assessmentScores[index]}</div>
+                `;
+                slidersContainer.appendChild(row);
+
+                // Add event listener to update chart dynamically
+                document.getElementById(`slider-${index}`).addEventListener('input', (e) => {
+                    const val = parseInt(e.target.value);
+                    document.getElementById(`val-${index}`).textContent = val;
+                    assessmentScores[index] = val;
+                    updateRadarChart();
+                });
+            });
+
+            initRadarChart();
+        }
+
+        // Setup Chart.js Canvas
+        function initRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+            Chart.defaults.color = '#94a3b8';
+
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: AGENT_BLUEPRINT.map(d => d.label.split(' ')[0]), // Short labels for chart
+                    datasets: [{
+                        label: 'Hệ thống hiện tại',
+                        data: assessmentScores,
+                        backgroundColor: 'rgba(20, 184, 166, 0.2)', // Brand 500 transparent
+                        borderColor: '#14b8a6', // Brand 500
+                        pointBackgroundColor: '#0f172a',
+                        pointBorderColor: '#14b8a6',
+                        pointHoverBackgroundColor: '#14b8a6',
+                        pointHoverBorderColor: '#fff',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(51, 65, 85, 0.5)' }, // Slate 700
+                            grid: { color: 'rgba(51, 65, 85, 0.5)' },
+                            pointLabels: {
+                                font: { size: 11, family: 'mono' },
+                                color: '#cbd5e1'
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                max: 10,
+                                stepSize: 2,
+                                backdropColor: 'transparent',
+                                color: '#64748b',
+                                z: 10
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#14b8a6',
+                            titleFont: { size: 13, family: 'mono' },
+                            bodyFont: { size: 14, weight: 'bold' },
+                            padding: 12,
+                            borderColor: 'rgba(51, 65, 85, 1)',
+                            borderWidth: 1,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return `Score: ${context.raw}/10`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateRadarChart() {
+            if(radarChartInstance) {
+                radarChartInstance.data.datasets[0].data = assessmentScores;
+                radarChartInstance.update();
+            }
+        }
+
+        // Boot the app
+        document.addEventListener('DOMContentLoaded', () => {
+            initExplorer();
+            initAssessment();
+            initAIFeatures();
+        });
+
+        // --- GEMINI API INTEGRATION ---
+        const apiKey = "";
+
+        async function callGeminiAPI(prompt, systemInstruction = "") {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }]
+            };
+            
+            if (systemInstruction) {
+                payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+            }
+
+            let retries = 5;
+            let delay = 1000;
+            
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Lỗi HTTP: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    if(data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
+                        return data.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error("Phản hồi API không đúng định dạng.");
+                    }
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2; // Exponential backoff
+                }
+            }
+        }
+
+        function initAIFeatures() {
+            const btnAnalyze = document.getElementById('btn-analyze-scores');
+            const btnGenerate = document.getElementById('btn-generate-arch');
+
+            if (btnAnalyze) {
+                btnAnalyze.addEventListener('click', async () => {
+                    const container = document.getElementById('ai-score-output-container');
+                    const contentDiv = document.getElementById('ai-score-content');
+                    const originalBtnHtml = btnAnalyze.innerHTML;
+                    
+                    container.classList.remove('hidden');
+                    contentDiv.innerHTML = '<div class="flex items-center gap-3 text-brand-400 font-medium py-4"><i class="fas fa-circle-notch fa-spin text-2xl"></i> AI đang phân tích sơ đồ hệ thống của bạn...</div>';
+                    btnAnalyze.disabled = true;
+                    btnAnalyze.classList.add('opacity-70', 'cursor-not-allowed');
+                    btnAnalyze.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Đang xử lý...';
+
+                    // Prepare current scores to feed to LLM
+                    const scoreText = AGENT_BLUEPRINT.map((step, idx) => `- ${step.label}: ${assessmentScores[idx]}/10`).join('\n');
+                    
+                    const systemPrompt = "Bạn là một Senior AI Systems Architect dày dặn kinh nghiệm thiết kế hệ thống Multi-Agent Production. Hãy phân tích điểm số của người dùng và đưa ra đánh giá tóm tắt, sau đó liệt kê đúng 3 hành động kỹ thuật cụ thể (Technical Action Items) cần ưu tiên thực hiện nhất để nâng cấp hệ thống. Viết ngắn gọn, chuyên sâu, chuyên nghiệp, sử dụng thuật ngữ như RAG, LangGraph, DSPy, VectorDB. Trả lời bằng tiếng Việt, định dạng Markdown.";
+                    const userPrompt = `Hãy phân tích điểm số đánh giá kiến trúc AI Agent của tôi (thang điểm 10) và gợi ý cải thiện:\n${scoreText}`;
+
+                    try {
+                        const responseText = await callGeminiAPI(userPrompt, systemPrompt);
+                        contentDiv.innerHTML = marked.parse(responseText);
+                    } catch (error) {
+                        contentDiv.innerHTML = `<div class="p-4 bg-red-900/30 border border-red-500/50 rounded-lg text-red-300"><i class="fas fa-exclamation-triangle mr-2"></i> Lỗi xử lý AI: ${error.message}</div>`;
+                    } finally {
+                        btnAnalyze.disabled = false;
+                        btnAnalyze.classList.remove('opacity-70', 'cursor-not-allowed');
+                        btnAnalyze.innerHTML = originalBtnHtml;
+                    }
+                });
+            }
+
+            if (btnGenerate) {
+                btnGenerate.addEventListener('click', async () => {
+                    const useCaseInput = document.getElementById('use-case-input').value.trim();
+                    const container = document.getElementById('ai-arch-output-container');
+                    const contentDiv = document.getElementById('ai-arch-content');
+                    const originalBtnHtml = btnGenerate.innerHTML;
+
+                    if (!useCaseInput) {
+                        const inputField = document.getElementById('use-case-input');
+                        inputField.classList.add('border-red-500', 'ring-1', 'ring-red-500');
+                        setTimeout(() => inputField.classList.remove('border-red-500', 'ring-1', 'ring-red-500'), 2000);
+                        return;
+                    }
+
+                    container.classList.remove('hidden');
+                    contentDiv.innerHTML = '<div class="flex items-center gap-3 text-brand-400 font-medium py-4"><i class="fas fa-cog fa-spin text-2xl"></i> Gemini đang thiết kế bản vẽ kiến trúc...</div>';
+                    btnGenerate.disabled = true;
+                    btnGenerate.classList.add('opacity-70', 'cursor-not-allowed');
+                    btnGenerate.innerHTML = '<i class="fas fa-cog fa-spin"></i> Đang thiết kế...';
+
+                    const systemPrompt = "Bạn là Principal AI Engineer chuyên thiết kế hệ thống Agent phức tạp. Người dùng sẽ nhập một nghiệp vụ. Hãy phác thảo kiến trúc hệ thống (khoảng 300 từ) gồm 4 phần: 1. Core Models & Prompt Strategy. 2. Memory & RAG Architecture. 3. Tools & API Integrations. 4. Orchestration Flow (Luồng điều phối bằng LangGraph). Hãy sử dụng Markdown, trình bày trực quan bằng danh sách và bôi đậm từ khoá kỹ thuật.";
+                    const userPrompt = `Thiết kế kiến trúc AI Agent cho bài toán sau: "${useCaseInput}"`;
+
+                    try {
+                        const responseText = await callGeminiAPI(userPrompt, systemPrompt);
+                        contentDiv.innerHTML = marked.parse(responseText);
+                    } catch (error) {
+                        contentDiv.innerHTML = `<div class="p-4 bg-red-900/30 border border-red-500/50 rounded-lg text-red-300"><i class="fas fa-exclamation-triangle mr-2"></i> Lỗi xử lý AI: ${error.message}</div>`;
+                    } finally {
+                        btnGenerate.disabled = false;
+                        btnGenerate.classList.remove('opacity-70', 'cursor-not-allowed');
+                        btnGenerate.innerHTML = originalBtnHtml;
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

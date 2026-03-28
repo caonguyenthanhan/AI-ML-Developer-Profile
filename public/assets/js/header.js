@@ -12,9 +12,59 @@ class HeaderComponent {
     }
 
     init() {
-        this.createHeader();
-        this.startAvatarRotation();
-        this.setActiveNavItem();
+        this.loadLinks().then(links => {
+            this.createHeaderFromLinks(links);
+            this.startAvatarRotation();
+            this.setActiveNavItem();
+        }).catch(() => {
+            this.createHeader();
+            this.startAvatarRotation();
+            this.setActiveNavItem();
+        });
+    }
+
+    async loadLinks() {
+        const res = await fetch('/data/links.json', { cache: 'no-store' });
+        const data = await res.json();
+        return data.links || [];
+    }
+
+    pickPrimaryPath(paths) {
+        if (!Array.isArray(paths) || paths.length === 0) return '/';
+        const sorted = [...paths].sort((a, b) => a.length - b.length);
+        return sorted[0];
+    }
+
+    createHeaderFromLinks(links) {
+        const order = ['core', 'profile', 'ai', 'education', 'cntt-edu', 'event', 'mindset', 'tool'];
+        const show = links.filter(l => l.showInHeader);
+        const sorted = show.sort((a, b) => {
+            const ta = (a.tags && a.tags[0]) || '';
+            const tb = (b.tags && b.tags[0]) || '';
+            const ia = order.indexOf(ta);
+            const ib = order.indexOf(tb);
+            if (ia !== ib) return ia - ib;
+            return (a.label || '').localeCompare(b.label || '');
+        });
+        const items = sorted.map(l => {
+            const p = this.pickPrimaryPath(l.paths);
+            return `<a href="${p}" class="nav-item" data-page="${p}">${l.label}</a>`;
+        }).join('\n');
+        const headerHTML = `
+            <header class="header-container">
+                <div class="header-content">
+                    <div class="avatar-container">
+                        <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" rel="noopener noreferrer">
+                            <img id="rotating-avatar" src="${this.imagePath}${this.avatars[0]}" alt="Avatar" class="avatar-image">
+                        </a>
+                    </div>
+                    <nav class="navigation">
+                        ${items}
+                    </nav>
+                </div>
+            </header>
+        `;
+        document.body.insertAdjacentHTML('afterbegin', headerHTML);
     }
 
     createHeader() {
@@ -28,10 +78,18 @@ class HeaderComponent {
                     </div>
                     <nav class="navigation">
                         <a href="/" class="nav-item" data-page="/">Trang chủ</a>
-                        <a href="/caonguyenthanhan/personal_info.html" class="nav-item" data-page="/caonguyenthanhan">Thông tin</a>
-                        <a href="/nlp/nlp.html" class="nav-item" data-page="/nlp">NLP</a>
-                        <a href="/genai/genai.html" class="nav-item" data-page="/genai">Gen AI</a>
-                        <a href="/extension/extensions.html" class="nav-item" data-page="/extensions">Extensions</a>
+                        <a href="/caonguyenthanhan" class="nav-item" data-page="/caonguyenthanhan">Thông tin</a>
+                        <a href="/ai_welcome" class="nav-item" data-page="/ai_welcome">AI Welcome</a>
+                        <a href="/education" class="nav-item" data-page="/education">Education</a>
+                        <a href="/attt" class="nav-item" data-page="/attt">CNTT-edu</a>
+                        <a href="/nlp" class="nav-item" data-page="/nlp">NLP</a>
+                        <a href="/genai" class="nav-item" data-page="/genai">Gen AI</a>
+                        <a href="/prompts" class="nav-item" data-page="/prompts">Prompts</a>
+                        <a href="/MorphoLearn" class="nav-item" data-page="/MorphoLearn">MorphoLearn</a>
+                        <a href="/gen-cv" class="nav-item" data-page="/gen-cv">Gen CV</a>
+                        <a href="/graduation" class="nav-item" data-page="/graduation">Graduation</a>
+                        <a href="/positive-mindset" class="nav-item" data-page="/positive-mindset">Tâm lý tích cực</a>
+                        <a href="/extensions" class="nav-item" data-page="/extensions">Extensions</a>
                     </nav>
                 </div>
             </header>
@@ -53,6 +111,7 @@ class HeaderComponent {
 
     setActiveNavItem() {
         const currentPath = window.location.pathname;
+        const currentPathLower = currentPath.toLowerCase();
         const navItems = document.querySelectorAll('.nav-item');
         
         navItems.forEach(item => {
@@ -60,11 +119,22 @@ class HeaderComponent {
             if (currentPath === itemPath || 
                 (currentPath === '/' && itemPath === '/') ||
                 (currentPath === '/index.html' && itemPath === '/') ||
-                (currentPath.includes('/caonguyenthanhan/') && itemPath === '/caonguyenthanhan') ||
-                (currentPath.includes('/nlp/') && itemPath === '/nlp') ||
-                (currentPath.includes('/genai/') && itemPath === '/genai') ||
+                (currentPath.includes('/caonguyenthanhan') && itemPath === '/caonguyenthanhan') ||
+                (currentPath.includes('/ai_welcome') && itemPath === '/ai_welcome') ||
+                ((currentPath.includes('/education') || currentPath.includes('/eduit')) && itemPath === '/education') ||
+                (currentPath.includes('/attt') && itemPath === '/attt') ||
+                (currentPath.includes('/nlp') && itemPath === '/nlp') ||
+                (currentPath.includes('/genai') && itemPath === '/genai') ||
+                ((currentPath.includes('/prompts') || currentPathLower.includes('image_prompt_library')) && itemPath === '/prompts') ||
+                (currentPathLower.includes('/morpholearn') && itemPath === '/MorphoLearn') ||
+                ((currentPath.includes('/gen-cv') || currentPathLower.includes('/cv%20builder') || currentPathLower.includes('/cv builder')) && itemPath === '/gen-cv') ||
+                ((currentPath.includes('/graduation') || currentPath.includes('/grad2025') || currentPath.includes('/graduation2025')) && itemPath === '/graduation') ||
+                ((currentPath.includes('/positive-mindset') || currentPath.includes('/Positive-mindset')) && itemPath === '/positive-mindset') ||
                 (currentPath.includes('/extension/') && itemPath === '/extensions')) {
                 item.classList.add('active');
+            } else {
+                const starts = currentPath.startsWith(itemPath) && itemPath !== '/';
+                if (starts) item.classList.add('active');
             }
         });
     }

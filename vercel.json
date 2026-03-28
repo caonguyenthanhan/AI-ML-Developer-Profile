@@ -5,10 +5,6 @@
       "destination": "/api/:match*"
     },
     {
-      "source": "/nhan_tuong_hoc/not_ruoi",
-      "destination": "/Physiognomy/not_ruoi.html"
-    },
-    {
       "source": "/",
       "destination": "/ai_welcome.html"
     },
@@ -18,7 +14,15 @@
     },
     {
       "source": "/aise",
-      "destination": "/AI Software Engineer 2025.html"
+      "destination": "/asie/AI Software Engineer 2025.html"
+    },
+    {
+      "source": "/aise/welcome",
+      "destination": "/asie/AI Software Engineer 2025.html"
+    },
+    {
+      "source": "/aise/plan",
+      "destination": "/asie/Chiến Lược AI Agent (Production-Ready).html"
     },
     {
       "source": "/becomaie",
@@ -31,18 +35,6 @@
     {
       "source": "/ai_setup",
       "destination": "/Project Genesis.html"
-    },
-    {
-      "source": "/atttem",
-      "destination": "/attt/attt.html"
-    },
-        {
-      "source": "/attt",
-      "destination": "/attt/attt_em.html"
-    },
-    {
-      "source": "/attt/md5",
-      "destination": "/attt/MD5 Interactive Demos.html"
     },
     {
       "source": "/caonguyenthanhan",
@@ -65,29 +57,12 @@
       "destination": "/caonguyenthanhan/Automation_Specialist.html"
     },
     {
-      "source": "/profile/aise",
-      "destination": "/caonguyenthanhan/profile/aise_portfolio.html"
-    },
-        {
       "source": "/caonguyenthanhan/profile/aise/as",
       "destination": "/caonguyenthanhan/Automation_Specialist.html"
     },
     {
       "source": "/profile/aise/as",
       "destination": "/caonguyenthanhan/Automation_Specialist.html"
-    },
-        {
-      "source": "/caonguyenthanhan/ban-do-sao-ca-nhan",
-      "destination": "/caonguyenthanhan/ban-do-sao-ca-nhan.html"
-    },
-
-    {
-      "source": "/genai/prompts",
-      "destination": "/genai/image_prompt_library.html"
-    },
-    {
-      "source": "/prompts",
-      "destination": "/genai/image_prompt_library.html"
     },
     {
       "source": "/nlp",
@@ -98,12 +73,56 @@
       "destination": "/genai/genai.html"
     },
     {
+      "source": "/prompts",
+      "destination": "/genai/image_prompt_library.html"
+    },
+    {
+      "source": "/genai/prompts",
+      "destination": "/genai/image_prompt_library.html"
+    },
+    {
       "source": "/extensions",
       "destination": "/extension/extensions.html"
     },
     {
-      "source": "/tool-admin/up_prompt",
-      "destination": "/tool-admin-up-prompt.html"
+      "source": "/positive-mindset",
+      "destination": "/Positive-mindset/index.html"
+    },
+    {
+      "source": "/positive-mindset/series",
+      "destination": "/Positive-mindset/series.html"
+    },
+    {
+      "source": "/nhan_tuong_hoc/not_ruoi",
+      "destination": "/Physiognomy/not_ruoi.html"
+    },
+    {
+      "source": "/attt",
+      "destination": "/attt/attt_em.html"
+    },
+    {
+      "source": "/attt/md5",
+      "destination": "/attt/MD5 Interactive Demos.html"
+    },
+    {
+      "source": "/education",
+      "destination": "/education/index.html"
+    },
+    {
+      "source": "/education/:guest",
+      "destination": "/education/:guest.html"
+    },
+    {
+      "source": "/eduit/testbase/:guest",
+      "destination": "/education/tin_hoc_hsg/check_the_basics/:guest.html"
+    },
+    {
+      "source": "/MorphoLearn",
+      "destination": "/English/MorphoLearn.html"
+    },
+    {
+      "source": "/gen-cv",
+      "destination": "/CV Builder/App Tạo CV Chuẩn ATS.html"
     },
     {
       "source": "/json-manager",
@@ -114,28 +133,16 @@
       "destination": "/json-manager.html"
     },
     {
-      "source": "/admin/29029003/upson",
-      "destination": "/admin-server-control.html"
+      "source": "/tool-admin/up_prompt",
+      "destination": "/tool-admin-up-prompt.html"
     },
     {
       "source": "/graduation",
       "destination": "/graduation/g_i.html"
     },
     {
-      "source": "/image/:guest",
-      "destination": "/image/:guest"
-    },
-    {
-      "source": "/data/:guest",
-      "destination": "/data/:guest"
-    },
-    {
       "source": "/graduation/:guest",
       "destination": "/graduation/g_i.html?guest=:guest"
-    },
-    {
-      "source": "/graduation_sc",
-      "destination": "/graduation/standing card.html"
     },
     {
       "source": "/gift",
@@ -144,14 +151,6 @@
     {
       "source": "/gift2",
       "destination": "/ar-card/index2.html"
-    },
-    {
-      "source": "/graduation_preview",
-      "destination": "/graduation/preview.html"
-    },
-    {
-      "source": "/graduation_preview/:guest",
-      "destination": "/graduation/preview.html"
     },
     {
       "source": "/grad2025",
@@ -170,36 +169,32 @@
       "destination": "/graduation/g_i_does_not_change_borderless_image.html?guest=:guest"
     },
     {
+      "source": "/graduation_preview",
+      "destination": "/graduation/preview.html"
+    },
+    {
+      "source": "/graduation_preview/:guest",
+      "destination": "/graduation/preview.html"
+    },
+    {
       "source": "/admin/rsvp",
       "destination": "/graduation/rsvp.html"
-    },
-    {
-      "source": "/education",
-      "destination": "/education/index.html"
-    },
-    {
-      "source": "/education/:guest",
-      "destination": "/education/:guest.html"
-    },
-    {
-      "source": "/eduit/testbase/:guest",
-      "destination": "/education/tin_hoc_hsg/check_the_basics/:guest.html"
     },
     {
       "source": "/admin/exam",
       "destination": "/education/tin_hoc_hsg/admin_exam.html"
     },
     {
-      "source": "/MorphoLearn",
-      "destination": "/English/MorphoLearn.html"
+      "source": "/admin/29029003/upson",
+      "destination": "/admin-server-control.html"
     },
     {
-      "source": "/image/:guest",
+      "source": "/image/:guest([^\\.]+)",
       "destination": "/image/:guest.png"
     },
     {
-      "source": "/gen-cv",
-      "destination": "/CV Builder/App Tạo CV Chuẩn ATS.html"
+      "source": "/data/:guest",
+      "destination": "/data/:guest"
     }
   ]
 }

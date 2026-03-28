@@ -1,0 +1,535 @@
+{
+  "version": 1,
+  "tags": [
+    {
+      "id": "core",
+      "name": "Core",
+      "description": "Các trang lõi của website"
+    },
+    {
+      "id": "ai",
+      "name": "AI",
+      "description": "AI/ML, GenAI, NLP, workflow"
+    },
+    {
+      "id": "education",
+      "name": "Giáo dục",
+      "description": "Học tập, bài giảng, kho tài nguyên"
+    },
+    {
+      "id": "cntt-edu",
+      "name": "CNTT-edu",
+      "description": "Các khoá học/kỹ năng cho kỹ sư CNTT (ATTT, demo, tài liệu)"
+    },
+    {
+      "id": "event",
+      "name": "Sự kiện",
+      "description": "Graduation, RSVP, thiệp, quà tặng"
+    },
+    {
+      "id": "tool",
+      "name": "Công cụ",
+      "description": "Các tool nội bộ, trang quản trị"
+    },
+    {
+      "id": "mindset",
+      "name": "Tâm lý",
+      "description": "Positive mindset"
+    },
+    {
+      "id": "mystic",
+      "name": "Huyền học",
+      "description": "Physiognomy, nhân tướng học"
+    },
+    {
+      "id": "profile",
+      "name": "Hồ sơ",
+      "description": "Thông tin cá nhân và portfolio"
+    }
+  ],
+  "links": [
+    {
+      "id": "home",
+      "label": "Trang chủ",
+      "paths": [
+        "/"
+      ],
+      "destination": "/ai_welcome.html",
+      "tags": [
+        "core",
+        "ai"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "ai_welcome",
+      "label": "AI Welcome",
+      "paths": [
+        "/ai_welcome"
+      ],
+      "destination": "/ai_welcome.html",
+      "tags": [
+        "ai"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "aise",
+      "label": "AI Software Engineer 2025",
+      "paths": [
+        "/aise",
+        "/aise/welcome"
+      ],
+      "destination": "/asie/AI Software Engineer 2025.html",
+      "tags": [
+        "ai"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "aise_plan",
+      "label": "AISE Plan",
+      "paths": [
+        "/aise/plan"
+      ],
+      "destination": "/asie/Chiến Lược AI Agent (Production-Ready).html",
+      "tags": [
+        "ai"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "becomaie",
+      "label": "Syllabus CyberSoft",
+      "paths": [
+        "/becomaie"
+      ],
+      "destination": "/Syllabus CyberSoft.html",
+      "tags": [
+        "ai",
+        "education"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "ai_worker",
+      "label": "Workflow Simulation",
+      "paths": [
+        "/ai_worker"
+      ],
+      "destination": "/workflow_simulation.html",
+      "tags": [
+        "ai"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "ai_setup",
+      "label": "Project Genesis",
+      "paths": [
+        "/ai_setup"
+      ],
+      "destination": "/Project Genesis.html",
+      "tags": [
+        "ai"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "profile_personal_info",
+      "label": "Thông tin",
+      "paths": [
+        "/caonguyenthanhan"
+      ],
+      "destination": "/caonguyenthanhan/personal_info.html",
+      "tags": [
+        "profile"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "profile_portfolio_aise",
+      "label": "Portfolio AISE",
+      "paths": [
+        "/caonguyenthanhan/profile/aise",
+        "/profile/aise"
+      ],
+      "destination": "/caonguyenthanhan/profile_portfolio.html",
+      "tags": [
+        "profile",
+        "ai"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "profile_as",
+      "label": "Automation Specialist",
+      "paths": [
+        "/caonguyenthanhan/profile/as",
+        "/profile/as",
+        "/caonguyenthanhan/profile/aise/as",
+        "/profile/aise/as"
+      ],
+      "destination": "/caonguyenthanhan/Automation_Specialist.html",
+      "tags": [
+        "profile"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "nlp",
+      "label": "NLP",
+      "paths": [
+        "/nlp"
+      ],
+      "destination": "/nlp/nlp.html",
+      "tags": [
+        "ai"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "genai",
+      "label": "Gen AI",
+      "paths": [
+        "/genai"
+      ],
+      "destination": "/genai/genai.html",
+      "tags": [
+        "ai"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "prompts",
+      "label": "Prompts",
+      "paths": [
+        "/prompts",
+        "/genai/prompts"
+      ],
+      "destination": "/genai/image_prompt_library.html",
+      "tags": [
+        "ai",
+        "tool"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "extensions",
+      "label": "Extensions",
+      "paths": [
+        "/extensions"
+      ],
+      "destination": "/extension/extensions.html",
+      "tags": [
+        "tool"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "positive_mindset",
+      "label": "Tâm lý tích cực",
+      "paths": [
+        "/positive-mindset"
+      ],
+      "destination": "/Positive-mindset/index.html",
+      "tags": [
+        "mindset"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "physiognomy_not_ruoi",
+      "label": "Nốt ruồi (Nhân tướng học)",
+      "paths": [
+        "/nhan_tuong_hoc/not_ruoi"
+      ],
+      "destination": "/Physiognomy/not_ruoi.html",
+      "tags": [
+        "mystic"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "attt",
+      "label": "CNTT-edu",
+      "paths": [
+        "/attt"
+      ],
+      "destination": "/attt/attt_em.html",
+      "tags": [
+        "cntt-edu"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "attt_md5",
+      "label": "MD5 Demo",
+      "paths": [
+        "/attt/md5"
+      ],
+      "destination": "/attt/MD5 Interactive Demos.html",
+      "tags": [
+        "cntt-edu",
+        "tool"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "education",
+      "label": "Education",
+      "paths": [
+        "/education"
+      ],
+      "destination": "/education/index.html",
+      "tags": [
+        "education"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "education_guest",
+      "label": "Education (guest)",
+      "paths": [
+        "/education/:guest"
+      ],
+      "destination": "/education/:guest.html",
+      "tags": [
+        "education"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "eduit_testbase",
+      "label": "EduIT Testbase",
+      "paths": [
+        "/eduit/testbase/:guest"
+      ],
+      "destination": "/education/tin_hoc_hsg/check_the_basics/:guest.html",
+      "tags": [
+        "education"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "morpholearn",
+      "label": "MorphoLearn",
+      "paths": [
+        "/MorphoLearn"
+      ],
+      "destination": "/English/MorphoLearn.html",
+      "tags": [
+        "education"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "gen_cv",
+      "label": "Gen CV",
+      "paths": [
+        "/gen-cv"
+      ],
+      "destination": "/CV Builder/App Tạo CV Chuẩn ATS.html",
+      "tags": [
+        "tool"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "json_manager",
+      "label": "JSON Manager",
+      "paths": [
+        "/json-manager",
+        "/admin/json-manager"
+      ],
+      "destination": "/json-manager.html",
+      "tags": [
+        "tool"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "tool_admin_up_prompt",
+      "label": "Up Prompt",
+      "paths": [
+        "/tool-admin/up_prompt"
+      ],
+      "destination": "/tool-admin-up-prompt.html",
+      "tags": [
+        "tool"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "graduation",
+      "label": "Graduation",
+      "paths": [
+        "/graduation"
+      ],
+      "destination": "/graduation/g_i.html",
+      "tags": [
+        "event"
+      ],
+      "showInHeader": true
+    },
+    {
+      "id": "graduation_guest",
+      "label": "Graduation (guest)",
+      "paths": [
+        "/graduation/:guest"
+      ],
+      "destination": "/graduation/g_i.html?guest=:guest",
+      "tags": [
+        "event"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "gift",
+      "label": "Gift",
+      "paths": [
+        "/gift"
+      ],
+      "destination": "/ar-card/index.html",
+      "tags": [
+        "event"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "gift2",
+      "label": "Gift 2",
+      "paths": [
+        "/gift2"
+      ],
+      "destination": "/ar-card/index2.html",
+      "tags": [
+        "event"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "grad2025",
+      "label": "Grad 2025",
+      "paths": [
+        "/grad2025"
+      ],
+      "destination": "/graduation/g_i_simple.html",
+      "tags": [
+        "event"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "grad2025_guest",
+      "label": "Grad 2025 (guest)",
+      "paths": [
+        "/grad2025/:guest"
+      ],
+      "destination": "/graduation/g_i_simple.html?guest=:guest",
+      "tags": [
+        "event"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "graduation2025",
+      "label": "Graduation 2025",
+      "paths": [
+        "/graduation2025"
+      ],
+      "destination": "/graduation/g_i_does_not_change_borderless_image.html",
+      "tags": [
+        "event"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "graduation2025_guest",
+      "label": "Graduation 2025 (guest)",
+      "paths": [
+        "/graduation2025/:guest"
+      ],
+      "destination": "/graduation/g_i_does_not_change_borderless_image.html?guest=:guest",
+      "tags": [
+        "event"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "graduation_preview",
+      "label": "Graduation Preview",
+      "paths": [
+        "/graduation_preview",
+        "/graduation_preview/:guest"
+      ],
+      "destination": "/graduation/preview.html",
+      "tags": [
+        "event"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "admin_rsvp",
+      "label": "Admin RSVP",
+      "paths": [
+        "/admin/rsvp"
+      ],
+      "destination": "/graduation/rsvp.html",
+      "tags": [
+        "event",
+        "tool"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "admin_exam",
+      "label": "Admin Exam",
+      "paths": [
+        "/admin/exam"
+      ],
+      "destination": "/education/tin_hoc_hsg/admin_exam.html",
+      "tags": [
+        "education",
+        "tool"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "admin_server_control",
+      "label": "Admin Server Control",
+      "paths": [
+        "/admin/29029003/upson"
+      ],
+      "destination": "/admin-server-control.html",
+      "tags": [
+        "tool"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "image_no_ext_png",
+      "label": "Image (no ext -> .png)",
+      "paths": [
+        "/image/:guest([^\\.]+)"
+      ],
+      "destination": "/image/:guest.png",
+      "tags": [
+        "tool"
+      ],
+      "showInHeader": false
+    },
+    {
+      "id": "data_passthrough",
+      "label": "Data passthrough",
+      "paths": [
+        "/data/:guest"
+      ],
+      "destination": "/data/:guest",
+      "tags": [
+        "tool"
+      ],
+      "showInHeader": false
+    }
+  ]
+}
