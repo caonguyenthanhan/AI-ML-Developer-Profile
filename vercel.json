@@ -193,7 +193,7 @@
       "destination": "/admin-server-control.html"
     },
     {
-      "source": "/image/:guest([^\\.]+)",
+      "source": "/image/:guest",
       "destination": "/image/:guest.png"
     },
     {
