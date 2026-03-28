@@ -93,6 +93,10 @@
       "destination": "/Positive-mindset/series.html"
     },
     {
+      "source": "/positive-mindset/series/:chapter",
+      "destination": "/Positive-mindset/series.html?chapter=:chapter"
+    },
+    {
       "source": "/nhan_tuong_hoc/not_ruoi",
       "destination": "/Physiognomy/not_ruoi.html"
     },

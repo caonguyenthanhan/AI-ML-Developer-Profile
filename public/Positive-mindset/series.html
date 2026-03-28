@@ -57,7 +57,22 @@
       </header>
 
       <section class="rounded-xl border border-slate-200 bg-white p-6">
-        <div id="md_container" class="prose prose-slate max-w-none"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <aside class="lg:col-span-1">
+            <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
+              <div class="font-bold text-slate-900 mb-2">Mục lục</div>
+              <nav class="space-y-2 text-sm">
+                <a href="/positive-mindset/series/muc-tieu" class="block px-3 py-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-100">Chương 1 — Mục tiêu</a>
+                <a href="/positive-mindset/series/concept" class="block px-3 py-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-100">Chương 2 — Concept</a>
+                <a href="/positive-mindset/series/bai-tap" class="block px-3 py-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-100">Chương 3 — Bài tập</a>
+                <a href="/positive-mindset/series" class="block px-3 py-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-100">Tổng quan</a>
+              </nav>
+            </div>
+          </aside>
+          <article class="lg:col-span-3">
+            <div id="md_container" class="prose prose-slate max-w-none"></div>
+          </article>
+        </div>
       </section>
 
       <div class="mt-8 text-center">
@@ -70,13 +85,24 @@
   </div>
 
   <script>
-    var path = '/private/' + encodeURIComponent('Tâm Lý Tích Cực Trong Đời Sống Hiện Đại.md');
+    function getQuery(name){
+      var url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+    function mapChapter(slug){
+      if (slug === 'muc-tieu') return '/Positive-mindset/chapters/01-muc-tieu.md';
+      if (slug === 'concept') return '/Positive-mindset/chapters/02-concept.md';
+      if (slug === 'bai-tap') return '/Positive-mindset/chapters/03-bai-tap.md';
+      return '/Positive-mindset/chapters/00-tong-quan.md';
+    }
     function renderMarkdown(text){
       var md = window.markdownit({ html: false, linkify: true, typographer: true });
       document.getElementById('md_container').innerHTML = md.render(text);
       if (window.lucide) lucide.createIcons();
     }
     function loadMarkdown(){
+      var slug = getQuery('chapter');
+      var path = mapChapter(slug);
       fetch(path).then(function(r){
         if(!r.ok) throw new Error('HTTP '+r.status);
         return r.text();
