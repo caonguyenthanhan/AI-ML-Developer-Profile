@@ -205,18 +205,68 @@
                     buildFn: () => buildHinhLapPhuong(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hình Lập Phương (Lớp 10)</h2>
-                        <p class="text-gray-300 text-sm mb-4">Lớp 10 học phần lớn là hình phẳng & Vector phẳng. Tuy nhiên, hình lập phương là bước đệm tuyệt vời để tư duy Vector vào Không gian (ứng dụng trong Vật lý & Lớp 12).</p>
+                        <p class="text-gray-300 text-sm mb-4">Hình lập phương là mô hình “chuẩn” để luyện tư duy vector và các quan hệ vuông góc trong không gian.</p>
                         <div class="space-y-3">
                             <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
-                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-cube mr-2"></i>Đặc điểm tuyệt đối</h3>
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-cube mr-2"></i>Đặc điểm</h3>
                                 <p class="text-gray-200 text-sm">6 mặt là hình vuông bằng nhau. 12 cạnh bằng nhau.</p>
                             </div>
                             <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
                                 <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-arrows-alt mr-2"></i>Quy tắc hình hộp (Vector)</h3>
                                 <p class="text-gray-200 text-sm">
                                     Tổng 3 vector xuất phát từ 1 đỉnh bằng vector đường chéo:<br>
-                                    <span class="math-text highlight">$\vec{AB} + \vec{AD} + \vec{AA'} = \vec{AC'}$</span>
+                                    <span class="math-text highlight">$\vec{AB} + \vec{AD} + \vec{AA'} = \vec{AC'}$</span><br>
+                                    (với A, B, D, A' là 3 cạnh đôi một vuông góc đi ra từ A)
                                 </p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-compass-drafting mr-2"></i>Mở rộng vector sang không gian</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Quy tắc hình bình hành vẫn đúng trên mọi mặt phẳng.</li>
+                                    <li>Quy tắc hình hộp tổng quát: tổng 3 vector theo 3 cạnh kề = vector đường chéo khối.</li>
+                                </ul>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '10_trong_tam_tu_dien',
+                    name: 'Trọng tâm tứ diện',
+                    buildFn: () => buildTuDienDeu12(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Quy tắc trọng tâm tứ diện (Lớp 10)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Một “mẹo” vector rất hay: gom các trung điểm để tạo vector đơn giản hơn trong tứ diện.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-dot-circle mr-2"></i>Trọng tâm</h3>
+                                <p class="text-gray-200 text-sm">Gọi G là trọng tâm tứ diện A, B, C, D thì <span class="math-text highlight">$\\vec{GA} + \\vec{GB} + \\vec{GC} + \\vec{GD} = \\vec{0}$</span>.</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-purple-400 property-card">
+                                <h3 class="font-bold text-purple-400 mb-1"><i class="fas fa-route mr-2"></i>Ứng dụng</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Chứng minh đồng phẳng/đồng quy bằng biến đổi vector.</li>
+                                    <li>Tính nhanh tỉ số trên đoạn thẳng khi có trung điểm, trọng tâm.</li>
+                                </ul>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '10_tich_vo_huong',
+                    name: 'Tích vô hướng',
+                    buildFn: () => buildOxyz(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Tích vô hướng trong không gian (Lớp 10)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Tích vô hướng giúp tính góc và kiểm tra vuông góc trong không gian bằng đại số.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-calculator mr-2"></i>Công thức góc</h3>
+                                <p class="text-gray-200 text-sm">
+                                    <span class="math-text highlight">$\\vec{u}\\cdot\\vec{v} = |\\vec{u}| |\\vec{v}|\\cos(\\theta)$</span><br>
+                                    với $\\theta$ là góc giữa 2 vector.
+                                </p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-red-400 property-card">
+                                <h3 class="font-bold text-red-400 mb-1"><i class="fas fa-square mr-2"></i>Điều kiện vuông góc</h3>
+                                <p class="text-gray-200 text-sm"><span class="math-text highlight">$\\vec{u}\\cdot\\vec{v} = 0 \\iff \\vec{u} \\perp \\vec{v}$</span>.</p>
                             </div>
                         </div>`
                 }
@@ -286,6 +336,110 @@
                                 <p class="text-gray-200 text-sm">Hai mặt đáy là hai đa giác đồng dạng và nằm trên hai mặt phẳng song song.</p>
                             </div>
                         </div>`
+                },
+                {
+                    id: '11_giao_tuyen_giao_diem',
+                    name: 'Giao tuyến & giao điểm',
+                    buildFn: () => buildLangTruDung(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Giao tuyến & Giao điểm (Lớp 11)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Nền tảng để giải mọi bài song song/vuông góc: tìm đúng “đường chung” trước.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-project-diagram mr-2"></i>Giao tuyến 2 mặt phẳng</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Tìm 2 điểm chung của hai mặt phẳng, nối lại được giao tuyến.</li>
+                                    <li>Nếu khó: tìm hướng giao tuyến bằng cách dựng các đường song song phù hợp trong từng mặt.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-bullseye mr-2"></i>Giao điểm đường - mặt</h3>
+                                <p class="text-gray-200 text-sm">Chọn (Q) chứa đường thẳng d, sao cho (Q) cắt (P) theo giao tuyến g. Khi đó <span class="math-text highlight">d ∩ (P) = d ∩ g</span>.</p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '11_thiet_dien',
+                    name: 'Thiết diện',
+                    buildFn: () => buildChopCut(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Phương pháp dựng thiết diện (Lớp 11)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Thiết diện là “mặt cắt” của khối đa diện bởi 1 mặt phẳng. Dựng đúng thiết diện giúp chuyển bài không gian về hình phẳng.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-list-ol mr-2"></i>Quy trình 3 bước</h3>
+                                <ol class="list-decimal list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Xác định mặt phẳng cắt đi qua các điểm/đường nào (dữ kiện đề bài).</li>
+                                    <li>Tìm giao tuyến của mặt phẳng cắt với từng mặt của khối.</li>
+                                    <li>Nối các đoạn giao tuyến theo chu vi để ra đa giác thiết diện.</li>
+                                </ol>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-purple-400 property-card">
+                                <h3 class="font-bold text-purple-400 mb-1"><i class="fas fa-lightbulb mr-2"></i>Mẹo</h3>
+                                <p class="text-gray-200 text-sm">Ưu tiên dựng trên các mặt có nhiều điểm đã biết (mặt đáy, mặt bên có đường song song/vuông góc rõ ràng).</p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '11_song_song',
+                    name: 'Quan hệ song song',
+                    buildFn: () => buildLangTruDung(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Quan hệ song song (Lớp 11)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Bộ tiêu chí hay dùng để chứng minh // trong không gian.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-arrows-alt-h mr-2"></i>Đường // mặt phẳng</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Nếu d // d' và d' ⊂ (P) thì d // (P).</li>
+                                    <li>Nếu d ⊂ (Q) và (Q) // (P) thì d // (P).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-layer-group mr-2"></i>Mặt // mặt</h3>
+                                <p class="text-gray-200 text-sm">Để chứng minh (P) // (Q): chứng minh 2 đường thẳng cắt nhau trong (P) lần lượt song song với 2 đường cắt nhau trong (Q).</p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '11_vuong_goc',
+                    name: 'Quan hệ vuông góc',
+                    buildFn: () => buildChopSAVuongGoc(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Quan hệ vuông góc (Lớp 11)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Trọng tâm của hình học không gian thuần túy: đường ⟂ đường, đường ⟂ mặt, mặt ⟂ mặt.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-red-400 property-card">
+                                <h3 class="font-bold text-red-400 mb-1"><i class="fas fa-perpendicular mr-2"></i>Đường ⟂ mặt</h3>
+                                <p class="text-gray-200 text-sm">Nếu d ⟂ a và d ⟂ b với a, b cắt nhau và cùng nằm trong (P) thì <span class="math-text highlight">d ⟂ (P)</span>.</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-triangle mr-2"></i>Định lý 3 đường vuông góc</h3>
+                                <p class="text-gray-200 text-sm">Một đường thẳng trong mặt phẳng vuông góc hình chiếu của đường kia thì cũng vuông góc với chính đường đó (dùng nhiều khi tìm góc/khoảng cách).</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-angle-right mr-2"></i>Góc nhị diện</h3>
+                                <p class="text-gray-200 text-sm">Muốn tính góc giữa 2 mặt phẳng: lấy 2 đường thẳng lần lượt nằm trong mỗi mặt và cùng vuông góc giao tuyến; góc giữa chúng là góc nhị diện.</p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '11_khoang_cach',
+                    name: 'Khoảng cách',
+                    buildFn: () => buildChopSAVuongGoc(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Khoảng cách (Lớp 11)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Khoảng cách trong không gian thường quy về đoạn vuông góc (đường cao hoặc đoạn vuông góc chung).</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-arrows-alt-v mr-2"></i>Từ điểm đến mặt phẳng</h3>
+                                <p class="text-gray-200 text-sm">Kẻ đường thẳng qua điểm và vuông góc mặt phẳng; độ dài đoạn từ điểm đến chân vuông góc là khoảng cách.</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-purple-400 property-card">
+                                <h3 class="font-bold text-purple-400 mb-1"><i class="fas fa-link mr-2"></i>Giữa 2 đường chéo nhau</h3>
+                                <p class="text-gray-200 text-sm">Là độ dài đoạn vuông góc chung. Thường dựng mặt phẳng phụ để dựng được đoạn vuông góc chung.</p>
+                            </div>
+                        </div>`
                 }
             ],
             '12': [
@@ -350,6 +504,141 @@
                                 <p class="text-gray-200 text-sm">
                                     Được xác định bằng hình chiếu vuông góc của M lên 3 mặt phẳng toạ độ (Oxy, Oyz, Ozx).
                                 </p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '12_the_tich_da_dien',
+                    name: 'Thể tích đa diện',
+                    buildFn: () => buildHopChuNhat(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Khối đa diện & Thể tích (Lớp 12)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Tập trung vào công thức cơ bản và chiến lược chia khối để tính thể tích nhanh.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-calculator mr-2"></i>Công thức cốt lõi</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Khối chóp: <span class="math-text highlight">$V = \\dfrac{1}{3}S_{\\text{đáy}}h$</span></li>
+                                    <li>Khối lăng trụ: <span class="math-text highlight">$V = S_{\\text{đáy}}h$</span></li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-puzzle-piece mr-2"></i>Chiến lược chia khối</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Chia khối phức tạp thành các chóp/lăng trụ nhỏ có cùng chiều cao hoặc cùng đáy.</li>
+                                    <li>Dùng tỉ số thể tích khi có các mặt phẳng song song đáy.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-exchange-alt mr-2"></i>Tỉ số thể tích (Simson)</h3>
+                                <p class="text-gray-200 text-sm">Trong chóp tam giác, các khối đồng dạng có tỉ số thể tích bằng <span class="math-text highlight">lập phương tỉ số đồng dạng</span>.</p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '12_mat_cau_noi_ngoai_tiep',
+                    name: 'Mặt cầu nội/ngoại tiếp',
+                    buildFn: () => buildTuDienDeu12(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Mặt cầu nội tiếp / ngoại tiếp (Lớp 12)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Bài toán tâm và bán kính thường quy về tính đối xứng, trung trực và trục đường tròn đáy.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-purple-400 property-card">
+                                <h3 class="font-bold text-purple-400 mb-1"><i class="fas fa-bullseye mr-2"></i>Ý tưởng tìm tâm</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Tâm ngoại tiếp: giao của các mặt phẳng trung trực (hoặc trục đường tròn đáy với trung trực cạnh).</li>
+                                    <li>Tâm nội tiếp: giao của các mặt phẳng phân giác góc nhị diện (nếu tồn tại).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-lightbulb mr-2"></i>Dạng hay gặp</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Chóp có 1 cạnh bên ⟂ đáy.</li>
+                                    <li>Chóp đều.</li>
+                                    <li>Chóp có mặt bên ⟂ đáy.</li>
+                                </ul>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '12_pt_mat_cau',
+                    name: 'Phương trình mặt cầu',
+                    buildFn: () => buildOxyz(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Phương trình mặt cầu (Oxyz)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Xác định tâm I(a;b;c) và bán kính R, hoặc suy ra từ phương trình khai triển.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-circle mr-2"></i>Dạng chuẩn</h3>
+                                <p class="text-gray-200 text-sm"><span class="math-text highlight">$(x-a)^2 + (y-b)^2 + (z-c)^2 = R^2$</span></p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-pen mr-2"></i>Dạng khai triển</h3>
+                                <p class="text-gray-200 text-sm"><span class="math-text">x² + y² + z² - 2ax - 2by - 2cz + d = 0</span> (đổi về dạng chuẩn để đọc tâm và R).</p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '12_pt_mat_phang',
+                    name: 'Phương trình mặt phẳng',
+                    buildFn: () => buildOxyz(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Phương trình mặt phẳng (Oxyz)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Dùng vector pháp tuyến để viết nhanh phương trình tổng quát.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-vector-square mr-2"></i>Vector pháp tuyến</h3>
+                                <p class="text-gray-200 text-sm">Nếu $\\vec{n}=(A;B;C)$ là pháp tuyến và mặt phẳng qua M(x₀;y₀;z₀) thì:</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-equals mr-2"></i>Dạng tổng quát</h3>
+                                <p class="text-gray-200 text-sm"><span class="math-text highlight">$A(x-x_0)+B(y-y_0)+C(z-z_0)=0$</span> ⇔ <span class="math-text highlight">$Ax+By+Cz+D=0$</span></p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '12_pt_duong_thang',
+                    name: 'Phương trình đường thẳng',
+                    buildFn: () => buildOxyz(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Phương trình đường thẳng (Oxyz)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Dùng điểm đi qua và vector chỉ phương để viết tham số/chính tắc.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-map-marker-alt mr-2"></i>Dạng tham số</h3>
+                                <p class="text-gray-200 text-sm">
+                                    Qua M(x₀;y₀;z₀), chỉ phương $\\vec{u}=(a;b;c)$:<br>
+                                    <span class="math-text highlight">$\\begin{cases}x=x_0+at\\\\y=y_0+bt\\\\z=z_0+ct\\end{cases}$</span>
+                                </p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-red-400 property-card">
+                                <h3 class="font-bold text-red-400 mb-1"><i class="fas fa-divide mr-2"></i>Dạng chính tắc</h3>
+                                <p class="text-gray-200 text-sm"><span class="math-text highlight">$\\dfrac{x-x_0}{a}=\\dfrac{y-y_0}{b}=\\dfrac{z-z_0}{c}$</span> (khi a, b, c đều khác 0).</p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '12_goc_khoang_cach',
+                    name: 'Góc & khoảng cách',
+                    buildFn: () => buildOxyz(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Góc & Khoảng cách (Oxyz)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Gom công thức thường dùng để giải nhanh bài tổng hợp.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-ruler mr-2"></i>Khoảng cách điểm đến mặt</h3>
+                                <p class="text-gray-200 text-sm">
+                                    Nếu (P): Ax+By+Cz+D=0 và M(x₀;y₀;z₀):<br>
+                                    <span class="math-text highlight">$d(M,(P))=\\dfrac{|Ax_0+By_0+Cz_0+D|}{\\sqrt{A^2+B^2+C^2}}$</span>
+                                </p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-angle-right mr-2"></i>Góc giữa 2 đường thẳng</h3>
+                                <p class="text-gray-200 text-sm">Góc giữa 2 đường thẳng bằng góc giữa 2 vector chỉ phương của chúng (dùng tích vô hướng).</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-compress-arrows-alt mr-2"></i>Khoảng cách 2 đường chéo nhau</h3>
+                                <p class="text-gray-200 text-sm">Thường dựng mặt phẳng phụ hoặc dùng công thức theo tích hỗn tạp (nâng cao) khi đã có vector chỉ phương.</p>
                             </div>
                         </div>`
                 }
