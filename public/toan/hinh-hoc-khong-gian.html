@@ -386,7 +386,7 @@
                 {
                     id: '11_song_song',
                     name: 'Quan hệ song song',
-                    buildFn: () => buildLangTruDung(),
+                    buildFn: () => buildParallelDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Quan hệ song song (Lớp 11)</h2>
                         <p class="text-gray-300 text-sm mb-4">Bộ tiêu chí hay dùng để chứng minh // trong không gian.</p>
@@ -407,7 +407,7 @@
                 {
                     id: '11_vuong_goc',
                     name: 'Quan hệ vuông góc',
-                    buildFn: () => buildChopSAVuongGoc(),
+                    buildFn: () => buildPerpendicularAndDihedralDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Quan hệ vuông góc (Lớp 11)</h2>
                         <p class="text-gray-300 text-sm mb-4">Trọng tâm của hình học không gian thuần túy: đường ⟂ đường, đường ⟂ mặt, mặt ⟂ mặt.</p>
@@ -429,7 +429,7 @@
                 {
                     id: '11_khoang_cach',
                     name: 'Khoảng cách',
-                    buildFn: () => buildChopSAVuongGoc(),
+                    buildFn: () => buildDistanceDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Khoảng cách (Lớp 11)</h2>
                         <p class="text-gray-300 text-sm mb-4">Khoảng cách trong không gian thường quy về đoạn vuông góc (đường cao hoặc đoạn vuông góc chung).</p>
@@ -541,7 +541,7 @@
                 {
                     id: '12_mat_cau_noi_ngoai_tiep',
                     name: 'Mặt cầu nội/ngoại tiếp',
-                    buildFn: () => buildTuDienDeu12(),
+                    buildFn: () => buildSphereInOutDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Mặt cầu nội tiếp / ngoại tiếp (Lớp 12)</h2>
                         <p class="text-gray-300 text-sm mb-4">Bài toán tâm và bán kính thường quy về tính đối xứng, trung trực và trục đường tròn đáy.</p>
@@ -566,7 +566,7 @@
                 {
                     id: '12_pt_mat_cau',
                     name: 'Phương trình mặt cầu',
-                    buildFn: () => buildOxyz(),
+                    buildFn: () => buildSphereEquationDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Phương trình mặt cầu (Oxyz)</h2>
                         <p class="text-gray-300 text-sm mb-4">Xác định tâm I(a;b;c) và bán kính R, hoặc suy ra từ phương trình khai triển.</p>
@@ -584,7 +584,7 @@
                 {
                     id: '12_pt_mat_phang',
                     name: 'Phương trình mặt phẳng',
-                    buildFn: () => buildOxyz(),
+                    buildFn: () => buildPlaneEquationDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Phương trình mặt phẳng (Oxyz)</h2>
                         <p class="text-gray-300 text-sm mb-4">Dùng vector pháp tuyến để viết nhanh phương trình tổng quát.</p>
@@ -602,7 +602,7 @@
                 {
                     id: '12_pt_duong_thang',
                     name: 'Phương trình đường thẳng',
-                    buildFn: () => buildOxyz(),
+                    buildFn: () => buildLineEquationDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Phương trình đường thẳng (Oxyz)</h2>
                         <p class="text-gray-300 text-sm mb-4">Dùng điểm đi qua và vector chỉ phương để viết tham số/chính tắc.</p>
@@ -623,7 +623,7 @@
                 {
                     id: '12_goc_khoang_cach',
                     name: 'Góc & khoảng cách',
-                    buildFn: () => buildOxyz(),
+                    buildFn: () => buildAngleDistanceOxyzDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Góc & Khoảng cách (Oxyz)</h2>
                         <p class="text-gray-300 text-sm mb-4">Gom công thức thường dùng để giải nhanh bài tổng hợp.</p>
@@ -638,6 +638,10 @@
                             <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
                                 <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-angle-right mr-2"></i>Góc giữa 2 đường thẳng</h3>
                                 <p class="text-gray-200 text-sm">Góc giữa 2 đường thẳng bằng góc giữa 2 vector chỉ phương của chúng (dùng tích vô hướng).</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-red-400 property-card">
+                                <h3 class="font-bold text-red-400 mb-1"><i class="fas fa-angle-double-right mr-2"></i>Góc nhị diện</h3>
+                                <p class="text-gray-200 text-sm">Góc nhị diện theo giao tuyến g: chọn 2 đường thẳng lần lượt nằm trong mỗi mặt và cùng vuông góc g; góc giữa chúng là góc nhị diện.</p>
                             </div>
                             <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
                                 <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-compress-arrows-alt mr-2"></i>Khoảng cách 2 đường chéo nhau</h3>
@@ -945,6 +949,315 @@
                 addFace([f1, f2, f3, f4], 0xfacc15, 0.08);
                 addLabel("Thiết diện", center.clone().add(planeNormal.clone().multiplyScalar(0.4)), "#facc15");
             }
+        }
+
+        function addArcAtPoint(center, dir1, dir2, radius = 1.6, color = 0xffffff, labelText = null) {
+            const u = dir1.clone().normalize();
+            const v = dir2.clone().normalize();
+            const angle = u.angleTo(v);
+            if (!isFinite(angle) || angle < 1e-6) return;
+            let axis = new THREE.Vector3().crossVectors(u, v);
+            if (axis.lengthSq() < 1e-8) axis = new THREE.Vector3(0, 1, 0);
+            axis.normalize();
+
+            const n = 48;
+            const points = [];
+            for (let i = 0; i <= n; i++) {
+                const t = (angle * i) / n;
+                const d = u.clone().applyAxisAngle(axis, t).multiplyScalar(radius);
+                points.push(center.clone().add(d));
+            }
+            const arcGeom = new THREE.BufferGeometry().setFromPoints(points);
+            const arcMat = new THREE.LineBasicMaterial({ color });
+            const arc = new THREE.Line(arcGeom, arcMat);
+            scene.add(arc);
+            currentObjects.push(arc);
+
+            if (labelText) {
+                const mid = u.clone().applyAxisAngle(axis, angle / 2).multiplyScalar(radius + 0.35);
+                addLabel(labelText, center.clone().add(mid), "#ffffff");
+            }
+        }
+
+        function makePlaneQuad(planePoint, planeNormal, size = 6) {
+            const n = planeNormal.clone().normalize();
+            const ref = Math.abs(n.y) < 0.9 ? new THREE.Vector3(0, 1, 0) : new THREE.Vector3(1, 0, 0);
+            const u = new THREE.Vector3().crossVectors(n, ref).normalize();
+            const v = new THREE.Vector3().crossVectors(n, u).normalize();
+            const p1 = planePoint.clone().add(u.clone().multiplyScalar(size)).add(v.clone().multiplyScalar(size));
+            const p2 = planePoint.clone().add(u.clone().multiplyScalar(size)).sub(v.clone().multiplyScalar(size));
+            const p3 = planePoint.clone().sub(u.clone().multiplyScalar(size)).sub(v.clone().multiplyScalar(size));
+            const p4 = planePoint.clone().sub(u.clone().multiplyScalar(size)).add(v.clone().multiplyScalar(size));
+            return { quad: [p1, p2, p3, p4], u, v, n };
+        }
+
+        function buildParallelDemo() {
+            clearScene();
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 9, 14);
+
+            const P0 = new THREE.Vector3(0, 0, 0);
+            const nP = new THREE.Vector3(0, 1, 0);
+            const Q0 = new THREE.Vector3(0, 3, 0);
+            const nQ = new THREE.Vector3(0, 1, 0);
+
+            const P = makePlaneQuad(P0, nP, 5);
+            const Q = makePlaneQuad(Q0, nQ, 5);
+            addFace(P.quad, 0x4b5563, 0.18);
+            addFace(Q.quad, 0x3b82f6, 0.12);
+            addLabel("(P)", P0.clone().add(new THREE.Vector3(-0.2, 0.2, 4.6)), "#9ca3af");
+            addLabel("(Q)", Q0.clone().add(new THREE.Vector3(-0.2, 0.2, 4.6)), "#60a5fa");
+
+            const d1 = new THREE.Vector3(-5, 4.2, -2);
+            const d2 = new THREE.Vector3(5, 4.2, 2);
+            addLine(d1, d2, 0xfacc15, false);
+            addPoint(d1, 0xfacc15, 0.09);
+            addPoint(d2, 0xfacc15, 0.09);
+            addLabel("d", new THREE.Vector3(0, 4.35, 0), "#facc15");
+        }
+
+        function buildPerpendicularAndDihedralDemo() {
+            clearScene();
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 10, 14);
+
+            const g1 = new THREE.Vector3(-6, 0, 0);
+            const g2 = new THREE.Vector3(6, 0, 0);
+            addLine(g1, g2, 0xfacc15, false);
+            addLabel("g", new THREE.Vector3(0, 0.25, 0.25), "#facc15");
+
+            const P0 = new THREE.Vector3(0, 0, 0);
+            const nP = new THREE.Vector3(0, 1, 0);
+            const Q0 = new THREE.Vector3(0, 0, 0);
+            const nQ = new THREE.Vector3(0, 0, 1);
+
+            const P = makePlaneQuad(P0, nP, 5);
+            const Q = makePlaneQuad(Q0, nQ, 5);
+            addFace(P.quad, 0x4b5563, 0.18);
+            addFace(Q.quad, 0x3b82f6, 0.14);
+            addLabel("(P)", new THREE.Vector3(-4.8, 0.2, 4.2), "#9ca3af");
+            addLabel("(Q)", new THREE.Vector3(-4.8, 4.0, 0.2), "#60a5fa");
+
+            const O = new THREE.Vector3(0, 0, 0);
+            const a = new THREE.Vector3(0, 0, 4);
+            const b = new THREE.Vector3(0, 4, 0);
+            addLine(O, a, 0xffffff, true);
+            addLine(O, b, 0xffffff, true);
+            addArcAtPoint(O, a, b, 1.6, 0xffffff, "φ");
+            addRightAngleMarker(O, a, b, 0.6);
+
+            const d1 = new THREE.Vector3(3, -4, 3);
+            const d2 = new THREE.Vector3(3, 4, 3);
+            addLine(d1, d2, 0xef4444, false);
+            addLabel("d", new THREE.Vector3(3.2, 3.8, 3.2), "#ef4444");
+        }
+
+        function buildDistanceDemo() {
+            clearScene();
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 10, 14);
+
+            const a1 = new THREE.Vector3(-6, 1, 0);
+            const a2 = new THREE.Vector3(6, 1, 0);
+            addLine(a1, a2, 0x60a5fa, false);
+            addLabel("a", new THREE.Vector3(0, 1.25, 0.2), "#60a5fa");
+
+            const b1 = new THREE.Vector3(2, -1, -6);
+            const b2 = new THREE.Vector3(2, -1, 6);
+            addLine(b1, b2, 0x10b981, false);
+            addLabel("b", new THREE.Vector3(2.2, -0.75, 0.2), "#10b981");
+
+            const A = new THREE.Vector3(2, 1, 0);
+            const B = new THREE.Vector3(2, -1, 0);
+            addPoint(A, 0xfacc15, 0.1);
+            addPoint(B, 0xfacc15, 0.1);
+            addLine(A, B, 0xfacc15, false);
+            addLabel("d(a,b)", new THREE.Vector3(2.25, 0, 0.25), "#facc15");
+
+            addRightAngleMarker(A, a2, B, 0.6);
+            addRightAngleMarker(B, b2, A, 0.6);
+        }
+
+        function buildSphereInOutDemo() {
+            clearScene();
+            const a = 6;
+            const B = new THREE.Vector3(0, -2, a / Math.sqrt(3));
+            const C = new THREE.Vector3(a / 2, -2, -a / (2 * Math.sqrt(3)));
+            const D = new THREE.Vector3(-a / 2, -2, -a / (2 * Math.sqrt(3)));
+            const G = new THREE.Vector3(0, -2, 0);
+            const h = a * Math.sqrt(2 / 3);
+            const A = new THREE.Vector3(0, -2 + h, 0);
+
+            const R = a * Math.sqrt(6) / 4;
+            const r = a * Math.sqrt(6) / 12;
+            const I = new THREE.Vector3(0, -2 + h - R, 0);
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(11, 9, 14);
+
+            addLine(B, C, 0xffffff);
+            addLine(C, D, 0xffffff, true);
+            addLine(D, B, 0xffffff);
+            addFace([B, C, D], 0x4b5563, 0.35);
+
+            addLine(A, B, 0x60a5fa);
+            addLine(A, C, 0x60a5fa);
+            addLine(A, D, 0x60a5fa);
+            addFace([A, B, C], 0x3b82f6, 0.12);
+            addFace([A, C, D], 0x10b981, 0.12);
+            addFace([A, D, B], 0xef4444, 0.12);
+
+            [A, B, C, D, G].forEach(p => addPoint(p, 0xffffff, 0.08));
+            addPoint(I, 0xfacc15, 0.12);
+            addLabel("I", I.clone().add(new THREE.Vector3(0.25, 0.2, 0.25)), "#facc15");
+
+            const outerGeom = new THREE.SphereGeometry(R, 36, 24);
+            outerGeom.translate(I.x, I.y, I.z);
+            const outerMat = new THREE.MeshBasicMaterial({ color: 0xef4444, wireframe: true, transparent: true, opacity: 0.35 });
+            const outerSphere = new THREE.Mesh(outerGeom, outerMat);
+            scene.add(outerSphere);
+            currentObjects.push(outerSphere);
+
+            const innerGeom = new THREE.SphereGeometry(r, 24, 18);
+            innerGeom.translate(I.x, I.y, I.z);
+            const innerMat = new THREE.MeshBasicMaterial({ color: 0x10b981, wireframe: true, transparent: true, opacity: 0.5 });
+            const innerSphere = new THREE.Mesh(innerGeom, innerMat);
+            scene.add(innerSphere);
+            currentObjects.push(innerSphere);
+
+            addLine(I, B, 0xef4444, true);
+            addLine(I, G, 0x10b981, true);
+            addLabel("R", I.clone().lerp(B, 0.5).add(new THREE.Vector3(0.2, 0.2, 0.2)), "#ef4444");
+            addLabel("r", I.clone().lerp(G, 0.5).add(new THREE.Vector3(0.2, 0.2, 0.2)), "#10b981");
+        }
+
+        function drawOxyzAxes(origin = new THREE.Vector3(0, 0, 0), len = 6) {
+            const X = new THREE.Vector3(len, 0, 0);
+            const Y = new THREE.Vector3(0, 0, len);
+            const Z = new THREE.Vector3(0, len, 0);
+            addArrow(origin, origin.clone().add(X), 0xef4444);
+            addArrow(origin, origin.clone().add(Y), 0x10b981);
+            addArrow(origin, origin.clone().add(Z), 0x3b82f6);
+            addLabel("x", origin.clone().add(new THREE.Vector3(len + 0.4, 0, 0)), "#ef4444");
+            addLabel("y", origin.clone().add(new THREE.Vector3(0, 0, len + 0.4)), "#10b981");
+            addLabel("z", origin.clone().add(new THREE.Vector3(0, len + 0.4, 0)), "#3b82f6");
+            addLabel("O", origin.clone().add(new THREE.Vector3(-0.3, -0.3, -0.3)));
+        }
+
+        function buildSphereEquationDemo() {
+            clearScene();
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 9, 14);
+
+            const O = new THREE.Vector3(0, 0, 0);
+            drawOxyzAxes(O, 6);
+
+            const I = new THREE.Vector3(2, 3, 1);
+            const R = 3.2;
+            addPoint(I, 0xfacc15, 0.12);
+            addLabel("I(a;b;c)", I.clone().add(new THREE.Vector3(0.2, 0.2, 0.2)), "#facc15");
+
+            const outerGeom = new THREE.SphereGeometry(R, 30, 20);
+            outerGeom.translate(I.x, I.y, I.z);
+            const outerMat = new THREE.MeshPhongMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.18, side: THREE.DoubleSide, shininess: 30 });
+            const sphere = new THREE.Mesh(outerGeom, outerMat);
+            scene.add(sphere);
+            currentObjects.push(sphere);
+
+            const A = I.clone().add(new THREE.Vector3(R, 0, 0));
+            addPoint(A, 0xffffff, 0.08);
+            addLine(I, A, 0xfacc15, true);
+            addLabel("R", I.clone().lerp(A, 0.5).add(new THREE.Vector3(0.2, 0.2, 0.2)), "#facc15");
+        }
+
+        function buildPlaneEquationDemo() {
+            clearScene();
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 9, 14);
+
+            const O = new THREE.Vector3(0, 0, 0);
+            drawOxyzAxes(O, 6);
+
+            const P0 = new THREE.Vector3(1, 1, 1);
+            const n = new THREE.Vector3(1, 2, 1);
+            const plane = makePlaneQuad(P0, n, 5);
+            addFace(plane.quad, 0x4b5563, 0.2);
+            addPoint(P0, 0xfacc15, 0.1);
+            addLabel("M₀", P0.clone().add(new THREE.Vector3(0.2, 0.2, 0.2)), "#facc15");
+
+            const nVec = n.clone().normalize().multiplyScalar(4);
+            addVectorArrow(P0, nVec, 0xef4444, "n");
+            addLabel("(P)", P0.clone().add(plane.u.clone().multiplyScalar(3)).add(plane.v.clone().multiplyScalar(3)), "#9ca3af");
+        }
+
+        function buildLineEquationDemo() {
+            clearScene();
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 9, 14);
+
+            const O = new THREE.Vector3(0, 0, 0);
+            drawOxyzAxes(O, 6);
+
+            const M0 = new THREE.Vector3(-1, 1.5, 2);
+            const u = new THREE.Vector3(3, 2, -1);
+            addPoint(M0, 0xfacc15, 0.1);
+            addLabel("M₀", M0.clone().add(new THREE.Vector3(0.2, 0.2, 0.2)), "#facc15");
+
+            const p1 = M0.clone().add(u.clone().multiplyScalar(-2));
+            const p2 = M0.clone().add(u.clone().multiplyScalar(2));
+            addLine(p1, p2, 0x60a5fa, false);
+            addVectorArrow(M0, u.clone().normalize().multiplyScalar(4), 0xef4444, "u");
+            addLabel("d", p2.clone().add(new THREE.Vector3(0.2, 0.2, 0.2)), "#60a5fa");
+        }
+
+        function buildAngleDistanceOxyzDemo() {
+            clearScene();
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 10, 14);
+
+            const O = new THREE.Vector3(0, 0, 0);
+            drawOxyzAxes(O, 6);
+
+            const u = new THREE.Vector3(5, 0, 2);
+            const v = new THREE.Vector3(2, 0, 5);
+            addVectorArrow(O, u, 0xfacc15, "u");
+            addVectorArrow(O, v, 0x60a5fa, "v");
+            addArcAtPoint(O, u, v, 1.9, 0xffffff, "θ");
+
+            const P0 = new THREE.Vector3(0, 1, 0);
+            const nP = new THREE.Vector3(1, 1, 0.2);
+            const plane = makePlaneQuad(P0, nP, 4.2);
+            addFace(plane.quad, 0x4b5563, 0.12);
+
+            const M = new THREE.Vector3(2, 5, 1);
+            addPoint(M, 0xffffff, 0.09);
+            addLabel("M", M.clone().add(new THREE.Vector3(0.2, 0.2, 0.2)));
+            const nUnit = nP.clone().normalize();
+            const t = nUnit.dot(M.clone().sub(P0));
+            const H = M.clone().sub(nUnit.clone().multiplyScalar(t));
+            addPoint(H, 0xfacc15, 0.09);
+            addLabel("H", H.clone().add(new THREE.Vector3(0.2, 0.2, 0.2)), "#facc15");
+            addLine(M, H, 0xfacc15, true);
+            addRightAngleMarker(H, M, H.clone().add(plane.u.clone()), 0.45);
+            addLabel("d(M,(P))", M.clone().lerp(H, 0.5).add(new THREE.Vector3(0.2, 0.2, 0.2)), "#facc15");
+
+            const gDir = new THREE.Vector3(1, 0, 0);
+            const O2 = new THREE.Vector3(-4, -1.2, -2.5);
+            const gA = O2.clone().add(gDir.clone().multiplyScalar(-5));
+            const gB = O2.clone().add(gDir.clone().multiplyScalar(5));
+            addLine(gA, gB, 0xffffff, true);
+            addLabel("g", O2.clone().add(new THREE.Vector3(0, 0.25, 0.25)), "#ffffff");
+
+            const P1 = makePlaneQuad(O2, new THREE.Vector3(0, 1, 0), 3.2);
+            const Q1 = makePlaneQuad(O2, new THREE.Vector3(0, 1, 1).normalize(), 3.2);
+            addFace(P1.quad, 0x10b981, 0.08);
+            addFace(Q1.quad, 0xef4444, 0.08);
+
+            const a = new THREE.Vector3(0, 0, 1);
+            const b = new THREE.Vector3(0, 1, -1).normalize();
+            addLine(O2, O2.clone().add(a.clone().multiplyScalar(2.6)), 0xffffff, true);
+            addLine(O2, O2.clone().add(b.clone().multiplyScalar(2.6)), 0xffffff, true);
+            addArcAtPoint(O2, a, b, 1.4, 0xffffff, "φ");
         }
 
         function buildChopTamGiacDeu() {
