@@ -539,9 +539,26 @@ def api_chat():
         data = request.get_json(silent=True) or {}
         user_query = (data.get('userQuery') or '').strip()
         system_instruction = (data.get('systemInstruction') or '').strip()
-        client_api_key = (data.get('apiKey') or '').strip()
 
-        api_key = client_api_key or os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY') or os.environ.get('GENAI_API_KEY')
+        allowed_ips_raw = (os.environ.get('ALLOWED_IPS') or '').strip()
+        allowed_ips = [s.strip() for s in allowed_ips_raw.split(',') if s.strip()] if allowed_ips_raw else []
+        admin_token_env = (os.environ.get('ADMIN_TOKEN') or '').strip()
+        admin_token = (request.headers.get('X-Admin-Token') or '').strip() or (data.get('adminToken') or '').strip()
+        auth = (request.headers.get('Authorization') or '').strip()
+        if not admin_token and auth.lower().startswith('bearer '):
+            admin_token = auth[7:].strip()
+
+        if allowed_ips:
+            xff = (request.headers.get('X-Forwarded-For') or '').split(',')[0].strip()
+            ip = xff or (request.headers.get('X-Real-Ip') or '').strip() or (request.remote_addr or '').strip()
+            if ip.startswith('::ffff:'):
+                ip = ip[7:]
+            ok_by_token = bool(admin_token_env and admin_token and admin_token == admin_token_env)
+            ok_by_ip = bool(ip and ip in allowed_ips)
+            if not ok_by_token and not ok_by_ip:
+                return jsonify({'ok': False, 'error': 'forbidden', 'text': 'IP không được phép.'}), 403
+
+        api_key = os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY') or os.environ.get('GENAI_API_KEY')
         if not api_key:
             return jsonify({'ok': False, 'error': 'missing_api_key', 'text': 'Máy chủ chưa cấu hình API key.'}), 501
         model_name = (data.get('modelName') or os.environ.get('MODEL_NAME') or 'gemini-2.0-flash')

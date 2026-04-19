@@ -5,20 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nhân Tướng Học AI - Nốt Ruồi</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .dot-btn { width: 12px; height: 12px; border-radius: 9999px; position: absolute; transform: translate(-6px, -6px); }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif; }
+    :root { --dot-size: clamp(12px, 2.4vw, 20px); }
+    .dot-btn { width: var(--dot-size); height: var(--dot-size); border-radius: 9999px; position: absolute; transform: translate(-50%, -50%); border-width: 2px; touch-action: manipulation; }
     .pulse { animation: pulse 2s infinite; }
     @keyframes pulse {
       0% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.7); }
       70% { box-shadow: 0 0 0 12px rgba(147, 51, 234, 0); }
       100% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0); }
     }
-    .mirror { transform: scaleX(-1); }
+    .mirror { transform: scaleX(-1); transform-origin: center; }
     .crosshair { cursor: crosshair; }
     .prose p { margin-bottom: 0.5rem; }
+    @media (prefers-reduced-motion: reduce) {
+      .pulse { animation: none; }
+    }
   </style>
 </head>
 <body class="bg-[#fdfaf6] text-gray-800">
@@ -43,7 +46,7 @@
   </header>
 
   <main class="max-w-6xl mx-auto px-4 mt-8 flex flex-col lg:flex-row gap-8 items-start">
-    <div class="lg:w-1/2 w-full sticky top-24 space-y-4">
+    <div class="lg:w-1/2 w-full lg:sticky lg:top-24 space-y-4">
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 relative overflow-hidden">
         <div class="flex justify-between items-center mb-4">
           <div class="bg-amber-100 px-3 py-1 rounded-full text-xs font-bold text-amber-800 shadow-sm">
@@ -55,8 +58,11 @@
           </button>
         </div>
         <div id="image-container" class="relative w-full aspect-[3/4] bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center">
-          <img id="face-image" class="w-full h-full object-contain transition-transform duration-300" alt="Sơ đồ nốt ruồi Nam">
+          <img id="face-image" class="w-full h-full object-contain transition-transform duration-300" alt="Sơ đồ nốt ruồi Nam" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/640x800/eeeeee/999999?text=Facial+Map';">
         </div>
+      </div>
+      <div class="flex justify-center my-3">
+        <button id="quick-toggle" class="px-5 py-2 rounded-full text-sm font-bold shadow-sm border bg-purple-600 text-white">Thêm vào hồ sơ</button>
       </div>
 
       <div class="bg-amber-50 rounded-2xl p-5 border border-amber-100 text-amber-900 text-sm">
@@ -74,18 +80,6 @@
           <span class="flex items-center gap-1 text-xs"><span class="w-3 h-3 rounded-full bg-gray-500 inline-block"></span> Hỗn hợp</span>
           <span class="flex items-center gap-1 text-xs"><span class="w-3 h-3 rounded-full bg-purple-500 inline-block"></span> Của bạn</span>
         </div>
-      </div>
-
-      <div id="edit-panel" class="hidden bg-red-50 rounded-2xl p-6 shadow-sm border border-red-100">
-        <h3 class="text-lg font-bold text-red-800 flex items-center gap-2 mb-3">
-          <i data-lucide="settings" class="w-5 h-5"></i> Chế Độ Căn Chỉnh Tọa Độ
-        </h3>
-        <div class="flex justify-between items-center mb-2 mt-6">
-          <button id="export-coords" class="flex items-center gap-1 text-xs bg-white border border-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-50 text-gray-700 font-medium">
-            <i data-lucide="download" class="w-4 h-4"></i> Xuất JSON
-          </button>
-        </div>
-        <textarea id="coords-text" readonly class="w-full h-32 text-[10px] font-mono p-3 rounded-lg border border-red-200"></textarea>
       </div>
     </div>
 
@@ -112,14 +106,21 @@
         <div id="profile-tags" class="mb-4"></div>
 
         <div class="bg-white rounded-xl border p-4 mb-4">
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between gap-3">
             <div class="text-sm text-gray-700">
-              <span class="font-bold">API Key:</span>
-              <span id="api-key-status" class="ml-1 text-gray-500">(chưa nhập)</span>
+              <span class="font-bold">AI:</span>
+              <span class="ml-1 text-gray-500">GOOGLE_API_KEY / GEMINI_API_KEY (máy chủ)</span>
             </div>
-            <button id="api-key-btn" class="px-3 py-1.5 rounded-lg text-sm font-bold border bg-white hover:bg-gray-50">Nhập/Sửa Key</button>
+            <div class="flex items-center gap-2">
+              <input id="admin-token-input" type="password" class="w-40 sm:w-56 px-3 py-1.5 rounded-lg text-sm border bg-white" placeholder="ADMIN_TOKEN">
+              <button id="admin-token-save" class="px-3 py-1.5 rounded-lg text-sm font-bold border bg-white hover:bg-gray-50 whitespace-nowrap">Lưu</button>
+              <button id="admin-token-clear" class="px-3 py-1.5 rounded-lg text-sm font-bold border bg-white hover:bg-gray-50 whitespace-nowrap">Xóa</button>
+            </div>
           </div>
-          <p class="text-xs text-gray-500 mt-2">Key được lưu cục bộ (localStorage). Nếu máy chủ đã cấu hình key, bạn có thể bỏ trống.</p>
+          <div class="text-xs text-gray-500 mt-2">
+            <span class="font-bold">ADMIN_TOKEN:</span>
+            <span id="admin-token-status" class="ml-1">(chưa nhập)</span>
+          </div>
         </div>
 
         <button id="analyze-btn" class="w-full py-4 rounded-xl font-bold text-lg flex justify-center items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 shadow-md">
@@ -287,26 +288,151 @@
     };
 
     const dotCoordinates = {
-      male: [
-        { id: 1, x: 50, y: 5 }, { id: 2, x: 42, y: 7 }, { id: 3, x: 58, y: 7 }, { id: 4, x: 50, y: 10 }, { id: 5, x: 35, y: 12 }, { id: 6, x: 65, y: 12 }, { id: 7, x: 45, y: 15 }, { id: 8, x: 55, y: 15 }, { id: 9, x: 25, y: 17 }, { id: 10, x: 75, y: 17 },
-        { id: 11, x: 50, y: 18 }, { id: 12, x: 38, y: 20 }, { id: 13, x: 62, y: 20 }, { id: 14, x: 18, y: 22 }, { id: 15, x: 82, y: 22 }, { id: 16, x: 50, y: 24 }, { id: 17, x: 30, y: 25 }, { id: 18, x: 70, y: 25 }, { id: 19, x: 42, y: 28 }, { id: 20, x: 58, y: 28 },
-        { id: 21, x: 22, y: 29 }, { id: 22, x: 78, y: 29 }, { id: 23, x: 50, y: 31 }, { id: 24, x: 35, y: 33 }, { id: 25, x: 65, y: 33 }, { id: 26, x: 45, y: 36 }, { id: 27, x: 55, y: 36 }, { id: 28, x: 25, y: 38 }, { id: 29, x: 75, y: 38 }, { id: 30, x: 50, y: 40 },
-        { id: 31, x: 38, y: 42 }, { id: 32, x: 62, y: 42 }, { id: 33, x: 18, y: 44 }, { id: 34, x: 82, y: 44 }, { id: 35, x: 50, y: 46 }, { id: 36, x: 30, y: 48 }, { id: 37, x: 70, y: 48 }, { id: 38, x: 42, y: 51 }, { id: 39, x: 58, y: 51 }, { id: 40, x: 22, y: 53 },
-        { id: 41, x: 78, y: 53 }, { id: 42, x: 50, y: 55 }, { id: 43, x: 35, y: 57 }, { id: 44, x: 65, y: 57 }, { id: 45, x: 45, y: 60 }, { id: 46, x: 55, y: 60 }, { id: 47, x: 25, y: 62 }, { id: 48, x: 75, y: 62 }, { id: 49, x: 50, y: 64 }, { id: 50, x: 38, y: 66 },
-        { id: 51, x: 62, y: 66 }, { id: 52, x: 18, y: 68 }, { id: 53, x: 82, y: 68 }, { id: 54, x: 50, y: 70 }, { id: 55, x: 30, y: 72 }, { id: 56, x: 70, y: 72 }, { id: 57, x: 42, y: 75 }, { id: 58, x: 58, y: 75 }, { id: 59, x: 22, y: 77 }, { id: 60, x: 78, y: 77 },
-        { id: 61, x: 50, y: 79 }, { id: 62, x: 35, y: 81 }, { id: 63, x: 65, y: 81 }, { id: 64, x: 45, y: 84 }, { id: 65, x: 55, y: 84 }, { id: 66, x: 25, y: 86 }, { id: 67, x: 75, y: 86 }, { id: 68, x: 50, y: 88 }, { id: 69, x: 38, y: 90 }, { id: 70, x: 62, y: 90 },
-        { id: 71, x: 18, y: 92 }, { id: 72, x: 82, y: 92 }, { id: 73, x: 50, y: 94 }, { id: 74, x: 30, y: 95 }, { id: 75, x: 70, y: 95 }, { id: 76, x: 42, y: 97 }, { id: 77, x: 58, y: 97 }, { id: 78, x: 50, y: 98 }
-      ],
-      female: [
-        { id: 1, x: 50, y: 6 }, { id: 2, x: 35, y: 8 }, { id: 3, x: 65, y: 8 }, { id: 4, x: 50, y: 11 }, { id: 5, x: 40, y: 14 }, { id: 6, x: 60, y: 14 }, { id: 7, x: 25, y: 16 }, { id: 8, x: 75, y: 16 }, { id: 9, x: 50, y: 18 }, { id: 10, x: 30, y: 20 },
-        { id: 11, x: 70, y: 20 }, { id: 12, x: 45, y: 23 }, { id: 13, x: 55, y: 23 }, { id: 14, x: 18, y: 25 }, { id: 15, x: 82, y: 25 }, { id: 16, x: 50, y: 27 }, { id: 17, x: 38, y: 29 }, { id: 18, x: 62, y: 29 }, { id: 19, x: 22, y: 32 }, { id: 20, x: 78, y: 32 },
-        { id: 21, x: 50, y: 34 }, { id: 22, x: 35, y: 36 }, { id: 23, x: 65, y: 36 }, { id: 24, x: 45, y: 39 }, { id: 25, x: 55, y: 39 }, { id: 26, x: 25, y: 41 }, { id: 27, x: 75, y: 41 }, { id: 28, x: 50, y: 43 }, { id: 29, x: 30, y: 45 }, { id: 30, x: 70, y: 45 },
-        { id: 31, x: 40, y: 48 }, { id: 32, x: 60, y: 48 }, { id: 33, x: 18, y: 50 }, { id: 34, x: 82, y: 50 }, { id: 35, x: 50, y: 52 }, { id: 36, x: 38, y: 55 }, { id: 37, x: 62, y: 55 }, { id: 38, x: 22, y: 58 }, { id: 39, x: 78, y: 58 }, { id: 40, x: 50, y: 60 },
-        { id: 41, x: 35, y: 62 }, { id: 42, x: 65, y: 62 }, { id: 43, x: 45, y: 65 }, { id: 44, x: 55, y: 65 }, { id: 45, x: 25, y: 67 }, { id: 46, x: 75, y: 67 }, { id: 47, x: 50, y: 69 }, { id: 48, x: 30, y: 72 }, { id: 49, x: 70, y: 72 }, { id: 50, x: 40, y: 75 },
-        { id: 51, x: 60, y: 75 }, { id: 52, x: 18, y: 77 }, { id: 53, x: 82, y: 77 }, { id: 54, x: 50, y: 79 }, { id: 55, x: 38, y: 82 }, { id: 56, x: 62, y: 82 }, { id: 57, x: 22, y: 85 }, { id: 58, x: 78, y: 85 }, { id: 59, x: 50, y: 87 }, { id: 60, x: 35, y: 90 },
-        { id: 61, x: 65, y: 90 }, { id: 62, x: 50, y: 93 }
-      ]
-    };
+  "male": [
+    { "id": 1, "x": 51.6, "y": 25 },
+    { "id": 2, "x": 55.8, "y": 22.6 },
+    { "id": 3, "x": 46.6, "y": 22.6 },
+    { "id": 4, "x": 61.8, "y": 22.6 },
+    { "id": 5, "x": 42.4, "y": 22.9 },
+    { "id": 6, "x": 66.7, "y": 22.9 },
+    { "id": 7, "x": 38.3, "y": 23 },
+    { "id": 8, "x": 71.6, "y": 23.3 },
+    { "id": 9, "x": 33.6, "y": 23.6 },
+    { "id": 10, "x": 76.7, "y": 23.7 },
+    { "id": 11, "x": 29.3, "y": 24 },
+    { "id": 12, "x": 24.8, "y": 24.8 },
+    { "id": 13, "x": 51.4, "y": 39.9 },
+    { "id": 14, "x": 43.6, "y": 40.1 },
+    { "id": 15, "x": 59.9, "y": 39 },
+    { "id": 16, "x": 40.6, "y": 39 },
+    { "id": 17, "x": 63, "y": 38.4 },
+    { "id": 18, "x": 36.4, "y": 38.7 },
+    { "id": 19, "x": 68.9, "y": 38 },
+    { "id": 20, "x": 32.8, "y": 38.9 },
+    { "id": 21, "x": 73, "y": 39.3 },
+    { "id": 22, "x": 29.3, "y": 39.2 },
+    { "id": 23, "x": 25, "y": 40.1 },
+    { "id": 24, "x": 25.4, "y": 47.7 },
+    { "id": 25, "x": 60.1, "y": 48.7 },
+    { "id": 26, "x": 42.6, "y": 49 },
+    { "id": 27, "x": 63, "y": 49 },
+    { "id": 28, "x": 39.5, "y": 49.3 },
+    { "id": 29, "x": 67.7, "y": 49 },
+    { "id": 30, "x": 35, "y": 49 },
+    { "id": 31, "x": 72.4, "y": 48.3 },
+    { "id": 32, "x": 30.3, "y": 48.4 },
+    { "id": 33, "x": 77.3, "y": 47.7 },
+    { "id": 34, "x": 21.3, "y": 40.8 },
+    { "id": 35, "x": 24.2, "y": 67.2 },
+    { "id": 36, "x": 29.9, "y": 66.1 },
+    { "id": 37, "x": 35.6, "y": 65 },
+    { "id": 38, "x": 48.3, "y": 76.1 },
+    { "id": 39, "x": 52.8, "y": 76.1 },
+    { "id": 40, "x": 57.1, "y": 75.6 },
+    { "id": 41, "x": 61.2, "y": 75.5 },
+    { "id": 42, "x": 65.2, "y": 75.5 },
+    { "id": 43, "x": 68.9, "y": 74.4 },
+    { "id": 44, "x": 72.4, "y": 74 },
+    { "id": 45, "x": 39.3, "y": 84.7 },
+    { "id": 46, "x": 66.1, "y": 83.7 },
+    { "id": 47, "x": 51.4, "y": 30.4 },
+    { "id": 48, "x": 51.6, "y": 35.8 },
+    { "id": 49, "x": 51.8, "y": 47.6 },
+    { "id": 50, "x": 52, "y": 53.1 },
+    { "id": 51, "x": 51.8, "y": 59.7 },
+    { "id": 52, "x": 43, "y": 58 },
+    { "id": 53, "x": 60.7, "y": 58.3 },
+    { "id": 54, "x": 46.2, "y": 61.4 },
+    { "id": 55, "x": 52.8, "y": 80 },
+    { "id": 56, "x": 53, "y": 84.3 },
+    { "id": 57, "x": 65.6, "y": 79.6 },
+    { "id": 58, "x": 40.1, "y": 80 },
+    { "id": 59, "x": 72.6, "y": 63.3 },
+    { "id": 60, "x": 78.3, "y": 43.1 },
+    { "id": 61, "x": 24.8, "y": 43.7 },
+    { "id": 62, "x": 25.6, "y": 54 },
+    { "id": 63, "x": 76.1, "y": 53.1 },
+    { "id": 64, "x": 48.5, "y": 36.7 },
+    { "id": 65, "x": 22.8, "y": 35.8 },
+    { "id": 66, "x": 36.4, "y": 32.1 },
+    { "id": 67, "x": 54.6, "y": 36.7 },
+    { "id": 68, "x": 80.3, "y": 35.1 },
+    { "id": 69, "x": 67.7, "y": 31.7 },
+    { "id": 70, "x": 52.8, "y": 65.8 },
+    { "id": 71, "x": 87.9, "y": 35.9 },
+    { "id": 72, "x": 86.3, "y": 57.8 },
+    { "id": 73, "x": 15.2, "y": 36.7 },
+    { "id": 74, "x": 17.6, "y": 59 },
+    { "id": 75, "x": 48.3, "y": 68.4 },
+    { "id": 76, "x": 56.3, "y": 71.2 },
+    { "id": 77, "x": 38.1, "y": 68.1 },
+    { "id": 78, "x": 65, "y": 67.8 }
+  ],
+  "female": [
+    { "id": 1, "x": 34, "y": 20.2 },
+    { "id": 2, "x": 38.7, "y": 20.2 },
+    { "id": 3, "x": 42.8, "y": 20.2 },
+    { "id": 4, "x": 47.3, "y": 20.2 },
+    { "id": 5, "x": 56.2, "y": 20.2 },
+    { "id": 6, "x": 59.3, "y": 26 },
+    { "id": 7, "x": 62.8, "y": 19.9 },
+    { "id": 8, "x": 67.7, "y": 20.1 },
+    { "id": 9, "x": 71.4, "y": 20.2 },
+    { "id": 10, "x": 75.5, "y": 20.2 },
+    { "id": 11, "x": 52.6, "y": 33.7 },
+    { "id": 12, "x": 29.1, "y": 36.7 },
+    { "id": 13, "x": 35.6, "y": 36.4 },
+    { "id": 14, "x": 40.3, "y": 36.4 },
+    { "id": 15, "x": 45, "y": 37.4 },
+    { "id": 16, "x": 58.7, "y": 37.9 },
+    { "id": 17, "x": 62, "y": 36.5 },
+    { "id": 18, "x": 65.8, "y": 35.6 },
+    { "id": 19, "x": 69.7, "y": 35.2 },
+    { "id": 20, "x": 74.6, "y": 35.1 },
+    { "id": 21, "x": 24.6, "y": 35.2 },
+    { "id": 22, "x": 27.2, "y": 44.9 },
+    { "id": 23, "x": 30.9, "y": 45.6 },
+    { "id": 24, "x": 35, "y": 45.9 },
+    { "id": 25, "x": 39.3, "y": 46.2 },
+    { "id": 26, "x": 43.4, "y": 46.4 },
+    { "id": 27, "x": 60.7, "y": 47.3 },
+    { "id": 28, "x": 65.8, "y": 47 },
+    { "id": 29, "x": 70.8, "y": 46.7 },
+    { "id": 30, "x": 75.5, "y": 46.2 },
+    { "id": 31, "x": 28.3, "y": 61.8 },
+    { "id": 32, "x": 32.2, "y": 62 },
+    { "id": 33, "x": 36.4, "y": 62 },
+    { "id": 34, "x": 51.4, "y": 62.4 },
+    { "id": 35, "x": 65.8, "y": 63.7 },
+    { "id": 36, "x": 70.7, "y": 63.9 },
+    { "id": 37, "x": 75.2, "y": 64 },
+    { "id": 38, "x": 79.7, "y": 54.9 },
+    { "id": 39, "x": 19.5, "y": 56.1 },
+    { "id": 40, "x": 31.9, "y": 69.4 },
+    { "id": 41, "x": 35.6, "y": 69.6 },
+    { "id": 42, "x": 51.3, "y": 74.3 },
+    { "id": 43, "x": 65.2, "y": 74.1 },
+    { "id": 44, "x": 39.3, "y": 81.5 },
+    { "id": 45, "x": 51.3, "y": 84.6 },
+    { "id": 46, "x": 62.2, "y": 81.3 },
+    { "id": 47, "x": 55.6, "y": 34 },
+    { "id": 48, "x": 67.1, "y": 30.2 },
+    { "id": 49, "x": 79.5, "y": 34.5 },
+    { "id": 50, "x": 48.7, "y": 34.3 },
+    { "id": 51, "x": 37.1, "y": 30.8 },
+    { "id": 52, "x": 52, "y": 46.7 },
+    { "id": 53, "x": 51.8, "y": 59.5 },
+    { "id": 54, "x": 45.4, "y": 57.5 },
+    { "id": 55, "x": 58.5, "y": 58.7 },
+    { "id": 56, "x": 52, "y": 50.3 },
+    { "id": 57, "x": 48.3, "y": 68.6 },
+    { "id": 58, "x": 53.6, "y": 70.9 },
+    { "id": 59, "x": 82.8, "y": 61.7 },
+    { "id": 60, "x": 88.7, "y": 38.4 },
+    { "id": 61, "x": 84.4, "y": 49.6 },
+    { "id": 62, "x": 51.1, "y": 81.5 }
+  ]
+};
 
     const analyzeType = (text) => {
       if (!text) return 'neutral';
@@ -331,12 +457,10 @@
 
     let gender = 'male';
     let isMirrored = false;
-    let isEditMode = false;
-    let editDotId = null;
     let coords = JSON.parse(JSON.stringify(dotCoordinates));
     let myMoles = [];
-    let apiKey = localStorage.getItem('ai_api_key') || '';
-    const isAdminDebug = new URLSearchParams(location.search).has('debug1235');
+    let adminToken = localStorage.getItem('admin_token') || '';
+    let selectedId = null;
 
     const faceImage = document.getElementById('face-image');
     const imageContainer = document.getElementById('image-container');
@@ -345,24 +469,24 @@
     const profileTags = document.getElementById('profile-tags');
     const mirrorToggle = document.getElementById('mirror-toggle');
     const mirrorLabel = document.getElementById('mirror-label');
-    const editPanel = document.getElementById('edit-panel');
-    const exportCoordsBtn = document.getElementById('export-coords');
-    const coordsText = document.getElementById('coords-text');
     const btnMale = document.getElementById('btn-male');
     const btnFemale = document.getElementById('btn-female');
     const labelGender = document.getElementById('label-gender');
     const analyzeBtn = document.getElementById('analyze-btn');
     const aiResult = document.getElementById('ai-result');
     const aiResultContent = document.getElementById('ai-result-content');
-    const apiKeyBtn = document.getElementById('api-key-btn');
-    const apiKeyStatus = document.getElementById('api-key-status');
+    const adminTokenInput = document.getElementById('admin-token-input');
+    const adminTokenSave = document.getElementById('admin-token-save');
+    const adminTokenClear = document.getElementById('admin-token-clear');
+    const adminTokenStatus = document.getElementById('admin-token-status');
+    const quickToggleBtn = document.getElementById('quick-toggle');
 
     const currentImageUrl = () => gender === 'male'
-      ? 'https://cms.lichngaytot.com/medias/original/2021/8/24/not-ruoi-tren-mat-dan-ong.jpg'
-      : 'https://cms.lichngaytot.com/medias/original/2021/8/24/not-ruoi-tren-mat-phu-nu.jpg';
+      ? '/Physiognomy/not-ruoi-nam.jpg'
+      : '/Physiognomy/not-ruoi-nu.jpg';
 
-    function refreshApiKeyStatus() {
-      apiKeyStatus.textContent = apiKey ? '(đã lưu)' : '(chưa nhập)';
+    function refreshAdminTokenStatus() {
+      adminTokenStatus.textContent = adminToken ? '(đã nhập)' : '(chưa nhập)';
     }
 
     function renderImage() {
@@ -375,12 +499,7 @@
         const dotDesc = moleData[gender][dot.id] || '';
         const dotType = analyzeType(dotDesc);
         let baseStyle = '';
-        if (isEditMode && editDotId === dot.id) {
-          baseStyle = 'border-red-500 bg-red-500 text-white';
-          btn.style.width = '24px';
-          btn.style.height = '24px';
-          btn.style.zIndex = '50';
-        } else if (myMoles.some(m => m.id === String(dot.id))) {
+        if (myMoles.some(m => m.id === String(dot.id))) {
           baseStyle = 'border-purple-600 bg-purple-500 text-white pulse';
           btn.style.zIndex = '40';
         } else {
@@ -388,18 +507,17 @@
           else if (dotType === 'negative') baseStyle = 'bg-red-500/40 border-red-500';
           else baseStyle = 'bg-gray-500/40 border-gray-500';
         }
-        btn.className += ' ' + baseStyle + (isMirrored ? ' mirror' : '');
+        btn.className += ' ' + baseStyle;
         btn.style.left = dot.x + '%';
         btn.style.top = dot.y + '%';
         btn.title = `Vị trí ${dot.id}`;
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
-          editDotId = dot.id;
           showResult(dot.id);
         });
         imageContainer.appendChild(btn);
       });
-      imageContainer.classList.toggle('crosshair', isEditMode);
+      imageContainer.classList.toggle('mirror', isMirrored);
     }
 
     function showResult(id) {
@@ -408,6 +526,9 @@
       const label = type === 'positive' ? 'Tích cực (Cát)' : type === 'negative' ? 'Tiêu cực (Hung)' : 'Hỗn hợp / Trung tính';
       resultBox.className = `rounded-2xl p-6 border-2 ${typeStyles[type].bg} ${typeStyles[type].border}`;
       const inProfile = myMoles.some(m => m.id === String(id));
+      selectedId = id;
+      quickToggleBtn.textContent = inProfile ? 'Bỏ khỏi hồ sơ' : 'Thêm vào hồ sơ';
+      quickToggleBtn.className = inProfile ? 'px-4 py-1.5 rounded-full text-sm font-bold shadow-sm border bg-red-50 text-red-600' : 'px-4 py-1.5 rounded-full text-sm font-bold shadow-sm border bg-purple-600 text-white';
       resultBox.innerHTML = `
         <div class="flex justify-between items-start mb-4">
           <div class="flex gap-2">
@@ -458,26 +579,6 @@
       });
     }
 
-    imageContainer.addEventListener('click', (e) => {
-      if (!isEditMode) return;
-      const rect = imageContainer.getBoundingClientRect();
-      let x = ((e.clientX - rect.left) / rect.width) * 100;
-      let y = ((e.clientY - rect.top) / rect.height) * 100;
-      if (isMirrored) x = 100 - x;
-      if (!editDotId) {
-        let nearest = null, best = 1e9;
-        coords[gender].forEach(d => {
-          const dx = d.x - x, dy = d.y - y;
-          const dist = dx*dx + dy*dy;
-          if (dist < best) { best = dist; nearest = d.id; }
-        });
-        editDotId = nearest;
-      }
-      coords[gender] = coords[gender].map(d => d.id === editDotId ? { ...d, x: parseFloat(x.toFixed(1)), y: parseFloat(y.toFixed(1)) } : d);
-      renderImage();
-      coordsText.value = JSON.stringify(coords, null, 2);
-    });
-
     searchInput.addEventListener('input', () => {
       const val = searchInput.value.trim();
       if (!val) {
@@ -497,26 +598,6 @@
       mirrorLabel.textContent = isMirrored ? 'Đang Lật (Soi Gương)' : 'Bản Gốc (Đối Diện)';
       renderImage();
       lucide.createIcons();
-    });
-
-    exportCoordsBtn.addEventListener('click', async () => {
-      const payload = JSON.stringify(coords, null, 2);
-      const blob = new Blob([payload], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const ts = new Date().toISOString().replace(/[:.]/g, '-');
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `not_ruoi_coords_${ts}.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-
-      exportCoordsBtn.innerHTML = '<i data-lucide="check-circle-2" class="w-4 h-4 text-green-600"></i> Đã xuất';
-      setTimeout(() => {
-        exportCoordsBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4"></i> Xuất JSON';
-        lucide.createIcons();
-      }, 2000);
     });
 
     btnMale.addEventListener('click', () => {
@@ -540,14 +621,30 @@
       renderImage();
     });
 
-    apiKeyBtn.addEventListener('click', async () => {
-      const val = prompt('Nhập API Key (Google Generative Language):', apiKey || '');
-      if (val !== null) {
-        apiKey = val.trim();
-        if (apiKey) localStorage.setItem('ai_api_key', apiKey);
-        else localStorage.removeItem('ai_api_key');
-        refreshApiKeyStatus();
-      }
+    quickToggleBtn.addEventListener('click', () => {
+      if (!selectedId) return;
+      const meaning = moleData[gender][selectedId] || `Vị trí nốt ruồi số ${selectedId}.`;
+      const idx = myMoles.findIndex(m => m.id === String(selectedId));
+      if (idx >= 0) myMoles.splice(idx, 1);
+      else myMoles.push({ id: String(selectedId), meaning });
+      renderProfile();
+      renderImage();
+      showResult(selectedId);
+    });
+
+
+    adminTokenInput.value = adminToken || '';
+    adminTokenSave.addEventListener('click', () => {
+      adminToken = (adminTokenInput.value || '').trim();
+      if (adminToken) localStorage.setItem('admin_token', adminToken);
+      else localStorage.removeItem('admin_token');
+      refreshAdminTokenStatus();
+    });
+    adminTokenClear.addEventListener('click', () => {
+      adminToken = '';
+      adminTokenInput.value = '';
+      localStorage.removeItem('admin_token');
+      refreshAdminTokenStatus();
     });
 
     function renderMarkdown(text) {
@@ -569,10 +666,12 @@
       const prompt = `Tôi là ${gender === 'male' ? 'Nam giới' : 'Nữ giới'}. Theo nhân tướng học, trên khuôn mặt tôi có các nốt ruồi sau đây:\n\n${moleDescriptions}\n\nHãy đóng vai một chuyên gia phong thủy và nhân tướng học uyên bác. Dựa trên sự kết hợp của tất cả các nốt ruồi trên, hãy phân tích tổng quan về:\n1. Tính cách đặc trưng của tôi.\n2. Đường công danh, sự nghiệp và tài lộc.\n3. Đường tình duyên, gia đạo.\n4. Cuối cùng, đưa ra lời khuyên (cách phát huy những điểm tốt và cách hóa giải phong thủy/lối sống cho những điểm xấu).\n\nHãy viết một cách rõ ràng, mạch lạc, súc tích và sử dụng định dạng Markdown (in đậm các từ khóa quan trọng). Lời văn thân thiện, tích cực, không làm người đọc hoang mang.`;
       const systemInstruction = "Bạn là một chuyên gia nhân tướng học uyên bác, thấu hiểu tâm lý con người. Luôn đưa ra những nhận định khách quan, kết hợp giữa thuật xem tướng cổ truyền và góc nhìn khoa học, tâm lý hiện đại. Lời khuyên luôn mang tính xây dựng, hướng thiện.";
       try {
+        const headers = { 'Content-Type': 'application/json' };
+        if (adminToken) headers['X-Admin-Token'] = adminToken;
         const resp = await fetch('/api/chat', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userQuery: prompt, systemInstruction, apiKey })
+          headers,
+          body: JSON.stringify({ userQuery: prompt, systemInstruction })
         });
         const j = await resp.json();
         const text = j.text || 'Không thể phân tích lúc này. Vui lòng thử lại.';
@@ -588,12 +687,14 @@
     });
 
     // Init
-    refreshApiKeyStatus();
+    refreshAdminTokenStatus();
     renderProfile();
-    isEditMode = isAdminDebug;
-    editDotId = null;
-    editPanel.classList.toggle('hidden', !isEditMode);
     renderImage();
+    try {
+      if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+        document.documentElement.style.setProperty('--dot-size', 'clamp(14px, 3.2vw, 26px)');
+      }
+    } catch (_) {}
   </script>
 </body>
 </html>
