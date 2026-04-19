@@ -9,6 +9,9 @@
     <!-- Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
     
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -215,7 +218,7 @@
                                 <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-arrows-alt mr-2"></i>Quy tắc hình hộp (Vector)</h3>
                                 <p class="text-gray-200 text-sm">
                                     Tổng 3 vector xuất phát từ 1 đỉnh bằng vector đường chéo:<br>
-                                    <span class="math-text highlight">$\vec{AB} + \vec{AD} + \vec{AA'} = \vec{AC'}$</span><br>
+                                    <span class="math-text highlight">$\\vec{AB} + \\vec{AD} + \\vec{AA'} = \\vec{AC'}$</span><br>
                                     (với A, B, D, A' là 3 cạnh đôi một vuông góc đi ra từ A)
                                 </p>
                             </div>
@@ -252,7 +255,7 @@
                 {
                     id: '10_tich_vo_huong',
                     name: 'Tích vô hướng',
-                    buildFn: () => buildOxyz(),
+                    buildFn: () => buildDotProductDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Tích vô hướng trong không gian (Lớp 10)</h2>
                         <p class="text-gray-300 text-sm mb-4">Tích vô hướng giúp tính góc và kiểm tra vuông góc trong không gian bằng đại số.</p>
@@ -340,7 +343,7 @@
                 {
                     id: '11_giao_tuyen_giao_diem',
                     name: 'Giao tuyến & giao điểm',
-                    buildFn: () => buildLangTruDung(),
+                    buildFn: () => buildPlaneIntersectionDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Giao tuyến & Giao điểm (Lớp 11)</h2>
                         <p class="text-gray-300 text-sm mb-4">Nền tảng để giải mọi bài song song/vuông góc: tìm đúng “đường chung” trước.</p>
@@ -361,7 +364,7 @@
                 {
                     id: '11_thiet_dien',
                     name: 'Thiết diện',
-                    buildFn: () => buildChopCut(),
+                    buildFn: () => buildSectionCubeDemo(),
                     html: `
                         <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Phương pháp dựng thiết diện (Lớp 11)</h2>
                         <p class="text-gray-300 text-sm mb-4">Thiết diện là “mặt cắt” của khối đa diện bởi 1 mặt phẳng. Dựng đúng thiết diện giúp chuyển bài không gian về hình phẳng.</p>
@@ -771,6 +774,178 @@
         // ==========================================
         // BUILDER FUNCTIONS (MÔ HÌNH TOÁN HỌC)
         // ==========================================
+
+        function addVectorArrow(origin, vector, color = 0xffffff, labelText = null) {
+            const end = origin.clone().add(vector);
+            const dir = vector.clone().normalize();
+            const length = vector.length();
+            const arrow = new THREE.ArrowHelper(dir, origin, length, color, 0.45, 0.18);
+            scene.add(arrow);
+            currentObjects.push(arrow);
+            if (labelText) addLabel(labelText, end.clone().add(new THREE.Vector3(0.2, 0.2, 0.2)));
+            return { origin, end };
+        }
+
+        function buildDotProductDemo() {
+            clearScene();
+            const O = new THREE.Vector3(0, 0, 0);
+            controls.target.set(0, 0, 0);
+            camera.position.set(10, 8, 14);
+
+            addArrow(O, new THREE.Vector3(6, 0, 0), 0xef4444);
+            addArrow(O, new THREE.Vector3(0, 0, 6), 0x10b981);
+            addArrow(O, new THREE.Vector3(0, 6, 0), 0x3b82f6);
+            addLabel("x", new THREE.Vector3(6.6, 0, 0), "#ef4444");
+            addLabel("y", new THREE.Vector3(0, 0, 6.6), "#10b981");
+            addLabel("z", new THREE.Vector3(0, 6.6, 0), "#3b82f6");
+            addLabel("O", new THREE.Vector3(-0.3, -0.3, -0.3));
+
+            const u = new THREE.Vector3(5, 0, 1.5);
+            const v = new THREE.Vector3(2, 0, 5);
+            addVectorArrow(O, u, 0xfacc15, "u");
+            addVectorArrow(O, v, 0x60a5fa, "v");
+
+            const angle = u.angleTo(v);
+            const axis = new THREE.Vector3().crossVectors(u, v).normalize();
+            const n = 36;
+            const r = 1.8;
+            const uDir = u.clone().normalize();
+            const points = [];
+            for (let i = 0; i <= n; i++) {
+                const t = (angle * i) / n;
+                const dir = uDir.clone().applyAxisAngle(axis, t).multiplyScalar(r);
+                points.push(O.clone().add(dir));
+            }
+            const arcGeom = new THREE.BufferGeometry().setFromPoints(points);
+            const arcMat = new THREE.LineBasicMaterial({ color: 0xffffff });
+            const arc = new THREE.Line(arcGeom, arcMat);
+            scene.add(arc);
+            currentObjects.push(arc);
+
+            const midDir = uDir.clone().applyAxisAngle(axis, angle / 2).multiplyScalar(r + 0.4);
+            addLabel("θ", O.clone().add(midDir), "#ffffff");
+        }
+
+        function buildPlaneIntersectionDemo() {
+            clearScene();
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 9, 14);
+
+            const s = 5;
+            const P1 = [new THREE.Vector3(-s, 0, -s), new THREE.Vector3(s, 0, -s), new THREE.Vector3(s, 0, s), new THREE.Vector3(-s, 0, s)];
+            addFace(P1, 0x4b5563, 0.22);
+
+            const Q1 = [new THREE.Vector3(-s, -s, -2), new THREE.Vector3(-s, s, -2), new THREE.Vector3(s, s, 2), new THREE.Vector3(s, -s, 2)];
+            addFace(Q1, 0x3b82f6, 0.18);
+
+            const g1 = new THREE.Vector3(-s, 0, -2);
+            const g2 = new THREE.Vector3(s, 0, 2);
+            addLine(g1, g2, 0xfacc15, false);
+            addPoint(g1, 0xfacc15, 0.1);
+            addPoint(g2, 0xfacc15, 0.1);
+
+            addLabel("(P)", new THREE.Vector3(0, 0.2, s - 1), "#9ca3af");
+            addLabel("(Q)", new THREE.Vector3(0, s - 1, 0.2), "#60a5fa");
+            addLabel("g", new THREE.Vector3(0, 0.2, 0.2), "#facc15");
+        }
+
+        function intersectSegmentPlane(p1, p2, planePoint, planeNormal, eps = 1e-6) {
+            const d1 = planeNormal.dot(p1.clone().sub(planePoint));
+            const d2 = planeNormal.dot(p2.clone().sub(planePoint));
+            if (Math.abs(d1) < eps && Math.abs(d2) < eps) return null;
+            if (Math.abs(d1) < eps) return p1.clone();
+            if (Math.abs(d2) < eps) return p2.clone();
+            if (d1 * d2 > 0) return null;
+            const t = d1 / (d1 - d2);
+            return p1.clone().add(p2.clone().sub(p1).multiplyScalar(t));
+        }
+
+        function uniquePoints(points, eps = 1e-4) {
+            const out = [];
+            for (const p of points) {
+                if (!out.some(q => p.distanceToSquared(q) < eps * eps)) out.push(p);
+            }
+            return out;
+        }
+
+        function orderPointsOnPlane(points, planeNormal) {
+            const center = points.reduce((acc, p) => acc.add(p), new THREE.Vector3()).multiplyScalar(1 / points.length);
+            const n = planeNormal.clone().normalize();
+            const ref = Math.abs(n.y) < 0.9 ? new THREE.Vector3(0, 1, 0) : new THREE.Vector3(1, 0, 0);
+            const u = new THREE.Vector3().crossVectors(n, ref).normalize();
+            const v = new THREE.Vector3().crossVectors(n, u).normalize();
+            const withAngle = points.map(p => {
+                const d = p.clone().sub(center);
+                return { p, a: Math.atan2(d.dot(v), d.dot(u)) };
+            });
+            withAngle.sort((a, b) => a.a - b.a);
+            return { ordered: withAngle.map(x => x.p), center, u, v };
+        }
+
+        function buildSectionCubeDemo() {
+            clearScene();
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 10, 14);
+
+            const x = 2, y = 2, z = 2;
+            const A = new THREE.Vector3(-x, -y, -z);
+            const B = new THREE.Vector3(x, -y, -z);
+            const C = new THREE.Vector3(x, -y, z);
+            const D = new THREE.Vector3(-x, -y, z);
+            const A_ = new THREE.Vector3(-x, y, -z);
+            const B_ = new THREE.Vector3(x, y, -z);
+            const C_ = new THREE.Vector3(x, y, z);
+            const D_ = new THREE.Vector3(-x, y, z);
+
+            addLine(A, B, 0xffffff, true);
+            addLine(B, C, 0xffffff);
+            addLine(C, D, 0xffffff);
+            addLine(D, A, 0xffffff, true);
+            addLine(A_, B_, 0xffffff);
+            addLine(B_, C_, 0xffffff);
+            addLine(C_, D_, 0xffffff);
+            addLine(D_, A_, 0xffffff);
+            addLine(A, A_, 0xffffff, true);
+            addLine(B, B_, 0xffffff);
+            addLine(C, C_, 0xffffff);
+            addLine(D, D_, 0xffffff);
+
+            const P = A.clone().lerp(A_, 0.75);
+            const Q = B.clone().lerp(B_, 0.35);
+            const R = D.clone().lerp(D_, 0.55);
+            [A, B, C, D, A_, B_, C_, D_, P, Q, R].forEach(p => addPoint(p, 0xffffff, 0.08));
+            addLabel("P", P.clone().add(new THREE.Vector3(-0.2, 0.2, -0.2)), "#facc15");
+            addLabel("Q", Q.clone().add(new THREE.Vector3(0.2, 0.2, -0.2)), "#facc15");
+            addLabel("R", R.clone().add(new THREE.Vector3(-0.2, 0.2, 0.2)), "#facc15");
+
+            const planeNormal = new THREE.Vector3().crossVectors(Q.clone().sub(P), R.clone().sub(P)).normalize();
+            const edges = [
+                [A, B], [B, C], [C, D], [D, A],
+                [A_, B_], [B_, C_], [C_, D_], [D_, A_],
+                [A, A_], [B, B_], [C, C_], [D, D_]
+            ];
+            const raw = [];
+            for (const [e1, e2] of edges) {
+                const ip = intersectSegmentPlane(e1, e2, P, planeNormal);
+                if (ip) raw.push(ip);
+            }
+            const pts = uniquePoints(raw);
+            if (pts.length >= 3) {
+                const { ordered, center, u, v } = orderPointsOnPlane(pts, planeNormal);
+                for (let i = 0; i < ordered.length; i++) {
+                    const p1 = ordered[i];
+                    const p2 = ordered[(i + 1) % ordered.length];
+                    addLine(p1, p2, 0xfacc15, false);
+                }
+                const size = 5;
+                const f1 = center.clone().add(u.clone().multiplyScalar(size)).add(v.clone().multiplyScalar(size));
+                const f2 = center.clone().add(u.clone().multiplyScalar(size)).sub(v.clone().multiplyScalar(size));
+                const f3 = center.clone().sub(u.clone().multiplyScalar(size)).sub(v.clone().multiplyScalar(size));
+                const f4 = center.clone().sub(u.clone().multiplyScalar(size)).add(v.clone().multiplyScalar(size));
+                addFace([f1, f2, f3, f4], 0xfacc15, 0.08);
+                addLabel("Thiết diện", center.clone().add(planeNormal.clone().multiplyScalar(0.4)), "#facc15");
+            }
+        }
 
         function buildChopTamGiacDeu() {
             clearScene();
@@ -1425,6 +1600,15 @@
 
             // Update Panel content
             infoPanel.innerHTML = shapeObj.html;
+            if (window.renderMathInElement) {
+                window.renderMathInElement(infoPanel, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false }
+                    ],
+                    throwOnError: false
+                });
+            }
 
             // Build 3D Scene
             shapeObj.buildFn();
