@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Liệu Trực Quan 3D: Hình Học Không Gian (Lớp 8 - Lớp 12)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        #canvas-container { width: 100%; height: 100%; position: relative; }
+        .label-3d {
+            position: absolute;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9), -1px -1px 2px rgba(0,0,0,0.9);
+            pointer-events: none;
+            user-select: none;
+            z-index: 10;
+        }
+        .math-text { font-family: 'Times New Roman', Times, serif; font-style: italic; }
+        .highlight { color: #facc15; font-weight: bold; }
+        .property-card { transition: all 0.3s ease; }
+        .property-card:hover { transform: translateX(5px); border-left-color: #3b82f6; }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        
+        /* Active Grade Tab Styling */
+        .grade-tab.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            border-bottom: 2px solid #60a5fa;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex flex-col h-screen">
+
+    <!-- Header & Navigation -->
+    <header class="bg-gray-800 border-b border-gray-700 shadow-md z-20 flex flex-col">
+        <!-- Top row: Title -->
+        <div class="p-4 pb-2 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-blue-400"><i class="fas fa-layer-group mr-2"></i>Không Gian Toán Học 3D</h1>
+                <p class="text-xs text-gray-400 mt-1">Tài liệu trực quan bám sát chương trình GDPT Mới (THCS & THPT)</p>
+            </div>
+        </div>
+        
+        <!-- Grade Tabs (Lớp 8 -> 12) -->
+        <div class="flex px-4 space-x-1 overflow-x-auto border-b border-gray-700 pb-0" id="gradeTabs">
+            <button class="grade-tab px-4 py-2 rounded-t-lg font-bold transition-colors text-gray-400 hover:text-white" data-grade="8">Lớp 8</button>
+            <button class="grade-tab px-4 py-2 rounded-t-lg font-bold transition-colors text-gray-400 hover:text-white" data-grade="9">Lớp 9</button>
+            <button class="grade-tab px-4 py-2 rounded-t-lg font-bold transition-colors text-gray-400 hover:text-white" data-grade="10">Lớp 10</button>
+            <button class="grade-tab px-4 py-2 rounded-t-lg font-bold transition-colors text-gray-400 hover:text-white" data-grade="11">Lớp 11</button>
+            <button class="grade-tab px-4 py-2 rounded-t-lg font-bold transition-colors text-gray-400 hover:text-white" data-grade="12">Lớp 12</button>
+        </div>
+
+        <!-- Shape Sub-tabs (Dynamically updated) -->
+        <div class="p-3 bg-gray-800 flex flex-wrap gap-2" id="shapeTabs">
+            <!-- Buttons will be injected here by JS -->
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex flex-1 overflow-hidden relative flex-col md:flex-row">
+        
+        <!-- 3D Canvas Area -->
+        <div id="canvas-container" class="flex-1 bg-gradient-to-b from-gray-900 to-black relative cursor-move">
+            <div class="absolute bottom-4 left-4 text-gray-400 text-sm bg-black/60 px-3 py-2 rounded backdrop-blur-sm pointer-events-none">
+                <i class="fas fa-mouse mr-1 text-blue-400"></i> Chuột trái xoay | <i class="fas fa-arrows-alt-v mx-1 text-blue-400"></i> Cuộn thu phóng | <i class="fas fa-hand-paper mx-1 text-blue-400"></i> Chuột phải di chuyển
+            </div>
+        </div>
+
+        <!-- Sidebar / Notes Area -->
+        <div class="w-full md:w-1/3 max-w-md bg-gray-800 border-l border-gray-700 p-5 overflow-y-auto z-10 shadow-xl flex flex-col" id="infoPanel">
+            <!-- Info panels will be dynamically injected here -->
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // DATA STRUCTURE: GRADES, SHAPES & CONTENT
+        // ==========================================
+        const appData = {
+            '8': [
+                {
+                    id: '8_chop_tam_giac',
+                    name: 'Chóp tam giác đều',
+                    buildFn: () => buildChopTamGiacDeu(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hình chóp tam giác đều</h2>
+                        <p class="text-gray-300 text-sm mb-4">Theo GDPT 2018, học sinh lớp 8 bắt đầu làm quen với hình chóp đều. Đáy là tam giác đều, các mặt bên là tam giác cân.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-ruler-combined mr-2"></i>Đặc điểm</h3>
+                                <p class="text-gray-200 text-sm">Hình chiếu của đỉnh <span class="math-text">S</span> rơi vào trọng tâm <span class="math-text">G</span> của đáy. <span class="math-text highlight">SG ⊥ (ABC)</span>.</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-calculator mr-2"></i>Công thức cơ bản</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Diện tích xung quanh: <span class="math-text">S<sub>xq</sub> = p.d</span> (p: nửa chu vi đáy, d: trung đoạn)</li>
+                                    <li>Thể tích: <span class="math-text highlight">V = 1/3.S<sub>đáy</sub>.h</span></li>
+                                </ul>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '8_chop_tu_giac',
+                    name: 'Chóp tứ giác đều',
+                    buildFn: () => buildChopTuGiacDeu(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hình chóp tứ giác đều</h2>
+                        <p class="text-gray-300 text-sm mb-4">Hình chóp có đáy là hình vuông và các mặt bên là các tam giác cân bằng nhau. Rất phổ biến trong kiến trúc (Kim tự tháp).</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-crosshairs mr-2"></i>Đường cao</h3>
+                                <p class="text-gray-200 text-sm">Đường cao <span class="math-text">SI</span> nối từ đỉnh S tới giao điểm 2 đường chéo của hình vuông đáy.</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-calculator mr-2"></i>Công thức (Lớp 8)</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Thể tích: <span class="math-text highlight">V = 1/3.S<sub>đáy</sub>.h</span></li>
+                                    <li>Với hình vuông cạnh <span class="math-text">a</span>, <span class="math-text">S<sub>đáy</sub> = a²</span></li>
+                                </ul>
+                            </div>
+                        </div>`
+                }
+            ],
+            '9': [
+                {
+                    id: '9_tru',
+                    name: 'Hình trụ',
+                    buildFn: () => buildHinhTru(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hình Trụ (Khối tròn xoay)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Học sinh lớp 9 tìm hiểu sự tạo thành hình trụ khi quay hình chữ nhật quanh một cạnh cố định.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-sync mr-2"></i>Sự tạo thành</h3>
+                                <p class="text-gray-200 text-sm">Đường sinh song song và bằng trục: <span class="math-text highlight">l = h</span>.</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-calculator mr-2"></i>Đại lượng đo lường</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Diện tích xung quanh: <span class="math-text">S<sub>xq</sub> = 2π.r.h</span></li>
+                                    <li>Thể tích: <span class="math-text highlight">V = π.r².h</span></li>
+                                </ul>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '9_non',
+                    name: 'Hình nón',
+                    buildFn: () => buildHinhNon(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hình Nón</h2>
+                        <p class="text-gray-300 text-sm mb-4">Tạo thành khi quay tam giác vuông quanh một cạnh góc vuông.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-red-400 property-card">
+                                <h3 class="font-bold text-red-400 mb-1"><i class="fas fa-draw-polygon mr-2"></i>Mối liên hệ R, h, l</h3>
+                                <p class="text-gray-200 text-sm">Định lý Pytago trong tam giác vuông tạo thành: <span class="math-text highlight">l² = h² + r²</span></p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-calculator mr-2"></i>Công thức</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Diện tích xung quanh: <span class="math-text">S<sub>xq</sub> = π.r.l</span></li>
+                                    <li>Thể tích: <span class="math-text highlight">V = 1/3.π.r².h</span></li>
+                                </ul>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '9_cau',
+                    name: 'Hình cầu',
+                    buildFn: () => buildHinhCau(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hình Cầu</h2>
+                        <p class="text-gray-300 text-sm mb-4">Tạo thành khi quay nửa hình tròn quanh đường kính của nó.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-circle-notch mr-2"></i>Thiết diện</h3>
+                                <p class="text-gray-200 text-sm">Bất cứ mặt phẳng nào cắt hình cầu cũng tạo ra mặt cắt là một <span class="math-text highlight">Hình tròn</span>.</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-calculator mr-2"></i>Công thức</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Diện tích mặt cầu: <span class="math-text highlight">S = 4π.R²</span></li>
+                                    <li>Thể tích khối cầu: <span class="math-text highlight">V = 4/3.π.R³</span></li>
+                                </ul>
+                            </div>
+                        </div>`
+                }
+            ],
+            '10': [
+                {
+                    id: '10_lap_phuong',
+                    name: 'Hình lập phương',
+                    buildFn: () => buildHinhLapPhuong(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hình Lập Phương (Lớp 10)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Lớp 10 học phần lớn là hình phẳng & Vector phẳng. Tuy nhiên, hình lập phương là bước đệm tuyệt vời để tư duy Vector vào Không gian (ứng dụng trong Vật lý & Lớp 12).</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-cube mr-2"></i>Đặc điểm tuyệt đối</h3>
+                                <p class="text-gray-200 text-sm">6 mặt là hình vuông bằng nhau. 12 cạnh bằng nhau.</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-arrows-alt mr-2"></i>Quy tắc hình hộp (Vector)</h3>
+                                <p class="text-gray-200 text-sm">
+                                    Tổng 3 vector xuất phát từ 1 đỉnh bằng vector đường chéo:<br>
+                                    <span class="math-text highlight">$\vec{AB} + \vec{AD} + \vec{AA'} = \vec{AC'}$</span>
+                                </p>
+                            </div>
+                        </div>`
+                }
+            ],
+            '11': [
+                {
+                    id: '11_chop_sa_vuong_day',
+                    name: 'Chóp SA ⊥ đáy',
+                    buildFn: () => buildChopSAVuongGoc(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Chóp S.ABC (SA ⊥ đáy)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Dạng hình quan trọng nhất Lớp 11 để học về Quan hệ vuông góc, Định lý 3 đường vuông góc.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-ruler-vertical mr-2"></i>Từ SA ⊥ đáy</h3>
+                                <p class="text-gray-200 text-sm">
+                                    <span class="math-text highlight">SA ⊥ (ABC)</span><br>
+                                    => SA vuông góc với mọi đường trong đáy (AB, AC, BC).
+                                </p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-play mr-2"></i>Định lý 3 đường vuông góc</h3>
+                                <p class="text-gray-200 text-sm">
+                                    Nghiên cứu góc vuông tại B: <span class="math-text">BC ⊥ AB</span> và <span class="math-text">BC ⊥ SA</span> <br>
+                                    => <span class="math-text highlight">BC ⊥ (SAB)</span> => <span class="math-text highlight">BC ⊥ SB</span>.
+                                </p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '11_lang_tru_dung',
+                    name: 'Lăng trụ đứng',
+                    buildFn: () => buildLangTruDung(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Lăng trụ đứng</h2>
+                        <p class="text-gray-300 text-sm mb-4">Các cạnh bên vuông góc với 2 mặt đáy. Mặt bên là các hình chữ nhật.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-layer-group mr-2"></i>Quan hệ vuông góc</h3>
+                                <p class="text-gray-200 text-sm">
+                                    <span class="math-text highlight">(ABB'A') ⊥ (ABC)</span><br>
+                                    Mặt bên luôn vuông góc với mặt đáy. Cạnh bên đóng vai trò là đường cao.
+                                </p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-red-400 property-card">
+                                <h3 class="font-bold text-red-400 mb-1"><i class="fas fa-equals mr-2"></i>Hai đáy song song</h3>
+                                <p class="text-gray-200 text-sm">
+                                    Hai đa giác đáy song song và bằng nhau. Dùng để chứng minh mặt phẳng // mặt phẳng.
+                                </p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '11_chop_cut',
+                    name: 'Hình chóp cụt',
+                    buildFn: () => buildChopCut(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hình chóp cụt (đều)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Được tạo ra khi cắt hình chóp đều bằng một mặt phẳng song song với đáy.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-shapes mr-2"></i>Mặt bên</h3>
+                                <p class="text-gray-200 text-sm">Các mặt bên của hình chóp cụt đều là các <span class="math-text highlight">hình thang cân</span> bằng nhau.</p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-purple-400 property-card">
+                                <h3 class="font-bold text-purple-400 mb-1"><i class="fas fa-align-justify mr-2"></i>Hai đáy</h3>
+                                <p class="text-gray-200 text-sm">Hai mặt đáy là hai đa giác đồng dạng và nằm trên hai mặt phẳng song song.</p>
+                            </div>
+                        </div>`
+                }
+            ],
+            '12': [
+                {
+                    id: '12_tu_dien_deu',
+                    name: 'Tứ diện đều (Đa diện)',
+                    buildFn: () => buildTuDienDeu12(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Tứ diện đều (Khối đa diện)</h2>
+                        <p class="text-gray-300 text-sm mb-4">Lớp 12 tập trung tính toán thể tích và bán kính mặt cầu ngoại tiếp khối đa diện đều loại {3;3}.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-calculator mr-2"></i>Công thức giải nhanh</h3>
+                                <ul class="list-disc list-inside text-gray-200 space-y-1 text-sm">
+                                    <li>Đường cao: <span class="math-text">h = a√6 / 3</span></li>
+                                    <li>Thể tích: <span class="math-text highlight">V = a³√2 / 12</span></li>
+                                    <li>BK mặt cầu ngoại tiếp: <span class="math-text">R = a√6 / 4</span></li>
+                                </ul>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '12_hop_chu_nhat',
+                    name: 'Hộp chữ nhật',
+                    buildFn: () => buildHopChuNhat(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hình hộp chữ nhật</h2>
+                        <p class="text-gray-300 text-sm mb-4">Khối đa diện với 3 kích thước: chiều dài, chiều rộng, chiều cao. Thường dùng để gán hệ trục toạ độ.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-red-400 property-card">
+                                <h3 class="font-bold text-red-400 mb-1"><i class="fas fa-draw-polygon mr-2"></i>Đường chéo</h3>
+                                <p class="text-gray-200 text-sm">
+                                    <span class="math-text highlight">d² = a² + b² + c²</span><br>
+                                    Độ dài đường chéo bằng căn bậc hai tổng bình phương 3 kích thước.
+                                </p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-green-400 property-card">
+                                <h3 class="font-bold text-green-400 mb-1"><i class="fas fa-cube mr-2"></i>Thể tích cực trị</h3>
+                                <p class="text-gray-200 text-sm">
+                                    <span class="math-text highlight">V = a.b.c</span><br>
+                                    BK mặt cầu ngoại tiếp: <span class="math-text">R = d / 2</span>.
+                                </p>
+                            </div>
+                        </div>`
+                },
+                {
+                    id: '12_oxyz',
+                    name: 'Hệ trục toạ độ Oxyz',
+                    buildFn: () => buildOxyz(),
+                    html: `
+                        <h2 class="text-xl font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">Hệ trục toạ độ Oxyz</h2>
+                        <p class="text-gray-300 text-sm mb-4">Chương quan trọng nhất Lớp 12: Hình học giải tích trong không gian.</p>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-blue-400 property-card">
+                                <h3 class="font-bold text-blue-400 mb-1"><i class="fas fa-vector-square mr-2"></i>3 Trục Vuông Góc</h3>
+                                <p class="text-gray-200 text-sm">
+                                    Trục hoành <span class="text-red-400 font-bold">Ox</span>, Trục tung <span class="text-green-400 font-bold">Oy</span>, Trục cao <span class="text-blue-400 font-bold">Oz</span> đôi một vuông góc tại gốc O(0;0;0).
+                                </p>
+                            </div>
+                            <div class="bg-gray-700/50 p-3 rounded-lg border-l-4 border-yellow-400 property-card">
+                                <h3 class="font-bold text-yellow-400 mb-1"><i class="fas fa-map-marker-alt mr-2"></i>Toạ độ điểm M(x; y; z)</h3>
+                                <p class="text-gray-200 text-sm">
+                                    Được xác định bằng hình chiếu vuông góc của M lên 3 mặt phẳng toạ độ (Oxy, Oyz, Ozx).
+                                </p>
+                            </div>
+                        </div>`
+                }
+            ]
+        };
+
+        // ==========================================
+        // THREE.JS SETUP & UTILS
+        // ==========================================
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(10, 8, 14);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(10, 20, 10);
+        scene.add(dirLight);
+
+        let currentObjects = [];
+        let labels = []; 
+
+        function clearScene() {
+            currentObjects.forEach(obj => {
+                if (obj.geometry) obj.geometry.dispose();
+                if (obj.material) obj.material.dispose();
+                scene.remove(obj);
+            });
+            currentObjects = [];
+            labels.forEach(l => l.element.remove());
+            labels = [];
+        }
+
+        function addLine(p1, p2, color = 0xffffff, dashed = false) {
+            const material = dashed ? 
+                new THREE.LineDashedMaterial({ color: color, dashSize: 0.2, gapSize: 0.1 }) :
+                new THREE.LineBasicMaterial({ color: color, linewidth: 2 });
+            const geometry = new THREE.BufferGeometry().setFromPoints([p1, p2]);
+            const line = new THREE.Line(geometry, material);
+            if(dashed) line.computeLineDistances();
+            scene.add(line);
+            currentObjects.push(line);
+            return line;
+        }
+
+        // Draw an arrow for axes
+        function addArrow(pStart, pEnd, color = 0xffffff) {
+            const dir = new THREE.Vector3().subVectors(pEnd, pStart);
+            const length = dir.length();
+            dir.normalize();
+            const arrow = new THREE.ArrowHelper(dir, pStart, length, color, 0.5, 0.2);
+            scene.add(arrow);
+            currentObjects.push(arrow);
+        }
+
+        function addFace(points, color = 0x3b82f6, opacity = 0.3) {
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            for (let i = 1; i < points.length - 1; i++) {
+                vertices.push(points[0].x, points[0].y, points[0].z);
+                vertices.push(points[i].x, points[i].y, points[i].z);
+                vertices.push(points[i+1].x, points[i+1].y, points[i+1].z);
+            }
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+            geometry.computeVertexNormals();
+
+            const material = new THREE.MeshPhongMaterial({
+                color: color, transparent: true, opacity: opacity,
+                side: THREE.DoubleSide, shininess: 30
+            });
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+            currentObjects.push(mesh);
+        }
+
+        function addPoint(position, color = 0xffffff, size = 0.12) {
+            const geom = new THREE.SphereGeometry(size, 16, 16);
+            const mat = new THREE.MeshBasicMaterial({ color: color });
+            const sphere = new THREE.Mesh(geom, mat);
+            sphere.position.copy(position);
+            scene.add(sphere);
+            currentObjects.push(sphere);
+        }
+
+        function addLabel(text, position, color = '#ffffff') {
+            const div = document.createElement('div');
+            div.className = 'label-3d';
+            div.innerHTML = text; 
+            div.style.color = color;
+            container.appendChild(div);
+            labels.push({ element: div, position: position.clone() });
+        }
+
+        function addRightAngleMarker(pCenter, p1, p2, size = 0.4) {
+            const v1 = new THREE.Vector3().subVectors(p1, pCenter).normalize().multiplyScalar(size);
+            const v2 = new THREE.Vector3().subVectors(p2, pCenter).normalize().multiplyScalar(size);
+            const m1 = new THREE.Vector3().addVectors(pCenter, v1);
+            const m2 = new THREE.Vector3().addVectors(pCenter, v2);
+            const m3 = new THREE.Vector3().addVectors(m1, v2); 
+            
+            addLine(m1, m3, 0xffd700, false);
+            addLine(m2, m3, 0xffd700, false);
+        }
+
+        function addCircle(center, radius, color = 0xffffff, isDashed = false) {
+            const curve = new THREE.EllipseCurve(center.x, center.z, radius, radius, 0, 2 * Math.PI, false, 0);
+            const points = curve.getPoints(50);
+            const geometry = new THREE.BufferGeometry().setFromPoints(points.map(p => new THREE.Vector3(p.x, center.y, p.y)));
+            const material = isDashed ? 
+                new THREE.LineDashedMaterial({ color: color, dashSize: 0.2, gapSize: 0.1 }) :
+                new THREE.LineBasicMaterial({ color: color, linewidth: 2 });
+            const circle = new THREE.Line(geometry, material);
+            if (isDashed) circle.computeLineDistances();
+            scene.add(circle);
+            currentObjects.push(circle);
+            return circle;
+        }
+
+        // ==========================================
+        // BUILDER FUNCTIONS (MÔ HÌNH TOÁN HỌC)
+        // ==========================================
+
+        function buildChopTamGiacDeu() {
+            clearScene();
+            const a = 6;
+            const B = new THREE.Vector3(0, -2, a / Math.sqrt(3));
+            const C = new THREE.Vector3(a/2, -2, -a / (2 * Math.sqrt(3)));
+            const D = new THREE.Vector3(-a/2, -2, -a / (2 * Math.sqrt(3)));
+            const G = new THREE.Vector3(0, -2, 0);
+            const h = 5; // Tùy chỉnh chiều cao, không nhất thiết là tứ diện đều
+            const A = new THREE.Vector3(0, -2 + h, 0);
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(10, 6, 12);
+
+            addLine(B, C, 0xffffff);
+            addLine(C, D, 0xffffff, true);
+            addLine(D, B, 0xffffff);
+            addFace([B, C, D], 0x4b5563, 0.4);
+
+            addLine(A, G, 0xfacc15, true); 
+            addLine(C, new THREE.Vector3((B.x+D.x)/2, (B.y+D.y)/2, (B.z+D.z)/2), 0x9ca3af, true);
+
+            addLine(A, B, 0x60a5fa);
+            addLine(A, C, 0x60a5fa);
+            addLine(A, D, 0x60a5fa);
+
+            addFace([A, B, C], 0x3b82f6, 0.15);
+            addFace([A, C, D], 0x10b981, 0.15);
+            addFace([A, D, B], 0xef4444, 0.15);
+
+            [A, B, C, D, G].forEach(p => addPoint(p));
+
+            const o = 0.5;
+            addLabel("S", new THREE.Vector3(A.x, A.y + o, A.z), "#60a5fa"); // Đổi tên đỉnh S cho hợp lớp 8
+            addLabel("A", new THREE.Vector3(B.x, B.y - o, B.z + o));
+            addLabel("B", new THREE.Vector3(C.x + o, C.y - o, C.z - o));
+            addLabel("C", new THREE.Vector3(D.x - o, D.y - o, D.z - o));
+            addLabel("G", new THREE.Vector3(G.x, G.y - o, G.z), "#facc15");
+
+            addRightAngleMarker(G, A, B, 0.4);
+        }
+
+        function buildChopTuGiacDeu() {
+            clearScene();
+            const h = 5, a = 3;
+            const I = new THREE.Vector3(0, -2, 0);
+            const A = new THREE.Vector3(-a, -2, -a);
+            const B = new THREE.Vector3(a, -2, -a);
+            const C = new THREE.Vector3(a, -2, a);
+            const D = new THREE.Vector3(-a, -2, a);
+            const S = new THREE.Vector3(0, -2 + h, 0);
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(10, 8, 12);
+
+            addLine(A, B, 0xffffff, true);
+            addLine(A, D, 0xffffff, true);
+            addLine(B, C, 0xffffff);
+            addLine(C, D, 0xffffff);
+            addFace([A, B, C, D], 0x4b5563, 0.4);
+
+            addLine(A, C, 0x9ca3af, true);
+            addLine(B, D, 0x9ca3af, true);
+            addLine(S, I, 0xfacc15, true); 
+
+            addLine(S, A, 0x60a5fa, true);
+            addLine(S, B, 0x60a5fa);
+            addLine(S, C, 0x60a5fa);
+            addLine(S, D, 0x60a5fa);
+
+            addFace([S, A, B], 0x3b82f6, 0.15);
+            addFace([S, B, C], 0x3b82f6, 0.15);
+            addFace([S, C, D], 0x3b82f6, 0.15);
+            addFace([S, D, A], 0x3b82f6, 0.15);
+
+            [A, B, C, D, S, I].forEach(p => addPoint(p));
+            
+            const o = 0.4;
+            addLabel("A", new THREE.Vector3(A.x - o, A.y, A.z - o));
+            addLabel("B", new THREE.Vector3(B.x + o, B.y, B.z - o));
+            addLabel("C", new THREE.Vector3(C.x + o, C.y, C.z + o));
+            addLabel("D", new THREE.Vector3(D.x - o, D.y, D.z + o));
+            addLabel("S", new THREE.Vector3(S.x, S.y + o, S.z), "#60a5fa");
+            addLabel("I", new THREE.Vector3(I.x, I.y - o, I.z), "#facc15");
+
+            addRightAngleMarker(I, A, B, 0.5);
+            addRightAngleMarker(I, S, A, 0.5);
+        }
+
+        function buildHinhTru() {
+            clearScene();
+            const r = 3, h = 6;
+            const O1 = new THREE.Vector3(0, -3, 0); 
+            const O2 = new THREE.Vector3(0, -3 + h, 0); 
+            const A1 = new THREE.Vector3(r, -3, 0);
+            const A2 = new THREE.Vector3(r, -3 + h, 0);
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(10, 6, 14);
+
+            addCircle(O1, r, 0xffffff, false);
+            addCircle(O2, r, 0xffffff, false);
+
+            const geometry = new THREE.CylinderGeometry(r, r, h, 32);
+            geometry.translate(0, h/2 - 3, 0);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x10b981, transparent: true, opacity: 0.2, side: THREE.DoubleSide, shininess: 50
+            });
+            const cylinder = new THREE.Mesh(geometry, material);
+            scene.add(cylinder);
+            currentObjects.push(cylinder);
+
+            addLine(O1, O2, 0xfacc15, true); 
+            addLine(O1, A1, 0xef4444, true); 
+            addLine(O2, A2, 0xef4444, false); 
+            addLine(A1, A2, 0x3b82f6, false); 
+
+            addLine(new THREE.Vector3(-r, -3, 0), new THREE.Vector3(-r, -3 + h, 0), 0xffffff, false);
+            addLine(new THREE.Vector3(r, -3, 0), new THREE.Vector3(r, -3 + h, 0), 0xffffff, false);
+
+            [O1, O2, A1, A2].forEach(p => addPoint(p));
+
+            const o = 0.5;
+            addLabel("O", new THREE.Vector3(O1.x - o, O1.y - o, O1.z));
+            addLabel("O'", new THREE.Vector3(O2.x - o, O2.y + o, O2.z));
+            addLabel("A", new THREE.Vector3(A1.x + o, A1.y, A1.z));
+            addLabel("A'", new THREE.Vector3(A2.x + o, A2.y, A2.z));
+
+            addRightAngleMarker(O1, O2, A1, 0.4);
+        }
+
+        function buildHinhNon() {
+            clearScene();
+            const r = 3, h = 6;
+            const O = new THREE.Vector3(0, -2, 0);
+            const S = new THREE.Vector3(0, -2 + h, 0);
+            const A = new THREE.Vector3(r, -2, 0); 
+
+            controls.target.set(0, 1, 0);
+            camera.position.set(10, 6, 12);
+
+            addCircle(O, r, 0xffffff, false);
+            
+            const geometry = new THREE.ConeGeometry(r, h, 32);
+            geometry.translate(0, h/2, 0); 
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x3b82f6, transparent: true, opacity: 0.2, side: THREE.DoubleSide, shininess: 50
+            });
+            const cone = new THREE.Mesh(geometry, material);
+            cone.position.set(0, -2, 0);
+            scene.add(cone);
+            currentObjects.push(cone);
+
+            addLine(S, O, 0xfacc15, true); 
+            addLine(O, A, 0x10b981, true); 
+            addLine(S, A, 0xef4444, false); 
+
+            addLine(S, new THREE.Vector3(-r, -2, 0), 0xffffff, false);
+            addLine(S, new THREE.Vector3(r, -2, 0), 0xffffff, false);
+
+            [O, S, A].forEach(p => addPoint(p));
+
+            const o = 0.5;
+            addLabel("S", new THREE.Vector3(S.x, S.y + o, S.z));
+            addLabel("O", new THREE.Vector3(O.x - o, O.y - o, O.z));
+            addLabel("A", new THREE.Vector3(A.x + o, A.y, A.z));
+
+            addRightAngleMarker(O, S, A, 0.4);
+        }
+
+        function buildHinhCau() {
+            clearScene();
+            const R = 4;
+            const O = new THREE.Vector3(0, 0, 0);
+            const M = new THREE.Vector3(R * Math.cos(Math.PI/4), R * Math.sin(Math.PI/4), 0); 
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(10, 6, 12);
+
+            addCircle(O, R, 0xffffff, false); 
+            
+            const verticalCurve = new THREE.EllipseCurve(0, 0, R, R, 0, 2 * Math.PI, false, 0);
+            const vPoints = verticalCurve.getPoints(50);
+            const vGeometry = new THREE.BufferGeometry().setFromPoints(vPoints.map(p => new THREE.Vector3(p.x, p.y, 0)));
+            const vLine = new THREE.Line(vGeometry, new THREE.LineBasicMaterial({ color: 0x9ca3af }));
+            scene.add(vLine);
+            currentObjects.push(vLine);
+
+            const geometry = new THREE.SphereGeometry(R, 32, 32);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0xef4444, transparent: true, opacity: 0.15, shininess: 80
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            currentObjects.push(sphere);
+
+            addLine(O, M, 0xfacc15, false);
+            
+            [O, M].forEach(p => addPoint(p));
+
+            const o = 0.5;
+            addLabel("O", new THREE.Vector3(O.x - o, O.y - o, O.z));
+            addLabel("M", new THREE.Vector3(M.x + o, M.y + o, M.z));
+            addLabel("R", new THREE.Vector3(M.x/2 - 0.2, M.y/2 + 0.2, M.z/2), "#facc15");
+        }
+
+        function buildHinhLapPhuong() {
+            clearScene();
+            const a = 4;
+            const h = a;
+            const x = a/2, z = a/2;
+
+            const A = new THREE.Vector3(-x, -h/2, z);
+            const B = new THREE.Vector3(x, -h/2, z);
+            const C = new THREE.Vector3(x, -h/2, -z);
+            const D = new THREE.Vector3(-x, -h/2, -z);
+
+            const A_ = new THREE.Vector3(-x, h/2, z);
+            const B_ = new THREE.Vector3(x, h/2, z);
+            const C_ = new THREE.Vector3(x, h/2, -z);
+            const D_ = new THREE.Vector3(-x, h/2, -z);
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(10, 8, 12);
+
+            // Vector demonstration
+            addLine(A, B, 0x60a5fa, false); // Vector AB
+            addLine(A, D, 0x10b981, true); // Vector AD
+            addLine(A, A_, 0xef4444, false); // Vector AA'
+            addLine(A, C_, 0xfacc15, true); // Vector AC' (Đường chéo)
+
+            // Remaining edges
+            addLine(B, C, 0xffffff, true);
+            addLine(C, D, 0xffffff, true);
+            addLine(A_, B_, 0xffffff);
+            addLine(B_, C_, 0xffffff);
+            addLine(C_, D_, 0xffffff);
+            addLine(D_, A_, 0xffffff);
+            addLine(B, B_, 0xffffff);
+            addLine(C, C_, 0xffffff, true);
+            addLine(D, D_, 0xffffff, true);
+
+            // Add arrows to vectors
+            addArrow(A, B, 0x60a5fa);
+            addArrow(A, D, 0x10b981);
+            addArrow(A, A_, 0xef4444);
+            addArrow(A, C_, 0xfacc15);
+
+            addFace([A, B, B_, A_], 0x3b82f6, 0.1);
+            addFace([A, D, D_, A_], 0xef4444, 0.1);
+
+            [A, B, C, D, A_, B_, C_, D_].forEach(p => addPoint(p));
+
+            const o = 0.5;
+            addLabel("A", new THREE.Vector3(A.x - o, A.y - o, A.z + o));
+            addLabel("B", new THREE.Vector3(B.x + o, B.y - o, B.z + o));
+            addLabel("C", new THREE.Vector3(C.x + o, C.y - o, C.z - o));
+            addLabel("D", new THREE.Vector3(D.x - o, D.y - o, D.z - o));
+            addLabel("A'", new THREE.Vector3(A_.x - o, A_.y + o, A_.z + o));
+            addLabel("B'", new THREE.Vector3(B_.x + o, B_.y + o, B_.z + o));
+            addLabel("C'", new THREE.Vector3(C_.x + o, C_.y + o, C_.z - o), "#facc15");
+            addLabel("D'", new THREE.Vector3(D_.x - o, D_.y + o, D_.z - o));
+        }
+
+        function buildChopSAVuongGoc() {
+            clearScene();
+            const A = new THREE.Vector3(-2, -2, -2);
+            const B = new THREE.Vector3(2, -2, -2);
+            const C = new THREE.Vector3(2, -2, 3);
+            const S = new THREE.Vector3(-2, 4, -2);
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(8, 6, 10);
+
+            addLine(A, B, 0xffffff);
+            addLine(B, C, 0xffffff);
+            addLine(C, A, 0xffffff, true); 
+            addFace([A, B, C], 0x4b5563, 0.4);
+
+            addLine(S, A, 0xfacc15);
+            addLine(S, B, 0x60a5fa);
+            addLine(S, C, 0x60a5fa);
+
+            addFace([S, A, B], 0xef4444, 0.15); 
+            addFace([S, B, C], 0x10b981, 0.15); 
+            addFace([S, A, C], 0x3b82f6, 0.15); 
+
+            [A, B, C, S].forEach(p => addPoint(p));
+            
+            const o = 0.4;
+            addLabel("A", new THREE.Vector3(A.x - o, A.y - o, A.z));
+            addLabel("B", new THREE.Vector3(B.x + o, B.y - o, B.z - o));
+            addLabel("C", new THREE.Vector3(C.x + o, C.y - o, C.z + o));
+            addLabel("S", new THREE.Vector3(S.x, S.y + o, S.z), "#facc15");
+
+            addRightAngleMarker(A, S, B, 0.5);
+            addRightAngleMarker(A, S, C, 0.5);
+            addRightAngleMarker(B, A, C, 0.5);
+            addRightAngleMarker(B, S, C, 0.5); 
+        }
+
+        function buildLangTruDung() {
+            clearScene();
+            const h = 5;
+            const A = new THREE.Vector3(-2, -2, -2);
+            const B = new THREE.Vector3(3, -2, -1);
+            const C = new THREE.Vector3(0, -2, 3);
+            const A_ = new THREE.Vector3(A.x, A.y + h, A.z);
+            const B_ = new THREE.Vector3(B.x, B.y + h, B.z);
+            const C_ = new THREE.Vector3(C.x, C.y + h, C.z);
+
+            controls.target.set(0.5, 0.5, 0);
+            camera.position.set(10, 8, 12);
+
+            addLine(A, B, 0xffffff, true);
+            addLine(A, C, 0xffffff, true);
+            addLine(B, C, 0xffffff);
+            addFace([A, C, B], 0x4b5563, 0.4); 
+
+            addLine(A_, B_, 0xffffff);
+            addLine(A_, C_, 0xffffff);
+            addLine(B_, C_, 0xffffff);
+            addFace([A_, B_, C_], 0x4b5563, 0.4);
+
+            addLine(A, A_, 0xfacc15, true); 
+            addLine(B, B_, 0x60a5fa);
+            addLine(C, C_, 0x60a5fa);
+
+            addFace([A, B, B_, A_], 0x3b82f6, 0.1);
+            addFace([B, C, C_, B_], 0x10b981, 0.1);
+            addFace([C, A, A_, C_], 0xef4444, 0.1);
+
+            [A, B, C, A_, B_, C_].forEach(p => addPoint(p));
+
+            const o = 0.5;
+            addLabel("A", new THREE.Vector3(A.x - o, A.y, A.z - o));
+            addLabel("B", new THREE.Vector3(B.x + o, B.y, B.z));
+            addLabel("C", new THREE.Vector3(C.x, C.y, C.z + o));
+            addLabel("A'", new THREE.Vector3(A_.x - o, A_.y + o, A_.z - o));
+            addLabel("B'", new THREE.Vector3(B_.x + o, B_.y + o, B_.z));
+            addLabel("C'", new THREE.Vector3(C_.x, C_.y + o, C_.z + o));
+
+            addRightAngleMarker(A, A_, B, 0.5);
+            addRightAngleMarker(A, A_, C, 0.5);
+        }
+
+        function buildChopCut() {
+            clearScene();
+            const h = 4, a1 = 4, a2 = 2; // a1 = base, a2 = top
+            const A = new THREE.Vector3(-a1/2, -2, -a1/2);
+            const B = new THREE.Vector3(a1/2, -2, -a1/2);
+            const C = new THREE.Vector3(a1/2, -2, a1/2);
+            const D = new THREE.Vector3(-a1/2, -2, a1/2);
+
+            const A_ = new THREE.Vector3(-a2/2, -2+h, -a2/2);
+            const B_ = new THREE.Vector3(a2/2, -2+h, -a2/2);
+            const C_ = new THREE.Vector3(a2/2, -2+h, a2/2);
+            const D_ = new THREE.Vector3(-a2/2, -2+h, a2/2);
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(10, 8, 12);
+
+            // Base
+            addLine(A, B, 0xffffff, true);
+            addLine(A, D, 0xffffff, true);
+            addLine(B, C, 0xffffff);
+            addLine(C, D, 0xffffff);
+            addFace([A, B, C, D], 0x4b5563, 0.4);
+
+            // Top
+            addLine(A_, B_, 0xffffff);
+            addLine(B_, C_, 0xffffff);
+            addLine(C_, D_, 0xffffff);
+            addLine(D_, A_, 0xffffff);
+            addFace([A_, B_, C_, D_], 0x9ca3af, 0.5);
+
+            // Edges
+            addLine(A, A_, 0x60a5fa, true);
+            addLine(B, B_, 0x60a5fa);
+            addLine(C, C_, 0x60a5fa);
+            addLine(D, D_, 0x60a5fa);
+
+            addFace([A, B, B_, A_], 0x3b82f6, 0.15);
+            addFace([B, C, C_, B_], 0x10b981, 0.15);
+            addFace([C, D, D_, C_], 0xef4444, 0.15);
+            addFace([D, A, A_, D_], 0xfacc15, 0.15);
+
+            [A, B, C, D, A_, B_, C_, D_].forEach(p => addPoint(p));
+
+            const o = 0.4;
+            addLabel("A", new THREE.Vector3(A.x - o, A.y, A.z - o));
+            addLabel("B", new THREE.Vector3(B.x + o, B.y, B.z - o));
+            addLabel("C", new THREE.Vector3(C.x + o, C.y, C.z + o));
+            addLabel("D", new THREE.Vector3(D.x - o, D.y, D.z + o));
+            addLabel("A'", new THREE.Vector3(A_.x - o, A_.y + o, A_.z - o));
+            addLabel("B'", new THREE.Vector3(B_.x + o, B_.y + o, B_.z - o));
+            addLabel("C'", new THREE.Vector3(C_.x + o, C_.y + o, C_.z + o));
+            addLabel("D'", new THREE.Vector3(D_.x - o, D_.y + o, D_.z + o));
+        }
+
+        function buildTuDienDeu12() {
+            // Re-use logic but update specific view for grade 12 (focus on height, circumcenter)
+            clearScene();
+            const a = 6;
+            const B = new THREE.Vector3(0, -2, a / Math.sqrt(3));
+            const C = new THREE.Vector3(a/2, -2, -a / (2 * Math.sqrt(3)));
+            const D = new THREE.Vector3(-a/2, -2, -a / (2 * Math.sqrt(3)));
+            const G = new THREE.Vector3(0, -2, 0);
+            const h = a * Math.sqrt(2/3); // Đúng tỉ lệ tứ diện đều
+            const A = new THREE.Vector3(0, -2 + h, 0);
+
+            // Tâm mặt cầu ngoại tiếp I
+            const R = a * Math.sqrt(6) / 4;
+            const I = new THREE.Vector3(0, -2 + h - R, 0);
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(10, 8, 12);
+
+            addLine(B, C, 0xffffff);
+            addLine(C, D, 0xffffff, true);
+            addLine(D, B, 0xffffff);
+            addFace([B, C, D], 0x4b5563, 0.4);
+
+            addLine(A, G, 0xfacc15, true); 
+
+            addLine(A, B, 0x60a5fa);
+            addLine(A, C, 0x60a5fa);
+            addLine(A, D, 0x60a5fa);
+
+            addFace([A, B, C], 0x3b82f6, 0.15);
+            addFace([A, C, D], 0x10b981, 0.15);
+            addFace([A, D, B], 0xef4444, 0.15);
+
+            [A, B, C, D, G].forEach(p => addPoint(p));
+            addPoint(I, 0xef4444, 0.15); // Highlight circumcenter
+            addLine(I, B, 0xef4444, true);
+
+            const o = 0.5;
+            addLabel("A", new THREE.Vector3(A.x, A.y + o, A.z), "#60a5fa");
+            addLabel("B", new THREE.Vector3(B.x, B.y - o, B.z + o));
+            addLabel("C", new THREE.Vector3(C.x + o, C.y - o, C.z - o));
+            addLabel("D", new THREE.Vector3(D.x - o, D.y - o, D.z - o));
+            addLabel("G", new THREE.Vector3(G.x, G.y - o, G.z), "#facc15");
+            addLabel("I", new THREE.Vector3(I.x + 0.3, I.y, I.z), "#ef4444");
+
+            addRightAngleMarker(G, A, B, 0.4);
+        }
+
+        function buildHopChuNhat() {
+            clearScene();
+            const w = 6, d = 4, h = 4;
+            const x = w/2, y = h/2, z = d/2;
+
+            const A = new THREE.Vector3(-x, -y, -z);
+            const B = new THREE.Vector3(x, -y, -z);
+            const C = new THREE.Vector3(x, -y, z);
+            const D = new THREE.Vector3(-x, -y, z);
+
+            const A_ = new THREE.Vector3(-x, y, -z);
+            const B_ = new THREE.Vector3(x, y, -z);
+            const C_ = new THREE.Vector3(x, y, z);
+            const D_ = new THREE.Vector3(-x, y, z);
+
+            controls.target.set(0, 0, 0);
+            camera.position.set(12, 10, 14);
+
+            addLine(A, B, 0xffffff, true);
+            addLine(A, D, 0xffffff, true);
+            addLine(B, C, 0xffffff);
+            addLine(C, D, 0xffffff);
+
+            addLine(A_, B_, 0xffffff);
+            addLine(B_, C_, 0xffffff);
+            addLine(C_, D_, 0xffffff);
+            addLine(D_, A_, 0xffffff);
+
+            addLine(A, A_, 0xffffff, true);
+            addLine(B, B_, 0xffffff);
+            addLine(C, C_, 0xffffff);
+            addLine(D, D_, 0xffffff);
+
+            addLine(A, C_, 0xfacc15, false); // Diagonal
+
+            addFace([A, D, C, B], 0x4b5563, 0.4); 
+            addFace([A_, B_, C_, D_], 0x4b5563, 0.4);
+            addFace([A, B, B_, A_], 0x3b82f6, 0.1);
+            addFace([B, C, C_, B_], 0x10b981, 0.1);
+            addFace([C, D, D_, C_], 0xef4444, 0.1);
+            addFace([D, A, A_, D_], 0xf59e0b, 0.1);
+
+            [A, B, C, D, A_, B_, C_, D_].forEach(p => addPoint(p));
+
+            const o = 0.5;
+            addLabel("A", new THREE.Vector3(A.x - o, A.y - o, A.z - o));
+            addLabel("B", new THREE.Vector3(B.x + o, B.y - o, B.z - o));
+            addLabel("C", new THREE.Vector3(C.x + o, C.y - o, C.z + o));
+            addLabel("D", new THREE.Vector3(D.x - o, D.y - o, D.z + o));
+            addLabel("A'", new THREE.Vector3(A_.x - o, A_.y + o, A_.z - o));
+            addLabel("B'", new THREE.Vector3(B_.x + o, B_.y + o, B_.z - o));
+            addLabel("C'", new THREE.Vector3(C_.x + o, C_.y + o, C_.z + o), "#facc15"); 
+            addLabel("D'", new THREE.Vector3(D_.x - o, D_.y + o, D_.z + o));
+
+            addRightAngleMarker(A, B, D, 0.5);
+            addRightAngleMarker(A, A_, B, 0.5);
+            addRightAngleMarker(A, A_, D, 0.5);
+        }
+
+        function buildOxyz() {
+            clearScene();
+            const O = new THREE.Vector3(0, 0, 0);
+            
+            // Note: ThreeJS axes are X, Y(up), Z(forward). 
+            // In VN Math, Z is up. Let's map Z -> Y, Y -> Z.
+            const X = new THREE.Vector3(6, 0, 0);
+            const Y = new THREE.Vector3(0, 0, 6);
+            const Z = new THREE.Vector3(0, 6, 0);
+
+            controls.target.set(2, 2, 2);
+            camera.position.set(10, 8, 14);
+
+            // Draw Axes
+            addArrow(O, X, 0xef4444); // Red X
+            addArrow(O, Y, 0x10b981); // Green Y
+            addArrow(O, Z, 0x3b82f6); // Blue Z
+
+            // A point M(x,y,z)
+            const M = new THREE.Vector3(4, 5, 3);
+            const Mx = new THREE.Vector3(4, 0, 0);
+            const My = new THREE.Vector3(0, 0, 3);
+            const Mz = new THREE.Vector3(0, 5, 0);
+            const Mxy = new THREE.Vector3(4, 0, 3);
+
+            // Projections
+            addLine(M, Mxy, 0xfacc15, true);
+            addLine(Mxy, Mx, 0xfacc15, true);
+            addLine(Mxy, My, 0xfacc15, true);
+            addLine(M, new THREE.Vector3(0, 5, 3), 0xfacc15, true);
+            addLine(new THREE.Vector3(0, 5, 3), Mz, 0xfacc15, true);
+            addLine(new THREE.Vector3(0, 5, 3), My, 0xfacc15, true);
+            addLine(M, new THREE.Vector3(4, 5, 0), 0xfacc15, true);
+            addLine(new THREE.Vector3(4, 5, 0), Mx, 0xfacc15, true);
+            addLine(new THREE.Vector3(4, 5, 0), Mz, 0xfacc15, true);
+
+            [O, M, Mx, My, Mz, Mxy].forEach(p => addPoint(p, 0xffffff, 0.08));
+
+            addLabel("O", new THREE.Vector3(-0.3, -0.3, -0.3));
+            addLabel("x", new THREE.Vector3(X.x + 0.5, X.y, X.z), "#ef4444");
+            addLabel("y", new THREE.Vector3(Y.x, Y.y, Y.z + 0.5), "#10b981");
+            addLabel("z", new THREE.Vector3(Z.x, Z.y + 0.5, Z.z), "#3b82f6");
+            addLabel("M (x; y; z)", new THREE.Vector3(M.x + 0.3, M.y + 0.3, M.z), "#facc15");
+
+            // Plane helper
+            addFace([O, Mx, Mxy, My], 0x4b5563, 0.2);
+        }
+
+        // ==========================================
+        // RENDER LOOP & UI LOGIC
+        // ==========================================
+        function updateLabelsPosition() {
+            labels.forEach(label => {
+                const vector = label.position.clone();
+                vector.project(camera);
+                
+                if (vector.z > 1) {
+                    label.element.style.display = 'none';
+                    return;
+                }
+                label.element.style.display = 'block';
+
+                const x = (vector.x * 0.5 + 0.5) * container.clientWidth;
+                const y = (vector.y * -0.5 + 0.5) * container.clientHeight;
+                
+                label.element.style.left = `${x}px`;
+                label.element.style.top = `${y}px`;
+                label.element.style.transform = 'translate(-50%, -50%)';
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+            updateLabelsPosition();
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        // UI Tab Management
+        const gradeTabs = document.querySelectorAll('.grade-tab');
+        const shapeTabsContainer = document.getElementById('shapeTabs');
+        const infoPanel = document.getElementById('infoPanel');
+
+        let currentGrade = '11'; // Default
+        let currentShapeId = null;
+
+        function loadGrade(gradeStr) {
+            currentGrade = gradeStr;
+            
+            // Update Grade Tab styling
+            gradeTabs.forEach(tab => {
+                if(tab.dataset.grade === gradeStr) {
+                    tab.classList.add('active');
+                    tab.classList.remove('text-gray-400');
+                } else {
+                    tab.classList.remove('active');
+                    tab.classList.add('text-gray-400');
+                }
+            });
+
+            // Render Shape buttons for this grade
+            const shapes = appData[gradeStr] || [];
+            shapeTabsContainer.innerHTML = '';
+            
+            shapes.forEach((shape, index) => {
+                const btn = document.createElement('button');
+                btn.className = "shape-tab px-3 py-1.5 rounded font-medium transition-colors border whitespace-nowrap text-sm";
+                btn.textContent = shape.name;
+                btn.onclick = () => loadShape(shape.id);
+                shapeTabsContainer.appendChild(btn);
+            });
+
+            // Auto-load first shape
+            if(shapes.length > 0) {
+                loadShape(shapes[0].id);
+            } else {
+                clearScene();
+                infoPanel.innerHTML = '<p class="text-gray-400 text-center mt-10">Đang cập nhật nội dung...</p>';
+            }
+        }
+
+        function loadShape(shapeId) {
+            currentShapeId = shapeId;
+            const shapes = appData[currentGrade];
+            const shapeObj = shapes.find(s => s.id === shapeId);
+            if(!shapeObj) return;
+
+            // Update button styles
+            const btns = shapeTabsContainer.querySelectorAll('.shape-tab');
+            btns.forEach(btn => {
+                if(btn.textContent === shapeObj.name) {
+                    btn.classList.add('bg-blue-600', 'hover:bg-blue-500', 'border-blue-400', 'shadow-[0_0_8px_rgba(59,130,246,0.5)]', 'text-white');
+                    btn.classList.remove('bg-gray-700', 'hover:bg-gray-600', 'border-gray-600', 'text-gray-300');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'hover:bg-blue-500', 'border-blue-400', 'shadow-[0_0_8px_rgba(59,130,246,0.5)]', 'text-white');
+                    btn.classList.add('bg-gray-700', 'hover:bg-gray-600', 'border-gray-600', 'text-gray-300');
+                }
+            });
+
+            // Update Panel content
+            infoPanel.innerHTML = shapeObj.html;
+
+            // Build 3D Scene
+            shapeObj.buildFn();
+        }
+
+        // Attach event listeners to Grade tabs
+        gradeTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                loadGrade(e.target.dataset.grade);
+            });
+        });
+
+        // Initialize
+        window.onload = () => {
+            loadGrade('11'); // Khởi đầu mở lớp 11
+            animate();
+        };
+
+    </script>
+</body>
+</html>

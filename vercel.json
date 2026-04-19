@@ -121,6 +121,10 @@
       "destination": "/education/tin_hoc_hsg/check_the_basics/:guest.html"
     },
     {
+      "source": "/toan/:guest",
+      "destination": "/toan/hinh-hoc-khong-gian.html?guest=:guest"
+    },
+    {
       "source": "/MorphoLearn",
       "destination": "/English/MorphoLearn.html"
     },
