@@ -671,7 +671,7 @@
         const resp = await fetch('/api/chat', {
           method: 'POST',
           headers,
-          body: JSON.stringify({ userQuery: prompt, systemInstruction })
+          body: JSON.stringify({ userQuery: prompt, systemInstruction, modelName: 'gemini-flash-latest' })
         });
         const j = await resp.json();
         const text = j.text || 'Không thể phân tích lúc này. Vui lòng thử lại.';

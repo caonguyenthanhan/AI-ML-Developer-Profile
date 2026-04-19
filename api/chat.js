@@ -7,6 +7,7 @@ export default async function handler(req, res) {
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
     const userQuery = (body.userQuery || '').trim();
     const systemInstruction = (body.systemInstruction || '').trim();
+    const modelName = (body.modelName || process.env.MODEL_NAME || 'gemini-flash-latest').toString().trim();
 
     const allowedIpsRaw = (process.env.ALLOWED_IPS || '').trim();
     const allowedIps = allowedIpsRaw ? allowedIpsRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
@@ -42,7 +43,6 @@ export default async function handler(req, res) {
       return res.status(501).json({ ok: false, error: 'missing_api_key', text: 'Máy chủ chưa cấu hình API key.' });
     }
 
-    const modelName = process.env.MODEL_NAME || 'gemini-2.0-flash';
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent`;
 
     const payload = {
