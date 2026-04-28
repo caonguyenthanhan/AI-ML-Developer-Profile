@@ -205,6 +205,14 @@
       "destination": "/blog/:post.html"
     },
     {
+      "source": "/blog-interact/:post",
+      "destination": "/blog-interact/:post.html"
+    },
+    {
+      "source": "/blog/:post/interact",
+      "destination": "/blog-interact/:post.html"
+    },
+    {
       "source": "/data/:guest",
       "destination": "/data/:guest"
     }

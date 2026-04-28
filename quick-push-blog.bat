@@ -19,6 +19,7 @@ echo.
 echo Dang stage cac file blog...
 set "POST=%~2"
 git add -A public\blog
+git add -A public\blog-interact
 git add vercel.json
 
 if not "%POST%"=="" (
