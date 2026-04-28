@@ -201,6 +201,10 @@
       "destination": "/image/:guest.png"
     },
     {
+      "source": "/blog/:post",
+      "destination": "/blog/:post.html"
+    },
+    {
       "source": "/data/:guest",
       "destination": "/data/:guest"
     }
