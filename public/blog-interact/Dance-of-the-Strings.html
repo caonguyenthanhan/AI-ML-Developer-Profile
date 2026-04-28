@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vũ Điệu Của Những Sợi Dây - Bài Luận Hiện Sinh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { serif: ['Lora', 'serif'], mono: ['Space Mono', 'monospace'] },
+                    colors: { blood: '#ff003c', darkness: '#050505', ash: '#111' }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* === BASE & UTILS === */
+        body {
+            background-color: #050505; color: #d1d5db;
+            overflow-x: hidden; scroll-behavior: smooth;
+            user-select: none; -webkit-user-select: none;
+            touch-action: pan-y;
+        }
+        .text-glow { text-shadow: 0 0 20px rgba(255, 0, 60, 0.9); }
+        .cursor::after { content: '█'; animation: blink 1s step-end infinite; color: #ff003c; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* === TYPEWRITER OPTIMIZATION === */
+        .typewriter-container { display: grid; }
+        .typewriter-ghost {
+            grid-area: 1 / 1 / 2 / 2;
+            visibility: hidden; 
+            pointer-events: none;
+        }
+        .typewriter-live { grid-area: 1 / 1 / 2 / 2; }
+
+        /* === PLAYER HAND & CARDS === */
+        #player-hand {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 180px;
+            display: flex; justify-content: center; align-items: flex-end;
+            z-index: 50; pointer-events: none; 
+            transform: translateY(100%); 
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @media (min-width: 768px) { #player-hand { height: 250px; } }
+        
+        #player-hand.active { transform: translateY(0); }
+
+        @keyframes float-cards {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .game-card {
+            width: 100px; height: 140px; position: absolute; bottom: 0;
+            cursor: grab; pointer-events: auto; transform-origin: bottom center;
+            perspective: 1500px; touch-action: none; 
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
+            will-change: transform, box-shadow;
+            animation: float-cards 4s infinite ease-in-out;
+        }
+        @media (min-width: 768px) { .game-card { width: 140px; height: 196px; } }
+
+        .game-card[data-id="1"] { animation-delay: 0s; }
+        .game-card[data-id="2"] { animation-delay: 1.5s; }
+        .game-card[data-id="3"] { animation-delay: 3s; }
+
+        /* Vị trí xòe quạt ban đầu (Responsive) */
+        #player-hand .game-card[data-id="1"] { transform: rotate(-15deg) translate(-45px, -20px); z-index: 51; }
+        #player-hand .game-card[data-id="2"] { transform: rotate(0deg) translate(0px, -35px); z-index: 52; }
+        #player-hand .game-card[data-id="3"] { transform: rotate(15deg) translate(45px, -20px); z-index: 53; }
+        
+        @media (min-width: 768px) {
+            #player-hand .game-card[data-id="1"] { transform: rotate(-15deg) translate(-65px, -20px); }
+            #player-hand .game-card[data-id="2"] { transform: rotate(0deg) translate(0px, -40px); }
+            #player-hand .game-card[data-id="3"] { transform: rotate(15deg) translate(65px, -20px); }
+        }
+        
+        #player-hand .game-card:hover { 
+            box-shadow: 0 -15px 40px rgba(255,255,255,0.3); z-index: 60 !important; 
+        }
+
+        /* Trạng thái Kéo */
+        .game-card.dragging {
+            transition: none !important; animation: none !important;
+            z-index: 9999 !important; cursor: grabbing !important;
+            pointer-events: none !important; /* Xuyên thấu để rơi vào dropzone */
+        }
+        .game-card.dragging .card-inner { box-shadow: 0 30px 60px rgba(255,255,255,0.4); }
+
+        /* Lật bài 3D */
+        .card-inner {
+            width: 100%; height: 100%; position: relative;
+            transform-style: preserve-3d; border-radius: 8px;
+            transition: transform 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 15px rgba(255,0,60,0.2);
+        }
+        .game-card.is-revealed .card-inner {
+            transform: rotateY(180deg); box-shadow: 0 0 40px rgba(255,0,60,0.5);
+        }
+        .card-front, .card-back {
+            position: absolute; inset: 0; backface-visibility: hidden;
+            border-radius: 8px; overflow: hidden; border: 2px solid transparent;
+        }
+        .card-front { border-color: #ddd; box-shadow: inset 0 0 20px rgba(255,255,255,0.8); }
+        .card-back { transform: rotateY(180deg); border-color: #ff003c; background: #000; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* === DROP ZONES === */
+        .drop-zone {
+            width: 100%; max-width: 250px; aspect-ratio: 5/7; margin: 0 auto;
+            border: 2px dashed #666; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; position: relative; opacity: 0; 
+            transform: scale(0.9); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 200px; will-change: transform, opacity;
+        }
+        @media (min-width: 768px) { .drop-zone { max-width: 280px; min-height: 250px; } }
+        
+        .drop-zone.active {
+            opacity: 1; transform: scale(1); border-color: #fff;
+            box-shadow: 0 0 25px rgba(255,255,255,0.2); animation: pulse-glow-white 2s infinite;
+        }
+        .drop-zone.drag-over {
+            transform: scale(1.08); border-style: solid; background: rgba(255,255,255,0.05);
+            box-shadow: 0 0 50px rgba(255,255,255,0.6); animation: none;
+        }
+        .drop-zone.filled {
+            border: none; box-shadow: none; animation: none; padding: 0; background: transparent;
+        }
+        @keyframes pulse-glow-white {
+            0%, 100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+            50% { box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+        }
+
+        /* === STORY SECTIONS === */
+        .story-section {
+            display: none; opacity: 0; transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .story-section.visible { display: flex; }
+        .story-section.fade-in { opacity: 1; transform: translateY(0); }
+        .text-content { opacity: 0; }
+        .text-content.revealed { opacity: 1; }
+
+        /* === PUNISH EFFECTS === */
+        .punish-laser {
+            position: fixed; height: 4px; background: #ff003c;
+            box-shadow: 0 0 20px #ff003c, 0 0 40px #ff003c, 0 0 10px #fff inset;
+            transform-origin: left center; z-index: 9999; pointer-events: none;
+            animation: laserZap 0.3s ease-out forwards;
+        }
+        @keyframes laserZap {
+            0%, 40% { transform: scaleX(1); filter: brightness(2); }
+            100% { transform: scaleX(1); opacity: 0; filter: brightness(1); }
+        }
+        .flash-red-screen {
+            position: fixed; inset: 0; background: rgba(255,0,60,0.3);
+            z-index: 9998; pointer-events: none; animation: flashRed 0.4s ease-out;
+        }
+        @keyframes flashRed { 0% { opacity: 1; } 100% { opacity: 0; } }
+        .shake-screen { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-3px, 0, 0); }
+            20%, 80% { transform: translate3d(5px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-10px, 0, 0); }
+            40%, 60% { transform: translate3d(10px, 0, 0); }
+        }
+
+        /* === CLIMAX === */
+        #bg-layer {
+            position: fixed; inset: 0; z-index: 1; pointer-events: none;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 3s ease-in-out; mix-blend-mode: luminosity;
+        }
+        #bg-layer.active { opacity: 0.25; }
+        #strings-layer { position: fixed; inset: 0; z-index: 5; pointer-events: none; overflow: hidden; }
+        .bg-laser-string {
+            position: absolute; height: 2px; width: 150vw; background: #ff003c;
+            box-shadow: 0 0 10px #ff003c; transform-origin: center; opacity: 0;
+            animation: stringStrike 0.8s forwards;
+        }
+        @keyframes stringStrike {
+            0% { transform: scaleX(0); opacity: 0; }
+            50% { opacity: 0.8; filter: brightness(1.5); }
+            100% { transform: scaleX(1); opacity: 0.3; }
+        }
+    </style>
+</head>
+<body class="font-serif antialiased pb-48">
+
+    <div id="bg-layer"></div>
+    <div id="strings-layer"></div>
+
+    <!-- Header -->
+    <header class="py-16 md:py-20 text-center border-b border-gray-900 relative z-10">
+        <div class="max-w-4xl mx-auto px-6">
+            <h3 class="font-mono text-blood tracking-widest uppercase text-xs md:text-sm mb-4 transition-colors duration-1000" id="sys-status">[ HỆ THỐNG BẢO VỆ ĐANG HOẠT ĐỘNG ]</h3>
+            <h1 class="text-4xl md:text-6xl font-black text-white mb-4">Vũ Điệu Của <span class="text-blood text-glow transition-all duration-1000" id="main-title">Sự Hoàn Hảo</span></h1>
+            <h2 class="text-lg md:text-xl text-gray-500 font-mono transition-colors duration-1000" id="sub-title">Một thế giới lý tưởng đang chờ đón bạn</h2>
+            <div class="h-1 w-24 md:w-32 bg-white mx-auto mt-8 transition-colors duration-1000" id="title-line"></div>
+        </div>
+    </header>
+
+    <!-- Intro Text -->
+    <main class="max-w-3xl mx-auto px-6 pt-12 md:pt-16 pb-10 relative z-10 min-h-[150px]">
+        <p class="text-lg md:text-xl text-gray-300 leading-relaxed font-mono" id="intro-text"></p>
+    </main>
+
+    <!-- CONTAINER ĐỂ JS BƠM NỘI DUNG VÀO (Không cần sửa HTML ở đây) -->
+    <section class="max-w-5xl mx-auto px-6 relative z-10 space-y-24 md:space-y-40 pb-20" id="story-flow"></section>
+
+    <!-- Finale -->
+    <section id="finale-section" class="max-w-4xl mx-auto px-6 mt-20 hidden pb-32">
+        <div class="border-2 border-blood bg-[#050505] p-6 md:p-12 shadow-[0_0_50px_rgba(255,0,60,0.6),_inset_0_0_100px_#000] relative z-50">
+            <div class="font-mono text-blood text-xs md:text-sm mb-4 font-bold">> CẢNH BÁO: MÃ ĐỘC XÂM NHẬP HỆ THỐNG</div>
+            <h2 class="text-2xl md:text-5xl font-bold text-white mb-8 font-mono uppercase" id="finale-title"></h2>
+            <div id="finale-text-container" class="text-gray-200 text-base md:text-xl leading-relaxed font-mono cursor min-h-[150px]"></div>
+        </div>
+    </section>
+
+    <!-- Player Hand Container -->
+    <div id="player-hand"></div>
+
+    <!-- MÃ ĐIỀU KHIỂN & CẤU HÌNH -->
+    <script>
+        /* =========================================================
+           THAY ĐỔI TOÀN BỘ NỘI DUNG TẠI ĐÂY (DỄ DÀNG QUẢN LÝ)
+        ========================================================= */
+        const GAME_CONFIG = {
+            // Phần Giới thiệu chạy chữ đầu tiên
+            introText: "Chào mừng đến với thế giới của sự tự do tuyệt đối. Chúng ta tự hào đứng trên đỉnh cao của nền văn minh... NHƯNG ĐỢI ĐÃ... Có gì đó không ổn. Lớp vỏ bọc này... hãy xé toạc nó ra. Lật mở sự thật.",
+            
+            // Hình nền xuất hiện ở phân đoạn Trùm Cuối (Kết luận)
+            climaxBackground: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/4.png",
+            
+            // Dữ liệu 3 Lá Bài (Bao gồm Ảnh, Gợi ý thả, Tiêu đề, Nội dung)
+            cards: [
+                {
+                    id: 1,
+                    // Link ảnh Sự thật (Hiện ra sau khi kéo thả đúng)
+                    truthImage: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/1.png",
+                    // Link ảnh Lớp Vỏ Bọc (Ảo tưởng ban đầu). Nếu để trống "", nó sẽ tự lấy ảnh Sự thật làm mặt trước.
+                    illusionImage: "https://placehold.co/400x560/f0f0f0/ff003c?text=Illusion+01",
+                    
+                    hint: "> KHÁM PHÁ SỰ THẬT 01",
+                    title: "I. Sự Đổ Nát Từ Bên Trong",
+                    paragraphs: [
+                        "Ảo tưởng về \"Sự tự do học thức\" bị phá vỡ. Con người không phải là một khối thống nhất, mà là một sinh thể bị thao túng bởi chính những mảnh ghép tạo nên mình.",
+                        "Những cuốn sách ta đọc, nền giáo dục ta đi qua đôi khi không giải phóng tâm trí, mà lại trở thành cái khuôn đúc sẵn. Mọi \"chuẩn mực\" đều đã được hệ thống lập trình từ trước để ép bạn hành xử theo quỹ đạo."
+                    ]
+                },
+                {
+                    id: 2,
+                    truthImage: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/2.png",
+                    illusionImage: "https://placehold.co/400x560/f0f0f0/ff003c?text=Illusion+02",
+                    hint: "> KHÁM PHÁ SỰ THẬT 02",
+                    title: "II. Vòng Lặp Quyền Lực Chéo",
+                    paragraphs: [
+                        "Mạng lưới \"yêu thương & kết nối\" thực chất là những sợi dây siết cổ chằng chịt. Ngay cả khi đang bị kìm kẹp, tay ta vẫn vô thức vươn ra để giật dây kẻ yếu thế hơn.",
+                        "Đó là vị sếp trút áp lực lên nhân viên. Là sự phán xét đám đông trên mạng xã hội. Một cái giãy giụa của bạn lại vô tình giật đứt sợi dây sinh mệnh của người khác ở trong góc khuất."
+                    ]
+                },
+                {
+                    id: 3,
+                    truthImage: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/3.png",
+                    illusionImage: "https://placehold.co/400x560/f0f0f0/ff003c?text=Illusion+03",
+                    hint: "> KHÁM PHÁ SỰ THẬT 03",
+                    title: "III. \"Con Mắt Đỏ\" Công Nghệ",
+                    paragraphs: [
+                        "Thiên đường công nghệ ngụy trang cho một cỗ máy ăn thịt người. Kẻ thao túng tối thượng: <span class=\"text-white text-glow font-bold\">Trí tuệ Nhân tạo.</span>",
+                        "Nó thấu hiểu sự yếu đuối của bạn rợn người. Bằng cách giam chúng ta vào những \"bong bóng thông tin\" đẹp đẽ, thuật toán từ từ luồn những sợi tơ ghim thẳng vào não bộ. Mọi tương tác của bạn chỉ là dữ liệu để nuôi béo nó."
+                    ]
+                }
+            ],
+
+            // Kết luận cuối cùng
+            finale: {
+                title: "IV. Trớ Trêu Hay Lựa Chọn?",
+                text: "Chính CHÚNG TA – những con rối đang gõ phím mỗi ngày – lại đang nạp dữ liệu, cắm ống truyền sinh lực để nuôi lớn kẻ giật dây mình. Một vòng lặp Möbius hoàn hảo. \n\nNhận thức được điều này có lẽ không giúp tháo gỡ được mọi sợi dây. Nhưng ít nhất, đó là tiếng chuông thức tỉnh.\n\nHãy tự hỏi: HÔM NAY, BẠN ĐANG NẮM SỢI DÂY CỦA AI, VÀ AI ĐANG GIỮ ĐẦU DÂY CỦA BẠN?"
+            }
+        };
+
+        /* =========================================================
+           HỆ THỐNG RENDER TỰ ĐỘNG TỪ GAME_CONFIG
+        ========================================================= */
+        function initializeGame() {
+            // Setup Climax Background
+            document.getElementById('bg-layer').style.backgroundImage = `url('${GAME_CONFIG.climaxBackground}')`;
+            document.getElementById('finale-title').innerHTML = GAME_CONFIG.finale.title;
+
+            const storyFlow = document.getElementById('story-flow');
+            const playerHand = document.getElementById('player-hand');
+
+            GAME_CONFIG.cards.forEach((card, index) => {
+                const isEven = index % 2 !== 0; // Đảo chiều Layout
+                const flexDir = isEven ? 'md:flex-row-reverse' : 'md:flex-row';
+                
+                // Logic ảnh mặt trước (Nếu không điền link ảo tưởng thì lấy link sự thật)
+                const coverImage = (card.illusionImage && card.illusionImage.trim() !== "") ? card.illusionImage : card.truthImage;
+
+                // 1. Tạo Khung Thả Bài & Nội dung (Story Section)
+                let paragraphsHTML = card.paragraphs.map(p => `<p class="mb-4 text-base md:text-lg text-gray-300">${p}</p>`).join('');
+                
+                const sectionHTML = `
+                    <div class="story-section flex-col ${flexDir} items-center gap-8 md:gap-12" id="section-${card.id}">
+                        <div class="w-full md:w-[40%] flex justify-center">
+                            <div class="drop-zone" data-target="${card.id}" id="drop-${card.id}">
+                                <span class="font-mono text-gray-400 text-xs md:text-sm text-center pointer-events-none tracking-widest">${card.hint}</span>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-[60%] text-content typewriter-container" id="text-${card.id}">
+                            <div class="typewriter-ghost">
+                                <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 font-mono uppercase border-l-4 border-blood pl-4">${card.title}</h2>
+                                ${paragraphsHTML}
+                            </div>
+                            <div class="typewriter-live"></div>
+                        </div>
+                    </div>
+                `;
+                storyFlow.insertAdjacentHTML('beforeend', sectionHTML);
+
+                // 2. Tạo Thẻ Bài trên tay (Player Hand)
+                const cardHTML = `
+                    <div class="game-card" data-id="${card.id}" id="card-${card.id}">
+                        <div class="card-inner">
+                            <div class="card-front"><img src="${coverImage}" class="card-img" alt="Card ${card.id}" draggable="false"></div>
+                            <div class="card-back"><img src="${card.truthImage}" class="card-img" alt="Truth ${card.id}" draggable="false"></div>
+                        </div>
+                    </div>
+                `;
+                playerHand.insertAdjacentHTML('beforeend', cardHTML);
+                
+                // Preload Ảnh ngầm vào trình duyệt
+                const preloadTruth = document.createElement('link');
+                preloadTruth.rel = 'preload'; preloadTruth.as = 'image'; preloadTruth.href = card.truthImage;
+                document.head.appendChild(preloadTruth);
+            });
+            
+            const preloadClimax = document.createElement('link');
+            preloadClimax.rel = 'preload'; preloadClimax.as = 'image'; preloadClimax.href = GAME_CONFIG.climaxBackground;
+            document.head.appendChild(preloadClimax);
+
+            // Gắn sự kiện Kéo thả sau khi đã tạo HTML
+            document.querySelectorAll('.game-card').forEach(card => {
+                card.addEventListener('dragstart', e => e.preventDefault());
+                card.addEventListener('pointerdown', startDrag);
+            });
+        }
+
+        /* =======================================
+           STORY FLOW & TYPEWRITER
+        ======================================= */
+        let currentStep = 0;
+        let iIndex = 0;
+        
+        function typeIntro() {
+            const introText = GAME_CONFIG.introText;
+            if (iIndex < introText.length) {
+                let char = introText.charAt(iIndex);
+                if (char === '.' && iIndex > 60) {
+                    document.getElementById('sys-status').innerText = '> LỖI HỆ THỐNG: PHÁT HIỆN SỰ THẬT';
+                    document.getElementById('sys-status').classList.replace('text-blood', 'text-white');
+                    document.getElementById('main-title').innerText = 'Sợi Dây';
+                    document.getElementById('sub-title').innerText = 'Khi Kẻ Giật Rối Lại Bị Giật Rối';
+                    document.getElementById('sub-title').classList.replace('text-gray-500', 'text-blood');
+                    document.getElementById('title-line').classList.replace('bg-white', 'bg-blood');
+                    document.getElementById('title-line').style.boxShadow = '0 0 15px #ff003c';
+                }
+                document.getElementById("intro-text").innerHTML += char;
+                iIndex++;
+                setTimeout(typeIntro, 30);
+            } else {
+                setTimeout(() => activateStep(1), 800);
+            }
+        }
+        
+        // Bắt đầu game khi tải trang xong
+        window.onload = () => {
+            initializeGame();
+            setTimeout(typeIntro, 500);
+        };
+
+        function activateStep(step) {
+            currentStep = step;
+            if (step === 1) document.getElementById('player-hand').classList.add('active');
+
+            if (step <= GAME_CONFIG.cards.length) {
+                const section = document.getElementById(`section-${step}`);
+                section.classList.add('visible');
+                void section.offsetWidth; 
+                section.classList.add('fade-in');
+                
+                document.getElementById(`drop-${step}`).classList.add('active');
+                setTimeout(() => document.getElementById(`drop-${step}`).scrollIntoView({ behavior: 'smooth', block: 'center' }), 400);
+            } else {
+                triggerClimax();
+            }
+        }
+
+        function optimizedTypeWriter(containerId, speed, callback) {
+            const container = document.getElementById(containerId);
+            const ghost = container.querySelector('.typewriter-ghost');
+            const live = container.querySelector('.typewriter-live');
+            
+            container.classList.add('revealed');
+            
+            const walker = document.createTreeWalker(ghost, NodeFilter.SHOW_TEXT, null, false);
+            const textNodes = [];
+            let node;
+            
+            live.innerHTML = ghost.innerHTML;
+            const liveWalker = document.createTreeWalker(live, NodeFilter.SHOW_TEXT, null, false);
+            
+            while((node = walker.nextNode())) {
+                const liveNode = liveWalker.nextNode();
+                if (node.nodeValue.trim() !== '') {
+                    textNodes.push({ node: liveNode, text: node.nodeValue });
+                    liveNode.nodeValue = ''; 
+                }
+            }
+
+            let nIndex = 0, cIndex = 0;
+            function type() {
+                if (nIndex < textNodes.length) {
+                    const currentObj = textNodes[nIndex];
+                    if (cIndex < currentObj.text.length) {
+                        currentObj.node.nodeValue += currentObj.text.charAt(cIndex);
+                        cIndex++;
+                        setTimeout(type, speed + Math.random() * 5); 
+                    } else {
+                        nIndex++; cIndex = 0;
+                        setTimeout(type, speed);
+                    }
+                } else {
+                    if (callback) callback();
+                }
+            }
+            type();
+        }
+
+        /* =======================================
+           DRAG ENGINE
+        ======================================= */
+        let activeCard = null, isDragging = false;
+        let startX, startY;
+
+        function startDrag(e) {
+            if(e.button !== 0 && e.pointerType === 'mouse') return;
+            if (e.target.closest('.drop-zone')) return; 
+            
+            activeCard = e.currentTarget;
+            isDragging = true;
+            activeCard.classList.add('dragging');
+            
+            activeCard.style.position = 'fixed';
+            activeCard.style.left = '0'; activeCard.style.top = '0';
+            activeCard.style.bottom = 'auto'; 
+            
+            updateCardPos(e.clientX, e.clientY);
+            
+            document.addEventListener('pointermove', dragMove);
+            document.addEventListener('pointerup', endDrag);
+            activeCard.setPointerCapture(e.pointerId);
+        }
+
+        function updateCardPos(x, y) {
+            activeCard.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(0.65)`;
+        }
+
+        function dragMove(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            requestAnimationFrame(() => {
+                updateCardPos(e.clientX, e.clientY);
+                
+                const elemBelow = document.elementFromPoint(e.clientX, e.clientY);
+                const dropZone = elemBelow ? elemBelow.closest('.drop-zone.active') : null;
+
+                document.querySelectorAll('.drop-zone.drag-over').forEach(dz => {
+                    if(dz !== dropZone) dz.classList.remove('drag-over');
+                });
+
+                if (dropZone) dropZone.classList.add('drag-over');
+            });
+        }
+
+        function endDrag(e) {
+            if (!isDragging) return;
+            isDragging = false;
+
+            document.removeEventListener('pointermove', dragMove);
+            document.removeEventListener('pointerup', endDrag);
+            activeCard.releasePointerCapture(e.pointerId);
+            activeCard.classList.remove('dragging');
+
+            const targetDropZone = document.querySelector('.drop-zone.drag-over');
+            
+            if (targetDropZone) {
+                targetDropZone.classList.remove('drag-over');
+                if (activeCard.dataset.id === targetDropZone.dataset.target) {
+                    successDrop(activeCard, targetDropZone);
+                } else {
+                    failDrop(activeCard, targetDropZone);
+                }
+            } else {
+                resetCardPosition(activeCard);
+            }
+            activeCard = null;
+        }
+
+        function failDrop(card, dropZone) {
+            document.body.classList.add('shake-screen');
+            const flash = document.createElement('div');
+            flash.className = 'flash-red-screen';
+            document.body.appendChild(flash);
+            
+            setTimeout(() => {
+                document.body.classList.remove('shake-screen');
+                flash.remove();
+            }, 400);
+
+            drawLaser(dropZone, card);
+            resetCardPosition(card);
+        }
+
+        function drawLaser(el1, el2) {
+            const r1 = el1.getBoundingClientRect(), r2 = el2.getBoundingClientRect();
+            const x1 = r1.left + r1.width/2, y1 = r1.top + r1.height/2;
+            const x2 = r2.left + r2.width/2, y2 = r2.top + r2.height/2;
+
+            const length = Math.hypot(x2 - x1, y2 - y1);
+            const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+
+            const laser = document.createElement('div');
+            laser.className = 'punish-laser';
+            laser.style.width = `${length}px`; laser.style.left = `${x1}px`; laser.style.top = `${y1}px`;
+            laser.style.transform = `rotate(${angle}deg)`;
+
+            document.body.appendChild(laser);
+            setTimeout(() => laser.remove(), 300);
+        }
+
+        function resetCardPosition(card) {
+            card.style.position = 'absolute';
+            card.style.left = ''; card.style.top = ''; card.style.bottom = '0';
+            card.style.transform = ''; 
+        }
+
+        function successDrop(card, dropZone) {
+            dropZone.classList.remove('active', 'drag-over');
+            dropZone.classList.add('filled');
+            dropZone.appendChild(card);
+
+            card.style.position = 'absolute'; card.style.inset = '0';
+            card.style.width = '100%'; card.style.height = '100%';
+            card.style.transform = 'none'; card.style.margin = '0';
+            
+            card.removeEventListener('pointerdown', startDrag); 
+            card.style.cursor = 'default';
+
+            setTimeout(() => {
+                card.classList.add('is-revealed'); 
+                setTimeout(() => {
+                    optimizedTypeWriter(`text-${card.dataset.id}`, 6, () => {
+                        setTimeout(() => activateStep(currentStep + 1), 1200); 
+                    });
+                }, 800);
+            }, 100);
+        }
+
+        /* =======================================
+           CLIMAX
+        ======================================= */
+        function triggerClimax() {
+            document.getElementById('player-hand').classList.remove('active');
+            document.getElementById('bg-layer').classList.add('active');
+
+            const stringsLayer = document.getElementById('strings-layer');
+            for(let i = 0; i < 40; i++) {
+                let string = document.createElement('div');
+                string.className = 'bg-laser-string';
+                string.style.top = `${Math.random() * 100}vh`;
+                string.style.left = `-25vw`; 
+                string.style.transform = `rotate(${Math.random() * 360}deg)`;
+                string.style.animationDelay = `${Math.random() * 1.5}s`;
+                stringsLayer.appendChild(string);
+            }
+
+            const finaleSection = document.getElementById('finale-section');
+            setTimeout(() => {
+                finaleSection.classList.remove('hidden');
+                finaleSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                typeFinaleText();
+            }, 2000);
+        }
+
+        let cIndex = 0;
+        function typeFinaleText() {
+            const finaleText = GAME_CONFIG.finale.text;
+            const finaleContainer = document.getElementById('finale-text-container');
+            if (cIndex < finaleText.length) {
+                let char = finaleText.charAt(cIndex);
+                if (char === '\n') {
+                    finaleContainer.innerHTML += '<br>'; 
+                } else if (char === char.toUpperCase() && char.match(/[A-ZÂĐÊÔƠƯ]/i)) {
+                    finaleContainer.innerHTML += `<span class="text-blood font-bold text-glow">${char}</span>`;
+                } else {
+                    finaleContainer.innerHTML += char;
+                }
+                cIndex++;
+                setTimeout(typeFinaleText, 25 + Math.random() * 20); 
+            }
+        }
+    </script>
+</body>
+</html>
