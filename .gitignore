@@ -67,3 +67,11 @@ jspm_packages/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Generated artifacts
+public/Physiognomy/not_ruoi_coords_*.json

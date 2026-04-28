@@ -36,26 +36,37 @@ document.addEventListener('DOMContentLoaded', function() {
                             Liên Kết Nhanh
                         </h3>
                         <div class="space-y-2 text-sm">
-                            <a href="/caonguyenthanhan/personal_info.html" class="block hover:text-indigo-300 transition duration-300">
+                            <a href="/" class="block hover:text-indigo-300 transition duration-300">
+                                <i data-lucide="home" class="w-4 h-4 mr-2 inline"></i>
+                                Trang chủ
+                            </a>
+                            <a href="/caonguyenthanhan" class="block hover:text-indigo-300 transition duration-300">
                                 <i data-lucide="user-circle" class="w-4 h-4 mr-2 inline"></i>
-                                Hồ Sơ CV
+                                Thông tin
                             </a>
-                            <a href="/nlp/nlp.html" class="block hover:text-indigo-300 transition duration-300">
+                            <a href="/ai_welcome" class="block hover:text-indigo-300 transition duration-300">
                                 <i data-lucide="brain" class="w-4 h-4 mr-2 inline"></i>
-                                NLP Projects
+                                AI Welcome
                             </a>
-                            <a href="/genai/genai.html" class="block hover:text-indigo-300 transition duration-300">
+                            <a href="/genai" class="block hover:text-indigo-300 transition duration-300">
                                 <i data-lucide="sparkles" class="w-4 h-4 mr-2 inline"></i>
-                                GenAI Tools
+                                Gen AI
                             </a>
-                            <a href="/extension/extensions.html" class="block hover:text-indigo-300 transition duration-300">
+                            <a href="/gen-cv" class="block hover:text-indigo-300 transition duration-300">
+                                <i data-lucide="file-text" class="w-4 h-4 mr-2 inline"></i>
+                                Gen CV
+                            </a>
+                            <a href="/extensions" class="block hover:text-indigo-300 transition duration-300">
                                 <i data-lucide="puzzle" class="w-4 h-4 mr-2 inline"></i>
                                 Extensions
                             </a>
-                            </a>
-                            <a href="/education/index.html" class="block hover:text-indigo-300 transition duration-300">
-                                <i data-lucide="puzzle" class="w-4 h-4 mr-2 inline"></i>
+                            <a href="/education" class="block hover:text-indigo-300 transition duration-300">
+                                <i data-lucide="graduation-cap" class="w-4 h-4 mr-2 inline"></i>
                                 Education
+                            </a>
+                            <a href="https://www.youtube.com/@tramgatgu" target="_blank" rel="noopener noreferrer" class="block hover:text-indigo-300 transition duration-300">
+                                <i data-lucide="youtube" class="w-4 h-4 mr-2 inline"></i>
+                                YouTube
                             </a>
                         </div>
                     </div>
@@ -67,13 +78,17 @@ document.addEventListener('DOMContentLoaded', function() {
                             Kết Nối
                         </h3>
                         <div class="flex space-x-4">
-                            <a href="https://github.com/caonguyenthanhan" target="_blank" 
+                            <a href="https://github.com/caonguyenthanhan" target="_blank" rel="noopener noreferrer"
                                class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
                                 <i data-lucide="github" class="w-5 h-5"></i>
                             </a>
-                            <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" 
+                            <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" rel="noopener noreferrer"
                                class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
                                 <i data-lucide="facebook" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@tramgatgu" target="_blank" rel="noopener noreferrer"
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
+                                <i data-lucide="youtube" class="w-5 h-5"></i>
                             </a>
                             <a href="mailto:caonguyenthanhan.aaa@gmail.com" 
                                class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">

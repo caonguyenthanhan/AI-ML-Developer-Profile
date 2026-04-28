@@ -5,7 +5,9 @@
   "main": "api/chat.js",
   "scripts": {
     "start": "echo 'No start script needed for static deployment'",
-    "build:css": "tailwindcss -i ./public/assets/css/tailwind.css -o ./public/assets/css/tw.css -m"
+    "build:css": "tailwindcss -i ./public/assets/css/tailwind.css -o ./public/assets/css/tw.css -m",
+    "format": "prettier -w \"api/**/*.js\" \".github/**/*.{yml,yaml}\" \"vercel.json\" \"package.json\" \"postcss.config.js\"",
+    "format:check": "prettier -c \"api/**/*.js\" \".github/**/*.{yml,yaml}\" \"vercel.json\" \"package.json\" \"postcss.config.js\""
   },
   "keywords": [
     "vercel",
@@ -29,6 +31,7 @@
     "@vercel/node": "^3.0.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
+    "prettier": "^3.8.3",
     "tailwindcss": "^3.4.18"
   }
 }

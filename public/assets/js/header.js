@@ -13,9 +13,9 @@ class HeaderComponent {
 
     getHeaderGroupsConfig() {
         return {
-            order: ['pages', 'ai', 'learning', 'tools', 'other'],
+            topLevelTags: ['core', 'profile'],
+            order: ['ai', 'learning', 'tools', 'other'],
             labelById: {
-                pages: 'Trang',
                 ai: 'AI',
                 learning: 'Học tập',
                 tools: 'Công cụ',
@@ -38,10 +38,12 @@ class HeaderComponent {
     init() {
         this.loadLinks().then(links => {
             this.createHeaderFromLinks(links);
+            this.setupNavGroups();
             this.startAvatarRotation();
             this.setActiveNavItem();
         }).catch(() => {
             this.createHeader();
+            this.setupNavGroups();
             this.startAvatarRotation();
             this.setActiveNavItem();
         });
@@ -67,13 +69,37 @@ class HeaderComponent {
         return [];
     }
 
+    getPrimaryTag(link) {
+        return (link && link.tags && link.tags[0]) || '';
+    }
+
+    isTopLevelLink(link) {
+        const config = this.getHeaderGroupsConfig();
+        const primaryTag = this.getPrimaryTag(link);
+        return Array.isArray(config.topLevelTags) && config.topLevelTags.includes(primaryTag);
+    }
+
+    sortTopLevelLinks(links) {
+        const config = this.getHeaderGroupsConfig();
+        const order = Array.isArray(config.topLevelTags) ? config.topLevelTags : [];
+        return [...links].sort((a, b) => {
+            const ta = this.getPrimaryTag(a);
+            const tb = this.getPrimaryTag(b);
+            const ia = order.indexOf(ta);
+            const ib = order.indexOf(tb);
+            if (ia !== ib) return ia - ib;
+            return (a.label || '').localeCompare(b.label || '');
+        });
+    }
+
     groupHeaderLinks(links) {
         const config = this.getHeaderGroupsConfig();
         const buckets = new Map(config.order.map(groupId => [groupId, []]));
 
         for (const link of links) {
             if (!link || !link.showInHeader) continue;
-            const primaryTag = (link.tags && link.tags[0]) || '';
+            if (this.isTopLevelLink(link)) continue;
+            const primaryTag = this.getPrimaryTag(link);
             const groupId = config.tagToGroupId[primaryTag] || 'other';
             const arr = buckets.get(groupId) || [];
             arr.push(link);
@@ -109,6 +135,11 @@ class HeaderComponent {
 
     createHeaderFromLinks(payload) {
         const links = this.normalizeLinksPayload(payload);
+        const topLinks = this.sortTopLevelLinks(links.filter(l => l && l.showInHeader && this.isTopLevelLink(l)));
+        const topHTML = topLinks.map(l => {
+            const p = this.pickPrimaryPath(l.paths);
+            return `<a href="${p}" class="nav-item nav-top-item" data-page="${p}">${l.label}</a>`;
+        }).join('\n');
         const groups = this.groupHeaderLinks(links);
         const groupHTML = groups.map(g => this.renderHeaderGroup(g.groupId, g.links)).join('\n');
         const headerHTML = `
@@ -120,6 +151,7 @@ class HeaderComponent {
                         </a>
                     </div>
                     <nav class="navigation">
+                        ${topHTML}
                         ${groupHTML}
                     </nav>
                 </div>
@@ -130,14 +162,16 @@ class HeaderComponent {
 
     createHeader() {
         const config = this.getHeaderGroupsConfig();
+        const topLinks = [
+            { label: 'Trang chủ', paths: ['/'], showInHeader: true, tags: ['core'] },
+            { label: 'Thông tin', paths: ['/caonguyenthanhan'], showInHeader: true, tags: ['profile'] }
+        ];
+        const topHTML = topLinks.map(l => {
+            const p = this.pickPrimaryPath(l.paths);
+            return `<a href="${p}" class="nav-item nav-top-item" data-page="${p}">${l.label}</a>`;
+        }).join('\n');
+
         const groups = [
-            {
-                groupId: 'pages',
-                links: [
-                    { label: 'Trang chủ', paths: ['/'], showInHeader: true, tags: ['core'] },
-                    { label: 'Thông tin', paths: ['/caonguyenthanhan'], showInHeader: true, tags: ['profile'] }
-                ]
-            },
             {
                 groupId: 'ai',
                 links: [
@@ -189,6 +223,7 @@ class HeaderComponent {
                         </a>
                     </div>
                     <nav class="navigation">
+                        ${topHTML}
                         ${groupHTML}
                     </nav>
                 </div>
@@ -197,6 +232,18 @@ class HeaderComponent {
 
         // Thêm header vào đầu body
         document.body.insertAdjacentHTML('afterbegin', headerHTML);
+    }
+
+    setupNavGroups() {
+        const navGroups = Array.from(document.querySelectorAll('.nav-group'));
+        navGroups.forEach(group => {
+            group.addEventListener('toggle', () => {
+                if (!group.open) return;
+                navGroups.forEach(other => {
+                    if (other !== group) other.open = false;
+                });
+            });
+        });
     }
 
     startAvatarRotation() {
@@ -239,6 +286,10 @@ class HeaderComponent {
                 item.classList.add('active');
                 const group = item.closest('.nav-group');
                 if (group && group.tagName.toLowerCase() === 'details') {
+                    const navGroups = Array.from(document.querySelectorAll('.nav-group'));
+                    navGroups.forEach(other => {
+                        if (other !== group) other.open = false;
+                    });
                     group.open = true;
                 }
             }
@@ -364,11 +415,13 @@ const headerStyles = `
 .nav-group-menu {
     position: absolute;
     top: calc(100% + 0.5rem);
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.98);
     border-radius: 14px;
     padding: 0.5rem;
     min-width: 220px;
+    max-width: calc(100vw - 2rem);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
     display: flex;
     flex-direction: column;
@@ -384,6 +437,8 @@ const headerStyles = `
     font-size: 1rem;
     width: 100%;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nav-group-menu .nav-item:hover {
