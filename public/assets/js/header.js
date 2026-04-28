@@ -11,6 +11,30 @@ class HeaderComponent {
         return '/image/';
     }
 
+    getHeaderGroupsConfig() {
+        return {
+            order: ['pages', 'ai', 'learning', 'tools', 'other'],
+            labelById: {
+                pages: 'Trang',
+                ai: 'AI',
+                learning: 'Học tập',
+                tools: 'Công cụ',
+                other: 'Khác'
+            },
+            tagToGroupId: {
+                core: 'pages',
+                profile: 'pages',
+                ai: 'ai',
+                education: 'learning',
+                'cntt-edu': 'learning',
+                tool: 'tools',
+                event: 'other',
+                mindset: 'other',
+                mystic: 'other'
+            }
+        };
+    }
+
     init() {
         this.loadLinks().then(links => {
             this.createHeaderFromLinks(links);
@@ -26,7 +50,9 @@ class HeaderComponent {
     async loadLinks() {
         const res = await fetch('/data/links.json', { cache: 'no-store' });
         const data = await res.json();
-        return data.links || [];
+        return {
+            links: data.links || []
+        };
     }
 
     pickPrimaryPath(paths) {
@@ -35,21 +61,56 @@ class HeaderComponent {
         return sorted[0];
     }
 
-    createHeaderFromLinks(links) {
-        const order = ['core', 'profile', 'ai', 'education', 'cntt-edu', 'event', 'mindset', 'tool'];
-        const show = links.filter(l => l.showInHeader);
-        const sorted = show.sort((a, b) => {
-            const ta = (a.tags && a.tags[0]) || '';
-            const tb = (b.tags && b.tags[0]) || '';
-            const ia = order.indexOf(ta);
-            const ib = order.indexOf(tb);
-            if (ia !== ib) return ia - ib;
-            return (a.label || '').localeCompare(b.label || '');
-        });
-        const items = sorted.map(l => {
+    normalizeLinksPayload(payload) {
+        if (Array.isArray(payload)) return payload;
+        if (payload && Array.isArray(payload.links)) return payload.links;
+        return [];
+    }
+
+    groupHeaderLinks(links) {
+        const config = this.getHeaderGroupsConfig();
+        const buckets = new Map(config.order.map(groupId => [groupId, []]));
+
+        for (const link of links) {
+            if (!link || !link.showInHeader) continue;
+            const primaryTag = (link.tags && link.tags[0]) || '';
+            const groupId = config.tagToGroupId[primaryTag] || 'other';
+            const arr = buckets.get(groupId) || [];
+            arr.push(link);
+            buckets.set(groupId, arr);
+        }
+
+        const groups = [];
+        for (const groupId of config.order) {
+            const arr = buckets.get(groupId) || [];
+            if (arr.length === 0) continue;
+            const sorted = [...arr].sort((a, b) => (a.label || '').localeCompare(b.label || ''));
+            groups.push({ groupId, links: sorted });
+        }
+        return groups;
+    }
+
+    renderHeaderGroup(groupId, links) {
+        const config = this.getHeaderGroupsConfig();
+        const label = config.labelById[groupId] || groupId;
+        const items = links.map(l => {
             const p = this.pickPrimaryPath(l.paths);
-            return `<a href="${p}" class="nav-item" data-page="${p}">${l.label}</a>`;
+            return `<a href="${p}" class="nav-item nav-sub-item" data-page="${p}">${l.label}</a>`;
         }).join('\n');
+        return `
+            <details class="nav-group" data-group="${groupId}">
+                <summary class="nav-group-summary">${label}</summary>
+                <div class="nav-group-menu">
+                    ${items}
+                </div>
+            </details>
+        `;
+    }
+
+    createHeaderFromLinks(payload) {
+        const links = this.normalizeLinksPayload(payload);
+        const groups = this.groupHeaderLinks(links);
+        const groupHTML = groups.map(g => this.renderHeaderGroup(g.groupId, g.links)).join('\n');
         const headerHTML = `
             <header class="header-container">
                 <div class="header-content">
@@ -59,7 +120,7 @@ class HeaderComponent {
                         </a>
                     </div>
                     <nav class="navigation">
-                        ${items}
+                        ${groupHTML}
                     </nav>
                 </div>
             </header>
@@ -68,6 +129,57 @@ class HeaderComponent {
     }
 
     createHeader() {
+        const config = this.getHeaderGroupsConfig();
+        const groups = [
+            {
+                groupId: 'pages',
+                links: [
+                    { label: 'Trang chủ', paths: ['/'], showInHeader: true, tags: ['core'] },
+                    { label: 'Thông tin', paths: ['/caonguyenthanhan'], showInHeader: true, tags: ['profile'] }
+                ]
+            },
+            {
+                groupId: 'ai',
+                links: [
+                    { label: 'AI Welcome', paths: ['/ai_welcome'], showInHeader: true, tags: ['ai'] },
+                    { label: 'NLP', paths: ['/nlp'], showInHeader: true, tags: ['ai'] },
+                    { label: 'Gen AI', paths: ['/genai'], showInHeader: true, tags: ['ai'] },
+                    { label: 'Prompts', paths: ['/prompts'], showInHeader: true, tags: ['ai'] }
+                ]
+            },
+            {
+                groupId: 'learning',
+                links: [
+                    { label: 'Education', paths: ['/education'], showInHeader: true, tags: ['education'] },
+                    { label: 'MorphoLearn', paths: ['/MorphoLearn'], showInHeader: true, tags: ['education'] },
+                    { label: 'CNTT-edu', paths: ['/attt'], showInHeader: true, tags: ['cntt-edu'] }
+                ]
+            },
+            {
+                groupId: 'tools',
+                links: [
+                    { label: 'Gen CV', paths: ['/gen-cv'], showInHeader: true, tags: ['tool'] },
+                    { label: 'Extensions', paths: ['/extensions'], showInHeader: true, tags: ['tool'] }
+                ]
+            },
+            {
+                groupId: 'other',
+                links: [
+                    { label: 'Graduation', paths: ['/graduation'], showInHeader: true, tags: ['event'] },
+                    { label: 'Tâm lý tích cực', paths: ['/positive-mindset'], showInHeader: true, tags: ['mindset'] }
+                ]
+            }
+        ];
+
+        const groupHTML = config.order
+            .map(groupId => {
+                const group = groups.find(g => g.groupId === groupId);
+                if (!group || !Array.isArray(group.links) || group.links.length === 0) return '';
+                return this.renderHeaderGroup(groupId, group.links);
+            })
+            .filter(Boolean)
+            .join('\n');
+
         const headerHTML = `
             <header class="header-container">
                 <div class="header-content">
@@ -77,19 +189,7 @@ class HeaderComponent {
                         </a>
                     </div>
                     <nav class="navigation">
-                        <a href="/" class="nav-item" data-page="/">Trang chủ</a>
-                        <a href="/caonguyenthanhan" class="nav-item" data-page="/caonguyenthanhan">Thông tin</a>
-                        <a href="/ai_welcome" class="nav-item" data-page="/ai_welcome">AI Welcome</a>
-                        <a href="/education" class="nav-item" data-page="/education">Education</a>
-                        <a href="/attt" class="nav-item" data-page="/attt">CNTT-edu</a>
-                        <a href="/nlp" class="nav-item" data-page="/nlp">NLP</a>
-                        <a href="/genai" class="nav-item" data-page="/genai">Gen AI</a>
-                        <a href="/prompts" class="nav-item" data-page="/prompts">Prompts</a>
-                        <a href="/MorphoLearn" class="nav-item" data-page="/MorphoLearn">MorphoLearn</a>
-                        <a href="/gen-cv" class="nav-item" data-page="/gen-cv">Gen CV</a>
-                        <a href="/graduation" class="nav-item" data-page="/graduation">Graduation</a>
-                        <a href="/positive-mindset" class="nav-item" data-page="/positive-mindset">Tâm lý tích cực</a>
-                        <a href="/extensions" class="nav-item" data-page="/extensions">Extensions</a>
+                        ${groupHTML}
                     </nav>
                 </div>
             </header>
@@ -115,8 +215,9 @@ class HeaderComponent {
         const navItems = document.querySelectorAll('.nav-item');
         
         navItems.forEach(item => {
+            item.classList.remove('active');
             const itemPath = item.getAttribute('data-page');
-            if (currentPath === itemPath || 
+            const isActive = currentPath === itemPath || 
                 (currentPath === '/' && itemPath === '/') ||
                 (currentPath === '/index.html' && itemPath === '/') ||
                 (currentPath.includes('/caonguyenthanhan') && itemPath === '/caonguyenthanhan') ||
@@ -130,11 +231,16 @@ class HeaderComponent {
                 ((currentPath.includes('/gen-cv') || currentPathLower.includes('/cv%20builder') || currentPathLower.includes('/cv builder')) && itemPath === '/gen-cv') ||
                 ((currentPath.includes('/graduation') || currentPath.includes('/grad2025') || currentPath.includes('/graduation2025')) && itemPath === '/graduation') ||
                 ((currentPath.includes('/positive-mindset') || currentPath.includes('/Positive-mindset')) && itemPath === '/positive-mindset') ||
-                (currentPath.includes('/extension/') && itemPath === '/extensions')) {
+                (currentPath.includes('/extension/') && itemPath === '/extensions');
+
+            const starts = currentPath.startsWith(itemPath) && itemPath !== '/';
+
+            if (isActive || starts) {
                 item.classList.add('active');
-            } else {
-                const starts = currentPath.startsWith(itemPath) && itemPath !== '/';
-                if (starts) item.classList.add('active');
+                const group = item.closest('.nav-group');
+                if (group && group.tagName.toLowerCase() === 'details') {
+                    group.open = true;
+                }
             }
         });
     }
@@ -191,9 +297,11 @@ const headerStyles = `
 
 .navigation {
     display: flex;
-    gap: 2rem;
     flex: 1;
+    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    gap: 0.75rem 1rem;
 }
 
 .nav-item {
@@ -205,6 +313,87 @@ const headerStyles = `
     border-radius: 25px;
     transition: all 0.3s ease;
     position: relative;
+}
+
+.nav-group {
+    position: relative;
+}
+
+.nav-group-summary {
+    color: white;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.nav-group-summary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-group[open] > .nav-group-summary {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.nav-group-summary::-webkit-details-marker {
+    display: none;
+}
+
+.nav-group-summary::marker {
+    content: '';
+}
+
+.nav-group-summary::after {
+    content: '▾';
+    margin-left: 0.5rem;
+    font-size: 0.9em;
+    opacity: 0.9;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.nav-group[open] > .nav-group-summary::after {
+    transform: rotate(180deg);
+}
+
+.nav-group-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 14px;
+    padding: 0.5rem;
+    min-width: 220px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    z-index: 1100;
+}
+
+.nav-group-menu .nav-item {
+    color: #2d3748;
+    background: transparent;
+    padding: 0.5rem 0.75rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.nav-group-menu .nav-item:hover {
+    background: rgba(102, 126, 234, 0.12);
+    transform: none;
+}
+
+.nav-group-menu .nav-item.active {
+    background: rgba(102, 126, 234, 0.18);
+    box-shadow: none;
 }
 
 .nav-item:hover {
@@ -224,7 +413,8 @@ const headerStyles = `
     }
     
     .navigation {
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: stretch;
         justify-content: center;
         gap: 1rem;
     }
@@ -232,6 +422,23 @@ const headerStyles = `
     .nav-item {
         font-size: 0.9rem;
         padding: 0.4rem 0.8rem;
+    }
+
+    .nav-group-summary {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+        text-align: center;
+    }
+
+    .nav-group {
+        width: 100%;
+    }
+
+    .nav-group-menu {
+        position: static;
+        min-width: unset;
+        width: 100%;
+        margin-top: 0.5rem;
     }
     
     .avatar-image {
