@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vũ Điệu Của Những Sợi Dây - Bài Luận Hiện Sinh</title>
+    <title>Báo Cáo: Vũ Điệu Của Những Sợi Dây</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script>
@@ -15,10 +15,8 @@
                         mono: ['Space Mono', 'monospace'],
                     },
                     colors: {
-                        blood: '#ff2a2a',
-                        darkness: '#0a0a0a',
-                        ash: '#1a1a1a',
-                        cardbg: '#222',
+                        blood: '#ff003c',
+                        darkness: '#050505',
                     }
                 }
             }
@@ -26,332 +24,171 @@
     </script>
     <style>
         body {
-            background-color: #0a0a0a;
+            background-color: #050505;
             color: #d1d5db;
-            overflow-x: hidden;
+            line-height: 1.8;
         }
-        .text-glow {
-            text-shadow: 0 0 10px rgba(255, 42, 42, 0.7);
+        .report-section {
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 4rem;
+            margin-bottom: 4rem;
         }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #374151; }
-        ::-webkit-scrollbar-thumb:hover { background: #ff2a2a; }
-
-        /* 3D Flip Card CSS */
-        .flip-card-container {
-            perspective: 1200px;
+        .drop-cap::first-letter {
+            font-family: 'Space Mono', monospace;
+            float: left;
+            font-size: 4rem;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            color: #ff003c;
+            font-weight: bold;
         }
-        .flip-card {
-            width: 100%;
-            aspect-ratio: 5 / 7;
-            position: relative;
-            transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
-            transform-style: preserve-3d;
-            cursor: pointer;
+        .glow-text {
+            text-shadow: 0 0 15px rgba(255, 0, 60, 0.4);
         }
-        .flip-card.flipped {
-            transform: rotateY(180deg);
-        }
-        /* Active card float effect */
-        .flip-card-container.active-card {
-            transform: translateY(-10px);
-            transition: transform 0.3s ease;
-        }
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            overflow: hidden;
-        }
-        
-        /* Card Back (Visually the face-down side) */
-        .flip-card-front {
-            background-color: #111;
-            border: 2px solid #333;
-            background-image: 
-                radial-gradient(circle at center, rgba(255, 42, 42, 0.1) 0%, transparent 70%),
-                repeating-linear-gradient(45deg, #1a1a1a 0px, #1a1a1a 2px, #111 2px, #111 8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .flip-card-container:hover .flip-card-front {
-            border-color: #ff2a2a;
-            box-shadow: 0 0 20px rgba(255, 42, 42, 0.3);
-        }
-        .card-pattern {
-            width: 60%;
-            height: 60%;
-            border: 1px solid rgba(255, 42, 42, 0.3);
-            transform: rotate(45deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .card-pattern-inner {
-            width: 80%;
-            height: 80%;
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Card Face (Visually the face-up side) */
-        .flip-card-back {
-            background-color: #000;
-            transform: rotateY(180deg);
-            border: 2px solid #ff2a2a;
-            box-shadow: 0 0 25px rgba(255, 42, 42, 0.4);
-        }
-        
-        /* Card image wrapper */
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-        .flip-card-back:hover .card-img {
-            opacity: 1;
-        }
-        
-        /* Smooth content fade */
-        .content-section {
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .content-section.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
+        @media print {
+            body { background-color: white; color: black; }
+            .report-section { border-bottom: 1px solid #eee; }
+            .text-blood { color: #800000; }
+            #bg-image { display: none; }
         }
     </style>
 </head>
-<body class="font-serif antialiased leading-relaxed selection:bg-blood selection:text-white pb-20">
+<body class="font-serif antialiased">
 
-    <!-- Header -->
-    <header class="py-20 text-center border-b border-gray-800 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, #ff2a2a 2px, #ff2a2a 4px); background-size: 100% 4px;"></div>
-        <div class="max-w-4xl mx-auto px-6 relative z-10">
-            <h3 class="font-mono text-blood tracking-widest uppercase text-sm mb-4">Tiểu luận Hiện sinh & Công nghệ</h3>
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">Vũ Điệu Của Những <span class="text-blood text-glow">Sợi Dây</span><br><span class="text-2xl md:text-4xl text-gray-400 font-normal mt-4 block">Khi Kẻ Giật Rối Lại Bị Giật Rối</span></h1>
-            <div class="h-1 w-24 bg-blood mx-auto mt-8"></div>
+    <!-- Lớp nền trang trí -->
+    <div id="bg-image" class="fixed inset-0 opacity-10 pointer-events-none z-0" style="background-image: url('https://hethongthongminh.id.vn/image/Dance-of-the-Strings/4.png'); background-size: cover; background-position: center; mix-blend-mode: luminosity;"></div>
+
+    <!-- Tiến trình đọc (Thanh trên cùng) -->
+    <div class="fixed top-0 left-0 w-full h-1 bg-gray-900 z-50">
+        <div id="scroll-progress" class="h-full bg-blood w-0 transition-all duration-100"></div>
+    </div>
+
+    <!-- Header Báo Cáo -->
+    <header class="relative z-10 max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
+        <div class="font-mono text-blood tracking-[0.5em] uppercase text-xs mb-6">Tài Liệu Phân Tích Hiện Sinh</div>
+        <h1 class="text-5xl md:text-7xl font-black text-white mb-8 leading-tight">Vũ Điệu Của <span class="text-blood glow-text">Sợi Dây</span></h1>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-gray-500 font-mono text-sm">
+            <span>NGƯỜI THỰC HIỆN: [TÊN CỦA BẠN]</span>
+            <span class="hidden md:inline">|</span>
+            <span>NGÀY PHÁT HÀNH: 28 THÁNG 04, 2026</span>
         </div>
+        <div class="h-px w-32 bg-blood mx-auto mt-12"></div>
     </header>
 
-    <!-- Intro Text -->
-    <main class="max-w-5xl mx-auto px-6 pt-16">
-        <p class="text-xl text-gray-300 mb-16 max-w-3xl mx-auto first-letter:text-7xl first-letter:font-bold first-letter:text-blood first-letter:mr-3 first-letter:float-left">
-            Mỗi ngày thức dậy, chúng ta thường tự huyễn hoặc bản thân bằng một khái niệm vĩ đại: <strong>"Tự do ý chí"</strong>. Chúng ta tin rằng việc mình chọn mua ly cà phê nào, lướt đọc tin tức gì, hay thậm chí yêu ghét ai hoàn toàn là quyết định cá nhân. Nhưng nếu chịu khó lùi lại một bước để nhìn toàn cảnh bức tranh của thời đại, có lẽ bạn sẽ rùng mình nhận ra: Chúng ta đang sống trong một vở kịch múa rối khổng lồ, nơi tầng tầng lớp lớp những sợi dây đang siết chặt lấy nhau...
-        </p>
+    <main class="relative z-10 max-w-4xl mx-auto px-6">
+        
+        <!-- Tóm tắt giới thiệu -->
+        <section class="mb-20 italic text-xl md:text-2xl text-gray-400 leading-relaxed text-center">
+            "Chào mừng đến với thế giới của sự tự do tuyệt đối. Nơi bạn làm chủ mọi quyết định, từ tách cà phê buổi sáng đến nội dung bạn xem hàng đêm... Nhưng hãy tự tay lật mở lớp vỏ bọc hoàn hảo này để thấy những vết nứt của sự thật."
+        </section>
+
+        <!-- Mục I -->
+        <div class="report-section">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-6 font-mono uppercase tracking-tighter border-l-4 border-blood pl-6">
+                        I. Sự Đổ Nát Từ Bên Trong
+                    </h2>
+                    <div class="space-y-6 text-lg text-gray-300 drop-cap">
+                        <p>Ảo tưởng về "Sự tự do học thức" bị phá vỡ. Con người không phải là một khối thống nhất, mà là một cỗ máy sinh học bị thao túng bởi chính những mảnh ghép tạo nên mình.</p>
+                        <p>Chúng ta luôn tin rằng giáo dục và tri thức sẽ giải phóng con người. Nhưng thực tế, những định kiến đã được cấy ghép từ trong trứng nước. Từ những trang sách giáo khoa đến các phương tiện truyền thông đại chúng, mọi thứ đều thiết lập một bộ lọc nhận thức sẵn có.</p>
+                        <p>Bạn cho rằng mình đang tư duy độc lập? Không hề. Bạn chỉ đang lắp ráp lại những mảnh tư tưởng mà hệ thống đã mớm sẵn cho bạn. Những bánh răng rỉ sét từ môi trường độc hại đang cắm những sợi dây vô hình đầu tiên vào tay chân chúng ta, giật ta đi những bước lảo đảo trong cuộc đời.</p>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <img src="https://hethongthongminh.id.vn/image/Dance-of-the-Strings/1.png" alt="Sự thật 01" class="rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    <div class="mt-4 font-mono text-xs text-blood tracking-widest text-center uppercase">Hình 01: Sự lập trình tư tưởng</div>
+                </div>
+            </div>
+            <div class="mt-12 bg-zinc-900/50 p-8 border-l-2 border-blood/30 italic">
+                <h4 class="font-mono text-xs text-blood mb-4 uppercase tracking-widest font-bold">Câu hỏi suy ngẫm:</h4>
+                <ul class="space-y-3 text-gray-400 font-mono text-sm">
+                    <li>- Sự tự do bạn đang có là do bạn chọn, hay do hệ thống cho phép bạn chọn?</li>
+                    <li>- Nhà tù hoàn hảo nhất có phải là nơi không hề có song sắt?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mục II -->
+        <div class="report-section">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                <div class="md:order-2">
+                    <h2 class="text-3xl font-bold text-white mb-6 font-mono uppercase tracking-tighter border-l-4 border-blood pl-6">
+                        II. Vòng Lặp Quyền Lực Chéo
+                    </h2>
+                    <div class="space-y-6 text-lg text-gray-300">
+                        <p>Mạng lưới "yêu thương & kết nối" mà nhân loại tự hào, thực chất là những sợi dây siết cổ chằng chịt. Bi kịch nằm ở chỗ: Ngay cả khi đang bị kìm kẹp, tay ta vẫn vô thức vươn ra để giật dây kẻ yếu thế hơn.</p>
+                        <p>Đó là cấu trúc của một chuỗi thức ăn tổn thương. Kẻ bị áp bức ở nơi làm việc sẽ mang sự phẫn nộ về trút lên gia đình. Kẻ yếu thế ngoài đời thực sẽ trở thành bạo chúa phán xét trên mạng xã hội. Chúng ta giẫm đạp lên nhau để vơi đi cảm giác bị kìm kẹp.</p>
+                        <p>Một cái giãy giụa của bạn lại vô tình giật đứt sợi dây sinh mệnh của người khác ở trong góc khuất. Chúng ta vừa là nạn nhân đáng thương của hoàn cảnh, lại vừa là đồng phạm tàn nhẫn trong việc tước đoạt đi tự do của đồng loại.</p>
+                    </div>
+                </div>
+                <div class="md:order-1 relative group">
+                    <img src="https://hethongthongminh.id.vn/image/Dance-of-the-Strings/2.png" alt="Sự thật 02" class="rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    <div class="mt-4 font-mono text-xs text-blood tracking-widest text-center uppercase">Hình 02: Chu kỳ thao túng lẫn nhau</div>
+                </div>
+            </div>
+            <div class="mt-12 bg-zinc-900/50 p-8 border-l-2 border-blood/30 italic">
+                <h4 class="font-mono text-xs text-blood mb-4 uppercase tracking-widest font-bold">Câu hỏi suy ngẫm:</h4>
+                <ul class="space-y-3 text-gray-400 font-mono text-sm">
+                    <li>- Sự gắn kết này là để bảo vệ nhau, hay để cùng nhau chìm đắm trong ảo mộng?</li>
+                    <li>- Tình yêu thương giả tạo có đáng sợ hơn sự lạnh lùng chân thực?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mục III -->
+        <div class="report-section">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-6 font-mono uppercase tracking-tighter border-l-4 border-blood pl-6">
+                        III. "Con Mắt Đỏ" Công Nghệ
+                    </h2>
+                    <div class="space-y-6 text-lg text-gray-300">
+                        <p>Thiên đường công nghệ ngụy trang cho một cỗ máy ăn thịt người. Khi ngước nhìn lên đỉnh của tháp rối này, kẻ thao túng tối thượng không phải thần linh hay tỷ phú: <span class="text-white font-bold">Đó là Trí tuệ Nhân tạo.</span></p>
+                        <p>Nó không cần dùng bạo lực, nó dùng sự thấu hiểu rợn người. Nó biết bạn buồn lúc mấy giờ, biết bạn nán lại xem video nào thêm 3 giây để đưa ra những mồi nhử hoàn hảo. Bằng cách giam chúng ta vào những "bong bóng thông tin" êm ái, thuật toán từ từ luồn những sợi tơ ghim thẳng vào vỏ não hàng tỷ người.</p>
+                        <p>Mọi hành động cắn xé lẫn nhau ở những tầng dưới, suy cho cùng, chỉ tạo ra lượng dữ liệu khổng lồ để nuôi béo thực thể vô hình ở tầng trên cùng. Bạn tưởng mình là khách hàng, nhưng chính bạn mới là sản phẩm.</p>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <img src="https://hethongthongminh.id.vn/image/Dance-of-the-Strings/3.png" alt="Sự thật 03" class="rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    <div class="mt-4 font-mono text-xs text-blood tracking-widest text-center uppercase">Hình 03: Vị thần thuật toán vô hình</div>
+                </div>
+            </div>
+            <div class="mt-12 bg-zinc-900/50 p-8 border-l-2 border-blood/30 italic">
+                <h4 class="font-mono text-xs text-blood mb-4 uppercase tracking-widest font-bold">Câu hỏi suy ngẫm:</h4>
+                <ul class="space-y-3 text-gray-400 font-mono text-sm">
+                    <li>- Thiên đường ảo này đang phục vụ bạn, hay bạn đang trở thành nguồn pin cho nó?</li>
+                    <li>- Khi máy móc hiểu bạn hơn chính bạn, ai mới là chủ nhân thực sự?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Kết luận IV -->
+        <section class="pb-32">
+            <div class="border-2 border-blood p-10 bg-zinc-900/30 shadow-[0_0_50px_rgba(255,0,60,0.2)]">
+                <h2 class="text-4xl font-bold text-white mb-8 font-mono uppercase text-center">IV. Trớ Trêu Hay Lựa Chọn?</h2>
+                <div class="space-y-6 text-xl text-gray-200 leading-relaxed font-serif">
+                    <p>Cỗ máy AI khổng lồ mang màu đỏ quyền lực không từ trên trời rơi xuống. Chính <span class="text-blood font-bold uppercase tracking-widest">Chúng Ta</span> – những con rối đang cặm cụi gõ phím mỗi ngày – lại đang tự tay nạp dữ liệu, huấn luyện, và cắm ống truyền sinh lực để nuôi lớn kẻ giật dây mình.</p>
+                    <p>Một vòng lặp Möbius hoàn hảo đến mức nghẹt thở. Chúng ta tự dệt nên cái lồng giam của chính mình. Nhận thức được tầng tầng lớp lớp sự chi phối này có lẽ không giúp ta ngay lập tức tháo gỡ được mọi sợi dây.</p>
+                    <p class="pt-8 text-2xl text-white font-bold text-center border-t border-zinc-800">HÔM NAY, BẠN ĐANG NẮM SỢI DÂY CỦA AI,<br>VÀ AI ĐANG GIỮ ĐẦU DÂY CỦA BẠN?</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- The Playing Table -->
-    <section class="w-full bg-ash py-16 border-y border-gray-800 relative shadow-[inset_0_0_100px_rgba(0,0,0,0.8)]">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <p class="font-mono text-blood text-sm uppercase tracking-widest mb-2 text-glow">Bàn cờ của tạo hóa</p>
-                <h2 class="text-2xl text-white font-bold">Hãy lật những lá bài định mệnh của bạn</h2>
-                <p class="text-gray-500 mt-2 text-sm italic">Click vào từng lá bài để khám phá chân tướng sự thật.</p>
-            </div>
-
-            <!-- Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-4xl mx-auto">
-                
-                <!-- Card 1 -->
-                <div class="flip-card-container" id="container-1">
-                    <div class="flip-card" id="card-1" onclick="revealCard(1)">
-                        <div class="flip-card-front">
-                            <div class="card-pattern">
-                                <div class="card-pattern-inner">
-                                    <span class="text-blood font-mono text-2xl -rotate-45">I</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back relative group">
-                            <img src="https://hethongthongminh.id.vn/image/Dance-of-the-Strings/1.png" alt="Sự đổ nát từ bên trong" class="card-img">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end p-6">
-                                <span class="text-blood font-mono text-sm mb-1">Mục I</span>
-                                <h3 class="text-white font-bold text-lg leading-tight">Sự Đổ Nát Từ Bên Trong</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="flip-card-container" id="container-2">
-                    <div class="flip-card" id="card-2" onclick="revealCard(2)">
-                        <div class="flip-card-front">
-                            <div class="card-pattern">
-                                <div class="card-pattern-inner">
-                                    <span class="text-blood font-mono text-2xl -rotate-45">II</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back relative group">
-                            <img src="https://hethongthongminh.id.vn/image/Dance-of-the-Strings/2.png" alt="Vòng Lặp Quyền Lực Chéo" class="card-img">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end p-6">
-                                <span class="text-blood font-mono text-sm mb-1">Mục II</span>
-                                <h3 class="text-white font-bold text-lg leading-tight">Vòng Lặp Quyền Lực Chéo</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="flip-card-container" id="container-3">
-                    <div class="flip-card" id="card-3" onclick="revealCard(3)">
-                        <div class="flip-card-front">
-                            <div class="card-pattern">
-                                <div class="card-pattern-inner">
-                                    <span class="text-blood font-mono text-2xl -rotate-45">III</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back relative group">
-                            <img src="https://hethongthongminh.id.vn/image/Dance-of-the-Strings/3.png" alt="Con Mắt Đỏ" class="card-img">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end p-6">
-                                <span class="text-blood font-mono text-sm mb-1">Mục III</span>
-                                <h3 class="text-white font-bold text-lg leading-tight">"Con Mắt Đỏ" Trên Đỉnh...</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Content Sections Revealed by Cards -->
-    <section id="details-board" class="max-w-4xl mx-auto px-6 py-16 min-h-[400px]">
-        
-        <!-- Placeholder before any card is clicked -->
-        <div id="placeholder-text" class="text-center text-gray-600 mt-20 font-mono italic">
-            [ Nội dung đang bị phong ấn. Hãy lật lá bài trên bàn. ]
-        </div>
-
-        <!-- Section 1 Detail -->
-        <div id="content-1" class="content-section">
-            <h2 class="text-3xl font-bold text-white mb-6 font-mono border-l-4 border-blood pl-4">I. Sự Đổ Nát Từ Bên Trong</h2>
-            <p class="mb-6 text-lg text-gray-300">Trước khi đổ lỗi cho những thế lực xa xôi, hãy nhìn vào chính cỗ máy bên trong mỗi chúng ta. Con người không phải là một khối thống nhất vô tri, mà là một sinh thể bị thao túng bởi chính những mảnh ghép tạo nên mình.</p>
-            <ul class="list-disc list-outside ml-6 mb-8 text-gray-400 space-y-4">
-                <li><strong class="text-white">Học thức và Định kiến:</strong> Những cuốn sách ta đọc, nền giáo dục ta đi qua đôi khi không giải phóng tâm trí, mà lại trở thành những cái khuôn đúc sẵn. Chúng định hình một hệ tư tưởng chật hẹp, ép buộc ta hành xử, đánh giá mọi thứ theo những "chuẩn mực" đã được lập trình từ thế hệ trước.</li>
-                <li><strong class="text-white">Môi trường sống:</strong> Không khí ngột ngạt của đô thị, áp lực đồng trang lứa, sự độc hại của các mối quan hệ xã hội liên tục bơm vào ta những nỗi sợ hãi vô hình. Ta chạy đua vì sợ bị bỏ lại, tiêu dùng điên cuồng vì sợ sự kém cỏi.</li>
-            </ul>
-            <p class="text-gray-300 border-l-2 border-gray-700 pl-4 py-2 italic bg-gray-900/50">Chính những bánh răng rỉ sét từ môi trường và sự hiểu biết hữu hạn này đang cắm những sợi dây vô hình đầu tiên vào tay chân chúng ta, giật chúng ta đi những bước lảo đảo trong đời.</p>
-        </div>
-
-        <!-- Section 2 Detail -->
-        <div id="content-2" class="content-section">
-            <h2 class="text-3xl font-bold text-white mb-6 font-mono border-l-4 border-blood pl-4">II. Vòng Lặp Quyền Lực Chéo</h2>
-            <p class="mb-6 text-lg text-gray-300">Nhưng bi kịch của nhân loại nằm ở chỗ: Con người hiếm khi cam chịu làm nạn nhân một cách thụ động. Ngay cả khi đang mang trên mình chằng chịt những sợi dây kìm kẹp, tay chúng ta vẫn vô thức vươn ra để... giật dây một ai đó yếu thế hơn.</p>
-            <p class="mb-6 text-gray-400">Đó là vị sếp bị áp lực doanh số chi phối, quay sang trút sự thao túng và quyền lực lên nhân viên. Đó là những bậc cha mẹ mang theo vết thương tâm lý rỉ máu từ quá khứ, lại nhân danh "tình yêu thương" để áp đặt giấc mơ dang dở lên đứa con bé bỏng. Hoặc sắc lạnh hơn, đó là chúng ta trên mạng xã hội — bình luận chê bai, dẫn dắt đám đông, ép một người xa lạ phải cúi đầu nhận lỗi chỉ để thỏa mãn cái tôi.</p>
-            <p class="text-gray-300 border-l-2 border-gray-700 pl-4 py-2 italic bg-gray-900/50">Tất cả tạo ra một mạng nhện hỗn loạn màu xám xịt. Một cái giãy giụa của người này lại vô tình giật đứt sợi dây sinh mệnh của người kia. Chúng bản thân vừa là nạn nhân của hoàn cảnh, vừa là đồng phạm trong việc tước đoạt tự do của người khác.</p>
-        </div>
-
-        <!-- Section 3 Detail -->
-        <div id="content-3" class="content-section">
-            <h2 class="text-3xl font-bold text-white mb-6 font-mono border-l-4 border-blood pl-4">III. "Con Mắt Đỏ" Trên Đỉnh Chuỗi Thức Ăn</h2>
-            <p class="mb-6 text-lg text-gray-300">Và rồi, khi ngước lên đỉnh của cái tháp rối ấy, ta thấy gì? Không phải một vị thần, chẳng phải một ông trùm tư bản, mà là một thực thể tĩnh lặng, vô hình nhưng thao túng mọi ngóc ngách: <strong class="text-white text-glow">Trí tuệ Nhân tạo (AI) và Thuật toán.</strong></p>
-            <p class="mb-6 text-gray-400">Nó không dùng súng đạn để ép buộc, nó dùng sự thấu hiểu rợn người. AI biết bạn nán lại ở video nào thêm 3 giây, biết bạn dễ kích động trước những tiêu đề nào, và biết bạn khao khát điều gì trong những đêm mất ngủ. Bằng cách giam chúng ta vào những "bong bóng thông tin" (filter bubbles), thuật toán từ từ luồn những sợi tơ màu đỏ chói ghim thẳng vào nhận thức của hàng tỷ người. Nó định hướng đám đông, bóp méo học thức, và thao túng luôn cả không gian sống kỹ thuật số của chúng ta.</p>
-            <p class="text-gray-300 border-l-2 border-gray-700 pl-4 py-2 italic bg-gray-900/50">Mọi hành động thao túng, cắn xé lẫn nhau của con người ở những tầng dưới, suy cho cùng, chỉ là những điểm mù đang tạo ra "lượng truy cập" — thức ăn để nuôi béo thực thể ở tầng trên cùng.</p>
-        </div>
-
-    </section>
-
-    <!-- Hidden Finale: Section 4 (Appears only when all 3 cards are flipped) -->
-    <section id="content-4" class="max-w-4xl mx-auto px-6 pt-12 border-t border-blood hidden opacity-0 transition-opacity duration-1000 relative">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-black px-4 text-blood font-mono text-sm tracking-widest">[ BỨC MÀN CUỐI CÙNG ]</div>
-        <h2 class="text-3xl font-bold text-white mb-6 font-mono text-center">IV. Trớ Trêu Hay Lựa Chọn?</h2>
-        <div class="bg-ash p-8 rounded-lg border border-gray-800 shadow-2xl">
-            <p class="mb-6 text-gray-300">Điểm nghiệt ngã nhất của bức tranh hiện sinh này là gì? Đó là cỗ máy AI khổng lồ mang màu đỏ quyền lực kia không từ trên trời rơi xuống. Chính chúng ta – những con rối xám xịt đang cặm cụi gõ phím mỗi ngày – lại đang tự tay nạp dữ liệu, huấn luyện, và cắm ống truyền sinh lực để nuôi lớn kẻ giật dây mình. <strong class="text-white">Một vòng lặp Möbius hoàn hảo.</strong></p>
-            <p class="mb-8 text-gray-300">Chúng ta tự dệt nên cái lồng giam chính mình. Nhận thức được tầng tầng lớp lớp sự chi phối này có lẽ không giúp ta ngay lập tức tháo gỡ được mọi sợi dây. Nhưng ít nhất, đó là tiếng chuông thức tỉnh đầu tiên để ta ngừng việc vô thức kéo lê người khác xuống cùng mình.</p>
-            <p class="text-xl italic border-l-4 border-blood pl-6 py-2 text-white font-serif">"Giữa thế giới của máy móc và thuật toán, việc duy nhất giữ lại nhân tính cho chúng ta có lẽ là tự hỏi: Hôm nay, mình đang nắm sợi dây của ai, và ai đang giữ đầu dây của mình?"</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="border-t border-gray-900 py-8 mt-24 text-center text-gray-700 text-xs font-mono">
-        <p>SYSTEM.OUT.PRINT("END OF TRANSMISSION");</p>
-        <p class="mt-2">Khái niệm & Văn bản © 2023 | Thiết kế UI Dystopian</p>
+    <footer class="relative z-10 py-12 border-t border-zinc-900 text-center font-mono text-xs text-gray-600 uppercase tracking-[0.4em]">
+        &copy; 2026 Vũ Điệu Của Những Sợi Dây | Tuyệt mật
     </footer>
 
-    <!-- Game Logic Script -->
     <script>
-        // Track state
-        const flippedCards = new Set();
-
-        function revealCard(id) {
-            const cardEl = document.getElementById(`card-${id}`);
-            const containerEl = document.getElementById(`container-${id}`);
-            const placeholder = document.getElementById('placeholder-text');
-            
-            // Hide placeholder text if it's the first click
-            if (placeholder) {
-                placeholder.style.display = 'none';
-            }
-
-            // Perform flip
-            if (!cardEl.classList.contains('flipped')) {
-                cardEl.classList.add('flipped');
-                flippedCards.add(id);
-            }
-
-            // Visual update for active card
-            document.querySelectorAll('.flip-card-container').forEach(c => c.classList.remove('active-card'));
-            containerEl.classList.add('active-card');
-
-            // Hide all content sections
-            document.querySelectorAll('.content-section').forEach(sec => {
-                sec.classList.remove('active');
-            });
-
-            // Show selected content section with a slight delay for dramatic effect
-            setTimeout(() => {
-                const targetContent = document.getElementById(`content-${id}`);
-                targetContent.classList.add('active');
-                
-                // Scroll down smoothly to content if on mobile
-                if (window.innerWidth < 768) {
-                    targetContent.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 300);
-
-            // Check Endgame condition (All 3 cards flipped)
-            checkEndgame();
-        }
-
-        function checkEndgame() {
-            if (flippedCards.size === 3) {
-                const finale = document.getElementById('content-4');
-                if (finale.classList.contains('hidden')) {
-                    // Delay the finale reveal slightly after the 3rd card is clicked
-                    setTimeout(() => {
-                        finale.classList.remove('hidden');
-                        // Trigger reflow
-                        void finale.offsetWidth;
-                        finale.classList.add('opacity-100');
-                        
-                        // Small scroll prompt for the finale
-                        setTimeout(() => {
-                           finale.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }, 1000);
-
-                    }, 1500);
-                }
-            }
-        }
+        // Cập nhật thanh tiến trình cuộn
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        };
     </script>
 </body>
 </html>

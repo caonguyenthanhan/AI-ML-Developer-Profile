@@ -51,6 +51,14 @@
         
         #player-hand.active { transform: translateY(0); }
 
+        .float-wrapper {
+            width: 100%; height: 100%;
+            position: relative;
+            animation: float-cards 4s infinite ease-in-out;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+        }
+
         @keyframes float-cards {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
@@ -59,18 +67,14 @@
         .game-card {
             width: 100px; height: 140px; position: absolute; bottom: 0;
             cursor: grab; pointer-events: auto; transform-origin: bottom center;
-            perspective: 1500px; touch-action: none; 
+            perspective: 1500px; -webkit-perspective: 1500px;
+            touch-action: none; 
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
             will-change: transform, box-shadow;
-            animation: float-cards 4s infinite ease-in-out;
         }
         @media (min-width: 768px) { .game-card { width: 140px; height: 196px; } }
 
-        .game-card[data-id="1"] { animation-delay: 0s; }
-        .game-card[data-id="2"] { animation-delay: 1.5s; }
-        .game-card[data-id="3"] { animation-delay: 3s; }
-
-        /* Vị trí xòe quạt ban đầu (Responsive) */
+        /* Vị trí xòe quạt ban đầu */
         #player-hand .game-card[data-id="1"] { transform: rotate(-15deg) translate(-45px, -20px); z-index: 51; }
         #player-hand .game-card[data-id="2"] { transform: rotate(0deg) translate(0px, -35px); z-index: 52; }
         #player-hand .game-card[data-id="3"] { transform: rotate(15deg) translate(45px, -20px); z-index: 53; }
@@ -82,60 +86,101 @@
         }
         
         #player-hand .game-card:hover { 
-            box-shadow: 0 -15px 40px rgba(255,255,255,0.3); z-index: 60 !important; 
+            box-shadow: 0 -15px 40px rgba(255,255,255,0.3); z-index: 60 !important; border-radius: 8px;
         }
 
         /* Trạng thái Kéo */
         .game-card.dragging {
-            transition: none !important; animation: none !important;
+            transition: none !important;
             z-index: 9999 !important; cursor: grabbing !important;
-            pointer-events: none !important; /* Xuyên thấu để rơi vào dropzone */
+            pointer-events: none !important; 
+        }
+        .game-card.dragging .float-wrapper {
+            animation: none !important; transform: translateY(0);
         }
         .game-card.dragging .card-inner { box-shadow: 0 30px 60px rgba(255,255,255,0.4); }
 
-        /* Lật bài 3D */
+        .game-card.is-revealed .float-wrapper {
+            animation: none !important; transform: translateY(0);
+        }
+
+        /* === HIỆU ỨNG LẬT BÀI 3D === */
         .card-inner {
             width: 100%; height: 100%; position: relative;
-            transform-style: preserve-3d; border-radius: 8px;
-            transition: transform 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
+            border-radius: 8px;
+            /* Tốc độ lật */
+            transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 2.5s ease-in-out;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 15px rgba(255,0,60,0.2);
         }
+        
         .game-card.is-revealed .card-inner {
-            transform: rotateY(180deg); box-shadow: 0 0 40px rgba(255,0,60,0.5);
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+            box-shadow: -10px 10px 50px rgba(255,0,60,0.6);
         }
+        
         .card-front, .card-back {
-            position: absolute; inset: 0; backface-visibility: hidden;
+            position: absolute; inset: 0; 
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
             border-radius: 8px; overflow: hidden; border: 2px solid transparent;
         }
-        .card-front { border-color: #ddd; box-shadow: inset 0 0 20px rgba(255,255,255,0.8); }
-        .card-back { transform: rotateY(180deg); border-color: #ff003c; background: #000; }
+        .card-front { border-color: #ddd; box-shadow: inset 0 0 20px rgba(255,255,255,0.8); background-color: #f0f0f0; z-index: 2; }
+        .card-back { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); border-color: #ff003c; background: #000; z-index: 1; }
         .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         /* === DROP ZONES === */
         .drop-zone {
             width: 100%; max-width: 250px; aspect-ratio: 5/7; margin: 0 auto;
             border: 2px dashed #666; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            padding: 20px; position: relative; opacity: 0; 
-            transform: scale(0.9); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 200px; will-change: transform, opacity;
+            position: relative; opacity: 0; 
+            transform: scale(0.9) rotate(var(--rot, 0deg)); 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 350px;
+            will-change: transform, opacity;
+            perspective: 1500px; -webkit-perspective: 1500px;
         }
-        @media (min-width: 768px) { .drop-zone { max-width: 280px; min-height: 250px; } }
+        @media (min-width: 768px) { .drop-zone { max-width: 280px; min-height: 390px; } }
         
         .drop-zone.active {
-            opacity: 1; transform: scale(1); border-color: #fff;
+            opacity: 1; border-color: #fff;
+            transform: scale(1) rotate(var(--rot, 0deg));
             box-shadow: 0 0 25px rgba(255,255,255,0.2); animation: pulse-glow-white 2s infinite;
         }
         .drop-zone.drag-over {
-            transform: scale(1.08); border-style: solid; background: rgba(255,255,255,0.05);
+            border-style: solid; background: rgba(255,255,255,0.05);
+            transform: scale(1.08) rotate(var(--rot, 0deg));
             box-shadow: 0 0 50px rgba(255,255,255,0.6); animation: none;
         }
+        
         .drop-zone.filled {
-            border: none; box-shadow: none; animation: none; padding: 0; background: transparent;
+            border: none; box-shadow: none; animation: none; background: transparent;
+            opacity: 1; transform: scale(1) rotate(var(--rot, 0deg));
         }
+
         @keyframes pulse-glow-white {
             0%, 100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
             50% { box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+        }
+
+        /* === QUESTIONS CONTAINER === */
+        .questions-container {
+            opacity: 0; max-height: 0; overflow: hidden;
+            transition: all 1.0s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-20px);
+            width: 100%; margin-top: 0;
+        }
+        .questions-container.active {
+            opacity: 1; max-height: 200px; transform: translateY(0);
+            margin-top: 2.5rem; padding-top: 2rem;
+            border-top: 1px dashed rgba(255,0,60,0.3);
+        }
+
+        .game-card.clickable:hover .card-inner {
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
+        }
+        .game-card.clickable.is-revealed:hover .card-inner {
+            box-shadow: -10px 10px 60px rgba(255, 0, 60, 0.8);
         }
 
         /* === STORY SECTIONS === */
@@ -176,10 +221,10 @@
         #bg-layer {
             position: fixed; inset: 0; z-index: 1; pointer-events: none;
             background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 3s ease-in-out; mix-blend-mode: luminosity;
+            opacity: 0; transition: opacity 2s ease-in-out; mix-blend-mode: luminosity;
         }
         #bg-layer.active { opacity: 0.25; }
-        #strings-layer { position: fixed; inset: 0; z-index: 5; pointer-events: none; overflow: hidden; }
+        #strings-layer { position: fixed; inset: 0; z-index: 5; pointer-events: none; overflow: hidden; transition: opacity 0.5s; }
         .bg-laser-string {
             position: absolute; height: 2px; width: 150vw; background: #ff003c;
             box-shadow: 0 0 10px #ff003c; transform-origin: center; opacity: 0;
@@ -190,6 +235,35 @@
             50% { opacity: 0.8; filter: brightness(1.5); }
             100% { transform: scaleX(1); opacity: 0.3; }
         }
+
+        /* Thêm transition cho màn tắt đèn Restart chậm hơn */
+        #global-header, #global-main, #story-flow, #finale-section {
+            transition: opacity 2.5s ease-in-out; 
+        }
+
+        /* === WHITE DOT IMPLOSION EFFECT === */
+        #white-dot-container {
+            position: fixed; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10000; pointer-events: none;
+        }
+        .white-dot {
+            width: 0px; height: 0px;
+            background-color: white; border-radius: 50%;
+            box-shadow: 0 0 80px 30px rgba(255,255,255,0.9), 0 0 150px 50px rgba(255,255,255,0.5);
+            opacity: 0;
+            transition: all 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .white-dot.expand {
+            width: 300px; height: 300px; /* To dần nhưng không tràn màn hình */
+            opacity: 1;
+        }
+        .white-dot.collapse {
+            width: 0px; height: 0px;
+            opacity: 0;
+            box-shadow: none;
+            transition: all 0.2s ease-in; /* Vụt tắt cực nhanh như rút điện */
+        }
     </style>
 </head>
 <body class="font-serif antialiased pb-48">
@@ -198,7 +272,7 @@
     <div id="strings-layer"></div>
 
     <!-- Header -->
-    <header class="py-16 md:py-20 text-center border-b border-gray-900 relative z-10">
+    <header id="global-header" class="py-16 md:py-20 text-center border-b border-gray-900 relative z-10">
         <div class="max-w-4xl mx-auto px-6">
             <h3 class="font-mono text-blood tracking-widest uppercase text-xs md:text-sm mb-4 transition-colors duration-1000" id="sys-status">[ HỆ THỐNG BẢO VỆ ĐANG HOẠT ĐỘNG ]</h3>
             <h1 class="text-4xl md:text-6xl font-black text-white mb-4">Vũ Điệu Của <span class="text-blood text-glow transition-all duration-1000" id="main-title">Sự Hoàn Hảo</span></h1>
@@ -208,11 +282,11 @@
     </header>
 
     <!-- Intro Text -->
-    <main class="max-w-3xl mx-auto px-6 pt-12 md:pt-16 pb-10 relative z-10 min-h-[150px]">
+    <main id="global-main" class="max-w-3xl mx-auto px-6 pt-12 md:pt-16 pb-10 relative z-10 min-h-[150px]">
         <p class="text-lg md:text-xl text-gray-300 leading-relaxed font-mono" id="intro-text"></p>
     </main>
 
-    <!-- CONTAINER ĐỂ JS BƠM NỘI DUNG VÀO (Không cần sửa HTML ở đây) -->
+    <!-- CONTAINER -->
     <section class="max-w-5xl mx-auto px-6 relative z-10 space-y-24 md:space-y-40 pb-20" id="story-flow"></section>
 
     <!-- Finale -->
@@ -221,6 +295,11 @@
             <div class="font-mono text-blood text-xs md:text-sm mb-4 font-bold">> CẢNH BÁO: MÃ ĐỘC XÂM NHẬP HỆ THỐNG</div>
             <h2 class="text-2xl md:text-5xl font-bold text-white mb-8 font-mono uppercase" id="finale-title"></h2>
             <div id="finale-text-container" class="text-gray-200 text-base md:text-xl leading-relaxed font-mono cursor min-h-[150px]"></div>
+            
+            <!-- NÚT RESTART (Màu xanh lá tương phản) -->
+            <div id="restart-btn-container" class="mt-16 text-center opacity-0 transition-opacity duration-1000 pointer-events-none">
+                <button id="restart-btn" class="px-12 py-4 bg-[#050505] border-2 border-green-500 text-green-500 font-mono font-bold text-xl tracking-widest hover:bg-green-500 hover:text-black transition-all duration-500 shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:shadow-[0_0_40px_rgba(34,197,94,0.8)]" onclick="restartGame()">> EXIT</button>
+            </div>
         </div>
     </section>
 
@@ -230,113 +309,134 @@
     <!-- MÃ ĐIỀU KHIỂN & CẤU HÌNH -->
     <script>
         /* =========================================================
-           THAY ĐỔI TOÀN BỘ NỘI DUNG TẠI ĐÂY (DỄ DÀNG QUẢN LÝ)
+           THAY ĐỔI TOÀN BỘ NỘI DUNG CHI TIẾT TẠI ĐÂY
         ========================================================= */
         const GAME_CONFIG = {
-            // Phần Giới thiệu chạy chữ đầu tiên
-            introText: "Chào mừng đến với thế giới của sự tự do tuyệt đối. Chúng ta tự hào đứng trên đỉnh cao của nền văn minh... NHƯNG ĐỢI ĐÃ... Có gì đó không ổn. Lớp vỏ bọc này... hãy xé toạc nó ra. Lật mở sự thật.",
-            
-            // Hình nền xuất hiện ở phân đoạn Trùm Cuối (Kết luận)
+            imageRotationAngle: 15,
+
+            introText: "Chào mừng đến với thế giới của sự tự do tuyệt đối. Nơi bạn làm chủ mọi quyết định, từ tách cà phê buổi sáng đến nội dung bạn xem hàng đêm. Chúng ta tự hào đứng trên đỉnh cao của nền văn minh, nơi vạn vật đều phục vụ con người... NHƯNG ĐỢI ĐÃ... Có gì đó không ổn. Lớp vỏ bọc hoàn hảo này có những vết nứt. Hãy xé toạc nó ra. Hãy tự tay lật mở sự thật.",
             climaxBackground: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/4.png",
             
-            // Dữ liệu 3 Lá Bài (Bao gồm Ảnh, Gợi ý thả, Tiêu đề, Nội dung)
             cards: [
                 {
                     id: 1,
-                    // Link ảnh Sự thật (Hiện ra sau khi kéo thả đúng)
                     truthImage: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/1.png",
-                    // Link ảnh Lớp Vỏ Bọc (Ảo tưởng ban đầu). Nếu để trống "", nó sẽ tự lấy ảnh Sự thật làm mặt trước.
-                    illusionImage: "https://placehold.co/400x560/f0f0f0/ff003c?text=Illusion+01",
-                    
+                    illusionImage: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/5.png",
                     hint: "> KHÁM PHÁ SỰ THẬT 01",
                     title: "I. Sự Đổ Nát Từ Bên Trong",
                     paragraphs: [
-                        "Ảo tưởng về \"Sự tự do học thức\" bị phá vỡ. Con người không phải là một khối thống nhất, mà là một sinh thể bị thao túng bởi chính những mảnh ghép tạo nên mình.",
-                        "Những cuốn sách ta đọc, nền giáo dục ta đi qua đôi khi không giải phóng tâm trí, mà lại trở thành cái khuôn đúc sẵn. Mọi \"chuẩn mực\" đều đã được hệ thống lập trình từ trước để ép bạn hành xử theo quỹ đạo."
+                        "Ảo tưởng về \"Sự tự do học thức\" bị phá vỡ. Con người không phải là một khối thống nhất, mà là một cỗ máy sinh học bị thao túng bởi chính những mảnh ghép tạo nên mình.",
+                        "Chúng ta luôn tin rằng giáo dục và tri thức sẽ giải phóng con người. Nhưng thực tế, những định kiến đã được cấy ghép từ trong trứng nước. Từ những trang sách giáo khoa đến các phương tiện truyền thông đại chúng, mọi thứ đều thiết lập một bộ lọc nhận thức sẵn có.",
+                        "Bạn cho rằng mình đang tư duy độc lập? Không hề. Bạn chỉ đang lắp ráp lại những mảnh tư tưởng mà hệ thống đã mớm sẵn cho bạn. Những bánh răng rỉ sét từ môi trường độc hại đang cắm những sợi dây vô hình đầu tiên vào tay chân chúng ta, giật ta đi những bước lảo đảo trong cuộc đời."
+                    ],
+                    questions: [
+                        "Sự tự do bạn đang có là do bạn chọn, hay do hệ thống cho phép bạn chọn?",
+                        "Nhà tù hoàn hảo nhất có phải là nơi không hề có song sắt?",
+                        "Liệu những gì bạn tin tưởng có thực sự là của bạn, hay được cấy ghép vào?",
+                        "Bạn đang sống cuộc đời của mình, hay đang diễn một kịch bản viết sẵn?",
+                        "Khi mọi lựa chọn đều được định hướng trước, tự do có còn ý nghĩa gì không?"
                     ]
                 },
                 {
                     id: 2,
                     truthImage: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/2.png",
-                    illusionImage: "https://placehold.co/400x560/f0f0f0/ff003c?text=Illusion+02",
+                    illusionImage: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/6.png",
                     hint: "> KHÁM PHÁ SỰ THẬT 02",
                     title: "II. Vòng Lặp Quyền Lực Chéo",
                     paragraphs: [
-                        "Mạng lưới \"yêu thương & kết nối\" thực chất là những sợi dây siết cổ chằng chịt. Ngay cả khi đang bị kìm kẹp, tay ta vẫn vô thức vươn ra để giật dây kẻ yếu thế hơn.",
-                        "Đó là vị sếp trút áp lực lên nhân viên. Là sự phán xét đám đông trên mạng xã hội. Một cái giãy giụa của bạn lại vô tình giật đứt sợi dây sinh mệnh của người khác ở trong góc khuất."
+                        "Mạng lưới \"yêu thương & kết nối\" mà nhân loại tự hào, thực chất là những sợi dây siết cổ chằng chịt. Bi kịch nằm ở chỗ: Ngay cả khi đang bị kìm kẹp, tay ta vẫn vô thức vươn ra để giật dây kẻ yếu thế hơn.",
+                        "Đó là cấu trúc của một chuỗi thức ăn tổn thương. Kẻ bị áp bức ở nơi làm việc sẽ mang sự phẫn nộ về trút lên gia đình. Kẻ yếu thế ngoài đời thực sẽ trở thành bạo chúa phán xét trên mạng xã hội. Chúng ta giẫm đạp lên nhau để vơi đi cảm giác bị kìm kẹp.",
+                        "Một cái giãy giụa của bạn lại vô tình giật đứt sợi dây sinh mệnh của người khác ở trong góc khuất. Chúng ta vừa là nạn nhân đáng thương của hoàn cảnh, lại vừa là đồng phạm tàn nhẫn trong việc tước đoạt đi tự do của đồng loại."
+                    ],
+                    questions: [
+                        "Sự gắn kết này là để bảo vệ nhau, hay để cùng nhau chìm đắm trong ảo mộng?",
+                        "Tình yêu thương giả tạo có đáng sợ hơn sự lạnh lùng chân thực?",
+                        "Bạn đang yêu thương họ, hay yêu thương cảm giác được họ công nhận?",
+                        "Lòng tốt của bạn có đang là công cụ để thao túng một ai đó?",
+                        "Lớp vỏ bọc của cộng đồng có đang bóp nghẹt tiếng nói thật bên trong bạn?"
                     ]
                 },
                 {
                     id: 3,
                     truthImage: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/3.png",
-                    illusionImage: "https://placehold.co/400x560/f0f0f0/ff003c?text=Illusion+03",
+                    illusionImage: "https://hethongthongminh.id.vn/image/Dance-of-the-Strings/7.png",
                     hint: "> KHÁM PHÁ SỰ THẬT 03",
                     title: "III. \"Con Mắt Đỏ\" Công Nghệ",
                     paragraphs: [
-                        "Thiên đường công nghệ ngụy trang cho một cỗ máy ăn thịt người. Kẻ thao túng tối thượng: <span class=\"text-white text-glow font-bold\">Trí tuệ Nhân tạo.</span>",
-                        "Nó thấu hiểu sự yếu đuối của bạn rợn người. Bằng cách giam chúng ta vào những \"bong bóng thông tin\" đẹp đẽ, thuật toán từ từ luồn những sợi tơ ghim thẳng vào não bộ. Mọi tương tác của bạn chỉ là dữ liệu để nuôi béo nó."
+                        "Thiên đường công nghệ ngụy trang cho một cỗ máy ăn thịt người. Khi ngước nhìn lên đỉnh của tháp rối này, kẻ thao túng tối thượng không phải thần linh hay tỷ phú: <span class=\"text-white text-glow font-bold\">Đó là Trí tuệ Nhân tạo.</span>",
+                        "Nó không cần dùng bạo lực, nó dùng sự thấu hiểu rợn người. Nó biết bạn buồn lúc mấy giờ, biết bạn nán lại xem video nào thêm 3 giây để đưa ra những mồi nhử hoàn hảo. Bằng cách giam chúng ta vào những \"bong bóng thông tin\" êm ái, thuật toán từ từ luồn những sợi tơ ghim thẳng vào vỏ não hàng tỷ người.",
+                        "Mọi hành động cắn xé lẫn nhau ở những tầng dưới, mọi cảm xúc hỉ nộ ái ố của bạn, suy cho cùng, chỉ tạo ra lượng dữ liệu khổng lồ để nuôi béo thực thể vô hình ở tầng trên cùng. Bạn tưởng mình là khách hàng, nhưng chính bạn mới là sản phẩm."
+                    ],
+                    questions: [
+                        "Thiên đường ảo này đang phục vụ bạn, hay bạn đang trở thành nguồn pin cho nó?",
+                        "Sự thoải mái tối thượng này phải đánh đổi bằng bao nhiêu phần nhân tính?",
+                        "Khi máy móc hiểu bạn hơn chính bạn, ai mới là chủ nhân thực sự?",
+                        "Bạn đang điều khiển thuật toán, hay thuật toán đang thuần hóa bạn?",
+                        "Màn hình rực rỡ kia là ô cửa sổ nhìn ra thế giới, hay là tấm gương phản chiếu sự cô đơn?"
                     ]
                 }
             ],
 
-            // Kết luận cuối cùng
             finale: {
                 title: "IV. Trớ Trêu Hay Lựa Chọn?",
-                text: "Chính CHÚNG TA – những con rối đang gõ phím mỗi ngày – lại đang nạp dữ liệu, cắm ống truyền sinh lực để nuôi lớn kẻ giật dây mình. Một vòng lặp Möbius hoàn hảo. \n\nNhận thức được điều này có lẽ không giúp tháo gỡ được mọi sợi dây. Nhưng ít nhất, đó là tiếng chuông thức tỉnh.\n\nHãy tự hỏi: HÔM NAY, BẠN ĐANG NẮM SỢI DÂY CỦA AI, VÀ AI ĐANG GIỮ ĐẦU DÂY CỦA BẠN?"
+                text: "Cỗ máy AI khổng lồ mang màu đỏ quyền lực không từ trên trời rơi xuống. Chính CHÚNG TA – những con rối đang cặm cụi gõ phím mỗi ngày – lại đang tự tay nạp dữ liệu, huấn luyện, và cắm ống truyền sinh lực để nuôi lớn kẻ giật dây mình. Một vòng lặp Möbius hoàn hảo đến mức nghẹt thở. \n\nChúng ta tự dệt nên cái lồng giam của chính mình. Nhận thức được tầng tầng lớp lớp sự chi phối này có lẽ không giúp ta ngay lập tức tháo gỡ được mọi sợi dây. Nhưng ít nhất, đó là tiếng chuông thức tỉnh đầu tiên để ta ngừng việc vô thức kéo lê người khác xuống cùng mình.\n\nGiữa một thế giới đang dần bị máy móc hóa, hãy dừng lại một nhịp và tự hỏi: HÔM NAY, BẠN ĐANG NẮM SỢI DÂY CỦA AI, VÀ AI ĐANG GIỮ ĐẦU DÂY CỦA BẠN?"
             }
         };
 
         /* =========================================================
-           HỆ THỐNG RENDER TỰ ĐỘNG TỪ GAME_CONFIG
+           HỆ THỐNG RENDER
         ========================================================= */
         function initializeGame() {
-            // Setup Climax Background
             document.getElementById('bg-layer').style.backgroundImage = `url('${GAME_CONFIG.climaxBackground}')`;
             document.getElementById('finale-title').innerHTML = GAME_CONFIG.finale.title;
 
             const storyFlow = document.getElementById('story-flow');
             const playerHand = document.getElementById('player-hand');
 
+            // Reset HTML
+            storyFlow.innerHTML = '';
+            playerHand.innerHTML = '';
+
             GAME_CONFIG.cards.forEach((card, index) => {
-                const isEven = index % 2 !== 0; // Đảo chiều Layout
+                const isEven = index % 2 !== 0; 
                 const flexDir = isEven ? 'md:flex-row-reverse' : 'md:flex-row';
-                
-                // Logic ảnh mặt trước (Nếu không điền link ảo tưởng thì lấy link sự thật)
+                const rotAngle = isEven ? GAME_CONFIG.imageRotationAngle : -GAME_CONFIG.imageRotationAngle;
                 const coverImage = (card.illusionImage && card.illusionImage.trim() !== "") ? card.illusionImage : card.truthImage;
 
-                // 1. Tạo Khung Thả Bài & Nội dung (Story Section)
-                let paragraphsHTML = card.paragraphs.map(p => `<p class="mb-4 text-base md:text-lg text-gray-300">${p}</p>`).join('');
+                let paragraphsHTML = card.paragraphs.map(p => `<p class="mb-5 text-base md:text-lg text-gray-300 leading-relaxed">${p}</p>`).join('');
                 
                 const sectionHTML = `
-                    <div class="story-section flex-col ${flexDir} items-center gap-8 md:gap-12" id="section-${card.id}">
-                        <div class="w-full md:w-[40%] flex justify-center">
-                            <div class="drop-zone" data-target="${card.id}" id="drop-${card.id}">
-                                <span class="font-mono text-gray-400 text-xs md:text-sm text-center pointer-events-none tracking-widest">${card.hint}</span>
+                    <div class="story-section w-full flex-col items-center mb-12" id="section-${card.id}">
+                        <div class="flex flex-col ${flexDir} items-center gap-8 md:gap-12 w-full">
+                            <div class="w-full md:w-[40%] flex flex-col items-center justify-center">
+                                <div class="font-mono text-blood text-sm md:text-base font-bold tracking-widest mb-6 uppercase text-glow opacity-transition">${card.hint}</div>
+                                <div class="drop-zone opacity-transition" data-target="${card.id}" id="drop-${card.id}" style="--rot: ${rotAngle}deg;"></div>
+                            </div>
+                            <div class="w-full md:w-[60%] text-content typewriter-container opacity-transition" id="text-${card.id}">
+                                <div class="typewriter-ghost">
+                                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 font-mono uppercase border-l-4 border-blood pl-4">${card.title}</h2>
+                                    ${paragraphsHTML}
+                                </div>
+                                <div class="typewriter-live"></div>
                             </div>
                         </div>
-                        <div class="w-full md:w-[60%] text-content typewriter-container" id="text-${card.id}">
-                            <div class="typewriter-ghost">
-                                <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 font-mono uppercase border-l-4 border-blood pl-4">${card.title}</h2>
-                                ${paragraphsHTML}
-                            </div>
-                            <div class="typewriter-live"></div>
-                        </div>
+                        <div class="questions-container w-full text-center opacity-transition" id="questions-${card.id}"></div>
                     </div>
                 `;
                 storyFlow.insertAdjacentHTML('beforeend', sectionHTML);
 
-                // 2. Tạo Thẻ Bài trên tay (Player Hand)
                 const cardHTML = `
                     <div class="game-card" data-id="${card.id}" id="card-${card.id}">
-                        <div class="card-inner">
-                            <div class="card-front"><img src="${coverImage}" class="card-img" alt="Card ${card.id}" draggable="false"></div>
-                            <div class="card-back"><img src="${card.truthImage}" class="card-img" alt="Truth ${card.id}" draggable="false"></div>
+                        <div class="float-wrapper" style="animation-delay: ${(card.id - 1) * 1.5}s">
+                            <div class="card-inner">
+                                <div class="card-front"><img src="${coverImage}" class="card-img" alt="Card ${card.id}" draggable="false"></div>
+                                <div class="card-back"><img src="${card.truthImage}" class="card-img" alt="Truth ${card.id}" draggable="false"></div>
+                            </div>
                         </div>
                     </div>
                 `;
                 playerHand.insertAdjacentHTML('beforeend', cardHTML);
                 
-                // Preload Ảnh ngầm vào trình duyệt
                 const preloadTruth = document.createElement('link');
                 preloadTruth.rel = 'preload'; preloadTruth.as = 'image'; preloadTruth.href = card.truthImage;
                 document.head.appendChild(preloadTruth);
@@ -346,7 +446,6 @@
             preloadClimax.rel = 'preload'; preloadClimax.as = 'image'; preloadClimax.href = GAME_CONFIG.climaxBackground;
             document.head.appendChild(preloadClimax);
 
-            // Gắn sự kiện Kéo thả sau khi đã tạo HTML
             document.querySelectorAll('.game-card').forEach(card => {
                 card.addEventListener('dragstart', e => e.preventDefault());
                 card.addEventListener('pointerdown', startDrag);
@@ -358,12 +457,13 @@
         ======================================= */
         let currentStep = 0;
         let iIndex = 0;
+        let isClimaxCompleted = false; 
         
         function typeIntro() {
             const introText = GAME_CONFIG.introText;
             if (iIndex < introText.length) {
                 let char = introText.charAt(iIndex);
-                if (char === '.' && iIndex > 60) {
+                if (char === '.' && iIndex > 100) {
                     document.getElementById('sys-status').innerText = '> LỖI HỆ THỐNG: PHÁT HIỆN SỰ THẬT';
                     document.getElementById('sys-status').classList.replace('text-blood', 'text-white');
                     document.getElementById('main-title').innerText = 'Sợi Dây';
@@ -374,13 +474,12 @@
                 }
                 document.getElementById("intro-text").innerHTML += char;
                 iIndex++;
-                setTimeout(typeIntro, 30);
+                setTimeout(typeIntro, 25);
             } else {
                 setTimeout(() => activateStep(1), 800);
             }
         }
         
-        // Bắt đầu game khi tải trang xong
         window.onload = () => {
             initializeGame();
             setTimeout(typeIntro, 500);
@@ -553,30 +652,62 @@
             card.style.transform = ''; 
         }
 
+        function toggleCard(id) {
+            isGlobalTruth = null; 
+
+            const card = document.getElementById(`card-${id}`);
+            const questions = document.getElementById(`questions-${id}`);
+            
+            if (card.classList.contains('is-revealed')) {
+                card.classList.remove('is-revealed');
+                const cardConfig = GAME_CONFIG.cards.find(c => c.id == id);
+                if (cardConfig && cardConfig.questions && cardConfig.questions.length > 0) {
+                    const randomQ = cardConfig.questions[Math.floor(Math.random() * cardConfig.questions.length)];
+                    questions.innerHTML = `<p class="text-lg md:text-2xl text-gray-300 italic font-mono text-glow transition-all duration-500">? ${randomQ}</p>`;
+                }
+                questions.classList.add('active');
+            } else {
+                card.classList.add('is-revealed');
+                questions.classList.remove('active');
+            }
+        }
+
         function successDrop(card, dropZone) {
             dropZone.classList.remove('active', 'drag-over');
             dropZone.classList.add('filled');
             dropZone.appendChild(card);
 
-            card.style.position = 'absolute'; card.style.inset = '0';
+            card.style.position = 'absolute'; 
+            card.style.left = '0'; card.style.top = '0'; card.style.bottom = 'auto';
             card.style.width = '100%'; card.style.height = '100%';
             card.style.transform = 'none'; card.style.margin = '0';
+            card.style.zIndex = '10';
+            
+            const floatWrapper = card.querySelector('.float-wrapper');
+            if (floatWrapper) {
+                floatWrapper.style.animation = 'none';
+                floatWrapper.style.transform = 'none';
+            }
             
             card.removeEventListener('pointerdown', startDrag); 
-            card.style.cursor = 'default';
 
             setTimeout(() => {
                 card.classList.add('is-revealed'); 
+                
                 setTimeout(() => {
-                    optimizedTypeWriter(`text-${card.dataset.id}`, 6, () => {
+                    optimizedTypeWriter(`text-${card.dataset.id}`, 8, () => {
+                        card.style.cursor = 'pointer';
+                        card.classList.add('clickable');
+                        card.onclick = () => toggleCard(card.dataset.id);
+
                         setTimeout(() => activateStep(currentStep + 1), 1200); 
                     });
-                }, 800);
+                }, 2500); 
             }, 100);
         }
 
         /* =======================================
-           CLIMAX
+           CLIMAX & GLOBAL SCROLL SYNC
         ======================================= */
         function triggerClimax() {
             document.getElementById('player-hand').classList.remove('active');
@@ -615,8 +746,204 @@
                     finaleContainer.innerHTML += char;
                 }
                 cIndex++;
-                setTimeout(typeFinaleText, 25 + Math.random() * 20); 
+                setTimeout(typeFinaleText, 15 + Math.random() * 15); 
+            } else {
+                isClimaxCompleted = true;
+                const restartContainer = document.getElementById('restart-btn-container');
+                restartContainer.style.pointerEvents = 'auto';
+                restartContainer.style.opacity = '1';
             }
+        }
+
+        /* === GLOBAL SCROLL SYNC === */
+        let lastScrollY = window.scrollY;
+        let isGlobalTruth = true; 
+
+        window.addEventListener('scroll', () => {
+            if (!isClimaxCompleted) return;
+
+            const currentScrollY = window.scrollY;
+            const scrollDiff = currentScrollY - lastScrollY;
+
+            if (Math.abs(scrollDiff) > 40) {
+                if (scrollDiff > 0 && isGlobalTruth !== true) {
+                    isGlobalTruth = true;
+                    GAME_CONFIG.cards.forEach(c => {
+                        const card = document.getElementById(`card-${c.id}`);
+                        const questions = document.getElementById(`questions-${c.id}`);
+                        if (card && questions) {
+                            card.classList.add('is-revealed');
+                            questions.classList.remove('active');
+                        }
+                    });
+                } else if (scrollDiff < 0 && isGlobalTruth !== false) {
+                    isGlobalTruth = false;
+                    GAME_CONFIG.cards.forEach(c => {
+                        const card = document.getElementById(`card-${c.id}`);
+                        const questions = document.getElementById(`questions-${c.id}`);
+                        if (card && questions) {
+                            card.classList.remove('is-revealed');
+                            if (!questions.classList.contains('active')) {
+                                const randomQ = c.questions[Math.floor(Math.random() * c.questions.length)];
+                                questions.innerHTML = `<p class="text-lg md:text-2xl text-gray-300 italic font-mono text-glow transition-all duration-500">? ${randomQ}</p>`;
+                            }
+                            questions.classList.add('active');
+                        }
+                    });
+                }
+                lastScrollY = currentScrollY;
+            }
+        });
+
+        /* =======================================
+           RESTART GAME (HIỆU ỨNG ĐIỆN ẢNH RÚT ĐIỆN TIVI)
+        ======================================= */
+        function restartGame() {
+            // Ngăn cuộn trang, tắt đồng bộ scroll
+            document.body.style.overflow = 'hidden';
+            isClimaxCompleted = false; 
+
+            // 1. Mờ dần toàn bộ văn bản và background (Chậm rãi, mất 2.5 giây)
+            document.getElementById('global-header').style.opacity = '0';
+            document.getElementById('global-main').style.opacity = '0';
+            document.getElementById('bg-layer').classList.remove('active');
+            document.querySelector('#finale-section > div').style.transition = 'opacity 2.5s ease-in-out';
+            document.querySelector('#finale-section > div').style.opacity = '0';
+
+            // Làm mờ luôn các text cạnh bài
+            document.querySelectorAll('.opacity-transition').forEach(el => {
+                el.style.transition = 'opacity 2.5s ease-in-out';
+                el.style.opacity = '0';
+            });
+
+            // 2. Trích xuất các lá bài ra ngoài Body để không bị mờ theo nội dung
+            const extractedCards = [];
+            GAME_CONFIG.cards.forEach(c => {
+                const card = document.getElementById(`card-${c.id}`);
+                if (card) {
+                    const rect = card.getBoundingClientRect();
+                    document.body.appendChild(card); // Di dời bài ra ngoài
+
+                    // Chốt chặt tọa độ bài hiện tại trên màn hình
+                    card.style.transition = 'none';
+                    card.style.position = 'fixed';
+                    card.style.left = `${rect.left}px`;
+                    card.style.top = `${rect.top}px`;
+                    card.style.width = `${rect.width}px`;
+                    card.style.height = `${rect.height}px`;
+                    card.style.margin = '0';
+                    card.style.zIndex = '9999';
+                    card.style.transform = 'none'; 
+                    card.classList.remove('clickable');
+                    card.onclick = null;
+
+                    extractedCards.push(card);
+                }
+            });
+
+            void document.body.offsetWidth; // Ép trình duyệt reflow
+
+            // 3. Rút bài lên trên (Thoát khỏi màn hình hiện tại)
+            setTimeout(() => {
+                extractedCards.forEach((card, i) => {
+                    card.style.transition = 'top 2s cubic-bezier(0.5, 0, 0.2, 1), transform 2s ease-in';
+                    card.style.top = '-300px'; 
+                    card.style.transform = `rotate(${(i-1)*15}deg) scale(0.8)`;
+                });
+            }, 500);
+
+            // 4. Chờ 3 giây để mọi thứ tối đen
+            setTimeout(() => {
+                // Tắt dây laser đỏ rụp một phát
+                const stringsLayer = document.getElementById('strings-layer');
+                stringsLayer.style.transition = 'opacity 0.3s ease-out';
+                stringsLayer.style.opacity = '0';
+
+                // 5. Cơn mưa bài rớt xuống từ trên nóc màn hình
+                setTimeout(() => {
+                    extractedCards.forEach((card, i) => {
+                        // Trải đều bài ở trên cùng
+                        card.style.transition = 'none';
+                        card.style.top = '-200px';
+                        card.style.left = `${20 + (i * 25)}vw`;
+                        card.style.transform = `rotate(${Math.random() * 90}deg)`;
+
+                        void card.offsetWidth; 
+
+                        // Rớt thẳng đứng xuống vực
+                        setTimeout(() => {
+                            card.style.transition = 'top 3.5s cubic-bezier(0.4, 0, 0.8, 1), transform 3.5s linear';
+                            card.style.top = '150vh'; 
+                            card.style.transform = `rotate(${Math.random() * 720}deg)`; 
+                        }, i * 400); 
+                    });
+
+                    // 6. Hiệu ứng rút điện Tivi CRT (White Dot Implosion)
+                    setTimeout(() => {
+                        const dotContainer = document.createElement('div');
+                        dotContainer.id = 'white-dot-container';
+                        dotContainer.innerHTML = '<div class="white-dot" id="the-white-dot"></div>';
+                        document.body.appendChild(dotContainer);
+
+                        const dot = document.getElementById('the-white-dot');
+
+                        setTimeout(() => {
+                            dot.classList.add('expand'); // Nở bung ánh sáng
+
+                            setTimeout(() => {
+                                dot.classList.remove('expand');
+                                dot.classList.add('collapse'); // Sụp đổ tức thì
+
+                                // 7. Khởi động lại hệ thống ở trong bóng tối
+                                setTimeout(() => {
+                                    dotContainer.remove();
+                                    performActualReset();
+                                    
+                                    // Gỡ các thẻ rác vừa rớt
+                                    extractedCards.forEach(c => c.remove());
+
+                                }, 400); 
+                            }, 2500); 
+                        }, 100);
+
+                    }, 2500); 
+                }, 500); 
+            }, 3000); 
+        }
+
+        function performActualReset() {
+            document.body.style.overflow = '';
+            
+            // Phục hồi lại độ sáng
+            document.getElementById('global-header').style.opacity = '1';
+            document.getElementById('global-main').style.opacity = '1';
+            document.getElementById('finale-section').classList.add('hidden');
+            document.querySelector('#finale-section > div').style.opacity = '1';
+
+            document.getElementById('sys-status').innerText = '[ HỆ THỐNG BẢO VỆ ĐANG HOẠT ĐỘNG ]';
+            document.getElementById('sys-status').classList.replace('text-white', 'text-blood');
+            document.getElementById('main-title').innerText = 'Sự Hoàn Hảo';
+            document.getElementById('sub-title').innerText = 'Một thế giới lý tưởng đang chờ đón bạn';
+            document.getElementById('sub-title').classList.replace('text-blood', 'text-gray-500');
+            document.getElementById('title-line').classList.replace('bg-blood', 'bg-white');
+            document.getElementById('title-line').style.boxShadow = 'none';
+
+            document.getElementById('intro-text').innerHTML = '';
+            document.getElementById('finale-text-container').innerHTML = '';
+            
+            const restartContainer = document.getElementById('restart-btn-container');
+            restartContainer.style.opacity = '0';
+            restartContainer.style.pointerEvents = 'none';
+
+            document.getElementById('strings-layer').innerHTML = '';
+            document.getElementById('strings-layer').style.opacity = '1';
+            document.getElementById('strings-layer').style.transition = 'opacity 0.5s';
+
+            currentStep = 0; iIndex = 0; cIndex = 0; isGlobalTruth = true;
+            
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            initializeGame(); 
+            setTimeout(typeIntro, 800);
         }
     </script>
 </body>
