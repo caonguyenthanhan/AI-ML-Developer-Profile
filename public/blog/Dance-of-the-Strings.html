@@ -28,6 +28,13 @@
             color: #d1d5db;
             line-height: 1.8;
         }
+        #bg-image {
+            left: 50%;
+            right: auto;
+            width: var(--content-max-width, 100vw);
+            transform: translateX(-50%);
+            background-position: center calc(50% - var(--bg-scroll-y, 0px));
+        }
         .report-section {
             border-bottom: 1px solid #1a1a1a;
             padding-bottom: 4rem;
@@ -56,7 +63,7 @@
 <body class="font-serif antialiased">
 
     <!-- Lớp nền trang trí -->
-    <div id="bg-image" class="fixed inset-0 opacity-10 pointer-events-none z-0" style="background-image: url('https://hethongthongminh.id.vn/image/Dance-of-the-Strings/8.png'); background-size: cover; background-position: center; mix-blend-mode: luminosity;"></div>
+    <div id="bg-image" class="fixed inset-0 opacity-10 pointer-events-none z-0" style="background-image: url('https://hethongthongminh.id.vn/image/Dance-of-the-Strings/8.png'); background-size: cover; mix-blend-mode: luminosity;"></div>
 
     <!-- Tiến trình đọc (Thanh trên cùng) -->
     <div class="fixed top-0 left-0 w-full h-1 bg-gray-900 z-50">
@@ -190,5 +197,7 @@
             document.getElementById("scroll-progress").style.width = scrolled + "%";
         };
     </script>
+    <script src="/assets/js/bg-content-width.js"></script>
+    <script src="/assets/js/blog-interact.js"></script>
 </body>
 </html>
