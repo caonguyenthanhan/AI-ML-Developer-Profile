@@ -445,7 +445,7 @@
 
         async function loadOverride() {
             try {
-                const data = await fetchJson(`/api/plan_override?planId=${encodeURIComponent(PLAN_ID)}`);
+                const data = await fetchJson(`/api/plan?op=override&planId=${encodeURIComponent(PLAN_ID)}`);
                 if (data?.data?.scheduleData && Array.isArray(data.data.scheduleData)) {
                     scheduleRuntime = data.data.scheduleData;
                     setAiSummary(data.data.summaryMarkdown || '');
@@ -503,7 +503,7 @@
             const statusEl = document.getElementById('comment-modal-status');
             if (statusEl) statusEl.textContent = 'Đang tải...';
             try {
-                const data = await fetchJson(`/api/plan_comments?planId=${encodeURIComponent(PLAN_ID)}&dayKey=${encodeURIComponent(dayKey)}`);
+                const data = await fetchJson(`/api/plan?op=comments&planId=${encodeURIComponent(PLAN_ID)}&dayKey=${encodeURIComponent(dayKey)}`);
                 renderComments(data.data || []);
                 if (statusEl) statusEl.textContent = data.storage === 'kv' ? 'Đã tải (KV).' : 'Đã tải (local dev).';
             } catch (e) {
@@ -534,7 +534,7 @@
             try {
                 if (authorInput && authorInput.value.trim()) writeStorage(storageKeys.author, authorInput.value.trim());
                 const planToken = getPlanToken();
-                await fetchJson('/api/plan_comments', {
+                await fetchJson('/api/plan?op=comments', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -568,10 +568,10 @@
         async function runAiAdjust() {
             setAiStatus('Đang tổng hợp...');
             try {
-                const all = await fetchJson(`/api/plan_comments?planId=${encodeURIComponent(PLAN_ID)}&all=1`);
+                const all = await fetchJson(`/api/plan?op=comments&planId=${encodeURIComponent(PLAN_ID)}&all=1`);
                 const comments = Array.isArray(all.data) ? all.data : [];
                 const planToken = getPlanToken();
-                const resp = await fetchJson('/api/plan_ai_adjust', {
+                const resp = await fetchJson('/api/plan?op=ai_adjust', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -660,4 +660,3 @@
     </script>
 </body>
 </html>
-
