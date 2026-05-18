@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Trình Chiến Đấu Tuần (GCal Style)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Tùy chỉnh thanh cuộn ngang/dọc cho giống app native */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Hiệu ứng cho event card */
+        .gcal-event { 
+            transition: all 0.2s ease; 
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .gcal-event:hover {
+            filter: brightness(0.95);
+            transform: scale(0.99);
+        }
+        
+        /* Trạng thái hoàn thành */
+        .completed { 
+            opacity: 0.5; 
+            filter: grayscale(80%); 
+        }
+        .completed .event-title { text-decoration: line-through; }
+        .completed .check-overlay { display: flex; }
+        
+        /* Giữ cố định chiều cao để cuộn nội dung cột */
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        #main-wrapper { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    </style>
+</head>
+<body class="bg-white text-slate-800 font-sans antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="p-2 bg-indigo-100 rounded-lg text-indigo-600">
+                <i data-lucide="calendar-days" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-slate-900 leading-tight">Lịch Trình Tuần - Chế Độ 18h</h1>
+                <p class="text-sm text-slate-500 font-medium">Click vào sự kiện để đánh dấu hoàn thành</p>
+            </div>
+        </div>
+        
+        <!-- Chú giải (Legend) -->
+        <div class="flex flex-wrap gap-3 text-xs font-semibold">
+            <span class="px-2 py-1 rounded bg-blue-100 text-blue-800 border-l-4 border-blue-500">Hành chính (9h-18h)</span>
+            <span class="px-2 py-1 rounded bg-emerald-100 text-emerald-800 border-l-4 border-emerald-500">Tự do</span>
+            <span class="px-2 py-1 rounded bg-purple-100 text-purple-800 border-l-4 border-purple-500">Học tập</span>
+            <span class="px-2 py-1 rounded bg-slate-100 text-slate-600 border-l-4 border-slate-400">Nghỉ/Ngủ</span>
+        </div>
+
+        <div class="w-full md:w-auto flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+                <input id="plan-token" type="password" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 w-full md:w-64" placeholder="Plan Token (tuỳ chọn)" />
+                <button id="save-week" class="px-3 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">
+                    Lưu lịch
+                </button>
+            </div>
+            <div class="flex items-center justify-between gap-2 text-xs text-slate-500">
+                <div id="sync-status">Sync: local</div>
+                <div id="schedule-status"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Khu vực cuộn ngang (Horizontal Scroll Area) -->
+    <main id="main-wrapper" class="bg-slate-50 p-4 overflow-hidden">
+        <div id="schedule-container" class="flex gap-4 overflow-x-auto h-full pb-2 snap-x">
+            <!-- Các cột ngày sẽ được render bằng JS vào đây -->
+        </div>
+    </main>
+
+    <div id="task-modal" class="fixed inset-0 hidden items-center justify-center bg-black/40 px-4 z-50">
+        <div class="bg-white w-full max-w-3xl rounded-xl shadow-xl border border-slate-200 overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between gap-3">
+                <div class="min-w-0">
+                    <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Task</div>
+                    <div id="task-modal-title" class="text-base font-bold text-slate-900 truncate">—</div>
+                </div>
+                <button id="task-modal-close" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">
+                    Đóng
+                </button>
+            </div>
+            <div class="p-5">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <label class="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+                                <input id="task-done" type="checkbox" class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-200" />
+                                Hoàn thành
+                            </label>
+                            <div id="task-modal-status" class="text-xs text-slate-500"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input id="edit-time" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200" placeholder="Time (vd 09:00 - 10:00)" />
+                            <input id="edit-type" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200" placeholder="Type (Hành chính/Tự do/...)" />
+                            <input id="edit-project" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 sm:col-span-2" placeholder="Project (tuỳ chọn)" />
+                        </div>
+                        <textarea id="edit-title" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 w-full min-h-[110px]" placeholder="Nội dung task"></textarea>
+
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <button id="apply-edit" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
+                                Áp dụng (chưa lưu)
+                            </button>
+                            <div class="flex items-center gap-2 flex-1">
+                                <select id="move-to-day" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 w-full"></select>
+                                <button id="move-task" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors shrink-0">
+                                    Dời
+                                </button>
+                            </div>
+                            <button id="delete-task" class="px-3 py-2 rounded-lg text-sm font-semibold bg-red-50 text-red-700 hover:bg-red-100 transition-colors">
+                                Xoá
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="text-sm font-bold text-slate-900">Comment</div>
+                        <div id="comment-list" class="space-y-3 max-h-[32vh] overflow-auto pr-1"></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                            <input id="comment-author" class="sm:col-span-1 px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200" placeholder="Tên (tuỳ chọn)" />
+                            <input id="comment-text" class="sm:col-span-3 px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200" placeholder="Nhập góp ý cho task này..." />
+                        </div>
+                        <div class="flex justify-end">
+                            <button id="comment-submit" class="px-3 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">
+                                Gửi góp ý
+                            </button>
+                        </div>
+                        <div id="comment-status" class="text-xs text-slate-500"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cấu hình style giống thẻ sự kiện Google Calendar
+        const typeConfig = {
+            'Hành chính': { bg: 'bg-blue-100', text: 'text-blue-900', border: 'border-blue-500', timeText: 'text-blue-700' },
+            'Tự do': { bg: 'bg-emerald-100', text: 'text-emerald-900', border: 'border-emerald-500', timeText: 'text-emerald-700' },
+            'Học tập': { bg: 'bg-purple-100', text: 'text-purple-900', border: 'border-purple-500', timeText: 'text-purple-700' },
+            'Nghỉ/Ngủ': { bg: 'bg-slate-100', text: 'text-slate-700', border: 'border-slate-400', timeText: 'text-slate-500' },
+        };
+
+        // Hàm tự động parse "HH:MM - HH:MM" thành tổng số giờ (Xử lý mượt cả ca vắt qua đêm)
+        function getDurationInHours(timeStr) {
+            if (timeStr === 'All day' || timeStr === 'Flexible') return 4; // Mặc định 4 tiếng cho các task mở
+            try {
+                const parts = timeStr.split('-');
+                if (parts.length !== 2) return 1.5; 
+                
+                const parseTime = (t) => {
+                    const [h, m] = t.trim().split(':').map(Number);
+                    return h * 60 + (m || 0);
+                };
+                
+                let startMins = parseTime(parts[0]);
+                let endMins = parseTime(parts[1]);
+                
+                // Thuật toán: Nếu kết thúc < bắt đầu -> tức là đã sang ngày hôm sau
+                if (endMins <= startMins) {
+                    endMins += 24 * 60;
+                }
+                
+                return (endMins - startMins) / 60;
+            } catch(e) {
+                return 1.5; // Fallback an toàn
+            }
+        }
+
+        // Dữ liệu bóc tách rõ Ngày và Subtitle để render header cột đẹp hơn
+        const scheduleData = [
+            {
+                day: 'THỨ 2',
+                date: '18/05',
+                subtitle: 'Chạy nước rút RFI & AI Base',
+                tasks: [
+                    { time: '09:00 - 13:00', type: 'Hành chính', project: 'RFI Web', title: 'Đánh giá cấu trúc Data & logic. Fix khẩn cấp issue để kịp chiều chốt.' },
+                    { time: '13:00 - 17:00', type: 'Hành chính', project: 'RFI Web', title: 'Họp trao đổi feedback logic. Chốt xong Database Structure.' },
+                    { time: '17:00 - 18:00', type: 'Hành chính', project: 'AI Agent', title: 'Bắt đầu outline bản draft "Kế hoạch triển khai & Cấu hình".' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn uống, reset não bộ.' },
+                    { time: '19:00 - 22:00', type: 'Hành chính', project: 'AI Agent', title: 'Đẩy tốc độ hoàn thiện Base Plan (Để sáng mai gửi sớm).' },
+                    { time: '22:00 - 01:00', type: 'Tự do', project: 'AI Phường Xã', title: 'Code test & nâng cấp version đầu tiên.' },
+                    { time: '01:00 - 04:00', type: 'Học tập', project: 'AI Y tế', title: 'Setup môi trường, bắt đầu fine-tuning model Tâm lý.' },
+                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                ]
+            },
+            {
+                day: 'THỨ 3',
+                date: '19/05',
+                subtitle: 'Xử lý RFI & Đẩy mạnh AI',
+                tasks: [
+                    { time: '09:00 - 10:00', type: 'Hành chính', project: 'AI Agent', title: 'Review final và BÁO CÁO KẾ HOẠCH BASE.' },
+                    { time: '10:00 - 18:00', type: 'Hành chính', project: 'RFI Web', title: 'Code & hoàn thiện phần: "General Required Information".' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn uống, reset não bộ.' },
+                    { time: '19:00 - 23:00', type: 'Tự do', project: 'AI Phường Xã', title: 'Nâng cấp luồng logic xử lý của phường xã.' },
+                    { time: '23:00 - 04:00', type: 'Học tập', project: 'AI Y tế', title: 'Ép prompt, test output các ca tư vấn tâm lý.' },
+                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                ]
+            },
+            {
+                day: 'THỨ 4',
+                date: '20/05',
+                subtitle: 'Input Data & Chuẩn bị Demo',
+                tasks: [
+                    { time: '09:00 - 14:00', type: 'Hành chính', project: 'PM Tool', title: 'Nhập data vào Web (Viết script auto-fill API nếu được).' },
+                    { time: '14:00 - 18:00', type: 'Hành chính', project: 'AI Agent', title: 'Tiến hành tinh chỉnh bài toán AI, đánh giá độ phức tạp.' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn uống, reset não bộ.' },
+                    { time: '19:00 - 22:00', type: 'Tự do', project: 'AI Phường Xã', title: 'Fix bug, hẹn lịch Demo tối Thứ 5 (20h-21h).' },
+                    { time: '22:00 - 04:00', type: 'Học tập', project: 'AI Y tế', title: 'Đóng gói Agent, bắt đầu viết luận báo cáo.' },
+                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                ]
+            },
+            {
+                day: 'THỨ 5',
+                date: '21/05',
+                subtitle: 'Ngày của Demo & NCKH',
+                tasks: [
+                    { time: '09:00 - 12:00', type: 'Hành chính', project: 'AI Agent', title: 'Chốt & gửi bản Tinh chỉnh cấu hình (Deadline).' },
+                    { time: '12:00 - 18:00', type: 'Hành chính', project: 'RFI Web', title: 'Refine DB dựa trên test thực tế. Lên outline sub-tasks.' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn uống, reset não bộ.' },
+                    { time: '19:00 - 20:00', type: 'Tự do', project: 'AI Phường Xã', title: 'Dry-run (Chạy thử) hệ thống trước khi lên sóng.' },
+                    { time: '20:00 - 21:00', type: 'Tự do', project: 'AI Phường Xã', title: '🌟 DEMO DỰ ÁN (30p demo + 30p Q&A).' },
+                    { time: '21:00 - 22:00', type: 'Học tập', project: 'AI Y tế', title: 'Rà soát lại bài luận báo cáo lần cuối.' },
+                    { time: '22:00 - 03:00', type: 'Học tập', project: 'NCKH', title: 'Viết thuyết minh, tài liệu, chốt sản phẩm đầu ra.' },
+                    { time: '03:00 - 04:00', type: 'Nghỉ/Ngủ', project: '', title: 'Buffer time - Xử lý việc phát sinh.' },
+                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                ]
+            },
+            {
+                day: 'CUỐI TUẦN',
+                date: '22-24/05',
+                subtitle: 'Duy trì & Bứt phá',
+                tasks: [
+                    { time: 'All day', type: 'Hành chính', project: 'RFI Web', title: 'Tinh chỉnh UI và logic Backend dựa trên Database đã chốt cứng.' },
+                    { time: 'All day', type: 'Hành chính', project: 'AI Agent', title: 'Test độ ổn định, review document cho Deadline Thứ 2 tuần sau.' },
+                    { time: 'Flexible', type: 'Tự do', project: 'AI Phường Xã', title: 'Xử lý các feedback, yêu cầu chỉnh sửa sau buổi Demo.' },
+                ]
+            }
+        ];
+
+        const PLAN_ID = 'plan_thang5_week20';
+        const storageKeys = {
+            token: 'plan_week20_token',
+            author: 'plan_week20_author',
+            completed: 'plan_week20_completed',
+            overrideCache: 'plan_week20_override_cache',
+            commentsCache: 'plan_week20_comments_cache'
+        };
+
+        function readStorage(key, fallback) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) return fallback;
+                return JSON.parse(raw);
+            } catch (e) {
+                return fallback;
+            }
+        }
+
+        function writeStorage(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+            } catch (e) {}
+        }
+
+        function cloneJson(x) {
+            try {
+                return JSON.parse(JSON.stringify(x));
+            } catch (e) {
+                return x;
+            }
+        }
+
+        function hashString(input) {
+            const s = String(input || '');
+            let h = 5381;
+            for (let i = 0; i < s.length; i++) h = ((h << 5) + h) ^ s.charCodeAt(i);
+            return (h >>> 0).toString(36);
+        }
+
+        function ensureTaskId(task, day) {
+            if (task && task.id) return String(task.id);
+            const raw = `${day?.date || ''}|${task?.time || ''}|${task?.type || ''}|${task?.project || ''}|${task?.title || ''}`;
+            const id = `w_${hashString(raw)}`;
+            if (task) task.id = id;
+            return id;
+        }
+
+        function normalizeSchedule(data) {
+            const next = cloneJson(data);
+            if (!Array.isArray(next)) return [];
+            next.forEach((day) => {
+                (day?.tasks || []).forEach((task) => {
+                    ensureTaskId(task, day);
+                });
+            });
+            return next;
+        }
+
+        async function fetchJson(url, options) {
+            const resp = await fetch(url, options);
+            const data = await resp.json().catch(() => ({}));
+            if (!resp.ok) {
+                const msg = data?.text || data?.error || `HTTP ${resp.status}`;
+                throw new Error(msg);
+            }
+            return data;
+        }
+
+        function escapeHtml(text) {
+            return String(text || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function getPlanToken() {
+            const input = document.getElementById('plan-token');
+            const v = (input?.value || '').trim();
+            return v || (readStorage(storageKeys.token, '') || '').trim();
+        }
+
+        function setSyncStatus(text) {
+            const el = document.getElementById('sync-status');
+            if (el) el.textContent = text || '';
+        }
+
+        function setScheduleStatus(text) {
+            const el = document.getElementById('schedule-status');
+            if (el) el.textContent = text || '';
+        }
+
+        let scheduleRuntime = normalizeSchedule(scheduleData);
+        let completedMap = readStorage(storageKeys.completed, {});
+        let saveProgressTimer = null;
+
+        async function loadOverride() {
+            try {
+                const data = await fetchJson(`/api/plan?op=override&planId=${encodeURIComponent(PLAN_ID)}`);
+                if (data?.data?.scheduleData && Array.isArray(data.data.scheduleData)) {
+                    scheduleRuntime = normalizeSchedule(data.data.scheduleData);
+                    setScheduleStatus(data.storage === 'kv' ? 'Lịch: KV' : 'Lịch: server');
+                    writeStorage(storageKeys.overrideCache, data.data);
+                    return true;
+                }
+            } catch (e) {}
+
+            const cached = readStorage(storageKeys.overrideCache, null);
+            if (cached?.scheduleData && Array.isArray(cached.scheduleData)) {
+                scheduleRuntime = normalizeSchedule(cached.scheduleData);
+                setScheduleStatus('Lịch: local');
+                return true;
+            }
+            setScheduleStatus('');
+            return false;
+        }
+
+        async function saveOverrideNow(summaryMarkdown) {
+            const planToken = getPlanToken();
+            const payload = {
+                planId: PLAN_ID,
+                scheduleData: scheduleRuntime,
+                summaryMarkdown: summaryMarkdown || 'Manual update',
+                modelName: 'manual',
+                planToken
+            };
+            try {
+                const resp = await fetchJson(`/api/plan?op=override`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(planToken ? { 'X-Plan-Token': planToken } : {})
+                    },
+                    body: JSON.stringify(payload)
+                });
+                writeStorage(storageKeys.overrideCache, resp.data || payload);
+                setScheduleStatus(resp.storage === 'kv' ? 'Lịch: đã lưu KV' : 'Lịch: đã lưu');
+            } catch (e) {
+                writeStorage(storageKeys.overrideCache, payload);
+                setScheduleStatus('Lịch: local');
+            }
+        }
+
+        async function loadProgress() {
+            try {
+                const data = await fetchJson(`/api/plan?op=progress&planId=${encodeURIComponent(PLAN_ID)}`);
+                const remote = data?.data?.completedMap;
+                if (remote && typeof remote === 'object' && !Array.isArray(remote)) {
+                    completedMap = remote;
+                    writeStorage(storageKeys.completed, completedMap);
+                    setSyncStatus(data.storage === 'kv' ? 'Sync: KV' : 'Sync: server');
+                    return true;
+                }
+            } catch (e) {}
+            setSyncStatus('Sync: local');
+            return false;
+        }
+
+        function scheduleSaveProgress() {
+            if (saveProgressTimer) clearTimeout(saveProgressTimer);
+            saveProgressTimer = setTimeout(saveProgressNow, 800);
+        }
+
+        async function saveProgressNow() {
+            const planToken = getPlanToken();
+            try {
+                await fetchJson(`/api/plan?op=progress`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(planToken ? { 'X-Plan-Token': planToken } : {})
+                    },
+                    body: JSON.stringify({ planId: PLAN_ID, completedMap, planToken })
+                });
+                setSyncStatus('Sync: đã lưu');
+            } catch (e) {
+                setSyncStatus('Sync: local');
+            }
+        }
+
+        function openModal() {
+            const modal = document.getElementById('task-modal');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('task-modal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function renderComments(list) {
+            const container = document.getElementById('comment-list');
+            if (!container) return;
+            if (!Array.isArray(list) || list.length === 0) {
+                container.innerHTML = '<div class="text-sm text-slate-500">Chưa có góp ý.</div>';
+                return;
+            }
+            container.innerHTML = list.map(item => {
+                const author = escapeHtml(item.author || 'Leader');
+                const createdAt = escapeHtml(item.createdAt || '');
+                const text = escapeHtml(item.text || '');
+                return `
+                    <div class="rounded-lg border border-slate-200 bg-white p-3">
+                        <div class="flex justify-between items-center gap-2">
+                            <div class="text-sm font-semibold text-slate-900 truncate">${author}</div>
+                            <div class="text-xs text-slate-500 shrink-0">${createdAt}</div>
+                        </div>
+                        <div class="mt-2 text-sm text-slate-800 whitespace-pre-wrap break-words">${text}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function loadTaskComments(commentKey) {
+            const statusEl = document.getElementById('comment-status');
+            if (statusEl) statusEl.textContent = 'Đang tải...';
+            try {
+                const data = await fetchJson(`/api/plan?op=comments&planId=${encodeURIComponent(PLAN_ID)}&dayKey=${encodeURIComponent(commentKey)}`);
+                renderComments(data.data || []);
+                if (statusEl) statusEl.textContent = data.storage === 'kv' ? 'Đã tải (KV).' : 'Đã tải (server).';
+            } catch (e) {
+                const cache = readStorage(storageKeys.commentsCache, {}) || {};
+                const list = Array.isArray(cache[commentKey]) ? cache[commentKey] : [];
+                renderComments(list);
+                if (statusEl) statusEl.textContent = 'Đã tải (local).';
+            }
+        }
+
+        async function submitTaskComment(commentKey) {
+            const authorInput = document.getElementById('comment-author');
+            const textInput = document.getElementById('comment-text');
+            const statusEl = document.getElementById('comment-status');
+            const author = (authorInput?.value || readStorage(storageKeys.author, '') || '').trim();
+            const text = (textInput?.value || '').trim();
+            if (!text) {
+                if (statusEl) statusEl.textContent = 'Vui lòng nhập góp ý.';
+                return;
+            }
+            if (statusEl) statusEl.textContent = 'Đang gửi...';
+            try {
+                if (authorInput && authorInput.value.trim()) writeStorage(storageKeys.author, authorInput.value.trim());
+                const planToken = getPlanToken();
+                await fetchJson('/api/plan?op=comments', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(planToken ? { 'X-Plan-Token': planToken } : {})
+                    },
+                    body: JSON.stringify({ planId: PLAN_ID, dayKey: commentKey, author: author || 'Leader', text, planToken })
+                });
+                if (textInput) textInput.value = '';
+                await loadTaskComments(commentKey);
+                if (statusEl) statusEl.textContent = 'Đã gửi.';
+            } catch (e) {
+                const cache = readStorage(storageKeys.commentsCache, {}) || {};
+                const list = Array.isArray(cache[commentKey]) ? cache[commentKey] : [];
+                const entry = {
+                    id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`,
+                    planId: PLAN_ID,
+                    dayKey: commentKey,
+                    author: author || 'Leader',
+                    text,
+                    createdAt: new Date().toISOString()
+                };
+                list.push(entry);
+                cache[commentKey] = list;
+                writeStorage(storageKeys.commentsCache, cache);
+                if (textInput) textInput.value = '';
+                await loadTaskComments(commentKey);
+                if (statusEl) statusEl.textContent = 'Đã lưu (local).';
+            }
+        }
+
+        function findTaskById(taskId) {
+            for (let d = 0; d < scheduleRuntime.length; d++) {
+                const day = scheduleRuntime[d];
+                const tasks = day?.tasks || [];
+                for (let i = 0; i < tasks.length; i++) {
+                    if (String(tasks[i].id) === String(taskId)) {
+                        return { dayIndex: d, taskIndex: i, day, task: tasks[i] };
+                    }
+                }
+            }
+            return null;
+        }
+
+        function fillDayOptions(selectedDayIndex) {
+            const select = document.getElementById('move-to-day');
+            if (!select) return;
+            const options = scheduleRuntime.map((d, idx) => {
+                const label = `${d.day} (${d.date})`;
+                const sel = idx === selectedDayIndex ? 'selected' : '';
+                return `<option value="${idx}" ${sel}>${escapeHtml(label)}</option>`;
+            }).join('');
+            select.innerHTML = options;
+        }
+
+        function openTaskModal(taskId) {
+            const found = findTaskById(taskId);
+            if (!found) return;
+            const modal = document.getElementById('task-modal');
+            const titleEl = document.getElementById('task-modal-title');
+            const doneEl = document.getElementById('task-done');
+            const statusEl = document.getElementById('task-modal-status');
+            const timeEl = document.getElementById('edit-time');
+            const typeEl = document.getElementById('edit-type');
+            const projEl = document.getElementById('edit-project');
+            const taskTitleEl = document.getElementById('edit-title');
+
+            if (modal) modal.setAttribute('data-task-id', String(taskId));
+
+            if (titleEl) titleEl.textContent = `${found.day.day} ${found.day.date}`;
+            if (doneEl) doneEl.checked = !!completedMap[String(taskId)];
+            if (statusEl) statusEl.textContent = '';
+
+            if (timeEl) timeEl.value = String(found.task.time || '');
+            if (typeEl) typeEl.value = String(found.task.type || '');
+            if (projEl) projEl.value = String(found.task.project || '');
+            if (taskTitleEl) taskTitleEl.value = String(found.task.title || '');
+
+            fillDayOptions(found.dayIndex);
+
+            const commentKey = `${found.day.date}|${taskId}`;
+            if (modal) modal.setAttribute('data-comment-key', commentKey);
+
+            openModal();
+            loadTaskComments(commentKey);
+        }
+
+        function closeTaskModal() {
+            closeModal();
+        }
+
+        function applyTaskEdit(taskId) {
+            const found = findTaskById(taskId);
+            if (!found) return false;
+            const timeEl = document.getElementById('edit-time');
+            const typeEl = document.getElementById('edit-type');
+            const projEl = document.getElementById('edit-project');
+            const titleEl = document.getElementById('edit-title');
+            found.task.time = String(timeEl?.value || found.task.time || '').trim();
+            found.task.type = String(typeEl?.value || found.task.type || '').trim();
+            found.task.project = String(projEl?.value || found.task.project || '').trim();
+            found.task.title = String(titleEl?.value || found.task.title || '').trim();
+            return true;
+        }
+
+        function deleteTask(taskId) {
+            const found = findTaskById(taskId);
+            if (!found) return false;
+            (found.day.tasks || []).splice(found.taskIndex, 1);
+            delete completedMap[String(taskId)];
+            writeStorage(storageKeys.completed, completedMap);
+            scheduleSaveProgress();
+            return true;
+        }
+
+        function moveTask(taskId, toDayIndex) {
+            const found = findTaskById(taskId);
+            if (!found) return false;
+            const idx = parseInt(toDayIndex, 10);
+            if (Number.isNaN(idx) || idx < 0 || idx >= scheduleRuntime.length) return false;
+            if (idx === found.dayIndex) return true;
+            const removed = (found.day.tasks || []).splice(found.taskIndex, 1)[0];
+            const targetDay = scheduleRuntime[idx];
+            if (!Array.isArray(targetDay.tasks)) targetDay.tasks = [];
+            targetDay.tasks.push(removed);
+            return true;
+        }
+
+        function renderSchedule() {
+            const container = document.getElementById('schedule-container');
+            container.innerHTML = '';
+            
+            scheduleRuntime.forEach(dayData => {
+                // Tạo cột cho mỗi ngày
+                const col = document.createElement('div');
+                // Độ rộng cố định cho mỗi cột, trên mobile tự thu nhỏ chút xíu
+                col.className = 'w-[85vw] md:w-[320px] lg:w-[350px] shrink-0 snap-start bg-white border border-slate-200 rounded-xl flex flex-col h-full shadow-sm';
+                
+                // Header của Cột
+                const isToday = dayData.day === 'THỨ 2'; // Hardcode tạm Thứ 2 là hôm nay
+                const headerHTML = `
+                    <div class="px-4 py-3 border-b border-slate-100 shrink-0 text-center sticky top-0 bg-white/95 backdrop-blur z-10 rounded-t-xl">
+                        <div class="text-xs font-semibold ${isToday ? 'text-indigo-600' : 'text-slate-500'} mb-1">${dayData.date}</div>
+                        <h2 class="font-bold text-lg ${isToday ? 'text-indigo-600' : 'text-slate-800'} leading-none">${dayData.day}</h2>
+                        <div class="text-xs text-slate-400 mt-1.5 truncate" title="${dayData.subtitle}">${dayData.subtitle}</div>
+                    </div>
+                `;
+                
+                // Body chứa các sự kiện (scroll dọc bên trong cột)
+                let tasksHTML = '<div class="p-3 flex-1 overflow-y-auto flex flex-col gap-2.5">';
+                
+                dayData.tasks.forEach((task) => {
+                    ensureTaskId(task, dayData);
+                    const theme = typeConfig[task.type] || typeConfig['Nghỉ/Ngủ'];
+                    const isRest = task.type === 'Nghỉ/Ngủ';
+                    const isDone = !!completedMap[String(task.id)];
+                    
+                    // Logic Scale theo thời gian thực (Linh động, không hardcode)
+                    const durationHours = getDurationInHours(task.time);
+                    const pixelsPerHour = 65; // Sếp có thể tăng/giảm số này để kéo giãn lịch
+                    // Chặn giới hạn dưới (vd task 30p) để không bị co quá nhỏ làm lẹm chữ
+                    const heightStyle = "min-height: " + Math.max(durationHours * pixelsPerHour, 65) + "px;";
+                    
+                    tasksHTML += `
+                        <div class="gcal-event p-2.5 rounded-lg border-l-4 ${theme.bg} ${theme.border} group flex flex-col ${isDone ? 'completed' : ''}" style="${heightStyle}" data-task-id="${escapeHtml(task.id)}">
+                            
+                            <!-- Checkmark overlay (ẩn mặc định) -->
+                            <div class="check-overlay hidden absolute inset-0 bg-white/40 items-center justify-center z-10">
+                                <i data-lucide="check-circle-2" class="w-8 h-8 text-green-600 drop-shadow-md"></i>
+                            </div>
+
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-semibold ${theme.timeText}">${task.time}</span>
+                                <div class="flex items-center gap-2">
+                                    ${task.project && !isRest ? `<span class="text-[10px] font-bold px-1.5 py-0.5 bg-white/50 rounded text-slate-600 shadow-sm border border-black/5">#${escapeHtml(task.project)}</span>` : ''}
+                                    <button class="open-task px-1.5 py-1 rounded-md bg-white/50 hover:bg-white/70 border border-black/5" data-task-id="${escapeHtml(task.id)}" type="button">
+                                        <i data-lucide="message-square" class="w-4 h-4 text-slate-600"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="event-title text-sm font-medium ${theme.text} leading-snug">
+                                ${escapeHtml(task.title)}
+                            </p>
+                        </div>
+                    `;
+                });
+                tasksHTML += '</div>';
+
+                col.innerHTML = headerHTML + tasksHTML;
+                container.appendChild(col);
+            });
+
+            // Khởi tạo icon
+            lucide.createIcons();
+        }
+
+        function toggleTaskById(taskId) {
+            const key = String(taskId);
+            completedMap[key] = !completedMap[key];
+            writeStorage(storageKeys.completed, completedMap);
+            scheduleSaveProgress();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tokenInput = document.getElementById('plan-token');
+            if (tokenInput) {
+                tokenInput.value = readStorage(storageKeys.token, '') || '';
+                tokenInput.addEventListener('change', () => {
+                    const v = tokenInput.value.trim();
+                    writeStorage(storageKeys.token, v);
+                });
+            }
+
+            const authorInput = document.getElementById('comment-author');
+            if (authorInput) authorInput.value = readStorage(storageKeys.author, '') || '';
+
+            const closeBtn = document.getElementById('task-modal-close');
+            if (closeBtn) closeBtn.addEventListener('click', closeTaskModal);
+
+            const modal = document.getElementById('task-modal');
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeTaskModal();
+                });
+            }
+
+            const submitBtn = document.getElementById('comment-submit');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', () => {
+                    const key = modal?.getAttribute('data-comment-key') || '';
+                    if (key) submitTaskComment(key);
+                });
+            }
+
+            const doneEl = document.getElementById('task-done');
+            if (doneEl) {
+                doneEl.addEventListener('change', () => {
+                    const taskId = modal?.getAttribute('data-task-id') || '';
+                    if (!taskId) return;
+                    completedMap[String(taskId)] = !!doneEl.checked;
+                    writeStorage(storageKeys.completed, completedMap);
+                    scheduleSaveProgress();
+                    renderSchedule();
+                });
+            }
+
+            const applyBtn = document.getElementById('apply-edit');
+            if (applyBtn) {
+                applyBtn.addEventListener('click', () => {
+                    const taskId = modal?.getAttribute('data-task-id') || '';
+                    if (!taskId) return;
+                    const ok = applyTaskEdit(taskId);
+                    const statusEl = document.getElementById('task-modal-status');
+                    if (statusEl) statusEl.textContent = ok ? 'Đã áp dụng (chưa lưu).' : 'Không tìm thấy task.';
+                    renderSchedule();
+                });
+            }
+
+            const delBtn = document.getElementById('delete-task');
+            if (delBtn) {
+                delBtn.addEventListener('click', () => {
+                    const taskId = modal?.getAttribute('data-task-id') || '';
+                    if (!taskId) return;
+                    const ok = window.confirm('Xoá task này?');
+                    if (!ok) return;
+                    const done = deleteTask(taskId);
+                    renderSchedule();
+                    closeTaskModal();
+                    const statusEl = document.getElementById('task-modal-status');
+                    if (statusEl) statusEl.textContent = done ? 'Đã xoá.' : 'Không tìm thấy task.';
+                });
+            }
+
+            const moveBtn = document.getElementById('move-task');
+            if (moveBtn) {
+                moveBtn.addEventListener('click', () => {
+                    const taskId = modal?.getAttribute('data-task-id') || '';
+                    const toDay = document.getElementById('move-to-day')?.value || '';
+                    if (!taskId) return;
+                    const ok = moveTask(taskId, toDay);
+                    const statusEl = document.getElementById('task-modal-status');
+                    if (statusEl) statusEl.textContent = ok ? 'Đã dời (chưa lưu).' : 'Không dời được.';
+                    renderSchedule();
+                });
+            }
+
+            const saveWeekBtn = document.getElementById('save-week');
+            if (saveWeekBtn) saveWeekBtn.addEventListener('click', () => saveOverrideNow('Manual update'));
+
+            document.addEventListener('click', (e) => {
+                const openBtn = e.target?.closest ? e.target.closest('.open-task') : null;
+                if (openBtn) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const taskId = openBtn.getAttribute('data-task-id') || '';
+                    if (taskId) openTaskModal(taskId);
+                    return;
+                }
+
+                const ev = e.target?.closest ? e.target.closest('.gcal-event') : null;
+                if (ev) {
+                    const taskId = ev.getAttribute('data-task-id') || '';
+                    if (!taskId) return;
+                    toggleTaskById(taskId);
+                    ev.classList.toggle('completed');
+                    return;
+                }
+            });
+
+            Promise.all([loadOverride(), loadProgress()]).finally(() => {
+                renderSchedule();
+            });
+        });
+    </script>
+</body>
+</html>

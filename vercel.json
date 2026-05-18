@@ -17,6 +17,10 @@
       "destination": "/plan/thang5.html"
     },
     {
+      "source": "/plan/week20",
+      "destination": "/plan/thang5-week20.html"
+    },
+    {
       "source": "/aise",
       "destination": "/asie/AI%20Software%20Engineer%202025.html"
     },
