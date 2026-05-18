@@ -63,6 +63,9 @@
         <div class="w-full md:w-auto flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <input id="plan-token" type="password" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 w-full md:w-64" placeholder="Plan Token (tuỳ chọn)" />
+                <button id="sync-now" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
+                    Đồng bộ
+                </button>
                 <button id="save-week" class="px-3 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">
                     Lưu lịch
                 </button>
@@ -76,8 +79,10 @@
 
     <!-- Khu vực cuộn ngang (Horizontal Scroll Area) -->
     <main id="main-wrapper" class="bg-slate-50 p-4 overflow-hidden">
-        <div id="schedule-container" class="flex gap-4 overflow-x-auto h-full pb-2 snap-x">
-            <!-- Các cột ngày sẽ được render bằng JS vào đây -->
+        <div id="schedule-scroll" class="h-full overflow-auto pb-2">
+            <div id="schedule-container" class="flex gap-4 min-w-max snap-x">
+                <!-- Time column + các cột ngày sẽ được render bằng JS -->
+            </div>
         </div>
     </main>
 
@@ -240,13 +245,29 @@
                 ]
             },
             {
-                day: 'CUỐI TUẦN',
-                date: '22-24/05',
+                day: 'THỨ 6',
+                date: '22/05',
                 subtitle: 'Duy trì & Bứt phá',
                 tasks: [
                     { time: 'All day', type: 'Hành chính', project: 'RFI Web', title: 'Tinh chỉnh UI và logic Backend dựa trên Database đã chốt cứng.' },
                     { time: 'All day', type: 'Hành chính', project: 'AI Agent', title: 'Test độ ổn định, review document cho Deadline Thứ 2 tuần sau.' },
-                    { time: 'Flexible', type: 'Tự do', project: 'AI Phường Xã', title: 'Xử lý các feedback, yêu cầu chỉnh sửa sau buổi Demo.' },
+                ]
+            },
+            {
+                day: 'THỨ 7',
+                date: '23/05',
+                subtitle: 'Duy trì & Bứt phá',
+                tasks: [
+                    { time: 'All day', type: 'Hành chính', project: 'RFI Web', title: 'Hoàn thiện nốt UI/flow còn vướng và chạy regression.' },
+                    { time: 'Flexible', type: 'Tự do', project: 'AI Phường Xã', title: 'Xử lý feedback, yêu cầu chỉnh sửa sau buổi Demo.' },
+                ]
+            },
+            {
+                day: 'CHỦ NHẬT',
+                date: '24/05',
+                subtitle: 'Duy trì & Chuẩn bị tuần mới',
+                tasks: [
+                    { time: 'Flexible', type: 'Học tập', project: 'AI Y tế', title: 'Ôn lại prompt/agent flow, chuẩn bị phần báo cáo tuần.' },
                 ]
             }
         ];
@@ -627,15 +648,79 @@
             return true;
         }
 
+        const VIEW_START_MINUTES = 9 * 60;
+        const VIEW_HOURS = 24;
+        const PIXELS_PER_HOUR = 65;
+        const TIMELINE_HEIGHT = VIEW_HOURS * PIXELS_PER_HOUR;
+
+        function parseTimeToMinutes(t) {
+            const [h, m] = String(t || '').trim().split(':').map(Number);
+            return (h || 0) * 60 + (m || 0);
+        }
+
+        function parseTimeRange(timeStr) {
+            const raw = String(timeStr || '').trim();
+            if (raw === 'All day') return { start: 9 * 60, end: 18 * 60 };
+            if (raw === 'Flexible') return { start: 18 * 60, end: 22 * 60 };
+
+            const parts = raw.split('-');
+            if (parts.length !== 2) {
+                const start = 9 * 60;
+                return { start, end: start + 90 };
+            }
+
+            let start = parseTimeToMinutes(parts[0]);
+            let end = parseTimeToMinutes(parts[1]);
+
+            if (end <= start) end += 24 * 60;
+            if (start < VIEW_START_MINUTES) start += 24 * 60;
+            if (end < VIEW_START_MINUTES) end += 24 * 60;
+
+            return { start, end };
+        }
+
+        function calcEventLayout(timeStr) {
+            const { start, end } = parseTimeRange(timeStr);
+            const startOffset = start - VIEW_START_MINUTES;
+            const endOffset = end - VIEW_START_MINUTES;
+            const top = (startOffset / 60) * PIXELS_PER_HOUR;
+            const height = Math.max(((endOffset - startOffset) / 60) * PIXELS_PER_HOUR, 65);
+            return { top, height };
+        }
+
         function renderSchedule() {
             const container = document.getElementById('schedule-container');
             container.innerHTML = '';
+
+            const timeCol = document.createElement('div');
+            timeCol.className = 'w-[72px] shrink-0 snap-start bg-white border border-slate-200 rounded-xl shadow-sm sticky left-0 z-20';
+
+            let timeHeader = `
+                <div class="px-2 py-3 border-b border-slate-100 text-center sticky top-0 bg-white/95 backdrop-blur z-10 rounded-t-xl">
+                    <div class="text-xs font-semibold text-slate-400">TIME</div>
+                </div>
+            `;
+
+            let timeBody = `<div class="relative" style="height:${TIMELINE_HEIGHT}px;">`;
+            for (let i = 0; i <= VIEW_HOURS; i++) {
+                const mins = VIEW_START_MINUTES + i * 60;
+                const hh = Math.floor((mins % (24 * 60)) / 60).toString().padStart(2, '0');
+                timeBody += `
+                    <div class="border-t border-slate-100 flex items-start justify-end pr-2" style="height:${PIXELS_PER_HOUR}px;">
+                        <span class="text-[10px] font-semibold text-slate-400 -translate-y-2 bg-white px-1">${hh}:00</span>
+                    </div>
+                `;
+            }
+            timeBody += `</div>`;
+
+            timeCol.innerHTML = timeHeader + timeBody;
+            container.appendChild(timeCol);
             
             scheduleRuntime.forEach(dayData => {
                 // Tạo cột cho mỗi ngày
                 const col = document.createElement('div');
                 // Độ rộng cố định cho mỗi cột, trên mobile tự thu nhỏ chút xíu
-                col.className = 'w-[85vw] md:w-[320px] lg:w-[350px] shrink-0 snap-start bg-white border border-slate-200 rounded-xl flex flex-col h-full shadow-sm';
+                col.className = 'w-[85vw] md:w-[320px] lg:w-[350px] shrink-0 snap-start bg-white border border-slate-200 rounded-xl shadow-sm';
                 
                 // Header của Cột
                 const isToday = dayData.day === 'THỨ 2'; // Hardcode tạm Thứ 2 là hôm nay
@@ -647,23 +732,23 @@
                     </div>
                 `;
                 
-                // Body chứa các sự kiện (scroll dọc bên trong cột)
-                let tasksHTML = '<div class="p-3 flex-1 overflow-y-auto flex flex-col gap-2.5">';
+                let gridLines = '';
+                for (let i = 0; i <= VIEW_HOURS; i++) {
+                    const top = i * PIXELS_PER_HOUR;
+                    gridLines += `<div class="absolute left-0 right-0 border-t border-slate-100" style="top:${top}px;"></div>`;
+                }
+
+                let tasksHTML = `<div class="relative p-3" style="height:${TIMELINE_HEIGHT}px;">${gridLines}`;
                 
                 dayData.tasks.forEach((task) => {
                     ensureTaskId(task, dayData);
                     const theme = typeConfig[task.type] || typeConfig['Nghỉ/Ngủ'];
                     const isRest = task.type === 'Nghỉ/Ngủ';
                     const isDone = !!completedMap[String(task.id)];
-                    
-                    // Logic Scale theo thời gian thực (Linh động, không hardcode)
-                    const durationHours = getDurationInHours(task.time);
-                    const pixelsPerHour = 65; // Sếp có thể tăng/giảm số này để kéo giãn lịch
-                    // Chặn giới hạn dưới (vd task 30p) để không bị co quá nhỏ làm lẹm chữ
-                    const heightStyle = "min-height: " + Math.max(durationHours * pixelsPerHour, 65) + "px;";
+                    const { top, height } = calcEventLayout(task.time);
                     
                     tasksHTML += `
-                        <div class="gcal-event p-2.5 rounded-lg border-l-4 ${theme.bg} ${theme.border} group flex flex-col ${isDone ? 'completed' : ''}" style="${heightStyle}" data-task-id="${escapeHtml(task.id)}">
+                        <div class="gcal-event absolute left-3 right-3 p-2.5 rounded-lg border-l-4 ${theme.bg} ${theme.border} group flex flex-col ${isDone ? 'completed' : ''}" style="top:${top}px; height:${height}px;" data-task-id="${escapeHtml(task.id)}">
                             
                             <!-- Checkmark overlay (ẩn mặc định) -->
                             <div class="check-overlay hidden absolute inset-0 bg-white/40 items-center justify-center z-10">
@@ -709,6 +794,47 @@
                 tokenInput.addEventListener('change', () => {
                     const v = tokenInput.value.trim();
                     writeStorage(storageKeys.token, v);
+                });
+            }
+
+            async function syncNow() {
+                setSyncStatus('Sync: đang tải...');
+                setScheduleStatus('Lịch: đang tải...');
+                await Promise.all([loadOverride(), loadProgress()]);
+                renderSchedule();
+            }
+
+            const syncBtn = document.getElementById('sync-now');
+            if (syncBtn) syncBtn.addEventListener('click', syncNow);
+
+            const scrollEl = document.getElementById('schedule-scroll');
+            if (scrollEl) {
+                let pullStartY = 0;
+                let pullDelta = 0;
+                let pullActive = false;
+
+                scrollEl.addEventListener('touchstart', (e) => {
+                    if (scrollEl.scrollTop !== 0) return;
+                    pullStartY = e.touches?.[0]?.clientY || 0;
+                    pullDelta = 0;
+                    pullActive = true;
+                }, { passive: true });
+
+                scrollEl.addEventListener('touchmove', (e) => {
+                    if (!pullActive) return;
+                    if (scrollEl.scrollTop !== 0) return;
+                    const y = e.touches?.[0]?.clientY || 0;
+                    pullDelta = y - pullStartY;
+                    if (pullDelta <= 0) return;
+                    if (pullDelta > 80) setSyncStatus('Thả để đồng bộ');
+                    else setSyncStatus('Kéo để đồng bộ');
+                }, { passive: true });
+
+                scrollEl.addEventListener('touchend', async () => {
+                    if (!pullActive) return;
+                    pullActive = false;
+                    if (pullDelta > 80) await syncNow();
+                    pullDelta = 0;
                 });
             }
 
@@ -808,9 +934,7 @@
                 }
             });
 
-            Promise.all([loadOverride(), loadProgress()]).finally(() => {
-                renderSchedule();
-            });
+            Promise.all([loadOverride(), loadProgress()]).finally(() => renderSchedule());
         });
     </script>
 </body>
