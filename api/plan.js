@@ -44,6 +44,7 @@ function getStore() {
       commentsByDay: new Map(),
       commentsAll: new Map(),
       overrides: new Map(),
+      progress: new Map(),
     };
   }
   return g.__plan_store;
@@ -126,7 +127,9 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
   }
 
   const body =
-    typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
+    typeof req.body === "string"
+      ? JSON.parse(req.body || "{}")
+      : req.body || {};
 
   const commentTokenEnv = String(
     process.env.PLAN_COMMENT_TOKEN || process.env.PLAN_ADMIN_TOKEN || "",
@@ -136,13 +139,17 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
     return json(res, 403, { ok: false, error: "forbidden" });
   }
 
-  const author = String(body.author || "").trim().slice(0, 60);
+  const author = String(body.author || "")
+    .trim()
+    .slice(0, 60);
   const text = String(body.text || "").trim();
   const safeDayKey = normId(body.dayKey || dayKey);
   if (!planId) return json(res, 400, { ok: false, error: "missing_planId" });
-  if (!safeDayKey) return json(res, 400, { ok: false, error: "missing_dayKey" });
+  if (!safeDayKey)
+    return json(res, 400, { ok: false, error: "missing_dayKey" });
   if (!text) return json(res, 400, { ok: false, error: "missing_text" });
-  if (text.length > 2000) return json(res, 413, { ok: false, error: "text_too_long" });
+  if (text.length > 2000)
+    return json(res, 413, { ok: false, error: "text_too_long" });
 
   const entry = {
     id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`,
@@ -158,7 +165,12 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
   if (kv) {
     await kv.rpush(safeDayListKey, JSON.stringify(entry));
     await kv.rpush(allListKey, JSON.stringify(entry));
-    return json(res, 200, { ok: true, data: entry, persisted: true, storage: "kv" });
+    return json(res, 200, {
+      ok: true,
+      data: entry,
+      persisted: true,
+      storage: "kv",
+    });
   }
 
   const dayArr = store.commentsByDay.get(safeDayListKey) || [];
@@ -167,19 +179,65 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
   const allArr = store.commentsAll.get(planId) || [];
   allArr.push(entry);
   store.commentsAll.set(planId, allArr);
-  return json(res, 200, { ok: true, data: entry, persisted: false, storage: "memory" });
+  return json(res, 200, {
+    ok: true,
+    data: entry,
+    persisted: false,
+    storage: "memory",
+  });
 }
 
 async function handleOverride(req, res, kv, store, planId) {
   const key = `plan:override:${planId}`;
-  if (req.method !== "GET") {
+  if (req.method === "GET") {
+    if (kv) {
+      const data = await kv.get(key);
+      return json(res, 200, { ok: true, data: data || null, storage: "kv" });
+    }
+    return json(res, 200, {
+      ok: true,
+      data: store.overrides.get(key) || null,
+      storage: "memory",
+    });
+  }
+
+  if (req.method !== "POST") {
     return json(res, 405, { ok: false, error: "method_not_allowed" });
   }
-  if (kv) {
-    const data = await kv.get(key);
-    return json(res, 200, { ok: true, data: data || null, storage: "kv" });
+
+  const body =
+    typeof req.body === "string"
+      ? JSON.parse(req.body || "{}")
+      : req.body || {};
+
+  const planTokenEnv = String(
+    process.env.PLAN_EDIT_TOKEN || process.env.PLAN_ADMIN_TOKEN || "",
+  ).trim();
+  const planToken = getPlanToken(req, body);
+  if (planTokenEnv && planTokenEnv !== planToken) {
+    return json(res, 403, { ok: false, error: "forbidden" });
   }
-  return json(res, 200, { ok: true, data: store.overrides.get(key) || null, storage: "memory" });
+
+  const scheduleData = body.scheduleData;
+  if (!Array.isArray(scheduleData)) {
+    return json(res, 400, { ok: false, error: "missing_scheduleData" });
+  }
+
+  const override = {
+    planId,
+    updatedAt: new Date().toISOString(),
+    summaryMarkdown: String(body.summaryMarkdown || "").trim(),
+    scheduleData,
+    commentCount: 0,
+    modelName: String(body.modelName || "manual").trim(),
+  };
+
+  if (kv) {
+    await kv.set(key, override);
+    return json(res, 200, { ok: true, data: override, storage: "kv" });
+  }
+  store.overrides.set(key, override);
+  return json(res, 200, { ok: true, data: override, storage: "memory" });
 }
 
 async function handleAiAdjust(req, res, kv, store, planId) {
@@ -188,7 +246,9 @@ async function handleAiAdjust(req, res, kv, store, planId) {
   }
 
   const body =
-    typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
+    typeof req.body === "string"
+      ? JSON.parse(req.body || "{}")
+      : req.body || {};
 
   const planTokenEnv = String(process.env.PLAN_ADMIN_TOKEN || "").trim();
   const planToken = getPlanToken(req, body);
@@ -248,15 +308,12 @@ async function handleAiAdjust(req, res, kv, store, planId) {
     "Ràng buộc:",
     "- Giữ nguyên cấu trúc mảng scheduleData (week/period/days) và các trường date/day.",
     "- Không đổi định dạng dữ liệu; chỉ chỉnh nội dung tasks hoặc thêm task mới.",
+    "- Nếu task có trường id thì giữ nguyên id đó.",
     '- Chỉ trả về JSON thuần đúng schema: {"summaryMarkdown": string, "scheduleData": array}.',
     "- Không thêm giải thích ngoài JSON.",
   ].join("\n");
 
-  const userQuery = JSON.stringify(
-    { planId, scheduleData, comments },
-    null,
-    2,
-  );
+  const userQuery = JSON.stringify({ planId, scheduleData, comments }, null, 2);
 
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelName)}:generateContent`;
   const payload = {
@@ -272,8 +329,14 @@ async function handleAiAdjust(req, res, kv, store, planId) {
 
   const data = await resp.json().catch(() => ({}));
   if (!resp.ok) {
-    const msg = (data && data.error && data.error.message) || `Gemini error ${resp.status}`;
-    return json(res, resp.status, { ok: false, error: "gemini_error", text: msg });
+    const msg =
+      (data && data.error && data.error.message) ||
+      `Gemini error ${resp.status}`;
+    return json(res, resp.status, {
+      ok: false,
+      error: "gemini_error",
+      text: msg,
+    });
   }
 
   let text = "";
@@ -302,10 +365,73 @@ async function handleAiAdjust(req, res, kv, store, planId) {
   const key = `plan:override:${planId}`;
   if (kv) {
     await kv.set(key, override);
-    return json(res, 200, { ok: true, parsed: true, data: override, storage: "kv" });
+    return json(res, 200, {
+      ok: true,
+      parsed: true,
+      data: override,
+      storage: "kv",
+    });
   }
   store.overrides.set(key, override);
-  return json(res, 200, { ok: true, parsed: true, data: override, storage: "memory" });
+  return json(res, 200, {
+    ok: true,
+    parsed: true,
+    data: override,
+    storage: "memory",
+  });
+}
+
+async function handleProgress(req, res, kv, store, planId) {
+  const key = `plan:progress:${planId}`;
+
+  if (req.method === "GET") {
+    if (kv) {
+      const data = await kv.get(key);
+      return json(res, 200, { ok: true, data: data || null, storage: "kv" });
+    }
+    return json(res, 200, {
+      ok: true,
+      data: store.progress.get(key) || null,
+      storage: "memory",
+    });
+  }
+
+  if (req.method !== "POST") {
+    return json(res, 405, { ok: false, error: "method_not_allowed" });
+  }
+
+  const body =
+    typeof req.body === "string"
+      ? JSON.parse(req.body || "{}")
+      : req.body || {};
+
+  const progressTokenEnv = String(process.env.PLAN_PROGRESS_TOKEN || "").trim();
+  const planToken = getPlanToken(req, body);
+  if (progressTokenEnv && progressTokenEnv !== planToken) {
+    return json(res, 403, { ok: false, error: "forbidden" });
+  }
+
+  const completedMap = body.completedMap;
+  if (
+    !completedMap ||
+    typeof completedMap !== "object" ||
+    Array.isArray(completedMap)
+  ) {
+    return json(res, 400, { ok: false, error: "missing_completedMap" });
+  }
+
+  const value = {
+    planId,
+    updatedAt: new Date().toISOString(),
+    completedMap,
+  };
+
+  if (kv) {
+    await kv.set(key, value);
+    return json(res, 200, { ok: true, data: value, storage: "kv" });
+  }
+  store.progress.set(key, value);
+  return json(res, 200, { ok: true, data: value, storage: "memory" });
 }
 
 module.exports = async function handler(req, res) {
@@ -332,10 +458,16 @@ module.exports = async function handler(req, res) {
     if (op === "ai_adjust") {
       return await handleAiAdjust(req, res, kv, store, planId);
     }
+    if (op === "progress") {
+      return await handleProgress(req, res, kv, store, planId);
+    }
 
     return json(res, 400, { ok: false, error: "missing_op" });
   } catch (e) {
-    return json(res, 500, { ok: false, error: "server_error", text: String(e?.message || e) });
+    return json(res, 500, {
+      ok: false,
+      error: "server_error",
+      text: String(e?.message || e),
+    });
   }
 };
-
