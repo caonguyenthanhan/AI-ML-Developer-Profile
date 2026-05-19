@@ -3,13 +3,23 @@ async function getKv() {
     const kvMod = await import("@vercel/kv");
     const kvRef = kvMod.kv || kvMod.default || null;
     const hasEnv =
-      process.env.KV_URL ||
-      process.env.KV_REST_API_URL ||
-      process.env.KV_REST_API_TOKEN;
+      (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) ||
+      (process.env.KV_URL && process.env.KV_REST_API_TOKEN);
     if (kvRef && hasEnv) return kvRef;
     return null;
   } catch (_) {
     return null;
+  }
+}
+
+async function getKvSafe() {
+  const kv = await getKv();
+  if (!kv) return { kv: null, kvError: "" };
+  try {
+    await kv.get("plan:kv_healthcheck");
+    return { kv, kvError: "" };
+  } catch (e) {
+    return { kv: null, kvError: String(e?.message || e) };
   }
 }
 
@@ -30,6 +40,11 @@ function json(res, status, payload) {
     res.setHeader("Cache-Control", "no-store");
   } catch (_) {}
   return res.status(status).json(payload);
+}
+
+function withKvMeta(payload, kvError) {
+  if (!kvError) return payload;
+  return { ...payload, kvError };
 }
 
 function normId(x) {
@@ -79,7 +94,16 @@ function extractJson(text) {
   }
 }
 
-async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
+async function handleComments(
+  req,
+  res,
+  kv,
+  store,
+  planId,
+  dayKey,
+  wantAll,
+  kvError,
+) {
   const allListKey = `plan:comments:${planId}:all`;
   const dayListKey = `plan:comments:${planId}:${dayKey}`;
 
@@ -96,13 +120,27 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
             }
           })
           .filter(Boolean);
-        return json(res, 200, { ok: true, data: list, storage: "kv" });
+        return json(
+          res,
+          200,
+          withKvMeta({ ok: true, data: list, storage: "kv" }, kvError),
+        );
       }
       const mem = store.commentsAll.get(planId) || [];
-      return json(res, 200, { ok: true, data: mem, storage: "memory" });
+      return json(
+        res,
+        200,
+        withKvMeta({ ok: true, data: mem, storage: "memory" }, kvError),
+      );
     }
 
-    if (!dayKey) return json(res, 400, { ok: false, error: "missing_dayKey" });
+    if (!dayKey) {
+      return json(
+        res,
+        400,
+        withKvMeta({ ok: false, error: "missing_dayKey" }, kvError),
+      );
+    }
 
     if (kv) {
       const rawList = await kv.lrange(dayListKey, 0, -1);
@@ -115,15 +153,27 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
           }
         })
         .filter(Boolean);
-      return json(res, 200, { ok: true, data: list, storage: "kv" });
+      return json(
+        res,
+        200,
+        withKvMeta({ ok: true, data: list, storage: "kv" }, kvError),
+      );
     }
 
     const mem = store.commentsByDay.get(dayListKey) || [];
-    return json(res, 200, { ok: true, data: mem, storage: "memory" });
+    return json(
+      res,
+      200,
+      withKvMeta({ ok: true, data: mem, storage: "memory" }, kvError),
+    );
   }
 
   if (req.method !== "POST") {
-    return json(res, 405, { ok: false, error: "method_not_allowed" });
+    return json(
+      res,
+      405,
+      withKvMeta({ ok: false, error: "method_not_allowed" }, kvError),
+    );
   }
 
   const body =
@@ -136,7 +186,11 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
   ).trim();
   const planToken = getPlanToken(req, body);
   if (commentTokenEnv && commentTokenEnv !== planToken) {
-    return json(res, 403, { ok: false, error: "forbidden" });
+    return json(
+      res,
+      403,
+      withKvMeta({ ok: false, error: "forbidden" }, kvError),
+    );
   }
 
   const author = String(body.author || "")
@@ -144,12 +198,31 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
     .slice(0, 60);
   const text = String(body.text || "").trim();
   const safeDayKey = normId(body.dayKey || dayKey);
-  if (!planId) return json(res, 400, { ok: false, error: "missing_planId" });
+  if (!planId) {
+    return json(
+      res,
+      400,
+      withKvMeta({ ok: false, error: "missing_planId" }, kvError),
+    );
+  }
   if (!safeDayKey)
-    return json(res, 400, { ok: false, error: "missing_dayKey" });
-  if (!text) return json(res, 400, { ok: false, error: "missing_text" });
+    return json(
+      res,
+      400,
+      withKvMeta({ ok: false, error: "missing_dayKey" }, kvError),
+    );
+  if (!text)
+    return json(
+      res,
+      400,
+      withKvMeta({ ok: false, error: "missing_text" }, kvError),
+    );
   if (text.length > 2000)
-    return json(res, 413, { ok: false, error: "text_too_long" });
+    return json(
+      res,
+      413,
+      withKvMeta({ ok: false, error: "text_too_long" }, kvError),
+    );
 
   const entry = {
     id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`,
@@ -165,12 +238,19 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
   if (kv) {
     await kv.rpush(safeDayListKey, JSON.stringify(entry));
     await kv.rpush(allListKey, JSON.stringify(entry));
-    return json(res, 200, {
-      ok: true,
-      data: entry,
-      persisted: true,
-      storage: "kv",
-    });
+    return json(
+      res,
+      200,
+      withKvMeta(
+        {
+          ok: true,
+          data: entry,
+          persisted: true,
+          storage: "kv",
+        },
+        kvError,
+      ),
+    );
   }
 
   const dayArr = store.commentsByDay.get(safeDayListKey) || [];
@@ -179,30 +259,48 @@ async function handleComments(req, res, kv, store, planId, dayKey, wantAll) {
   const allArr = store.commentsAll.get(planId) || [];
   allArr.push(entry);
   store.commentsAll.set(planId, allArr);
-  return json(res, 200, {
-    ok: true,
-    data: entry,
-    persisted: false,
-    storage: "memory",
-  });
+  return json(
+    res,
+    200,
+    withKvMeta(
+      {
+        ok: true,
+        data: entry,
+        persisted: false,
+        storage: "memory",
+      },
+      kvError,
+    ),
+  );
 }
 
-async function handleOverride(req, res, kv, store, planId) {
+async function handleOverride(req, res, kv, store, planId, kvError) {
   const key = `plan:override:${planId}`;
   if (req.method === "GET") {
     if (kv) {
       const data = await kv.get(key);
-      return json(res, 200, { ok: true, data: data || null, storage: "kv" });
+      return json(
+        res,
+        200,
+        withKvMeta({ ok: true, data: data || null, storage: "kv" }, kvError),
+      );
     }
-    return json(res, 200, {
-      ok: true,
-      data: store.overrides.get(key) || null,
-      storage: "memory",
-    });
+    return json(
+      res,
+      200,
+      withKvMeta(
+        { ok: true, data: store.overrides.get(key) || null, storage: "memory" },
+        kvError,
+      ),
+    );
   }
 
   if (req.method !== "POST") {
-    return json(res, 405, { ok: false, error: "method_not_allowed" });
+    return json(
+      res,
+      405,
+      withKvMeta({ ok: false, error: "method_not_allowed" }, kvError),
+    );
   }
 
   const body =
@@ -215,12 +313,20 @@ async function handleOverride(req, res, kv, store, planId) {
   ).trim();
   const planToken = getPlanToken(req, body);
   if (planTokenEnv && planTokenEnv !== planToken) {
-    return json(res, 403, { ok: false, error: "forbidden" });
+    return json(
+      res,
+      403,
+      withKvMeta({ ok: false, error: "forbidden" }, kvError),
+    );
   }
 
   const scheduleData = body.scheduleData;
   if (!Array.isArray(scheduleData)) {
-    return json(res, 400, { ok: false, error: "missing_scheduleData" });
+    return json(
+      res,
+      400,
+      withKvMeta({ ok: false, error: "missing_scheduleData" }, kvError),
+    );
   }
 
   const override = {
@@ -234,15 +340,27 @@ async function handleOverride(req, res, kv, store, planId) {
 
   if (kv) {
     await kv.set(key, override);
-    return json(res, 200, { ok: true, data: override, storage: "kv" });
+    return json(
+      res,
+      200,
+      withKvMeta({ ok: true, data: override, storage: "kv" }, kvError),
+    );
   }
   store.overrides.set(key, override);
-  return json(res, 200, { ok: true, data: override, storage: "memory" });
+  return json(
+    res,
+    200,
+    withKvMeta({ ok: true, data: override, storage: "memory" }, kvError),
+  );
 }
 
-async function handleAiAdjust(req, res, kv, store, planId) {
+async function handleAiAdjust(req, res, kv, store, planId, kvError) {
   if (req.method !== "POST") {
-    return json(res, 405, { ok: false, error: "method_not_allowed" });
+    return json(
+      res,
+      405,
+      withKvMeta({ ok: false, error: "method_not_allowed" }, kvError),
+    );
   }
 
   const body =
@@ -253,12 +371,20 @@ async function handleAiAdjust(req, res, kv, store, planId) {
   const planTokenEnv = String(process.env.PLAN_ADMIN_TOKEN || "").trim();
   const planToken = getPlanToken(req, body);
   if (planTokenEnv && planTokenEnv !== planToken) {
-    return json(res, 403, { ok: false, error: "forbidden" });
+    return json(
+      res,
+      403,
+      withKvMeta({ ok: false, error: "forbidden" }, kvError),
+    );
   }
 
   const scheduleData = body.scheduleData;
   if (!Array.isArray(scheduleData)) {
-    return json(res, 400, { ok: false, error: "missing_scheduleData" });
+    return json(
+      res,
+      400,
+      withKvMeta({ ok: false, error: "missing_scheduleData" }, kvError),
+    );
   }
 
   const rawModelName = String(
@@ -274,11 +400,18 @@ async function handleAiAdjust(req, res, kv, store, planId) {
     process.env.GENAI_API_KEY ||
     "";
   if (!apiKey) {
-    return json(res, 501, {
-      ok: false,
-      error: "missing_api_key",
-      text: "Máy chủ chưa cấu hình API key.",
-    });
+    return json(
+      res,
+      501,
+      withKvMeta(
+        {
+          ok: false,
+          error: "missing_api_key",
+          text: "Máy chủ chưa cấu hình API key.",
+        },
+        kvError,
+      ),
+    );
   }
 
   let comments = Array.isArray(body.comments) ? body.comments : [];
@@ -332,11 +465,11 @@ async function handleAiAdjust(req, res, kv, store, planId) {
     const msg =
       (data && data.error && data.error.message) ||
       `Gemini error ${resp.status}`;
-    return json(res, resp.status, {
-      ok: false,
-      error: "gemini_error",
-      text: msg,
-    });
+    return json(
+      res,
+      resp.status,
+      withKvMeta({ ok: false, error: "gemini_error", text: msg }, kvError),
+    );
   }
 
   let text = "";
@@ -350,7 +483,11 @@ async function handleAiAdjust(req, res, kv, store, planId) {
 
   const parsed = extractJson(text);
   if (!parsed || !Array.isArray(parsed.scheduleData)) {
-    return json(res, 200, { ok: true, parsed: false, text });
+    return json(
+      res,
+      200,
+      withKvMeta({ ok: true, parsed: false, text }, kvError),
+    );
   }
 
   const override = {
@@ -365,39 +502,54 @@ async function handleAiAdjust(req, res, kv, store, planId) {
   const key = `plan:override:${planId}`;
   if (kv) {
     await kv.set(key, override);
-    return json(res, 200, {
-      ok: true,
-      parsed: true,
-      data: override,
-      storage: "kv",
-    });
+    return json(
+      res,
+      200,
+      withKvMeta(
+        { ok: true, parsed: true, data: override, storage: "kv" },
+        kvError,
+      ),
+    );
   }
   store.overrides.set(key, override);
-  return json(res, 200, {
-    ok: true,
-    parsed: true,
-    data: override,
-    storage: "memory",
-  });
+  return json(
+    res,
+    200,
+    withKvMeta(
+      { ok: true, parsed: true, data: override, storage: "memory" },
+      kvError,
+    ),
+  );
 }
 
-async function handleProgress(req, res, kv, store, planId) {
+async function handleProgress(req, res, kv, store, planId, kvError) {
   const key = `plan:progress:${planId}`;
 
   if (req.method === "GET") {
     if (kv) {
       const data = await kv.get(key);
-      return json(res, 200, { ok: true, data: data || null, storage: "kv" });
+      return json(
+        res,
+        200,
+        withKvMeta({ ok: true, data: data || null, storage: "kv" }, kvError),
+      );
     }
-    return json(res, 200, {
-      ok: true,
-      data: store.progress.get(key) || null,
-      storage: "memory",
-    });
+    return json(
+      res,
+      200,
+      withKvMeta(
+        { ok: true, data: store.progress.get(key) || null, storage: "memory" },
+        kvError,
+      ),
+    );
   }
 
   if (req.method !== "POST") {
-    return json(res, 405, { ok: false, error: "method_not_allowed" });
+    return json(
+      res,
+      405,
+      withKvMeta({ ok: false, error: "method_not_allowed" }, kvError),
+    );
   }
 
   const body =
@@ -408,7 +560,11 @@ async function handleProgress(req, res, kv, store, planId) {
   const progressTokenEnv = String(process.env.PLAN_PROGRESS_TOKEN || "").trim();
   const planToken = getPlanToken(req, body);
   if (progressTokenEnv && progressTokenEnv !== planToken) {
-    return json(res, 403, { ok: false, error: "forbidden" });
+    return json(
+      res,
+      403,
+      withKvMeta({ ok: false, error: "forbidden" }, kvError),
+    );
   }
 
   const completedMap = body.completedMap;
@@ -417,7 +573,11 @@ async function handleProgress(req, res, kv, store, planId) {
     typeof completedMap !== "object" ||
     Array.isArray(completedMap)
   ) {
-    return json(res, 400, { ok: false, error: "missing_completedMap" });
+    return json(
+      res,
+      400,
+      withKvMeta({ ok: false, error: "missing_completedMap" }, kvError),
+    );
   }
 
   const value = {
@@ -428,10 +588,18 @@ async function handleProgress(req, res, kv, store, planId) {
 
   if (kv) {
     await kv.set(key, value);
-    return json(res, 200, { ok: true, data: value, storage: "kv" });
+    return json(
+      res,
+      200,
+      withKvMeta({ ok: true, data: value, storage: "kv" }, kvError),
+    );
   }
   store.progress.set(key, value);
-  return json(res, 200, { ok: true, data: value, storage: "memory" });
+  return json(
+    res,
+    200,
+    withKvMeta({ ok: true, data: value, storage: "memory" }, kvError),
+  );
 }
 
 module.exports = async function handler(req, res) {
@@ -446,23 +614,36 @@ module.exports = async function handler(req, res) {
       String(req.query?.all || "").trim() === "1" ||
       String(req.query?.all || "").toLowerCase() === "true";
 
-    const kv = await getKv();
+    const { kv, kvError } = await getKvSafe();
     const store = getStore();
 
     if (op === "comments") {
-      return await handleComments(req, res, kv, store, planId, dayKey, wantAll);
+      return await handleComments(
+        req,
+        res,
+        kv,
+        store,
+        planId,
+        dayKey,
+        wantAll,
+        kvError,
+      );
     }
     if (op === "override") {
-      return await handleOverride(req, res, kv, store, planId);
+      return await handleOverride(req, res, kv, store, planId, kvError);
     }
     if (op === "ai_adjust") {
-      return await handleAiAdjust(req, res, kv, store, planId);
+      return await handleAiAdjust(req, res, kv, store, planId, kvError);
     }
     if (op === "progress") {
-      return await handleProgress(req, res, kv, store, planId);
+      return await handleProgress(req, res, kv, store, planId, kvError);
     }
 
-    return json(res, 400, { ok: false, error: "missing_op" });
+    return json(
+      res,
+      400,
+      withKvMeta({ ok: false, error: "missing_op" }, kvError),
+    );
   } catch (e) {
     return json(res, 500, {
       ok: false,
