@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch Trình Chiến Đấu Tuần (GCal Style)</title>
+    <title>Lịch Trình Tuần 22 (GCal Style)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Tùy chỉnh thanh cuộn ngang/dọc cho giống app native */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        /* Hiệu ứng cho event card */
-        .gcal-event { 
-            transition: all 0.2s ease; 
+
+        .gcal-event {
+            transition: all 0.2s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -24,37 +22,32 @@
             filter: brightness(0.95);
             transform: scale(0.99);
         }
-        
-        /* Trạng thái hoàn thành */
-        .completed { 
-            opacity: 0.5; 
-            filter: grayscale(80%); 
+
+        .completed {
+            opacity: 0.5;
+            filter: grayscale(80%);
         }
         .completed .event-title { text-decoration: line-through; }
         .completed .check-overlay { display: flex; }
-        
-        /* Giữ cố định chiều cao để cuộn nội dung cột */
+
         body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         #main-wrapper { flex: 1; min-height: 0; display: flex; flex-direction: column; }
     </style>
 </head>
 <body class="bg-white text-slate-800 font-sans antialiased">
-
-    <!-- Header / Navbar -->
     <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shrink-0">
         <div class="flex items-center gap-3">
             <div class="p-2 bg-indigo-100 rounded-lg text-indigo-600">
                 <i data-lucide="calendar-days" class="w-6 h-6"></i>
             </div>
             <div>
-                <h1 class="text-xl font-bold text-slate-900 leading-tight">Lịch Trình Tuần - Chế Độ 18h</h1>
-                <p class="text-sm text-slate-500 font-medium">Click vào sự kiện để đánh dấu hoàn thành</p>
+                <h1 class="text-xl font-bold text-slate-900 leading-tight">Lịch Trình Tuần 22 - Chế Độ 18h</h1>
+                <p class="text-sm text-slate-500 font-medium">Click vào sự kiện để tick; mở modal để comment/dời/sửa/xoá</p>
             </div>
         </div>
-        
-        <!-- Chú giải (Legend) -->
+
         <div class="flex flex-wrap gap-3 text-xs font-semibold">
-            <span class="px-2 py-1 rounded bg-blue-100 text-blue-800 border-l-4 border-blue-500">Hành chính (9h-18h)</span>
+            <span class="px-2 py-1 rounded bg-blue-100 text-blue-800 border-l-4 border-blue-500">Hành chính</span>
             <span class="px-2 py-1 rounded bg-emerald-100 text-emerald-800 border-l-4 border-emerald-500">Tự do</span>
             <span class="px-2 py-1 rounded bg-purple-100 text-purple-800 border-l-4 border-purple-500">Học tập</span>
             <span class="px-2 py-1 rounded bg-slate-100 text-slate-600 border-l-4 border-slate-400">Nghỉ/Ngủ</span>
@@ -63,12 +56,8 @@
         <div class="w-full md:w-auto flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <input id="plan-token" type="password" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 w-full md:w-64" placeholder="Plan Token (tuỳ chọn)" />
-                <button id="sync-now" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
-                    Đồng bộ
-                </button>
-                <button id="save-week" class="px-3 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">
-                    Lưu lịch
-                </button>
+                <button id="sync-now" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">Đồng bộ</button>
+                <button id="save-week" class="px-3 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">Lưu lịch</button>
             </div>
             <div class="flex items-center justify-between gap-2 text-xs text-slate-500">
                 <div id="sync-status">Sync: local</div>
@@ -77,12 +66,9 @@
         </div>
     </header>
 
-    <!-- Khu vực cuộn ngang (Horizontal Scroll Area) -->
     <main id="main-wrapper" class="bg-slate-50 p-4 overflow-hidden">
         <div id="schedule-scroll" class="h-full overflow-auto pb-2">
-            <div id="schedule-container" class="flex gap-4 min-w-max snap-x">
-                <!-- Time column + các cột ngày sẽ được render bằng JS -->
-            </div>
+            <div id="schedule-container" class="flex gap-4 min-w-max snap-x"></div>
         </div>
     </main>
 
@@ -93,9 +79,7 @@
                     <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Task</div>
                     <div id="task-modal-title" class="text-base font-bold text-slate-900 truncate">—</div>
                 </div>
-                <button id="task-modal-close" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">
-                    Đóng
-                </button>
+                <button id="task-modal-close" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">Đóng</button>
             </div>
             <div class="p-5">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -116,18 +100,12 @@
                         <textarea id="edit-title" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 w-full min-h-[110px]" placeholder="Nội dung task"></textarea>
 
                         <div class="flex flex-col sm:flex-row gap-2">
-                            <button id="apply-edit" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
-                                Áp dụng (chưa lưu)
-                            </button>
+                            <button id="apply-edit" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">Áp dụng (chưa lưu)</button>
                             <div class="flex items-center gap-2 flex-1">
                                 <select id="move-to-day" class="px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 w-full"></select>
-                                <button id="move-task" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors shrink-0">
-                                    Dời
-                                </button>
+                                <button id="move-task" class="px-3 py-2 rounded-lg text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors shrink-0">Dời</button>
                             </div>
-                            <button id="delete-task" class="px-3 py-2 rounded-lg text-sm font-semibold bg-red-50 text-red-700 hover:bg-red-100 transition-colors">
-                                Xoá
-                            </button>
+                            <button id="delete-task" class="px-3 py-2 rounded-lg text-sm font-semibold bg-red-50 text-red-700 hover:bg-red-100 transition-colors">Xoá</button>
                         </div>
                     </div>
 
@@ -139,9 +117,7 @@
                             <input id="comment-text" class="sm:col-span-3 px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200" placeholder="Nhập góp ý cho task này..." />
                         </div>
                         <div class="flex justify-end">
-                            <button id="comment-submit" class="px-3 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">
-                                Gửi góp ý
-                            </button>
+                            <button id="comment-submit" class="px-3 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">Gửi góp ý</button>
                         </div>
                         <div id="comment-status" class="text-xs text-slate-500"></div>
                     </div>
@@ -151,7 +127,6 @@
     </div>
 
     <script>
-        // Cấu hình style giống thẻ sự kiện Google Calendar
         const typeConfig = {
             'Hành chính': { bg: 'bg-blue-100', text: 'text-blue-900', border: 'border-blue-500', timeText: 'text-blue-700' },
             'Tự do': { bg: 'bg-emerald-100', text: 'text-emerald-900', border: 'border-emerald-500', timeText: 'text-emerald-700' },
@@ -159,126 +134,112 @@
             'Nghỉ/Ngủ': { bg: 'bg-slate-100', text: 'text-slate-700', border: 'border-slate-400', timeText: 'text-slate-500' },
         };
 
-        // Hàm tự động parse "HH:MM - HH:MM" thành tổng số giờ (Xử lý mượt cả ca vắt qua đêm)
-        function getDurationInHours(timeStr) {
-            if (timeStr === 'All day' || timeStr === 'Flexible') return 4; // Mặc định 4 tiếng cho các task mở
-            try {
-                const parts = timeStr.split('-');
-                if (parts.length !== 2) return 1.5; 
-                
-                const parseTime = (t) => {
-                    const [h, m] = t.trim().split(':').map(Number);
-                    return h * 60 + (m || 0);
-                };
-                
-                let startMins = parseTime(parts[0]);
-                let endMins = parseTime(parts[1]);
-                
-                // Thuật toán: Nếu kết thúc < bắt đầu -> tức là đã sang ngày hôm sau
-                if (endMins <= startMins) {
-                    endMins += 24 * 60;
-                }
-                
-                return (endMins - startMins) / 60;
-            } catch(e) {
-                return 1.5; // Fallback an toàn
-            }
-        }
-
-        // Dữ liệu bóc tách rõ Ngày và Subtitle để render header cột đẹp hơn
         const scheduleData = [
             {
                 day: 'THỨ 2',
-                date: '18/05',
-                subtitle: 'Chạy nước rút RFI & AI Base',
+                date: '25/05',
+                subtitle: 'RFI UI Deadline & Demo Gov-AI',
                 tasks: [
-                    { time: '09:00 - 13:00', type: 'Hành chính', project: 'RFI Web', title: 'Đánh giá cấu trúc Data & logic. Fix khẩn cấp issue để kịp chiều chốt.' },
-                    { time: '13:00 - 17:00', type: 'Hành chính', project: 'RFI Web', title: 'Họp trao đổi feedback logic. Chốt xong Database Structure.' },
-                    { time: '17:00 - 18:00', type: 'Hành chính', project: 'AI Agent', title: 'Bắt đầu outline bản draft "Kế hoạch triển khai & Cấu hình".' },
-                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn uống, reset não bộ.' },
-                    { time: '19:00 - 22:00', type: 'Hành chính', project: 'AI Agent', title: 'Đẩy tốc độ hoàn thiện Base Plan (Để sáng mai gửi sớm).' },
-                    { time: '22:00 - 01:00', type: 'Tự do', project: 'AI Phường Xã', title: 'Code test & nâng cấp version đầu tiên.' },
-                    { time: '01:00 - 04:00', type: 'Học tập', project: 'AI Y tế', title: 'Setup môi trường, bắt đầu fine-tuning model Tâm lý.' },
-                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                    { time: '09:00 - 13:00', type: 'Hành chính', project: 'RFI Web', title: 'Hoàn thiện RFI UI (Chuẩn bị họp 14h).' },
+                    { time: '13:00 - 14:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ trưa, ăn uống.' },
+                    { time: '14:00 - 16:00', type: 'Hành chính', project: 'RFI Web', title: 'Họp Review RFI UI.' },
+                    { time: '16:00 - 18:00', type: 'Học tập', project: 'AI Y tế', title: 'Fix Agent Med-AI (2h).' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn tối.' },
+                    { time: '19:00 - 20:30', type: 'Tự do', project: 'Gov-AI', title: 'Dry-run & Chuẩn bị Demo Gov-AI.' },
+                    { time: '20:30 - 22:00', type: 'Tự do', project: 'Gov-AI', title: 'DEMO DỰ ÁN Gov-AI.' },
+                    { time: '22:00 - 01:00', type: 'Học tập', project: 'AI Y tế', title: 'Fix Agent Med-AI (3h).' },
+                    { time: '01:00 - 03:00', type: 'Tự do', project: 'Gov-AI', title: 'Ghi nhận feedback, lên list Fix nghiệp vụ.' },
+                    { time: '03:00 - 08:30', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu.' },
                 ]
             },
             {
                 day: 'THỨ 3',
-                date: '19/05',
-                subtitle: 'Xử lý RFI & Đẩy mạnh AI',
+                date: '26/05',
+                subtitle: 'Web PM & Nhận Review RFI',
                 tasks: [
-                    { time: '09:00 - 10:00', type: 'Hành chính', project: 'AI Agent', title: 'Review final và BÁO CÁO KẾ HOẠCH BASE.' },
-                    { time: '10:00 - 18:00', type: 'Hành chính', project: 'RFI Web', title: 'Code & hoàn thiện phần: "General Required Information".' },
-                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn uống, reset não bộ.' },
-                    { time: '19:00 - 23:00', type: 'Tự do', project: 'AI Phường Xã', title: 'Nâng cấp luồng logic xử lý của phường xã.' },
-                    { time: '23:00 - 04:00', type: 'Học tập', project: 'AI Y tế', title: 'Ép prompt, test output các ca tư vấn tâm lý.' },
-                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                    { time: '09:00 - 12:00', type: 'Hành chính', project: 'Web PM', title: 'Lên kế hoạch & chuẩn bị tài liệu train Leader sử dụng Web PM.' },
+                    { time: '12:00 - 13:30', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ trưa, ăn uống.' },
+                    { time: '13:30 - 15:00', type: 'Hành chính', project: 'Web PM', title: 'Meeting train các Leader sử dụng hệ thống.' },
+                    { time: '15:00 - 18:00', type: 'Hành chính', project: 'TRV', title: 'Phát triển chèn hình nội suy vào báo cáo.' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn tối.' },
+                    { time: '19:00 - 23:00', type: 'Hành chính', project: 'RFI Web', title: 'Nhận feedback RFI. Bắt đầu sửa (nếu có).' },
+                    { time: '23:00 - 01:00', type: 'Tự do', project: 'Gov-AI', title: 'Fix nghiệp vụ Gov-AI.' },
+                    { time: '01:00 - 03:00', type: 'Học tập', project: 'AI Y tế', title: 'Fix Agent Med-AI.' },
+                    { time: '03:00 - 08:30', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu.' },
                 ]
             },
             {
                 day: 'THỨ 4',
-                date: '20/05',
-                subtitle: 'Input Data & Chuẩn bị Demo',
+                date: '27/05',
+                subtitle: 'Push TOV/TRV & NCKH',
                 tasks: [
-                    { time: '09:00 - 14:00', type: 'Hành chính', project: 'PM Tool', title: 'Nhập data vào Web (Viết script auto-fill API nếu được).' },
-                    { time: '14:00 - 18:00', type: 'Hành chính', project: 'AI Agent', title: 'Tiến hành tinh chỉnh bài toán AI, đánh giá độ phức tạp.' },
-                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn uống, reset não bộ.' },
-                    { time: '19:00 - 22:00', type: 'Tự do', project: 'AI Phường Xã', title: 'Fix bug, hẹn lịch Demo tối Thứ 5 (20h-21h).' },
-                    { time: '22:00 - 04:00', type: 'Học tập', project: 'AI Y tế', title: 'Đóng gói Agent, bắt đầu viết luận báo cáo.' },
-                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                    { time: '09:00 - 12:00', type: 'Học tập', project: 'NCKH', title: 'Viết thuyết minh nghiên cứu khoa học.' },
+                    { time: '12:00 - 13:30', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ trưa, ăn uống.' },
+                    { time: '13:30 - 16:30', type: 'Hành chính', project: 'TOV', title: 'Phát triển AI viết câu văn mẫu báo cáo.' },
+                    { time: '16:30 - 18:00', type: 'Hành chính', project: 'TRV', title: 'Sửa lại câu văn TRV chuẩn hơn.' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn tối.' },
+                    { time: '19:00 - 22:00', type: 'Học tập', project: 'AI Y tế', title: 'Fix Agent Med-AI (chốt phần fix).' },
+                    { time: '22:00 - 01:00', type: 'Học tập', project: 'KLTN', title: 'Bắt đầu viết luận tốt nghiệp.' },
+                    { time: '01:00 - 03:00', type: 'Học tập', project: 'AI Y tế', title: 'Hỗ trợ prompt Graph Med-AI cho Thịnh.' },
+                    { time: '03:00 - 08:30', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu.' },
                 ]
             },
             {
                 day: 'THỨ 5',
-                date: '21/05',
-                subtitle: 'Ngày của Demo & NCKH',
+                date: '28/05',
+                subtitle: 'Chốt Agent & Deadline TOV/TRV',
                 tasks: [
-                    { time: '09:00 - 12:00', type: 'Hành chính', project: 'AI Agent', title: 'Chốt & gửi bản Tinh chỉnh cấu hình (Deadline).' },
-                    { time: '12:00 - 18:00', type: 'Hành chính', project: 'RFI Web', title: 'Refine DB dựa trên test thực tế. Lên outline sub-tasks.' },
-                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn uống, reset não bộ.' },
-                    { time: '19:00 - 20:00', type: 'Tự do', project: 'AI Phường Xã', title: 'Dry-run (Chạy thử) hệ thống trước khi lên sóng.' },
-                    { time: '20:00 - 21:00', type: 'Tự do', project: 'AI Phường Xã', title: '🌟 DEMO DỰ ÁN (30p demo + 30p Q&A).' },
-                    { time: '21:00 - 22:00', type: 'Học tập', project: 'AI Y tế', title: 'Rà soát lại bài luận báo cáo lần cuối.' },
-                    { time: '22:00 - 03:00', type: 'Học tập', project: 'NCKH', title: 'Viết thuyết minh, tài liệu, chốt sản phẩm đầu ra.' },
-                    { time: '03:00 - 04:00', type: 'Nghỉ/Ngủ', project: '', title: 'Buffer time - Xử lý việc phát sinh.' },
-                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                    { time: '09:00 - 11:00', type: 'Hành chính', project: 'AI Agent', title: 'Nhận phản hồi HN, chốt & hiệu chỉnh bài toán Agent.' },
+                    { time: '11:00 - 13:00', type: 'Hành chính', project: 'TOV', title: 'Hoàn thiện AI viết câu văn mẫu.' },
+                    { time: '13:00 - 14:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ trưa, ăn uống.' },
+                    { time: '14:00 - 15:30', type: 'Hành chính', project: 'TRV', title: 'Hoàn thiện chèn hình & câu văn.' },
+                    { time: '15:30 - 18:00', type: 'Học tập', project: 'KLTN', title: 'Viết luận tốt nghiệp.' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn tối.' },
+                    { time: '19:00 - 20:30', type: 'Học tập', project: 'NASM', title: 'Làm bài tập NASM Hợp ngữ.' },
+                    { time: '20:30 - 21:30', type: 'Học tập', project: 'AI Y tế', title: 'Hoàn thành hỗ trợ prompt cho Thịnh.' },
+                    { time: '21:30 - 23:00', type: 'Học tập', project: 'KLTN', title: 'Viết luận tốt nghiệp (deadline T6).' },
+                    { time: '23:00 - 03:00', type: 'Học tập', project: 'NCKH', title: 'Rà soát thuyết minh NCKH & in ấn chuẩn bị nộp.' },
+                    { time: '03:00 - 08:30', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu.' },
                 ]
             },
             {
                 day: 'THỨ 6',
-                date: '22/05',
-                subtitle: 'Duy trì & Bứt phá',
+                date: '29/05',
+                subtitle: 'Nộp NCKH & Deadline KLTN',
                 tasks: [
-                    { time: 'All day', type: 'Hành chính', project: 'RFI Web', title: 'Tinh chỉnh UI và logic Backend dựa trên Database đã chốt cứng.' },
-                    { time: 'All day', type: 'Hành chính', project: 'AI Agent', title: 'Test độ ổn định, review document cho Deadline Thứ 2 tuần sau.' },
+                    { time: '09:00 - 12:00', type: 'Học tập', project: 'NCKH', title: 'Lên trường nộp thuyết minh NCKH & xin chữ ký GV.' },
+                    { time: '12:00 - 13:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ trưa.' },
+                    { time: '13:00 - 18:00', type: 'Học tập', project: 'KLTN', title: 'Buffer time hoàn thiện KLTN & review lần cuối.' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, xả hơi.' },
+                    { time: '19:00 - 23:00', type: 'Hành chính', project: 'Misc', title: 'Xử lý các task phát sinh/trễ deadline trong tuần.' },
                 ]
             },
             {
                 day: 'THỨ 7',
-                date: '23/05',
-                subtitle: 'Duy trì & Bứt phá',
+                date: '30/05',
+                subtitle: 'Bảo trì & Tự do',
                 tasks: [
-                    { time: 'All day', type: 'Hành chính', project: 'RFI Web', title: 'Hoàn thiện nốt UI/flow còn vướng và chạy regression.' },
-                    { time: 'Flexible', type: 'Tự do', project: 'AI Phường Xã', title: 'Xử lý feedback, yêu cầu chỉnh sửa sau buổi Demo.' },
+                    { time: 'Flexible', type: 'Học tập', project: 'KLTN', title: 'Tinh chỉnh format KLTN (nếu cần).' },
+                    { time: 'Flexible', type: 'Tự do', project: 'Gov-AI', title: 'Support Gov-AI nếu có lỗi phát sinh sau demo.' },
                 ]
             },
             {
                 day: 'CHỦ NHẬT',
-                date: '24/05',
-                subtitle: 'Duy trì & Chuẩn bị tuần mới',
+                date: '31/05',
+                subtitle: 'Nghỉ ngơi',
                 tasks: [
-                    { time: 'Flexible', type: 'Học tập', project: 'AI Y tế', title: 'Ôn lại prompt/agent flow, chuẩn bị phần báo cáo tuần.' },
+                    { time: 'All day', type: 'Nghỉ/Ngủ', project: '', title: 'Off-day. Phục hồi thể lực & chuẩn bị tuần mới.' },
                 ]
             }
         ];
 
-        const PLAN_ID = 'plan_thang5_week20';
+        const PLAN_ID = 'plan_thang5_week22';
         const storageKeys = {
             token: `${PLAN_ID}_token`,
             author: `${PLAN_ID}_author`,
             completed: `${PLAN_ID}_completed`,
             overrideCache: `${PLAN_ID}_override_cache`,
-            commentsCache: `${PLAN_ID}_comments_cache`
+            commentsCache: `${PLAN_ID}_comments_cache`,
         };
 
         function readStorage(key, fallback) {
@@ -398,18 +359,18 @@
                 scheduleData: scheduleRuntime,
                 summaryMarkdown: summaryMarkdown || 'Manual update',
                 modelName: 'manual',
-                planToken
+                planToken,
             };
             try {
                 const resp = await fetchJson(`/api/plan?op=override`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        ...(planToken ? { 'X-Plan-Token': planToken } : {})
+                        ...(planToken ? { 'X-Plan-Token': planToken } : {}),
                     },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(payload),
                 });
-                writeStorage(storageKeys.overrideCache, resp.data || payload);
+                writeStorage(storageKeys.overrideCache, resp?.data || payload);
                 setScheduleStatus(resp.storage === 'kv' ? 'Lịch: đã lưu KV' : 'Lịch: đã lưu');
             } catch (e) {
                 writeStorage(storageKeys.overrideCache, payload);
@@ -444,9 +405,9 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        ...(planToken ? { 'X-Plan-Token': planToken } : {})
+                        ...(planToken ? { 'X-Plan-Token': planToken } : {}),
                     },
-                    body: JSON.stringify({ planId: PLAN_ID, completedMap, planToken })
+                    body: JSON.stringify({ planId: PLAN_ID, completedMap, planToken }),
                 });
                 setSyncStatus('Sync: đã lưu');
             } catch (e) {
@@ -475,10 +436,10 @@
                 container.innerHTML = '<div class="text-sm text-slate-500">Chưa có góp ý.</div>';
                 return;
             }
-            container.innerHTML = list.map(item => {
-                const author = escapeHtml(item.author || 'Leader');
-                const createdAt = escapeHtml(item.createdAt || '');
-                const text = escapeHtml(item.text || '');
+            container.innerHTML = list.map((item) => {
+                const author = escapeHtml(item?.author || 'Leader');
+                const createdAt = escapeHtml(item?.createdAt || '');
+                const text = escapeHtml(item?.text || '');
                 return `
                     <div class="rounded-lg border border-slate-200 bg-white p-3">
                         <div class="flex justify-between items-center gap-2">
@@ -496,7 +457,7 @@
             if (statusEl) statusEl.textContent = 'Đang tải...';
             try {
                 const data = await fetchJson(`/api/plan?op=comments&planId=${encodeURIComponent(PLAN_ID)}&dayKey=${encodeURIComponent(commentKey)}`);
-                renderComments(data.data || []);
+                renderComments(data?.data || []);
                 if (statusEl) statusEl.textContent = data.storage === 'kv' ? 'Đã tải (KV).' : 'Đã tải (server).';
             } catch (e) {
                 const cache = readStorage(storageKeys.commentsCache, {}) || {};
@@ -506,133 +467,51 @@
             }
         }
 
-        async function submitTaskComment(commentKey) {
-            const authorInput = document.getElementById('comment-author');
-            const textInput = document.getElementById('comment-text');
+        async function submitComment(commentKey, author, text) {
             const statusEl = document.getElementById('comment-status');
-            const author = (authorInput?.value || readStorage(storageKeys.author, '') || '').trim();
-            const text = (textInput?.value || '').trim();
-            if (!text) {
-                if (statusEl) statusEl.textContent = 'Vui lòng nhập góp ý.';
-                return;
-            }
             if (statusEl) statusEl.textContent = 'Đang gửi...';
+            const planToken = getPlanToken();
+            const payload = { planId: PLAN_ID, dayKey: commentKey, author: author || '', text, planToken };
             try {
-                if (authorInput && authorInput.value.trim()) writeStorage(storageKeys.author, authorInput.value.trim());
-                const planToken = getPlanToken();
-                await fetchJson('/api/plan?op=comments', {
+                const resp = await fetchJson(`/api/plan?op=comments`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        ...(planToken ? { 'X-Plan-Token': planToken } : {})
+                        ...(planToken ? { 'X-Plan-Token': planToken } : {}),
                     },
-                    body: JSON.stringify({ planId: PLAN_ID, dayKey: commentKey, author: author || 'Leader', text, planToken })
+                    body: JSON.stringify(payload),
                 });
-                if (textInput) textInput.value = '';
+                if (statusEl) statusEl.textContent = resp.storage === 'kv' ? 'Đã gửi (KV).' : 'Đã gửi.';
                 await loadTaskComments(commentKey);
-                if (statusEl) statusEl.textContent = 'Đã gửi.';
             } catch (e) {
                 const cache = readStorage(storageKeys.commentsCache, {}) || {};
                 const list = Array.isArray(cache[commentKey]) ? cache[commentKey] : [];
                 const entry = {
-                    id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`,
+                    id: `local_${Date.now()}`,
                     planId: PLAN_ID,
                     dayKey: commentKey,
-                    author: author || 'Leader',
+                    author: author || '',
                     text,
-                    createdAt: new Date().toISOString()
+                    createdAt: new Date().toLocaleString('vi-VN'),
                 };
                 list.push(entry);
                 cache[commentKey] = list;
                 writeStorage(storageKeys.commentsCache, cache);
-                if (textInput) textInput.value = '';
-                await loadTaskComments(commentKey);
-                if (statusEl) statusEl.textContent = 'Đã lưu (local).';
+                renderComments(list);
+                if (statusEl) statusEl.textContent = 'Đã gửi (local).';
             }
         }
 
         function findTaskById(taskId) {
-            for (let d = 0; d < scheduleRuntime.length; d++) {
-                const day = scheduleRuntime[d];
-                const tasks = day?.tasks || [];
-                for (let i = 0; i < tasks.length; i++) {
-                    if (String(tasks[i].id) === String(taskId)) {
-                        return { dayIndex: d, taskIndex: i, day, task: tasks[i] };
-                    }
+            const id = String(taskId || '');
+            for (let di = 0; di < scheduleRuntime.length; di++) {
+                const tasks = scheduleRuntime[di]?.tasks || [];
+                for (let ti = 0; ti < tasks.length; ti++) {
+                    const t = tasks[ti];
+                    if (String(t?.id) === id) return { dayIndex: di, taskIndex: ti, day: scheduleRuntime[di], task: t };
                 }
             }
             return null;
-        }
-
-        function fillDayOptions(selectedDayIndex) {
-            const select = document.getElementById('move-to-day');
-            if (!select) return;
-            const options = scheduleRuntime.map((d, idx) => {
-                const label = `${d.day} (${d.date})`;
-                const sel = idx === selectedDayIndex ? 'selected' : '';
-                return `<option value="${idx}" ${sel}>${escapeHtml(label)}</option>`;
-            }).join('');
-            select.innerHTML = options;
-        }
-
-        function openTaskModal(taskId) {
-            const found = findTaskById(taskId);
-            if (!found) return;
-            const modal = document.getElementById('task-modal');
-            const titleEl = document.getElementById('task-modal-title');
-            const doneEl = document.getElementById('task-done');
-            const statusEl = document.getElementById('task-modal-status');
-            const timeEl = document.getElementById('edit-time');
-            const typeEl = document.getElementById('edit-type');
-            const projEl = document.getElementById('edit-project');
-            const taskTitleEl = document.getElementById('edit-title');
-
-            if (modal) modal.setAttribute('data-task-id', String(taskId));
-
-            if (titleEl) titleEl.textContent = `${found.day.day} ${found.day.date}`;
-            if (doneEl) doneEl.checked = !!completedMap[String(taskId)];
-            if (statusEl) statusEl.textContent = '';
-
-            if (timeEl) timeEl.value = String(found.task.time || '');
-            if (typeEl) typeEl.value = String(found.task.type || '');
-            if (projEl) projEl.value = String(found.task.project || '');
-            if (taskTitleEl) taskTitleEl.value = String(found.task.title || '');
-
-            fillDayOptions(found.dayIndex);
-
-            const commentKey = `${found.day.date}|${taskId}`;
-            if (modal) modal.setAttribute('data-comment-key', commentKey);
-
-            openModal();
-            loadTaskComments(commentKey);
-        }
-
-        function closeTaskModal() {
-            closeModal();
-        }
-
-        function applyTaskEdit(taskId) {
-            const found = findTaskById(taskId);
-            if (!found) return false;
-            const timeEl = document.getElementById('edit-time');
-            const typeEl = document.getElementById('edit-type');
-            const projEl = document.getElementById('edit-project');
-            const titleEl = document.getElementById('edit-title');
-            found.task.time = String(timeEl?.value || found.task.time || '').trim();
-            found.task.type = String(typeEl?.value || found.task.type || '').trim();
-            found.task.project = String(projEl?.value || found.task.project || '').trim();
-            found.task.title = String(titleEl?.value || found.task.title || '').trim();
-            return true;
-        }
-
-        function deleteTask(taskId) {
-            const found = findTaskById(taskId);
-            if (!found) return false;
-            (found.day.tasks || []).splice(found.taskIndex, 1);
-            delete completedMap[String(taskId)];
-            writeStorage(storageKeys.completed, completedMap);
-            scheduleSaveProgress();
-            return true;
         }
 
         function moveTask(taskId, toDayIndex) {
@@ -688,6 +567,46 @@
             return { top, height };
         }
 
+        let modalTaskId = '';
+        let modalCommentKey = '';
+
+        function renderMoveDaySelect() {
+            const select = document.getElementById('move-to-day');
+            if (!select) return;
+            select.innerHTML = scheduleRuntime.map((d, idx) => {
+                const label = `${d?.day || ''} (${d?.date || ''})`;
+                return `<option value="${idx}">${escapeHtml(label)}</option>`;
+            }).join('');
+        }
+
+        function setModalTask(taskId) {
+            modalTaskId = String(taskId || '');
+            const found = findTaskById(modalTaskId);
+            if (!found) return;
+
+            const title = document.getElementById('task-modal-title');
+            if (title) title.textContent = `${found.day?.day || ''} ${found.day?.date || ''} • ${found.task?.time || ''}`;
+
+            const done = document.getElementById('task-done');
+            if (done) done.checked = !!completedMap[modalTaskId];
+
+            const editTime = document.getElementById('edit-time');
+            const editType = document.getElementById('edit-type');
+            const editProject = document.getElementById('edit-project');
+            const editTitle = document.getElementById('edit-title');
+            if (editTime) editTime.value = found.task?.time || '';
+            if (editType) editType.value = found.task?.type || '';
+            if (editProject) editProject.value = found.task?.project || '';
+            if (editTitle) editTitle.value = found.task?.title || '';
+
+            renderMoveDaySelect();
+            const moveSel = document.getElementById('move-to-day');
+            if (moveSel) moveSel.value = String(found.dayIndex);
+
+            modalCommentKey = modalTaskId;
+            loadTaskComments(modalCommentKey);
+        }
+
         function renderSchedule() {
             const container = document.getElementById('schedule-container');
             container.innerHTML = '';
@@ -715,23 +634,19 @@
 
             timeCol.innerHTML = timeHeader + timeBody;
             container.appendChild(timeCol);
-            
-            scheduleRuntime.forEach(dayData => {
-                // Tạo cột cho mỗi ngày
+
+            scheduleRuntime.forEach((dayData) => {
                 const col = document.createElement('div');
-                // Độ rộng cố định cho mỗi cột, trên mobile tự thu nhỏ chút xíu
                 col.className = 'w-[85vw] md:w-[320px] lg:w-[350px] shrink-0 snap-start bg-white border border-slate-200 rounded-xl shadow-sm';
-                
-                // Header của Cột
-                const isToday = dayData.day === 'THỨ 2'; // Hardcode tạm Thứ 2 là hôm nay
+
                 const headerHTML = `
                     <div class="px-4 py-3 border-b border-slate-100 shrink-0 text-center sticky top-0 bg-white/95 backdrop-blur z-10 rounded-t-xl">
-                        <div class="text-xs font-semibold ${isToday ? 'text-indigo-600' : 'text-slate-500'} mb-1">${dayData.date}</div>
-                        <h2 class="font-bold text-lg ${isToday ? 'text-indigo-600' : 'text-slate-800'} leading-none">${dayData.day}</h2>
-                        <div class="text-xs text-slate-400 mt-1.5 truncate" title="${dayData.subtitle}">${dayData.subtitle}</div>
+                        <div class="text-xs font-semibold text-slate-500 mb-1">${escapeHtml(dayData?.date || '')}</div>
+                        <h2 class="font-bold text-lg text-slate-800 leading-none">${escapeHtml(dayData?.day || '')}</h2>
+                        <div class="text-xs text-slate-400 mt-1.5 truncate" title="${escapeHtml(dayData?.subtitle || '')}">${escapeHtml(dayData?.subtitle || '')}</div>
                     </div>
                 `;
-                
+
                 let gridLines = '';
                 for (let i = 0; i <= VIEW_HOURS; i++) {
                     const top = i * PIXELS_PER_HOUR;
@@ -739,52 +654,64 @@
                 }
 
                 let tasksHTML = `<div class="relative p-3" style="height:${TIMELINE_HEIGHT}px;">${gridLines}`;
-                
-                dayData.tasks.forEach((task) => {
+
+                (dayData?.tasks || []).forEach((task) => {
                     ensureTaskId(task, dayData);
                     const theme = typeConfig[task.type] || typeConfig['Nghỉ/Ngủ'];
                     const isRest = task.type === 'Nghỉ/Ngủ';
                     const isDone = !!completedMap[String(task.id)];
                     const { top, height } = calcEventLayout(task.time);
-                    
+
                     tasksHTML += `
                         <div class="gcal-event absolute left-3 right-3 p-2.5 rounded-lg border-l-4 ${theme.bg} ${theme.border} group flex flex-col ${isDone ? 'completed' : ''}" style="top:${top}px; height:${height}px;" data-task-id="${escapeHtml(task.id)}">
-                            
-                            <!-- Checkmark overlay (ẩn mặc định) -->
                             <div class="check-overlay hidden absolute inset-0 bg-white/40 items-center justify-center z-10">
                                 <i data-lucide="check-circle-2" class="w-8 h-8 text-green-600 drop-shadow-md"></i>
                             </div>
-
                             <div class="flex items-center justify-between mb-1">
-                                <span class="text-xs font-semibold ${theme.timeText}">${task.time}</span>
-                                <div class="flex items-center gap-2">
-                                    ${task.project && !isRest ? `<span class="text-[10px] font-bold px-1.5 py-0.5 bg-white/50 rounded text-slate-600 shadow-sm border border-black/5">#${escapeHtml(task.project)}</span>` : ''}
-                                    <button class="open-task px-1.5 py-1 rounded-md bg-white/50 hover:bg-white/70 border border-black/5" data-task-id="${escapeHtml(task.id)}" type="button">
-                                        <i data-lucide="message-square" class="w-4 h-4 text-slate-600"></i>
-                                    </button>
-                                </div>
+                                <span class="text-xs font-semibold ${theme.timeText}">${escapeHtml(task.time)}</span>
+                                ${task.project && !isRest ? `<span class="text-[10px] font-bold px-1.5 py-0.5 bg-white/50 rounded text-slate-600 shadow-sm border border-black/5">#${escapeHtml(task.project)}</span>` : ''}
                             </div>
-                            <p class="event-title text-sm font-medium ${theme.text} leading-snug">
-                                ${escapeHtml(task.title)}
-                            </p>
+                            <p class="event-title text-sm font-medium ${theme.text} leading-snug">${escapeHtml(task.title)}</p>
+                            <div class="mt-auto pt-2 flex justify-end">
+                                <button class="task-open-modal text-[11px] font-semibold px-2 py-1 rounded bg-white/60 hover:bg-white/90 border border-black/5 text-slate-700" data-task-id="${escapeHtml(task.id)}">Comment/Sửa</button>
+                            </div>
                         </div>
                     `;
                 });
+
                 tasksHTML += '</div>';
 
                 col.innerHTML = headerHTML + tasksHTML;
                 container.appendChild(col);
             });
 
-            // Khởi tạo icon
             lucide.createIcons();
-        }
 
-        function toggleTaskById(taskId) {
-            const key = String(taskId);
-            completedMap[key] = !completedMap[key];
-            writeStorage(storageKeys.completed, completedMap);
-            scheduleSaveProgress();
+            document.querySelectorAll('.gcal-event').forEach((el) => {
+                el.addEventListener('click', (e) => {
+                    const btn = e.target?.closest?.('.task-open-modal');
+                    if (btn) return;
+                    const id = el.getAttribute('data-task-id');
+                    if (!id) return;
+                    const next = !completedMap[id];
+                    completedMap[id] = next;
+                    if (!next) delete completedMap[id];
+                    writeStorage(storageKeys.completed, completedMap);
+                    el.classList.toggle('completed', !!completedMap[id]);
+                    scheduleSaveProgress();
+                });
+            });
+
+            document.querySelectorAll('.task-open-modal').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const id = btn.getAttribute('data-task-id');
+                    if (!id) return;
+                    setModalTask(id);
+                    openModal();
+                });
+            });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -840,31 +767,28 @@
 
             const authorInput = document.getElementById('comment-author');
             if (authorInput) authorInput.value = readStorage(storageKeys.author, '') || '';
+            if (authorInput) {
+                authorInput.addEventListener('change', () => {
+                    writeStorage(storageKeys.author, authorInput.value || '');
+                });
+            }
 
-            const closeBtn = document.getElementById('task-modal-close');
-            if (closeBtn) closeBtn.addEventListener('click', closeTaskModal);
-
+            const modalClose = document.getElementById('task-modal-close');
+            if (modalClose) modalClose.addEventListener('click', closeModal);
             const modal = document.getElementById('task-modal');
             if (modal) {
                 modal.addEventListener('click', (e) => {
-                    if (e.target === modal) closeTaskModal();
+                    if (e.target === modal) closeModal();
                 });
             }
 
-            const submitBtn = document.getElementById('comment-submit');
-            if (submitBtn) {
-                submitBtn.addEventListener('click', () => {
-                    const key = modal?.getAttribute('data-comment-key') || '';
-                    if (key) submitTaskComment(key);
-                });
-            }
-
-            const doneEl = document.getElementById('task-done');
-            if (doneEl) {
-                doneEl.addEventListener('change', () => {
-                    const taskId = modal?.getAttribute('data-task-id') || '';
-                    if (!taskId) return;
-                    completedMap[String(taskId)] = !!doneEl.checked;
+            const done = document.getElementById('task-done');
+            if (done) {
+                done.addEventListener('change', () => {
+                    if (!modalTaskId) return;
+                    const next = !!done.checked;
+                    completedMap[modalTaskId] = next;
+                    if (!next) delete completedMap[modalTaskId];
                     writeStorage(storageKeys.completed, completedMap);
                     scheduleSaveProgress();
                     renderSchedule();
@@ -874,65 +798,61 @@
             const applyBtn = document.getElementById('apply-edit');
             if (applyBtn) {
                 applyBtn.addEventListener('click', () => {
-                    const taskId = modal?.getAttribute('data-task-id') || '';
-                    if (!taskId) return;
-                    const ok = applyTaskEdit(taskId);
-                    const statusEl = document.getElementById('task-modal-status');
-                    if (statusEl) statusEl.textContent = ok ? 'Đã áp dụng (chưa lưu).' : 'Không tìm thấy task.';
-                    renderSchedule();
-                });
-            }
+                    const found = findTaskById(modalTaskId);
+                    if (!found) return;
+                    const editTime = document.getElementById('edit-time');
+                    const editType = document.getElementById('edit-type');
+                    const editProject = document.getElementById('edit-project');
+                    const editTitle = document.getElementById('edit-title');
 
-            const delBtn = document.getElementById('delete-task');
-            if (delBtn) {
-                delBtn.addEventListener('click', () => {
-                    const taskId = modal?.getAttribute('data-task-id') || '';
-                    if (!taskId) return;
-                    const ok = window.confirm('Xoá task này?');
-                    if (!ok) return;
-                    const done = deleteTask(taskId);
+                    found.task.time = (editTime?.value || '').trim() || found.task.time;
+                    found.task.type = (editType?.value || '').trim() || found.task.type;
+                    found.task.project = (editProject?.value || '').trim();
+                    found.task.title = (editTitle?.value || '').trim() || found.task.title;
                     renderSchedule();
-                    closeTaskModal();
-                    const statusEl = document.getElementById('task-modal-status');
-                    if (statusEl) statusEl.textContent = done ? 'Đã xoá.' : 'Không tìm thấy task.';
                 });
             }
 
             const moveBtn = document.getElementById('move-task');
             if (moveBtn) {
                 moveBtn.addEventListener('click', () => {
-                    const taskId = modal?.getAttribute('data-task-id') || '';
-                    const toDay = document.getElementById('move-to-day')?.value || '';
-                    if (!taskId) return;
-                    const ok = moveTask(taskId, toDay);
-                    const statusEl = document.getElementById('task-modal-status');
-                    if (statusEl) statusEl.textContent = ok ? 'Đã dời (chưa lưu).' : 'Không dời được.';
+                    const moveSel = document.getElementById('move-to-day');
+                    if (!moveSel) return;
+                    const ok = moveTask(modalTaskId, moveSel.value);
+                    if (!ok) return;
                     renderSchedule();
+                    setModalTask(modalTaskId);
+                });
+            }
+
+            const delBtn = document.getElementById('delete-task');
+            if (delBtn) {
+                delBtn.addEventListener('click', () => {
+                    const found = findTaskById(modalTaskId);
+                    if (!found) return;
+                    (found.day.tasks || []).splice(found.taskIndex, 1);
+                    delete completedMap[modalTaskId];
+                    writeStorage(storageKeys.completed, completedMap);
+                    renderSchedule();
+                    closeModal();
+                });
+            }
+
+            const commentBtn = document.getElementById('comment-submit');
+            if (commentBtn) {
+                commentBtn.addEventListener('click', async () => {
+                    const author = (document.getElementById('comment-author')?.value || '').trim();
+                    const textEl = document.getElementById('comment-text');
+                    const text = (textEl?.value || '').trim();
+                    if (!text) return;
+                    if (textEl) textEl.value = '';
+                    writeStorage(storageKeys.author, author || '');
+                    await submitComment(modalCommentKey, author, text);
                 });
             }
 
             const saveWeekBtn = document.getElementById('save-week');
             if (saveWeekBtn) saveWeekBtn.addEventListener('click', () => saveOverrideNow('Manual update'));
-
-            document.addEventListener('click', (e) => {
-                const openBtn = e.target?.closest ? e.target.closest('.open-task') : null;
-                if (openBtn) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const taskId = openBtn.getAttribute('data-task-id') || '';
-                    if (taskId) openTaskModal(taskId);
-                    return;
-                }
-
-                const ev = e.target?.closest ? e.target.closest('.gcal-event') : null;
-                if (ev) {
-                    const taskId = ev.getAttribute('data-task-id') || '';
-                    if (!taskId) return;
-                    toggleTaskById(taskId);
-                    ev.classList.toggle('completed');
-                    return;
-                }
-            });
 
             Promise.all([loadOverride(), loadProgress()]).finally(() => renderSchedule());
         });
