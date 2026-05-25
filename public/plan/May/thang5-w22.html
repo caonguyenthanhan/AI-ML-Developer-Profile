@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Trình Chiến Đấu Tuần 22 (GCal Style)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Tùy chỉnh thanh cuộn ngang/dọc cho giống app native */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Hiệu ứng cho event card */
+        .gcal-event { 
+            transition: all 0.2s ease; 
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .gcal-event:hover {
+            filter: brightness(0.95);
+            transform: scale(0.99);
+        }
+        
+        /* Trạng thái hoàn thành */
+        .completed { 
+            opacity: 0.5; 
+            filter: grayscale(80%); 
+        }
+        .completed .event-title { text-decoration: line-through; }
+        .completed .check-overlay { display: flex; }
+        
+        /* Giữ cố định chiều cao để cuộn nội dung cột */
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        #main-wrapper { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    </style>
+</head>
+<body class="bg-white text-slate-800 font-sans antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="p-2 bg-indigo-100 rounded-lg text-indigo-600">
+                <i data-lucide="calendar-days" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-slate-900 leading-tight">Lịch Trình Tuần 22 - Chế Độ 18h</h1>
+                <p class="text-sm text-slate-500 font-medium">Click vào sự kiện để đánh dấu hoàn thành</p>
+            </div>
+        </div>
+        
+        <!-- Chú giải (Legend) -->
+        <div class="flex flex-wrap gap-3 text-xs font-semibold">
+            <span class="px-2 py-1 rounded bg-blue-100 text-blue-800 border-l-4 border-blue-500">Hành chính (9h-18h)</span>
+            <span class="px-2 py-1 rounded bg-emerald-100 text-emerald-800 border-l-4 border-emerald-500">Tự do</span>
+            <span class="px-2 py-1 rounded bg-purple-100 text-purple-800 border-l-4 border-purple-500">Học tập</span>
+            <span class="px-2 py-1 rounded bg-slate-100 text-slate-600 border-l-4 border-slate-400">Nghỉ/Ngủ</span>
+        </div>
+    </header>
+
+    <!-- Khu vực cuộn ngang (Horizontal Scroll Area) -->
+    <main id="main-wrapper" class="bg-slate-50 p-4 overflow-hidden">
+        <div id="schedule-container" class="flex gap-4 overflow-x-auto h-full pb-2 snap-x">
+            <!-- Các cột ngày sẽ được render bằng JS vào đây -->
+        </div>
+    </main>
+
+    <script>
+        // Cấu hình style giống thẻ sự kiện Google Calendar
+        const typeConfig = {
+            'Hành chính': { bg: 'bg-blue-100', text: 'text-blue-900', border: 'border-blue-500', timeText: 'text-blue-700' },
+            'Tự do': { bg: 'bg-emerald-100', text: 'text-emerald-900', border: 'border-emerald-500', timeText: 'text-emerald-700' },
+            'Học tập': { bg: 'bg-purple-100', text: 'text-purple-900', border: 'border-purple-500', timeText: 'text-purple-700' },
+            'Nghỉ/Ngủ': { bg: 'bg-slate-100', text: 'text-slate-700', border: 'border-slate-400', timeText: 'text-slate-500' },
+        };
+
+        // Hàm tự động parse "HH:MM - HH:MM" thành tổng số giờ (Xử lý mượt cả ca vắt qua đêm)
+        function getDurationInHours(timeStr) {
+            if (timeStr === 'All day' || timeStr === 'Flexible') return 4; // Mặc định 4 tiếng cho các task mở
+            try {
+                const parts = timeStr.split('-');
+                if (parts.length !== 2) return 1.5; 
+                
+                const parseTime = (t) => {
+                    const [h, m] = t.trim().split(':').map(Number);
+                    return h * 60 + (m || 0);
+                };
+                
+                let startMins = parseTime(parts[0]);
+                let endMins = parseTime(parts[1]);
+                
+                // Thuật toán: Nếu kết thúc < bắt đầu -> tức là đã sang ngày hôm sau
+                if (endMins <= startMins) {
+                    endMins += 24 * 60;
+                }
+                
+                return (endMins - startMins) / 60;
+            } catch(e) {
+                return 1.5; // Fallback an toàn
+            }
+        }
+
+        // Dữ liệu bóc tách rõ Ngày và Subtitle để render header cột đẹp hơn
+        const scheduleData = [
+            {
+                day: 'THỨ 2',
+                date: 'Tuần 22',
+                subtitle: 'Deadline RFI UI & Demo Gov-AI',
+                tasks: [
+                    { time: '09:00 - 14:00', type: 'Hành chính', project: 'RFI Web', title: 'Hoàn thiện gấp RFI UI (Đúng 14h họp chốt).' },
+                    { time: '14:00 - 15:30', type: 'Hành chính', project: 'RFI Web', title: 'Họp team, chốt UI/Logic RFI.' },
+                    { time: '15:30 - 18:00', type: 'Hành chính', project: 'Web PM', title: 'Lên kế hoạch & chuẩn bị tài liệu train sử dụng cho các Leader.' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn tối.' },
+                    { time: '19:00 - 20:30', type: 'Học tập', project: 'Graph Med', title: 'Hỗ trợ prompt cho Graph Med-AI (Thịnh) [1.5h/3h].' },
+                    { time: '20:30 - 21:00', type: 'Tự do', project: 'Gov-AI', title: 'Chuẩn bị môi trường, dry-run Demo Gov-AI.' },
+                    { time: '21:00 - 22:00', type: 'Tự do', project: 'Gov-AI', title: '🌟 DEMO CHÍNH THỨC Gov-AI Phường Xã (9h tối).' },
+                    { time: '22:00 - 04:00', type: 'Học tập', project: 'Med-AI', title: 'Fix Agent Med-AI Khóa luận [6h/10h].' },
+                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                ]
+            },
+            {
+                day: 'THỨ 3',
+                date: 'Tuần 22',
+                subtitle: 'Fix RFI, Train PM & Dev TOV',
+                tasks: [
+                    { time: '09:00 - 13:00', type: 'Hành chính', project: 'RFI Web', title: 'Nhận review FRI, tiến hành sửa lỗi & tối ưu (Deadline trước T4) [4h].' },
+                    { time: '13:00 - 15:00', type: 'Hành chính', project: 'Web PM', title: 'Meeting train cách sử dụng cho các Leader.' },
+                    { time: '15:00 - 18:00', type: 'Hành chính', project: 'Tool TOV', title: 'Phát triển phần AI viết câu văn mẫu cho báo cáo [3h/5h].' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn tối.' },
+                    { time: '19:00 - 23:00', type: 'Tự do', project: 'Gov-AI', title: 'Fix các nghiệp vụ phát sinh sau buổi Demo hôm qua [4h].' },
+                    { time: '23:00 - 02:30', type: 'Học tập', project: 'Med-AI', title: 'Fix Agent Med-AI Khóa luận [3.5h/10h].' },
+                    { time: '02:30 - 04:00', type: 'Học tập', project: 'Graph Med', title: 'Hỗ trợ prompt nốt cho Thịnh [1.5h/3h - XONG].' },
+                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                ]
+            },
+            {
+                day: 'THỨ 4',
+                date: 'Tuần 22',
+                subtitle: 'Chốt Agent & NCKH',
+                tasks: [
+                    { time: '09:00 - 11:00', type: 'Hành chính', project: 'Agent', title: 'Nhận feedback từ HN -> Hiệu chỉnh chốt bài toán Agent [2h].' },
+                    { time: '11:00 - 13:00', type: 'Hành chính', project: 'Tool TOV', title: 'Hoàn thiện dứt điểm AI viết câu văn báo cáo [2h/5h - XONG].' },
+                    { time: '13:00 - 18:00', type: 'Hành chính', project: 'Tool TRV', title: 'Phát triển nội suy, chèn hình & sửa câu văn [5h - XONG].' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn tối.' },
+                    { time: '19:00 - 19:30', type: 'Học tập', project: 'Med-AI', title: 'Fix nốt Agent Med-AI Khóa luận [0.5h/10h - XONG].' },
+                    { time: '19:30 - 22:30', type: 'Học tập', project: 'NCKH', title: 'Viết Thuyết minh Nghiên cứu khoa học [3h - XONG Kịp sáng T6 nộp].' },
+                    { time: '22:30 - 04:00', type: 'Học tập', project: 'Luận văn', title: 'Bắt đầu cày viết Luận Tốt Nghiệp [5.5h/7h].' },
+                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                ]
+            },
+            {
+                day: 'THỨ 5',
+                date: 'Tuần 22',
+                subtitle: 'Dứt điểm Deadline Hành Chính',
+                tasks: [
+                    { time: '09:00 - 18:00', type: 'Hành chính', project: 'Buffer', title: 'Task Hành chính đã cơ bản xong trước hạn. Dành 9h này rà soát lỗi Tool TOV/TRV trước khi nộp vào tối nay. (Linh động viết thêm luận văn nếu rảnh).' },
+                    { time: '18:00 - 19:00', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi, ăn tối.' },
+                    { time: '19:00 - 20:30', type: 'Học tập', project: 'Luận văn', title: 'Hoàn thiện nốt phần Viết Luận Tốt Nghiệp [1.5h/7h - XONG].' },
+                    { time: '20:30 - 21:30', type: 'Học tập', project: 'NASM', title: 'Làm bài tập NASM cho hợp ngữ [1h - XONG sáng T6 nộp].' },
+                    { time: '21:30 - 04:00', type: 'Học tập', project: 'Đóng gói', title: 'Đọc rà soát toàn bộ Thuyết minh NCKH, Khóa luận, chuẩn bị in ấn nộp.' },
+                    { time: '04:00 - 09:00', type: 'Nghỉ/Ngủ', project: '', title: 'Ngủ sâu (Strict 5 tiếng).' },
+                ]
+            },
+            {
+                day: 'THỨ 6 & CUỐI TUẦN',
+                date: 'Tuần 22',
+                subtitle: 'Giao nộp & Thả lỏng',
+                tasks: [
+                    { time: '09:00 - 12:00', type: 'Học tập', project: 'Nộp bài', title: 'Nộp Thuyết minh NCKH (Xin chữ ký Giảng viên) + Nộp bài NASM.' },
+                    { time: '12:00 - 18:00', type: 'Hành chính', project: 'Review', title: 'Tổng kết tuần 22. Backup source code Agent, TOV, TRV.' },
+                    { time: 'Tối T6 - CN', type: 'Nghỉ/Ngủ', project: '', title: 'Nghỉ ngơi bù sau một tuần chạy Deadline cường độ cao. Tự do nghiên cứu thêm AI.' },
+                ]
+            }
+        ];
+
+        function renderSchedule() {
+            const container = document.getElementById('schedule-container');
+            if (!container) return; // Bảo vệ tránh lỗi null
+
+            // Xóa dữ liệu cũ (nếu có) trước khi render lại
+            container.innerHTML = '';
+            
+            scheduleData.forEach(dayData => {
+                // Tạo cột cho mỗi ngày
+                const col = document.createElement('div');
+                col.className = 'w-[85vw] md:w-[320px] lg:w-[350px] shrink-0 snap-start bg-white border border-slate-200 rounded-xl flex flex-col h-full shadow-sm';
+                
+                // Header của Cột
+                const isToday = dayData.day === 'THỨ 2';
+                const headerHTML = `
+                    <div class="px-4 py-3 border-b border-slate-100 shrink-0 text-center sticky top-0 bg-white/95 backdrop-blur z-10 rounded-t-xl">
+                        <div class="text-xs font-semibold ${isToday ? 'text-indigo-600' : 'text-slate-500'} mb-1">${dayData.date}</div>
+                        <h2 class="font-bold text-lg ${isToday ? 'text-indigo-600' : 'text-slate-800'} leading-none">${dayData.day}</h2>
+                        <div class="text-xs text-slate-400 mt-1.5 truncate" title="${dayData.subtitle}">${dayData.subtitle}</div>
+                    </div>
+                `;
+                
+                // Body chứa các sự kiện
+                let tasksHTML = '<div class="p-3 flex-1 overflow-y-auto flex flex-col gap-2.5">';
+                
+                dayData.tasks.forEach((task) => {
+                    const theme = typeConfig[task.type] || typeConfig['Nghỉ/Ngủ'];
+                    const isRest = task.type === 'Nghỉ/Ngủ';
+                    
+                    const durationHours = getDurationInHours(task.time);
+                    const pixelsPerHour = 65; 
+                    const heightStyle = "min-height: " + Math.max(durationHours * pixelsPerHour, 65) + "px;";
+                    
+                    tasksHTML += `
+                        <div class="gcal-event p-2.5 rounded-lg border-l-4 ${theme.bg} ${theme.border} group flex flex-col" style="${heightStyle}" onclick="toggleTask(this)">
+                            <div class="check-overlay hidden absolute inset-0 bg-white/40 items-center justify-center z-10">
+                                <i data-lucide="check-circle-2" class="w-8 h-8 text-green-600 drop-shadow-md"></i>
+                            </div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-semibold ${theme.timeText}">${task.time}</span>
+                                ${task.project && !isRest ? `<span class="text-[10px] font-bold px-1.5 py-0.5 bg-white/50 rounded text-slate-600 shadow-sm border border-black/5">#${task.project}</span>` : ''}
+                            </div>
+                            <p class="event-title text-sm font-medium ${theme.text} leading-snug">
+                                ${task.title}
+                            </p>
+                        </div>
+                    `;
+                });
+                tasksHTML += '</div>';
+
+                col.innerHTML = headerHTML + tasksHTML;
+                container.appendChild(col);
+            });
+
+            // Khởi tạo icon
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        }
+
+        // Script gạch bỏ task khi click
+        function toggleTask(element) {
+            element.classList.toggle('completed');
+        }
+
+        // Render lịch chỉ khi HTML đã sẵn sàng
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderSchedule);
+        } else {
+            renderSchedule();
+        }
+    </script>
+</body>
+</html>
