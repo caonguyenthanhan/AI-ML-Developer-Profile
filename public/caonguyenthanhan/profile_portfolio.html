@@ -149,6 +149,11 @@
                 <div class="skills-category">
                     <span class="font-bold text-slate-900 block mb-1">AI & Multi-Agent:</span>
                     <span class="text-slate-700">LangGraph, LangChain/LCEL, LlamaIndex, DSPy, Multi-Agent, GraphRAG, Neo4j, Memgraph, Qdrant, RAGAS</span>
+                    <span class="block mt-1 text-slate-600 text-xs">
+                        <strong>Methodology:</strong>
+                        <span class="lang-vi">AEOS (Quy trình kỹ thuật AI có con người giám sát: Tự chủ trong scope, Cổng phê duyệt, Xác minh bằng chứng)</span>
+                        <span class="lang-en hidden">AEOS (Human-Governed AI Engineering Workflow: Autonomy within scope, Approval gates, Evidence-based verification)</span>
+                    </span>
                 </div>
                 <div class="skills-category">
                     <span class="font-bold text-slate-900 block mb-1">Backend & LLMOps:</span>
@@ -363,7 +368,188 @@
             </div>
         </section>
 
-        <!-- 6. EDUCATION -->
+        <!-- 6. ENGINEERING METHODOLOGY: AEOS (HOW I BUILD AI SYSTEMS) -->
+        <section id="aeos-methodology" class="mb-8 no-print print:hidden">
+            <h2 class="text-lg font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-4 uppercase flex items-center justify-between">
+                <div>
+                    <span class="lang-vi">Triết Lý & Quy Trình Kỹ Thuật (AEOS)</span>
+                    <span class="lang-en hidden">How I Build AI Systems (AEOS Methodology)</span>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 font-mono no-print">Public-Safe Workflow</span>
+            </h2>
+
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-5 shadow-sm print:bg-white print:border-slate-300">
+                <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-3">
+                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                        <span>AEOS — A Human-Governed AI Engineering Workflow</span>
+                    </h3>
+                    <span class="text-xs font-mono text-slate-500 italic">Engineering Governance</span>
+                </div>
+
+                <div class="border-l-4 border-blue-600 pl-3 py-1 bg-blue-50/60 rounded-r text-sm text-slate-800 font-medium italic mb-4 print:bg-white print:pl-2">
+                    "Human decides WHAT. AI builds HOW. Evidence determines DONE."
+                </div>
+
+                <p class="text-sm text-slate-700 leading-relaxed mb-5 text-justify">
+                    <span class="lang-vi">Tôi tiếp cận phát triển AI không phải là tạo prompt tùy hứng, mà là xây dựng một hệ thống kỹ thuật phần mềm có kiểm chứng và quản trị chặt chẽ. AEOS là phương pháp kỹ thuật thực hành giúp tối đa hóa khả năng tự chủ của Agent trong phạm vi cho phép, đồng thời đảm bảo mọi quyết định phát hành và đóng nhiệm vụ đều do con người phê duyệt dựa trên bằng chứng kiểm nghiệm cụ thể.</span>
+                    <span class="lang-en hidden">I approach AI systems not as ad-hoc prompt engineering, but as disciplined, verifiable software systems. AEOS is an engineering methodology balancing autonomous agent execution within pre-authorized boundaries with strict, evidence-based human approval gates.</span>
+                </p>
+
+                <!-- Workflow Pipeline Diagram -->
+                <div class="mb-5">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5 flex items-center gap-1.5">
+                        <i data-lucide="git-branch" class="w-3.5 h-3.5 text-blue-600"></i>
+                        <span class="lang-vi">Quy trình điều phối 5 bước (Core Workflow):</span>
+                        <span class="lang-en hidden">5-Stage Execution Pipeline (Core Workflow):</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-2xs flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs font-bold text-blue-700 mb-1">
+                                    <span>01. DEFINE</span>
+                                    <span class="px-1.5 py-0.5 bg-blue-50 text-[10px] rounded text-blue-600 border border-blue-200">Human</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-900 mb-1">
+                                    <span class="lang-vi">Xác định WHAT</span>
+                                    <span class="lang-en hidden">Defines WHAT</span>
+                                </div>
+                                <p class="text-[11px] text-slate-600 leading-snug">
+                                    <span class="lang-vi">Con người định nghĩa mục tiêu, rào cản và phạm vi (Scope).</span>
+                                    <span class="lang-en hidden">Human defines objective, boundaries, and scope constraints.</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-2xs flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs font-bold text-indigo-700 mb-1">
+                                    <span>02. BUILD</span>
+                                    <span class="px-1.5 py-0.5 bg-indigo-50 text-[10px] rounded text-indigo-600 border border-indigo-200">AI</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-900 mb-1">
+                                    <span class="lang-vi">Thiết kế & Tạo HOW</span>
+                                    <span class="lang-en hidden">Designs & Builds HOW</span>
+                                </div>
+                                <p class="text-[11px] text-slate-600 leading-snug">
+                                    <span class="lang-vi">Agent tự chủ triển khai giải pháp kỹ thuật trong phạm vi cho phép.</span>
+                                    <span class="lang-en hidden">AI autonomously executes and implements code within authorized scope.</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-2xs flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs font-bold text-indigo-700 mb-1">
+                                    <span>03. VERIFY</span>
+                                    <span class="px-1.5 py-0.5 bg-indigo-50 text-[10px] rounded text-indigo-600 border border-indigo-200">AI</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-900 mb-1">
+                                    <span class="lang-vi">Kiểm thử & Khắc phục</span>
+                                    <span class="lang-en hidden">Tests / Fixes / Verifies</span>
+                                </div>
+                                <p class="text-[11px] text-slate-600 leading-snug">
+                                    <span class="lang-vi">Chạy test tự động, sửa lỗi, kiểm tra diff và thu thập bằng chứng.</span>
+                                    <span class="lang-en hidden">Runs automated tests, resolves regression, collects delta evidence.</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-2xs flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs font-bold text-amber-700 mb-1">
+                                    <span>04. AUDIT</span>
+                                    <span class="px-1.5 py-0.5 bg-amber-50 text-[10px] rounded text-amber-700 border border-amber-200">Manager</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-900 mb-1">
+                                    <span class="lang-vi">Kiểm toán & Đánh giá</span>
+                                    <span class="lang-en hidden">Audits Scope & Risk</span>
+                                </div>
+                                <p class="text-[11px] text-slate-600 leading-snug">
+                                    <span class="lang-vi">Kiểm tra tuân thủ phạm vi, rủi ro và gói bằng chứng độc lập.</span>
+                                    <span class="lang-en hidden">Reviews scope boundaries, risk assessment, and evidence packets.</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-2xs flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs font-bold text-emerald-700 mb-1">
+                                    <span>05. GATE</span>
+                                    <span class="px-1.5 py-0.5 bg-emerald-50 text-[10px] rounded text-emerald-700 border border-emerald-200">Human</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-900 mb-1">
+                                    <span class="lang-vi">Nghiệm thu & Next Wave</span>
+                                    <span class="lang-en hidden">Accepts & Next Wave</span>
+                                </div>
+                                <p class="text-[11px] text-slate-600 leading-snug">
+                                    <span class="lang-vi">Con người phê duyệt nghiệm thu trước khi chuyển giao hoặc release.</span>
+                                    <span class="lang-en hidden">Human accepts when required before release to start next wave.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Principles -->
+                <div>
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5 flex items-center gap-1.5">
+                        <i data-lucide="compass" class="w-3.5 h-3.5 text-blue-600"></i>
+                        <span class="lang-vi">4 Nguyên tắc Cốt lõi (Core Principles):</span>
+                        <span class="lang-en hidden">4 Core Principles:</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                        <div class="bg-white p-3 rounded-lg border border-slate-200">
+                            <h4 class="text-xs font-bold text-slate-900 flex items-center gap-1.5 mb-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                One Active Wave
+                            </h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                <span class="lang-vi">Tập trung giải quyết dứt điểm một phạm vi nhiệm vụ tại một thời điểm, loại bỏ phân mảnh ngữ cảnh và ngăn chặn trôi phạm vi.</span>
+                                <span class="lang-en hidden">Single-threaded execution per wave, eliminating context degradation and preventing scope drift.</span>
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-slate-200">
+                            <h4 class="text-xs font-bold text-slate-900 flex items-center gap-1.5 mb-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                Autonomy Within Scope
+                            </h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                <span class="lang-vi">Agent được trao quyền tự chủ tối đa để thiết kế, chạy thử nghiệm và sửa lỗi trong giới hạn rào cản đã được định nghĩa trước.</span>
+                                <span class="lang-en hidden">Agents operate autonomously to design, test, and self-correct within strictly predefined boundary rails.</span>
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-slate-200">
+                            <h4 class="text-xs font-bold text-slate-900 flex items-center gap-1.5 mb-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                Evidence Over Claims
+                            </h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                <span class="lang-vi">Chỉ tuyên bố "Done" khi có bằng chứng thực tế có thể kiểm tra: mã diff rõ ràng, exit code kiểm thử, và nhật ký runtime.</span>
+                                <span class="lang-en hidden">Work is considered done only with verifiable evidence: exact diffs, test exit codes, and runtime logs.</span>
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-slate-200">
+                            <h4 class="text-xs font-bold text-slate-900 flex items-center gap-1.5 mb-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                Human-Governed Approval Gates
+                            </h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                <span class="lang-vi">Mọi điểm mốc quan trọng (kích hoạt wave, phê duyệt commit, release production) đều bắt buộc qua cổng kiểm soát của con người.</span>
+                                <span class="lang-en hidden">All critical milestones (wave activation, commit approval, production release) remain strictly human-governed.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. EDUCATION -->
         <section id="education" class="mb-8">
             <h2 class="text-lg font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-4 uppercase">
                 <span class="lang-vi">Học Vấn</span>
