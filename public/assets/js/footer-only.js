@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="space-y-3">
                         <h3 class="text-lg font-semibold flex items-center">
                             <i data-lucide="user" class="w-5 h-5 mr-2"></i>
-                            Cao Nguyễn Thành An
+                            Cao Nguyễn Thành An (Aleian Cao)
                         </h3>
-                        <p class="text-sm text-indigo-100">AI Software Engineer - Automation Specialist</p>
+                        <p class="text-sm text-indigo-100 font-medium">AI Systems Architect / Automation Engineer</p>
                         <div class="space-y-2 text-sm">
                             <div class="flex items-center">
                                 <i data-lucide="mail" class="w-4 h-4 mr-2 text-indigo-300"></i>
@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="flex items-center">
                                 <i data-lucide="phone" class="w-4 h-4 mr-2 text-indigo-300"></i>
-                                <span>0929620697</span>
+                                <span><a href="tel:+84929620697" class="hover:text-white transition duration-300">0929 620 697</a></span>
                             </div>
                             <div class="flex items-center">
                                 <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-indigo-300"></i>
-                                <span>Số 70, Đường Số 6, Linh Trung, Thủ Đức</span>
+                                <span>Ho Chi Minh City, Vietnam</span>
                             </div>
                         </div>
                     </div>
@@ -61,17 +61,25 @@ document.addEventListener('DOMContentLoaded', function() {
                             <i data-lucide="share-2" class="w-5 h-5 mr-2"></i>
                             Kết Nối
                         </h3>
-                        <div class="flex space-x-4">
-                            <a href="https://github.com/caonguyenthanhan" target="_blank" 
-                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
+                        <div class="flex flex-wrap gap-3">
+                            <a href="https://github.com/caonguyenthanhan" target="_blank" rel="noopener noreferrer"
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="GitHub">
                                 <i data-lucide="github" class="w-5 h-5"></i>
                             </a>
-                            <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" 
-                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
+                            <a href="https://www.linkedin.com/in/th%C3%A0nh-an-cao-nguy%E1%BB%85n-b97b23322/" target="_blank" rel="noopener noreferrer"
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="LinkedIn">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@tramgatgu" target="_blank" rel="noopener noreferrer"
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="YouTube Trạm Gật Gù">
+                                <i data-lucide="youtube" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" rel="noopener noreferrer"
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="Facebook">
                                 <i data-lucide="facebook" class="w-5 h-5"></i>
                             </a>
                             <a href="mailto:caonguyenthanhan.aaa@gmail.com" 
-                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="Email">
                                 <i data-lucide="mail" class="w-5 h-5"></i>
                             </a>
                         </div>
@@ -80,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 <!-- Copyright -->
                 <div class="border-t border-indigo-600 mt-6 pt-4 text-center text-sm text-indigo-200">
-                    <p>&copy; 2025 Cao Nguyễn Thành An. Portfolio được xây dựng với AI/ML focus.</p>
+                    <p>&copy; 2026 Cao Nguyễn Thành An. AI-First · Engineering-Driven · Product-Focused.</p>
                 </div>
             </div>
         </footer>

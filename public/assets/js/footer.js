@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="space-y-3">
                         <h3 class="text-lg font-semibold flex items-center">
                             <i data-lucide="user" class="w-5 h-5 mr-2"></i>
-                            Cao Nguyễn Thành An
+                            Cao Nguyễn Thành An (Aleian Cao)
                         </h3>
-                        <p class="text-sm text-indigo-100">Thực Tập Sinh Kỹ Sư AI/ML</p>
+                        <p class="text-sm text-indigo-100 font-medium">AI Systems Architect / Automation Engineer</p>
                         <div class="space-y-2 text-sm">
                             <div class="flex items-center">
                                 <i data-lucide="mail" class="w-4 h-4 mr-2 text-indigo-300"></i>
@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="flex items-center">
                                 <i data-lucide="phone" class="w-4 h-4 mr-2 text-indigo-300"></i>
-                                <span>0929620697</span>
+                                <span>Số điện thoại Cao Nguyễn Thành An là <a href="tel:+84929620697" class="underline decoration-indigo-300 hover:text-white transition duration-300">0929620697</a></span>
                             </div>
                             <div class="flex items-center">
                                 <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-indigo-300"></i>
-                                <span>Số 70, Đường Số 6, Linh Trung, Thủ Đức</span>
+                                <span>Ho Chi Minh City, Vietnam</span>
                             </div>
                         </div>
                     </div>
@@ -77,21 +77,25 @@ document.addEventListener('DOMContentLoaded', function() {
                             <i data-lucide="share-2" class="w-5 h-5 mr-2"></i>
                             Kết Nối
                         </h3>
-                        <div class="flex space-x-4">
+                        <div class="flex flex-wrap gap-3">
                             <a href="https://github.com/caonguyenthanhan" target="_blank" rel="noopener noreferrer"
-                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="GitHub">
                                 <i data-lucide="github" class="w-5 h-5"></i>
                             </a>
-                            <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" rel="noopener noreferrer"
-                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
-                                <i data-lucide="facebook" class="w-5 h-5"></i>
+                            <a href="https://www.linkedin.com/in/th%C3%A0nh-an-cao-nguy%E1%BB%85n-b97b23322/" target="_blank" rel="noopener noreferrer"
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="LinkedIn">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
                             </a>
                             <a href="https://www.youtube.com/@tramgatgu" target="_blank" rel="noopener noreferrer"
-                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="YouTube Trạm Gật Gù">
                                 <i data-lucide="youtube" class="w-5 h-5"></i>
                             </a>
+                            <a href="https://www.facebook.com/nguyenthanhan.cao/" target="_blank" rel="noopener noreferrer"
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="Facebook">
+                                <i data-lucide="facebook" class="w-5 h-5"></i>
+                            </a>
                             <a href="mailto:caonguyenthanhan.aaa@gmail.com" 
-                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="Email">
                                 <i data-lucide="mail" class="w-5 h-5"></i>
                             </a>
                         </div>
@@ -100,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 <!-- Copyright -->
                 <div class="border-t border-indigo-600 mt-6 pt-4 text-center text-sm text-indigo-200">
-                    <p>&copy; 2025 Cao Nguyễn Thành An. Portfolio được xây dựng với AI/ML focus.</p>
+                    <p>&copy; 2026 Cao Nguyễn Thành An. AI-First · Engineering-Driven · Product-Focused.</p>
                 </div>
             </div>
         </footer>
@@ -185,30 +189,57 @@ function initializeChatBox() {
 
     // CV Context cho AI Assistant
     const cvContext = `
-        Hồ sơ xin việc của Cao Nguyễn Thành An, Kỹ Sư AI/ML.
+        Hồ sơ năng lực của Cao Nguyễn Thành An (Aleian Cao), AI Systems Architect / Automation Engineer.
 
-        Mục Tiêu: Áp dụng kiến thức Machine Learning và Python để giải quyết các bài toán phức tạp trong dự án AI/ML.
+        Định Vị Chuyên Môn:
+        AI-First · Engineering-Driven · Product-Focused.
+        Chuyên thiết kế và triển khai Multi-Agent Systems, GraphRAG, Agentic Workflows và tự động hóa quy trình kỹ thuật điện (PSCAD, PSS/E, ETAP). Tập trung vào kiến trúc AI thực tế, system evaluation, LLMOps, độ tin cậy và giải quyết bài toán nghiệp vụ.
 
-        Học Vấn: Trí Tuệ Nhân Tạo, Đại học Sư phạm Kỹ thuật TP. HCM (08/2021 – 04/2025). Loại tốt nghiệp dự kiến: Khá.
+        Thông Tin Cá Nhân & Liên Hệ:
+        - Họ tên: Cao Nguyễn Thành An (Aleian Cao / Aleian)
+        - Vị trí hiện tại: AI Systems Architect / Automation Engineer
+        - Công ty hiện tại: INS Engineering
+        - Kinh nghiệm trước đây: AI Engineer tại VNA GROUP
+        - Địa điểm: Ho Chi Minh City, Vietnam
+        - Email: caonguyenthanhan.aaa@gmail.com
+        - Điện thoại: 0929 620 697
+        - GitHub: https://github.com/caonguyenthanhan
+        - LinkedIn: https://www.linkedin.com/in/thành-an-cao-nguyễn-b97b23322/
+        - YouTube: https://www.youtube.com/@tramgatgu (Trạm Gật Gù - YouTube về tâm lý học tích cực, phát triển bản thân và âm nhạc AI)
+        - Website: https://hethongthongminh.id.vn/
 
-        Kỹ Năng Chuyên Môn:
-        1. Python & Core ML/Data: Python (thành thạo Scikit-learn, Pandas, Numpy). Kinh nghiệm Data Processing & SQL. Ứng dụng: Xây dựng mô hình dự đoán giá nhà.
-        2. Deep Learning & Thuật toán: TensorFlow, PyTorch. Mô hình Học Sâu (GANs, DCGAN, AttGAN). Ứng dụng: Phát triển hệ thống Nhận dạng Khuôn mặt, OCR.
-        3. Nền tảng: EC2, S3, Lambda, Docker, Git, Hadoop, Spark, Power BI.
+        Học Vấn:
+        - HCMUTE — AI / Information Technology (Information Systems & AI), Đại học Sư phạm Kỹ thuật TP. HCM (08/2021 – 04/2025).
 
-        Kinh Nghiệm Làm Việc (Sắp xếp theo thời gian):
-        - 01/2025 – 04/2025: Chuyên viên Đào tạo AI/ML (CTy TNHH Tư Vấn Giáo Dục Nhân Mỹ). Thành tựu: Nâng cao năng suất làm việc của đội ngũ lên 15-20%.
-        - 06/2024 – 07/2024: Nhân viên Triển khai và Bảo trì Phần mềm (CÔNG TY PHẦN MỀM VÀNG). Vai trò: Quản lý Dữ liệu (SQL) và Hỗ trợ Kỹ thuật.
-        - 03/2023 – 03/2024: Nhân viên Kỹ thuật & Marketing (Hệ thống giáo dục Nam Mỹ). Thành tựu: Tăng 20% lượng người theo dõi truyền thông.
-        - 05/2024 – 06/2024: Thực tập sinh Sửa chữa Máy tính (Trường Thịnh Group).
+        Kỹ Năng Nòng Cốt:
+        - AI: LangGraph, LangChain/LCEL, LlamaIndex, DSPy, Multi-Agent, GraphRAG, Neo4j, Memgraph, Qdrant, RAGAS.
+        - Backend: Python, Pydantic v2, FastAPI, vLLM, PyTorch.
+        - Frontend: React, TypeScript, Next.js, Tailwind CSS.
+        - Other: Supabase, Docker, PowerShell, Engineering Automation (PSCAD, PSS/E, ETAP), Git.
 
-        Dự Án AI/ML Tiêu Biểu:
-        - OCR Mobile Application (Computer Vision, Mobile App)
-        - Gemini Tóm Tắt & Đọc (Gemini API, TTS)
-        - AI Models Unified Chatbox (LLM Integration)
-        - Hệ thống Tư vấn Y tế (Dùng Llama)
-        - Bộ Công Cụ Xử Lý Ngôn Ngữ Tự Nhiên (NLP)
-        - Ứng Dụng Chat Tích Hợp API
+        Kinh Nghiệm Làm Việc:
+        - 01/2026 – Hiện tại: AI Systems Architect / Automation Engineer tại INS Engineering (Công ty hiện tại).
+          + Tự động hóa quy trình thao tác trên các phần mềm kỹ thuật điện (PSS/E, PSCAD, ETAP...), xử lý dữ liệu mô phỏng và tự động hóa tạo báo cáo.
+          + Thiết kế quy trình tự động hóa luồng công việc nội bộ và xây dựng công cụ với giao diện tối giản (1-2 thao tác) cho đội ngũ kỹ sư điện.
+          + Triển khai các giải pháp AI tuân thủ bảo mật nội bộ, nghiên cứu triển khai Local LLMs hỗ trợ kỹ thuật và chuẩn hóa hệ thống quản trị mã nguồn.
+        - 09/2025 – 12/2025: AI Software Engineer tại VNA GROUP (Kinh nghiệm trước đây).
+          + Phát triển hệ thống Multi-Agent (LangGraph) tự động hóa quy trình báo cáo và phân tích số liệu.
+          + Thiết kế kiến trúc luồng xử lý: Router → Analyst → Writer, tích hợp Graph Knowledge (NetworkX).
+          + Tự động hóa tạo báo cáo Word chuẩn format doanh nghiệp (Table Grid style), giảm 90% thao tác thủ công.
+        - 01/2025 – 04/2025: Chuyên viên Đào tạo AI/ML & Solutions Consultant (CTy TNHH Tư Vấn Giáo Dục Nhân Mỹ).
+        - 06/2024 – 07/2024: Nhân viên Triển khai và Bảo trì Phần mềm (CÔNG TY PHẦN MỀM VÀNG).
+        - 03/2023 – 03/2024: Nhân viên Kỹ thuật & Marketing (Hệ thống giáo dục Nam Mỹ).
+        - 05/2024 – 06/2024: Kỹ thuật viên (Trường Thịnh Group).
+
+        Dự Án Tiêu Biểu:
+        - AiMed: Hệ thống tư vấn y tế tích hợp RAG, Hybrid Search và LLM.
+        - ENERGY-TASK-AI: Nền tảng điều phối tác vụ và tự động hóa quy trình kỹ thuật điện.
+        - Morphology-Master (MorphoLearn): Hệ thống học tiếng Anh Hình thái học.
+        - ETMS: Enterprise Task Management System.
+        - TOV/TRV Automation: Tự động hóa quy trình mô phỏng và phân tích PSCAD/TRV.
+        - FILL_POI & ATS CV Builder: Công cụ tạo và tối ưu hóa CV chuẩn ATS.
+        - Gemini Summarizer & Video Speed Controller: Công cụ hỗ trợ xử lý thông tin thông minh.
+        - Trạm Gật Gù: Kênh YouTube về tâm lý học tích cực, phát triển bản thân và âm nhạc AI.
     `;
 
     const systemPrompt = `

@@ -1,13 +1,12 @@
-# AI-ML-Developer-Profile
+# AI-ML-Developer-Profile — Cao Nguyễn Thành An (Aleian Cao)
 
 ## 🚀 Giới thiệu
-Đây là website cá nhân của **Cao Nguyễn Thành An**, tập trung vào vai trò AI/ML Developer với các trải nghiệm thực tế:
-- Trang hồ sơ và case study cá nhân.
-- Hệ thống thiệp mời tốt nghiệp (Graduation Invitation) với RSVP.
-- Thư viện prompts AI/GenAI kèm hình ảnh minh hoạ.
-- Công cụ tạo CV chuẩn ATS chạy trực tiếp trên Vercel.
+Đây là website chuyên môn của **Cao Nguyễn Thành An (Aleian Cao)** — **AI Systems Architect / Automation Engineer** tại **INS Engineering**.
+- **Định vị:** AI-First · Engineering-Driven · Product-Focused.
+- **Trọng tâm kỹ thuật:** Multi-Agent Systems, GraphRAG, Agentic Workflows và tự động hóa quy trình kỹ thuật điện (PSCAD, PSS/E, ETAP).
+- **Hệ sinh thái:** Trang hồ sơ & case study cá nhân, công cụ tạo CV chuẩn ATS, hệ thống học ngôn ngữ hình thái học (MorphoLearn), thư viện GenAI, và kênh sáng tạo Trạm Gật Gù.
 
-Trang chủ sản phẩm: https://hethongthongminh.id.vn/
+Trang chủ: https://hethongthongminh.id.vn/
 
 ## 📁 Cấu trúc dự án (rút gọn)
 ```text
@@ -65,8 +64,10 @@ Truy cập local:
 - Dùng làm nguồn cho các tool/landing page hiển thị gallery hình AI.
 
 ### 4. Trang CV / Portfolio chính
-- Giao diện giới thiệu bản thân ở `public/caonguyenthanhan/cv.html`.
-- Phần heading nêu rõ vai trò, kinh nghiệm, call-to-action xem case study và liên hệ.
+- Giao diện giới thiệu bản thân tại `public/caonguyenthanhan/cv.html` và `index.html`.
+- Định vị chuyên môn: **AI Systems Architect / Automation Engineer** (Aleian Cao) tại **INS Engineering** (trước đây: **VNA GROUP**).
+- Chuyên sâu: Multi-Agent Systems, GraphRAG, Agentic Workflows và tự động hóa quy trình kỹ thuật điện (PSCAD, PSS/E, ETAP).
+- Các trang chuyên sâu: `/profile/aise` (AI Software Engineer), `/profile/as` (Automation Specialist), Bản đồ sao cá nhân (`/caonguyenthanhan/ban-do-sao-ca-nhan.html`).
 
 ## ▶️ Chạy server Graduation (local, PowerShell)
 1. Tạo và kích hoạt môi trường ảo Python:
