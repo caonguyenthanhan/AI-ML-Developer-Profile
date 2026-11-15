@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AISE 2.0 · Cao Nguyễn Thành An (Aleian Cao) — AI Engineering Ecosystem</title>
+    <meta name="description" content="AISE 2.0: Hệ sinh thái Kỹ thuật AI của Cao Nguyễn Thành An (Aleian Cao) — kết nối Kiến trúc AI 8 tầng, Kiến tạo Hệ thống AI, AEOS v1.4.2, Engineering Lab thực chiến và lộ trình Atlas – Siêu tư duy.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --aise-navy: #0f2537;
+            --aise-navy-deep: #091824;
+            --aise-teal: #0f766e;
+            --aise-gold: #c99743;
+            --aise-paper: #f6f5f0;
+            --aise-line: #d8dfdc;
+        }
+        html {
+            scroll-behavior: smooth;
+            overflow-x: clip;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', 'Inter', system-ui, sans-serif;
+            background-color: var(--aise-paper);
+            color: #1e293b;
+            overflow-x: clip;
+            max-width: 100%;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+        }
+        .hero-grid-bg {
+            background-color: var(--aise-navy);
+            background-image:
+                radial-gradient(circle at 82% 22%, rgba(201, 151, 67, 0.14), transparent 44%),
+                radial-gradient(circle at 12% 85%, rgba(20, 124, 120, 0.18), transparent 46%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: auto, auto, 32px 32px, 32px 32px;
+        }
+        .section-anchor {
+            scroll-margin-top: 5.75rem;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .chapter-highlight {
+            outline: 2px solid #c99743;
+            background-color: #fffbeb !important;
+        }
+        @media (max-width: 767px) {
+            body .header-container {
+                position: relative !important;
+                top: auto !important;
+            }
+        }
+        @media print {
+            @page { margin: 1cm; size: A4; }
+            html, body { background: white !important; color: black !important; -webkit-print-color-adjust: exact; overflow: visible !important; }
+            .no-print { display: none !important; }
+            .container { max-width: 100% !important; padding: 0 !important; }
+            section { padding: 0.5rem 0 !important; page-break-inside: auto; }
+            .mb-6, .mb-5, .skills-category { page-break-inside: avoid; }
+            h2, h3 { page-break-after: avoid; }
+            .bg-slate-50, .bg-slate-900, .bg-white, .bg-blue-600, .bg-blue-100, .bg-slate-800 {
+                background: none !important;
+                color: black !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+            .text-white, .text-slate-300, .text-slate-400, .text-slate-500, .text-slate-600, .text-blue-600, .text-blue-300 {
+                color: black !important;
+            }
+
+            /* CV Specific Formatting for Print */
+            nav, .header-placeholder, header:not(#cv-header), footer { display: none !important; }
+            #cv-profile { margin: 0 !important; padding: 0 !important; max-width: none !important; box-shadow: none !important; border: none !important; }
+            #cv-header { display: block !important; }
+
+            /* Header */
+            #cv-header h1 { font-size: 24pt !important; margin-bottom: 0.2rem; text-transform: uppercase; }
+            #cv-header .job-title { font-size: 14pt !important; font-weight: bold; margin-bottom: 0.5rem; }
+            #cv-header .contact-info { font-size: 10pt !important; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+            /* Sections */
+            h2 { font-size: 16pt !important; border-bottom: 2px solid #333; padding-bottom: 2px; margin-top: 15px; margin-bottom: 10px; text-transform: uppercase; }
+            h3 { font-size: 12pt !important; font-weight: bold; margin-bottom: 2px; }
+            .period { float: right; font-size: 10pt; }
+
+            /* Content */
+            p, li { font-size: 10pt !important; line-height: 1.3; }
+            ul { margin-left: 1.5rem; }
+
+            /* Skills Grid to List */
+            .skills-grid { display: flex !important; flex-wrap: wrap; gap: 1rem; }
+            .skills-category { margin-bottom: 0.5rem; }
+            .skills-category strong { display: block; margin-bottom: 0.2rem; }
+
+            /* Links */
+            a { text-decoration: none; color: black !important; }
+            a[href^="http"]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+
+            /* Hide decorative elements */
+            img, .icon-box, .decorative-line { display: none !important; }
+        }
+    </style>
+    <script src="/assets/js/header.js"></script>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- Sticky Ecosystem & CV Actions Bar -->
+    <div class="sticky top-0 z-40 bg-[#091824]/95 backdrop-blur border-b border-slate-700/80 text-white px-3 sm:px-6 py-2.5 shadow-md no-print">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2.5">
+            <div class="flex items-center gap-3 min-w-0">
+                <a href="#hero" class="flex items-center gap-2 shrink-0 text-sm font-bold tracking-tight text-white hover:text-[#e6be73] transition">
+                    <span class="inline-flex items-center justify-center w-6 h-6 rounded bg-[#c99743]/20 border border-[#c99743]/50 text-[#e6be73] font-mono text-xs">AI</span>
+                    <span>AISE 2.0</span>
+                </a>
+                <nav aria-label="Ecosystem Navigation" class="hidden md:flex items-center gap-1 text-xs font-medium text-slate-300 overflow-x-auto no-scrollbar">
+                    <a href="#books" class="px-2.5 py-1 rounded hover:bg-white/10 hover:text-white transition whitespace-nowrap">
+                        <span class="lang-vi">5 Quyển sách</span>
+                        <span class="lang-en hidden">5-Book Journey</span>
+                    </a>
+                    <a href="#architecture" class="px-2.5 py-1 rounded hover:bg-white/10 hover:text-white transition whitespace-nowrap">
+                        <span class="lang-vi">8 Tầng &amp; AEOS</span>
+                        <span class="lang-en hidden">8 Layers &amp; AEOS</span>
+                    </a>
+                    <a href="#lab" class="px-2.5 py-1 rounded hover:bg-white/10 hover:text-white transition whitespace-nowrap">
+                        <span class="lang-vi">Engineering Lab</span>
+                        <span class="lang-en hidden">Engineering Lab</span>
+                    </a>
+                    <a href="#author-bridge" class="px-2.5 py-1 rounded hover:bg-white/10 hover:text-white transition whitespace-nowrap">
+                        <span class="lang-vi">Tác giả</span>
+                        <span class="lang-en hidden">Author</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <div class="flex bg-slate-800 rounded p-0.5 border border-slate-700">
+                    <button type="button" onclick="toggleLang('vi')" id="btn-lang-vi" class="px-2.5 py-1 rounded text-xs font-bold text-blue-400 hover:bg-slate-700 transition">VI</button>
+                    <button type="button" onclick="toggleLang('en')" id="btn-lang-en" class="px-2.5 py-1 rounded text-xs font-bold text-slate-300 hover:bg-slate-700 transition">EN</button>
+                </div>
+                <a href="/caonguyenthanhan/profile/aise" class="px-2.5 sm:px-3 py-1.5 rounded bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center gap-1.5 shadow transition whitespace-nowrap">
+                    <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                    <span class="lang-vi">Trang CV &amp; In PDF →</span>
+                    <span class="lang-en hidden">CV Page &amp; PDF →</span>
+                </a>
+                <button type="button" id="toggle-header" onclick="toggleHeaderVisibility()" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition">Ẩn Header</button>
+                <button type="button" id="toggle-footer" onclick="toggleFooterVisibility()" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition">Ẩn Footer</button>
+            </div>
+        </div>
+        <!-- Mobile Subnav Strip -->
+        <nav aria-label="Mobile Section Links" class="flex md:hidden items-center gap-1.5 mt-2 pt-2 border-t border-slate-800 text-[11px] font-semibold text-slate-300 overflow-x-auto no-scrollbar">
+            <a href="#hero" class="px-2 py-1 rounded bg-slate-800/80 whitespace-nowrap">Hero</a>
+            <a href="#books" class="px-2 py-1 rounded bg-slate-800/80 whitespace-nowrap">
+                <span class="lang-vi">5 Quyển sách</span><span class="lang-en hidden">5 Books</span>
+            </a>
+            <a href="#architecture" class="px-2 py-1 rounded bg-slate-800/80 whitespace-nowrap">
+                <span class="lang-vi">8 Tầng</span><span class="lang-en hidden">8 Layers</span>
+            </a>
+            <a href="#aeos-ecosystem" class="px-2 py-1 rounded bg-slate-800/80 whitespace-nowrap">AEOS</a>
+            <a href="#lab" class="px-2 py-1 rounded bg-slate-800/80 whitespace-nowrap">Lab</a>
+            <a href="/caonguyenthanhan/profile/aise" class="px-2 py-1 rounded bg-blue-600/80 text-white whitespace-nowrap">CV Page</a>
+        </nav>
+    </div>
+
+    <!-- Header Placeholder handled by header.js -->
+    <div class="header-placeholder no-print"></div>
+
+    <!-- ===================================================================== -->
+    <!-- SECTION 1: HERO (AC-001)                                              -->
+    <!-- ===================================================================== -->
+    <section id="hero" class="hero-grid-bg text-white border-b-4 border-[#c99743] no-print section-anchor">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                <!-- Left: Positioning & Metrics -->
+                <div class="lg:col-span-7 min-w-0">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-mono uppercase tracking-[0.14em] text-[#e6be73] mb-4">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#34d399]"></span>
+                        AISE · AI ENGINEERING ECOSYSTEM
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-white mb-4">
+                        <span class="lang-vi">Xây đúng.<br class="sm:hidden"> Kiểm chứng.<br class="sm:hidden"> Tiến hóa.</span>
+                        <span class="lang-en hidden">Build Right.<br class="sm:hidden"> Verify.<br class="sm:hidden"> Evolve.</span>
+                    </h1>
+
+                    <p class="text-slate-200 text-base sm:text-lg leading-relaxed max-w-2xl mb-6">
+                        <span class="lang-vi">Từ kiến trúc AI 8 tầng đến hệ điều hành công việc AI (<strong class="text-white">AEOS</strong>) và những sản phẩm phần mềm được xây dựng, kiểm thử và soi giới hạn bằng chứng trong thực tế — bởi <strong class="text-[#e6be73]">Cao Nguyễn Thành An (Aleian Cao)</strong>.</span>
+                        <span class="lang-en hidden">From an 8-layer AI architecture to the <strong class="text-white">AEOS</strong> operational governance system and real software artifacts built, tested, and scoped with honest evidence limits — by <strong class="text-[#e6be73]">Cao Nguyen Thanh An (Aleian Cao)</strong>.</span>
+                    </p>
+
+                    <!-- 3 Signature Metrics -->
+                    <div class="grid grid-cols-3 gap-2.5 sm:gap-4 mb-7 max-w-xl">
+                        <div class="bg-[#132c42]/90 border border-slate-600/60 rounded-lg p-3 sm:p-3.5">
+                            <div class="text-2xl sm:text-3xl font-extrabold font-mono text-[#e6be73] leading-none">8</div>
+                            <div class="text-[11px] sm:text-xs font-medium text-slate-200 mt-1.5 leading-snug">
+                                <span class="lang-vi">Trách nhiệm kiến trúc</span>
+                                <span class="lang-en hidden">Architectural layers</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#132c42]/90 border border-slate-600/60 rounded-lg p-3 sm:p-3.5">
+                            <div class="text-2xl sm:text-3xl font-extrabold font-mono text-[#5eead4] leading-none">5</div>
+                            <div class="text-[11px] sm:text-xs font-medium text-slate-200 mt-1.5 leading-snug">
+                                <span class="lang-vi">Quyển sách lộ trình</span>
+                                <span class="lang-en hidden">Books roadmap</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#132c42]/90 border border-slate-600/60 rounded-lg p-3 sm:p-3.5">
+                            <div class="text-xl sm:text-2xl font-extrabold font-mono text-white leading-none pt-0.5">AEOS</div>
+                            <div class="text-[11px] sm:text-xs font-medium text-slate-200 mt-2 leading-snug">
+                                <span class="lang-vi">Hệ điều hành công việc</span>
+                                <span class="lang-en hidden">AI Work OS (v1.4.2)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Primary CTAs -->
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <a href="#books" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#c99743] hover:bg-[#b58434] text-[#091824] font-bold text-xs sm:text-sm shadow transition whitespace-nowrap">
+                            <span class="lang-vi">Khám phá hệ sinh thái</span>
+                            <span class="lang-en hidden">Explore Ecosystem</span>
+                            <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#lab" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#147c78] hover:bg-[#0f6663] text-white font-semibold text-xs sm:text-sm transition whitespace-nowrap">
+                            <i data-lucide="flask-conical" class="w-4 h-4"></i>
+                            <span class="lang-vi">Engineering Lab (5 Case)</span>
+                            <span class="lang-en hidden">Engineering Lab (5 Cases)</span>
+                        </a>
+                        <a href="/caonguyenthanhan/profile/aise" class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-white/10 hover:bg-white/15 border border-white/20 text-white font-medium text-xs sm:text-sm transition whitespace-nowrap">
+                            <i data-lucide="file-text" class="w-4 h-4"></i>
+                            <span class="lang-vi">Mở Trang CV &amp; In PDF →</span>
+                            <span class="lang-en hidden">Open CV Page &amp; PDF →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Original Two-Owls Hero Artwork (NOT the dense poster) -->
+                <div class="lg:col-span-5 min-w-0">
+                    <div class="bg-[#132c42] border border-[#c99743]/40 rounded-xl p-2.5 sm:p-3 shadow-2xl">
+                        <div class="overflow-hidden rounded-lg border border-white/10 bg-[#091824]">
+                            <img
+                                src="/image/aise/aise-owls-hero.webp"
+                                alt="Hai chú cú của bộ sách AISE đang cùng thiết kế bản vẽ cây cầu giữa hai bờ"
+                                width="715"
+                                height="353"
+                                class="w-full h-auto block object-cover"
+                            >
+                        </div>
+                        <div class="mt-2.5 px-1 flex items-center justify-between gap-2 text-xs text-slate-300">
+                            <span class="font-medium">
+                                <span class="lang-vi">Nhận diện AISE · Hai chú cú xây cầu tri thức ↔ thực chiến</span>
+                                <span class="lang-en hidden">AISE Identity · Two owls bridging theory &amp; real systems</span>
+                            </span>
+                            <span class="font-mono text-[11px] text-[#e6be73] shrink-0">SOT v1.4.2</span>
+                        </div>
+                    </div>
+
+                    <!-- Ecosystem Loop Bar -->
+                    <div class="mt-3 bg-[#091824]/70 border border-slate-700/70 rounded-lg px-3.5 py-2.5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
+                        <span class="lang-vi font-medium text-slate-200">Điểm khác biệt của AISE:</span>
+                        <span class="lang-en hidden font-medium text-slate-200">What sets AISE apart:</span>
+                        <span class="font-mono text-[11px] text-[#5eead4]">
+                            <span class="lang-vi">Kiến thức → AEOS → Thực chiến → Bằng chứng → Sách ↺</span>
+                            <span class="lang-en hidden">Knowledge → AEOS → Practice → Evidence → Books ↺</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- MAIN ECOSYSTEM WORKSPACE (.no-print except Section 5 CV)              -->
+    <!-- ===================================================================== -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12 sm:space-y-16">
+
+        <!-- ================================================================= -->
+        <!-- SECTION 2: 5-BOOK JOURNEY (AC-002, AC-005, AC-008)                -->
+        <!-- ================================================================= -->
+        <section id="books" class="no-print section-anchor">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                <div>
+                    <div class="text-xs font-mono font-bold uppercase tracking-[0.14em] text-[#0f766e] mb-1">
+                        <span class="lang-vi">01 · Lộ trình tri thức 5 quyển sách</span>
+                        <span class="lang-en hidden">01 · Five-Volume Knowledge Journey</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0f2537] tracking-tight">
+                        <span class="lang-vi">Từ hiểu hệ thống đến tự thiết kế cách làm</span>
+                        <span class="lang-en hidden">From Understanding Systems to Meta-Design</span>
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-1.5 max-w-3xl">
+                        <span class="lang-vi">Năm quyển nối nhau theo tiến trình tích lũy năng lực — trong đó <strong>AEOS là cầu nối điều hành</strong> giữa hai quyển nền tảng và lộ trình Atlas. Bấm vào từng quyển để mở mục lục, nội dung trọng tâm, phiên bản và liên kết tới dự án thực chiến.</span>
+                        <span class="lang-en hidden">Five connected volumes representing a working progression — with <strong>AEOS acting as the operational bridge</strong> between the two core handbooks and the Atlas roadmap. Click any volume to inspect its intro, TOC, version, and linked case studies.</span>
+                    </p>
+                </div>
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs text-slate-600 shadow-sm shrink-0 self-start md:self-auto">
+                    <i data-lucide="mouse-pointer-click" class="w-3.5 h-3.5 text-[#0f766e]"></i>
+                    <span class="lang-vi">Bấm từng quyển để xem mục lục &amp; case liên quan</span>
+                    <span class="lang-en hidden">Click a volume for TOC &amp; case links</span>
+                </div>
+            </div>
+
+            <!-- 3-Phase Progression Indicator -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 mb-4 text-xs font-bold uppercase tracking-wider">
+                <div class="md:col-span-5 bg-white border border-slate-200 rounded-lg px-3.5 py-2 flex items-center justify-between text-[#0f2537]">
+                    <span class="lang-vi">Giai đoạn 1 · Nền tảng kỹ thuật &amp; Giá trị</span>
+                    <span class="lang-en hidden">Phase 1 · Architecture &amp; System Value</span>
+                    <span class="font-mono text-[#0f766e]">01 → 02</span>
+                </div>
+                <div class="md:col-span-3 bg-amber-50 border border-amber-300 rounded-lg px-3.5 py-2 flex items-center justify-between text-amber-900">
+                    <span class="lang-vi">Cầu nối điều hành</span>
+                    <span class="lang-en hidden">Operational Bridge</span>
+                    <span class="font-mono">03 · AEOS</span>
+                </div>
+                <div class="md:col-span-4 bg-slate-100 border border-slate-200 rounded-lg px-3.5 py-2 flex items-center justify-between text-slate-600">
+                    <span class="lang-vi">Chưa khởi động &amp; Định hướng</span>
+                    <span class="lang-en hidden">Gated Build &amp; Horizon</span>
+                    <span class="font-mono">04 → 05</span>
+                </div>
+            </div>
+
+            <!-- 5 Connected Volume Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-stretch">
+                <!-- Book 1 -->
+                <button type="button" onclick="openBookModal('b1')" class="group text-left bg-white border border-slate-200 hover:border-[#0f766e] rounded-xl p-3.5 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="flex items-center justify-between gap-2 mb-2.5">
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-[#0f766e] border border-emerald-200">
+                            <span class="lang-vi">Tập 1 · Đã hoàn thiện thảo</span>
+                            <span class="lang-en hidden">Vol 1 · Mature Draft</span>
+                        </span>
+                        <span class="text-[11px] font-mono font-bold text-slate-400">v4.2 A5</span>
+                    </div>
+                    <div class="aspect-[2/3] w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-900 mb-3">
+                        <img src="/image/aise/cover-book1-8layers.webp" alt="Bìa Cẩm nang Kỹ thuật: Kiến trúc AI 8 tầng" class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-300" loading="lazy">
+                    </div>
+                    <h3 class="font-bold text-[#0f2537] text-base leading-snug">
+                        <span class="lang-vi">Kiến trúc AI 8 tầng</span>
+                        <span class="lang-en hidden">8-Layer AI Architecture</span>
+                    </h3>
+                    <p class="text-xs font-semibold text-[#0f766e] mt-0.5">
+                        <span class="lang-vi">Hiểu hệ thống &amp; ranh giới tầng</span>
+                        <span class="lang-en hidden">Understand system layers</span>
+                    </p>
+                    <p class="text-xs text-slate-600 mt-1.5 line-clamp-2 flex-1">
+                        <span class="lang-vi">12+ sơ đồ, 16+ runbook, 8+ checklist nghiệm thu và bài toán trước công cụ.</span>
+                        <span class="lang-en hidden">12+ diagrams, 16+ runbooks, 8+ acceptance checklists &amp; problem-first design.</span>
+                    </p>
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600">
+                        <span class="lang-vi">Xem mục lục &amp; Case</span>
+                        <span class="lang-en hidden">Inspect TOC &amp; Cases</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </button>
+
+                <!-- Book 2 -->
+                <button type="button" onclick="openBookModal('b2')" class="group text-left bg-white border border-slate-200 hover:border-[#0f766e] rounded-xl p-3.5 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="flex items-center justify-between gap-2 mb-2.5">
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-[#0f766e] border border-emerald-200">
+                            <span class="lang-vi">Tập 2 · Biên tập visual</span>
+                            <span class="lang-en hidden">Vol 2 · Editorial 0.6</span>
+                        </span>
+                        <span class="text-[11px] font-mono font-bold text-slate-400">v0.6</span>
+                    </div>
+                    <div class="aspect-[2/3] w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-900 mb-3">
+                        <img src="/image/aise/cover-book2-systems.webp" alt="Bìa Cẩm nang Kỹ thuật: Kiến tạo Hệ thống AI" class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-300" loading="lazy">
+                    </div>
+                    <h3 class="font-bold text-[#0f2537] text-base leading-snug">
+                        <span class="lang-vi">Kiến tạo Hệ thống AI</span>
+                        <span class="lang-en hidden">Building AI Systems</span>
+                    </h3>
+                    <p class="text-xs font-semibold text-[#0f766e] mt-0.5">
+                        <span class="lang-vi">Tư duy hệ thống &amp; giữ giá trị</span>
+                        <span class="lang-en hidden">System thinking &amp; value</span>
+                    </p>
+                    <p class="text-xs text-slate-600 mt-1.5 line-clamp-2 flex-1">
+                        <span class="lang-vi">19 chương thực chiến về tối giản kiến trúc, multi-agent, kiểm thử &amp; giới hạn chứng cứ.</span>
+                        <span class="lang-en hidden">19 chapters on dropping unneeded layers, multi-agent ops, testing &amp; evidence scope.</span>
+                    </p>
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600">
+                        <span class="lang-vi">Xem 19 chương &amp; [I1]–[I4]</span>
+                        <span class="lang-en hidden">Inspect TOC &amp; [I1]–[I4]</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </button>
+
+                <!-- Book 3: AEOS (THE BRIDGE) -->
+                <button type="button" onclick="openBookModal('b3')" class="group text-left bg-[#fffcf2] border-2 border-[#c99743] hover:border-[#9f7224] rounded-xl p-3.5 shadow-sm hover:shadow-md transition flex flex-col relative">
+                    <div class="flex items-center justify-between gap-2 mb-2.5">
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">
+                            <span class="lang-vi">Cầu nối · Đang hoàn thiện</span>
+                            <span class="lang-en hidden">Bridge · Evolving</span>
+                        </span>
+                        <span class="text-[11px] font-mono font-bold text-amber-800">v1.4.2</span>
+                    </div>
+                    <div class="aspect-[2/3] w-full overflow-hidden rounded-lg border border-amber-300/70 bg-slate-900 mb-3">
+                        <img src="/image/aise/cover-book3-aeos.webp" alt="Bìa sách AEOS: Hệ điều hành cho kỷ nguyên AI" class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-300" loading="lazy">
+                    </div>
+                    <h3 class="font-bold text-[#0f2537] text-base leading-snug">AEOS</h3>
+                    <p class="text-xs font-semibold text-amber-800 mt-0.5">
+                        <span class="lang-vi">Tổ chức hệ thống · Nối Tập 1–2 → Atlas</span>
+                        <span class="lang-en hidden">Work OS · Bridges Vol 1–2 → Atlas</span>
+                    </p>
+                    <p class="text-xs text-slate-700 mt-1.5 line-clamp-2 flex-1">
+                        <span class="lang-vi">Điều phối Owner · Manager 4.1 · Master 1.0 · Workers · AI-r bằng luật, gate &amp; chứng cứ.</span>
+                        <span class="lang-en hidden">Governs Owner, Manager 4.1, Master 1.0, Workers &amp; AI-r via rules, gates &amp; receipts.</span>
+                    </p>
+                    <div class="mt-3 pt-2.5 border-t border-amber-200/80 flex items-center justify-between text-xs font-semibold text-amber-900">
+                        <span class="lang-vi">Xem cầu nối AEOS</span>
+                        <span class="lang-en hidden">Inspect AEOS Bridge</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </button>
+
+                <!-- Book 4: Atlas (NOT STARTED - Gated on AEOS) -->
+                <button type="button" onclick="openBookModal('b4')" class="group text-left bg-slate-50 border border-dashed border-slate-300 hover:border-[#0f2537] rounded-xl p-3.5 shadow-sm hover:shadow transition flex flex-col">
+                    <div class="flex items-center justify-between gap-2 mb-2.5">
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-200 text-slate-700">
+                            <span class="lang-vi">Tập 3 · Chưa khởi động</span>
+                            <span class="lang-en hidden">Vol 3 · Not Started</span>
+                        </span>
+                        <span class="text-[11px] font-mono text-slate-500">Gated</span>
+                    </div>
+                    <div class="aspect-[2/3] w-full rounded-lg border border-dashed border-slate-300 bg-[#132c42] text-white p-4 flex flex-col justify-between mb-3">
+                        <div class="flex items-center justify-between text-[10px] font-mono text-[#adc9d3] uppercase tracking-widest">
+                            <span>BLUEPRINT</span>
+                            <span>04</span>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-extrabold tracking-tight text-white">Atlas</div>
+                            <div class="h-0.5 w-10 bg-[#c99743] my-2"></div>
+                            <p class="text-[11px] text-slate-300 leading-relaxed">
+                                <span class="lang-vi">Xây dựng hệ thống tích hợp 8 tầng từ code &amp; lỗi thật — chỉ khởi động sau khi AEOS đủ trưởng thành.</span>
+                                <span class="lang-en hidden">Build an integrated 8-layer system from real code &amp; failures — gated until AEOS matures.</span>
+                            </p>
+                        </div>
+                        <div class="text-[10px] font-mono px-2 py-1 rounded bg-white/10 text-amber-200 border border-white/15">
+                            <span class="lang-vi">Chờ cổng AEOS · Không bịa telemetry</span>
+                            <span class="lang-en hidden">Awaiting AEOS gate · No mock results</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-[#0f2537] text-base leading-snug">
+                        <span class="lang-vi">Tập 3 — Atlas</span>
+                        <span class="lang-en hidden">Vol 3 — Atlas</span>
+                    </h3>
+                    <p class="text-xs font-semibold text-slate-600 mt-0.5">
+                        <span class="lang-vi">Xây dựng và kiểm chứng · Chờ AEOS</span>
+                        <span class="lang-en hidden">Build &amp; Verify · Gated on AEOS</span>
+                    </p>
+                    <p class="text-xs text-slate-600 mt-1.5 line-clamp-2 flex-1">
+                        <span class="lang-vi">Sách viết sau khi build &amp; test thật; chưa khởi động.</span>
+                        <span class="lang-en hidden">Book written after real build &amp; fault injection; currently unstarted.</span>
+                    </p>
+                    <div class="mt-3 pt-2.5 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-slate-700">
+                        <span class="lang-vi">Xem điều kiện kích hoạt</span>
+                        <span class="lang-en hidden">View Trigger Rules</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </button>
+
+                <!-- Book 5: Siêu tư duy -->
+                <button type="button" onclick="openBookModal('b5')" class="group text-left bg-slate-50 border border-dashed border-slate-300 hover:border-[#0f2537] rounded-xl p-3.5 shadow-sm hover:shadow transition flex flex-col">
+                    <div class="flex items-center justify-between gap-2 mb-2.5">
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-200 text-slate-700">
+                            <span class="lang-vi">Tập 4 · Định hướng</span>
+                            <span class="lang-en hidden">Vol 4 · Horizon</span>
+                        </span>
+                        <span class="text-[11px] font-mono text-slate-500">~2027</span>
+                    </div>
+                    <div class="aspect-[2/3] w-full rounded-lg border border-dashed border-slate-300 bg-gradient-to-b from-[#1a3449] to-[#0f2537] text-white p-4 flex flex-col justify-between mb-3">
+                        <div class="flex items-center justify-between text-[10px] font-mono text-[#adc9d3] uppercase tracking-widest">
+                            <span>HORIZON</span>
+                            <span>05</span>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-extrabold tracking-tight text-white">
+                                <span class="lang-vi">Siêu tư duy</span>
+                                <span class="lang-en hidden">Meta-Thinking</span>
+                            </div>
+                            <div class="h-0.5 w-10 bg-[#5eead4] my-2"></div>
+                            <p class="text-[11px] text-slate-300 leading-relaxed">
+                                <span class="lang-vi">Phản biện, tái thiết kế cách kỹ sư &amp; AI làm việc — sổ tay tư duy &amp; workflow riêng.</span>
+                                <span class="lang-en hidden">Critique, dismantle &amp; redesign engineering workflows — a personal meta-playbook.</span>
+                            </p>
+                        </div>
+                        <div class="text-[10px] font-mono px-2 py-1 rounded bg-white/10 text-teal-200 border border-white/15">
+                            <span class="lang-vi">Định hướng đầu năm 2027</span>
+                            <span class="lang-en hidden">Target review early 2027</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-[#0f2537] text-base leading-snug">
+                        <span class="lang-vi">Tập 4 — Siêu tư duy</span>
+                        <span class="lang-en hidden">Vol 4 — Meta-Thinking</span>
+                    </h3>
+                    <p class="text-xs font-semibold text-slate-600 mt-0.5">
+                        <span class="lang-vi">Phản biện &amp; Tái thiết kế · Đầu 2027</span>
+                        <span class="lang-en hidden">Critique &amp; Redesign · Early 2027</span>
+                    </p>
+                    <p class="text-xs text-slate-600 mt-1.5 line-clamp-2 flex-1">
+                        <span class="lang-vi">Mốc quay lại định hướng đầu năm 2027 sau khi vượt qua Tập 1–3.</span>
+                        <span class="lang-en hidden">Re-architecture milestone slated for early 2027 review (not a release commitment).</span>
+                    </p>
+                    <div class="mt-3 pt-2.5 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-slate-700">
+                        <span class="lang-vi">Xem lộ trình Tập 4</span>
+                        <span class="lang-en hidden">View Vol 4 Horizon</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Transition Boundary Callout (AC-008) -->
+            <div class="mt-4 bg-amber-50/80 border-l-4 border-[#c99743] rounded-r-lg px-4 py-3 text-xs sm:text-sm text-slate-700">
+                <span class="lang-vi"><strong class="text-[#0f2537]">Điều kiện chuyển tiếp AEOS → Atlas:</strong> Tập 3 (Atlas) chỉ khởi động khi AEOS vận hành đủ tin cậy qua bằng chứng thực tế — không đồng nghĩa AEOS phải hoàn thiện 100% mới được đi tiếp, mà do Owner chốt tại cổng kiểm chứng. Mốc đầu năm 2027 cho Tập 4 là định hướng quay lại, chưa phải ngày phát hành thương mại.</span>
+                <span class="lang-en hidden"><strong class="text-[#0f2537]">AEOS → Atlas Transition Gate:</strong> Vol 3 (Atlas) opens only when AEOS demonstrates operational sufficiency under Owner review (evidence-gated, not perfection-gated). Early 2027 for Vol 4 is a directional revisit horizon, not a guaranteed publication date.</span>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- SECTION 3: 8-LAYER ARCHITECTURE & AEOS v1.4.2 (AC-003, AC-005)    -->
+        <!-- ================================================================= -->
+        <section id="architecture" class="no-print section-anchor space-y-8">
+            <div>
+                <div class="text-xs font-mono font-bold uppercase tracking-[0.14em] text-[#0f766e] mb-1">
+                    <span class="lang-vi">02 · Kiến trúc 8 tầng &amp; Hệ điều hành AEOS</span>
+                    <span class="lang-en hidden">02 · 8-Layer Architecture &amp; AEOS Governance</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0f2537] tracking-tight">
+                    <span class="lang-vi">Trách nhiệm kỹ thuật đi cùng kỷ luật điều hành</span>
+                    <span class="lang-en hidden">Technical Responsibilities Paired with Operational Discipline</span>
+                </h2>
+            </div>
+
+            <!-- 3A. 8-Layer Interactive Map -->
+            <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-6 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
+                    <div>
+                        <h3 class="text-base sm:text-lg font-bold text-[#0f2537]">
+                            <span class="lang-vi">Kiến trúc AI 8 tầng — Nhóm trách nhiệm, không phải pipeline bắt buộc</span>
+                            <span class="lang-en hidden">8-Layer AI Architecture — Responsibility Groups, Not Mandatory Steps</span>
+                        </h3>
+                        <p class="text-xs text-slate-600 mt-0.5">
+                            <span class="lang-vi">Chọn một tầng để xem quyết định trọng tâm, chương sách tương ứng và dự án trong Engineering Lab.</span>
+                            <span class="lang-en hidden">Select a layer to view key design decisions, corresponding book chapters, and Engineering Lab cases.</span>
+                        </p>
+                    </div>
+                    <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-slate-100 text-slate-700 self-start sm:self-auto">
+                        <span class="lang-vi">Tập 1 · Phần II + Tập 2 · Phụ lục C</span>
+                        <span class="lang-en hidden">Vol 1 Part II + Vol 2 App. C</span>
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+                    <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="layer-buttons">
+                        <button type="button" data-layer="l1" onclick="selectLayer('l1')" class="layer-btn text-left p-3 rounded-lg border transition">
+                            <div class="text-[10px] font-mono font-bold text-[#0f766e]">01 / MODEL</div>
+                            <div class="font-bold text-sm text-[#0f2537] mt-0.5">Model</div>
+                            <div class="text-[11px] text-slate-600 mt-0.5">
+                                <span class="lang-vi">Năng lực &amp; chi phí</span>
+                                <span class="lang-en hidden">Capability &amp; cost</span>
+                            </div>
+                        </button>
+                        <button type="button" data-layer="l2" onclick="selectLayer('l2')" class="layer-btn text-left p-3 rounded-lg border transition">
+                            <div class="text-[10px] font-mono font-bold text-[#0f766e]">02 / PROMPT</div>
+                            <div class="font-bold text-sm text-[#0f2537] mt-0.5">Prompt</div>
+                            <div class="text-[11px] text-slate-600 mt-0.5">
+                                <span class="lang-vi">Hợp đồng đầu ra</span>
+                                <span class="lang-en hidden">Output contract</span>
+                            </div>
+                        </button>
+                        <button type="button" data-layer="l3" onclick="selectLayer('l3')" class="layer-btn text-left p-3 rounded-lg border transition">
+                            <div class="text-[10px] font-mono font-bold text-[#0f766e]">03 / RAG</div>
+                            <div class="font-bold text-sm text-[#0f2537] mt-0.5">
+                                <span class="lang-vi">Tri thức</span>
+                                <span class="lang-en hidden">Knowledge</span>
+                            </div>
+                            <div class="text-[11px] text-slate-600 mt-0.5">
+                                <span class="lang-vi">Nguồn &amp; hiệu lực</span>
+                                <span class="lang-en hidden">Source &amp; freshness</span>
+                            </div>
+                        </button>
+                        <button type="button" data-layer="l4" onclick="selectLayer('l4')" class="layer-btn text-left p-3 rounded-lg border transition">
+                            <div class="text-[10px] font-mono font-bold text-[#0f766e]">04 / TOOLS</div>
+                            <div class="font-bold text-sm text-[#0f2537] mt-0.5">Tools &amp; MCP</div>
+                            <div class="text-[11px] text-slate-600 mt-0.5">
+                                <span class="lang-vi">Hành động an toàn</span>
+                                <span class="lang-en hidden">Safe actions</span>
+                            </div>
+                        </button>
+                        <button type="button" data-layer="l5" onclick="selectLayer('l5')" class="layer-btn text-left p-3 rounded-lg border transition">
+                            <div class="text-[10px] font-mono font-bold text-[#0f766e]">05 / AUTH</div>
+                            <div class="font-bold text-sm text-[#0f2537] mt-0.5">Authorization</div>
+                            <div class="text-[11px] text-slate-600 mt-0.5">
+                                <span class="lang-vi">Quyền thực thi</span>
+                                <span class="lang-en hidden">Access control</span>
+                            </div>
+                        </button>
+                        <button type="button" data-layer="l6" onclick="selectLayer('l6')" class="layer-btn text-left p-3 rounded-lg border transition">
+                            <div class="text-[10px] font-mono font-bold text-[#0f766e]">06 / GUARDS</div>
+                            <div class="font-bold text-sm text-[#0f2537] mt-0.5">Guardrails</div>
+                            <div class="text-[11px] text-slate-600 mt-0.5">
+                                <span class="lang-vi">Thất bại an toàn</span>
+                                <span class="lang-en hidden">Fail-safe bounds</span>
+                            </div>
+                        </button>
+                        <button type="button" data-layer="l7" onclick="selectLayer('l7')" class="layer-btn text-left p-3 rounded-lg border transition">
+                            <div class="text-[10px] font-mono font-bold text-[#0f766e]">07 / CACHE</div>
+                            <div class="font-bold text-sm text-[#0f2537] mt-0.5">Cache &amp; Router</div>
+                            <div class="text-[11px] text-slate-600 mt-0.5">
+                                <span class="lang-vi">Tối ưu không sai</span>
+                                <span class="lang-en hidden">Truthful caching</span>
+                            </div>
+                        </button>
+                        <button type="button" data-layer="l8" onclick="selectLayer('l8')" class="layer-btn text-left p-3 rounded-lg border transition">
+                            <div class="text-[10px] font-mono font-bold text-[#0f766e]">08 / EVALS</div>
+                            <div class="font-bold text-sm text-[#0f2537] mt-0.5">Observability</div>
+                            <div class="text-[11px] text-slate-600 mt-0.5">
+                                <span class="lang-vi">Trace &amp; Nghiệm thu</span>
+                                <span class="lang-en hidden">Trace &amp; Evals</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Layer Detail Inspector -->
+                    <div id="layer-detail" class="lg:col-span-5 bg-[#f8fafc] border border-slate-200 border-t-4 border-t-[#0f766e] rounded-xl p-4 sm:p-5">
+                        <!-- Dynamically populated by selectLayer() -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3B. AEOS Governance Section (AC-003) -->
+            <div id="aeos-ecosystem" class="bg-white border border-slate-200 rounded-xl p-4 sm:p-6 shadow-sm section-anchor">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5 pb-4 border-b border-slate-100">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#0f766e] mb-1">
+                            <span>AEOS GOVERNANCE MODEL</span>
+                            <span class="text-slate-300">·</span>
+                            <span>SOT v1.4.2</span>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-extrabold text-[#0f2537]">
+                            <span class="lang-vi">AEOS — Quyền quyết định, Thi công và Kiểm chứng độc lập</span>
+                            <span class="lang-en hidden">AEOS — Authority, Execution &amp; Independent Verification</span>
+                        </h3>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 text-[11px] font-mono">
+                        <span class="px-2.5 py-1 rounded bg-[#0f2537] text-white font-semibold">SOT v1.4.2</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-800 border border-slate-200 font-semibold">AI-Manager v4.1</span>
+                        <span class="px-2.5 py-1 rounded bg-emerald-50 text-[#0f766e] border border-emerald-200 font-semibold">AI-Master v1.0</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Role Matrix + Inspector -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+                    <div class="lg:col-span-7 space-y-3">
+                        <!-- Top Authority: Owner -->
+                        <button type="button" data-role="owner" onclick="selectRole('owner')" class="role-btn w-full text-left p-4 rounded-xl bg-[#0f2537] text-white border-2 border-transparent hover:border-[#c99743] transition">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-white/15 text-[#e6be73]">Authority · Gate</span>
+                                <span class="text-[11px] font-mono text-slate-300">Role §4–§6</span>
+                            </div>
+                            <div class="font-bold text-base mt-1.5">OWNER</div>
+                            <p class="text-xs text-slate-200 mt-0.5">
+                                <span class="lang-vi">Giữ quyền quyết WHAT, phạm vi (scope), mở/thu ghế, 7 điều kiện auto-stop và nghiệm thu cuối.</span>
+                                <span class="lang-en hidden">Owns WHAT, scope bounds, worker seats, 7 auto-stop triggers, trunk decisions &amp; final acceptance.</span>
+                            </p>
+                        </button>
+
+                        <!-- Middle Tier: Manager 4.1 + Master 1.0 -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button type="button" data-role="manager" onclick="selectRole('manager')" class="role-btn text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-[#0f766e] transition">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Chat-tier</span>
+                                    <span class="text-[11px] font-mono font-bold text-slate-500">v4.1</span>
+                                </div>
+                                <div class="font-bold text-sm text-[#0f2537] mt-1.5">AI-Manager v4.1</div>
+                                <p class="text-xs text-slate-600 mt-1">
+                                    <span class="lang-vi">Soạn WHAT cùng Owner, kiểm toán ngoài, phản biện &amp; đề xuất luật. <strong>Không repo · Không gate · Không chỉ huy Master.</strong></span>
+                                    <span class="lang-en hidden">Co-drafts WHAT with Owner, performs external audit &amp; rule proposals. <strong>No repo access · Not Master's boss · Not a gate.</strong></span>
+                                </p>
+                            </button>
+
+                            <button type="button" data-role="master" onclick="selectRole('master')" class="role-btn text-left p-3.5 rounded-xl bg-[#0f766e] text-white border-2 border-transparent hover:border-[#c99743] transition">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-white/20 text-white">Execution</span>
+                                    <span class="text-[11px] font-mono text-teal-100">v1.0</span>
+                                </div>
+                                <div class="font-bold text-sm mt-1.5">AI-Master v1.0</div>
+                                <p class="text-xs text-teal-50 mt-1">
+                                    <span class="lang-vi">Chịu trách nhiệm HOW trong scope: chia việc, lint envelope (17 mục), quản trị worktree, kiểm chứng L3 &amp; tích hợp.</span>
+                                    <span class="lang-en hidden">Owns HOW within scope: task split, 17-item envelope lint, worktrees, L3 verification &amp; integration.</span>
+                                </p>
+                            </button>
+                        </div>
+
+                        <!-- Execution & Review Tier: Workers + AI-r -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button type="button" data-role="worker" onclick="selectRole('worker')" class="role-btn text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-[#0f766e] transition">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-700">Thi công</span>
+                                    <span class="text-[11px] font-mono text-slate-500">W1–W8</span>
+                                </div>
+                                <div class="font-bold text-sm text-[#0f2537] mt-1.5">Workers (W1–W8)</div>
+                                <p class="text-xs text-slate-600 mt-1">
+                                    <span class="lang-vi">Thực thi tự chứa trong envelope &amp; worktree; không tự sửa WHAT; có quyền báo sai tiền đề nếu số đo ngược.</span>
+                                    <span class="lang-en hidden">Self-contained implementation inside envelope &amp; worktree; cannot alter WHAT; may reject contradictory metrics.</span>
+                                </p>
+                            </button>
+
+                            <button type="button" data-role="review" onclick="selectRole('review')" class="role-btn text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-[#0f766e] transition">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">Cross-Model</span>
+                                    <span class="text-[11px] font-mono text-slate-500">review/&lt;id&gt;</span>
+                                </div>
+                                <div class="font-bold text-sm text-[#0f2537] mt-1.5">AI-r (Independent Review)</div>
+                                <p class="text-xs text-slate-600 mt-1">
+                                    <span class="lang-vi">Review giả định, mutation test &amp; code trên nhánh <code>review/&lt;task-id&gt;</code>; không sửa mã sản phẩm và không thay Owner Accept.</span>
+                                    <span class="lang-en hidden">Reviews assumptions, mutation tests &amp; code on <code>review/&lt;task-id&gt;</code>; never edits prod code or replaces Owner Accept.</span>
+                                </p>
+                            </button>
+                        </div>
+
+                        <!-- 6-Step Execution Pipeline Strip -->
+                        <div class="pt-2">
+                            <div class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 mb-2">
+                                <span class="lang-vi">Luồng điều phối mặc định (AEOS 1.4.2):</span>
+                                <span class="lang-en hidden">Default Execution Pipeline (AEOS 1.4.2):</span>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-6 gap-1.5 text-center text-[11px]">
+                                <div class="p-2 rounded bg-slate-100 font-semibold text-[#0f2537]">1. WHAT<br><span class="text-[10px] font-normal text-slate-600">Owner</span></div>
+                                <div class="p-2 rounded bg-slate-100 font-semibold text-[#0f2537]">2. Envelope<br><span class="text-[10px] font-normal text-slate-600">Master</span></div>
+                                <div class="p-2 rounded bg-slate-100 font-semibold text-[#0f2537]">3. Code/Test<br><span class="text-[10px] font-normal text-slate-600">Workers</span></div>
+                                <div class="p-2 rounded bg-slate-100 font-semibold text-[#0f2537]">4. L3 + AI-r<br><span class="text-[10px] font-normal text-slate-600">Evidence</span></div>
+                                <div class="p-2 rounded bg-emerald-50 font-semibold text-[#0f766e] border border-emerald-200">5. Accept<br><span class="text-[10px] font-normal">Owner</span></div>
+                                <div class="p-2 rounded bg-slate-100 font-semibold text-[#0f2537]">6. Integrate<br><span class="text-[10px] font-normal text-slate-600">Scoped</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AEOS Role / SOT / Gap Inspector -->
+                    <div id="role-detail" class="lg:col-span-5 bg-[#f8fafc] border border-slate-200 border-t-4 border-t-[#c99743] rounded-xl p-4 sm:p-5">
+                        <!-- Dynamically populated by selectRole() -->
+                    </div>
+                </div>
+
+                <!-- SOT Rules & Honest Operational Boundary -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-100 text-xs">
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-3.5">
+                        <div class="font-bold text-[#0f2537] flex items-center justify-between gap-2 mb-1">
+                            <span>SOT v1.4.2 Active Baseline</span>
+                            <button type="button" onclick="selectRole('law')" class="text-blue-600 hover:underline font-semibold">
+                                <span class="lang-vi">Xem chi tiết luật</span><span class="lang-en hidden">Inspect SOT</span>
+                            </button>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            <span class="lang-vi">18 luật Master (M1–M12, M15–M20 active), 8 quyền Worker (W1–W8), 7 điểm auto-stop, Envelope v1.1 + Lint v1.3 (17 mục bắt buộc). Land-first <code>D-20261115-3</code> không xóa nhãn review/test thực tế.</span>
+                            <span class="lang-en hidden">18 Master laws (M1–M12, M15–M20 active), 8 Worker rights (W1–W8), 7 auto-stop triggers, Envelope v1.1 + Lint v1.3 (17 required items). Land-first <code>D-20261115-3</code> keeps actual review/test status intact.</span>
+                        </p>
+                    </div>
+                    <div class="bg-amber-50/70 border border-amber-200 rounded-lg p-3.5">
+                        <div class="font-bold text-amber-950 flex items-center justify-between gap-2 mb-1">
+                            <span>
+                                <span class="lang-vi">Giới hạn &amp; Khoảng trống cần xử lý (Gap)</span>
+                                <span class="lang-en hidden">Known Enforcement &amp; Evidence Gaps</span>
+                            </span>
+                            <button type="button" onclick="selectRole('gap')" class="text-amber-800 hover:underline font-semibold">
+                                <span class="lang-vi">Xem bằng chứng gap</span><span class="lang-en hidden">Inspect Gap</span>
+                            </button>
+                        </div>
+                        <p class="text-amber-900/90 leading-relaxed">
+                            <span class="lang-vi">AEOS là lớp điều hành quy trình (không phải sandbox bảo mật hoàn chỉnh). Snapshot 15/11/2026 ghi nhận nhiều quy tắc vẫn dựa vào văn bản, cần hoàn thiện receipt độc lập &amp; kiểm tra guard trước khi coi là rào cứng.</span>
+                            <span class="lang-en hidden">AEOS is a workflow governance layer (not a full security boundary). Snapshot 15/11/2026 notes several rules still rely on text discipline and require independent receipts &amp; guard audits.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- SECTION 4: ENGINEERING LAB (AC-004, AC-005, AC-008)               -->
+        <!-- ================================================================= -->
+        <section id="lab" class="no-print section-anchor">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                <div>
+                    <div class="text-xs font-mono font-bold uppercase tracking-[0.14em] text-[#0f766e] mb-1">
+                        <span class="lang-vi">03 · Engineering Lab — Bằng chứng thực chiến</span>
+                        <span class="lang-en hidden">03 · Engineering Lab — Verified Field Cases</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0f2537] tracking-tight">
+                        <span class="lang-vi">Sách nói gì, phần mềm thật chứng minh (hoặc phản biện) điều đó</span>
+                        <span class="lang-en hidden">Real Decisions, Honest Evidence Limits &amp; Book Traceability</span>
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-1.5 max-w-3xl">
+                        <span class="lang-vi">Mỗi hồ sơ dự án trả lời đủ 4 câu hỏi: <strong>Bài toán gì · Quyết định gì · Bằng chứng nào (kèm giới hạn) · Học được gì</strong> — kèm liên kết hai chiều quay lại chương sách giải thích quyết định đó.</span>
+                        <span class="lang-en hidden">Every case answers four engineering questions — <strong>Problem · Decision · Evidence (with scope bounds) · Lesson</strong> — with direct two-way links back to the chapters where those principles live.</span>
+                    </p>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-mono text-slate-700 self-start md:self-auto shrink-0">
+                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    <span class="lang-vi">Hồ sơ ≠ Nghiệm thu Production mặc định</span>
+                    <span class="lang-en hidden">Case Dossier ≠ Default Production Sign-off</span>
+                </span>
+            </div>
+
+            <!-- Interactive Case Switcher + Structured 4-Question Dossier -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+                <!-- Case List Column -->
+                <div class="lg:col-span-4 space-y-2.5">
+                    <button type="button" data-case="fsm" onclick="selectCase('fsm')" class="case-btn w-full text-left p-3.5 rounded-xl border transition">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-[#0f766e] border border-emerald-200">Tập 2 · Ch.1 · [I1]</span>
+                            <span class="text-[11px] font-mono text-slate-500">22/22 QA</span>
+                        </div>
+                        <div class="font-bold text-sm text-[#0f2537] mt-1.5">FolderSizeManager</div>
+                        <div class="text-xs text-slate-600 mt-0.5">
+                            <span class="lang-vi">Kiến trúc có quyền bị bỏ · Tkinter + Local AI</span>
+                            <span class="lang-en hidden">Dropping unneeded stack · Tkinter + Local AI</span>
+                        </div>
+                    </button>
+
+                    <button type="button" data-case="pv" onclick="selectCase('pv')" class="case-btn w-full text-left p-3.5 rounded-xl border transition">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-[#0f766e] border border-emerald-200">Tập 2 · Ch.2 · [I2]</span>
+                            <span class="text-[11px] font-mono text-slate-500">~16 ms popup</span>
+                        </div>
+                        <div class="font-bold text-sm text-[#0f2537] mt-1.5">Personal Vault</div>
+                        <div class="text-xs text-slate-600 mt-0.5">
+                            <span class="lang-vi">Privacy-first · Resident UI &amp; Vòng đời phiên</span>
+                            <span class="lang-en hidden">Privacy-first · Resident hotkey &amp; session lock</span>
+                        </div>
+                    </button>
+
+                    <button type="button" data-case="tw" onclick="selectCase('tw')" class="case-btn w-full text-left p-3.5 rounded-xl border transition">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Tập 2 · Ch.10 · [I3]</span>
+                            <span class="text-[11px] font-mono text-slate-500">407/407 + WallyQA</span>
+                        </div>
+                        <div class="font-bold text-sm text-[#0f2537] mt-1.5">Time Wallet</div>
+                        <div class="text-xs text-slate-600 mt-0.5">
+                            <span class="lang-vi">AI Domain Modeling · Emulator ≠ Real Device</span>
+                            <span class="lang-en hidden">AI Domain Modeling · Emulator ≠ Real Device</span>
+                        </div>
+                    </button>
+
+                    <button type="button" data-case="doc" onclick="selectCase('doc')" class="case-btn w-full text-left p-3.5 rounded-xl border transition">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Tập 2 · Ch.10 · [I4]</span>
+                            <span class="text-[11px] font-mono text-slate-500">QA: OPEN</span>
+                        </div>
+                        <div class="font-bold text-sm text-[#0f2537] mt-1.5">Doc88Downloader</div>
+                        <div class="text-xs text-slate-600 mt-0.5">
+                            <span class="lang-vi">Execution (610/610) ≠ Quality Acceptance</span>
+                            <span class="lang-en hidden">Execution (610/610) ≠ Quality Acceptance</span>
+                        </div>
+                    </button>
+
+                    <button type="button" data-case="hub" onclick="selectCase('hub')" class="case-btn w-full text-left p-3.5 rounded-xl border transition">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">Tập 1 · Ch.05</span>
+                            <span class="text-[11px] font-mono text-slate-500">Scoped QA</span>
+                        </div>
+                        <div class="font-bold text-sm text-[#0f2537] mt-1.5">INS-SERVER-HUB</div>
+                        <div class="text-xs text-slate-600 mt-0.5">
+                            <span class="lang-vi">Credential Isolation · Multi-profile RDP</span>
+                            <span class="lang-en hidden">Credential Isolation · Multi-profile RDP</span>
+                        </div>
+                    </button>
+
+                    <!-- Explicit Non-Deployed Atlas Guardrail Card (AC-008) -->
+                    <div class="p-3.5 rounded-xl bg-slate-100 border border-dashed border-slate-300 text-xs">
+                        <div class="flex items-center justify-between gap-2 mb-1">
+                            <span class="font-bold text-[#0f2537]">Atlas (Tập 3 Build)</span>
+                            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-700">
+                                <span class="lang-vi">Chưa khởi động</span>
+                                <span class="lang-en hidden">Not Started</span>
+                            </span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed mb-2">
+                            <span class="lang-vi">Không đưa Atlas vào danh sách dự án đã triển khai. Các bài tập "Thư viện Kỹ thuật Atlas" trong Tập 1 là tình huống giảng dạy, không phải telemetry sản phẩm thật.</span>
+                            <span class="lang-en hidden">Atlas is intentionally excluded from shipped case metrics. "Atlas Library" examples in Vol 1 are pedagogical exercises, not production telemetry.</span>
+                        </p>
+                        <button type="button" onclick="openBookModal('b4')" class="text-blue-600 hover:underline font-semibold">
+                            <span class="lang-vi">Xem điều kiện mở khóa Atlas →</span>
+                            <span class="lang-en hidden">View Atlas gate criteria →</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4-Question Active Case Study Detail -->
+                <div id="case-detail" class="lg:col-span-8 bg-white border border-slate-200 border-t-4 border-t-[#0f2537] rounded-xl p-5 sm:p-6 shadow-sm">
+                    <!-- Dynamically populated by selectCase() -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- SECTION 5: AUTHOR & CV PAGE BRIDGE                                -->
+        <!-- ================================================================= -->
+        <section id="author-bridge" class="no-print section-anchor">
+            <div class="bg-[#0f2537] text-white border border-slate-700/80 border-l-4 border-l-[#c99743] rounded-xl p-6 sm:p-8 shadow-md">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                    <div class="space-y-2 max-w-2xl">
+                        <div class="text-xs font-mono font-bold uppercase tracking-[0.14em] text-[#e6be73]">
+                            <span class="lang-vi">04 · Tác giả &amp; Hồ sơ chuyên môn</span>
+                            <span class="lang-en hidden">04 · Author &amp; Engineering Profile</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                            Cao Nguyễn Thành An <span class="text-slate-300 font-semibold text-lg">(Aleian Cao)</span>
+                        </h2>
+                        <p class="text-sm text-slate-200 leading-relaxed">
+                            <span class="lang-vi">AI Systems Architect / Automation Engineer tại INS Engineering — thiết kế Multi-Agent Systems, GraphRAG, tự động hóa kỹ thuật điện (PSCAD, PSS/E, ETAP) và xây dựng hệ sinh thái AISE / AEOS. Trang CV chi tiết và bản in A4 được tách riêng để tối ưu trải nghiệm gửi nhà tuyển dụng.</span>
+                            <span class="lang-en hidden">AI Systems Architect / Automation Engineer at INS Engineering — designing Multi-Agent Systems, GraphRAG, power engineering automation (PSCAD, PSS/E, ETAP), and the AISE / AEOS ecosystem. The clean print-ready A4 CV sits on its own dedicated route.</span>
+                        </p>
+                        <div class="flex flex-wrap gap-4 pt-1 text-xs text-slate-300">
+                            <a href="mailto:caonguyenthanhan.aaa@gmail.com" class="inline-flex items-center gap-1.5 hover:text-white transition"><i data-lucide="mail" class="w-3.5 h-3.5 text-[#e6be73]"></i> caonguyenthanhan.aaa@gmail.com</a>
+                            <a href="https://github.com/caonguyenthanhan" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-white transition"><i data-lucide="github" class="w-3.5 h-3.5 text-[#5eead4]"></i> GitHub (caonguyenthanhan)</a>
+                            <a href="https://github.com/Aleian-Cao" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-white transition"><i data-lucide="github" class="w-3.5 h-3.5 text-[#5eead4]"></i> GitHub (Aleian-Cao)</a>
+                            <a href="https://www.linkedin.com/in/th%C3%A0nh-an-cao-nguy%E1%BB%85n-b97b23322/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-white transition"><i data-lucide="linkedin" class="w-3.5 h-3.5 text-blue-300"></i> LinkedIn</a>
+                            <a href="https://www.youtube.com/@tramgatgu" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-white transition"><i data-lucide="youtube" class="w-3.5 h-3.5 text-rose-400"></i> @tramgatgu</a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
+                        <a href="/caonguyenthanhan/profile/aise" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#c99743] hover:bg-[#b58434] text-[#091824] font-bold text-sm shadow transition whitespace-nowrap">
+                            <i data-lucide="file-text" class="w-4 h-4"></i>
+                            <span class="lang-vi">Mở Trang CV A4 &amp; In PDF →</span>
+                            <span class="lang-en hidden">Open A4 CV Page &amp; PDF →</span>
+                        </a>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="/caonguyenthanhan/profile/as" class="flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-white/10 hover:bg-white/15 border border-white/20 text-xs font-semibold text-white transition whitespace-nowrap">
+                                <span class="lang-vi">Automation Profile</span>
+                                <span class="lang-en hidden">Automation Profile</span>
+                            </a>
+                            <a href="/caonguyenthanhan" class="flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-white/10 hover:bg-white/15 border border-white/20 text-xs font-semibold text-white transition whitespace-nowrap">
+                                <span class="lang-vi">Thông tin cá nhân</span>
+                                <span class="lang-en hidden">Personal Info</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ecosystem Editorial Footer Note (.no-print) -->
+        <aside class="no-print border-t border-slate-200 pt-5 text-xs text-slate-500 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+                <span class="lang-vi"><strong>Phạm vi biên tập AISE 2.0:</strong> Snapshot 16/11/2026 · Dữ liệu sách từ ấn bản Tập 1 v4.2 A5 &amp; Tập 2 v0.6 Editorial; quy trình AEOS SOT v1.4.2, AI-Manager v4.1, AI-Master v1.0. Các số liệu QA nội bộ [I1]–[I4] mang nguyên phạm vi giới hạn đã công bố.</span>
+                <span class="lang-en hidden"><strong>AISE 2.0 Editorial Scope:</strong> Snapshot 16/11/2026 · Book data grounded in Vol 1 v4.2 A5 &amp; Vol 2 v0.6 Editorial; governance per AEOS SOT v1.4.2, AI-Manager v4.1, AI-Master v1.0. Internal QA metrics [I1]–[I4] strictly preserve published scope bounds.</span>
+            </div>
+            <span class="font-mono text-[11px] shrink-0 text-slate-400">hethongthongminh.id.vn</span>
+        </aside>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- BOOK INSPECTOR MODAL (Interactive Details + Case Study Links)         -->
+    <!-- ===================================================================== -->
+    <div id="book-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-6 bg-slate-950/75 backdrop-blur-sm no-print" role="dialog" aria-modal="true" aria-labelledby="modal-book-title">
+        <div class="bg-white border border-slate-200 rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-[#0f2537] text-white px-5 py-4 flex items-start justify-between gap-4 border-b-2 border-[#c99743]">
+                <div class="min-w-0">
+                    <div id="modal-book-badge" class="text-[11px] font-mono uppercase tracking-wider text-[#e6be73] font-bold"></div>
+                    <h3 id="modal-book-title" class="text-lg sm:text-xl font-extrabold text-white mt-0.5 leading-snug"></h3>
+                </div>
+                <button type="button" onclick="closeBookModal()" aria-label="Close" class="shrink-0 w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition text-lg font-bold">×</button>
+            </div>
+            <!-- Modal Body -->
+            <div id="modal-book-body" class="p-5 sm:p-6 overflow-y-auto space-y-5 text-sm text-slate-700"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'vi';
+        let activeLayer = 'l1';
+        let activeRole = 'owner';
+        let activeCase = 'fsm';
+        let openBookKey = null;
+        let highlightedChapterTag = null;
+
+        const BOOKS = {
+            b1: {
+                vi: {
+                    badge: 'QUYỂN 1 · TẬP 1 · ẤN BẢN 4.2 A5 BIÊN TẬP',
+                    title: 'Cẩm nang Kỹ thuật: Kiến trúc AI 8 tầng',
+                    version: 'Bản thảo trưởng thành 4.2 A5 (11/2026) · 12+ sơ đồ · 16+ runbook · 8+ checklist nghiệm thu',
+                    intro: 'Nền tảng giúp kỹ sư hiểu tám nhóm trách nhiệm kỹ thuật trong hệ thống AI từ thiết kế đến production. Điểm xuất phát luôn là bài toán nghiệp vụ và non-AI baseline — không xây đủ tám tầng chỉ để cho đẹp sơ đồ.',
+                    focus: [
+                        'Chương 0 (Engineering for Value): phân biệt đúng hệ thống với đúng sản phẩm; ba loại bằng chứng không thay thế nhau.',
+                        'Phần II (Tầng 01–08): Model, Prompt, RAG, Tools & MCP, Authorization, Guardrails, Cache & Router, Observability & Evals.',
+                        'Phần III–IV (Field Manual): từ demo đến hệ thống đáng tin, A01–A16 kịch bản xử lý sự cố thực chiến.',
+                        'Phụ lục B–C: checklist trước GO, 20 anti-patterns, mẫu ADR; bài tập "Thư viện Kỹ thuật Atlas" đóng vai trò ví dụ giảng dạy.'
+                    ],
+                    toc: [
+                        { id: 'c0', label: 'Lời mở đầu & Chương 0 · Engineering for Value' },
+                        { id: 'p1', label: 'Phần I · Tư duy Kỹ sư AI (Mục 1–7, gồm ví dụ Atlas)' },
+                        { id: 'c1', label: 'Ch.01 · Model — Từ năng lực đến hiệu năng thực' },
+                        { id: 'c2', label: 'Ch.02 · Prompt — Hợp đồng đầu ra & giới hạn chỉ thị', caseLink: 'tw' },
+                        { id: 'c3', label: 'Ch.03 · RAG — Tri thức đúng nguồn, revision & thời điểm', caseLink: 'doc' },
+                        { id: 'c4', label: 'Ch.04 · Tools & MCP — Từ đề xuất đến hành động an toàn' },
+                        { id: 'c5', label: 'Ch.05 · Authorization — AI không được vượt quyền', caseLink: 'hub' },
+                        { id: 'c6', label: 'Ch.06 · Guardrails — Thiết kế hệ thống để thất bại an toàn', caseLink: 'fsm' },
+                        { id: 'c7', label: 'Ch.07 · Cache & Router — Tối ưu mà không đổi sự thật' },
+                        { id: 'c8', label: 'Ch.08 · Observability & Evals — Chứng minh hệ thống đáng tin', caseLink: 'tw' },
+                        { id: 'p34', label: 'Phần III–IV · Demo → Production & Field Manual (A01–A18)' },
+                        { id: 'appbc', label: 'Phụ lục B–C · Checklist GO, 20 Anti-patterns & Thuật ngữ' }
+                    ],
+                    artifacts: 'Nguồn nội bộ [I0]: 4.2 A5 biên tập; liên kết sang Tập 2 Phụ lục C và các hồ sơ dự án thực chiến.',
+                    cases: [
+                        { id: 'fsm', label: 'FolderSizeManager (Guardrails Tầng 06)' },
+                        { id: 'hub', label: 'INS-SERVER-HUB (Authorization Tầng 05)' },
+                        { id: 'tw', label: 'Time Wallet (Prompt/Evals Tầng 02 & 08)' },
+                        { id: 'doc', label: 'Doc88Downloader (RAG Parser & Evals)' }
+                    ]
+                },
+                en: {
+                    badge: 'BOOK 1 · VOL 1 · EDITION 4.2 A5',
+                    title: 'AI Engineering Handbook: 8-Layer AI Architecture',
+                    version: 'Mature Draft v4.2 A5 (11/2026) · 12+ diagrams · 16+ runbooks · 8+ checklists',
+                    intro: 'Teaches eight core responsibility groups from design to production. Starts with business value and non-AI baselines — teams never adopt all eight layers mechanically.',
+                    focus: [
+                        'Ch.0 (Engineering for Value): why a technically valid pipeline can still build the wrong product.',
+                        'Part II (Layers 01–08): Model, Prompt, RAG, Tools & MCP, Authorization, Guardrails, Cache & Router, Observability & Evals.',
+                        'Parts III–IV (Field Manual): incident diagnostics A01–A16 and recovery runbooks.',
+                        'Appendix B–C: GO checklists, 20 anti-patterns, ADR template; Atlas Library appears strictly as a teaching example.'
+                    ],
+                    toc: [
+                        { id: 'c0', label: 'Preface & Ch.0 · Engineering for Value' },
+                        { id: 'p1', label: 'Part I · AI Engineering Mindset (1–7 incl. Atlas example)' },
+                        { id: 'c1', label: 'Ch.01 · Model — Capability vs Real Throughput' },
+                        { id: 'c2', label: 'Ch.02 · Prompt — Output Contracts & Boundaries', caseLink: 'tw' },
+                        { id: 'c3', label: 'Ch.03 · RAG — Right Source, Revision & Validity', caseLink: 'doc' },
+                        { id: 'c4', label: 'Ch.04 · Tools & MCP — Safe Executed Actions' },
+                        { id: 'c5', label: 'Ch.05 · Authorization — Never Let AI Bypass Policy', caseLink: 'hub' },
+                        { id: 'c6', label: 'Ch.06 · Guardrails — Designing to Fail Safely', caseLink: 'fsm' },
+                        { id: 'c7', label: 'Ch.07 · Cache & Router — Optimize Without Stale Truth' },
+                        { id: 'c8', label: 'Ch.08 · Observability & Evals — Proving Reliability', caseLink: 'tw' },
+                        { id: 'p34', label: 'Parts III–IV · Production Readiness & Field Manual (A01–A18)' },
+                        { id: 'appbc', label: 'Appendix B–C · Pre-GO Checklists & 20 Anti-patterns' }
+                    ],
+                    artifacts: 'Grounded in Edition 4.2 A5; mapped into Vol 2 Appendix C and live Engineering Lab cases.',
+                    cases: [
+                        { id: 'fsm', label: 'FolderSizeManager (Layer 06 Guardrails)' },
+                        { id: 'hub', label: 'INS-SERVER-HUB (Layer 05 Auth)' },
+                        { id: 'tw', label: 'Time Wallet (Layers 02 & 08)' },
+                        { id: 'doc', label: 'Doc88Downloader (Layer 03 Parsers & Evals)' }
+                    ]
+                },
+                cover: '/image/aise/cover-book1-8layers.webp'
+            },
+            b2: {
+                vi: {
+                    badge: 'QUYỂN 2 · TẬP 2 · BẢN 0.6 EDITORIAL & VISUAL',
+                    title: 'Cẩm nang Kỹ thuật: Kiến tạo Hệ thống AI',
+                    version: 'Bản 0.6 Editorial & Visual (11/2026) · 19 Chương · 4 Phụ lục (A–D)',
+                    intro: 'Đi từ câu hỏi "một ứng dụng chạy được" sang "một hệ thống tạo giá trị bền vững cho tổ chức". Toàn bộ các case thực chiến được tách rạch ròi giữa điều đã đo và phần giới hạn chưa có benchmark đối chứng.',
+                    focus: [
+                        'Phần I (Ch.0–5): Bớt xây, làm đúng việc — quyền bỏ một tầng kiến trúc (FolderSizeManager), bài toán 16 ms (Personal Vault), ranh giới dữ liệu OCR xấu.',
+                        'Phần II (Ch.6–8): Phân quyền quyết định, bàn giao ngữ cảnh và điểm Agent phải dừng.',
+                        'Phần III (Ch.9–13): Golden set tiếng Việt, bài học "PASS trên máy nào?" (Time Wallet & Doc88Downloader), chi phí công việc hoàn tất.',
+                        'Phần IV–V (Ch.14–19) & Phụ lục A–D: Hai hồ sơ công khai [S1] Air Canada / [S2] Cloudflare, viết skill từ lỗi thật, 3 lab chạy được & nguồn [I0]–[I5].'
+                    ],
+                    toc: [
+                        { id: 'b2-c0', label: 'Ch.0 · Khi một ứng dụng thành công & Continued Value' },
+                        { id: 'b2-c1', label: 'Ch.1 · Kiến trúc có quyền bị bỏ [FolderSizeManager · I1]', caseLink: 'fsm' },
+                        { id: 'b2-c2', label: 'Ch.2 · Người dùng chỉ cần 16 ms [Personal Vault · I2]', caseLink: 'pv' },
+                        { id: 'b2-c34', label: 'Ch.3–4 · Ranh giới dùng chung & Tích hợp hệ thống sẵn có' },
+                        { id: 'b2-c5', label: 'Ch.5 · Tài liệu không chịu đứng vào hàng (OCR, bảng xấu)', caseLink: 'doc' },
+                        { id: 'b2-c678', label: 'Ch.6–8 · Quyền quyết định, Handoff & Khi Agent phải dừng' },
+                        { id: 'b2-c9', label: 'Ch.9 · Làm bộ kiểm thử mà người khác tin được' },
+                        { id: 'b2-c10', label: 'Ch.10 · PASS trên máy nào? [Time Wallet I3 & Doc88 I4]', caseLink: 'tw' },
+                        { id: 'b2-c1113', label: 'Ch.11–13 · Model drift, Telemetry gọn & Chi phí công việc' },
+                        { id: 'b2-c1416', label: 'Ch.14–16 · Adoption, Quản trị vừa đủ & Case [S1]–[S2]', caseLink: 'hub' },
+                        { id: 'b2-c1719', label: 'Ch.17–19 · Field Manual, Viết Skill từ lỗi thật & Tổ chức' },
+                        { id: 'b2-app', label: 'Phụ lục A–D · 3 Lab, 4 Template (ADR-FSM), Map 8 tầng & Giới hạn [I0]–[I5]' }
+                    ],
+                    artifacts: 'Lưu ý biên tập trong Phụ lục D: phân biệt rõ hồ sơ nội bộ [I1]–[I5], nguồn công khai [S1]–[S5] và đề xuất LAB/PROPOSAL.',
+                    cases: [
+                        { id: 'fsm', label: 'FolderSizeManager · Chương 1 [I1]' },
+                        { id: 'pv', label: 'Personal Vault · Chương 2 [I2]' },
+                        { id: 'tw', label: 'Time Wallet · Chương 10 [I3]' },
+                        { id: 'doc', label: 'Doc88Downloader · Chương 10 [I4]' }
+                    ]
+                },
+                en: {
+                    badge: 'BOOK 2 · VOL 2 · 0.6 EDITORIAL & VISUAL',
+                    title: 'AI Engineering Handbook: Building AI Systems',
+                    version: 'Edition 0.6 Editorial & Visual (11/2026) · 19 Chapters · Appendices A–D',
+                    intro: 'Moves beyond "a working app" to "sustainable organizational capability". Separates observed QA findings from unverified claims across real internal dossiers.',
+                    focus: [
+                        'Ch.0–5: Drop unneeded complexity (FolderSizeManager), design around felt latency & session lifecycles (Personal Vault), tame noisy OCR documents.',
+                        'Ch.6–8: Decision rights before org charts, context handoff lifecycles, and state-machine stop gates.',
+                        'Ch.9–13: Credible evals, "PASS on which machine?" (Time Wallet & Doc88Downloader), and full cost-per-completed-task.',
+                        'Ch.14–19 & App. A–D: Public cases [S1] Air Canada / [S2] Cloudflare, turning real bugs into skills, runnable labs & [I0]–[I5] limits.'
+                    ],
+                    toc: [
+                        { id: 'b2-c0', label: 'Ch.0 · After an App Succeeds & Continued Value' },
+                        { id: 'b2-c1', label: 'Ch.1 · Architecture Has the Right to Be Dropped [FSM · I1]', caseLink: 'fsm' },
+                        { id: 'b2-c2', label: 'Ch.2 · The User Only Needs 16 ms [Personal Vault · I2]', caseLink: 'pv' },
+                        { id: 'b2-c34', label: 'Ch.3–4 · Where to Share & Integrating Existing Systems' },
+                        { id: 'b2-c5', label: 'Ch.5 · Documents Refuse to Stand in Line (OCR & Tables)', caseLink: 'doc' },
+                        { id: 'b2-c678', label: 'Ch.6–8 · Decision Rights, Handoffs & Agent Stop Gates' },
+                        { id: 'b2-c9', label: 'Ch.9 · Test Suites Others Can Trust' },
+                        { id: 'b2-c10', label: 'Ch.10 · PASS on Which Machine? [Time Wallet I3 & Doc88 I4]', caseLink: 'tw' },
+                        { id: 'b2-c1113', label: 'Ch.11–13 · Uncode Changes, Lean Telemetry & True Cost' },
+                        { id: 'b2-c1416', label: 'Ch.14–16 · User Workflows, Right-Sized Governance & [S1]–[S2]', caseLink: 'hub' },
+                        { id: 'b2-c1719', label: 'Ch.17–19 · Field Manual, Bug-to-Skill & Org Capability' },
+                        { id: 'b2-app', label: 'Appendix A–D · 3 Labs, Templates, 8-Layer Map & Limits [I0]–[I5]' }
+                    ],
+                    artifacts: 'Editorial Note (Appendix D): explicitly separates internal records [I1]–[I5], public legal/outage filings [S1]–[S5], and LAB/PROPOSAL drills.',
+                    cases: [
+                        { id: 'fsm', label: 'FolderSizeManager · Ch.1 [I1]' },
+                        { id: 'pv', label: 'Personal Vault · Ch.2 [I2]' },
+                        { id: 'tw', label: 'Time Wallet · Ch.10 [I3]' },
+                        { id: 'doc', label: 'Doc88Downloader · Ch.10 [I4]' }
+                    ]
+                },
+                cover: '/image/aise/cover-book2-systems.webp'
+            },
+            b3: {
+                vi: {
+                    badge: 'QUYỂN 3 · CẦU NỐI ĐIỀU HÀNH · SOT v1.4.2',
+                    title: 'AEOS — Hệ điều hành cho kỷ nguyên AI',
+                    version: 'SOT v1.4.2 · AI-Manager v4.1 · AI-Master v1.0 · Trạng thái: Đang hoàn thiện',
+                    intro: 'AEOS không phải phần mềm chạy nền, cũng không phải một cuốn sách đứng tách rời. Đây là CẦU NỐI VẬN HÀNH biến tri thức ở Tập 1 & 2 thành kỷ luật giao việc, kiểm soát phạm vi và thu thập bằng chứng để mở đường khởi động Tập 3 — Atlas.',
+                    focus: [
+                        'Phân tách quyền lực rõ ràng: Owner giữ WHAT & Gate; AI-Manager v4.1 phản biện ở tầng chat (không repo, không ra lệnh Master); AI-Master v1.0 chịu trách nhiệm HOW trong scope.',
+                        '18 luật Master active (M1–M12, M15–M20), 8 quyền Workers (W1–W8), 7 auto-stop, Envelope v1.1 + Lint v1.3 (17 mục bắt buộc).',
+                        'Review độc lập AI-r khác hệ model trên nhánh riêng review/<task-id> — không thay Owner Accept.',
+                        'Minh bạch khoảng trống: nhiều quy tắc hiện vẫn dựa trên kỷ luật văn bản; đang hoàn thiện cơ chế cưỡng chế & receipt độc lập trước khi sang Atlas.'
+                    ],
+                    toc: [
+                        { id: 'aeos-1', label: 'Phần I · Tại sao từ Một trợ lý AI phải bước sang Tổ chức AI' },
+                        { id: 'aeos-2', label: 'Phần II · Owner – AI-Manager 4.1 – AI-Master 1.0 – Workers – AI-r' },
+                        { id: 'aeos-3', label: 'Phần III · Luật nền SOT v1.4.2, Auto-stop & Envelope 17 mục' },
+                        { id: 'aeos-4', label: 'Phần IV · Cổng bằng chứng: [đã đo] vs [chưa đo], L3 & Review độc lập' },
+                        { id: 'aeos-5', label: 'Phần V · Điều kiện chuyển tiếp từ AEOS sang Tập 3 Atlas' }
+                    ],
+                    artifacts: 'Tài liệu gốc: SKILL.md v1.4.2 (§0–§6, Changelog), Role AI-Manager v4.1, Role AI-Master v1.0, Snapshot AEOS 15/11/2026.',
+                    cases: [
+                        { id: 'fsm', label: 'FolderSizeManager (Bàn giao W8 & Scope cut)' },
+                        { id: 'pv', label: 'Personal Vault (Candidate ID & Resident Report)' },
+                        { id: 'tw', label: 'Time Wallet (WallyQA RED→GREEN)' }
+                    ]
+                },
+                en: {
+                    badge: 'BOOK 3 · OPERATIONAL BRIDGE · SOT v1.4.2',
+                    title: 'AEOS — Operating System for the AI Era',
+                    version: 'SOT v1.4.2 · AI-Manager v4.1 · AI-Master v1.0 · Status: Evolving',
+                    intro: 'AEOS is not a background daemon nor an isolated book. It is the OPERATIONAL BRIDGE translating Vol 1 & Vol 2 principles into task boundaries, scope discipline, and verifiable receipts required before Vol 3 (Atlas) can begin.',
+                    focus: [
+                        'Clear authority boundaries: Owner owns WHAT & Gates; AI-Manager v4.1 audits at chat tier (no repo access, not Master boss); AI-Master v1.0 owns HOW in scope.',
+                        '18 active Master laws, 8 Worker rights (W1–W8), 7 auto-stop triggers, and 17-item mandatory Envelope lint.',
+                        'Cross-model AI-r reviews code & mutations strictly on review/<task-id> — never replacing Owner Accept.',
+                        'Honest enforcement gaps: 15/11 snapshot tracks remaining text-based rules & independent receipt improvements prior to Atlas.'
+                    ],
+                    toc: [
+                        { id: 'aeos-1', label: 'Part I · From Single AI Assistant to Governed AI Workflow' },
+                        { id: 'aeos-2', label: 'Part II · Owner – AI-Manager 4.1 – AI-Master 1.0 – Workers – AI-r' },
+                        { id: 'aeos-3', label: 'Part III · SOT v1.4.2 Laws, Auto-Stop & 17-Item Envelope' },
+                        { id: 'aeos-4', label: 'Part IV · Evidence Discipline: Measured vs Unverified, L3 & AI-r' },
+                        { id: 'aeos-5', label: 'Part V · Readiness Gate for Transitioning to Vol 3 Atlas' }
+                    ],
+                    artifacts: 'Canonical specs: SKILL.md v1.4.2, Role AI-Manager v4.1, Role AI-Master v1.0, Snapshot 15/11/2026.',
+                    cases: [
+                        { id: 'fsm', label: 'FolderSizeManager (W8 Handover & Scope Cut)' },
+                        { id: 'pv', label: 'Personal Vault (Pinned Candidate Receipt)' },
+                        { id: 'tw', label: 'Time Wallet (Android 9 RED→GREEN)' }
+                    ]
+                }
+                , cover: '/image/aise/cover-book3-aeos.webp'
+            },
+            b4: {
+                vi: {
+                    badge: 'QUYỂN 4 · TẬP 3 · CHƯA KHỞI ĐỘNG',
+                    title: 'Atlas — Xây dựng & Kiểm chứng Hệ thống Tích hợp',
+                    version: 'Trạng thái: CHƯA KHỞI ĐỘNG · Chờ AEOS đủ trưởng thành (do Owner quyết)',
+                    intro: 'Atlas là dự án kỹ thuật thực chiến viết nên Tập 3 — KHÔNG phải một chương minh họa đã hoàn tất. Nguyên tắc cốt lõi: xây hệ thống thật qua baseline không AI, nâng dần các tầng thật sự tạo giá trị, kiểm thử, fault injection, phá và sửa trước khi viết thành sách.',
+                    focus: [
+                        'Trạng thái trung thực (AC-008): Chưa khởi động; ATLAS-001 chưa phải mandate đã cấp phép; tuyệt đối chưa có kết quả kiểm thử hay mốc phát hành.',
+                        'Phân biệt rạch ròi với "Thư viện Kỹ thuật Atlas" ở Tập 1 (Phần I, Mục 5) — vốn chỉ là tình huống giả lập phục vụ giảng dạy.',
+                        'Khi đủ điều kiện AEOS: AI-Master tổ chức xây & test, AI-Manager soạn WHAT và kiểm toán ngoài, tích lũy trace, RED–GREEN và benchmark thật.'
+                    ],
+                    toc: [
+                        { id: 'at-1', label: 'Cổng điều kiện · AEOS đạt độ trưởng thành vận hành do Owner chốt' },
+                        { id: 'at-2', label: 'Pha 1 · Baseline không AI & Bộ đo bài toán gốc' },
+                        { id: 'at-3', label: 'Pha 2 · Mở dần từng tầng kiến trúc có lý do đo được' },
+                        { id: 'at-4', label: 'Pha 3 · Fault injection, RED–GREEN, phục hồi & Trace thật' },
+                        { id: 'at-5', label: 'Pha 4 · Viết Tập 3 trực tiếp từ quyết định và bằng chứng thật' }
+                    ],
+                    artifacts: 'Lộ trình Owner & Tập 1 Mục 5 Atlas (ví dụ nền). Không công bố telemetry hay KPI chưa phát sinh.',
+                    cases: [
+                        { id: 'tw', label: 'Bài học kiểm thử tiền đề: Time Wallet' },
+                        { id: 'doc', label: 'Bài học tách Quality Gate: Doc88Downloader' }
+                    ]
+                },
+                en: {
+                    badge: 'BOOK 4 · VOL 3 · NOT STARTED',
+                    title: 'Atlas — Integrated System Build & Verification',
+                    version: 'Status: UNSTARTED · Gated until Owner verifies AEOS maturity',
+                    intro: 'Atlas will be built as a real integrated system first and documented into Vol 3 afterward. Starts from a non-AI baseline, adding only layers that justify their cost and risk.',
+                    focus: [
+                        'Strict Honesty (AC-008): Not started yet. ATLAS-001 is not an active mandate; zero test results or launch dates exist.',
+                        'Distinguished explicitly from Vol 1 Part I.5 "Atlas Library", which is purely a teaching backdrop.',
+                        'When AEOS is deemed operationally ready by Owner: build, break, inject faults, verify RED→GREEN, then author Vol 3 from receipts.'
+                    ],
+                    toc: [
+                        { id: 'at-1', label: 'Gate Condition · Owner sign-off on AEOS operational readiness' },
+                        { id: 'at-2', label: 'Phase 1 · Non-AI Baseline & Ground-Truth Measurement' },
+                        { id: 'at-3', label: 'Phase 2 · Justified Layer Addition with Measured Deltas' },
+                        { id: 'at-4', label: 'Phase 3 · Fault Injection, Recovery & Trace Audits' },
+                        { id: 'at-5', label: 'Phase 4 · Authoring Vol 3 from Code & Verified Receipts' }
+                    ],
+                    artifacts: 'Owner Roadmap. Zero fabricated telemetry or release promises.',
+                    cases: [
+                        { id: 'tw', label: 'Prerequisite Lesson: Time Wallet' },
+                        { id: 'doc', label: 'Prerequisite Lesson: Doc88Downloader' }
+                    ]
+                },
+                cover: null
+            },
+            b5: {
+                vi: {
+                    badge: 'QUYỂN 5 · TẬP 4 · ĐỊNH HƯỚNG ĐẦU NĂM 2027',
+                    title: 'Siêu tư duy — Tự thiết kế Cách nghĩ & Workflow',
+                    version: 'Định hướng quay lại: Đầu năm 2027 (không phải cam kết ngày xuất bản)',
+                    intro: 'Quyển thứ năm nhìn ngược lại cả bốn quyển trước để phản biện, gỡ bỏ những thứ lỗi thời và tự thiết kế cách con người lẫn AI suy nghĩ, phối hợp và kiểm chứng.',
+                    focus: [
+                        'Meta-cognition cho kỹ sư AI: đánh giá cách mình ra quyết định kiến trúc và thiết kế quy trình.',
+                        'Sẵn sàng phản biện và tái cấu trúc cả Bộ sách 8 tầng, Kiến tạo Hệ thống, AEOS và Atlas khi bối cảnh mô hình thay đổi.',
+                        'Đích đến là sổ tay tư duy & workflow cá nhân có thể thích nghi qua các thế hệ công cụ.'
+                    ],
+                    toc: [
+                        { id: 'st-1', label: 'Chặng 1 · Phản biện giả định của chính bộ 4 quyển trước' },
+                        { id: 'st-2', label: 'Chặng 2 · Thiết kế ngôn ngữ giao tiếp & phối hợp Người – Agent' },
+                        { id: 'st-3', label: 'Chặng 3 · Khung tự tiến hóa workflow khi năng lực model thay đổi' }
+                    ],
+                    artifacts: 'Mốc định hướng Owner (16/11/2026) · Chưa mở biên soạn chi tiết.',
+                    cases: []
+                },
+                en: {
+                    badge: 'BOOK 5 · VOL 4 · EARLY 2027 HORIZON',
+                    title: 'Meta-Thinking — Redesigning How We Build & Think',
+                    version: 'Target revisit milestone: Early 2027 (directional goal, not publish deadline)',
+                    intro: 'The fifth volume looks back across the first four to question outdated assumptions and design custom mental models and workflows as AI capabilities evolve.',
+                    focus: [
+                        'Engineering meta-cognition: auditing how architects design boundaries and operational habits.',
+                        'Full willingness to dismantle and restructure the 8 layers, AEOS, and Atlas assumptions.',
+                        'Outcome: an adaptable personal playbook for thinking and working with AI systems.'
+                    ],
+                    toc: [
+                        { id: 'st-1', label: 'Stage 1 · Challenging Assumptions from Volumes 1–3' },
+                        { id: 'st-2', label: 'Stage 2 · Designing Human–Agent Decision Languages' },
+                        { id: 'st-3', label: 'Stage 3 · Evolving Workflows Beyond Fixed Tooling' }
+                    ],
+                    artifacts: 'Owner Horizon Note (16/11/2026). Drafting not yet opened.',
+                    cases: []
+                },
+                cover: null
+            }
+        };
+
+        const LAYERS = {
+            l1: {
+                tag: 'Tầng 01 · Model',
+                vi: {
+                    title: '01 · Model — Từ năng lực đến hiệu năng thực',
+                    summary: 'Chọn model theo tác vụ, ràng buộc cứng, chất lượng, latency và chi phí thực — không chọn theo bảng xếp hạng chung. Baseline không AI vẫn có thể thắng.',
+                    bullets: [
+                        'Phân tách Time-To-First-Token với throughput và chi phí theo candidate cụ thể.',
+                        'Cân nhắc model local (như Qwen3-0.6B-Q8_0.gguf offline) vs cloud API tùy ranh giới bảo mật.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c1', label: 'Tập 1 · Chương 01 (Model)' },
+                    caseRef: { id: 'fsm', label: 'Case: FolderSizeManager (Local AI offline)' }
+                },
+                en: {
+                    title: '01 · Model — From Capability to Real Throughput',
+                    summary: 'Pick models by concrete workload, hard latency/privacy constraints, and cost — never by generic leaderboards. Non-AI baselines can still win.',
+                    bullets: [
+                        'Measure TTFT separately from throughput and cost per verified output.',
+                        'Weigh offline local models (e.g., Qwen3-0.6B-Q8_0.gguf) vs hosted APIs by security bounds.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c1', label: 'Vol 1 · Ch.01 (Model)' },
+                    caseRef: { id: 'fsm', label: 'Case: FolderSizeManager (Offline AI)' }
+                }
+            },
+            l2: {
+                tag: 'Tầng 02 · Prompt',
+                vi: {
+                    title: '02 · Prompt — Hợp đồng đầu ra & giới hạn chỉ thị',
+                    summary: 'Prompt là chỉ thị; schema (Pydantic) chỉ bảo đảm cấu trúc. Nghiệp vụ và phân quyền luôn phải được kiểm ở backend.',
+                    bullets: [
+                        'JSON đúng định dạng vẫn có thể sai revision hoặc phá vỡ giả định miền nghiệp vụ.',
+                        'Ghim chặt prompt + model + schema với bộ regression cố định.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c2', label: 'Tập 1 · Chương 02 (Prompt)' },
+                    caseRef: { id: 'tw', label: 'Case: Time Wallet (Parser & Domain Model)' }
+                },
+                en: {
+                    title: '02 · Prompt — Output Contracts & Boundaries',
+                    summary: 'Prompts instruct; schemas validate shape only. Business logic and permissions must always be enforced on the backend.',
+                    bullets: [
+                        'Valid JSON can still carry wrong revisions or violate domain state rules.',
+                        'Pin prompt + model + schema versions against regression suites.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c2', label: 'Vol 1 · Ch.02 (Prompt)' },
+                    caseRef: { id: 'tw', label: 'Case: Time Wallet (Command Parser)' }
+                }
+            },
+            l3: {
+                tag: 'Tầng 03 · RAG',
+                vi: {
+                    title: '03 · RAG — Tri thức đúng nguồn & đúng thời điểm',
+                    summary: 'Điểm làm sai dữ liệu đầu tiên thường nằm ở parser/OCR và chunking chứ không phải ở câu trả lời cuối của LLM.',
+                    bullets: [
+                        'Tách luồng ingestion với query; lọc phân quyền (ACL) trước khi retrieval.',
+                        'Tập 2 Chương 5 chỉ ra: xử lý bảng xấu & tiếng Việt lỗi OCR quyết định độ tin cậy của kho chứng cứ.'
+                    ],
+                    bookRef: { key: 'b2', chapterId: 'b2-c5', label: 'Tập 2 · Ch.5 & Tập 1 · Ch.03' },
+                    caseRef: { id: 'doc', label: 'Case: Doc88Downloader (610 trang vs QA)' }
+                },
+                en: {
+                    title: '03 · RAG — Right Source, Revision & Validity',
+                    summary: 'The first failure point usually sits in document parsing/OCR and chunking boundaries, long before the final LLM call.',
+                    bullets: [
+                        'Separate ingestion from query paths; enforce ACL pre-retrieval filters.',
+                        'Vol 2 Ch.5 shows messy tables & noisy Vietnamese OCR dominate retrieval quality.'
+                    ],
+                    bookRef: { key: 'b2', chapterId: 'b2-c5', label: 'Vol 2 · Ch.5 & Vol 1 · Ch.03' },
+                    caseRef: { id: 'doc', label: 'Case: Doc88Downloader (610p vs QA)' }
+                }
+            },
+            l4: {
+                tag: 'Tầng 04 · Tools & MCP',
+                vi: {
+                    title: '04 · Tools & MCP — Từ đề xuất đến hành động an toàn',
+                    summary: 'Model chỉ đề xuất gọi công cụ; backend kiểm tra hợp đồng, phê duyệt, idempotency và đối soát trạng thái UNKNOWN khi timeout.',
+                    bullets: [
+                        'Không retry mù khi timeout sau điểm có khả năng đã commit tác vụ ngoài.',
+                        'Phân biệt tác vụ deterministic workflow với tác vụ cần agent linh hoạt.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c4', label: 'Tập 1 · Chương 04 (Tools & MCP)' },
+                    caseRef: { id: 'fsm', label: 'Case: FolderSizeManager (Action Guard)' }
+                },
+                en: {
+                    title: '04 · Tools & MCP — From Proposal to Safe Action',
+                    summary: 'Models propose tool calls; backends verify contracts, approvals, idempotency, and treat ambiguous timeouts as UNKNOWN until reconciled.',
+                    bullets: [
+                        'Never blindly retry mutations when timeout happens after potential side effects.',
+                        'Use deterministic workflows where branching freedom adds risk without value.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c4', label: 'Vol 1 · Ch.04 (Tools & MCP)' },
+                    caseRef: { id: 'fsm', label: 'Case: FolderSizeManager (Action Guard)' }
+                }
+            },
+            l5: {
+                tag: 'Tầng 05 · Authorization',
+                vi: {
+                    title: '05 · Authorization — AI không được vượt quyền',
+                    summary: 'Danh tính và policy phải lấy từ nguồn tin cậy (backend/session/ProfileId), tuyệt đối không tin lời model hoặc chỉ dẫn trong prompt.',
+                    bullets: [
+                        'Cô lập tenant, lọc quyền trước khi truy xuất và kiểm lại trước thao tác ghi/xóa.',
+                        'Áp dụng trong INS-SERVER-HUB (cô lập ProfileId) và Personal Vault (trạng thái khóa phiên).'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c5', label: 'Tập 1 · Chương 05 (Authorization)' },
+                    caseRef: { id: 'hub', label: 'Case: INS-SERVER-HUB & Personal Vault' }
+                },
+                en: {
+                    title: '05 · Authorization — AI Must Not Exceed Authority',
+                    summary: 'Identity and policy originate from trusted backend sources — never from model text or prompt instructions.',
+                    bullets: [
+                        'Isolate tenants, pre-filter retrieval, and re-verify permissions before writes/deletes.',
+                        'Applied in INS-SERVER-HUB (ProfileId isolation) and Personal Vault (session locking).'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c5', label: 'Vol 1 · Ch.05 (Authorization)' },
+                    caseRef: { id: 'hub', label: 'Case: INS-SERVER-HUB & Personal Vault' }
+                }
+            },
+            l6: {
+                tag: 'Tầng 06 · Guardrails',
+                vi: {
+                    title: '06 · Guardrails — Thiết kế hệ thống để thất bại an toàn',
+                    summary: 'Tập trung cơ chế kiểm soát chặt tại nơi có hậu quả lớn (xóa dữ liệu, rò rỉ bí mật, prompt injection) để phần còn lại của hệ thống nhẹ đi.',
+                    bullets: [
+                        'Phép kiểm phải bắt được mẫu bẩn cố ý và fail-safe (mất kết nối thì từ chối an toàn).',
+                        'Mọi sửa đổi có rủi ro trong FolderSizeManager đều tách khỏi gợi ý AI và đi qua Recycle Bin / path guard.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c6', label: 'Tập 1 · Ch.06 & Tập 2 · Ch.1' },
+                    caseRef: { id: 'fsm', label: 'Case: FolderSizeManager (Delete Guardrails)' }
+                },
+                en: {
+                    title: '06 · Guardrails — Designing Systems to Fail Safely',
+                    summary: 'Concentrate strict enforcement where failure carries real blast radius (deletion, egress, injection) so the rest stays lightweight.',
+                    bullets: [
+                        'Tests must include adversarial dirty inputs and fail-safe defaults.',
+                        'FolderSizeManager isolates AI suggestions from actual Recycle Bin / path-guarded deletion.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c6', label: 'Vol 1 · Ch.06 & Vol 2 · Ch.1' },
+                    caseRef: { id: 'fsm', label: 'Case: FolderSizeManager (Delete Guardrails)' }
+                }
+            },
+            l7: {
+                tag: 'Tầng 07 · Cache & Router',
+                vi: {
+                    title: '07 · Cache & Router — Tối ưu không đổi sự thật',
+                    summary: 'Giảm độ trễ và chi phí token nhưng cache key bắt buộc gắn revision tài liệu, ACL và phạm vi người dùng.',
+                    bullets: [
+                        'Router fallback giữa model mạnh / nhẹ / rule-based phải giữ nguyên hợp đồng đầu ra và policy.',
+                        'Personal Vault ưu tiên tìm kiếm deterministic trước khi bật model để giữ trải nghiệm tức thì.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c7', label: 'Tập 1 · Chương 07 (Cache & Router)' },
+                    caseRef: { id: 'pv', label: 'Case: Personal Vault (Deterministic Search)' }
+                },
+                en: {
+                    title: '07 · Cache & Router — Optimize Without Breaking Truth',
+                    summary: 'Cut latency and token spend, but always key caches on document revision, ACLs, and tenant scope.',
+                    bullets: [
+                        'Router fallbacks must preserve output contracts and authorization constraints.',
+                        'Personal Vault prioritizes deterministic lookup before invoking optional local AI.'
+                    ],
+                    bookRef: { key: 'b1', chapterId: 'c7', label: 'Vol 1 · Ch.07 (Cache & Router)' },
+                    caseRef: { id: 'pv', label: 'Case: Personal Vault (Deterministic Search)' }
+                }
+            },
+            l8: {
+                tag: 'Tầng 08 · Observability & Evals',
+                vi: {
+                    title: '08 · Observability & Evals — Chứng minh đáng tin',
+                    summary: 'Mọi tuyên bố "DONE" phải gắn với candidate hash, dataset, môi trường chạy cụ thể — PASS trong lab hay emulator không tự suy sang production.',
+                    bullets: [
+                        'Tách Execution Completion (610/610 trang) khỏi Quality Acceptance (Doc88Downloader OPEN).',
+                        'Giữ ma trận theo OS/API & artifact hash (Time Wallet Android 9 WallyQA vs Android 16).'
+                    ],
+                    bookRef: { key: 'b2', chapterId: 'b2-c10', label: 'Tập 2 · Ch.9–10 & Tập 1 · Ch.08' },
+                    caseRef: { id: 'tw', label: 'Case: Time Wallet & Doc88Downloader' }
+                },
+                en: {
+                    title: '08 · Observability & Evals — Proving Trustworthiness',
+                    summary: 'Every DONE claim binds candidate hash, dataset, and runtime environment — lab/emulator PASS never implies real-device production PASS.',
+                    bullets: [
+                        'Separate Execution Completion (610/610) from Quality Acceptance (Doc88 OPEN).',
+                        'Maintain OS/API + artifact SHA matrices (Time Wallet Android 9 WallyQA vs Android 16).'
+                    ],
+                    bookRef: { key: 'b2', chapterId: 'b2-c10', label: 'Vol 2 · Ch.9–10 & Vol 1 · Ch.08' },
+                    caseRef: { id: 'tw', label: 'Case: Time Wallet & Doc88Downloader' }
+                }
+            }
+        };
+
+        const AEOS_ROLES = {
+            owner: {
+                vi: {
+                    tag: 'AUTHORITY · HUMAN GATE',
+                    title: 'Owner (Người giữ quyền)',
+                    desc: 'Nắm toàn quyền mục tiêu (WHAT), phạm vi, quyền truy cập, ngân sách và nghiệm thu cuối cùng.',
+                    points: [
+                        'Chốt 7 điều kiện auto-stop và quyết định mở/thu ghế Workers (W1–W8).',
+                        'Duyệt sửa đổi luật nền SOT; quyết trunk, push và phát hành.',
+                        'Chấp nhận rủi ro theo thực tế chứ không bao giờ biến FAIL thành PASS.'
+                    ],
+                    source: 'Role Master §4–§6 · Role Manager §5'
+                },
+                en: {
+                    tag: 'AUTHORITY · HUMAN GATE',
+                    title: 'Owner (Human Authority)',
+                    desc: 'Holds final decision rights on WHAT, scope boundaries, worker seats, cost limits, and acceptance.',
+                    points: [
+                        'Decides all 7 auto-stop triggers and opening/closing Worker seats (W1–W8).',
+                        'Approves SOT updates, trunk integration, push, and releases.',
+                        'May accept documented risk without relabeling a FAIL as PASS.'
+                    ],
+                    source: 'Role Master §4–§6 · Role Manager §5'
+                }
+            },
+            manager: {
+                vi: {
+                    tag: 'CHAT-TIER · AI-MANAGER v4.1',
+                    title: 'AI-Manager v4.1 (Kiểm toán ngoài)',
+                    desc: 'Làm việc ở tầng hội thoại cùng Owner để soạn WHAT, phản biện giả định và đề xuất hoàn thiện luật.',
+                    points: [
+                        'KHÔNG có quyền truy cập repo, KHÔNG là cấp trên của Master, KHÔNG ra lệnh cho Worker.',
+                        'KHÔNG chọn HOW, KHÔNG tự viết test hay biến mình thành cổng bắt buộc.',
+                        'Xuất finding gửi Owner (Owner duyệt D-20261115-4); Master có thể phản biện bằng bằng chứng.'
+                    ],
+                    source: 'Role AI-Manager v4.1 §1–§6 · D-20261115-4'
+                },
+                en: {
+                    tag: 'CHAT-TIER · AI-MANAGER v4.1',
+                    title: 'AI-Manager v4.1 (External Auditor)',
+                    desc: 'Works alongside Owner at the chat tier to craft WHAT specs, audit digests, and surface blind spots.',
+                    points: [
+                        'NO repository access, NOT Master’s supervisor, issues NO commands to Workers.',
+                        'Does NOT dictate HOW, write product tests, or act as an automated blocking gate.',
+                        'Sends findings to Owner; Master retains the right to challenge with evidence.'
+                    ],
+                    source: 'Role AI-Manager v4.1 §1–§6 · D-20261115-4'
+                }
+            },
+            master: {
+                vi: {
+                    tag: 'EXECUTION LEAD · AI-MASTER v1.0',
+                    title: 'AI-Master v1.0 (Điều phối HOW)',
+                    desc: 'Sở hữu thiết kế và tổ chức thi công HOW trong đúng phạm vi được Owner phê duyệt.',
+                    points: [
+                        'Chia việc tự chứa, soạn và kiểm tra Envelope Template 1.1 bằng Lint 1.3 (17 mục bắt buộc: 1–16 + 18).',
+                        'Quản lý worktree cô lập, thu thập kiểm chứng L3 và tích hợp duy nhất trên repo.',
+                        'Chủ động thực thi phần hợp lệ; dừng đúng phần chạm auto-stop hoặc quyền Owner.'
+                    ],
+                    source: 'Role AI-Master v1.0 §1–§4 · SOT M11, M12, M17, M20'
+                },
+                en: {
+                    tag: 'EXECUTION LEAD · AI-MASTER v1.0',
+                    title: 'AI-Master v1.0 (HOW Orchestrator)',
+                    desc: 'Owns technical execution (HOW) strictly within Owner-approved wave boundaries.',
+                    points: [
+                        'Splits tasks, builds & lints envelopes (Lint v1.3: 17 required fields), manages worktrees.',
+                        'Collects L3 verification evidence and acts as sole repository integrator.',
+                        'Proceeds on valid in-scope work while stopping cleanly on Owner-only/auto-stop boundaries.'
+                    ],
+                    source: 'Role AI-Master v1.0 §1–§4 · SOT M11, M12, M17, M20'
+                }
+            },
+            worker: {
+                vi: {
+                    tag: 'WORKERS · W1–W8',
+                    title: 'Workers (Ghế thi công tự chứa)',
+                    desc: 'Thực thi tác vụ gọn bên trong envelope, worktree và RÀO (fence) được giao.',
+                    points: [
+                        'W1: Liệt kê mâu thuẫn lên báo cáo, tuyệt đối không tự sửa WHAT.',
+                        'W2: Có quyền từ chối tiền đề nếu phát hiện số đo thực tế đi ngược giả định.',
+                        'Nguyên tắc: Test/đo trước, SKIP không bao giờ tính là PASS, tự khai báo sự cố.'
+                    ],
+                    source: 'SOT v1.4.2 §2 · W1–W8'
+                },
+                en: {
+                    tag: 'WORKERS · W1–W8',
+                    title: 'Workers (Scoped Execution Seats)',
+                    desc: 'Execute bounded tasks inside assigned envelopes, git worktrees, and explicit fences.',
+                    points: [
+                        'W1: Surface spec contradictions explicitly without rewriting WHAT silently.',
+                        'W2: Right to reject invalid premises contradicted by observed measurements.',
+                        'Discipline: Measure/test first; SKIP never equals PASS; self-report anomalies.'
+                    ],
+                    source: 'SOT v1.4.2 §2 · W1–W8'
+                }
+            },
+            review: {
+                vi: {
+                    tag: 'CROSS-MODEL · AI-r',
+                    title: 'AI-r (Review độc lập khác hệ model)',
+                    desc: 'Review theo tiêu chí không phải tác giả và khác họ model nhằm tránh điểm mù đồng nhất.',
+                    points: [
+                        'Kiểm tra giả định, chạy mutation test & code review trên candidate đã ghim hash.',
+                        'Chỉ được phép ghi test/mutation/report trên nhánh review/<task-id> — không chạm mã sản phẩm.',
+                        'Không thay thế Owner Acceptance và không khẳng định phần mềm hết 100% lỗi.'
+                    ],
+                    source: 'SOT M9 · Role Master §5'
+                },
+                en: {
+                    tag: 'CROSS-MODEL · AI-r',
+                    title: 'AI-r (Cross-Model Reviewer)',
+                    desc: 'Reviews across a different model family from the implementer to break single-model blind spots.',
+                    points: [
+                        'Challenges assumptions and executes mutation tests against a pinned candidate.',
+                        'Restricted to writing reports/tests on review/<task-id>; cannot alter production source.',
+                        'Advisory evidence only — never replaces Owner Acceptance.'
+                    ],
+                    source: 'SOT M9 · Role Master §5'
+                }
+            },
+            law: {
+                vi: {
+                    tag: 'SOT ACTIVE · v1.4.2',
+                    title: 'Hệ thống luật nền & Artifact',
+                    desc: 'Đóng khung hành vi phối hợp AI-Human bằng bộ quy tắc kiểm chứng được.',
+                    points: [
+                        '18 luật Master active (M1–M12, M15–M20 active; M12-ngược/M21 proposed; M13/M14 để dành).',
+                        '8 quyền/luật Worker (W1–W8), 7 điều kiện auto-stop, Envelope 1.1 & Lint 1.3 (17 mục).',
+                        'M1 [đã đo]/[chưa đo], M2 điều khiển hai chiều, Land-first D-20261115-3 bảo toàn trạng thái review/test thật.'
+                    ],
+                    source: 'SKILL.md v1.4.2 §1–§4 · Role Master §10'
+                },
+                en: {
+                    tag: 'SOT ACTIVE · v1.4.2',
+                    title: 'Canonical Rules & Artifacts',
+                    desc: 'Codifies human-governed multi-agent collaboration with explicit audit trails.',
+                    points: [
+                        '18 active Master rules (M1–M12, M15–M20 active), 8 Worker rights (W1–W8), 7 auto-stop triggers.',
+                        'Envelope Template 1.1 & Lint Checklist 1.3 (17 mandatory items: 1–16 + 18).',
+                        'Strict [measured]/[unmeasured] tagging; Land-first D-20261115-3 keeps true review status visible.'
+                    ],
+                    source: 'SKILL.md v1.4.2 §1–§4 · Role Master §10'
+                }
+            },
+            gap: {
+                vi: {
+                    tag: 'TRANSPARENT AUDIT · SNAPSHOT 15/11/2026',
+                    title: 'Khoảng trống giữa Luật & Thực thi (Gap)',
+                    desc: 'AISE công khai luôn phần chưa hoàn hảo thay vì tô hồng quy trình.',
+                    points: [
+                        'Nhiều quy tắc AEOS hiện vẫn dựa vào tuân thủ văn bản, chưa phải ranh giới bảo mật cứng (hard sandbox).',
+                        'Báo cáo R2b từng ghi còn 2 bypass P1 chưa đo lại độc lập trong cùng bản chụp; cần receipt cấp (d) ngoài quyền ghi của Master.',
+                        'Tiêu chí trước khi mở Atlas: đối chiếu trạng thái guard, chuẩn hóa receipt độc lập và đo chi phí quy trình.'
+                    ],
+                    source: 'aeos-he-thong-va-hai-ghe-2026-11-15.md §A4, B8 · Role Manager §5'
+                },
+                en: {
+                    tag: 'TRANSPARENT AUDIT · SNAPSHOT 15/11/2026',
+                    title: 'Known Enforcement & Evidence Gaps',
+                    desc: 'AISE documents what is still imperfect rather than overselling governance maturity.',
+                    points: [
+                        'Several AEOS rules still rely on prompt/text compliance rather than hard OS/CI enforcement.',
+                        'R2b snapshot noted two P1 bypasses awaiting independent re-measurement and tamper-evident receipts outside Master write scope.',
+                        'Tracked actively prior to greenlighting Vol 3 Atlas.'
+                    ],
+                    source: 'aeos-he-thong-va-hai-ghe-2026-11-15.md §A4, B8 · Role Manager §5'
+                }
+            }
+        };
+
+        const LAB_CASES = {
+            fsm: {
+                vi: {
+                    badge: 'CASE STUDY 01 · TẬP 2 CHƯƠNG 1 · NGUỒN [I1]',
+                    title: 'FolderSizeManager — Kiến trúc có quyền bị bỏ',
+                    subtitle: 'Thu hẹp stack từ React/Tauri/FastAPI về Python Tkinter + Scanner + Local AI offline có guardrails.',
+                    problem: 'Công cụ quét dung lượng thư mục trên Windows gặp độ phức tạp bảo trì dư thừa khi song song giữ hướng web React/Tauri/FastAPI và phần quét hệ thống tập tin bản địa, trong khi người dùng cuối chỉ cần công cụ mở nhanh, xem cây dung lượng rõ và dọn file an toàn.',
+                    decision: 'Ngày 02/11/2026, Owner quyết định dừng nhánh web React/Tauri/FastAPI để dồn vào Python Tkinter/CustomTkinter + background scanner + Local AI tùy chọn (Qwen3-0.6B-Q8_0.gguf, chạy hoàn toàn offline). Tách rạch ròi theo mức rủi ro hành động: AI chỉ đề xuất ứng viên; mọi thao tác xóa đều phải qua path guardrails, đưa vào Recycle Bin và xác nhận bởi Owner.',
+                    evidence: 'Hồ sơ [I1] ghi nhận bàn giao W8 (01/11/2026), quyết định thu hẹp stack (02/11/2026) và báo cáo QA sau đó đạt 22/22 acceptance tests vượt qua ở 1 candidate chạy model Qwen3-0.6B-Q8_0.gguf offline.',
+                    limit: 'Giới hạn phạm vi bắt buộc: 22/22 là kết quả QA trên 1 candidate; hồ sơ không có ADR gốc thời điểm cắt stack (ADR-FSM-20261102 được tái dựng biên tập), không có số giờ duy trì 2 stack và không có benchmark đối chứng trực tiếp giữa stack cũ vs mới trên cùng workload.',
+                    lesson: 'Không cần áp bộ máy phê duyệt hay multi-agent cho thao tác đổi màu hay sắp xếp danh sách — khóa chặt cơ chế bảo vệ ở điểm hậu quả lớn (xóa file) giúp toàn bộ phần mềm nhẹ và tin cậy hơn.',
+                    repoUrl: 'https://github.com/Aleian-Cao/FolderSizeManagerPy',
+                    repoLabel: 'GitHub · Aleian-Cao/FolderSizeManagerPy',
+                    bookLinks: [
+                        { key: 'b2', chapterId: 'b2-c1', label: 'Đọc Tập 2 · Chương 1: Kiến trúc có quyền bị bỏ' },
+                        { key: 'b2', chapterId: 'b2-app', label: 'Phụ lục B.1a · Mẫu ADR-FSM-20261102' },
+                        { key: 'b1', chapterId: 'c6', label: 'Tập 1 · Tầng 06 Guardrails & Tầng 01 Model' }
+                    ]
+                },
+                en: {
+                    badge: 'CASE STUDY 01 · VOL 2 CH.1 · REF [I1]',
+                    title: 'FolderSizeManager — Architecture Has the Right to Be Dropped',
+                    subtitle: 'Consolidated from parallel React/Tauri/FastAPI UI back into Python Tkinter + Scanner + Offline Local AI.',
+                    problem: 'A local disk-analyzer utility carried unnecessary cross-stack maintenance overhead across React/Tauri/FastAPI while the core user need was fast folder inspection and safe cleanup.',
+                    decision: 'On 02/11/2026, Owner stopped the web frontend branch to focus on Tkinter/CustomTkinter + background filesystem scanner + optional offline Local AI (Qwen3-0.6B-Q8_0.gguf). Applied action-risk separation: AI suggests candidates only; deletions always pass path guardrails, Recycle Bin, and explicit Owner confirmation.',
+                    evidence: 'Internal record [I1] logs W8 handover (01/11/2026), stack narrowing decision (02/11/2026), and subsequent QA achieving 22/22 passing acceptance tests on an offline candidate running Qwen3-0.6B-Q8_0.gguf.',
+                    limit: 'Explicit evidence scope: 22/22 reflects QA on a single candidate; ADR-FSM-20261102 is an editorial reconstruction and no same-workload A/B speed/memory benchmark was run between old and new UI stacks.',
+                    lesson: 'Tighten safety controls where blast radius matters (file deletion) instead of forcing heavy review workflows onto harmless UI preferences.',
+                    repoUrl: 'https://github.com/Aleian-Cao/FolderSizeManagerPy',
+                    repoLabel: 'GitHub · Aleian-Cao/FolderSizeManagerPy',
+                    bookLinks: [
+                        { key: 'b2', chapterId: 'b2-c1', label: 'Read Vol 2 · Ch.1: Architecture to Drop' },
+                        { key: 'b2', chapterId: 'b2-app', label: 'Vol 2 · Appendix B.1a (ADR-FSM)' },
+                        { key: 'b1', chapterId: 'c6', label: 'Vol 1 · Layer 06 Guardrails' }
+                    ]
+                }
+            },
+            pv: {
+                vi: {
+                    badge: 'CASE STUDY 02 · TẬP 2 CHƯƠNG 2 · NGUỒN [I2]',
+                    title: 'Personal Vault — 16 ms & Vòng đời phiên bảo mật',
+                    subtitle: 'Privacy-first · Tách popup resident Win32 khỏi WebView quản trị · Giữ một nguồn sự thật phiên.',
+                    problem: 'Giữ nguyên cửa sổ quản trị React/WebView chạy ngầm ngốn ~350–386 MB RAM trên máy cá nhân, nhưng hủy hoàn toàn UI lại gây trễ cold start mỗi lần người dùng bấm phím nóng tìm dữ liệu vault.',
+                    decision: 'Chọn kiến trúc Resident 2 (phương án C): giữ popup Ctrl+Alt+V native Win32 gọn nhẹ để tra cứu và chỉ khởi tạo lười (lazy-create) React/WebView khi cần quản trị đầy đủ — dùng chung một sidecar, ưu tiên tìm kiếm deterministic và quản lý trạng thái khóa phiên tại một nguồn duy nhất.',
+                    evidence: 'Hồ sơ [I2] (RESIDENT_REPORT.md, candidate PV-20261115-A8D61417-resident2, 15/11/2026): popup mở được báo cáo khoảng 16 ms; RAM trước đổi ~350–386 MB → thường trú khi mở phiên ~75–86 MB, sau khi khóa phiên ~27–38 MB.',
+                    limit: 'Giới hạn phạm vi bắt buộc: Số đo thuộc phạm vi synthetic-only trên candidate; chưa phải phân vị p95 đa máy, chưa đo song song phương án A/B/C trên cùng phần cứng và chưa thay kiểm toán bảo mật / egress độc lập.',
+                    lesson: 'Nút thắt thường nằm ở quyết định vòng đời tài nguyên và tính nhất quán trạng thái khóa phiên (lock invariant), không phải chuyện tranh cãi ngôn ngữ hay framework.',
+                    bookLinks: [
+                        { key: 'b2', chapterId: 'b2-c2', label: 'Đọc Tập 2 · Chương 2: Người dùng chỉ cần 16 ms' },
+                        { key: 'b1', chapterId: 'c5', label: 'Tập 1 · Tầng 05 Authorization & Tầng 07 Cache' }
+                    ]
+                },
+                en: {
+                    badge: 'CASE STUDY 02 · VOL 2 CH.2 · REF [I2]',
+                    title: 'Personal Vault — 16 ms Hotkey & Session Lock Lifecycle',
+                    subtitle: 'Privacy-first · Native Win32 popup + lazy WebView admin · Shared sidecar & single session source.',
+                    problem: 'Keeping a full React/WebView window resident consumed ~350–386 MB RAM, whereas tearing down everything caused sluggish cold starts on daily quick-lookup hotkeys.',
+                    decision: 'Implemented Resident 2 (Option C): a lightweight native Win32 Ctrl+Alt+V popup paired with lazy-created React/WebView for management — sharing one sidecar, deterministic lookup first, and a single source of truth for vault lock state.',
+                    evidence: 'Internal record [I2] (RESIDENT_REPORT.md, candidate PV-20261115-A8D61417-resident2, 15/11/2026): ~16 ms reported popup wake latency; RAM shifted from ~350–386 MB to ~75–86 MB unlocked resident and ~27–38 MB locked.',
+                    limit: 'Explicit evidence scope: synthetic-only candidate figures — not multi-machine p95 benchmarks, not a head-to-head A/B/C harness, and not an independent security/egress audit.',
+                    lesson: 'Perceived responsiveness and security live in UI lifecycle boundaries and single-source lock state invariants, not framework debates.',
+                    bookLinks: [
+                        { key: 'b2', chapterId: 'b2-c2', label: 'Read Vol 2 · Ch.2: 16 ms Perceived Latency' },
+                        { key: 'b1', chapterId: 'c5', label: 'Vol 1 · Layer 05 Authorization' }
+                    ]
+                }
+            },
+            tw: {
+                vi: {
+                    badge: 'CASE STUDY 03 · TẬP 2 CHƯƠNG 10 · NGUỒN [I3]',
+                    title: 'Time Wallet — AI Domain Modeling & Ma trận Thiết bị',
+                    subtitle: 'Phân biệt measured / reported / active / planned time · Android 9 WallyQA regression.',
+                    problem: 'Ứng dụng Android quản lý thời gian nhận đề xuất/chỉ thị AI không được trộn lẫn dữ liệu đo thực với kế hoạch; đồng thời bài kiểm thử tự động pass 100% vẫn để lọt lỗi điều hướng ở runtime Android mục tiêu.',
+                    decision: 'Định nghĩa domain model tách bạch 4 loại thời gian (đã đo / tự khai / đang diễn ra / dự kiến). Chuyển kỷ luật kiểm thử sang ma trận gắn chặt artifact hash + phiên bản OS/API + kịch bản thao tác, bắt buộc tái hiện trực tiếp lỗi trên runtime mục tiêu trước khi đánh dấu PASS.',
+                    evidence: 'Hồ sơ [I3]: Candidate v1.0.11 vượt 407/407 automated tests (409 tính holdout) nhưng trên WallyQA Android 9 phát sinh lỗi vào tab Wally làm mất thanh tab dưới (commit 195a60c, SHA af50d6cc, không tái hiện trên Android 16). Riêng lỗi crash regex (?U) tại CancelCommandParser đã được cô lập và kiểm chứng RED v1.0.8 → GREEN v1.0.9 trên Android 9 LDPlayer (14/11/2026).',
+                    limit: 'Giới hạn phạm vi bắt buộc: Không gộp lỗi điều hướng v1.0.11 với bug regex đã fix ở v1.0.9; Android 9 LDPlayer là emulator (không phải thiết bị thật) và chưa có production telemetry trong bộ nguồn.',
+                    lesson: 'Không bao giờ suy DEVICE_PASS từ unit test JDK hay emulator OS khác; tách từng regression theo candidate SHA và phiên bản OS.',
+                    repoUrl: 'https://github.com/caonguyenthanhan/Time_Wallet',
+                    repoLabel: 'GitHub · caonguyenthanhan/Time_Wallet',
+                    bookLinks: [
+                        { key: 'b2', chapterId: 'b2-c10', label: 'Đọc Tập 2 · Chương 10: PASS trên máy nào?' },
+                        { key: 'b1', chapterId: 'c2', label: 'Tập 1 · Tầng 02 Prompt & Tầng 08 Evals' }
+                    ]
+                },
+                en: {
+                    badge: 'CASE STUDY 03 · VOL 2 CH.10 · REF [I3]',
+                    title: 'Time Wallet — Domain Modeling & Target Runtime Matrix',
+                    subtitle: 'Measured vs Reported vs Active vs Planned time · Android 9 WallyQA vs Android 16.',
+                    problem: 'An Android time-tracking assistant must keep AI-assisted entries cleanly separated by epistemic status while preventing green unit tests from masking target-OS UI bugs.',
+                    decision: 'Modeled four explicit time states (measured / reported / active / planned) and bound verification reports to a matrix of artifact SHA + OS/API level + interaction path, requiring target-runtime reproduction prior to fixing.',
+                    evidence: 'Internal record [I3]: v1.0.11 passed 407/407 automated tests (409 w/ holdout) yet broke bottom-tab navigation in WallyQA on Android 9 (commit 195a60c, SHA af50d6cc, non-reproducible on Android 16). Separately, CancelCommandParser regex (?U) crash moved cleanly from RED v1.0.8 to GREEN v1.0.9 on Android 9 LDPlayer (14/11/2026).',
+                    limit: 'Explicit evidence scope: Keep v1.0.11 navigation findings distinct from the resolved v1.0.9 regex fix; Android 9 LDPlayer is an emulator rather than physical hardware, with no production telemetry.',
+                    lesson: 'Never infer DEVICE_PASS from JVM tests or another OS version; index every verdict to artifact SHA + target OS/API.',
+                    repoUrl: 'https://github.com/caonguyenthanhan/Time_Wallet',
+                    repoLabel: 'GitHub · caonguyenthanhan/Time_Wallet',
+                    bookLinks: [
+                        { key: 'b2', chapterId: 'b2-c10', label: 'Read Vol 2 · Ch.10: PASS on Which Machine?' },
+                        { key: 'b1', chapterId: 'c8', label: 'Vol 1 · Layer 02 Prompt & Layer 08 Evals' }
+                    ]
+                }
+            },
+            doc: {
+                vi: {
+                    badge: 'CASE STUDY 04 · TẬP 2 CHƯƠNG 10 · NGUỒN [I4]',
+                    title: 'Doc88Downloader — Execution ≠ Quality Acceptance',
+                    subtitle: '610/610 trang chạy hoàn tất và test phần mềm PASS, nhưng Quality Acceptance vẫn OPEN.',
+                    problem: 'Các pipeline bóc tách và xử lý tài liệu số lượng lớn rất dễ báo cáo "thành công 100%" chỉ vì không bị crash và sinh đủ số file, bỏ qua lỗi glyph hoặc sai lệch nội dung ở giữa tập tài liệu.',
+                    decision: 'Áp dụng nguyên tắc tách 3 cổng độc lập: (1) Job chạy hết khối lượng, (2) Artifact đúng định dạng kỹ thuật, (3) Nghiệm thu chất lượng nội dung theo đơn vị nghiệp vụ và nhóm trang rủi ro.',
+                    evidence: 'Hồ sơ W2K [I4] ghi nhận lượt chạy thực 610/610 trang hoàn tất (607 trang có chữ, 3 trang trắng, không fallback) và các bộ test phần mềm báo PASS; tuy nhiên Quality Acceptance được giữ nguyên trạng thái OPEN vì phát hiện hiện tượng lỗi glyph tại các trang 250, 350, 431, 550.',
+                    limit: 'Giới hạn phạm vi bắt buộc: 610/610 là chỉ số execution completion; nguyên nhân nghi liên quan ảnh capture nguồn chưa qua kiểm toán độc lập toàn bộ từng ảnh trang.',
+                    lesson: 'Hoàn thành số lượt chạy ≠ đạt chuẩn sử dụng. Tuyệt đối không mở rộng batch tự động khi phép kiểm chất lượng đại diện chưa thông qua.',
+                    bookLinks: [
+                        { key: 'b2', chapterId: 'b2-c10', label: 'Đọc Tập 2 · Chương 10 & Chương 5 (Tài liệu)' },
+                        { key: 'b1', chapterId: 'c3', label: 'Tập 1 · Tầng 03 RAG Parsers & Tầng 08 Evals' }
+                    ]
+                },
+                en: {
+                    badge: 'CASE STUDY 04 · VOL 2 CH.10 · REF [I4]',
+                    title: 'Doc88Downloader — Execution ≠ Quality Acceptance',
+                    subtitle: '610/610 pages processed with passing code tests, yet Quality Acceptance stays strictly OPEN.',
+                    problem: 'Document ingestion pipelines routinely report green completion solely because batch jobs finished without throwing exceptions, hiding corrupted glyphs inside middle pages.',
+                    decision: 'Split sign-off into three independent checks: batch execution completion, artifact structural validity, and business-level content quality acceptance.',
+                    evidence: 'W2K record [I4] logs 610/610 execution completion (607 text pages, 3 blank pages, zero fallback) and passing software tests, while Quality Acceptance deliberately stayed OPEN due to glyph anomalies observed on pages 250, 350, 431, and 550.',
+                    limit: 'Explicit evidence scope: 610/610 measures execution completion only; root-cause pointers to source captures were not independently audited across all 610 page images.',
+                    lesson: 'Pipeline progress counters never prove usable document fidelity — gate batch scaling behind representative quality sampling.',
+                    bookLinks: [
+                        { key: 'b2', chapterId: 'b2-c10', label: 'Read Vol 2 · Ch.10 & Ch.5 (Noisy Docs)' },
+                        { key: 'b1', chapterId: 'c3', label: 'Vol 1 · Layer 03 Parsers & Layer 08 Evals' }
+                    ]
+                }
+            },
+            hub: {
+                vi: {
+                    badge: 'CASE STUDY 05 · TẦNG 05 AUTHORIZATION · INS CONTEXT',
+                    title: 'INS-SERVER-HUB — Credential Isolation & Scoped QA',
+                    subtitle: 'Danh mục kết nối RDP nhiều profile · Cô lập credential theo ProfileId · Giữ nguyên giới hạn preflight.',
+                    problem: 'Quản lý danh mục nhiều máy chủ và profile Remote Desktop dễ phát sinh rủi ro lưu mật khẩu tập trung hoặc trộn lẫn ngữ cảnh xác thực giữa các máy.',
+                    decision: 'Cô lập ranh giới credential gắn cứng với từng ProfileId; thiết kế hệ thống không lưu mật khẩu theo yêu cầu an toàn vận hành và đóng khung kết luận QA đúng phạm vi môi trường thử nghiệm.',
+                    evidence: 'Ngữ cảnh kỹ thuật INS-SERVER-HUB ghi nhận mô hình ProfileId cô lập kết nối cùng kịch bản preflight / thử nghiệm synthetic trên cấu hình máy giới hạn.',
+                    limit: 'Giới hạn phạm vi bắt buộc: Các phép thử preflight & synthetic không thay thế chứng nhận triển khai production; chỉ tuyên bố đúng môi trường đã kiểm tra.',
+                    lesson: 'Ranh giới quyền và cô lập credential phải đứng ở lớp danh mục dữ liệu ngay từ thiết kế đầu tiên.',
+                    bookLinks: [
+                        { key: 'b1', chapterId: 'c5', label: 'Đọc Tập 1 · Chương 05 (Authorization)' },
+                        { key: 'b2', chapterId: 'b2-c1416', label: 'Tập 2 · Chương 15 (Quản trị vừa đủ)' }
+                    ]
+                },
+                en: {
+                    badge: 'CASE STUDY 05 · LAYER 05 AUTH · INS CONTEXT',
+                    title: 'INS-SERVER-HUB — Credential Isolation & Scoped QA',
+                    subtitle: 'Multi-profile RDP directory · ProfileId isolation · Honest preflight boundaries.',
+                    problem: 'Multi-server RDP directories risk centralizing plaintext credentials or leaking auth contexts across operator profiles.',
+                    decision: 'Bound credential boundaries per ProfileId with zero persisted passwords per requirement, keeping QA verdicts strictly scoped to synthetic/preflight limits.',
+                    evidence: 'INS-SERVER-HUB technical record documents ProfileId-scoped isolation alongside local preflight and synthetic verification constraints.',
+                    limit: 'Explicit evidence scope: Local preflight and synthetic runs do not constitute production release certification.',
+                    lesson: 'Authorization and credential isolation belong in the data schema from day zero, not in operator memory.',
+                    bookLinks: [
+                        { key: 'b1', chapterId: 'c5', label: 'Read Vol 1 · Ch.05 (Authorization)' },
+                        { key: 'b2', chapterId: 'b2-c1416', label: 'Vol 2 · Ch.15 (Right-Sized Governance)' }
+                    ]
+                }
+            }
+        };
+
+        function createEl(tag, className, text) {
+            const el = document.createElement(tag);
+            if (className) el.className = className;
+            if (text !== undefined && text !== null) el.textContent = text;
+            return el;
+        }
+
+        function selectLayer(key) {
+            if (!LAYERS[key]) return;
+            activeLayer = key;
+            document.querySelectorAll('.layer-btn').forEach(btn => {
+                const isActive = btn.dataset.layer === key;
+                btn.classList.toggle('border-[#0f766e]', isActive);
+                btn.classList.toggle('bg-emerald-50/70', isActive);
+                btn.classList.toggle('ring-2', isActive);
+                btn.classList.toggle('ring-[#0f766e]/25', isActive);
+                btn.classList.toggle('border-slate-200', !isActive);
+                btn.classList.toggle('bg-white', !isActive);
+            });
+
+            const container = document.getElementById('layer-detail');
+            if (!container) return;
+            const raw = LAYERS[key];
+            const d = raw[currentLang];
+            container.replaceChildren();
+
+            container.appendChild(createEl('div', 'text-[11px] font-mono font-bold uppercase tracking-wider text-[#0f766e]', raw.tag));
+            container.appendChild(createEl('h4', 'text-lg font-extrabold text-[#0f2537] mt-1 leading-snug', d.title));
+            container.appendChild(createEl('p', 'text-xs sm:text-sm text-slate-700 mt-2 leading-relaxed', d.summary));
+
+            const ul = createEl('ul', 'mt-3 space-y-1.5 text-xs text-slate-600 list-disc pl-4');
+            d.bullets.forEach(b => ul.appendChild(createEl('li', '', b)));
+            container.appendChild(ul);
+
+            const actions = createEl('div', 'mt-4 pt-3 border-t border-slate-200 flex flex-wrap gap-2');
+            const bookBtn = createEl('button', 'inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#0f2537] hover:bg-[#1a3449] text-white text-xs font-semibold transition', (currentLang === 'vi' ? 'Mở sách: ' : 'Book: ') + d.bookRef.label);
+            bookBtn.type = 'button';
+            bookBtn.addEventListener('click', () => openBookModal(d.bookRef.key, d.bookRef.chapterId));
+
+            const caseBtn = createEl('button', 'inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-[#0f766e] text-xs font-semibold transition', d.caseRef.label + ' →');
+            caseBtn.type = 'button';
+            caseBtn.addEventListener('click', () => jumpToCase(d.caseRef.id));
+
+            actions.appendChild(bookBtn);
+            actions.appendChild(caseBtn);
+            container.appendChild(actions);
+        }
+
+        function selectRole(key) {
+            if (!AEOS_ROLES[key]) return;
+            activeRole = key;
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                const isActive = btn.dataset.role === key;
+                btn.classList.toggle('ring-2', isActive);
+                btn.classList.toggle('ring-[#c99743]', isActive);
+                btn.classList.toggle('shadow-md', isActive);
+            });
+
+            const container = document.getElementById('role-detail');
+            if (!container) return;
+            const d = AEOS_ROLES[key][currentLang];
+            container.replaceChildren();
+
+            container.appendChild(createEl('div', 'text-[11px] font-mono font-bold uppercase tracking-wider text-amber-800', d.tag));
+            container.appendChild(createEl('h4', 'text-lg font-extrabold text-[#0f2537] mt-1 leading-snug', d.title));
+            container.appendChild(createEl('p', 'text-xs sm:text-sm text-slate-700 mt-2 leading-relaxed', d.desc));
+
+            const ul = createEl('ul', 'mt-3 space-y-2 text-xs text-slate-700 list-disc pl-4 leading-relaxed');
+            d.points.forEach(pt => ul.appendChild(createEl('li', '', pt)));
+            container.appendChild(ul);
+
+            const foot = createEl('div', 'mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-slate-500');
+            foot.appendChild(createEl('span', '', d.source));
+            const bridgeBtn = createEl('button', 'text-blue-600 hover:underline font-sans font-semibold', currentLang === 'vi' ? 'Mở sách Quyển 3 AEOS →' : 'Open AEOS Vol 3 →');
+            bridgeBtn.type = 'button';
+            bridgeBtn.addEventListener('click', () => openBookModal('b3'));
+            foot.appendChild(bridgeBtn);
+            container.appendChild(foot);
+        }
+
+        function selectCase(key) {
+            if (!LAB_CASES[key]) return;
+            activeCase = key;
+            document.querySelectorAll('.case-btn').forEach(btn => {
+                const isActive = btn.dataset.case === key;
+                btn.classList.toggle('border-[#0f2537]', isActive);
+                btn.classList.toggle('bg-white', isActive);
+                btn.classList.toggle('shadow-sm', isActive);
+                btn.classList.toggle('ring-2', isActive);
+                btn.classList.toggle('ring-[#0f2537]/15', isActive);
+                btn.classList.toggle('border-slate-200', !isActive);
+                btn.classList.toggle('bg-white/80', !isActive);
+            });
+
+            const container = document.getElementById('case-detail');
+            if (!container) return;
+            const d = LAB_CASES[key][currentLang];
+            container.replaceChildren();
+
+            container.appendChild(createEl('div', 'text-[11px] font-mono font-bold uppercase tracking-wider text-[#0f766e]', d.badge));
+            container.appendChild(createEl('h3', 'text-xl sm:text-2xl font-extrabold text-[#0f2537] mt-1 leading-tight', d.title));
+            container.appendChild(createEl('p', 'text-xs sm:text-sm font-semibold text-slate-600 mt-1 pb-4 border-b border-slate-100', d.subtitle));
+
+            const grid = createEl('div', 'grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-xs sm:text-sm');
+
+            const makeBlock = (qVi, qEn, body, toneClass) => {
+                const box = createEl('div', 'p-3.5 rounded-lg border ' + toneClass);
+                box.appendChild(createEl('div', 'text-[11px] font-mono font-bold uppercase tracking-wider mb-1.5', currentLang === 'vi' ? qVi : qEn));
+                box.appendChild(createEl('p', 'text-slate-700 leading-relaxed text-xs sm:text-[13px]', body));
+                return box;
+            };
+
+            grid.appendChild(makeBlock('1. Bài toán gì?', '1. What Problem?', d.problem, 'bg-slate-50 border-slate-200 text-[#0f2537]'));
+            grid.appendChild(makeBlock('2. Quyết định gì?', '2. What Decision?', d.decision, 'bg-blue-50/50 border-blue-200 text-blue-900'));
+
+            const evBox = createEl('div', 'p-3.5 rounded-lg border bg-emerald-50/60 border-emerald-200 md:col-span-2');
+            evBox.appendChild(createEl('div', 'text-[11px] font-mono font-bold uppercase tracking-wider text-[#0f766e] mb-1.5', currentLang === 'vi' ? '3. Bằng chứng nào? (kèm giới hạn phạm vi)' : '3. What Evidence? (with Scope Bounds)'));
+            evBox.appendChild(createEl('p', 'text-slate-800 leading-relaxed text-xs sm:text-[13px] font-medium', d.evidence));
+            evBox.appendChild(createEl('p', 'text-amber-900 bg-amber-50 border border-amber-200 rounded px-2.5 py-1.5 mt-2 text-xs leading-relaxed', d.limit));
+            grid.appendChild(evBox);
+
+            const lessonBox = makeBlock('4. Học được gì?', '4. Key Lesson?', d.lesson, 'bg-slate-900/5 border-slate-200 text-[#0f2537] md:col-span-2');
+            grid.appendChild(lessonBox);
+            container.appendChild(grid);
+
+            // Bidirectional links back to Books & Chapters (AC-005)
+            const linksWrap = createEl('div', 'mt-5 pt-4 border-t border-slate-100');
+            linksWrap.appendChild(createEl('div', 'text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 mb-2', currentLang === 'vi' ? 'Quay về trang sách giải thích quyết định này:' : 'Back to the book chapters explaining this decision:'));
+            const btnRow = createEl('div', 'flex flex-wrap gap-2');
+            d.bookLinks.forEach(bl => {
+                const btn = createEl('button', 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0f2537] hover:bg-[#1a3449] text-white text-xs font-semibold transition', bl.label + ' →');
+                btn.type = 'button';
+                btn.addEventListener('click', () => openBookModal(bl.key, bl.chapterId));
+                btnRow.appendChild(btn);
+            });
+            if (d.repoUrl) {
+                const repoLink = createEl('a', 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-[#0f2537] text-xs font-semibold transition', (d.repoLabel || 'GitHub Repo') + ' ↗');
+                repoLink.href = d.repoUrl;
+                repoLink.target = '_blank';
+                repoLink.rel = 'noopener noreferrer';
+                btnRow.appendChild(repoLink);
+            }
+            linksWrap.appendChild(btnRow);
+            container.appendChild(linksWrap);
+        }
+
+        function jumpToCase(caseId) {
+            closeBookModal();
+            selectCase(caseId);
+            const labEl = document.getElementById('lab');
+            if (labEl) labEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function openBookModal(bookKey, chapterId) {
+            const book = BOOKS[bookKey];
+            if (!book) return;
+            openBookKey = bookKey;
+            highlightedChapterTag = chapterId || null;
+            renderBookModal();
+            const modal = document.getElementById('book-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            if (highlightedChapterTag) {
+                requestAnimationFrame(() => {
+                    const chEl = document.getElementById('modal-ch-' + highlightedChapterTag);
+                    if (chEl) chEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            }
+        }
+
+        function closeBookModal() {
+            openBookKey = null;
+            highlightedChapterTag = null;
+            const modal = document.getElementById('book-modal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        function renderBookModal() {
+            if (!openBookKey || !BOOKS[openBookKey]) return;
+            const book = BOOKS[openBookKey];
+            const d = book[currentLang];
+
+            document.getElementById('modal-book-badge').textContent = d.badge;
+            document.getElementById('modal-book-title').textContent = d.title;
+
+            const body = document.getElementById('modal-book-body');
+            body.replaceChildren();
+
+            // Top summary row with cover if available
+            const top = createEl('div', 'flex flex-col sm:flex-row gap-4 items-start');
+            if (book.cover) {
+                const imgWrap = createEl('div', 'w-28 sm:w-32 shrink-0 rounded-lg overflow-hidden border border-slate-200 shadow-sm');
+                const img = document.createElement('img');
+                img.src = book.cover;
+                img.alt = d.title;
+                img.className = 'w-full h-auto block';
+                imgWrap.appendChild(img);
+                top.appendChild(imgWrap);
+            }
+            const meta = createEl('div', 'flex-1 min-w-0 space-y-2');
+            meta.appendChild(createEl('div', 'inline-block text-[11px] font-mono px-2.5 py-1 rounded bg-slate-100 text-slate-700 font-semibold', d.version));
+            meta.appendChild(createEl('p', 'text-slate-700 leading-relaxed', d.intro));
+            top.appendChild(meta);
+            body.appendChild(top);
+
+            // Key focus
+            const focusBox = createEl('div', 'bg-slate-50 border border-slate-200 rounded-lg p-3.5');
+            focusBox.appendChild(createEl('h4', 'text-xs font-mono font-bold uppercase tracking-wider text-[#0f766e] mb-2', currentLang === 'vi' ? 'Nội dung trọng tâm' : 'Core Focus'));
+            const ful = createEl('ul', 'space-y-1.5 text-xs sm:text-[13px] list-disc pl-4 text-slate-700');
+            d.focus.forEach(item => ful.appendChild(createEl('li', '', item)));
+            focusBox.appendChild(ful);
+            body.appendChild(focusBox);
+
+            // Table of contents with clickable bidirectional links to case studies
+            const tocBox = createEl('div', '');
+            tocBox.appendChild(createEl('h4', 'text-xs font-mono font-bold uppercase tracking-wider text-[#0f2537] mb-2', currentLang === 'vi' ? 'Mục lục & Lộ trình chương' : 'Table of Contents & Progression'));
+            const tocList = createEl('div', 'space-y-1.5');
+            d.toc.forEach(ch => {
+                const row = createEl('div', 'flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white text-xs sm:text-[13px]' + (highlightedChapterTag === ch.id ? ' chapter-highlight' : ''));
+                row.id = 'modal-ch-' + ch.id;
+                row.appendChild(createEl('span', 'font-medium text-slate-800', ch.label));
+                if (ch.caseLink && LAB_CASES[ch.caseLink]) {
+                    const cBtn = createEl('button', 'text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-[#0f766e] border border-emerald-200 hover:bg-emerald-100 transition shrink-0', (currentLang === 'vi' ? 'Xem Case: ' : 'Case: ') + ch.caseLink.toUpperCase() + ' →');
+                    cBtn.type = 'button';
+                    cBtn.addEventListener('click', () => jumpToCase(ch.caseLink));
+                    row.appendChild(cBtn);
+                }
+                tocList.appendChild(row);
+            });
+            tocBox.appendChild(tocList);
+            body.appendChild(tocBox);
+
+            // Artifacts & Linked Case Studies footer
+            const artBox = createEl('div', 'bg-amber-50/70 border border-amber-200 rounded-lg p-3.5 text-xs text-slate-700 space-y-2');
+            artBox.appendChild(createEl('div', 'font-semibold text-amber-950', d.artifacts));
+            if (d.cases && d.cases.length > 0) {
+                const cWrap = createEl('div', 'flex flex-wrap gap-2 pt-1');
+                d.cases.forEach(c => {
+                    const btn = createEl('button', 'px-2.5 py-1 rounded bg-[#0f2537] hover:bg-[#1a3449] text-white text-[11px] font-semibold transition', 'Case Lab: ' + c.label + ' →');
+                    btn.type = 'button';
+                    btn.addEventListener('click', () => jumpToCase(c.id));
+                    cWrap.appendChild(btn);
+                });
+                artBox.appendChild(cWrap);
+            }
+            body.appendChild(artBox);
+        }
+
+        // Modal Backdrop & Esc key support
+        document.getElementById('book-modal').addEventListener('click', function (e) {
+            if (e.target === this) closeBookModal();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && openBookKey) closeBookModal();
+        });
+
+        function toggleLang(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            const vi = document.querySelectorAll('.lang-vi');
+            const en = document.querySelectorAll('.lang-en');
+            const btnVi = document.getElementById('btn-lang-vi');
+            const btnEn = document.getElementById('btn-lang-en');
+            if (lang === 'vi') {
+                vi.forEach(el => el.classList.remove('hidden'));
+                en.forEach(el => el.classList.add('hidden'));
+                if (btnVi) { btnVi.classList.add('text-blue-400'); btnVi.classList.remove('text-slate-300'); }
+                if (btnEn) { btnEn.classList.add('text-slate-300'); btnEn.classList.remove('text-blue-400'); }
+            } else {
+                en.forEach(el => el.classList.remove('hidden'));
+                vi.forEach(el => el.classList.add('hidden'));
+                if (btnEn) { btnEn.classList.add('text-blue-400'); btnEn.classList.remove('text-slate-300'); }
+                if (btnVi) { btnVi.classList.add('text-slate-300'); btnVi.classList.remove('text-blue-400'); }
+            }
+            selectLayer(activeLayer);
+            selectRole(activeRole);
+            selectCase(activeCase);
+            if (openBookKey) renderBookModal();
+        }
+
+        let headerHidden = false;
+        let footerHidden = false;
+        function toggleHeaderVisibility() {
+            const headerEl = document.querySelector('.header-container');
+            if (!headerEl) return;
+            headerHidden = !headerHidden;
+            if (headerHidden) {
+                headerEl.classList.add('hidden');
+                document.getElementById('toggle-header').textContent = 'Hiện Header';
+            } else {
+                headerEl.classList.remove('hidden');
+                document.getElementById('toggle-header').textContent = 'Ẩn Header';
+            }
+        }
+        function toggleFooterVisibility() {
+            const footerEl = document.querySelector('footer');
+            if (!footerEl) return;
+            footerHidden = !footerHidden;
+            if (footerHidden) {
+                footerEl.classList.add('hidden');
+                document.getElementById('toggle-footer').textContent = 'Hiện Footer';
+            } else {
+                footerEl.classList.remove('hidden');
+                document.getElementById('toggle-footer').textContent = 'Ẩn Footer';
+            }
+        }
+
+        // Initial Render
+        lucide.createIcons();
+        selectLayer(activeLayer);
+        selectRole(activeRole);
+        selectCase(activeCase);
+    </script>
+    <script src="/assets/js/footer.js"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <!-- Tải Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Tải thư viện Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
@@ -15,40 +16,47 @@
             background-color: #f3f4f6;
             color: #1f2937;
         }
+
         .section-title {
             @apply text-2xl font-bold border-b-2 border-indigo-400 pb-2 mb-4 text-indigo-700 flex items-center;
         }
+
         .skill-item {
             @apply bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium shadow-sm;
         }
+
         .project-card {
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+
         .project-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Shadow đậm hơn khi hover */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            /* Shadow đậm hơn khi hover */
         }
+
         /* Thanh tiến trình minh họa */
         .progress-bar-container {
             @apply h-2 bg-gray-200 rounded-full mt-1;
         }
+
         .progress-bar {
             @apply h-2 bg-indigo-600 rounded-full;
         }
-
     </style>
 </head>
+
 <body class="p-4 md:p-8 lg:p-12">
     <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden print:shadow-none print:p-0">
-        
+
         <!-- HEADER & CONTACT INFO -->
-        <header class="bg-indigo-700 text-white p-6 md:p-10 lg:p-12 flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-10">
+        <header
+            class="bg-indigo-700 text-white p-6 md:p-10 lg:p-12 flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-10">
             <div class="flex-shrink-0">
                 <!-- Sử dụng link ảnh đại diện bạn cung cấp -->
-                <img src="public/image/avata1.png" 
-                     alt="Ảnh đại diện Cao Nguyễn Thành An" 
-                     onerror="this.onerror=null; this.src='https://placehold.co/150x150/ffffff/525252?text=AN';"
-                     class="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-white shadow-lg">
+                <img src="public/image/avata1.png" alt="Ảnh đại diện Cao Nguyễn Thành An"
+                    onerror="this.onerror=null; this.src='https://placehold.co/150x150/ffffff/525252?text=AN';"
+                    class="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-white shadow-lg">
             </div>
             <div class="text-left flex-grow">
                 <div class="flex flex-wrap items-baseline gap-3">
@@ -61,11 +69,12 @@
                 <p class="text-sm text-indigo-200 font-medium mt-0.5">
                     Ho Chi Minh City, Vietnam
                 </p>
-                
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mt-4 text-sm font-light">
                     <div class="flex items-center space-x-2">
                         <i data-lucide="mail" class="w-4 h-4 text-indigo-300"></i>
-                        <a href="mailto:caonguyenthanhan.aaa@gmail.com" class="hover:underline">caonguyenthanhan.aaa@gmail.com</a>
+                        <a href="mailto:caonguyenthanhan.aaa@gmail.com"
+                            class="hover:underline">caonguyenthanhan.aaa@gmail.com</a>
                     </div>
                     <div class="flex items-center space-x-2">
                         <i data-lucide="phone" class="w-4 h-4 text-indigo-300"></i>
@@ -81,16 +90,25 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-4 mt-4 text-sm">
-                    <a href="https://github.com/caonguyenthanhan" target="_blank" rel="noopener noreferrer" class="flex items-center text-white/90 hover:text-white transition duration-300 underline-offset-2 hover:underline">
-                        <i data-lucide="github" class="w-4 h-4 mr-1.5"></i> GitHub
+                    <a href="https://github.com/caonguyenthanhan" target="_blank" rel="noopener noreferrer"
+                        class="flex items-center text-white/90 hover:text-white transition duration-300 underline-offset-2 hover:underline">
+                        <i data-lucide="github" class="w-4 h-4 mr-1.5"></i> GitHub (caonguyenthanhan)
                     </a>
-                    <a href="https://www.linkedin.com/in/thành-an-cao-nguyễn-b97b23322/" target="_blank" rel="noopener noreferrer" class="flex items-center text-white/90 hover:text-white transition duration-300 underline-offset-2 hover:underline">
+                    <a href="https://github.com/Aleian-Cao" target="_blank" rel="noopener noreferrer"
+                        class="flex items-center text-white/90 hover:text-white transition duration-300 underline-offset-2 hover:underline">
+                        <i data-lucide="github" class="w-4 h-4 mr-1.5"></i> GitHub (Aleian-Cao)
+                    </a>
+                    <a href="https://www.linkedin.com/in/thành-an-cao-nguyễn-b97b23322/" target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center text-white/90 hover:text-white transition duration-300 underline-offset-2 hover:underline">
                         <i data-lucide="linkedin" class="w-4 h-4 mr-1.5"></i> LinkedIn
                     </a>
-                    <a href="https://www.youtube.com/@tramgatgu" target="_blank" rel="noopener noreferrer" class="flex items-center text-white/90 hover:text-white transition duration-300 underline-offset-2 hover:underline">
+                    <a href="https://www.youtube.com/@tramgatgu" target="_blank" rel="noopener noreferrer"
+                        class="flex items-center text-white/90 hover:text-white transition duration-300 underline-offset-2 hover:underline">
                         <i data-lucide="youtube" class="w-4 h-4 mr-1.5"></i> Trạm Gật Gù
                     </a>
-                    <a href="https://hethongthongminh.id.vn/" target="_blank" rel="noopener noreferrer" class="flex items-center text-white/90 hover:text-white transition duration-300 underline-offset-2 hover:underline">
+                    <a href="https://hethongthongminh.id.vn/" target="_blank" rel="noopener noreferrer"
+                        class="flex items-center text-white/90 hover:text-white transition duration-300 underline-offset-2 hover:underline">
                         <i data-lucide="globe" class="w-4 h-4 mr-1.5"></i> Website
                     </a>
                 </div>
@@ -99,10 +117,10 @@
 
         <!-- MAIN CONTENT -->
         <main class="p-6 md:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
+
             <!-- COLUMN 1: OBJECTIVE, EDUCATION, OTHER SKILLS -->
             <div class="lg:col-span-1 space-y-8">
-                
+
                 <!-- ĐỊNH HƯỚNG NGHỀ NGHIỆP -->
                 <section>
                     <h2 class="section-title">
@@ -111,14 +129,17 @@
                     <div class="text-gray-700 leading-relaxed text-sm space-y-2">
                         <p class="font-semibold text-indigo-700">AI-First · Engineering-Driven · Product-Focused</p>
                         <p>
-                            Chuyên thiết kế và triển khai <strong>Multi-Agent Systems</strong>, <strong>GraphRAG</strong>, <strong>Agentic Workflows</strong> và tự động hóa quy trình kỹ thuật điện (<strong>PSCAD, PSS/E, ETAP</strong>).
+                            Chuyên thiết kế và triển khai <strong>Multi-Agent Systems</strong>,
+                            <strong>GraphRAG</strong>, <strong>Agentic Workflows</strong> và tự động hóa quy trình kỹ
+                            thuật điện (<strong>PSCAD, PSS/E, ETAP</strong>).
                         </p>
                         <p>
-                            Tập trung vào kiến trúc AI thực tế, system evaluation, LLMOps, độ tin cậy và giải quyết triệt để bài toán nghiệp vụ cho doanh nghiệp.
+                            Tập trung vào kiến trúc AI thực tế, system evaluation, LLMOps, độ tin cậy và giải quyết
+                            triệt để bài toán nghiệp vụ cho doanh nghiệp.
                         </p>
                     </div>
                 </section>
-                
+
                 <!-- HỌC VẤN -->
                 <section>
                     <h2 class="section-title">
@@ -126,9 +147,11 @@
                     </h2>
                     <div class="space-y-4">
                         <div class="border-l-4 border-indigo-600 pl-3">
-                            <p class="font-semibold text-lg text-gray-800">Kỹ Sư Công nghệ Thông tin (Information Systems & AI)</p>
+                            <p class="font-semibold text-lg text-gray-800">Kỹ Sư Công nghệ Thông tin (Information
+                                Systems & AI)</p>
                             <p class="text-sm text-gray-600">Trường Đại học Sư phạm Kỹ thuật TP. HCM (HCMUTE)</p>
-                            <p class="text-xs text-gray-500 italic">Nay là Trường Đại học Công nghệ Kỹ thuật TP.HCM (HCM-UTE)</p>
+                            <p class="text-xs text-gray-500 italic">Nay là Trường Đại học Công nghệ Kỹ thuật TP.HCM
+                                (HCM-UTE)</p>
                             <p class="text-xs text-gray-500 italic mt-0.5">2021 – 2025 | Xếp loại tốt nghiệp: Khá</p>
                         </div>
                     </div>
@@ -141,20 +164,20 @@
                     </h2>
                     <div class="space-y-3 text-sm">
                         <div class="bg-gray-100 p-3 rounded-lg">
-                             <p class="font-semibold text-gray-800 mb-1">Giao tiếp & Hỗ trợ Kỹ thuật</p>
-                             <div class="flex flex-wrap gap-2">
+                            <p class="font-semibold text-gray-800 mb-1">Giao tiếp & Hỗ trợ Kỹ thuật</p>
+                            <div class="flex flex-wrap gap-2">
                                 <span class="skill-item !bg-gray-200 !text-gray-800">Kỹ năng Giáo viên/Gia sư</span>
                                 <span class="skill-item !bg-gray-200 !text-gray-800">Hỗ trợ Khách hàng</span>
                                 <span class="skill-item !bg-gray-200 !text-gray-800">IT Support</span>
-                             </div>
+                            </div>
                         </div>
-                         <div class="bg-gray-100 p-3 rounded-lg">
-                             <p class="font-semibold text-gray-800 mb-1">Sáng tạo & Thiết kế</p>
-                             <div class="flex flex-wrap gap-2">
+                        <div class="bg-gray-100 p-3 rounded-lg">
+                            <p class="font-semibold text-gray-800 mb-1">Sáng tạo & Thiết kế</p>
+                            <div class="flex flex-wrap gap-2">
                                 <span class="skill-item !bg-gray-200 !text-gray-800">Thiết kế 2D (Photoshop/AI)</span>
                                 <span class="skill-item !bg-gray-200 !text-gray-800">Sáng tạo Nội dung</span>
                                 <span class="skill-item !bg-gray-200 !text-gray-800">Dựng Video</span>
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -165,7 +188,8 @@
                         <i data-lucide="heart" class="w-5 h-5 mr-2"></i> Sở Thích
                     </h2>
                     <p class="text-gray-700 text-sm">
-                        Thích viết blog về công nghệ, chia sẻ kiến thức về AI/ML, rèn luyện kỹ năng viết lách và truyền đạt thông tin.
+                        Thích viết blog về công nghệ, chia sẻ kiến thức về AI/ML, rèn luyện kỹ năng viết lách và truyền
+                        đạt thông tin.
                     </p>
                 </section>
 
@@ -173,14 +197,14 @@
 
             <!-- COLUMN 2 & 3: TECHNICAL SKILLS & EXPERIENCE + PROJECTS -->
             <div class="lg:col-span-2 space-y-8">
-                
+
                 <!-- KỸ NĂNG CHUYÊN MÔN AI/ML & AUTOMATION -->
                 <section>
                     <h2 class="section-title">
                         <i data-lucide="cpu" class="w-5 h-5 mr-2"></i> Kỹ Năng Chuyên Môn & Công Nghệ
                     </h2>
                     <div class="space-y-4">
-                        
+
                         <!-- Nhóm 1: AI, Agentic Workflows & GraphRAG -->
                         <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <h3 class="font-semibold text-lg text-indigo-700 mb-2">AI & Agentic Systems</h3>
@@ -188,16 +212,25 @@
                                 <div>
                                     <div class="flex justify-between text-sm font-medium">
                                         <span>Multi-Agent & Orchestration (LangGraph, LangChain/LCEL, DSPy)</span>
-                                        <span class="text-indigo-600 font-semibold text-xs bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Chuyên sâu</span>
+                                        <span
+                                            class="text-indigo-600 font-semibold text-xs bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Chuyên
+                                            sâu</span>
                                     </div>
-                                    <div class="progress-bar-container"><div class="progress-bar" style="width: 95%;"></div></div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 95%;"></div>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="flex justify-between text-sm font-medium">
-                                        <span>GraphRAG & Knowledge Graphs (Neo4j, Memgraph, Qdrant, LlamaIndex, RAGAS)</span>
-                                        <span class="text-indigo-600 font-semibold text-xs bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Thành thạo</span>
+                                        <span>GraphRAG & Knowledge Graphs (Neo4j, Memgraph, Qdrant, LlamaIndex,
+                                            RAGAS)</span>
+                                        <span
+                                            class="text-indigo-600 font-semibold text-xs bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Thành
+                                            thạo</span>
                                     </div>
-                                    <div class="progress-bar-container"><div class="progress-bar" style="width: 90%;"></div></div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 90%;"></div>
+                                    </div>
                                 </div>
                                 <div class="flex flex-wrap gap-1.5 mt-2">
                                     <span class="skill-item">LangGraph</span>
@@ -211,7 +244,8 @@
                                 </div>
                                 <div class="mt-2.5 pt-2 border-t border-gray-200 text-xs text-gray-700">
                                     <span class="font-bold text-indigo-700">Methodology:</span>
-                                    <span>AEOS (Quy trình kỹ thuật AI có con người giám sát: Tự chủ trong scope, Cổng phê duyệt, Xác minh bằng chứng)</span>
+                                    <span>AEOS (Quy trình kỹ thuật AI có con người giám sát: Tự chủ trong scope, Cổng
+                                        phê duyệt, Xác minh bằng chứng)</span>
                                 </div>
                             </div>
                         </div>
@@ -223,16 +257,24 @@
                                 <div>
                                     <div class="flex justify-between text-sm font-medium">
                                         <span>Python High-Performance (FastAPI, Pydantic v2, vLLM)</span>
-                                        <span class="text-indigo-600 font-semibold text-xs bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Chuyên sâu</span>
+                                        <span
+                                            class="text-indigo-600 font-semibold text-xs bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Chuyên
+                                            sâu</span>
                                     </div>
-                                    <div class="progress-bar-container"><div class="progress-bar" style="width: 95%;"></div></div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 95%;"></div>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="flex justify-between text-sm font-medium">
                                         <span>Power Engineering Automation (PSCAD, PSS/E, ETAP)</span>
-                                        <span class="text-indigo-600 font-semibold text-xs bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Thành thạo</span>
+                                        <span
+                                            class="text-indigo-600 font-semibold text-xs bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Thành
+                                            thạo</span>
                                     </div>
-                                    <div class="progress-bar-container"><div class="progress-bar" style="width: 85%;"></div></div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 85%;"></div>
+                                    </div>
                                 </div>
                                 <div class="flex flex-wrap gap-1.5 mt-2">
                                     <span class="skill-item">Python</span>
@@ -262,50 +304,70 @@
                         </div>
                     </div>
                 </section>
-                
+
                 <!-- DỰ ÁN AI/ML TIÊU BIỂU -->
                 <section>
                     <h2 class="section-title">
                         <i data-lucide="archive" class="w-5 h-5 mr-2"></i> Dự Án Tiêu Biểu & Sản Phẩm
                     </h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        
+
                         <!-- Dự án 1: AiMed - Precision Medical RAG -->
                         <div class="project-card bg-gray-50 p-4 rounded-lg border border-indigo-400">
                             <h3 class="font-semibold text-base text-indigo-700 mb-1">AiMed — Precision Medical RAG</h3>
-                            <p class="text-xs text-gray-600 mb-2">Hệ thống trợ lý y tế chuyên sâu sử dụng RAG với cơ chế Strict Citation, Hybrid Search và Reranker, loại bỏ triệt để ảo giác y khoa.</p>
+                            <p class="text-xs text-gray-600 mb-2">Hệ thống trợ lý y tế chuyên sâu sử dụng RAG với cơ chế
+                                Strict Citation, Hybrid Search và Reranker, loại bỏ triệt để ảo giác y khoa.</p>
                             <div class="flex flex-wrap gap-1 mb-2">
-                                <span class="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Llama 2</span>
-                                <span class="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Hybrid Search</span>
-                                <span class="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">FastAPI</span>
+                                <span
+                                    class="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Llama
+                                    2</span>
+                                <span
+                                    class="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Hybrid
+                                    Search</span>
+                                <span
+                                    class="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">FastAPI</span>
                             </div>
-                            <a href="https://github.com/caonguyenthanhan/Medical-Consulting-System" target="_blank" rel="noopener noreferrer" class="flex items-center text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="https://github.com/caonguyenthanhan/Medical-Consulting-System" target="_blank"
+                                rel="noopener noreferrer"
+                                class="flex items-center text-xs text-indigo-600 hover:text-indigo-800 font-medium">
                                 <i data-lucide="github" class="w-3.5 h-3.5 mr-1"></i> Xem GitHub
                             </a>
                         </div>
-                        
+
                         <!-- Dự án 2: TOV/TRV Automation & ENERGY-TASK-AI -->
                         <div class="project-card bg-gray-50 p-4 rounded-lg border border-indigo-400">
                             <h3 class="font-semibold text-base text-indigo-700 mb-1">Power Systems AI & Automation</h3>
-                            <p class="text-xs text-gray-600 mb-2">Tự động hóa tính toán quá độ điện từ (TOV/TRV), phụ tải và phân tích dữ liệu điện tử PSCAD/ETAP kết hợp LLM sinh báo cáo chuẩn IEEE.</p>
+                            <p class="text-xs text-gray-600 mb-2">Tự động hóa tính toán quá độ điện từ (TOV/TRV), phụ
+                                tải và phân tích dữ liệu điện tử PSCAD/ETAP kết hợp LLM sinh báo cáo chuẩn IEEE.</p>
                             <div class="flex flex-wrap gap-1 mb-2">
-                                <span class="text-xs font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">PSCAD / ETAP</span>
-                                <span class="text-xs font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Agentic Pipeline</span>
-                                <span class="text-xs font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Python</span>
+                                <span
+                                    class="text-xs font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">PSCAD
+                                    / ETAP</span>
+                                <span
+                                    class="text-xs font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Agentic
+                                    Pipeline</span>
+                                <span
+                                    class="text-xs font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Python</span>
                             </div>
                             <span class="text-xs text-emerald-700 font-medium flex items-center">
-                                <i data-lucide="check-circle" class="w-3.5 h-3.5 mr-1"></i> Đang triển khai tại INS Engineering
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5 mr-1"></i> Đang triển khai tại INS
+                                Engineering
                             </span>
                         </div>
 
                         <!-- Dự án 3: Enterprise Multi-Agent System (ETMS) -->
                         <div class="project-card bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <h3 class="font-semibold text-base text-gray-800 mb-1">Enterprise Multi-Agent (ETMS)</h3>
-                            <p class="text-xs text-gray-600 mb-2">Hệ thống Multi-Agent Router-Analyst-Writer trên nền LangGraph, giải quyết luồng phân tích tuần hoàn và rút ngắn đáng kể thời gian quay vòng (TAT) xử lý.</p>
+                            <p class="text-xs text-gray-600 mb-2">Hệ thống Multi-Agent Router-Analyst-Writer trên nền
+                                LangGraph, giải quyết luồng phân tích tuần hoàn và rút ngắn đáng kể thời gian quay vòng
+                                (TAT) xử lý.</p>
                             <div class="flex flex-wrap gap-1 mb-2">
-                                <span class="text-xs font-medium bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">LangGraph</span>
-                                <span class="text-xs font-medium bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">Multi-Agent</span>
-                                <span class="text-xs font-medium bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">LCEL</span>
+                                <span
+                                    class="text-xs font-medium bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">LangGraph</span>
+                                <span
+                                    class="text-xs font-medium bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">Multi-Agent</span>
+                                <span
+                                    class="text-xs font-medium bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">LCEL</span>
                             </div>
                             <span class="text-xs text-gray-500 font-medium">VNA GROUP Experience</span>
                         </div>
@@ -313,12 +375,18 @@
                         <!-- Dự án 4: Morphology-Master (MorphoLearn) -->
                         <div class="project-card bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <h3 class="font-semibold text-base text-gray-800 mb-1">Morphology-Master</h3>
-                            <p class="text-xs text-gray-600 mb-2">Hệ thống học tiếng Anh Hình thái học trực tuyến, phân tích tiền tố/gốc từ/hậu tố và tương tác học tập thông minh.</p>
+                            <p class="text-xs text-gray-600 mb-2">Hệ thống học tiếng Anh Hình thái học trực tuyến, phân
+                                tích tiền tố/gốc từ/hậu tố và tương tác học tập thông minh.</p>
                             <div class="flex flex-wrap gap-1 mb-2">
-                                <span class="text-xs font-medium bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Next.js / TS</span>
-                                <span class="text-xs font-medium bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">NLP</span>
+                                <span
+                                    class="text-xs font-medium bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Next.js
+                                    / TS</span>
+                                <span
+                                    class="text-xs font-medium bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">NLP</span>
                             </div>
-                            <a href="https://hethongthongminh.id.vn/MorphoLearn" target="_blank" rel="noopener noreferrer" class="flex items-center text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="https://hethongthongminh.id.vn/MorphoLearn" target="_blank"
+                                rel="noopener noreferrer"
+                                class="flex items-center text-xs text-indigo-600 hover:text-indigo-800 font-medium">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5 mr-1"></i> Trải nghiệm Web
                             </a>
                         </div>
@@ -326,12 +394,18 @@
                         <!-- Dự án 5: ATS CV Builder & Gemini Summarizer -->
                         <div class="project-card bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <h3 class="font-semibold text-base text-gray-800 mb-1">ATS CV Builder & Summarizer</h3>
-                            <p class="text-xs text-gray-600 mb-2">Công cụ tối ưu hóa CV theo chuẩn ATS, kết hợp Gemini API tóm tắt tài liệu tự động và đọc văn bản (TTS).</p>
+                            <p class="text-xs text-gray-600 mb-2">Công cụ tối ưu hóa CV theo chuẩn ATS, kết hợp Gemini
+                                API tóm tắt tài liệu tự động và đọc văn bản (TTS).</p>
                             <div class="flex flex-wrap gap-1 mb-2">
-                                <span class="text-xs font-medium bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-full">Gemini API</span>
-                                <span class="text-xs font-medium bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-full">TTS</span>
+                                <span
+                                    class="text-xs font-medium bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-full">Gemini
+                                    API</span>
+                                <span
+                                    class="text-xs font-medium bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-full">TTS</span>
                             </div>
-                            <a href="https://github.com/caonguyenthanhan/Ai-Demo-Project" target="_blank" rel="noopener noreferrer" class="flex items-center text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="https://github.com/caonguyenthanhan/Ai-Demo-Project" target="_blank"
+                                rel="noopener noreferrer"
+                                class="flex items-center text-xs text-indigo-600 hover:text-indigo-800 font-medium">
                                 <i data-lucide="github" class="w-3.5 h-3.5 mr-1"></i> Xem GitHub
                             </a>
                         </div>
@@ -339,17 +413,22 @@
                         <!-- Dự án 6: Trạm Gật Gù -->
                         <div class="project-card bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <h3 class="font-semibold text-base text-gray-800 mb-1">Trạm Gật Gù (Creative Hub)</h3>
-                            <p class="text-xs text-gray-600 mb-2">Kênh nội dung sáng tạo về tâm lý học tích cực, phát triển tư duy cá nhân và âm nhạc do AI đồng sáng tác.</p>
+                            <p class="text-xs text-gray-600 mb-2">Kênh nội dung sáng tạo về tâm lý học tích cực, phát
+                                triển tư duy cá nhân và âm nhạc do AI đồng sáng tác.</p>
                             <div class="flex flex-wrap gap-1 mb-2">
-                                <span class="text-xs font-medium bg-red-100 text-red-800 px-2 py-0.5 rounded-full">YouTube</span>
-                                <span class="text-xs font-medium bg-red-100 text-red-800 px-2 py-0.5 rounded-full">Psychology</span>
-                                <span class="text-xs font-medium bg-red-100 text-red-800 px-2 py-0.5 rounded-full">AI Music</span>
+                                <span
+                                    class="text-xs font-medium bg-red-100 text-red-800 px-2 py-0.5 rounded-full">YouTube</span>
+                                <span
+                                    class="text-xs font-medium bg-red-100 text-red-800 px-2 py-0.5 rounded-full">Psychology</span>
+                                <span class="text-xs font-medium bg-red-100 text-red-800 px-2 py-0.5 rounded-full">AI
+                                    Music</span>
                             </div>
-                            <a href="https://www.youtube.com/@tramgatgu" target="_blank" rel="noopener noreferrer" class="flex items-center text-xs text-red-600 hover:text-red-800 font-medium">
+                            <a href="https://www.youtube.com/@tramgatgu" target="_blank" rel="noopener noreferrer"
+                                class="flex items-center text-xs text-red-600 hover:text-red-800 font-medium">
                                 <i data-lucide="youtube" class="w-3.5 h-3.5 mr-1"></i> Kênh YouTube
                             </a>
                         </div>
-                        
+
                     </div>
                 </section>
 
@@ -364,75 +443,100 @@
                             <h3 class="font-bold text-base text-gray-900 flex items-center gap-1.5">
                                 <span>AEOS — A Human-Governed AI Engineering Workflow</span>
                             </h3>
-                            <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Public-Safe Methodology</span>
+                            <span
+                                class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Public-Safe
+                                Methodology</span>
                         </div>
 
-                        <div class="border-l-4 border-indigo-600 pl-3 py-1 bg-indigo-50/70 rounded-r text-sm text-indigo-900 font-medium italic mb-3">
+                        <div
+                            class="border-l-4 border-indigo-600 pl-3 py-1 bg-indigo-50/70 rounded-r text-sm text-indigo-900 font-medium italic mb-3">
                             "Human decides WHAT. AI builds HOW. Evidence determines DONE."
                         </div>
 
                         <p class="text-sm text-gray-700 leading-relaxed mb-4 text-justify">
-                            Tôi tiếp cận kỹ thuật AI không phải là tạo prompt tùy hứng, mà là xây dựng một hệ thống kỹ thuật phần mềm có kiểm chứng và quản trị chặt chẽ. AEOS là phương pháp kỹ thuật thực hành giúp tối đa hóa khả năng tự chủ của Agent trong phạm vi cho phép, đồng thời đảm bảo mọi quyết định phát hành và nghiệm thu đều do con người phê duyệt dựa trên bằng chứng kiểm nghiệm cụ thể.
+                            Tôi tiếp cận kỹ thuật AI không phải là tạo prompt tùy hứng, mà là xây dựng một hệ thống kỹ
+                            thuật phần mềm có kiểm chứng và quản trị chặt chẽ. AEOS là phương pháp kỹ thuật thực hành
+                            giúp tối đa hóa khả năng tự chủ của Agent trong phạm vi cho phép, đồng thời đảm bảo mọi
+                            quyết định phát hành và nghiệm thu đều do con người phê duyệt dựa trên bằng chứng kiểm
+                            nghiệm cụ thể.
                         </p>
 
                         <!-- Workflow Pipeline -->
                         <div class="mb-4">
-                            <div class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 flex items-center gap-1">
+                            <div
+                                class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 flex items-center gap-1">
                                 <i data-lucide="git-branch" class="w-3.5 h-3.5 text-indigo-600"></i>
                                 <span>Quy trình điều phối 5 bước (Core Workflow):</span>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
                                 <div class="bg-white p-2.5 rounded-lg border border-gray-200 shadow-2xs">
-                                    <div class="flex items-center justify-between text-xs font-bold text-indigo-700 mb-0.5">
+                                    <div
+                                        class="flex items-center justify-between text-xs font-bold text-indigo-700 mb-0.5">
                                         <span>01. DEFINE</span>
-                                        <span class="px-1.5 py-0.2 bg-blue-50 text-[10px] text-blue-600 rounded border border-blue-200">Human</span>
+                                        <span
+                                            class="px-1.5 py-0.2 bg-blue-50 text-[10px] text-blue-600 rounded border border-blue-200">Human</span>
                                     </div>
                                     <div class="text-xs font-semibold text-gray-900 mb-0.5">Xác định WHAT</div>
-                                    <p class="text-[11px] text-gray-600 leading-tight">Con người định nghĩa mục tiêu và rào cản phạm vi (Scope).</p>
+                                    <p class="text-[11px] text-gray-600 leading-tight">Con người định nghĩa mục tiêu và
+                                        rào cản phạm vi (Scope).</p>
                                 </div>
 
                                 <div class="bg-white p-2.5 rounded-lg border border-gray-200 shadow-2xs">
-                                    <div class="flex items-center justify-between text-xs font-bold text-indigo-700 mb-0.5">
+                                    <div
+                                        class="flex items-center justify-between text-xs font-bold text-indigo-700 mb-0.5">
                                         <span>02. BUILD</span>
-                                        <span class="px-1.5 py-0.2 bg-indigo-50 text-[10px] text-indigo-600 rounded border border-indigo-200">AI</span>
+                                        <span
+                                            class="px-1.5 py-0.2 bg-indigo-50 text-[10px] text-indigo-600 rounded border border-indigo-200">AI</span>
                                     </div>
                                     <div class="text-xs font-semibold text-gray-900 mb-0.5">Thiết kế & Tạo HOW</div>
-                                    <p class="text-[11px] text-gray-600 leading-tight">Agent tự chủ triển khai mã và kiến trúc trong scope.</p>
+                                    <p class="text-[11px] text-gray-600 leading-tight">Agent tự chủ triển khai mã và
+                                        kiến trúc trong scope.</p>
                                 </div>
 
                                 <div class="bg-white p-2.5 rounded-lg border border-gray-200 shadow-2xs">
-                                    <div class="flex items-center justify-between text-xs font-bold text-indigo-700 mb-0.5">
+                                    <div
+                                        class="flex items-center justify-between text-xs font-bold text-indigo-700 mb-0.5">
                                         <span>03. VERIFY</span>
-                                        <span class="px-1.5 py-0.2 bg-indigo-50 text-[10px] text-indigo-600 rounded border border-indigo-200">AI</span>
+                                        <span
+                                            class="px-1.5 py-0.2 bg-indigo-50 text-[10px] text-indigo-600 rounded border border-indigo-200">AI</span>
                                     </div>
                                     <div class="text-xs font-semibold text-gray-900 mb-0.5">Kiểm thử & Khắc phục</div>
-                                    <p class="text-[11px] text-gray-600 leading-tight">Chạy test tự động, sửa lỗi và thu thập bằng chứng delta.</p>
+                                    <p class="text-[11px] text-gray-600 leading-tight">Chạy test tự động, sửa lỗi và thu
+                                        thập bằng chứng delta.</p>
                                 </div>
 
                                 <div class="bg-white p-2.5 rounded-lg border border-gray-200 shadow-2xs">
-                                    <div class="flex items-center justify-between text-xs font-bold text-amber-700 mb-0.5">
+                                    <div
+                                        class="flex items-center justify-between text-xs font-bold text-amber-700 mb-0.5">
                                         <span>04. AUDIT</span>
-                                        <span class="px-1.5 py-0.2 bg-amber-50 text-[10px] text-amber-700 rounded border border-amber-200">Manager</span>
+                                        <span
+                                            class="px-1.5 py-0.2 bg-amber-50 text-[10px] text-amber-700 rounded border border-amber-200">Manager</span>
                                     </div>
-                                    <div class="text-xs font-semibold text-gray-900 mb-0.5">Kiểm toán Scope & Rủi ro</div>
-                                    <p class="text-[11px] text-gray-600 leading-tight">Đánh giá ranh giới phạm vi và chất lượng bằng chứng.</p>
+                                    <div class="text-xs font-semibold text-gray-900 mb-0.5">Kiểm toán Scope & Rủi ro
+                                    </div>
+                                    <p class="text-[11px] text-gray-600 leading-tight">Đánh giá ranh giới phạm vi và
+                                        chất lượng bằng chứng.</p>
                                 </div>
 
                                 <div class="bg-white p-2.5 rounded-lg border border-gray-200 shadow-2xs">
-                                    <div class="flex items-center justify-between text-xs font-bold text-emerald-700 mb-0.5">
+                                    <div
+                                        class="flex items-center justify-between text-xs font-bold text-emerald-700 mb-0.5">
                                         <span>05. GATE</span>
-                                        <span class="px-1.5 py-0.2 bg-emerald-50 text-[10px] text-emerald-700 rounded border border-emerald-200">Human</span>
+                                        <span
+                                            class="px-1.5 py-0.2 bg-emerald-50 text-[10px] text-emerald-700 rounded border border-emerald-200">Human</span>
                                     </div>
                                     <div class="text-xs font-semibold text-gray-900 mb-0.5">Nghiệm thu & Next Wave</div>
-                                    <p class="text-[11px] text-gray-600 leading-tight">Con người phê duyệt trước khi chuyển giao hoặc release.</p>
+                                    <p class="text-[11px] text-gray-600 leading-tight">Con người phê duyệt trước khi
+                                        chuyển giao hoặc release.</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 4 Core Principles -->
                         <div>
-                            <div class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 flex items-center gap-1">
+                            <div
+                                class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 flex items-center gap-1">
                                 <i data-lucide="compass" class="w-3.5 h-3.5 text-indigo-600"></i>
                                 <span>4 Nguyên tắc Cốt lõi (Core Principles):</span>
                             </div>
@@ -440,19 +544,24 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 <div class="bg-white p-2.5 rounded-lg border border-gray-200">
                                     <div class="text-xs font-bold text-gray-900 mb-0.5">• One Active Wave</div>
-                                    <p class="text-[11px] text-gray-600 leading-relaxed">Tập trung giải quyết dứt điểm một phạm vi nhiệm vụ tại một thời điểm, tránh trôi phạm vi.</p>
+                                    <p class="text-[11px] text-gray-600 leading-relaxed">Tập trung giải quyết dứt điểm
+                                        một phạm vi nhiệm vụ tại một thời điểm, tránh trôi phạm vi.</p>
                                 </div>
                                 <div class="bg-white p-2.5 rounded-lg border border-gray-200">
                                     <div class="text-xs font-bold text-gray-900 mb-0.5">• Autonomy Within Scope</div>
-                                    <p class="text-[11px] text-gray-600 leading-relaxed">Agent tự chủ tối đa để thiết kế, test và tự sửa lỗi trong rào cản đã định trước.</p>
+                                    <p class="text-[11px] text-gray-600 leading-relaxed">Agent tự chủ tối đa để thiết
+                                        kế, test và tự sửa lỗi trong rào cản đã định trước.</p>
                                 </div>
                                 <div class="bg-white p-2.5 rounded-lg border border-gray-200">
                                     <div class="text-xs font-bold text-gray-900 mb-0.5">• Evidence Over Claims</div>
-                                    <p class="text-[11px] text-gray-600 leading-relaxed">Chỉ tuyên bố "Done" khi có bằng chứng thực tế: diff rõ ràng, exit code kiểm thử và log runtime.</p>
+                                    <p class="text-[11px] text-gray-600 leading-relaxed">Chỉ tuyên bố "Done" khi có bằng
+                                        chứng thực tế: diff rõ ràng, exit code kiểm thử và log runtime.</p>
                                 </div>
                                 <div class="bg-white p-2.5 rounded-lg border border-gray-200">
-                                    <div class="text-xs font-bold text-gray-900 mb-0.5">• Human-Governed Approval Gates</div>
-                                    <p class="text-[11px] text-gray-600 leading-relaxed">Mọi điểm mốc quan trọng (kích hoạt, commit, release production) đều do con người kiểm soát.</p>
+                                    <div class="text-xs font-bold text-gray-900 mb-0.5">• Human-Governed Approval Gates
+                                    </div>
+                                    <p class="text-[11px] text-gray-600 leading-relaxed">Mọi điểm mốc quan trọng (kích
+                                        hoạt, commit, release production) đều do con người kiểm soát.</p>
                                 </div>
                             </div>
                         </div>
@@ -465,19 +574,24 @@
                         <i data-lucide="briefcase" class="w-5 h-5 mr-2"></i> Kinh Nghiệm Làm Việc
                     </h2>
                     <div class="space-y-6">
-                        
+
                         <!-- INS Engineering (Current) -->
                         <div class="border-l-4 border-indigo-600 pl-4 bg-indigo-50/70 p-4 rounded-lg">
                             <div class="flex flex-wrap justify-between items-start gap-1">
-                                <h3 class="font-bold text-lg text-indigo-800">AI Systems Architect / Automation Engineer</h3>
-                                <span class="text-xs font-bold px-2 py-0.5 bg-indigo-600 text-white rounded">HIỆN TẠI</span>
+                                <h3 class="font-bold text-lg text-indigo-800">AI Systems Architect / Automation Engineer
+                                </h3>
+                                <span class="text-xs font-bold px-2 py-0.5 bg-indigo-600 text-white rounded">HIỆN
+                                    TẠI</span>
                             </div>
                             <p class="text-sm font-semibold text-gray-700">INS Engineering</p>
                             <p class="text-xs text-indigo-700 italic mb-2">01/2026 – Hiện tại · TP. Hồ Chí Minh</p>
                             <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
-                                <li>Thiết kế và triển khai Multi-Agent Systems, GraphRAG và Agentic Workflows ứng dụng trong tự động hóa quy trình kỹ thuật điện.</li>
-                                <li>Phát triển các pipeline tự động tương tác với phần mềm mô phỏng chuyên ngành (PSCAD, PSS/E, ETAP), tự động hóa tính toán quá độ điện từ (TOV/TRV).</li>
-                                <li>Tối ưu hóa độ tin cậy của mô hình AI, system evaluation và LLMOps đảm bảo chuẩn xác số liệu kỹ thuật theo tiêu chuẩn IEEE.</li>
+                                <li>Thiết kế và triển khai Multi-Agent Systems, GraphRAG và Agentic Workflows ứng dụng
+                                    trong tự động hóa quy trình kỹ thuật điện.</li>
+                                <li>Phát triển các pipeline tự động tương tác với phần mềm mô phỏng chuyên ngành (PSCAD,
+                                    PSS/E, ETAP), tự động hóa tính toán quá độ điện từ (TOV/TRV).</li>
+                                <li>Tối ưu hóa độ tin cậy của mô hình AI, system evaluation và LLMOps đảm bảo chuẩn xác
+                                    số liệu kỹ thuật theo tiêu chuẩn IEEE.</li>
                             </ul>
                         </div>
 
@@ -487,8 +601,10 @@
                             <p class="text-sm text-gray-700 font-medium">VNA GROUP</p>
                             <p class="text-xs text-gray-500 italic mb-2">09/2025 – 12/2025</p>
                             <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
-                                <li>Thiết kế và triển khai hệ thống Enterprise Multi-Agent (Router-Analyst-Writer) trên LangGraph, giải quyết bài toán luồng phân tích có vòng lặp (Cyclic Graphs).</li>
-                                <li>Tối ưu hóa pipeline RAG kết hợp Hybrid Search và Reranking, rút ngắn đáng kể thời gian tổng hợp báo cáo (TAT) của doanh nghiệp.</li>
+                                <li>Thiết kế và triển khai hệ thống Enterprise Multi-Agent (Router-Analyst-Writer) trên
+                                    LangGraph, giải quyết bài toán luồng phân tích có vòng lặp (Cyclic Graphs).</li>
+                                <li>Tối ưu hóa pipeline RAG kết hợp Hybrid Search và Reranking, rút ngắn đáng kể thời
+                                    gian tổng hợp báo cáo (TAT) của doanh nghiệp.</li>
                             </ul>
                         </div>
 
@@ -499,86 +615,98 @@
                             <p class="text-xs text-gray-500 italic mb-2">01/2025 – 04/2025</p>
                             <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
                                 <li>Thiết kế và triển khai chương trình đào tạo về Trí tuệ Nhân tạo thực chiến.</li>
-                                <li>Nâng cao hiệu suất làm việc của đội ngũ thông qua ứng dụng các công cụ AI và tự động hóa quy trình.</li>
+                                <li>Nâng cao hiệu suất làm việc của đội ngũ thông qua ứng dụng các công cụ AI và tự động
+                                    hóa quy trình.</li>
                             </ul>
                         </div>
-                        
+
                         <!-- Phần Mềm Vàng -->
                         <div class="border-l-4 border-gray-400 pl-4">
-                            <h3 class="font-semibold text-lg text-gray-800">Nhân viên Triển khai và Bảo trì Phần mềm</h3>
+                            <h3 class="font-semibold text-lg text-gray-800">Nhân viên Triển khai và Bảo trì Phần mềm
+                            </h3>
                             <p class="text-sm text-gray-600">CÔNG TY TNHH TM&DV TIN HỌC PHẦN MỀM VÀNG</p>
                             <p class="text-xs text-gray-500 italic mb-2">06/2024 – 07/2024</p>
                             <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
-                                <li>Quản trị dữ liệu: Thực hiện rà soát và hiệu chỉnh thông tin trên cơ sở dữ liệu SQL.</li>
-                                <li>Hỗ trợ kỹ thuật: Hỗ trợ khách hàng từ xa, giải quyết các lỗi phần mềm và thiết bị ngoại vi.</li>
+                                <li>Quản trị dữ liệu: Thực hiện rà soát và hiệu chỉnh thông tin trên cơ sở dữ liệu SQL.
+                                </li>
+                                <li>Hỗ trợ kỹ thuật: Hỗ trợ khách hàng từ xa, giải quyết các lỗi phần mềm và thiết bị
+                                    ngoại vi.</li>
                             </ul>
                         </div>
-                        
+
                         <!-- Hệ thống giáo dục Nam Mỹ -->
                         <div class="border-l-4 border-gray-400 pl-4">
                             <h3 class="font-semibold text-lg text-gray-800">Nhân viên Kỹ thuật & Marketing</h3>
                             <p class="text-sm text-gray-600">Hệ thống giáo dục mầm non và anh ngữ quốc tế Nam Mỹ</p>
                             <p class="text-xs text-gray-500 italic mb-2">03/2023 – 03/2024</p>
                             <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
-                                <li>Quản lý và phát triển các kênh truyền thông số, gia tăng lượng tương tác và người theo dõi trong 6 tháng.</li>
+                                <li>Quản lý và phát triển các kênh truyền thông số, gia tăng lượng tương tác và người
+                                    theo dõi trong 6 tháng.</li>
                             </ul>
                         </div>
-                        
+
                         <!-- Trường Thịnh Group -->
                         <div class="border-l-4 border-gray-400 pl-4">
-                            <h3 class="font-semibold text-lg text-gray-800">Thực tập sinh Sửa chữa Máy tính & IT Support</h3>
+                            <h3 class="font-semibold text-lg text-gray-800">Thực tập sinh Sửa chữa Máy tính & IT Support
+                            </h3>
                             <p class="text-sm text-gray-600">Công Ty TNHH TM Trường Thịnh Group</p>
                             <p class="text-xs text-gray-500 italic mb-2">05/2024 – 06/2024</p>
                             <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
-                                <li>Thực hiện bảo trì phần cứng, cài đặt hệ điều hành và hỗ trợ xử lý sự cố thiết bị máy tính văn phòng.</li>
+                                <li>Thực hiện bảo trì phần cứng, cài đặt hệ điều hành và hỗ trợ xử lý sự cố thiết bị máy
+                                    tính văn phòng.</li>
                             </ul>
                         </div>
 
                     </div>
                 </section>
-                
+
             </div>
 
         </main>
 
         <!-- FOOTER -->
         <footer class="bg-indigo-700 text-white text-center p-4 mt-6">
-            <p class="text-sm">&copy; 2026 Cao Nguyễn Thành An (Aleian Cao) · AI Systems Architect / Automation Engineer</p>
+            <p class="text-sm">&copy; 2026 Cao Nguyễn Thành An (Aleian Cao) · AI Systems Architect / Automation Engineer
+            </p>
         </footer>
     </div>
-    
+
     <!-- CHATBOT WIDGET -->
-    <button id="chat-toggle" class="fixed bottom-6 right-6 p-4 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 transition duration-300 transform hover:scale-105">
+    <button id="chat-toggle"
+        class="fixed bottom-6 right-6 p-4 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 transition duration-300 transform hover:scale-105">
         <i data-lucide="message-square" class="w-6 h-6"></i>
     </button>
 
     <div id="chat-widget" class="flex flex-col bg-white rounded-xl shadow-2xl overflow-hidden border border-indigo-200">
         <div class="bg-indigo-600 text-white p-3 flex justify-between items-center">
             <h3 class="font-semibold text-base flex items-center">
-                 <i data-lucide="sparkles" class="w-4 h-4 mr-2 text-yellow-300"></i> AI CV Assistant
+                <i data-lucide="sparkles" class="w-4 h-4 mr-2 text-yellow-300"></i> AI CV Assistant
             </h3>
             <button id="chat-close" class="p-1 rounded-full hover:bg-indigo-700">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
-        
+
         <div id="chat-messages" class="flex-grow p-4 space-y-4">
             <!-- Initial Message -->
             <div class="flex justify-start">
                 <div class="bg-indigo-100 text-gray-800 p-3 rounded-xl rounded-tl-none max-w-xs text-sm shadow-md">
-                    Chào bạn! Tôi là trợ lý AI của Cao Nguyễn Thành An (Aleian Cao). Tôi có thể giải đáp thông tin về kỹ năng AI/Agentic, tự động hóa kỹ thuật điện, kinh nghiệm và dự án!
+                    Chào bạn! Tôi là trợ lý AI của Cao Nguyễn Thành An (Aleian Cao). Tôi có thể giải đáp thông tin về kỹ
+                    năng AI/Agentic, tự động hóa kỹ thuật điện, kinh nghiệm và dự án!
                 </div>
             </div>
         </div>
-        
+
         <div class="p-3 border-t border-gray-200 flex space-x-2">
-            <input type="text" id="chat-input" placeholder="Hỏi về kinh nghiệm AI, dự án..." class="w-full border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <button id="chat-send" class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition duration-300">
+            <input type="text" id="chat-input" placeholder="Hỏi về kinh nghiệm AI, dự án..."
+                class="w-full border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <button id="chat-send"
+                class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition duration-300">
                 <i data-lucide="send" class="w-5 h-5"></i>
             </button>
         </div>
     </div>
-    
+
     <!-- Khởi tạo Lucide Icons và Logic Chatbot -->
     <script>
         lucide.createIcons();
@@ -589,11 +717,11 @@
         const chatMessages = document.getElementById('chat-messages');
         const chatInput = document.getElementById('chat-input');
         const chatSend = document.getElementById('chat-send');
-        
+
         // CHỈNH SỬA: Không sử dụng API key ở Client-side.
         // Thay vì gọi API trực tiếp, chúng ta sẽ gọi một endpoint Proxy.
-        const proxyUrl = '/api/chat'; 
-        
+        const proxyUrl = '/api/chat';
+
         const MODEL_NAME = 'gemini-2.5-flash-preview-05-20'; // Vẫn giữ tên model để gửi lên Proxy
         // Xóa biến apiKey khỏi đây
 
@@ -668,13 +796,12 @@
         function displayMessage(text, isUser = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
-            
+
             const contentDiv = document.createElement('div');
-            contentDiv.className = `p-3 rounded-xl max-w-xs text-sm shadow-md ${
-                isUser 
-                ? 'bg-indigo-600 text-white rounded-br-none' 
+            contentDiv.className = `p-3 rounded-xl max-w-xs text-sm shadow-md ${isUser
+                ? 'bg-indigo-600 text-white rounded-br-none'
                 : 'bg-indigo-100 text-gray-800 rounded-tl-none'
-            }`;
+                }`;
             contentDiv.innerHTML = text;
             messageDiv.appendChild(contentDiv);
             chatMessages.appendChild(messageDiv);
@@ -710,7 +837,7 @@
             const loadingIndicator = createLoadingIndicator();
             chatInput.disabled = true;
             chatSend.disabled = true;
-            
+
             // Dữ liệu gửi đến Proxy
             const payload = {
                 userQuery: userQuery,
@@ -730,13 +857,13 @@
                 }
 
                 const result = await response.json();
-                
+
                 let aiResponseText = "Rất tiếc, máy chủ trung gian (Proxy) chưa được cấu hình hoặc gặp lỗi. Vui lòng thử lại sau.";
-                
+
                 if (result.text) {
                     aiResponseText = result.text;
                 }
-                
+
                 // Remove loading indicator
                 loadingIndicator.remove();
 
@@ -754,10 +881,11 @@
             }
         }
     </script>
-    
+
     <!-- Header Component -->
-    
+
     <!-- Footer Component với Chat Box -->
     <script src="public/assets/js/footer.js"></script>
 </body>
+
 </html>

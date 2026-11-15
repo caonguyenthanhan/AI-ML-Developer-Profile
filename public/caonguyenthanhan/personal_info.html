@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,14 +28,16 @@
     <!-- Font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/image/tag.png">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Nền tối (Slate 900) */
-            color: #f1f5f9; /* Màu chữ sáng */
+            background-color: #0f172a;
+            /* Nền tối (Slate 900) */
+            color: #f1f5f9;
+            /* Màu chữ sáng */
             /* Hiệu ứng nền chấm mờ ảo */
             background-image: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
             background-size: 30px 30px;
@@ -45,6 +48,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-in-out;
         }
+
         .card-glow:hover {
             /* Hiệu ứng phát sáng nhẹ từ màu chủ đạo */
             box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.5), 0 4px 6px -4px rgba(59, 130, 246, 0.3);
@@ -53,16 +57,24 @@
 
         /* Animation cho tiêu đề khi trang tải */
         @keyframes slideInFromTop {
-            0% { transform: translateY(-20px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+            0% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .title-entrance {
             animation: slideInFromTop 0.8s ease-out forwards;
         }
     </style>
-<script src="../assets/js/header.js"></script>
+    <script src="../assets/js/header.js"></script>
 </head>
+
 <body class="min-h-screen">
 
     <!-- Main Content Container -->
@@ -70,142 +82,177 @@
         <!-- Card Container -->
         <div class="w-full max-w-3xl bg-dark-card rounded-2xl p-6 md:p-10 card-glow">
 
-        <!-- Header - Thông tin cơ bản -->
-        <header class="text-center mb-10">
-            <!-- Avatar -->
-            <img src="../image/avata3.png" alt="Avatar Cao Nguyễn Thành An" class="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-primary-blue shadow-xl object-cover">
-            <div class="inline-block px-3 py-1 mb-3 bg-primary-blue/20 text-primary-blue rounded-full text-xs font-semibold tracking-wider uppercase">
-                Aleian Cao · Professional Profile
-            </div>
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-dark-text mb-2 title-entrance">
-                CAO NGUYỄN THÀNH AN
-            </h1>
-            <p class="text-lg sm:text-xl font-medium text-primary-blue/90 title-entrance" style="animation-delay: 0.2s;">
-                AI Systems Architect / Automation Engineer
-            </p>
-            <p class="text-sm text-slate-400 mt-1">
-                Hiện tại: <span class="text-slate-200 font-semibold">INS Engineering</span> • Ho Chi Minh City, Vietnam
-            </p>
-            <!-- Gạch chân phân cách -->
-            <div class="w-20 h-1 bg-primary-blue mx-auto mt-4 rounded-full"></div>
-
-            <!-- Quick links -->
-            <div class="flex flex-wrap justify-center gap-4 mt-4 text-xs text-slate-300">
-                <a href="mailto:caonguyenthanhan.aaa@gmail.com" class="hover:text-primary-blue transition flex items-center gap-1">
-                    <i data-lucide="mail" class="w-3.5 h-3.5"></i> caonguyenthanhan.aaa@gmail.com
-                </a>
-                <span>•</span>
-                <a href="tel:0929620697" class="hover:text-primary-blue transition flex items-center gap-1">
-                    <i data-lucide="phone" class="w-3.5 h-3.5"></i> 0929 620 697
-                </a>
-                <span>•</span>
-                <a href="https://github.com/caonguyenthanhan" target="_blank" class="hover:text-primary-blue transition flex items-center gap-1">
-                    <i data-lucide="github" class="w-3.5 h-3.5"></i> GitHub
-                </a>
-                <span>•</span>
-                <a href="https://www.linkedin.com/in/th%C3%A0nh-an-cao-nguy%E1%BB%85n-b97b23322/" target="_blank" class="hover:text-primary-blue transition flex items-center gap-1">
-                    <i data-lucide="linkedin" class="w-3.5 h-3.5"></i> LinkedIn
-                </a>
-                <span>•</span>
-                <a href="https://www.youtube.com/@tramgatgu" target="_blank" class="hover:text-primary-blue transition flex items-center gap-1">
-                    <i data-lucide="youtube" class="w-3.5 h-3.5"></i> Trạm Gật Gù
-                </a>
-            </div>
-        </header>
-
-        <!-- Main Section - Giới thiệu và Kỹ năng -->
-        <section class="space-y-8">
-            
-            <!-- Định vị chuyên môn -->
-            <div class="bg-dark-bg p-6 rounded-xl shadow-inner border border-primary-blue/20">
-                <div class="flex items-center gap-2 mb-2 text-xs font-bold uppercase tracking-widest text-primary-blue">
-                    <i data-lucide="crosshair" class="w-4 h-4"></i> Professional Positioning
+            <!-- Header - Thông tin cơ bản -->
+            <header class="text-center mb-10">
+                <!-- Avatar -->
+                <img src="../image/avata3.png" alt="Avatar Cao Nguyễn Thành An"
+                    class="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-primary-blue shadow-xl object-cover">
+                <div
+                    class="inline-block px-3 py-1 mb-3 bg-primary-blue/20 text-primary-blue rounded-full text-xs font-semibold tracking-wider uppercase">
+                    Aleian Cao · Professional Profile
                 </div>
-                <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 border-b border-primary-blue/30 pb-2">
-                    AI-First · Engineering-Driven · Product-Focused
-                </h2>
-                <p class="text-dark-text/90 leading-relaxed text-base sm:text-lg">
-                    Chuyên thiết kế và triển khai <strong class="text-primary-blue">Multi-Agent Systems</strong>, <strong class="text-primary-blue">GraphRAG</strong>, <strong class="text-primary-blue">Agentic Workflows</strong> và tự động hóa quy trình kỹ thuật điện (<strong class="text-primary-blue">PSCAD, PSS/E, ETAP</strong>). Tập trung vào kiến trúc AI thực tế, system evaluation (RAGAS), LLMOps, độ tin cậy và giải quyết bài toán nghiệp vụ phức tạp.
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-dark-text mb-2 title-entrance">
+                    CAO NGUYỄN THÀNH AN
+                </h1>
+                <p class="text-lg sm:text-xl font-medium text-primary-blue/90 title-entrance"
+                    style="animation-delay: 0.2s;">
+                    AI Systems Architect / Automation Engineer
                 </p>
-                <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400 flex flex-wrap gap-x-4 gap-y-1">
-                    <span><strong>Học vấn:</strong> Kỹ Sư CNTT (Information Systems & AI) — ĐH Sư phạm Kỹ thuật TP.HCM (HCMUTE, nay là HCM-UTE)</span>
-                    <span><strong>Kinh nghiệm trước đây:</strong> AI Engineer tại VNA GROUP</span>
+                <p class="text-sm text-slate-400 mt-1">
+                    Hiện tại: <span class="text-slate-200 font-semibold">INS Engineering</span> • Ho Chi Minh City,
+                    Vietnam
+                </p>
+                <!-- Gạch chân phân cách -->
+                <div class="w-20 h-1 bg-primary-blue mx-auto mt-4 rounded-full"></div>
+
+                <!-- Quick links -->
+                <div class="flex flex-wrap justify-center gap-4 mt-4 text-xs text-slate-300">
+                    <a href="mailto:caonguyenthanhan.aaa@gmail.com"
+                        class="hover:text-primary-blue transition flex items-center gap-1">
+                        <i data-lucide="mail" class="w-3.5 h-3.5"></i> caonguyenthanhan.aaa@gmail.com
+                    </a>
+                    <span>•</span>
+                    <a href="tel:0929620697" class="hover:text-primary-blue transition flex items-center gap-1">
+                        <i data-lucide="phone" class="w-3.5 h-3.5"></i> 0929 620 697
+                    </a>
+                    <span>•</span>
+                    <a href="https://github.com/caonguyenthanhan" target="_blank" rel="noopener noreferrer"
+                        class="hover:text-primary-blue transition flex items-center gap-1">
+                        <i data-lucide="github" class="w-3.5 h-3.5"></i> GitHub (caonguyenthanhan)
+                    </a>
+                    <span>•</span>
+                    <a href="https://github.com/Aleian-Cao" target="_blank" rel="noopener noreferrer"
+                        class="hover:text-primary-blue transition flex items-center gap-1">
+                        <i data-lucide="github" class="w-3.5 h-3.5"></i> GitHub (Aleian-Cao)
+                    </a>
+                    <span>•</span>
+                    <a href="https://www.linkedin.com/in/th%C3%A0nh-an-cao-nguy%E1%BB%85n-b97b23322/" target="_blank"
+                        class="hover:text-primary-blue transition flex items-center gap-1">
+                        <i data-lucide="linkedin" class="w-3.5 h-3.5"></i> LinkedIn
+                    </a>
+                    <span>•</span>
+                    <a href="https://www.youtube.com/@tramgatgu" target="_blank"
+                        class="hover:text-primary-blue transition flex items-center gap-1">
+                        <i data-lucide="youtube" class="w-3.5 h-3.5"></i> Trạm Gật Gù
+                    </a>
+                </div>
+            </header>
+
+            <!-- Main Section - Giới thiệu và Kỹ năng -->
+            <section class="space-y-8">
+
+                <!-- Định vị chuyên môn -->
+                <div class="bg-dark-bg p-6 rounded-xl shadow-inner border border-primary-blue/20">
+                    <div
+                        class="flex items-center gap-2 mb-2 text-xs font-bold uppercase tracking-widest text-primary-blue">
+                        <i data-lucide="crosshair" class="w-4 h-4"></i> Professional Positioning
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 border-b border-primary-blue/30 pb-2">
+                        AI-First · Engineering-Driven · Product-Focused
+                    </h2>
+                    <p class="text-dark-text/90 leading-relaxed text-base sm:text-lg">
+                        Chuyên thiết kế và triển khai <strong class="text-primary-blue">Multi-Agent Systems</strong>,
+                        <strong class="text-primary-blue">GraphRAG</strong>, <strong class="text-primary-blue">Agentic
+                            Workflows</strong> và tự động hóa quy trình kỹ thuật điện (<strong
+                            class="text-primary-blue">PSCAD, PSS/E, ETAP</strong>). Tập trung vào kiến trúc AI thực tế,
+                        system evaluation (RAGAS), LLMOps, độ tin cậy và giải quyết bài toán nghiệp vụ phức tạp.
+                    </p>
+                    <div
+                        class="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400 flex flex-wrap gap-x-4 gap-y-1">
+                        <span><strong>Học vấn:</strong> Kỹ Sư CNTT (Information Systems & AI) — ĐH Sư phạm Kỹ thuật
+                            TP.HCM (HCMUTE, nay là HCM-UTE)</span>
+                        <span><strong>Kinh nghiệm trước đây:</strong> AI Engineer tại VNA GROUP</span>
+                    </div>
+                </div>
+
+                <!-- Kỹ năng chính -->
+                <div>
+                    <h2 class="text-2xl font-semibold text-primary-blue mb-4">Các Lĩnh vực Chuyên môn</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
+                            <span class="block font-semibold text-primary-blue text-sm">Multi-Agent & GraphRAG</span>
+                            <span class="text-xs text-slate-300">LangGraph, Neo4j, Memgraph, Qdrant</span>
+                        </div>
+                        <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
+                            <span class="block font-semibold text-primary-blue text-sm">LLMOps & Evaluation</span>
+                            <span class="text-xs text-slate-300">RAGAS, DSPy, Prompt Optimization</span>
+                        </div>
+                        <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
+                            <span class="block font-semibold text-primary-blue text-sm">Backend & vLLM</span>
+                            <span class="text-xs text-slate-300">Python, FastAPI, Pydantic v2</span>
+                        </div>
+                        <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
+                            <span class="block font-semibold text-primary-blue text-sm">Engineering Automation</span>
+                            <span class="text-xs text-slate-300">PSCAD, PSS/E, ETAP, Scripts</span>
+                        </div>
+                        <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
+                            <span class="block font-semibold text-primary-blue text-sm">Modern Frontend</span>
+                            <span class="text-xs text-slate-300">React, TypeScript, Next.js, Tailwind</span>
+                        </div>
+                        <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
+                            <span class="block font-semibold text-primary-blue text-sm">Infra & DevOps</span>
+                            <span class="text-xs text-slate-300">Docker, PowerShell, Supabase, Git</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dự án tiêu biểu ngắn gọn -->
+                <div>
+                    <h2 class="text-2xl font-semibold text-primary-blue mb-3">Dự Án Nổi Bật</h2>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">AiMed
+                            (Healthcare RAG)</span>
+                        <span
+                            class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">ENERGY-TASK-AI</span>
+                        <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">TOV/TRV
+                            Automation</span>
+                        <span
+                            class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">Morphology-Master</span>
+                        <span
+                            class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">ETMS</span>
+                        <span
+                            class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">FILL_POI
+                            & ATS CV Builder</span>
+                        <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">Gemini
+                            Summarizer</span>
+                        <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">Trạm
+                            Gật Gù</span>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Call to Action (CTA) - Đến Portfolio chi tiết -->
+            <div class="mt-12 text-center pt-8 border-t border-dark-card/50">
+                <p class="mb-4 text-xl font-light text-dark-text/80">
+                    Khám phá hồ sơ chuyên môn và kiến trúc kỹ thuật chi tiết:
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="/caonguyenthanhan/profile/aise"
+                        class="inline-flex items-center px-8 py-3.5 bg-primary-blue text-dark-text font-bold text-base rounded-full shadow-2xl shadow-primary-blue/40 hover:bg-primary-blue/90 transition duration-300 transform hover:scale-105 active:scale-100 focus:outline-none focus:ring-4 focus:ring-primary-blue/60">
+                        <i data-lucide="file-text" class="w-5 h-5 mr-2"></i>
+                        Career CV & Portfolio
+                    </a>
+                    <a href="/caonguyenthanhan/aise"
+                        class="inline-flex items-center px-8 py-3.5 bg-amber-500 text-slate-950 font-bold text-base rounded-full shadow-xl hover:bg-amber-400 transition duration-300 transform hover:scale-105 active:scale-100">
+                        <i data-lucide="layers" class="w-5 h-5 mr-2"></i>
+                        AISE 2.0 Ecosystem
+                    </a>
+                    <a href="/caonguyenthanhan/profile/as"
+                        class="inline-flex items-center px-8 py-3.5 bg-slate-800 text-dark-text font-bold text-base rounded-full border border-primary-blue/40 hover:bg-slate-700 transition duration-300 transform hover:scale-105 active:scale-100">
+                        <i data-lucide="zap" class="w-5 h-5 mr-2 text-yellow-400"></i>
+                        Automation Profile
+                    </a>
                 </div>
             </div>
-
-            <!-- Kỹ năng chính -->
-            <div>
-                <h2 class="text-2xl font-semibold text-primary-blue mb-4">Các Lĩnh vực Chuyên môn</h2>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
-                        <span class="block font-semibold text-primary-blue text-sm">Multi-Agent & GraphRAG</span>
-                        <span class="text-xs text-slate-300">LangGraph, Neo4j, Memgraph, Qdrant</span>
-                    </div>
-                    <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
-                        <span class="block font-semibold text-primary-blue text-sm">LLMOps & Evaluation</span>
-                        <span class="text-xs text-slate-300">RAGAS, DSPy, Prompt Optimization</span>
-                    </div>
-                    <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
-                        <span class="block font-semibold text-primary-blue text-sm">Backend & vLLM</span>
-                        <span class="text-xs text-slate-300">Python, FastAPI, Pydantic v2</span>
-                    </div>
-                    <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
-                        <span class="block font-semibold text-primary-blue text-sm">Engineering Automation</span>
-                        <span class="text-xs text-slate-300">PSCAD, PSS/E, ETAP, Scripts</span>
-                    </div>
-                    <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
-                        <span class="block font-semibold text-primary-blue text-sm">Modern Frontend</span>
-                        <span class="text-xs text-slate-300">React, TypeScript, Next.js, Tailwind</span>
-                    </div>
-                    <div class="p-3 bg-primary-blue/15 border border-primary-blue/30 rounded-xl text-center">
-                        <span class="block font-semibold text-primary-blue text-sm">Infra & DevOps</span>
-                        <span class="text-xs text-slate-300">Docker, PowerShell, Supabase, Git</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Dự án tiêu biểu ngắn gọn -->
-            <div>
-                <h2 class="text-2xl font-semibold text-primary-blue mb-3">Dự Án Nổi Bật</h2>
-                <div class="flex flex-wrap gap-2 text-xs">
-                    <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">AiMed (Healthcare RAG)</span>
-                    <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">ENERGY-TASK-AI</span>
-                    <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">TOV/TRV Automation</span>
-                    <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">Morphology-Master</span>
-                    <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">ETMS</span>
-                    <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">FILL_POI & ATS CV Builder</span>
-                    <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">Gemini Summarizer</span>
-                    <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md border border-slate-700">Trạm Gật Gù</span>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- Call to Action (CTA) - Đến Portfolio chi tiết -->
-        <div class="mt-12 text-center pt-8 border-t border-dark-card/50">
-            <p class="mb-4 text-xl font-light text-dark-text/80">
-                Khám phá hồ sơ chuyên môn và kiến trúc kỹ thuật chi tiết:
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="/caonguyenthanhan/profile/aise"
-                   class="inline-flex items-center px-8 py-3.5 bg-primary-blue text-dark-text font-bold text-base rounded-full shadow-2xl shadow-primary-blue/40 hover:bg-primary-blue/90 transition duration-300 transform hover:scale-105 active:scale-100 focus:outline-none focus:ring-4 focus:ring-primary-blue/60">
-                   <i data-lucide="file-text" class="w-5 h-5 mr-2"></i>
-                   Career CV & Portfolio
-                </a>
-                <a href="/caonguyenthanhan/profile/as"
-                   class="inline-flex items-center px-8 py-3.5 bg-slate-800 text-dark-text font-bold text-base rounded-full border border-primary-blue/40 hover:bg-slate-700 transition duration-300 transform hover:scale-105 active:scale-100">
-                   <i data-lucide="zap" class="w-5 h-5 mr-2 text-yellow-400"></i>
-                   Automation Profile
-                </a>
-            </div>
-        </div>
 
         </div>
     </div>
 
     <!-- Header Component -->
-    
+
     <!-- Footer Component với Chat Box -->
     <script src="../assets/js/footer.js"></script>
 </body>
+
 </html>

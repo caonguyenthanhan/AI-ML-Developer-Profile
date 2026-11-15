@@ -162,6 +162,20 @@
       "showInHeader": false
     },
     {
+      "id": "aise_ecosystem",
+      "label": "AISE 2.0 Ecosystem",
+      "paths": [
+        "/caonguyenthanhan/aise",
+        "/aise-ecosystem"
+      ],
+      "destination": "/caonguyenthanhan/aise_ecosystem.html",
+      "tags": [
+        "ai",
+        "profile"
+      ],
+      "showInHeader": true
+    },
+    {
       "id": "profile_as",
       "label": "Automation Specialist",
       "paths": [

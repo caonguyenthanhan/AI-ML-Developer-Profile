@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="flex items-center">
                                 <i data-lucide="phone" class="w-4 h-4 mr-2 text-indigo-300"></i>
-                                <span>Số điện thoại Cao Nguyễn Thành An là <a href="tel:+84929620697" class="underline decoration-indigo-300 hover:text-white transition duration-300">0929620697</a></span>
+                                <a href="tel:+84929620697" class="hover:text-white transition duration-300">0929 620 697</a>
                             </div>
                             <div class="flex items-center">
                                 <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-indigo-300"></i>
@@ -79,7 +79,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         </h3>
                         <div class="flex flex-wrap gap-3">
                             <a href="https://github.com/caonguyenthanhan" target="_blank" rel="noopener noreferrer"
-                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="GitHub">
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="GitHub (caonguyenthanhan)">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://github.com/Aleian-Cao" target="_blank" rel="noopener noreferrer"
+                               class="flex items-center justify-center w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition duration-300" title="GitHub (Aleian-Cao)">
                                 <i data-lucide="github" class="w-5 h-5"></i>
                             </a>
                             <a href="https://www.linkedin.com/in/th%C3%A0nh-an-cao-nguy%E1%BB%85n-b97b23322/" target="_blank" rel="noopener noreferrer"
@@ -156,6 +160,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .h-96 {
                 height: 32rem;
             }
+            @media print {
+                footer,
+                #chat-toggle,
+                #chat-widget {
+                    display: none !important;
+                }
+            }
         </style>
     `;
 
@@ -183,9 +194,10 @@ function initializeChatBox() {
     // API Configuration
     const proxyUrl = '/api/chat'; 
     let MODEL_NAME = 'gemini-2.0-flash';
-    try {
-        fetch('/api/config').then(r=>r.json()).then(c=>{ if (c && c.modelName) { MODEL_NAME = c.modelName; } });
-    } catch (_) {}
+    fetch('/api/config')
+        .then(r => (r.ok ? r.json() : null))
+        .then(c => { if (c && c.modelName) { MODEL_NAME = c.modelName; } })
+        .catch(() => {});
 
     // CV Context cho AI Assistant
     const cvContext = `
@@ -203,7 +215,9 @@ function initializeChatBox() {
         - Địa điểm: Ho Chi Minh City, Vietnam
         - Email: caonguyenthanhan.aaa@gmail.com
         - Điện thoại: 0929 620 697
-        - GitHub: https://github.com/caonguyenthanhan
+        - GitHub: https://github.com/caonguyenthanhan và https://github.com/Aleian-Cao
+        - AISE 2.0 Ecosystem: https://hethongthongminh.id.vn/caonguyenthanhan/aise (5 quyển sách AI Engineering, Kiến trúc 8 tầng, AEOS v1.4.2, Engineering Lab)
+        - Dự án công khai tiêu biểu trên 2 GitHub: Time_Wallet, PocketHID, An-note, Video-to-Text, ENERGY-TASK-AI, CV-Builder, aimed, FolderSizeManagerPy, ETMS, Morphology-Master, fillpoi-releases, Video-Speed-Controller (GitHub Pages)
         - LinkedIn: https://www.linkedin.com/in/thành-an-cao-nguyễn-b97b23322/
         - YouTube: https://www.youtube.com/@tramgatgu (Trạm Gật Gù - YouTube về tâm lý học tích cực, phát triển bản thân và âm nhạc AI)
         - Website: https://hethongthongminh.id.vn/

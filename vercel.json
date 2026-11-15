@@ -65,6 +65,14 @@
       "destination": "/caonguyenthanhan/profile_portfolio.html"
     },
     {
+      "source": "/caonguyenthanhan/aise",
+      "destination": "/caonguyenthanhan/aise_ecosystem.html"
+    },
+    {
+      "source": "/aise-ecosystem",
+      "destination": "/caonguyenthanhan/aise_ecosystem.html"
+    },
+    {
       "source": "/caonguyenthanhan/profile/as",
       "destination": "/caonguyenthanhan/Automation_Specialist.html"
     },
