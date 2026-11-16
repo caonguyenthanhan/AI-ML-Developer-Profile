@@ -217,7 +217,7 @@ function initializeChatBox() {
         - Điện thoại: 0929 620 697
         - GitHub: https://github.com/caonguyenthanhan và https://github.com/Aleian-Cao
         - AISE 2.0 Ecosystem: https://hethongthongminh.id.vn/caonguyenthanhan/aise (5 quyển sách AI Engineering, Kiến trúc 8 tầng, AEOS v1.4.2, Engineering Lab)
-        - Dự án công khai tiêu biểu trên 2 GitHub: Time_Wallet, PocketHID, An-note, Video-to-Text, ENERGY-TASK-AI, CV-Builder, aimed, FolderSizeManagerPy, ETMS, Morphology-Master, fillpoi-releases, Video-Speed-Controller (GitHub Pages)
+        - Dự án công khai tiêu biểu trên 2 GitHub: Personal-Vault-Public (Tauri v2 + React + Python stdio sidecar, Hybrid Router & Qwen3-0.6B evals, Net-Trace R4), Medical-Consulting-System & AI-rag-med (AiMed GraphRAG/RAGAS), PocketHID (Kotlin Bluetooth HID), Time_Wallet, FolderSizeManagerPy, fillpoi-releases, Video-Speed-Controller
         - LinkedIn: https://www.linkedin.com/in/thành-an-cao-nguyễn-b97b23322/
         - YouTube: https://www.youtube.com/@tramgatgu (Trạm Gật Gù - YouTube về tâm lý học tích cực, phát triển bản thân và âm nhạc AI)
         - Website: https://hethongthongminh.id.vn/
@@ -239,7 +239,7 @@ function initializeChatBox() {
         - 09/2025 – 12/2025: AI Software Engineer tại VNA GROUP (Kinh nghiệm trước đây).
           + Phát triển hệ thống Multi-Agent (LangGraph) tự động hóa quy trình báo cáo và phân tích số liệu.
           + Thiết kế kiến trúc luồng xử lý: Router → Analyst → Writer, tích hợp Graph Knowledge (NetworkX).
-          + Tự động hóa tạo báo cáo Word chuẩn format doanh nghiệp (Table Grid style), giảm 90% thao tác thủ công.
+          + Tự động hóa tạo báo cáo Word chuẩn format doanh nghiệp (Table Grid style), loại bỏ phần lớn thao tác định dạng thủ công lặp lại.
         - 01/2025 – 04/2025: Chuyên viên Đào tạo AI/ML & Solutions Consultant (CTy TNHH Tư Vấn Giáo Dục Nhân Mỹ).
         - 06/2024 – 07/2024: Nhân viên Triển khai và Bảo trì Phần mềm (CÔNG TY PHẦN MỀM VÀNG).
         - 03/2023 – 03/2024: Nhân viên Kỹ thuật & Marketing (Hệ thống giáo dục Nam Mỹ).

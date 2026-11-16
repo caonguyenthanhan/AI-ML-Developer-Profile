@@ -828,12 +828,12 @@
                     <button type="button" data-case="pv" onclick="selectCase('pv')" class="case-btn w-full text-left p-3.5 rounded-xl border transition">
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-[#0f766e] border border-emerald-200">Tập 2 · Ch.2 · [I2]</span>
-                            <span class="text-[11px] font-mono text-slate-500">~16 ms popup</span>
+                            <span class="text-[11px] font-mono text-slate-500">Hybrid AI + ~16 ms</span>
                         </div>
                         <div class="font-bold text-sm text-[#0f2537] mt-1.5">Personal Vault</div>
                         <div class="text-xs text-slate-600 mt-0.5">
-                            <span class="lang-vi">Privacy-first · Resident UI &amp; Vòng đời phiên</span>
-                            <span class="lang-en hidden">Privacy-first · Resident hotkey &amp; session lock</span>
+                            <span class="lang-vi">Privacy-first · Zero-Trust Local AI &amp; Vòng đời phiên</span>
+                            <span class="lang-en hidden">Privacy-first · Zero-Trust Local AI &amp; Session Lock</span>
                         </div>
                     </button>
 
@@ -1663,31 +1663,35 @@
             },
             pv: {
                 vi: {
-                    badge: 'CASE STUDY 02 · TẬP 2 CHƯƠNG 2 · NGUỒN [I2]',
-                    title: 'Personal Vault — 16 ms & Vòng đời phiên bảo mật',
-                    subtitle: 'Privacy-first · Tách popup resident Win32 khỏi WebView quản trị · Giữ một nguồn sự thật phiên.',
-                    problem: 'Giữ nguyên cửa sổ quản trị React/WebView chạy ngầm ngốn ~350–386 MB RAM trên máy cá nhân, nhưng hủy hoàn toàn UI lại gây trễ cold start mỗi lần người dùng bấm phím nóng tìm dữ liệu vault.',
-                    decision: 'Chọn kiến trúc Resident 2 (phương án C): giữ popup Ctrl+Alt+V native Win32 gọn nhẹ để tra cứu và chỉ khởi tạo lười (lazy-create) React/WebView khi cần quản trị đầy đủ — dùng chung một sidecar, ưu tiên tìm kiếm deterministic và quản lý trạng thái khóa phiên tại một nguồn duy nhất.',
-                    evidence: 'Hồ sơ [I2] (RESIDENT_REPORT.md, candidate PV-20261115-A8D61417-resident2, 15/11/2026): popup mở được báo cáo khoảng 16 ms; RAM trước đổi ~350–386 MB → thường trú khi mở phiên ~75–86 MB, sau khi khóa phiên ~27–38 MB.',
-                    limit: 'Giới hạn phạm vi bắt buộc: Số đo thuộc phạm vi synthetic-only trên candidate; chưa phải phân vị p95 đa máy, chưa đo song song phương án A/B/C trên cùng phần cứng và chưa thay kiểm toán bảo mật / egress độc lập.',
-                    lesson: 'Nút thắt thường nằm ở quyết định vòng đời tài nguyên và tính nhất quán trạng thái khóa phiên (lock invariant), không phải chuyện tranh cãi ngôn ngữ hay framework.',
+                    badge: 'CASE STUDY 02 · TẬP 2 CHƯƠNG 2 · NGUỒN [I2] + PUBLIC BASE',
+                    title: 'Personal Vault — Zero-Trust Local AI, Net-Trace & 16 ms Lifecycle',
+                    subtitle: 'Privacy-first · Deterministic-First Hybrid Router (Qwen3-0.6B) · Tauri v2 + Python stdio · Win32 Resident UI.',
+                    problem: 'Trợ lý quản lý mật khẩu local vừa phải giải quyết rủi ro LLM làm rò rỉ hoặc bịa credential, vừa tránh ngốn ~350–386 MB RAM hoặc mở socket ngầm trong WebView2/llama.cpp.',
+                    decision: 'Bản công khai (Personal-Vault-Public): thiết kế sidecar stdio (Argon2id + AES-256-GCM), Hybrid Router ưu tiên deterministic trước (3.2–7.1 ms p50) chỉ leo thang Qwen3-0.6B qua llama-completion-impl.dll (0 listening socket, cổng vào/ra chặn secret & hallucination), và tắt QWEN_ALLOWED = False ở release. Ở checkpoint sau ([I2], Resident 2, chưa mở nguồn), tách riêng popup Win32 Ctrl+Alt+V khỏi WebView quản trị lười.',
+                    evidence: 'Trên repo công khai Aleian-Cao/Personal-Vault-Public (Closure6 UI + Net-Trace R4, fixture synthetic 507 mục): A/B Qwen3 đạt 92.8% → 97.8% (Acc@1 88.0% → 97.3%, AI gọi 40/138 lượt, 0 leak); bản hardened đạt 130/138 (94.2%), Blind Held-Out v2 đạt 543/691 (0 false_exact), Web Playwright 26/26, Net-Trace R4 50/50 PASS. Riêng hồ sơ [I2] (Resident 2, 15/11/2026) ghi nhận popup ~16 ms, RAM ~75–86 MB mở phiên / ~27–38 MB khóa phiên.',
+                    limit: 'Ranh giới phạm vi minh bạch: Aleian-Cao/Personal-Vault-Public mới mở mã nguồn nền sạch Closure6 UI + Hybrid AI + Eval Suite + Net-Trace R4 (synthetic-only); nhánh Resident 2 (~16 ms) thuộc checkpoint tách riêng chưa mở nguồn và toàn bộ số đo chưa thay thế kiểm toán bảo mật độc lập.',
+                    lesson: 'An toàn thực sự đến từ ranh giới zero-trust (LLM không thấy vault, release tắt tính năng thừa khi deterministic đã đủ) và kỷ luật tách vòng đời tiến trình — không chạy theo hype.',
+                    repoUrl: 'https://github.com/Aleian-Cao/Personal-Vault-Public',
+                    repoLabel: 'GitHub · Aleian-Cao/Personal-Vault-Public',
                     bookLinks: [
                         { key: 'b2', chapterId: 'b2-c2', label: 'Đọc Tập 2 · Chương 2: Người dùng chỉ cần 16 ms' },
-                        { key: 'b1', chapterId: 'c5', label: 'Tập 1 · Tầng 05 Authorization & Tầng 07 Cache' }
+                        { key: 'b1', chapterId: 'c5', label: 'Tập 1 · Tầng 05 Authorization & Tầng 06 Guardrails' }
                     ]
                 },
                 en: {
-                    badge: 'CASE STUDY 02 · VOL 2 CH.2 · REF [I2]',
-                    title: 'Personal Vault — 16 ms Hotkey & Session Lock Lifecycle',
-                    subtitle: 'Privacy-first · Native Win32 popup + lazy WebView admin · Shared sidecar & single session source.',
-                    problem: 'Keeping a full React/WebView window resident consumed ~350–386 MB RAM, whereas tearing down everything caused sluggish cold starts on daily quick-lookup hotkeys.',
-                    decision: 'Implemented Resident 2 (Option C): a lightweight native Win32 Ctrl+Alt+V popup paired with lazy-created React/WebView for management — sharing one sidecar, deterministic lookup first, and a single source of truth for vault lock state.',
-                    evidence: 'Internal record [I2] (RESIDENT_REPORT.md, candidate PV-20261115-A8D61417-resident2, 15/11/2026): ~16 ms reported popup wake latency; RAM shifted from ~350–386 MB to ~75–86 MB unlocked resident and ~27–38 MB locked.',
-                    limit: 'Explicit evidence scope: synthetic-only candidate figures — not multi-machine p95 benchmarks, not a head-to-head A/B/C harness, and not an independent security/egress audit.',
-                    lesson: 'Perceived responsiveness and security live in UI lifecycle boundaries and single-source lock state invariants, not framework debates.',
+                    badge: 'CASE STUDY 02 · VOL 2 CH.2 · REF [I2] + PUBLIC BASE',
+                    title: 'Personal Vault — Zero-Trust Local AI, Net-Trace & 16 ms Lifecycle',
+                    subtitle: 'Privacy-first · Deterministic-First Hybrid Router (Qwen3-0.6B) · Tauri v2 + Python stdio · Win32 Resident UI.',
+                    problem: 'A local password assistant must prevent LLMs from touching secrets or hallucinating credentials, while avoiding ~350–386 MB idle WebView RAM and hidden loopback/telemetry sockets.',
+                    decision: 'In the public base (Personal-Vault-Public): built a stdio JSON-RPC sidecar (Argon2id + AES-256-GCM), deterministic-first Hybrid Router (3.2–7.1 ms p50) escalating only hard queries to isolated Qwen3-0.6B via llama-completion-impl.dll (0 sockets), with pre/post gates and release QWEN_ALLOWED = False. Separately in [I2] (Resident 2, private), split a native Win32 Ctrl+Alt+V popup from lazy WebView admin.',
+                    evidence: 'Verified in Aleian-Cao/Personal-Vault-Public (507 synthetic entries): Qwen3 A/B rose 92.8% → 97.8% (Acc@1 88.0% → 97.3%, 40/138 AI calls, 0 leaks); hardened deterministic reached 130/138 (94.2%), SHA-256 locked Held-Out v2 hit 543/691 (0 false_exact), Web Playwright 26/26, Net-Trace R4 50/50 PASS. Private [I2] (Resident 2) adds ~16 ms popup latency and ~75–86 MB unlocked / ~27–38 MB locked RAM.',
+                    limit: 'Explicit scope split: Aleian-Cao/Personal-Vault-Public ships the sanitized Closure6 UI + Hybrid AI + Eval + Net-Trace R4 base (synthetic-only); Resident 2 (16 ms popup) belongs to a separate unpublished checkpoint and none of these metrics replace an independent third-party security audit.',
+                    lesson: 'Real safety comes from zero-trust secret boundaries (shipping QWEN_ALLOWED=False when deterministic invariants suffice) and UI lifecycle isolation rather than framework hype.',
+                    repoUrl: 'https://github.com/Aleian-Cao/Personal-Vault-Public',
+                    repoLabel: 'GitHub · Aleian-Cao/Personal-Vault-Public',
                     bookLinks: [
                         { key: 'b2', chapterId: 'b2-c2', label: 'Read Vol 2 · Ch.2: 16 ms Perceived Latency' },
-                        { key: 'b1', chapterId: 'c5', label: 'Vol 1 · Layer 05 Authorization' }
+                        { key: 'b1', chapterId: 'c5', label: 'Vol 1 · Layer 05 Auth & Layer 06 Guardrails' }
                     ]
                 }
             },
